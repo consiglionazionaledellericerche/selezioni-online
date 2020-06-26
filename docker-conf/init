@@ -1,0 +1,18 @@
+#!/bin/sh
+
+echo "Configuring Angular App"
+
+set -e
+
+GATEWAY_PROTOCOL=${GATEWAY_PROTOCOL:-http}
+GATEWAY_HOST=${GATEWAY_HOST:-localhost}
+GATEWAY_PORT=${GATEWAY_PORT:-5555}
+
+echo "Setting Gateway to: $GATEWAY_PROTOCOL://$GATEWAY_HOST:$GATEWAY_PORT"
+
+sed 's#{{GATEWAY_PROTOCOL}}#'"${GATEWAY_PROTOCOL}"'#' -i /usr/share/nginx/html/assets/config/config.json
+sed 's#{{GATEWAY_HOST}}#'"${GATEWAY_HOST}"'#' -i /usr/share/nginx/html/assets/config/config.json
+sed 's#{{GATEWAY_PORT}}#'"${GATEWAY_PORT}"'#' -i /usr/share/nginx/html/assets/config/config.json
+
+nginx -g 'daemon off;'
+
