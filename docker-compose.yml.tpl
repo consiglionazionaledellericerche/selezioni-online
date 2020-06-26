@@ -8,6 +8,8 @@ services:
       GATEWAY_HOST: "cool-jconon.test.si.cnr.it"
       GATEWAY_PORT: "80"
     network_mode: bridge
+    extra_hosts:
+      - "cool-jconon.test.si.cnr.it:150.146.206.186"
     tmpfs:
     - /tmp/
 
