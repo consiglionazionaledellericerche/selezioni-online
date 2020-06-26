@@ -8,22 +8,9 @@ services:
       GATEWAY_HOST: "cool-jconon.test.si.cnr.it"
       GATEWAY_PORT: "80"
     network_mode: bridge
+    labels:
+      SERVICE_NAME: ##{SERVICE_NAME}##
     extra_hosts:
       - "cool-jconon.test.si.cnr.it:150.146.206.186"
     tmpfs:
     - /tmp/
-
-  nginx:
-    image: nginx:1.13-alpine
-    network_mode: bridge
-    environment:
-    - 'FASTCGI_READ_TIMEOUT=300s'
-    links:
-    - selezioni:selezioni
-    labels:
-      SERVICE_NAME: ##{SERVICE_NAME}##
-    read_only: true
-    volumes:
-    - ./conf.d/:/etc/nginx/conf.d/
-    - /var/cache/nginx/
-    - /var/run/
