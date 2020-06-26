@@ -1,0 +1,219 @@
+{
+  "F:jconon_call:folder": "Tutti i Bandi",
+  "F:jconon_call_tind:folder": "Tempo Indeterminato",
+  "F:jconon_call_tind:folder_concorsi_pubblici":"Concorsi Pubblici",
+  "F:jconon_call_tind:folder_reclutamento_speciale":"Reclutamento Speciale",
+  "F:jconon_call_tind:folder_categorie_protette":"Categorie Protette",
+  "F:jconon_call_tdet:folder":"Tempo Determinato",
+  "F:jconon_call_bstd:folder":"Borse di Studio",
+  "F:jconon_call_aric:folder":"Assegni di Ricerca",
+  "F:jconon_call_mobility:folder":"Mobilità",
+  "F:jconon_call_mobility_open:folder":"Mobilità aperta",
+  "F:jconon_call_director:folder":"Direttori",
+  "F:jconon_call_tind:folder_tirocini_categorie_protette":"Tirocini - Categorie Protette",
+  "F:jconon_call_tind:manifestazione_interesse":"Manifestazione di Interesse",
+  "F:jconon_call_employees:folder":"Selezioni per dipendenti CNR/Candidature",
+  "D:jconon_attachment:call_it": "Bando di concorso",
+  "D:jconon_attachment:call_en": "Bando di concorso in inglese",
+  "D:jconon_attachment:call_commission": "Commissione",
+  "D:jconon_dic_sost:attachment": "Modulo Dichiarazioni Sostitutive",
+  "D:jconon_attachment:trattamento_dati_personali": "Modulo Trattamento Dati Personali",
+  "D:jconon_allegato_generico:attachment": "Allegato generico Multiplo",
+  "D:jconon_curriculum_vitae:attachment": "Curriculum Vitae",
+  "D:jconon_documento_riconoscimento:attachment": "Documento Riconoscimento",
+  "D:jconon_curriculum_vitae:attachment_strutturato": "Curriculum strutturato",
+  "D:jconon_esclusione:attachment": "Provvedimento di Esclusione",
+  "D:jconon_convocazione:attachment": "Convocazione",
+  "D:jconon_rinuncia:attachment": "Rinuncia",
+
+
+  "presents": "Sono presenti",
+
+  "utenti": "Utenti",
+  "utente": "Utente",
+  "utente.create": "Nuovo Utente",
+  "utente.edit": "Modifica Utente",
+  "utente.show": "Utente:",
+  "utente.list": "Utenti",
+  "utente.create.info": "Creazione di un nuovo ",
+  "utente.edit.info": "Modifica utente ",
+
+  "M": "Uomo",
+  "F": "Donna",
+  "true": "Si",
+  "false": "No",
+
+  "cancel": "Annulla",
+  "save": "Salva",
+  "back": "Indietro",
+  "new": "Nuovo",
+  "delete": "Elimina",
+  "edit": "Modifica",
+  "remove": "Rimuovi",
+  "add": "Aggiungi",
+  "show": "Visualizza",
+  "attach": "Allegati",
+  "attach_to": "Allegati a {{value}}",
+  "more.actions" : "Altre opzioni..",
+  "properties" : "Proprietà",
+  "required": "Obbligatorio",
+  "UniqueValidator": "Deve essere unico",
+  "minlength": "Lunghezza minima non raggiunta",
+  "maxlength": "Lunghezza massima superata",
+  "property": "Proprietà",
+  "no_item": "Non sono presenti elementi.",
+  "present": "Presenti",
+  "shown_from": "Mostrate dalla",
+  "shown_to": "alla",
+  "occurrences": "occorrenze",
+  "search": "Cerca",
+  "previous": "Indietro",
+  "next": "Avanti",
+  "name": "Nome",
+  "title": "Titolo",
+  "description": "Descrizione",
+  "protocollo": {
+    "data": "Data Protocollo",
+    "numero": "Numero Protocollo" 
+  },
+  "contacts": {
+    "title": "Contatti",
+    "subtitle": "Ufficio Concorsi - DCSGR - CNR",
+    "telefono": "telefono 0039 06 4993 2172/2140",
+    "fax": "fax 0039 06 4993 3852",
+    "email": "e-mail <a href=\"mailto:concorsi@cnr.it\">concorsi@cnr.it</a>",
+    "pec": "PEC <a href=\"mailto:concorsi@pec.cnr.it\">concorsi@pec.cnr.it</a>",
+    "helpdesk" : {
+      "info": "Per ricevere assistenza a problemi tecnici/informatici o normativi utilizzare il servizio",
+      "name": "HelpDesk",
+      "alert":"Si consiglia vivamente di procedere alla compilazione e all'invio della domanda online evitando i giorni immediatamente precedenti la scadenza del termine previsto dal bando, per non incorrere in possibili inconvenienti derivanti da un eventuale sovraccarico del sistema e per usufruire del supporto di Help Desk in tempo utile."
+    }
+  },
+  "faq": {
+    "title": "F.A.Q."
+  },
+  "helpdesk": {
+    "title": "HelpDesk"
+  },
+  "home" : {
+    "title": "Selezioni online CNR",
+    "subtitle": "Sistema di presentazione delle candidature online per il reclutamento del personale dipendente e degli altri rapporti di lavoro e formazione del Consiglio Nazionale delle Ricerche."
+  },
+  "footer": {
+    "first": "Il sistema si colloca nell'ambito del progetto e-goverment, in linea con il Codice dell'Amministrazione Digitale (art. 65 - Istanze e dichiarazioni presentate alle pubbliche amministrazioni per via telematica), il DL 27 ottobre 2009, n. 150, recante \"Attuazione della legge 4 marzo 2009, n. 15, in materia di ottimizzazione della produttivita' del lavoro pubblico e di efficienza e trasparenza delle pubbliche amministrazioni\" e il recente DL 9 febbraio 2012, n. 5 \"Disposizioni urgenti in materia di semplificazione e di sviluppo\" (art. 8 - Semplificazioni per la partecipazione a concorsi e  prove  selettive).",
+    "second": "La piattaforma Selezioni online ospita procedure sviluppate per consentire la partecipazione ai bandi emessi dalle strutture dell'Ente. Le procedure sono sviluppate a partire dalle specifiche prodotte dalle strutture che emettono i bandi e devono rispondere alle regole imposte dagli stessi.",
+    "copyright": {
+      "large": "copyright ©2016-2020 Consiglio Nazionale delle Ricerche",
+      "slim": "copyright ©2016-2020 CNR"
+    }
+  },
+  "signin": {
+    "title": "Accedi",
+    "concorsi": "Per partecipare alle selezioni online del Consiglio Nazionale delle Ricerche occorre accedere all'area utenti inserendo Nome utente e password scelti in fase di registrazione al sito.",
+    "registration": "Si ricorda che, qualora si avesse già partecipato ad una precedente selezione sempre su questo sito, non é necessario ripetere la registrazione.",
+    "altri": "Per registrarsi utilizzare il link <a href=\"create-account?guest=true\">Nuova registrazione</a>. <br>Per maggiori informazioni consultare il capitolo \"Accesso / registrazione in procedura\" del Manuale Utente. <br> Per ricevere assistenza utilizzare il servizio di <a href=\"configurazione/helpdesk\">Helpdesk</a>",
+    "candidaticnr": "I dipendenti CNR e tutti i candidati già in possesso delle credenziali ufficiali CNR dovranno utilizzarle per l'accesso alla procedura senza necessità di ulteriori registrazioni.<br>Per la gestione delle credenziali ufficiali CNR utilizzare il sito <a href=\"https://utenti.cnr.it\">https://utenti.cnr.it</a>",
+    "username": "Nome utente",
+    "password": "Password",
+    "message" : {
+      "required" : {
+        "username": "Nome utente obbligatorio!",
+        "password": "Password obbligatoria!"
+      }
+    }
+  },
+  "call": {
+    "attivi": "Attivi",
+    "scaduti": "Scaduti",
+    "tutti": "Tutti",
+    "codice": "Codice bando:",
+    "profilo": "Profilo:",
+    "elenco_macroaree": "MACROAREA:",
+    "elenco_settori_tecnologici": "Settore Tecnologico:",
+    "sede": "Struttura di riferimento:",
+    "struttura": "Sede di Lavoro:",
+    "numero_gu": "Gazzetta Ufficiale n.",
+    "data_gu": "del",
+    "data_fine_invio_domande": "Scadenza:",
+    "numero_posti": "N. posti:",
+    "numero_max_domande": "N. massimo di domande:",
+    "elenco_titoli_studio": "Requisiti:",
+    "submit_application": "Presenta domanda",
+    "attach_to": "Allegati al Bando {{value}}",
+    "search" : {
+      "title": "Filtra Bandi",
+      "code": "Codice bando",
+      "type": "Tipologia bando",
+      "scadenza": {
+        "inizio": "Scadenza dal",
+        "fine": "Scadenza al"
+      },
+      "profile": "Profilo",
+      "gazzette": {
+        "number": "Numero della Gazzetta Ufficiale",
+        "date": "Data della Gazzetta Ufficiale"
+      },
+      "requirements": "Requisiti",
+      "struttura": "Struttura di riferimento",
+      "sede": "Sede di Lavoro"
+    },
+    "menuitem": {
+      "application": "Domande"
+    }
+  },
+  "application": {
+    "firstname": "Nome:",
+    "lastname": "Cognome:",
+    "codice_fiscale": "CF:",
+    "data_nascita": "Data di nascita:",
+    "mine": {
+      "title": "Le mie domande"
+    },
+    "user": {
+      "title": "Domande"
+    },
+    "state": {
+      "C": "Inviata",
+      "P": "Provvisoria"
+    },
+    "date": {
+      "modified": " - modificata il {{value}}",
+      "send": " il {{value}}"
+    },
+    "status": {
+      "temporary": "Provvisorie",
+      "confirmed": "Inviate",
+      "all": "Tutte",
+      "active": "Attive",
+      "excluded": "Escluse"
+    },
+    "esclusione": {
+      "E": "Esclusa",
+      "R": "Ritirata",
+      "S": "Scheda anonima respinta",
+      "A": "Sospesa",
+      "N": "Non Ammesso"
+    },
+    "attach_to": "Allegati alla Domanda"
+  },
+  "user": {
+    "username": "Nome utente",
+    "firstname": "Nome",
+    "lastname": "Cognome",
+    "email": "E-Mail ordinaria",
+    "emailesterno": "E-Mail esterna",
+    "codicefiscale": "Codice Fiscale",
+    "matricola": "Matricola",
+    "mobile": "Telefono",
+    "groups": "Gruppi"
+  },
+  "document": {
+    "last_modified": ", ultima modifica: {{value}}",
+    "docummento_riconoscimento": {
+      "tipologia": "Tipologia",
+      "numero": "Numero",
+      "data_scadenza": "Data Scadenza",
+      "rilasciato_da": "RIlasciato da"
+    }
+  }
+}

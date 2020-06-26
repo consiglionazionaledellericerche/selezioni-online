@@ -1,0 +1,154 @@
+<app-layout-title [title]="'call.search.title'" [titleClass]="'main-title'"></app-layout-title>
+<app-list-header-layout>
+    <form *ngIf="filterFormSearch" class="clearfix" [formGroup]="filterFormSearch">
+        <div class="form-row col-md-12">
+            <div class="form-group mb-n3 col-md-4">
+                <app-control-select-model
+                    class="pr-1"
+                    [inline]="true"
+                    [noLabel]="true"
+                    [prepend]="'list-ul'"
+                    [types]="cache.jsonlistCallType"
+                    [showValidation]="false"
+                    [allowClear]="true"
+                    [placeholder]="'call.search.type'| translate"
+                    [ttip]="'call.search.type'| translate"
+                    formControlName="type">
+                </app-control-select-model>
+            </div>
+            <div class="form-group col-md-3">
+                <!--Rounded checkbox buttons-->
+                <div class="btn-group btn-block btn-group-toggle">
+                    <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentFilterType('active')}">
+                        <input type="radio" formControlName="filterType"  value="active"> {{'call.attivi' | translate}}
+                    </label>
+                    <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentFilterType('expire')}">
+                        <input type="radio" formControlName="filterType" value="expire"> {{'call.scaduti' | translate}}
+                    </label>
+                    <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentFilterType('all')}">
+                        <input type="radio" formControlName="filterType"  value="all"> {{'call.tutti' | translate}}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group mb-n3 col-md-5">
+                <app-control-text 
+                    formControlName="callCode"
+                    class="pr-1"
+                    [inline]="true"
+                    type="search"
+                    [showValidation]="false"
+                    [noLabel]="true"
+                    [prepend]="'cube'"
+                    [ttip]="'call.search.code'| translate"
+                    [placeholder]="'call.search.code'| translate">
+                </app-control-text>
+            </div>    
+        </div>
+        <div class="form-row col-md-12">
+            <div class="form-group mb-n3 col-md-2">
+                <app-control-datepicker
+                    class="pr-1"
+                    type="search"
+                    [inline]="true" 
+                    [noLabel]="true" 
+                    [showValidation]="false"
+                    [ttip]="'call.search.scadenza.inizio'| translate" 
+                    formControlName="inizioScadenza">            
+                </app-control-datepicker>
+            </div>
+            <div class="form-group mb-n3 col-md-2">
+                <app-control-datepicker
+                    class="pr-1"
+                    type="search"
+                    [inline]="true" 
+                    [noLabel]="true" 
+                    [showValidation]="false"
+                    [ttip]="'call.search.scadenza.fine'| translate" 
+                    formControlName="fineScadenza">            
+                </app-control-datepicker>    
+            </div>
+            <div class="form-group mb-n3 col-md-8">
+                <app-control-select-model
+                    class="pr-1"
+                    [inline]="true"
+                    [noLabel]="true"
+                    [prepend]="'users'"
+                    [enums]="profiles"
+                    [showValidation]="false"
+                    [allowClear]="true"
+                    [placeholder]="'call.search.profile'| translate"
+                    [ttip]="'call.search.profile'| translate"
+                    formControlName="profile">
+                </app-control-select-model>
+            </div>
+        </div>
+        <div class="form-row col-md-12">
+            <div class="form-group mb-n3 col-md-2">    
+                <app-control-text 
+                    formControlName="gazzetteNumber"
+                    class="pr-1"
+                    [inline]="true"
+                    type="search"
+                    [showValidation]="false"
+                    [noLabel]="true"
+                    [prepend]="'university'"
+                    [ttip]="'call.search.gazzette.number'| translate"
+                    [placeholder]="'call.search.gazzette.number'| translate">
+                </app-control-text>
+            </div>
+            <div class="form-group mb-n3 col-md-2">    
+                <app-control-datepicker
+                    class="pr-1"
+                    type="search"
+                    [inline]="true" 
+                    [noLabel]="true" 
+                    [showValidation]="false"
+                    [ttip]="'call.search.gazzette.date'| translate" 
+                    formControlName="gazzetteDate">            
+                </app-control-datepicker>
+            </div>
+            <div class="form-group mb-n3 col-md-8">
+                <app-control-text 
+                    formControlName="requirements"
+                    class="pr-1"
+                    [inline]="true"
+                    type="search"
+                    [showValidation]="false"
+                    [noLabel]="true"
+                    [prepend]="'registered'"
+                    [ttip]="'call.search.requirements'| translate"
+                    [placeholder]="'call.search.requirements'| translate">
+                </app-control-text>
+            </div>    
+        </div>
+        <div class="form-row col-md-12">        
+            <div class="form-group mb-n3 col-md-6">        
+                <app-control-text 
+                    formControlName="struttura"
+                    class="pr-1"
+                    [inline]="true"
+                    type="search"
+                    [showValidation]="false"
+                    [noLabel]="true"
+                    [prepend]="'industry'"
+                    [ttip]="'call.search.struttura'| translate"
+                    [placeholder]="'call.search.struttura'| translate">
+                </app-control-text>
+            </div>
+            <div class="form-group mb-n3 col-md-6">        
+                <app-control-text 
+                    formControlName="sede"
+                    class="pr-1"
+                    [inline]="true"
+                    type="search"
+                    [showValidation]="false"
+                    [noLabel]="true"
+                    [prepend]="'address-book'"
+                    [ttip]="'call.search.sede'| translate"
+                    [placeholder]="'call.search.sede'| translate">
+                </app-control-text>
+            </div>    
+        </div>
+    </form>    
+    <call-list [filterForm] = "filterFormSearch"></call-list>
+<app-list-header-layout>

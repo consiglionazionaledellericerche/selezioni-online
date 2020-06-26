@@ -1,0 +1,3 @@
+{
+  "gateway": "{{GATEWAY_PROTOCOL}}://{{GATEWAY_HOST}}:{{GATEWAY_PORT}}"
+}

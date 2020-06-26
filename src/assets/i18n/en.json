@@ -1,0 +1,153 @@
+{
+  "F:jconon_call:folder": "All Calls",
+  "F:jconon_call_tind:folder": "Permanent",
+  "F:jconon_call_tind:folder_concorsi_pubblici":"Public Permanent",
+  "F:jconon_call_tind:folder_reclutamento_speciale":"Recruitment Special",
+  "F:jconon_call_tind:folder_categorie_protette":"Protected categories",
+  "F:jconon_call_tdet:folder":"Temporary",
+  "F:jconon_call_bstd:folder":"Scholarships",
+  "F:jconon_call_aric:folder":"Research Grants",
+  "F:jconon_call_mobility:folder":"Mobility",
+  "F:jconon_call_mobility_open:folder":"Mobility open",
+  "F:jconon_call_director:folder":"Directors",
+  "F:jconon_call_tind:folder_tirocini_categorie_protette":"Internships - Protected categories",
+  "F:jconon_call_tind:manifestazione_interesse":"Expressions of Interest",
+  "F:jconon_call_employees:folder":"Selections for employees/Applications",
+  "D:jconon_attachment:call_it": "Notice of Call in Italian",
+  "D:jconon_attachment:call_en": "Notice of Call in English",
+  "D:jconon_attachment:call_commission": "Commission",
+
+  "presents": "There are",
+
+  "utenti": "Users",
+  "utente": "User",
+  "utente.create": "New User",
+  "utente.edit": "Edit User",
+  "utente.show": "User",
+  "utente.list": "Users",
+  "utente.create.info": "Create new User",
+  "utente.edit.info": "Edit User ",
+
+  "M": "Male",
+  "F": "Female",
+  "true": "Yes",
+  "false": "No",
+
+  "cancel": "Cancel",
+  "save": "Save",
+  "back": "Back",
+  "new": "New",
+  "delete": "Delete",
+  "edit": "Edit",
+  "remove": "Remove",
+  "add": "Add",
+  "show": "Show",
+  "attach": "Attachments",
+  "attach_to": "Attachments to {{value}}",
+  "more.actions" : "More Actions..",
+  "properties" : "Properties",
+
+  "required": "Required",
+  "UniqueValidator": "It must be unique",
+  "minlength": "Minimum length not reached",
+  "maxlength": "Maximum length exceeded",
+
+  "no_item": "There are no elements.",
+  "present": "There are",
+  "shown_from": "Show",
+  "shown_to": "to",
+  "occurrences": "occurrences",
+  "search": "Find",
+  "previous": "Back",
+  "next": "Forward",
+  "name": "Name",
+  "title": "Title",
+  "description": "Description",
+  "protocollo": {
+    "data": "Protocol date",
+    "numero": "Protocol number" 
+  },
+  "contacts": {
+    "title": "Contact Us",
+    "subtitle": "Ufficio Concorsi - DCSGR - CNR",
+    "telefono": "Telephone: +39 06 4993 2172/2140",
+    "fax": "Fax: +39 06 4993 3852",
+    "email": "e-mail <a href=\"mailto:concorsi@cnr.it\">concorsi@cnr.it</a>",
+    "pec": "PEC <a href=\"mailto:concorsi@pec.cnr.it\">concorsi@pec.cnr.it</a>",
+    "helpdesk" : {
+      "info": "For further information use the service",
+      "name": "HelpDesk",
+      "alert":"We strongly recommend that you fill in and send the application online, avoiding the days immediately preceding the expiry of the deadline set by the call, in order not to incur possible problems deriving from a possible overload of the system and to take advantage of the Help Desk support in time helpful."
+    }
+  },
+  "faq": {
+    "title": "F.A.Q."
+  },
+  "helpdesk": {
+    "title": "HelpDesk"
+  },
+  "home" : {
+    "title": "CNR E-Recruitment",
+    "subtitle": "Online application system for recruitment of staff and other types of employment and training of the National Research Council of Italy."
+  },
+  "footer": {
+    "first": "The platform is part of the e-government project of CNR, in coherence with the Administrative Digital Code and regulations concerning optimization of the productivity of public work and of efficiency and transparency of public administrations and their simplification and development*.*27 October 2009, legislative decree, n. 150, on \"Implementation of the 4 March 2009 law, n. 15, on the matter of optimization of the productivity of public work and of efficiency and transparency of public administrations\" and the recent 9 February 2012 legislative decree, n. 5, \"Urgent measures of simplification and development\" (art. 8  Simplification of participation in recruitment competitions and testing).",
+    "second": "The hosts procedures developed to allow participation in the notices issued by the organization's structures. The procedures are developed starting from the specifications produced by the structures issuing the calls and must comply with the rules imposed by them.",
+    "copyright": {
+      "large": "copyright ©2016-2020 National Research Council of Italy",
+      "slim": "copyright ©2016-2020 CNR"
+    }
+  },
+  "signin": {
+    "title": "Sign In",
+    "concorsi": "You can only apply online for a position by using CNR E-Recruitment system which permits you to submit all the required information and documents.",
+    "registration": "Remember that if you have already participated in a previous selection always on this site, it is not necessary to repeat the registration.",
+    "altri": "To register use the link <a href=\"create-account?guest=true\"> New registration </a>. <br> For more information, see the chapter \"Access / registration in procedure\" of the User Manual. <br> For assistance use the <a href=\"configurazione/helpdesk\"> Helpdesk </a> service",
+    "candidaticnr": "CNR employees and all candidates already in possession of official CNR credentials must use them to access the procedure without the need for further registration. <br> For the management of CNR official credentials, use the site <a href=\"https://utenti.cnr.it\">https://utenti.cnr.it</a>",
+    "username": "Username",
+    "password": "Password",
+    "message" : {
+      "required" : {
+        "username": "Username is required!",
+        "password": "Password is required!"
+      }
+    }
+  },
+  "call": {
+    "attivi": "Active",
+    "scaduti": "Expired",
+    "tutti": "All",
+    "codice": "Call number:",
+    "profilo": "Profile:",
+    "elenco_macroaree": "MACROAREA:",
+    "elenco_settori_tecnologici": "Technology sector:",
+    "sede": "Reference structure:",
+    "numero_gu": "Official Gazette n.",
+    "data_gu": "of",
+    "data_fine_invio_domande": "Deadline:",
+    "numero_posti": "Position available:",
+    "numero_max_domande": "Max application numbers:",
+    "elenco_titoli_studio": "Requirements:",
+    "submit_application": "Submit Application",
+    "attach_to": "Attachments to Call {{value}}",
+    "search" : {
+      "title": "Filter Calls",
+      "code": "Call code",
+      "type": "Call type",
+      "scadenza": {
+        "inizio": "Due date from",
+        "fine": "Due date until"
+      },
+      "profile": "Profile",
+      "gazzette": {
+        "number": "Official Gazzette number",
+        "date": "Official Gazzette date"
+      },
+      "requirements": "Requirments",
+      "struttura": "Reference structure",
+      "sede": "Place of work"
+
+    }
+  }
+
+}

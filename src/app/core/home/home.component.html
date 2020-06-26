@@ -1,0 +1,55 @@
+<app-layout-title [title]="'home.title'" [titleClass]="'main-title'" [subTitle]="'home.subtitle'"></app-layout-title>
+<div class="row">
+    <div class="col-lg-3">
+        <form *ngIf="filterFormHome" class="sticky-top top-on-navbar" [formGroup]="filterFormHome">
+            <div>
+                <div id="list-call-types" class="list-group ml-1 pb-2">
+                    <a class="list-group-item list-group-item-action" (click)="setType('jconon_call:folder')" [ngClass]="{'active': isCurrentType('jconon_call:folder')}" href="#list-call">
+                        <span>{{'F:jconon_call:folder' | translate}}</span> 
+                        <i class="fa fa-angle-right pull-right" [ngClass]="{'text-white': isCurrentType('jconon_call:folder'), 'text-primary': !isCurrentType('jconon_call:folder')}"></i>
+                    </a>
+                    <ng-container *ngFor="let item of cache.jsonlistCallType">
+                        <ng-container *ngIf="item.display && !item.childs">
+                            <a class="list-group-item list-group-item-action" (click)="setType(item.queryName)" href="#list-call" [ngClass]="{'active': isCurrentType(item.queryName)}">
+                                <span>{{item.key | translate}}</span> 
+                                <i class="fa fa-angle-right pull-right" [ngClass]="{'text-white': isCurrentType(item.queryName), 'text-primary': !isCurrentType(item.queryName)}"></i>
+                            </a>
+                        </ng-container>
+                        <ng-container *ngIf="item.display && item.childs">
+                            <a class="list-group-item list-group-item-action">
+                                <span class="font-weight-bolder">{{item.key | translate}}</span> 
+                                <i class="fa fa-angle-down pull-right text-primary"></i>
+                            </a>
+                            <ng-container *ngFor="let child of item.childs">
+                                <a class="list-group-item list-group-item-action" (click)="setType(child.queryName)" href="#list-call" [ngClass]="{'active': isCurrentType(child.queryName)}">
+                                    <span class="ml-3">{{child.key | translate}}</span> 
+                                    <i class="fa fa-angle-right pull-right" [ngClass]="{'text-white': isCurrentType(child.queryName), 'text-primary': !isCurrentType(child.queryName)}"></i>
+                                </a>            
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <div class="ml-1 pb-1">
+                    <!--Rounded checkbox buttons-->
+                    <div class="btn-group btn-block btn-group-toggle">
+                        <label class="btn btn-outline-primary btn-toggle" [ngClass]="{'active': isCurrentFilterType('active')}">
+                            <input type="radio"  formControlName="filterType"  value="active"> {{'call.attivi' | translate}}
+                        </label>
+                        <label class="btn btn-outline-primary btn-toggle" [ngClass]="{'active': isCurrentFilterType('expire')}">
+                            <input type="radio"  formControlName="filterType" value="expire"> {{'call.scaduti' | translate}}
+                        </label>
+                        <label class="btn btn-outline-primary btn-toggle" [ngClass]="{'active': isCurrentFilterType('all')}">
+                            <input type="radio"  formControlName="filterType"  value="all"> {{'call.tutti' | translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>       
+    </div>
+    <!--Rounded checkbox buttons-->          
+    <div class="col-lg-9">
+        <div id="list-call" class="pr-2">
+            <call-list #callList [filterForm]="filterFormHome"></call-list>
+        </div>
+    </div>
+</div>

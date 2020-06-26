@@ -1,0 +1,20 @@
+// ####################################################################################
+//                              Bootstrap variables override
+// ####################################################################################
+
+$input-btn-focus-width:  .0rem;
+
+//$border-radius:          .0rem;
+
+$btn-transition:              none;
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif,
+"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+// Alcuni esperimenti circa il font size. Ridotto lo standard e leggermente autmentato lo small.
+
+$font-size-base:              .9rem; // Assumes the browser default, typically `16px`
+$font-size-lg:                ($font-size-base * 1.25);
+$font-size-sm:                ($font-size-base);
+$small-font-size:             80%;

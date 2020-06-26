@@ -1,0 +1,58 @@
+import {BrowserModule} from '@angular/platform-browser';
+import {ErrorHandler, NgModule} from '@angular/core';
+
+import {AppComponent} from './app.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {AuthInterceptor} from './auth/auth.interceptor';
+
+import {CoreModule} from './core/core.module';
+import {DynamicModule} from './dynamic/dynamic.module';
+import {DynamicService} from './dynamic/dynamic.service';
+
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppRoutingModule} from './app-routing.module';
+import {GlobalErrorHandler} from './core/global-error-handler.service';
+
+// import ngx-translate and the http loader
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient} from '@angular/common/http';
+
+@NgModule({
+
+  declarations: [
+    AppComponent
+  ],
+
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    // ngx-translate and the loader module
+    HttpClientModule,
+    TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: CustomHttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    }),
+    AppRoutingModule, // Routing
+
+    CoreModule,        // Componenti moduli e servizi non Lazy
+    DynamicModule,
+  ],
+
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},
+    DynamicService
+  ],
+
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+// required for AOT compilation
+export function CustomHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

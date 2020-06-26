@@ -1,0 +1,50 @@
+<div class="row pt-3">
+  <div class="col-md-6">
+      <div class="ml-3">
+        <p>{{'signin.concorsi' | translate}}</p>
+        <p>{{'signin.registration' | translate}}</p>
+        <div class="h6" innerHtml="{{'signin.altri' | translate}}"></div>
+        <p innerHtml="{{'signin.candidaticnr' | translate}}"></p>
+      </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card m-3">
+      <div class="card-header h1">{{'signin.title' | translate}}</div>
+      <div class="card-body">
+        <form (keyup.enter)="onSignin()" [formGroup]="ngForm">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <button type="button" tabindex="-1" tooltip="{{ 'signin.username' | translate }}" class="btn border text-primary" [ngClass]="{ 'border-danger text-danger': submitted && f.username.errors }">
+                    <i class="fa fa-fw fa-user" aria-hidden="true"></i>
+                  </button>
+                </div> 
+                <input type="text" autocomplete="{{ 'signin.username' | translate }}" placeholder="{{ 'signin.username' | translate }}" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                  <div *ngIf="f.username.errors.required">{{ 'signin.message.required.username' | translate }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                    <button type="button" tabindex="-1" tooltip="{{ 'signin.password' | translate }}" class="btn border text-primary" [ngClass]="{ 'border-danger text-danger': submitted && f.password.errors }">
+                      <i class="fa fa-fw fa-key" aria-hidden="true"></i>
+                    </button>
+                </div> 
+                <input #passwordfield type="password" autocomplete="{{ 'signin.password' | translate }}" placeholder="{{ 'signin.password' | translate }}" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                <span *ngIf="!(submitted && f.password.errors)" (click)="passwordfield.type=passwordfield.type=='password'?'text':'password'" class="fa fa-fw field-icon toggle-password"
+                    [ngClass]="(passwordfield.type=='password')?' fa-eye':' fa-eye-slash'"></span>
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">{{ 'signin.message.required.password' | translate }}</div>
+                </div>
+              </div>  
+            </div>
+        </form>
+      </div>
+      <div class="card-footer">
+        <button (click)="onSignin()" class="btn btn-primary btn-block" type="submit">{{'signin.title' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

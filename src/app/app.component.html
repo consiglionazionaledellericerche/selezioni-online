@@ -1,0 +1,25 @@
+<app-header1></app-header1>
+
+<!-- Begin page content -->
+<div class="wrapper">
+
+  <div class="application-content container pl-0 pr-0">
+    
+    <div id="application-container" class="container mb-2 pr-0 pl-0">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <div class="push"></div>
+
+</div>
+
+
+<footer class="footer">
+    <div class="container">
+      <span class="text-muted d-none d-sm-block text-justify">{{ 'footer.first' | translate}}</span>
+      <span class="text-muted d-none d-sm-block text-justify">{{ 'footer.second' | translate}}</span>
+      <span class="text-muted d-none d-sm-block text-center mt-3">{{ 'footer.copyright.large' | translate}}</span>
+      <span class="text-muted d-block d-sm-none text-center mt-3">{{ 'footer.copyright.slim' | translate}}</span>
+    </div>
+</footer>
