@@ -4,13 +4,13 @@ import {JsonProperty, JsonObject} from 'json2typescript';
 @JsonObject("DocumentoRiconoscimento")
 export class DocumentoRiconoscimento extends Document{
     @JsonProperty('jconon_documento_riconoscimento:numero')
-    protected numero: string;
+    public numero: string;
     @JsonProperty('jconon_documento_riconoscimento:tipologia')
-    protected tipologia: string;
+    public tipologia: string;
     @JsonProperty('jconon_documento_riconoscimento:emittente')
-    protected emittente: string;
+    public emittente: string;
     @JsonProperty('jconon_documento_riconoscimento:data_scadenza')
-    protected data_scadenza: Date;
+    public data_scadenza: Date;
     constructor() {
         super();
         this.numero = undefined;

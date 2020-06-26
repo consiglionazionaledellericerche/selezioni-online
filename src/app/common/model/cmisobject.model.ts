@@ -4,27 +4,27 @@ import {JsonProperty, JsonObject} from 'json2typescript';
 @JsonObject("CmisObject")
 export abstract class CmisObject {
   @JsonProperty('cmis:objectId')
-  protected objectId: string;
+  public objectId: string;
   @JsonProperty('cmis:name')
-  protected name: string;
+  public name: string;
   @JsonProperty('cmis:description')
-  protected description: string;
+  public description: string;
   @JsonProperty('cm:title', null, true)
-  protected title: string;
+  public title: string;
   @JsonProperty('cmis:objectTypeId')
-  protected objectTypeId: string;
+  public objectTypeId: string;
   @JsonProperty('cmis:baseTypeId')
-  protected baseTypeId: string;
+  public baseTypeId: string;
   @JsonProperty('cmis:createdBy')
-  protected createdBy: string;
+  public createdBy: string;
   @JsonProperty('cmis:creationDate')
-  protected creationDate: Date;
+  public creationDate: Date;
   @JsonProperty('cmis:lastModifiedBy')
-  protected lastModifiedBy: string;
+  public lastModifiedBy: string;
   @JsonProperty('cmis:lastModificationDate')
-  protected lastModificationDate: Date;
+  public lastModificationDate: Date;
   @JsonProperty('cmis:secondaryObjectTypeIds')
-  protected secondaryObjectTypeIds: string[];
+  public secondaryObjectTypeIds: string[];
 
   public allowableActions: AllowableAction[];
 

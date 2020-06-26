@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AdMetadataComponent } from '../../shared/tags/show/ad-metadata.component';
-import { CmisObject } from '../../common/model/cmisobject.model';
+import { Attachment } from '../../common/model/attachment.model';
 
 @Component({
     selector: 'D:jconon_attachment:call_it',
@@ -17,5 +17,5 @@ import { CmisObject } from '../../common/model/cmisobject.model';
     `
   })
 export class JcononAttachmentCallShowComponent implements AdMetadataComponent {
-    @Input() data: CmisObject;
+    @Input() data: Attachment;
 }
