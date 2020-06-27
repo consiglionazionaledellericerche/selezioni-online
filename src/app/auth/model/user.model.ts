@@ -36,7 +36,7 @@ export class User {
   public firstName: string = undefined;
   @JsonProperty("enabled")
   public enabled: boolean = undefined;
-  @JsonProperty("codicefiscale")
+  @JsonProperty("codicefiscale", null, true)
   public codicefiscale: string = undefined;
   @JsonProperty("departmentNumber", null, true)
   public departmentNumber: string = undefined;

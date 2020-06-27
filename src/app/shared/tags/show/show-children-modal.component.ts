@@ -1,11 +1,12 @@
 import {Component, Input, TemplateRef} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Interpolation } from '@angular/compiler';
 
 @Component({
   selector: 'app-show-children-modal',
   template: `
     
-    <button class="btn text-dark" (click)="openModal(template)" tooltip="{{'attach' | translate}}">
+    <button class="btn {{buttonClass}}" (click)="openModal(template)" tooltip="{{'attach' | translate}}">
         <i class="fa fa-fw fa-download"></i>
     </button>
 
@@ -28,6 +29,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 export class ShowChildrenModalComponent {
 
   @Input() parentId;  
+  @Input() buttonClass = 'text-dark';
   @Input() label;
   @Input() value;
   @Input() type;  

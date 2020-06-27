@@ -9,6 +9,7 @@ import {TranslateService} from '@ngx-translate/core';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/model/user.model';
 import { CacheService } from '../cache.service';
+import { Helpers } from '../../common/helpers/helpers';
 
 @Component({
   selector: 'application-list',
@@ -146,6 +147,11 @@ import { CacheService } from '../cache.service';
               [strong]="false">
             </app-show-text-modal>
           </div>
+          <div class="col-sm-12 h5" *ngIf="item.isShowEsclusioneRiununcia(user)">
+            <span class="badge" [ngClass]="{'badge-warning' : item.isSospesa(), 'badge-danger' : !item.isSospesa()}">
+              <span>{{'application.esclusione.' + item.esclusione_rinuncia | translate}}</span>
+            </span>
+          </div>
         </app-list-item-application>
       </li>
     </app-list-layout>
@@ -191,7 +197,7 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
 
   public ngOnInit() {
     if (this.authService.isAuthenticated()) {
-      this.user = this.authService.getUser();
+      this.user = Helpers.buildInstance(this.authService.getUser(), User);
     }
     this.cacheService.cache().subscribe((cache) => {
       this.cache = cache;

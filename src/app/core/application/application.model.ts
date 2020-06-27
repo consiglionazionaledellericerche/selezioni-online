@@ -3,7 +3,7 @@ import {JsonProperty, JsonObject} from 'json2typescript';
 import { Call } from '../call/call.model';
 import { StatoDomanda, PropertyStatoDomandaConverter } from './stato-domanda.enum';
 import { EsclusioneRiununcia, PropertyEsclusioneRiununciaConverter } from './esclusione-rinuncia.enum';
-import { User, Group } from '../../auth/model/user.model';
+import { User } from '../../auth/model/user.model';
 
 @JsonObject("Application")
 export class Application extends Folder {
@@ -148,7 +148,6 @@ export class Application extends Folder {
   }
 
   public isShowEsclusioneRiununcia(user: User): boolean {
-    console.log(user);
     if (this.esclusione_rinuncia && this.isConfermata()) {
       if (this.esclusione_rinuncia === EsclusioneRiununcia.SOSPESA && 
             (user.isRdP(this.call.rdp) || user.isConcorsi())) {

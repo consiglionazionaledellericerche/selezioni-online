@@ -162,6 +162,7 @@
     }
   },
   "application": {
+    "title": "DOMANDA DI PARTECIPAZIONE",
     "firstname": "Nome:",
     "lastname": "Cognome:",
     "codice_fiscale": "CF:",
@@ -194,7 +195,15 @@
       "A": "Sospesa",
       "N": "Non Ammesso"
     },
-    "attach_to": "Allegati alla Domanda"
+    "attach_to": "Allegati alla Domanda",
+    "richiesta.partecipazione": "CHIEDE DI PARTECIPARE ALLA PREDETTA PROCEDURA",
+    "sottoscritto": {
+      "M": "IL SOTTOSCRITTO",
+      "F": "LA SOTTOSCRITTA"
+    },
+    "call": {
+      "title": "BANDO DI SELEZIONE N. {{value}}"
+    }
   },
   "user": {
     "username": "Nome utente",
@@ -204,6 +213,8 @@
     "emailesterno": "E-Mail esterna",
     "codicefiscale": "Codice Fiscale",
     "matricola": "Matricola",
+    "matricola_value": "Matricola: {{value}}",
+    "email_value": "E-Mail: {{value}}",
     "mobile": "Telefono",
     "groups": "Gruppi"
   },

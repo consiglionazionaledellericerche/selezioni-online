@@ -19,6 +19,7 @@ import {CallListComponent} from './call/call-list.component';
 import {CallService} from './call/call.service';
 import {ApplicationListComponent} from './application/application-list.component';
 import {ApplicationUserListComponent} from './application/application-user-list.component';
+import { ManageApplicationComponent } from './application/manage-application.component';
 
 import {ApplicationService} from './application/application.service';
 import {ApplicationUserService} from './application/application-user.service';
@@ -26,6 +27,7 @@ import {ApplicationUserService} from './application/application-user.service';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -50,6 +52,7 @@ import {HttpClient} from '@angular/common/http';
     CallListComponent,
     ApplicationListComponent,
     ApplicationUserListComponent,
+    ManageApplicationComponent,
     BadRequestComponent,
   ],
 
@@ -68,6 +71,7 @@ import {HttpClient} from '@angular/common/http';
       }
     }),
     CollapseModule.forRoot(),
+    ProgressbarModule.forRoot(),
     SimpleNotificationsModule.forRoot() // Le notifiche (per ora) vengono tutte generate nell'header component.
   ],
 
@@ -81,7 +85,8 @@ import {HttpClient} from '@angular/common/http';
     BadRequestComponent,
     CallListComponent,
     ApplicationListComponent,
-    ApplicationUserListComponent
+    ApplicationUserListComponent,
+    ManageApplicationComponent,
   ],
 
   providers: [

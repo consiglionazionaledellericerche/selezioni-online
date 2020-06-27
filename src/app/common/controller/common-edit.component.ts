@@ -9,7 +9,6 @@ import {SpringError} from '../model/spring-error.model';
 import {ValidationHelper} from '../validation/validation-helper';
 import {OnInit} from '@angular/core';
 import {Breadcrumbs} from '../model/breadcrumbs.model';
-import {CommonAttributoValoreService} from './common-attributo-valore.service';
 import { CmisObject } from '../model/cmisobject.model';
 
 export abstract class CommonEditComponent<T extends CmisObject> implements OnInit {

@@ -77,7 +77,7 @@ export class AuthService {
           }),
         catchError(
           (error: HttpErrorResponse) => {
-            this.apiMessageService.sendMessage(MessageType.ERROR, error.error.error_description);
+            this.apiMessageService.sendMessage(MessageType.ERROR, error.statusText);
             return observableThrowError(error);
           }));
     }));

@@ -13,6 +13,7 @@ import { CallService } from '../call/call.service';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Call } from '../call/call.model';
+import { Helpers } from '../../common/helpers/helpers';
 
 @Component({
   selector: 'application-user-list',
@@ -204,7 +205,7 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
       this.callId = queryParams['callId'];
     }); 
     if (this.authService.isAuthenticated()) {
-      this.user = this.authService.getUser();
+      this.user = Helpers.buildInstance(this.authService.getUser(), User);
     }
     if (this.callId) {
       return this.callService.getById(this.callId).pipe(switchMap((call) => {

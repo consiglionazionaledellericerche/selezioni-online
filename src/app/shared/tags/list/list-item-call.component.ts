@@ -15,7 +15,7 @@ import { AllowableAction } from '../../../common/model/allowableaction.enum';
              <div class="btn-group border rounded" role="group" dropdown [ngStyle]="buttonStyle()">
 
                 <button *ngIf="isActive()" class="btn text-dark" [disabled]="!item.hasId()"
-                      (click)="navigateShow()" tooltip="{{'call.submit_application' | translate}}">
+                      (click)="newApplication()" tooltip="{{'call.submit_application' | translate}}">
                       <i class="fa fa-fw fa-edit"></i>
                 </button>
 
@@ -53,29 +53,17 @@ export class ListItemCallComponent {
 
   @Input() item: Call = null;
 
-  @Input() showRoute = 'show/';
-
-  @Input() editRoute = 'edit/';
-
-  @Input() deleteRoute = 'delete/';
-
-  @Input() editValiditaRoute = 'editvalidita/';
-
-  @Input() hasEditValidita = false;
-
-  @Input() noEdit = false;
-
   @Output() onDelete = new EventEmitter();
 
   @Input() filterForm;
 
   @Input() page;
 
-  public navigateShow() {
-    this.router.navigate([this.showRoute + this.item.getObjectId()],
+  public newApplication() {
+    this.router.navigate(['manage-application'],
       {
         relativeTo: this.route,
-        queryParams: { page: 'prova'}
+        queryParams: { callId: this.item.getObjectId()}
       });
   }
 

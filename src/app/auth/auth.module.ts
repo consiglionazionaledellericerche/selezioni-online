@@ -24,6 +24,7 @@ export enum ServiceReg {
   CONFIGURAZIONE = 'configurazione',
   APPLICATION = 'application',
   APPLICATION_USER = 'application-user',
+
   UTENTE = 'utente',
   CONTACTS = 'contacts'
 }
