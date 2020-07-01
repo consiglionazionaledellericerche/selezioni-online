@@ -43,6 +43,26 @@
                     </div>
                 </form>
             </li>
+            <ng-container *ngIf="applicationsState.length > 0">
+                <li class="list-group-item">
+                    <ul class="list-group list-group-flush">
+                        <h5 class="font-weight-light font-italic">{{'application.all'| translate}}</h5>
+                        <ng-container *ngFor="let state of applicationsState">
+                            <li class="list-group-item border-bottom-0 p-1">                         
+                                <a class="h5" [routerLink]="['/application']" [queryParams]="{applicationStatus: state.stato_domanda}" routerLinkActive="active" (click)="toggle()">
+                                    <span>{{ state.getLabel() | translate}}</span> 
+                                    <span class="badge badge-pill float-right" 
+                                        [ngClass]="{
+                                            'badge-danger': state.isEsclusa(), 
+                                            'badge-warning': state.isProvvisoria(),
+                                            'badge-success': state.isConfermata()
+                                        }">{{state.count}}</span>
+                                </a>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </li>
+            </ng-container>
             <ng-container *ngFor="let menu of navbarMenu.menus">
                 <li *ngIf="menu.active && menu.path && menu.type == 'sidebar'" class="list-group-item">
                     <a [routerLink]="[menu.path]" routerLinkActive="active" (click)="toggle()">

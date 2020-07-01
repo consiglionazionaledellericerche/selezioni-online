@@ -13,6 +13,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Helpers } from '../../common/helpers/helpers';
+import { ApplicationService } from '../application/application.service';
+import { ApplicationState } from '../application/application-state.model';
 
 @Component({
   selector: 'app-sidenav',
@@ -35,7 +37,8 @@ import { Helpers } from '../../common/helpers/helpers';
 })
 export class SidenavComponent implements OnInit, OnDestroy {
     constructor(private _eref: ElementRef,
-                private authService: AuthService, 
+                private authService: AuthService,
+                private applicationService: ApplicationService, 
                 private router: Router,
                 private formBuilder: FormBuilder,
                 private notificationService: NotificationsService,
@@ -52,6 +55,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     public searchForm: FormGroup;
     public navbarMenu: NavbarMenu = null;
     public onNavbarEvaluated: Subscription = new Subscription();
+    public applicationsState: ApplicationState[] = undefined;
 
     public ngOnInit() {
         this.sidebarToggle = this.menuService.sidebarEvaluated.subscribe( (toggle: boolean) => {
@@ -61,6 +65,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
             if (user != null) {
               this.toggle();  
               this.user = Helpers.buildInstance(user, User);
+              this.applicationState();
             } else {
               this.user = null;
             }
@@ -74,6 +79,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
       
         if (this.authService.isAuthenticated()) {
             this.user = Helpers.buildInstance(this.authService.getUser(), User);
+            this.applicationState();
         }      
     }
 
@@ -87,6 +93,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
         this.onUserActivated.unsubscribe();
         this.sidebarToggle.unsubscribe();
         this.onNavbarEvaluated.unsubscribe();
+    }
+
+    applicationState() {
+        this.applicationService.applicationState(this.user.userName).subscribe((result) => {
+            this.applicationsState = result;
+        });
     }
 
     toggle() {

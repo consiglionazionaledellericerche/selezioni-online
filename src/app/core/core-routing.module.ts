@@ -10,7 +10,7 @@ const coreRoutes: Routes = [
   { 
     path: 'application', 
     component: ApplicationListComponent, 
-    canActivate: [AuthGuard], 
+    canActivate: [AuthGuard],
     data: {service: ServiceReg.APPLICATION},
   },
   { 

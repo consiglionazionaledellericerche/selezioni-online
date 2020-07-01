@@ -9,6 +9,8 @@ import {ConfigService} from '../config.service';
 import {MODULE_CONFIGURAZIONE} from '../../app-routing.module';
 import { Application } from './application.model';
 import { SpringError } from '../../common/model/spring-error.model';
+import { ApplicationState } from './application-state.model';
+import { Helpers } from '../../common/helpers/helpers';
 
 @Injectable()
 export class ApplicationService extends CommonService<Application> {
@@ -34,6 +36,42 @@ export class ApplicationService extends CommonService<Application> {
     return ApplicationService.ROUTE;
   }
 
+  public applicationState(userId: string): Observable<ApplicationState[]> {
+    if (!userId) {
+      this.apiMessageService.sendMessage(MessageType.ERROR, 'Id richiesta mancante');
+      observableThrowError(null);
+    }
+    const params = new HttpParams()
+          .set('user', userId);
+    return this.configService.getApiBase()
+    .pipe(
+      switchMap((apiBase) => {
+        return this.httpClient.get<ApplicationState[]>(apiBase + this.getApiPath() + '/state', {params: params})
+          .pipe(
+            map((result: any) => {
+              try {
+                const items: ApplicationState[] = result.map((item) => {
+                  const instance: ApplicationState = Helpers.buildInstance(item, ApplicationState);
+                  console.log(instance);
+                  return instance;
+                });
+                return items;
+              } catch (ex) {
+                console.error(ex);
+                this.apiMessageService.sendMessage(MessageType.ERROR, ex);
+                observableThrowError(ex);
+              }
+            }),
+            catchError( (httpErrorResponse: HttpErrorResponse) => {
+              const springError = new SpringError(httpErrorResponse);
+              this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
+              return observableThrowError(springError);
+            })
+          );
+      })
+    );
+  }
+
   public loadApplication(callId: string, userId: string): Observable<Application> {
     if (!callId) {
       this.apiMessageService.sendMessage(MessageType.ERROR, 'Id richiesta mancante');
@@ -53,7 +91,7 @@ export class ApplicationService extends CommonService<Application> {
                   const instance: Application = this._buildInstance(item);
                   return instance;
                 } catch (ex) {
-                  console.log(ex);
+                  console.error(ex);
                   this.apiMessageService.sendMessage(MessageType.ERROR, ex);
                   observableThrowError(ex);
                 }

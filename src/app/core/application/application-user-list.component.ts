@@ -188,6 +188,7 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
   public user: User;
   protected callId: string;
   protected callSearch: Call;
+  protected applicationStatus: string = 'all';
 
   public constructor(public service: ApplicationUserService,
                      private authService: AuthService,
@@ -203,6 +204,7 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
   public beforeOnInit(): Observable<any> {
     this.route.queryParams.subscribe((queryParams) => {
       this.callId = queryParams['callId'];
+      this.applicationStatus = queryParams['applicationStatus'];
     }); 
     if (this.authService.isAuthenticated()) {
       this.user = Helpers.buildInstance(this.authService.getUser(), User);
@@ -229,7 +231,7 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
     return this.formBuilder.group({
       user: new FormControl(''),
       fetchCall: new FormControl(true),
-      applicationStatus: new FormControl('all'),
+      applicationStatus: new FormControl(this.applicationStatus),
       firstname: new FormControl(''),
       lastname: new FormControl(''),
       codicefiscale: new FormControl(''),

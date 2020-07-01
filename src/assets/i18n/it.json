@@ -164,6 +164,7 @@
   },
   "application": {
     "title": "DOMANDA DI PARTECIPAZIONE",
+    "all": "Domande presentate",
     "firstname": "Nome:",
     "lastname": "Cognome:",
     "codice_fiscale": "CF:",
@@ -187,7 +188,10 @@
       "confirmed": "Inviate",
       "all": "Tutte",
       "active": "Attive",
-      "excluded": "Escluse"
+      "excluded": "Escluse",
+      "withdrawal": "Ritirate",
+      "not_admitted": "Non Ammesse",
+      "suspended": "Sospese"
     },
     "esclusione": {
       "E": "Esclusa",

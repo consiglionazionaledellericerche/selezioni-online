@@ -10,6 +10,7 @@ import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/model/user.model';
 import { CacheService } from '../cache.service';
 import { Helpers } from '../../common/helpers/helpers';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'application-list',
@@ -162,6 +163,7 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
   public items: Application[] = [];
   public user: User = null;
   cache: any = {};
+  protected applicationStatus: string = 'all';
 
   public constructor(public service: ApplicationService,
                      private authService: AuthService,
@@ -172,6 +174,13 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
                      protected navigationService: NavigationService,
                      protected translateService: TranslateService) {
     super(service, route, changeDetector, navigationService);
+  }
+
+  public beforeOnInit(): Observable<any> {
+    this.route.queryParams.subscribe((queryParams) => {
+      this.applicationStatus = queryParams['applicationStatus'];
+    }); 
+    return of(null);
   }
 
   public setItems(items: Application[]) {
@@ -191,7 +200,7 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
       type: new FormControl(''),
       inizioScadenza: new FormControl(''),
       fineScadenza: new FormControl(''),
-      applicationStatus: new FormControl('all'),
+      applicationStatus: new FormControl(this.applicationStatus),
     });
   }
 

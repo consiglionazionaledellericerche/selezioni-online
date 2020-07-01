@@ -1,6 +1,5 @@
 import {JsonProperty, JsonObject} from 'json2typescript';
 
-
 @JsonObject("Capabilities")
 export class Capabilities {
   constructor() {}
