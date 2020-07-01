@@ -43,6 +43,7 @@
   "true": "Si",
   "false": "No",
 
+  "close": "Chiudi",
   "cancel": "Annulla",
   "save": "Salva",
   "back": "Indietro",
@@ -66,7 +67,7 @@
   "shown_from": "Mostrate dalla",
   "shown_to": "alla",
   "occurrences": "occorrenze",
-  "search": "Cerca",
+  "search": "Cerca...",
   "previous": "Indietro",
   "next": "Avanti",
   "name": "Nome",

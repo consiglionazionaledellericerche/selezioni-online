@@ -1,4 +1,4 @@
-<div *ngIf="!isCollapsed" @slideInOut class="sidenav position-absolute h-100 p-0 col-sm-12 col-lg-4 col-xl-3">
+<div *ngIf="!isCollapsed" @slideInOut class="sidenav position-absolute h-100 p-0 col-8 col-lg-4 col-xl-3">
     <nav class="bg-light bg-faded h-100">
         <ul class="list-group-flush sticky-top p-0">
             <li class="list-group-item">
@@ -8,6 +8,9 @@
                         <span class="pl-1">{{user.firstName|capitalizeFirst}}</span>
                         <span class="pl-1">{{user.lastName|capitalizeFirst}}</span>
                     </span>
+                    <a class="btn btn-link float-right" (click)="toggle()"  placement="bottom" tooltip="{{'close'| translate }}">
+                        <i class="fa fa-2x fa-close" aria-hidden="true"></i>
+                    </a>                  
                 </div>
                 <div>
                     <small class="pl-1 font-weight-bold">{{'user.username_value' | translate:{value: user.userName} }}</small>
@@ -28,21 +31,23 @@
                     </div>
                 </div>
             </li>
-            <li class="d-block d-lg-none d-xl-none">
+            <li class="list-group-item d-block d-lg-none d-xl-none">
                 <form class="form-inline d-block" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
                     <div class="input-group">
-                      <input class="form-control col-12" formControlName="callCode" type="search" placeholder="Search">
-                      <div class="input-group-append">
-                          <button class="btn text-primary border" type="submit">
+                        <input class="form-control col-12" formControlName="callCode" type="search" placeholder="{{'search'|translate}}">
+                        <div class="input-group-append">
+                            <button class="btn text-primary border" type="submit">
                             <i class="fa fa-search" aria-hidden="true"></i>
-                          </button>
-                      </div>    
+                            </button>
+                        </div>    
                     </div>
                 </form>
             </li>
             <ng-container *ngFor="let menu of navbarMenu.menus">
                 <li *ngIf="menu.active && menu.path && menu.type == 'sidebar'" class="list-group-item">
-                    <a [routerLink]="[menu.path]" routerLinkActive="active" (click)="toggle()">{{ menu.name | translate}}</a>
+                    <a [routerLink]="[menu.path]" routerLinkActive="active" (click)="toggle()">
+                        <i *ngIf="menu.icon" class="fa fa-fw fa-{{menu.icon}}" aria-hidden="true"></i> {{ menu.name | translate}}
+                    </a>
                 </li>    
             </ng-container>
         </ul>

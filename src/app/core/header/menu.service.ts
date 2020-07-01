@@ -36,8 +36,8 @@ export class MenuService {
    */
   public buildNavbar() {
 
-    const application = new Menu('application.mine.title', undefined, [], '/application', 'sidebar');
-    const application_user = new Menu('application.user.title', undefined, [], '/applications-user', 'sidebar');
+    const application = new Menu('application.mine.title', 'folder-open', [], '/application', 'sidebar');
+    const application_user = new Menu('application.user.title', 'folder-open-o', [], '/applications-user', 'sidebar');
 
     const helpdesk = new Menu('helpdesk.title', 'question-circle-o', [], '/configurazione/helpdesk');
     const faq = new Menu('faq.title', 'question', [], '/configurazione/faq');

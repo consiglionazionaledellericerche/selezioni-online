@@ -7,7 +7,7 @@ import {RouterLinkActive} from '@angular/router';
 
     <li *ngIf="active && path && type == 'navbar'" class="nav-item"> 
       <a *ngIf="active && path && type == 'navbar'" class="nav-link d-flex" [routerLink]="[path]" [routerLinkActive]="['active', 'text-primary']">
-        <i *ngIf="fa" class="fa fa-fw fa-{{fa}} d-flex d-sm-none" aria-hidden="true"></i>
+        <i *ngIf="fa" class="fa fa-fw fa-{{fa}} d-flex d-sm-none text-dark" aria-hidden="true" tooltip="{{ dropdownTitle | translate}}"></i>
         <span class="pl-1 d-none d-sm-flex">{{ dropdownTitle | translate}}</span>
       </a> 
     </li> 
