@@ -47,7 +47,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
     public onUserActivated: Subscription = new Subscription();
     public sidebarToggle: Subscription = new Subscription();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-    private isCollapsed: boolean = true;
+    public isCollapsed: boolean = true;
     public user: User = null;
     public searchForm: FormGroup;
     public navbarMenu: NavbarMenu = null;
