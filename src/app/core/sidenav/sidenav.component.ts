@@ -18,7 +18,7 @@ import { Helpers } from '../../common/helpers/helpers';
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styles: [
-    '.sidenav {z-index: 1021; border-right:solid 1px lightgray;}',
+    '.sidenav {z-index: 1021; border-right:solid 1px lightgray;height: calc(100vh - 58px);}',
     'ul.list-group-flush {top: 56px;}'
   ],
   animations: [

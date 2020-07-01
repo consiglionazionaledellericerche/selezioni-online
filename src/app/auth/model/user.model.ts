@@ -64,6 +64,23 @@ export class User {
     return this.emailcertificatoperpuk;
   }
   
+  public getIcon(): string {
+    if (this.getSesso()) {
+      if (this.getSesso() === 'M') {
+        return 'fa-male';
+      } else if (this.getSesso() === 'F') {
+        return 'fa-female';
+      } 
+    }
+    return 'fa-user-circle-o';
+  }
+
+  private getSesso(): string {
+    if (this.codicefiscale) {
+      return Number(this.codicefiscale.substring(9,11)) > 40 ? 'F' : 'M';
+    }
+  }
+
   public isMemberOf(groupName: string): boolean {
     return this.groups.filter((group) => {
       group.itemName === groupName || group.itemName === 'GROUP_' + groupName

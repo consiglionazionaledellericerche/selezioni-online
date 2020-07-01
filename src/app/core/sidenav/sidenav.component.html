@@ -1,10 +1,10 @@
-<div *ngIf="!isCollapsed" @slideInOut class="sidenav position-absolute h-100 p-0 col-8 col-lg-4 col-xl-3">
+<div *ngIf="!isCollapsed" @slideInOut class="sidenav position-absolute p-0 col-8 col-lg-4 col-xl-3">
     <nav class="bg-light bg-faded h-100">
         <ul class="list-group-flush sticky-top p-0">
             <li class="list-group-item">
                 <div>
                     <span class="h5">
-                        <i class="fa fa-2x fa-user"></i> 
+                        <i class="fa fa-2x {{user.getIcon()}}"></i> 
                         <span class="pl-1">{{user.firstName|capitalizeFirst}}</span>
                         <span class="pl-1">{{user.lastName|capitalizeFirst}}</span>
                     </span>
