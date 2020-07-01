@@ -17,6 +17,7 @@ import { path } from 'tns-core-modules/file-system/file-system';
 export class MenuService {
 
   public navbarEvaluated = new Subject<NavbarMenu>();
+  public sidebarEvaluated = new Subject<boolean>();
 
   public navbarMenu: NavbarMenu = null;
 
@@ -35,14 +36,14 @@ export class MenuService {
    */
   public buildNavbar() {
 
-    const application = new Menu('application.mine.title', undefined, [], '/application');
-    const application_user = new Menu('application.user.title', undefined, [], '/applications-user');
+    const application = new Menu('application.mine.title', undefined, [], '/application', 'sidebar');
+    const application_user = new Menu('application.user.title', undefined, [], '/applications-user', 'sidebar');
 
-    const helpdesk = new Menu('helpdesk.title', undefined, [], '/configurazione/helpdesk');
-    const faq = new Menu('faq.title', undefined, [], '/configurazione/faq');
-    const contacts = new Menu('contacts.title', undefined, [], '/configurazione/contacts');
+    const helpdesk = new Menu('helpdesk.title', 'question-circle-o', [], '/configurazione/helpdesk');
+    const faq = new Menu('faq.title', 'question', [], '/configurazione/faq');
+    const contacts = new Menu('contacts.title', 'address-book-o', [], '/configurazione/contacts');
 
-    this.navbarMenu = new NavbarMenu([application,application_user, helpdesk, faq, contacts]);
+    this.navbarMenu = new NavbarMenu([application, application_user, helpdesk, faq, contacts]);
 
   }
 

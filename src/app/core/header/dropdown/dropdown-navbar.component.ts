@@ -5,9 +5,10 @@ import {RouterLinkActive} from '@angular/router';
   selector: 'app-dropdown-navbar',
   template: `
 
-    <li *ngIf="active && path" class="nav-item"> 
-      <a class="nav-link" [routerLink]="[path]" [routerLinkActive]="['active', 'text-primary']">
-        <i *ngIf="fa" class="fa fa-fw fa-{{fa}}" aria-hidden="true"></i> <span class="pl-1">{{ dropdownTitle | translate}}</span>
+    <li *ngIf="active && path && type == 'navbar'" class="nav-item"> 
+      <a *ngIf="active && path && type == 'navbar'" class="nav-link d-flex" [routerLink]="[path]" [routerLinkActive]="['active', 'text-primary']">
+        <i *ngIf="fa" class="fa fa-fw fa-{{fa}} d-flex d-sm-none" aria-hidden="true"></i>
+        <span class="pl-1 d-none d-sm-flex">{{ dropdownTitle | translate}}</span>
       </a> 
     </li> 
     
@@ -34,6 +35,7 @@ export class DropdownNavbarComponent implements AfterContentInit {
   @Input() rightAlignment;
   @Input() user;
   @Input() path;
+  @Input() type;
 
   @Input() fa;
 

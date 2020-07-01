@@ -146,4 +146,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onSubmit(searchData) {
     this.router.navigate(['search'],  { queryParams: searchData });
   }
+
+
+  sidebarToggle() {
+    this.menuService.sidebarEvaluated.next(true);
+  }
 }

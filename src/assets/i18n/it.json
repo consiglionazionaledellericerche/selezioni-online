@@ -207,6 +207,7 @@
   },
   "user": {
     "username": "Nome utente",
+    "username_value": "Nome utente: {{value}}",
     "firstname": "Nome",
     "lastname": "Cognome",
     "email": "E-Mail ordinaria",
@@ -216,7 +217,9 @@
     "matricola_value": "Matricola: {{value}}",
     "email_value": "E-Mail: {{value}}",
     "mobile": "Telefono",
-    "groups": "Gruppi"
+    "groups": "Gruppi",
+    "settings": "Impostazioni",
+    "logout": "Esci"
   },
   "document": {
     "last_modified": ", ultima modifica: {{value}}",

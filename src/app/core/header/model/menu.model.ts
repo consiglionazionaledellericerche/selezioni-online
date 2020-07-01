@@ -6,6 +6,7 @@ export class Menu {
               public icon: string,
               public items: MenuItem[],
               public path: string = '',
+              public type: string = 'navbar',
               public active: boolean = false) {}
 
   /**

@@ -1,0 +1,50 @@
+<div *ngIf="!isCollapsed" @slideInOut class="sidenav position-absolute h-100 p-0 col-sm-12 col-lg-4 col-xl-3">
+    <nav class="bg-light bg-faded h-100">
+        <ul class="list-group-flush sticky-top p-0">
+            <li class="list-group-item">
+                <div>
+                    <span class="h5">
+                        <i class="fa fa-2x fa-user"></i> 
+                        <span class="pl-1">{{user.firstName|capitalizeFirst}}</span>
+                        <span class="pl-1">{{user.lastName|capitalizeFirst}}</span>
+                    </span>
+                </div>
+                <div>
+                    <small class="pl-1 font-weight-bold">{{'user.username_value' | translate:{value: user.userName} }}</small>
+                </div>
+                <div>
+                    <small class="pl-1 font-weight-bold">{{'user.email_value' | translate:{value: user.getEmail()} }}</small>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <a class="btn btn-link">
+                            <i class="fa fa-fw fa-address-card"></i> {{'user.settings'|translate}} 
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a class="btn btn-link" (click)="onLogout()">
+                            <i class="fa fa-fw fa-sign-out"></i> {{'user.logout'|translate}}
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="d-block d-lg-none d-xl-none">
+                <form class="form-inline d-block" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
+                    <div class="input-group">
+                      <input class="form-control col-12" formControlName="callCode" type="search" placeholder="Search">
+                      <div class="input-group-append">
+                          <button class="btn text-primary border" type="submit">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                          </button>
+                      </div>    
+                    </div>
+                </form>
+            </li>
+            <ng-container *ngFor="let menu of navbarMenu.menus">
+                <li *ngIf="menu.active && menu.path && menu.type == 'sidebar'" class="list-group-item">
+                    <a [routerLink]="[menu.path]" routerLinkActive="active" (click)="toggle()">{{ menu.name | translate}}</a>
+                </li>    
+            </ng-container>
+        </ul>
+    </nav>
+</div>
