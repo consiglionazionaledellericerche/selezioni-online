@@ -48,7 +48,7 @@
     </div>
     <!--Rounded checkbox buttons-->          
     <div class="col-lg-9">
-        <div id="list-call" class="pr-2">
+        <div *ngIf="filterFormHome" id="list-call" class="pr-2">
             <call-list #callList [filterForm]="filterFormHome"></call-list>
         </div>
     </div>

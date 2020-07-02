@@ -20,7 +20,7 @@ import { ApplicationState } from '../application/application-state.model';
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styles: [
-    '.sidenav {z-index: 1021; border-right:solid 1px lightgray;height: calc(100vh - 58px);}',
+    '.sidenav {z-index: 1021; border-right:solid 1px lightgray;height: calc(100% - 58px);}',
     'ul.list-group-flush {top: 56px;}'
   ],
   animations: [

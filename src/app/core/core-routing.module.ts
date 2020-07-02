@@ -12,6 +12,7 @@ const coreRoutes: Routes = [
     component: ApplicationListComponent, 
     canActivate: [AuthGuard],
     data: {service: ServiceReg.APPLICATION},
+    runGuardsAndResolvers: 'always',
   },
   { 
     path: 'applications-user', 

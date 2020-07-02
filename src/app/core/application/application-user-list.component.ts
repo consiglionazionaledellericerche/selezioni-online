@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, SimpleChanges} from '@angular/core';
 import {CommonListComponent} from '../../common/controller/common-list.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import {NavigationService} from '../navigation.service';
 import { Application } from './application.model';
@@ -17,7 +17,6 @@ import { Helpers } from '../../common/helpers/helpers';
 
 @Component({
   selector: 'application-user-list',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template:
   `
     <app-layout-title [title]="'application.user.title'" [titleClass]="'main-title'"></app-layout-title>
@@ -188,23 +187,22 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
   public user: User;
   protected callId: string;
   protected callSearch: Call;
-  protected applicationStatus: string = 'all';
 
   public constructor(public service: ApplicationUserService,
                      private authService: AuthService,
                      public callService: CallService,                     
                      private formBuilder: FormBuilder,
                      protected route: ActivatedRoute,
+                     protected router: Router,
                      protected changeDetector: ChangeDetectorRef,
                      protected navigationService: NavigationService,
                      protected translateService: TranslateService) {
-    super(service, route, changeDetector, navigationService);
+    super(service, route, router, changeDetector, navigationService);
   }
   
   public beforeOnInit(): Observable<any> {
     this.route.queryParams.subscribe((queryParams) => {
       this.callId = queryParams['callId'];
-      this.applicationStatus = queryParams['applicationStatus'];
     }); 
     if (this.authService.isAuthenticated()) {
       this.user = Helpers.buildInstance(this.authService.getUser(), User);
@@ -231,7 +229,7 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
     return this.formBuilder.group({
       user: new FormControl(''),
       fetchCall: new FormControl(true),
-      applicationStatus: new FormControl(this.applicationStatus),
+      applicationStatus: new FormControl('all'),
       firstname: new FormControl(''),
       lastname: new FormControl(''),
       codicefiscale: new FormControl(''),

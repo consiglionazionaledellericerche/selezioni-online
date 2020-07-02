@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, SimpleChanges} from '@angular/core';
 import {CommonListComponent} from '../../common/controller/common-list.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup} from '@angular/forms';
 import {NavigationService} from '../../core/navigation.service';
 import { Call } from './call.model';
@@ -9,7 +9,6 @@ import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'call-list',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template:
   `
     <!-- List -->
@@ -66,10 +65,11 @@ export class CallListComponent extends CommonListComponent<Call> implements OnIn
 
   public constructor(public service: CallService,
                      protected route: ActivatedRoute,
+                     protected router: Router,
                      protected changeDetector: ChangeDetectorRef,
                      protected navigationService: NavigationService,
                      protected translateService: TranslateService) {
-    super(service, route, changeDetector, navigationService);
+    super(service, route, router, changeDetector, navigationService);
   }
 
   public setItems(items: Call[]) {

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, SimpleChanges} from '@angular/core';
 import {CommonListComponent} from '../../common/controller/common-list.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup} from '@angular/forms';
 import {NavigationService} from '../../core/navigation.service';
 import { Attachment } from './attachment.model';
@@ -54,10 +54,11 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
                      protected apiMessageService: ApiMessageService,
                      private httpClient: HttpClient,
                      protected route: ActivatedRoute,
+                     protected router: Router,
                      protected changeDetector: ChangeDetectorRef,
                      protected navigationService: NavigationService,
                      protected translateService: TranslateService) {
-    super(service, route, changeDetector, navigationService);
+    super(service, route, router, changeDetector, navigationService);
   }
 
   public setItems(items: Attachment[]) {

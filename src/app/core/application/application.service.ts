@@ -52,7 +52,6 @@ export class ApplicationService extends CommonService<Application> {
               try {
                 const items: ApplicationState[] = result.map((item) => {
                   const instance: ApplicationState = Helpers.buildInstance(item, ApplicationState);
-                  console.log(instance);
                   return instance;
                 });
                 return items;

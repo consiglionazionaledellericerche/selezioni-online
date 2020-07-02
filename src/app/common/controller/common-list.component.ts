@@ -1,16 +1,17 @@
 
-import { of as observableOf, Observable, of } from 'rxjs';
+import { of as observableOf, Observable, of, Subscription } from 'rxjs';
 
 import {debounceTime, switchMap, map} from 'rxjs/operators';
 import {CommonService} from './common.service';
 import {Page} from '../model/page.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 import {ChangeDetectorRef, OnDestroy, OnInit, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {Breadcrumbs} from '../model/breadcrumbs.model';
 
 import {NavigationService} from '../../core/navigation.service';
 import { CmisObject } from '../model/cmisobject.model';
+import { Helpers } from '../helpers/helpers';
 
 export abstract class CommonListComponent<T extends CmisObject> implements OnInit, OnDestroy {
 
@@ -37,8 +38,24 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
 
   public constructor(protected service: CommonService<T>,
                      protected route: ActivatedRoute,
+                     protected router: Router,
                      protected changeDetector: ChangeDetectorRef,
-                     protected navigationService: NavigationService) {}
+                     protected navigationService: NavigationService) {
+    // override the route reuse strategy
+    this.router.routeReuseStrategy.shouldReuseRoute = function(){
+      return false;
+    }
+
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+        // if you need to scroll back to top, here is the right place
+        window.scrollTo(0, 0);
+      }
+    });
+  }
+
 
   // -------------------------------
   // Metodi Abstract.
@@ -74,7 +91,7 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
 
       // Sottoscrivo la modifica dei valori in filterForm
       this.filterForm.valueChanges.pipe(
-        debounceTime(300),
+        debounceTime(100),
         switchMap(id =>  {
           this.initializePage();
           return this.executePageable();

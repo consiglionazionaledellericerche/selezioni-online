@@ -150,5 +150,5 @@
             </div>    
         </div>
     </form>    
-    <call-list [filterForm] = "filterFormSearch"></call-list>
+    <call-list *ngIf="filterFormSearch" [filterForm] = "filterFormSearch"></call-list>
 <app-list-header-layout>

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, SimpleChanges} from '@angular/core';
 import {CommonListComponent} from '../../common/controller/common-list.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import {NavigationService} from '../navigation.service';
 import { Application } from './application.model';
@@ -14,7 +14,6 @@ import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'application-list',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template:
   `
     <app-layout-title [title]="'application.mine.title'" [titleClass]="'main-title'"></app-layout-title>
@@ -164,16 +163,18 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
   public user: User = null;
   cache: any = {};
   protected applicationStatus: string = 'all';
-
+  
   public constructor(public service: ApplicationService,
                      private authService: AuthService,
                      private formBuilder: FormBuilder,
                      private cacheService: CacheService,
+                     protected router: Router,
                      protected route: ActivatedRoute,
                      protected changeDetector: ChangeDetectorRef,
                      protected navigationService: NavigationService,
                      protected translateService: TranslateService) {
-    super(service, route, changeDetector, navigationService);
+    super(service, route, router, changeDetector, navigationService);
+    
   }
 
   public beforeOnInit(): Observable<any> {
