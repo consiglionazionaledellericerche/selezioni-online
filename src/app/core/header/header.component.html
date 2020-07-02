@@ -34,7 +34,6 @@
                 </div>    
               </div>
           </form>
-
           <i *ngIf="spinner" class="fa fa-spinner fa-spin fa-2x fa-fw" [ngStyle]="{'color': 'white'}"></i>
         </ul>
 
@@ -46,12 +45,9 @@
               </a> 
             </li> 
             <li *ngSwitchCase="false" class="nav-item d-flex align-items-center">
-                <a class="btn btn-outline-primary"
-                  #rla="routerLinkActive"
-                  [routerLink]="['auth/signin']"
-                  routerLinkActive="active">
+                <button class="btn btn-outline-primary" (click)="loginPage()">
                   <i class="fa fa-fw fa-user"></i> {{'signin.title' | translate}}
-                </a>
+                </button>
             </li> 
         </ul>
     </ng-container>

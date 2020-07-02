@@ -3,7 +3,6 @@ import {CacheService} from '../cache.service';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 import { Profile } from '../../common/model/profile.enum.';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search',

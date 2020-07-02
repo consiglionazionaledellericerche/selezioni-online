@@ -43,7 +43,7 @@
                     </div>
                 </form>
             </li>
-            <ng-container *ngIf="applicationsState.length > 0">
+            <ng-container *ngIf="applicationsState && applicationsState.length > 0">
                 <li class="list-group-item">
                     <ul class="list-group list-group-flush">
                         <h5 class="font-weight-light font-italic">{{'application.all'| translate}}</h5>
@@ -65,7 +65,7 @@
             </ng-container>
             <ng-container *ngFor="let menu of navbarMenu.menus">
                 <li *ngIf="menu.active && menu.path && menu.type == 'sidebar'" class="list-group-item">
-                    <a [routerLink]="[menu.path]" routerLinkActive="active" (click)="toggle()">
+                    <a [routerLink]="[menu.path]" (click)="toggle()">
                         <i *ngIf="menu.icon" class="fa fa-fw fa-{{menu.icon}}" aria-hidden="true"></i> {{ menu.name | translate}}
                     </a>
                 </li>    

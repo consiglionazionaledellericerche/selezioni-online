@@ -26,7 +26,7 @@ import {RouterLinkActive} from '@angular/router';
 
   `
 })
-export class DropdownNavbarComponent implements AfterContentInit {
+export class DropdownNavbarComponent {
 
   @Input() width = '10rem';
 
@@ -41,23 +41,6 @@ export class DropdownNavbarComponent implements AfterContentInit {
 
   opened = false;
 
-  @ContentChild('rla', {static: true}) rla: RouterLinkActive;
-
-  @HostListener('document:click', ['$event', '$event.target'])
-  onClick(event: any, targetElement: any): void {
-    if (!targetElement) {
-      return;
-    }
-    // console.log(targetElement);
-    // console.log(this._eref.nativeElement);
-    // console.log(targetElement.hasAttribute('href'));
-    const clickedInside = this._eref.nativeElement.contains(targetElement);
-    const clickRouting = targetElement.hasAttribute('href');
-    if (!clickedInside || clickRouting) {
-      this.opened = false;
-    }
-  }
-
   constructor(private _eref: ElementRef) {}
 
   getTitle() {
@@ -65,14 +48,6 @@ export class DropdownNavbarComponent implements AfterContentInit {
       return this.user.userName;
     }
     return this.dropdownTitle;
-  }
-
-  isActive() {
-    return (this.rla && this.rla.isActive) || this.opened;
-  }
-
-  ngAfterContentInit() {
-    console.log(this.rla);
   }
 
   onDropdownClick() {

@@ -162,7 +162,7 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
   public items: Application[] = [];
   public user: User = null;
   cache: any = {};
-  protected applicationStatus: string = 'all';
+  protected applicationStatus: string;
   
   public constructor(public service: ApplicationService,
                      private authService: AuthService,
@@ -201,7 +201,7 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
       type: new FormControl(''),
       inizioScadenza: new FormControl(''),
       fineScadenza: new FormControl(''),
-      applicationStatus: new FormControl(this.applicationStatus),
+      applicationStatus: new FormControl(this.applicationStatus||'all'),
     });
   }
 

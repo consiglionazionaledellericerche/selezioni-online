@@ -123,6 +123,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.notificationService.success('Success', 'Logout effettuato');
   }
 
+  public loginPage() {
+    this.router.navigateByUrl('auth/signin');
+  }
+
   public isAuthenticated() {
       return this.authService.isAuthenticated();
   }
@@ -149,6 +153,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   sidebarToggle() {
-    this.menuService.sidebarEvaluated.next(true);
+    this.menuService.sidebarEvaluated.next();
   }
 }
