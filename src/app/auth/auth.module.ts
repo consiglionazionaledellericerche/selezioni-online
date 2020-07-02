@@ -3,6 +3,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 
 import {SigninComponent} from './signin/signin.component';
+import {UserEditComponent} from './edit/user-edit.component';
+
 import {ShowUserModalComponent} from './show/show-user-modal.component';
 import {ShowGroupMembersModalComponent} from './show/show-group-members-modal.component';
 
@@ -32,6 +34,7 @@ export enum ServiceReg {
 @NgModule({
   declarations: [
     SigninComponent,
+    UserEditComponent,
     ShowUserModalComponent,
     ShowGroupMembersModalComponent,
   ],

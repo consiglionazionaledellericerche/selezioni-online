@@ -35,6 +35,17 @@ export class ApplicationState  {
         return this.esclusione_rinuncia !== undefined;
     }
     
+    public getFilterStato(): string {
+        if (this.isProvvisoria()) {
+            return StatoDomanda.PROVVISORIA;
+        } else if (this.isConfermata() && !this.isEsclusa()) {
+            return 'active';
+        } else if (this.isEsclusa()) {
+            return 'excluded';
+        }
+        return 'all';
+    }
+    
     public getLabel(): string {
         if (this.isProvvisoria()) {
             return 'application.status.temporary';

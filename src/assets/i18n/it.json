@@ -73,6 +73,9 @@
   "name": "Nome",
   "title": "Titolo",
   "description": "Descrizione",
+  "message": {
+    "required": "Campo obbligatorio!"
+  },
   "protocollo": {
     "data": "Data Protocollo",
     "numero": "Numero Protocollo" 
@@ -112,10 +115,14 @@
     "title": "Accedi",
     "concorsi": "Per partecipare alle selezioni online del Consiglio Nazionale delle Ricerche occorre accedere all'area utenti inserendo Nome utente e password scelti in fase di registrazione al sito.",
     "registration": "Si ricorda che, qualora si avesse già partecipato ad una precedente selezione sempre su questo sito, non é necessario ripetere la registrazione.",
-    "altri": "Per registrarsi utilizzare il link <a href=\"create-account?guest=true\">Nuova registrazione</a>. <br>Per maggiori informazioni consultare il capitolo \"Accesso / registrazione in procedura\" del Manuale Utente. <br> Per ricevere assistenza utilizzare il servizio di <a href=\"configurazione/helpdesk\">Helpdesk</a>",
+    "altri": "Per registrarsi utilizzare il link",
+    "new_registration": "Nuova registrazione", 
+    "manuale":"Per maggiori informazioni consultare il capitolo \"Accesso / registrazione in procedura\" del Manuale Utente.",
+    "helpdesk":"Per ricevere assistenza utilizzare il servizio di",
     "candidaticnr": "I dipendenti CNR e tutti i candidati già in possesso delle credenziali ufficiali CNR dovranno utilizzarle per l'accesso alla procedura senza necessità di ulteriori registrazioni.<br>Per la gestione delle credenziali ufficiali CNR utilizzare il sito <a href=\"https://utenti.cnr.it\">https://utenti.cnr.it</a>",
     "username": "Nome utente",
     "password": "Password",
+    "showpassword": "Visualizza password",
     "message" : {
       "required" : {
         "username": "Nome utente obbligatorio!",
@@ -224,7 +231,11 @@
     "mobile": "Telefono",
     "groups": "Gruppi",
     "settings": "Impostazioni",
-    "logout": "Esci"
+    "logout": "Esci",
+    "new_registration": {
+      "title" :"Nuova Registrazione",
+      "requisiti": "<p>La nuova registrazione richiede, per utenti di nazionalità italiana, nome, cognome, il nome utente e la password, il codice fiscale e un indirizzo e-mail (esclusivamente NON PEC); per utenti di nazionalità estera, invece del codice fiscale, viene richiesto di inserire sesso, data di nascita e stato estero.</p><p>All'indirizzo mail indicato in fase di registrazione verrà inviata una mail automatica con un link da \"cliccare\" <u>entro un'ora dalla ricezione</u> per completare l'attivazione dell'utenza. Trascorsa un'ora dalla ricezione l’utenza viene eliminata, pertanto occorre ripetere ex novo la procedura di registrazione.</p><p>Cliccando sul link Attivazione utenza contenuto nella mail si completa la registrazione e viene presentata la pagina per l'accesso in procedura.<br>Dopo aver effettuato l'accesso alla procedura, viene attivato un nuovo menù con il proprio nominativo attraverso il quale é possibile visualizzare e/o modificare le proprie impostazioni personali ed é possibile disconnettersi dall'applicazione.</p>"
+    } 
   },
   "document": {
     "last_modified": ", ultima modifica: {{value}}",

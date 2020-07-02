@@ -1,4 +1,4 @@
-<div *ngIf="!isCollapsed" @slideInOut class="sidenav position-absolute p-0 col-8 col-lg-4 col-xl-3">
+<div *ngIf="!isCollapsed" @slideInOut class="sidenav position-absolute p-0 col-10 col-sm-8 col-lg-4 col-xl-3">
     <nav class="bg-light bg-faded h-100">
         <ul class="list-group-flush sticky-top p-0">
             <li class="list-group-item">
@@ -20,12 +20,12 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <a class="btn btn-link">
+                        <a class="btn btn-link" [routerLink]="['/create-account']" (click)="toggle()">
                             <i class="fa fa-fw fa-address-card"></i> {{'user.settings'|translate}} 
                         </a>
                     </div>
                     <div class="col-6">
-                        <a class="btn btn-link" (click)="onLogout()">
+                        <a class="btn btn-link" [routerLink]="['/']" (click)="onLogout()">
                             <i class="fa fa-fw fa-sign-out"></i> {{'user.logout'|translate}}
                         </a>
                     </div>
@@ -49,7 +49,7 @@
                         <h5 class="font-weight-light font-italic">{{'application.all'| translate}}</h5>
                         <ng-container *ngFor="let state of applicationsState">
                             <li class="list-group-item border-bottom-0 p-1">                         
-                                <a class="h5" [routerLink]="['/application']" [queryParams]="{applicationStatus: state.stato_domanda}" routerLinkActive="active" (click)="toggle()">
+                                <a class="h5" [routerLink]="['/application']" [queryParams]="{applicationStatus: state.getFilterStato()}" routerLinkActive="active" (click)="toggle()">
                                     <span>{{ state.getLabel() | translate}}</span> 
                                     <span class="badge badge-pill float-right" 
                                         [ngClass]="{

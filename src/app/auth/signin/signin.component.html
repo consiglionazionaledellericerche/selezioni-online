@@ -3,7 +3,17 @@
       <div class="ml-3">
         <p>{{'signin.concorsi' | translate}}</p>
         <p>{{'signin.registration' | translate}}</p>
-        <div class="h6" innerHtml="{{'signin.altri' | translate}}"></div>
+        <div class="h6">
+          <span class="pr-1">{{'signin.altri' | translate}}</span>
+          <a [routerLink]="['/create-account']">{{'signin.new_registration' | translate}}</a>.
+        </div>
+        <div class="h6">
+          <span class="pr-1">{{'signin.manuale' | translate}}</span>
+        </div>
+        <div class="h6">
+          <span class="pr-1">{{'signin.helpdesk' | translate}}</span>
+          <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
+        </div>
         <p innerHtml="{{'signin.candidaticnr' | translate}}"></p>
       </div>
   </div>
@@ -33,7 +43,7 @@
                     </button>
                 </div> 
                 <input #passwordfield type="password" autocomplete="{{ 'signin.password' | translate }}" placeholder="{{ 'signin.password' | translate }}" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-                <span *ngIf="!(submitted && f.password.errors)" (click)="passwordfield.type=passwordfield.type=='password'?'text':'password'" class="fa fa-fw field-icon toggle-password"
+                <span *ngIf="!(submitted && f.password.errors)" tooltip="{{ 'signin.showpassword' | translate }}" (click)="passwordfield.type=passwordfield.type=='password'?'text':'password'" class="fa fa-fw field-icon toggle-password"
                     [ngClass]="(passwordfield.type=='password')?' fa-eye':' fa-eye-slash'"></span>
                 <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                   <div *ngIf="f.password.errors.required">{{ 'signin.message.required.password' | translate }}</div>

@@ -12,7 +12,6 @@ import { User } from '../../auth/model/user.model';
 import { CacheService } from '../cache.service';
 import { CallService } from '../call/call.service';
 import { Call } from '../call/call.model';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'manage-application',

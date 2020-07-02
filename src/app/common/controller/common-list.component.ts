@@ -5,13 +5,12 @@ import {debounceTime, switchMap, map} from 'rxjs/operators';
 import {CommonService} from './common.service';
 import {Page} from '../model/page.model';
 import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
-import {ChangeDetectorRef, OnDestroy, OnInit, Input} from '@angular/core';
+import {ChangeDetectorRef, OnDestroy, OnInit, Input, ViewRef} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {Breadcrumbs} from '../model/breadcrumbs.model';
 
 import {NavigationService} from '../../core/navigation.service';
 import { CmisObject } from '../model/cmisobject.model';
-import { Helpers } from '../helpers/helpers';
 
 export abstract class CommonListComponent<T extends CmisObject> implements OnInit, OnDestroy {
 
@@ -122,7 +121,11 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
   private executePageable(): Observable<Page<T>> {
     this.initialized = true;
     this.loading = true;
-    this.changeDetector.detectChanges();
+    setTimeout(() => {
+      if (this.changeDetector && !(this.changeDetector as ViewRef).destroyed) {
+        this.changeDetector.detectChanges();
+      }
+    });
     return this.service.getPageable(
       this.navigationService.getPage(this.service.getRoute()), 
       this.filterFormValue()
@@ -136,7 +139,11 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
     if (!this.initialized) {
       this.initialized = true;
     }
-    this.changeDetector.detectChanges();
+    setTimeout(() => {
+      if (this.changeDetector && !(this.changeDetector as ViewRef).destroyed) {
+        this.changeDetector.detectChanges();
+      }
+    });  
   }
   /**
    * Operazioni asincrone prima di caricare il component (ex. se devo effettuare delle get al server).
