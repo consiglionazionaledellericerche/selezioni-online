@@ -11,11 +11,12 @@ import {Enum} from '../model/enum.model';
 import {ConfigService} from '../../core/config.service';
 import {ErrorObservable} from 'rxjs-compat/observable/ErrorObservable';
 import {ActivatedRoute} from '@angular/router';
-import { CmisObject } from '../model/cmisobject.model';
 import { ObjectType } from '../model/object-type.model';
 import {JsonConvert, ValueCheckingMode} from 'json2typescript';
+import { Base } from '../model/base.model';
+import { CmisObject } from '../model/cmisobject.model';
 
-export abstract class CommonService<T extends CmisObject> {
+export abstract class CommonService<T extends Base> {
 
   static PAGE_OFFSET = 10;
 
@@ -245,7 +246,7 @@ export abstract class CommonService<T extends CmisObject> {
    */
   public save(entity: T): Observable<T> {
 
-    if (!entity.getObjectId()) {
+    if (!entity.getId()) {
       return this.create(entity);
     }
 
@@ -470,7 +471,7 @@ export abstract class CommonService<T extends CmisObject> {
 
   public postFile(entity: T, fileToUpload: File, descr: string): Observable<any> {
 
-    const endpoint = '/' + entity.getObjectId + '/docs/upload';
+    const endpoint = '/' + entity.getId + '/docs/upload';
 
     const formData: FormData = new FormData();
 
@@ -520,7 +521,7 @@ export abstract class CommonService<T extends CmisObject> {
         return;
       }
       if (value instanceof CmisObject) {
-        httpParams = httpParams.append(key, value.getObjectId() + '');
+        httpParams = httpParams.append(key, value.getId() + '');
         return;
       }
       if (value instanceof Enum) {
@@ -586,7 +587,7 @@ export abstract class CommonService<T extends CmisObject> {
   }
 
   public turnIdsIntoEntities(ids: string[], list: T[]): T[] {
-    return list.filter(entity => ids.includes(entity.getObjectId().toString()));
+    return list.filter(entity => ids.includes(entity.getId()));
   }
 
   public navigate(path: string[], route: ActivatedRoute) {

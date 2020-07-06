@@ -1,8 +1,9 @@
 import {AllowableAction} from './allowableaction.enum';
 import {JsonProperty, JsonObject} from 'json2typescript';
+import { Base } from './base.model';
 
 @JsonObject("CmisObject")
-export abstract class CmisObject {
+export abstract class CmisObject implements Base{
   @JsonProperty('cmis:objectId')
   public objectId: string;
   @JsonProperty('cmis:name')

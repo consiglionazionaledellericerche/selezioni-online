@@ -74,7 +74,13 @@
   "title": "Titolo",
   "description": "Descrizione",
   "message": {
-    "required": "Campo obbligatorio!"
+    "validation": {
+      "required": "Campo obbligatorio!",
+      "email": "E-Mail non valida!",
+      "emailalredyexist": "E-Mail già presente!",
+      "compare": "Il valore del campo non corrisponde!"
+    },
+    "form.invalid" : "La mappa contiene errori, impossibile procedere."
   },
   "protocollo": {
     "data": "Data Protocollo",
@@ -223,6 +229,7 @@
     "firstname": "Nome",
     "lastname": "Cognome",
     "email": "E-Mail ordinaria",
+    "confirmemail": "Conferma E-Mail",
     "emailesterno": "E-Mail esterna",
     "codicefiscale": "Codice Fiscale",
     "matricola": "Matricola",

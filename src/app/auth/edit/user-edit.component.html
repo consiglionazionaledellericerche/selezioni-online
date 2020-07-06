@@ -5,33 +5,35 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="firstName" class="font-weight-bold">{{'user.firstname'| translate}}</label>
-            <input type="text" id="firstName" class="form-control" placeholder="{{'user.firstname'| translate}}" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
-            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                <div *ngIf="f.firstName.errors.required">{{ 'message.required' | translate }}</div>
-            </div>
+            <app-control-text type="email" [inline]="true" [noLabel]="true" formControlName="firstName"></app-control-text>
           </div>
           <div class="form-group col-md-6">
             <label for="lastName" class="font-weight-bold">{{'user.lastname'| translate}}</label>
-            <input type="text" id="lastName" class="form-control" placeholder="{{'user.lastname'| translate}}" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
-            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                <div *ngIf="f.lastName.errors.required">{{ 'message.required' | translate }}</div>
-            </div>
+            <app-control-text type="email" [inline]="true" [noLabel]="true" formControlName="lastName"></app-control-text>
           </div>
           <div class="form-group col-md-6">
             <label for="email" class="font-weight-bold">{{'user.email'| translate}}</label>
-            <input type="email" id="email" class="form-control" placeholder="{{'user.email'| translate}}" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                <div *ngIf="f.email.errors.required">{{ 'message.required' | translate }}</div>
-            </div>
+            <app-control-text 
+                (cut)="$event.preventDefault()" 
+                (copy)="$event.preventDefault()" 
+                (paste)="$event.preventDefault()" 
+                type="email" 
+                [inline]="true" 
+                [noLabel]="true" 
+                formControlName="email"></app-control-text>
           </div>
           <div class="form-group col-md-6">
-            <label for="lastName" class="font-weight-bold">{{'user.lastname'| translate}}</label>
-            <input type="text" id="lastName" class="form-control" placeholder="{{'user.lastname'| translate}}" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
-            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                <div *ngIf="f.lastName.errors.required">{{ 'message.required' | translate }}</div>
-            </div>
-          </div>
+            <label for="confirmemail" class="font-weight-bold">{{'user.confirmemail'| translate}}</label>
+            <app-control-text 
+                type="email" 
+                (cut)="$event.preventDefault()" 
+                (copy)="$event.preventDefault()" 
+                (paste)="$event.preventDefault()" 
+                [inline]="true" 
+                [noLabel]="true" 
+                formControlName="confirmemail"></app-control-text>
+          </div>    
         </div>
-        <button (click)="onSubmit()" class="btn btn-primary btn-block" type="submit">{{'signin.title' | translate}}</button>
+        <button (click)="onSubmit()" class="btn btn-primary btn-block" type="submit">{{'user.new_registration.title' | translate}}</button>
       </form>
 </div>

@@ -41,7 +41,7 @@ import {FormCommonTag} from './form-common-tag';
              [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}"
         >
         <div *ngIf="controlDir.dirty && controlDir.pending"
-             [ngStyle]="{'position': 'absolute', 'top': '5px', 'right': '-8px', 'z-index': '100'}">
+             [ngStyle]="{'position': 'absolute', 'top': '5px', 'right': '5px', 'z-index': '100'}">
           <i class="fa fa-circle-o-notch fa-spin fa-fw text-secondary"></i>
         </div>
 
@@ -124,8 +124,7 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
   }
 
   isValid(): boolean  {
-    return false;
-    // return ValidationHelper.showValid(this.controlDir, this.showValidation);
+    return ValidationHelper.showValid(this.controlDir, this.showValidation);
   }
 
 }

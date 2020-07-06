@@ -1,4 +1,5 @@
 import {JsonProperty, JsonObject} from 'json2typescript';
+import { Base } from '../../common/model/base.model';
 
 @JsonObject("Capabilities")
 export class Capabilities {
@@ -25,7 +26,7 @@ export class Group {
 }
 
 @JsonObject("User")
-export class User {
+export class User implements Base{
   constructor() {}  
   @JsonProperty("userName")
   public userName: string = undefined;
@@ -56,6 +57,16 @@ export class User {
   @JsonProperty("organization", null, true)
   public organization: string = undefined;
 
+  public getId(): string {
+    return this.userName;
+  }
+
+  public hasId(): boolean {
+    return this.userName !== undefined;
+  }
+
+  setAllowableActions(allowableActions: string[]) {}
+  
   public getEmail(): string {
     if (this.email && this.email !== 'nomail') {
       return this.email;

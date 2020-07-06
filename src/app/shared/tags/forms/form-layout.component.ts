@@ -37,11 +37,7 @@ import {Helpers} from '../../../common/helpers/helpers';
     </div>
     <div *ngIf="showValidation">
       <div *ngIf=isInvalid()>
-        <div class="row">
-          <div class="offset-sm-2 pl-3">
-            <div *ngFor="let error of hasErrors()" class="text-danger"><small class="align-top">{{ error | translate }}</small></div>
-          </div>
-        </div>
+          <div *ngFor="let error of hasErrors()" class="text-danger"><small class="align-top">{{ 'message.validation.' + error | translate }}</small></div>
       </div>
       <div *ngIf=!isInvalid()>
         &nbsp; </div>

@@ -1,6 +1,7 @@
 import { CmisObject } from './cmisobject.model';
+import { Base } from './base.model';
 
-export class Page<T extends CmisObject> {
+export class Page<T extends Base> {
 
   constructor(public items: T[],
               public count: number,

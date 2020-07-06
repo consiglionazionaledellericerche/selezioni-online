@@ -1,9 +1,11 @@
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {SharedModule} from '../shared/shared.module';
 
 import {SigninComponent} from './signin/signin.component';
 import {UserEditComponent} from './edit/user-edit.component';
+import {UserService} from './edit/user.service';
 
 import {ShowUserModalComponent} from './show/show-user-modal.component';
 import {ShowGroupMembersModalComponent} from './show/show-group-members-modal.component';
@@ -43,6 +45,7 @@ export enum ServiceReg {
     ShowGroupMembersModalComponent,
   ],
   imports: [
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
     AuthRoutingModule,
@@ -59,6 +62,7 @@ export enum ServiceReg {
   ],
   providers: [
     AuthService,
+    UserService,
     AuthGuard,
     ApplicationService, {provide: ServiceReg.APPLICATION, useExisting: ApplicationService},
     ApplicationUserService, {provide: ServiceReg.APPLICATION_USER, useExisting: ApplicationUserService},
