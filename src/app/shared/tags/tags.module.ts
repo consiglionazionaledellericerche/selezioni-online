@@ -29,6 +29,7 @@ import {BsModalService, ModalModule} from 'ngx-bootstrap/modal';
 import {PaginationModule} from 'ngx-bootstrap/pagination';
 import {PopoverModule, PopoverDirective} from 'ngx-bootstrap/popover';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
+import {ButtonsModule} from 'ngx-bootstrap/buttons';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {ListItemCallComponent} from './list/list-item-call.component';
@@ -145,6 +146,7 @@ import {HttpClient} from '@angular/common/http';
     AlertModule.forRoot(),
     PaginationModule.forRoot(),
     TooltipModule.forRoot(),
+    ButtonsModule.forRoot(),
     PopoverModule.forRoot(),
     ColorPickerModule,
     TranslateModule.forChild({

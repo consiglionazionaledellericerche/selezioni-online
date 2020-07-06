@@ -13,10 +13,12 @@
                     </a>                  
                 </div>
                 <div>
-                    <small class="pl-1 font-weight-bold">{{'user.username_value' | translate:{value: user.userName} }}</small>
+                    <small class="pl-1">{{'user.username' | translate }}:</small>
+                    <small class="pl-1 font-weight-bold">{{user.userName}}</small>
                 </div>
                 <div>
-                    <small class="pl-1 font-weight-bold">{{'user.email_value' | translate:{value: user.getEmail()} }}</small>
+                    <small class="pl-1">{{'user.email' | translate }}:</small>
+                    <small class="pl-1 font-weight-bold">{{user.getEmail()}}</small>
                 </div>
                 <div class="row">
                     <div class="col-6">

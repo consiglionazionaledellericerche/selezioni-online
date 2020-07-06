@@ -12,7 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
   template:
   `
     <!-- List -->
-    <app-list-layout [loading]="loading" [items]="items" [page]="getPage()"
+    <app-list-layout [loading]="loading" [items]="items" [page]="getPage()" [showTotalOnTop]="showTotalOnTop"
                      [count]="count" (onChangePage)="onChangePage($event)">
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
         <app-list-item-call [item]="item" (onDelete)="onDelete(item.getId())">
@@ -62,6 +62,7 @@ import {TranslateService} from '@ngx-translate/core';
 export class CallListComponent extends CommonListComponent<Call> implements OnInit {
 
   public items: Call[] = [];
+  @Input() showTotalOnTop: boolean = true;
 
   public constructor(public service: CallService,
                      protected route: ActivatedRoute,

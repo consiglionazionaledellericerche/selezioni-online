@@ -15,6 +15,7 @@ import {AuthService} from './auth.service';
 import {AuthGuard} from './auth-guard.service';
 import {TooltipModule} from 'ngx-bootstrap/tooltip'
 import {PopoverModule} from 'ngx-bootstrap/popover'
+import {ButtonsModule} from 'ngx-bootstrap/buttons'
 
 import { ApplicationService } from '../core/application/application.service';
 import { ApplicationUserService } from '../core/application/application-user.service';
@@ -52,6 +53,7 @@ export enum ServiceReg {
     CommonModule,
     TooltipModule,
     PopoverModule,
+    ButtonsModule.forRoot(),
     TranslateModule.forChild({
       loader: {
           provide: TranslateLoader,

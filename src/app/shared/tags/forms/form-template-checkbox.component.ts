@@ -22,32 +22,12 @@ import {FormCommonTag} from './form-common-tag';
               [checkbox]="true"
       >
 
-        <div class="form-check">
-          <div #checkbox>
-
-            <div class="d-inline" *ngFor="let option of options">
-              <input *ngIf="option.selected"
-                [ngStyle]="styles()"
-                class="form-check-input"
-                checked
-                [disabled]="disabled"
-                type="checkbox"
-                value="{{ option.value }}"
-                (change)="change($event.target.checked, option)"
-                id="defaultCheck1{{ option.id }}">
-              <input *ngIf="!option.selected"
-                     class="form-check-input"
-                     [disabled]="disabled"
-                     type="checkbox"
-                     value="{{ option.value }}"
-                     (change)="change($event.target.checked, option)"
-                     id="defaultCheck1{{ option.id }}">
-              <label class="form-check-label" for="{{ option.id }}">
-                {{ option.label | translate }}
-              </label>
-            </div>
-
-          </div>
+        <div class="btn-group btn-block" btnRadioGroup>
+          <ng-container *ngFor="let option of options">
+            <label class="btn btn-primary" 
+              btnRadio="{{ option.value }}" 
+              tabindex="0" role="button">{{ option.label | translate }}</label>
+          </ng-container>
         </div>
 
         <div *ngIf="controlDir.dirty && controlDir.pending"
@@ -118,6 +98,7 @@ export class FormTemplateCheckboxComponent extends FormCommonTag implements Cont
       this.options = CheckboxModel.booleanBox(value, this.booleanBoxDisabled);
       return;
     }
+    console.log(value);
     if (value) {
       this.options = value;
     }

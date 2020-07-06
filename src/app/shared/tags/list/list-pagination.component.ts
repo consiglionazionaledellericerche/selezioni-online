@@ -10,6 +10,7 @@ import {PageChangedEvent} from 'ngx-bootstrap/pagination';
           <!-- Paging -->
           <div *ngIf="count > 0" class="col-md-6">
             <pagination 
+                *ngIf="showPage"
                 [boundaryLinks]="true" 
                 [totalItems]="count" 
                 [itemsPerPage]="page_offset"
@@ -25,9 +26,9 @@ import {PageChangedEvent} from 'ngx-bootstrap/pagination';
           </div>
           <div class="col-md-6">
             <!-- Recap -->
-            <div *ngIf="count > 0" class="d-inline-block float-right mt-3">
+            <div *ngIf="count > 0" class="d-inline-block float-right" [ngClass]="{'mt-3':showPage}">
               <small>
-              {{ 'present' | translate }} {{ count }} {{ 'occurrences' | translate }}.
+              {{ 'present' | translate }} <span class="font-weight-bold">{{ count }}</span> {{ 'occurrences' | translate }}.
                   {{ 'shown_from' | translate }} {{ showFrom() }} {{ 'shown_to' | translate }} {{ showTo() }}.
               </small>
             </div>
@@ -40,6 +41,8 @@ export class ListPaginationComponent implements OnInit{
   @Input() page: 0;
 
   @Input() count = 0;
+
+  @Input() showPage: boolean = true;
 
   @Input() page_offset = CommonService.PAGE_OFFSET;
 

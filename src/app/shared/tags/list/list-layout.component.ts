@@ -17,6 +17,7 @@ import { CommonService } from '../../../common/controller/common.service';
 
         <ng-template #results_table>
           <div *ngIf="count > 0; else nessun_item" >
+            <app-list-pagination *ngIf="!loading && showTotalOnTop" [showPage]="false" [page]="page" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
 
             <ul class="list-group" [ngClass]="classForDisplayList()">
               <ng-content></ng-content>
@@ -36,7 +37,7 @@ import { CommonService } from '../../../common/controller/common.service';
           </div>
 
           
-          </ng-template>
+        </ng-template>
 
         <!-- Paging -->
         <app-list-pagination *ngIf="!loading" [page]="page" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
@@ -67,6 +68,8 @@ export class ListLayoutComponent {
   @Input() hasEditValidita = false;
 
   @Input() noEdit = false;
+
+  @Input() showTotalOnTop = true;
 
   @Output() onChangePage = new EventEmitter();
 

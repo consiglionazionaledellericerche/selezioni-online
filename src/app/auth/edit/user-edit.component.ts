@@ -43,6 +43,17 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
                 [emailUnique.validator.bind(emailUnique)] 
             ],
             confirmemail: ['', [Validators.required, Validators.email, RxwebValidators.compare({fieldName:'email' })]],
+            password: ['', [
+                    Validators.required, 
+                    Helpers.patternValidator(/\d/, { hasNumber: true }),
+                    Helpers.patternValidator(/[A-Z]/, { hasCapitalCase: true }),
+                    Helpers.patternValidator(/[a-z]/, { hasSmallCase: true }),
+                    Helpers.minlengthValidator(8, {minlength8: true})
+                ]
+            ],
+            confirmpassword: ['', [Validators.required, RxwebValidators.compare({fieldName:'password' })]],
+            cittadinanza: ['italy', Validators.required],
+            codicefiscale: ['', Validators.required],
         });
     }
     
@@ -68,7 +79,7 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
 
     onSubmit() {
         this.submitted = true;
-
+        console.log(this.ngForm.value);
         // stop here if form is invalid
         if (this.ngForm.invalid) {
             this.translateService.get('message.form.invalid').subscribe((label) => {
