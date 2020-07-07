@@ -58,11 +58,7 @@ export class SearchComponent implements OnInit, OnDestroy{
     });
   }
 
-  isCurrentFilterType(filterType: string): boolean {
-    return this.filterFormSearch.controls['filterType'].value === filterType;
-  }
-
-    // -------------------------------
+  // -------------------------------
   // On Destroy.
   // -------------------------------
 

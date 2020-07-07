@@ -34,18 +34,12 @@ import { Observable, of } from 'rxjs';
             </app-control-select-model>
         </div>
         <div class="form-group col-md-3">
-            <!--Rounded checkbox buttons-->
-            <div class="btn-group btn-block btn-group-toggle">
-                <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentFilterType('active')}">
-                    <input type="radio" formControlName="filterType"  value="active"> {{'call.attivi' | translate}}
-                </label>
-                <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentFilterType('expire')}">
-                    <input type="radio" formControlName="filterType" value="expire"> {{'call.scaduti' | translate}}
-                </label>
-                <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentFilterType('all')}">
-                    <input type="radio" formControlName="filterType"  value="all"> {{'call.tutti' | translate}}
-                </label>
-            </div>
+          <!--Rounded checkbox buttons-->
+          <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="filterType">
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="active">{{'call.attivi' | translate}}</label>
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="expire">{{'call.scaduti' | translate}}</label>
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="all">{{'call.tutti' | translate}}</label>
+          </div>
         </div>
         <div class="form-group mb-n3 col-md-5">
             <app-control-text 
@@ -86,23 +80,13 @@ import { Observable, of } from 'rxjs';
         </div>
         <div class="form-group col-md-3">
           <!--Rounded checkbox buttons-->
-          <div class="btn-group btn-block btn-group-toggle">
-              <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentApplicationStatus('P')}">
-                <input type="radio" formControlName="applicationStatus" value="P"> {{'application.status.temporary' | translate}}
-              </label>
-              <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentApplicationStatus('C')}">
-                <input type="radio" formControlName="applicationStatus" value="C"> {{'application.status.confirmed' | translate}}
-              </label>
-              <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentApplicationStatus('all')}">
-                <input type="radio" formControlName="applicationStatus"  value="all"> {{'application.status.all' | translate}}
-              </label>
-              <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentApplicationStatus('active')}">
-                <input type="radio" formControlName="applicationStatus"  value="active"> {{'application.status.active' | translate}}
-              </label>
-              <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentApplicationStatus('excluded')}">
-                <input type="radio" formControlName="applicationStatus"  value="excluded"> {{'application.status.excluded' | translate}}
-              </label>
-            </div>
+          <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="applicationStatus">
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="P">{{'application.status.temporary' | translate}}</label>
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="C">{{'application.status.confirmed' | translate}}</label>
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="all">{{'application.status.all' | translate}}</label>
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="active">{{'application.status.active' | translate}}</label>
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="excluded">{{'application.status.excluded' | translate}}</label>
+          </div>
         </div>
       </div>
     </form>
@@ -214,13 +198,4 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
     });
     super.ngOnInit();
   }
-
-  isCurrentFilterType(filterType: string): boolean {
-    return this.filterForm.controls['filterType'].value === filterType;
-  }
-
-  isCurrentApplicationStatus(applicationStatus: string): boolean {
-    return this.filterForm.controls['applicationStatus'].value === applicationStatus;
-  }
-
 }

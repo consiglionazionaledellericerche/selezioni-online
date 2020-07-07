@@ -18,16 +18,10 @@
             </div>
             <div class="form-group col-md-3">
                 <!--Rounded checkbox buttons-->
-                <div class="btn-group btn-block btn-group-toggle">
-                    <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentFilterType('active')}">
-                        <input type="radio" formControlName="filterType"  value="active"> {{'call.attivi' | translate}}
-                    </label>
-                    <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentFilterType('expire')}">
-                        <input type="radio" formControlName="filterType" value="expire"> {{'call.scaduti' | translate}}
-                    </label>
-                    <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentFilterType('all')}">
-                        <input type="radio" formControlName="filterType"  value="all"> {{'call.tutti' | translate}}
-                    </label>
+                <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="filterType">
+                    <label class="btn btn-outline-primary btn-toggle" btnRadio="active">{{'call.attivi' | translate}}</label>
+                    <label class="btn btn-outline-primary btn-toggle" btnRadio="expire">{{'call.scaduti' | translate}}</label>
+                    <label class="btn btn-outline-primary btn-toggle" btnRadio="all">{{'call.tutti' | translate}}</label>
                 </div>
             </div>
             <div class="form-group mb-n3 col-md-5">

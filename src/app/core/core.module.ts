@@ -30,6 +30,7 @@ import {ApplicationUserService} from './application/application-user.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -66,6 +67,7 @@ import {HttpClient} from '@angular/common/http';
     AuthModule,
     FormsModule,
     ReactiveFormsModule,
+    ButtonsModule.forRoot(),
     TranslateModule.forChild({
       loader: {
           provide: TranslateLoader,

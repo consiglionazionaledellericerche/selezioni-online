@@ -82,7 +82,8 @@
       "hasNumber": "Deve contenere almeno un numero!",
       "hasCapitalCase": "Deve contenere almeno una lettera Maiuscola!",
       "hasSmallCase": "Deve contenere almeno una lettera Minuscola!",
-      "minlength8": "Deve essere lunga almeno 8 caratteri!"
+      "minlength8": "Deve essere lunga almeno 8 caratteri!",
+      "codicefiscalealredyexist": "Codice fiscale già presente!"
     },
     "form.invalid" : "La mappa contiene errori, impossibile procedere."
   },

@@ -32,7 +32,6 @@ export class ConfigService {
       map(
         (config) => {
           this.config = config;
-          console.log(config);
           if (this.config.gateway.indexOf('{') >= 0) {
             console.log('Run non dockerizzato, il gateway è prelevato dall\'environment');
             this.config.gateway = environment.zuul_uri;

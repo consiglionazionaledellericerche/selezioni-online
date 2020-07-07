@@ -33,8 +33,20 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
     }
 
     ngOnInit() {
-        const emailUnique = new UniqueFieldValidator(this.injector, this.entity, UserService, 'existingEmail', 'emailalredyexist');
-        const codicefisclaeUnique = new UniqueFieldValidator(this.injector, this.entity, UserService, 'existingCodicefiscale');
+        const emailUnique = new UniqueFieldValidator(
+            this.injector, 
+            this.entity, 
+            UserService, 
+            'existingEmail', 
+            'emailalredyexist'
+        );
+        const codicefisclaeUnique = new UniqueFieldValidator(
+            this.injector, 
+            this.entity, 
+            UserService, 
+            'existingCodicefiscale', 
+            'codicefiscalealredyexist'
+        );
         this.ngForm = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
@@ -53,7 +65,7 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
             ],
             confirmpassword: ['', [Validators.required, RxwebValidators.compare({fieldName:'password' })]],
             cittadinanza: ['italy', Validators.required],
-            codicefiscale: ['', Validators.required],
+            codicefiscale: ['', Validators.required, [codicefisclaeUnique.validator.bind(codicefisclaeUnique)] ],
         });
     }
     

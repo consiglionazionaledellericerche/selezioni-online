@@ -7,8 +7,7 @@ import { CommonService } from '../../../common/controller/common.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template:
      `
-    <div class="row">
-      <div class="container">
+    <div class="px-1">
 
         <div *ngIf="loading ; else results_table" class="text-center">
           Caricamento ...
@@ -17,7 +16,7 @@ import { CommonService } from '../../../common/controller/common.service';
 
         <ng-template #results_table>
           <div *ngIf="count > 0; else nessun_item" >
-            <app-list-pagination *ngIf="!loading && showTotalOnTop" [showPage]="false" [page]="page" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
+            <app-list-pagination *ngIf="!loading && showTotalOnTop && count > page_offset" [showPage]="false" [page]="page" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
 
             <ul class="list-group" [ngClass]="classForDisplayList()">
               <ng-content></ng-content>
@@ -44,7 +43,6 @@ import { CommonService } from '../../../common/controller/common.service';
 
         <ng-template #nessun_item style="text-align: center;"> {{ 'no_item' | translate }}</ng-template>
 
-      </div>
     </div>
     `,
 styles: [`.loadingmask tr { color: lightgray ; }`]

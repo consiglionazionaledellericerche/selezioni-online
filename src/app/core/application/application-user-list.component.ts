@@ -94,23 +94,13 @@ import { Helpers } from '../../common/helpers/helpers';
 
         <div class="form-group col-md-6">
           <!--Rounded checkbox buttons-->
-          <div class="btn-group btn-block btn-group-toggle">
-              <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentApplicationStatus('P')}">
-                <input type="radio" formControlName="applicationStatus" value="P"> {{'application.status.temporary' | translate}}
-              </label>
-              <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentApplicationStatus('C')}">
-                <input type="radio" formControlName="applicationStatus" value="C"> {{'application.status.confirmed' | translate}}
-              </label>
-              <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentApplicationStatus('all')}">
-                <input type="radio" formControlName="applicationStatus"  value="all"> {{'application.status.all' | translate}}
-              </label>
-              <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentApplicationStatus('active')}">
-                <input type="radio" formControlName="applicationStatus"  value="active"> {{'application.status.active' | translate}}
-              </label>
-              <label class="btn btn-outline-primary " [ngClass]="{'active': isCurrentApplicationStatus('excluded')}">
-                <input type="radio" formControlName="applicationStatus"  value="excluded"> {{'application.status.excluded' | translate}}
-              </label>
-            </div>
+          <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="applicationStatus">
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="P">{{'application.status.temporary' | translate}}</label>
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="C">{{'application.status.confirmed' | translate}}</label>
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="all">{{'application.status.all' | translate}}</label>
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="active">{{'application.status.active' | translate}}</label>
+              <label class="btn btn-outline-primary btn-toggle" btnRadio="excluded">{{'application.status.excluded' | translate}}</label>
+          </div>
         </div>
       </div>
     </form>
@@ -236,9 +226,4 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
       call: new FormControl(this.callSearch),
     });
   }
-
-  isCurrentApplicationStatus(applicationStatus: string): boolean {
-    return this.filterForm.controls['applicationStatus'].value === applicationStatus;
-  }
-
 }

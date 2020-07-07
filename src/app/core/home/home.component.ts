@@ -11,17 +11,15 @@ export class HomeComponent implements OnInit {
   cache: any = {};
   public filterFormHome: FormGroup;
   public callCode: String;
-  public filterType: String = 'active';
 
   constructor(
     private formBuilder: FormBuilder,
-    private cacheService: CacheService) {
-  }
+    private cacheService: CacheService) {}
 
   ngOnInit(): void {
     this.filterFormHome = this.formBuilder.group({
       callCode: new FormControl(this.callCode),
-      filterType: new FormControl(this.filterType),
+      filterType: new FormControl('active'),
       type: new FormControl('jconon_call:folder'),
       inizioScadenza: '',
       fineScadenza: '',
@@ -36,21 +34,4 @@ export class HomeComponent implements OnInit {
       this.cache = cache;
     });
   }
-
-  setType(type: string): void {
-    this.filterFormHome.controls['type'].setValue(type);
-  }
-
-  getType(): string {
-    return this.filterFormHome.controls['type'].value;
-  }
-
-  isCurrentType(type: string): boolean {
-    return this.filterFormHome.controls['type'].value === type;
-  }
-
-  isCurrentFilterType(filterType: string): boolean {
-    return this.filterFormHome.controls['filterType'].value === filterType;
-  }
-
 }

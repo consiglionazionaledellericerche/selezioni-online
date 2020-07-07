@@ -8,9 +8,9 @@ import {PageChangedEvent} from 'ngx-bootstrap/pagination';
      `
         <div class="row pt-1">
           <!-- Paging -->
-          <div *ngIf="count > 0" class="col-md-6">
+          <div class="col-md-6">
             <pagination 
-                *ngIf="showPage"
+                *ngIf="showPage && count > page_offset"
                 [boundaryLinks]="true" 
                 [totalItems]="count" 
                 [itemsPerPage]="page_offset"
@@ -21,12 +21,12 @@ import {PageChangedEvent} from 'ngx-bootstrap/pagination';
                 (pageChanged)="pageChanged($event)"
                 [(ngModel)]="currentPage"
                 [rotate]="true" 
-                [maxSize]="5"
-            ></pagination>
+                [maxSize]="5">
+            </pagination>
           </div>
           <div class="col-md-6">
             <!-- Recap -->
-            <div *ngIf="count > 0" class="d-inline-block float-right" [ngClass]="{'mt-3':showPage}">
+            <div *ngIf="count > 0" class="d-inline-block float-right" [ngClass]="{'mt-3': showPage && count > page_offset}">
               <small>
               {{ 'present' | translate }} <span class="font-weight-bold">{{ count }}</span> {{ 'occurrences' | translate }}.
                   {{ 'shown_from' | translate }} {{ showFrom() }} {{ 'shown_to' | translate }} {{ showTo() }}.
