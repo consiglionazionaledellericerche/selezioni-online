@@ -80,7 +80,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
         if (this.authService.isAuthenticated()) {
             this.user = Helpers.buildInstance(this.authService.getUser(), User);
             this.applicationState();
-        }      
+        }
     }
 
     public onLogout() {

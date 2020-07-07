@@ -254,7 +254,13 @@
     "new_registration": {
       "title" :"Nuova Registrazione",
       "requisiti": "<p>La nuova registrazione richiede, per utenti di nazionalità italiana, nome, cognome, il nome utente e la password, il codice fiscale e un indirizzo e-mail (esclusivamente NON PEC); per utenti di nazionalità estera, invece del codice fiscale, viene richiesto di inserire sesso, data di nascita e stato estero.</p><p>All'indirizzo mail indicato in fase di registrazione verrà inviata una mail automatica con un link da \"cliccare\" <u>entro un'ora dalla ricezione</u> per completare l'attivazione dell'utenza. Trascorsa un'ora dalla ricezione l’utenza viene eliminata, pertanto occorre ripetere ex novo la procedura di registrazione.</p><p>Cliccando sul link Attivazione utenza contenuto nella mail si completa la registrazione e viene presentata la pagina per l'accesso in procedura.<br>Dopo aver effettuato l'accesso alla procedura, viene attivato un nuovo menù con il proprio nominativo attraverso il quale é possibile visualizzare e/o modificare le proprie impostazioni personali ed é possibile disconnettersi dall'applicazione.</p>"
-    }
+    },
+    "profile.title": "Informazioni Personali",
+    "sex": "Sesso",
+    "male": "Maschio",
+    "female": "Femmina",
+    "dataDiNascita": "Data di Nascita",
+    "statoestero": "Stato Estero"
   },
   "document": {
     "last_modified": ", ultima modifica: {{value}}",

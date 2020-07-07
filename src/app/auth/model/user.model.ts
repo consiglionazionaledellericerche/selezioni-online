@@ -56,7 +56,15 @@ export class User implements Base{
   public capabilities: Capabilities = undefined;
   @JsonProperty("organization", null, true)
   public organization: string = undefined;
-
+  @JsonProperty("cnrperson:sesso", null, true)
+  public sesso: string = undefined;
+  @JsonProperty("cnrperson:statoestero", null, true)
+  public statoestero: string = undefined;
+  @JsonProperty("cnrperson:straniero", null, true)
+  public straniero: boolean = undefined;
+  @JsonProperty("cnrperson:dataDiNascita", null, true)
+  public dataDiNascita: Date = undefined;
+  
   public getId(): string {
     return this.userName;
   }

@@ -26,11 +26,11 @@ import {Helpers} from '../../../common/helpers/helpers';
           <ng-content></ng-content>
 
           <div *ngIf="append || appendText" class="input-group-append" tooltip="{{ ttipAppend | translate }}" placement="left">
-			<div class="input-group-text">
+			      <div class="input-group-text">
               <i *ngIf="append" class="fa fa-{{ append }}" aria-hidden="true"></i>
               {{ appendText }}
             </div>
-		  </div>
+		      </div>
 
         </div>
       <!--</div>-->

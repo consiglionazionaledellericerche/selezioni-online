@@ -146,7 +146,7 @@ export class ValidationHelper {
     return show
       && controlDir
       && controlDir.control
-      && !controlDir.pristine
+      && controlDir.dirty
       && !controlDir.pending // && (controlDir.control.dirty || controlDir.control.touched)
       && !controlDir.control.valid;
   }
@@ -155,7 +155,7 @@ export class ValidationHelper {
     return show
       && controlDir
       && controlDir.control
-      && !controlDir.pristine
+      && controlDir.dirty
       && !controlDir.pending // && (controlDir.control.dirty || controlDir.control.touched)
       && controlDir.control.valid;
   }

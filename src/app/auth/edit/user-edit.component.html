@@ -1,77 +1,118 @@
-<div class="p-2">
+<div class="p-2 row">    
+  <div class="col-md-6" [ngClass]="{'col-md-12': !entity.userName}">
     <h1>{{'user.new_registration.title'|translate}}</h1>
     <span innerHtml="{{'user.new_registration.requisiti'|translate}}"></span>
-    <form (keyup.enter)="onSubmit()" [formGroup]="ngForm">
-        <div class="form-row">
-          <div class="form-group mb-0 col-md-6">
-            <label for="firstName" class="font-weight-bold">{{'user.firstname'| translate}}</label>
-            <app-control-text type="email" [inline]="true" [noLabel]="true" formControlName="firstName"></app-control-text>
-          </div>
-          <div class="form-group mb-0 col-md-6">
-            <label for="lastName" class="font-weight-bold">{{'user.lastname'| translate}}</label>
-            <app-control-text type="email" [inline]="true" [noLabel]="true" formControlName="lastName"></app-control-text>
-          </div>
-          <div class="form-group mb-0 col-md-6">
-            <label for="email" class="font-weight-bold">{{'user.email'| translate}}</label>
-            <app-control-text 
-                (cut)="$event.preventDefault()" 
-                (copy)="$event.preventDefault()" 
-                (paste)="$event.preventDefault()" 
-                type="email" 
-                [inline]="true" 
-                [noLabel]="true" 
-                formControlName="email"></app-control-text>
-          </div>
-          <div class="form-group mb-0 col-md-6">
-            <label for="confirmemail" class="font-weight-bold">{{'user.confirmemail'| translate}}</label>
-            <app-control-text 
-                type="email" 
-                (cut)="$event.preventDefault()" 
-                (copy)="$event.preventDefault()" 
-                (paste)="$event.preventDefault()" 
-                [inline]="true" 
-                [noLabel]="true" 
-                formControlName="confirmemail"></app-control-text>
-          </div>
-          <div class="form-group mb-0 col-md-6">
-            <label for="password" class="font-weight-bold">{{'user.password'| translate}}</label>
-            <app-control-text 
-                (cut)="$event.preventDefault()" 
-                (copy)="$event.preventDefault()" 
-                (paste)="$event.preventDefault()" 
-                type="password" 
-                [inline]="true" 
-                [noLabel]="true" 
-                formControlName="password"></app-control-text>
-          </div>
-          <div class="form-group mb-0 col-md-6">
-            <label for="confirmpassword" class="font-weight-bold">{{'user.confirmpassword'| translate}}</label>
-            <app-control-text 
-                type="password" 
-                (cut)="$event.preventDefault()" 
-                (copy)="$event.preventDefault()" 
-                (paste)="$event.preventDefault()" 
-                [inline]="true" 
-                [noLabel]="true" 
-                formControlName="confirmpassword"></app-control-text>
-          </div>
-          <div class="form-group mb-3 col-md-6">
-            <label for="cittadinanza" class="font-weight-bold">{{'user.cittadinanza.label'| translate}}</label>
-            <div class="btn-group btn-block" btnRadioGroup formControlName="cittadinanza">
-              <label btnRadio="italy" class="btn btn-success" tabindex="0" role="button">{{'user.cittadinanza.italy'|translate}}</label>
-              <label btnRadio="foreign" class="btn btn-success" tabindex="0" role="button">{{'user.cittadinanza.foreign'|translate}}</label>
+  </div>
+  <div class="col-md-6" [ngClass]="{'col-md-12': !entity.userName}">
+    <div class="card m-3">
+      <div class="card-header h1">{{'user.profile.title' | translate}}</div>
+      <div class="card-body">  
+        <form (keyup.enter)="onSubmit()" [formGroup]="ngForm">
+          <div [ngClass]="{'row': !entity.userName}">
+            <div class="form-group mb-0" [ngClass]="{'col-md-6': !entity.userName}">
+              <label for="firstName" class="font-weight-bold">{{'user.firstname'| translate}}</label>
+              <app-control-text type="email" [inline]="true" [noLabel]="true" formControlName="firstName"></app-control-text>
+            </div>
+            <div class="form-group mb-0" [ngClass]="{'col-md-6': !entity.userName}">
+              <label for="lastName" class="font-weight-bold">{{'user.lastname'| translate}}</label>
+              <app-control-text type="email" [inline]="true" [noLabel]="true" formControlName="lastName"></app-control-text>
             </div>
           </div>
-          <div *ngIf="f.cittadinanza.value == 'italy' " class="form-group mb-0 col-md-6">
-            <label for="codicefiscale" class="font-weight-bold">{{'user.codicefiscale'| translate}}</label>
-            <app-control-text 
-                type="text" 
-                [inline]="true" 
-                [noLabel]="true" 
-                formControlName="codicefiscale"></app-control-text>
+          <div [ngClass]="{'row': !entity.userName}">
+            <div class="form-group mb-0" [ngClass]="{'col-md-6': !entity.userName}">
+              <label for="email" class="font-weight-bold">{{'user.email'| translate}}</label>
+              <app-control-text 
+                  (cut)="$event.preventDefault()" 
+                  (copy)="$event.preventDefault()" 
+                  (paste)="$event.preventDefault()" 
+                  type="email" 
+                  [inline]="true" 
+                  [noLabel]="true" 
+                  formControlName="email"></app-control-text>
+            </div>
+            <div *ngIf="!entity.userName" class="form-group mb-0" [ngClass]="{'col-md-6': !entity.userName}">
+              <label for="confirmemail" class="font-weight-bold">{{'user.confirmemail'| translate}}</label>
+              <app-control-text 
+                  type="email" 
+                  (cut)="$event.preventDefault()" 
+                  (copy)="$event.preventDefault()" 
+                  (paste)="$event.preventDefault()" 
+                  [inline]="true" 
+                  [noLabel]="true" 
+                  formControlName="confirmemail"></app-control-text>
+            </div>
           </div>
-
-        </div>
+          <div [ngClass]="{'row': !entity.userName}">
+            <div *ngIf="!entity.userName" class="form-group mb-0" [ngClass]="{'col-md-6': !entity.userName}">
+              <label for="password" class="font-weight-bold">{{'user.password'| translate}}</label>
+              <app-control-text 
+                  (cut)="$event.preventDefault()" 
+                  (copy)="$event.preventDefault()" 
+                  (paste)="$event.preventDefault()" 
+                  type="password" 
+                  [inline]="true" 
+                  [noLabel]="true" 
+                  formControlName="password"></app-control-text>
+            </div>
+            <div *ngIf="!entity.userName" class="form-group mb-0" [ngClass]="{'col-md-6': !entity.userName}">
+              <label for="confirmpassword" class="font-weight-bold">{{'user.confirmpassword'| translate}}</label>
+              <app-control-text 
+                  type="password" 
+                  (cut)="$event.preventDefault()" 
+                  (copy)="$event.preventDefault()" 
+                  (paste)="$event.preventDefault()" 
+                  [inline]="true" 
+                  [noLabel]="true" 
+                  formControlName="confirmpassword"></app-control-text>
+            </div>
+          </div>
+          <div [ngClass]="{'row': !entity.userName}">
+            <div class="form-group mb-0" [ngClass]="{'col-md-3': !entity.userName}">
+              <label for="cittadinanza" class="font-weight-bold">{{'user.cittadinanza.label'| translate}}</label>
+              <div class="btn-group btn-block" btnRadioGroup formControlName="straniero">
+                <label btnRadio="false" class="btn btn-outline-success" tabindex="0" role="button">{{'user.cittadinanza.italy'|translate}}</label>
+                <label btnRadio="true" class="btn btn-outline-success" tabindex="0" role="button">{{'user.cittadinanza.foreign'|translate}}</label>
+              </div>
+            </div>
+            <div *ngIf="f.straniero.value === 'false'" class="form-group mb-0" [ngClass]="{'col-md-9': !entity.userName}">
+              <label for="codicefiscale" class="font-weight-bold">{{'user.codicefiscale'| translate}}</label>
+              <app-control-text 
+                  type="text" 
+                  [inline]="true" 
+                  [noLabel]="true" 
+                  formControlName="codicefiscale"></app-control-text>
+            </div>
+            <div *ngIf="f.straniero.value === 'true'" class="form-group mb-0" [ngClass]="{'col-md-3': !entity.userName}">
+              <label for="sesso" class="font-weight-bold">{{'user.sex'| translate}}</label>
+              <div class="btn-group btn-block" btnRadioGroup formControlName="sesso">
+                <label btnRadio="M" class="btn btn-outline-primary" tabindex="0" role="button">{{'user.male'|translate}}</label>
+                <label btnRadio="F" class="btn btn-outline-primary" tabindex="0" role="button">{{'user.female'|translate}}</label>
+              </div>
+            </div>
+            <div *ngIf="f.straniero.value === 'true'" class="form-group mb-0" [ngClass]="{'col-md-3': !entity.userName}">
+              <label for="dataDiNascita" class="font-weight-bold">{{'user.dataDiNascita'| translate}}</label>
+              <app-control-datepicker
+                  class="pr-1"
+                  type="search"
+                  [inline]="true" 
+                  [noLabel]="true" 
+                  formControlName="dataDiNascita">            
+              </app-control-datepicker>
+            </div>
+            <div *ngIf="f.straniero.value === 'true'" class="form-group mb-0" [ngClass]="{'col-md-3': !entity.userName}">
+              <label for="statoestero" class="font-weight-bold">{{'user.statoestero'| translate}}</label>
+              <app-control-text 
+                  type="text" 
+                  [inline]="true" 
+                  [noLabel]="true" 
+                  formControlName="statoestero"></app-control-text>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer">
         <button (click)="onSubmit()" class="btn btn-primary btn-block" type="submit">{{'user.new_registration.title' | translate}}</button>
-      </form>
+      </div>      
+    </div>
+  </div>      
 </div>
