@@ -32,7 +32,7 @@ import {FormCommonTag} from './form-common-tag';
               [showValidation]="showValidation"
       >
 
-        <input class="form-control"
+        <input class="form-control {{inputClass}}"
              type="{{ type }}"
              #input
              (input)="change($event.target.value)"
@@ -51,6 +51,8 @@ import {FormCommonTag} from './form-common-tag';
 export class FormTemplateTextComponent extends FormCommonTag implements ControlValueAccessor, OnInit {
 
   @Input() type = 'text';
+
+  @Input() inputClass = ''; 
 
   @Input() nullIfEmpty = false;
 

@@ -1,5 +1,5 @@
-import { Component, OnInit, Injector, ChangeDetectionStrategy } from '@angular/core';
-import { NgForm, FormGroup, FormBuilder, Validators, NG_VALIDATORS } from '@angular/forms';
+import { Component, OnInit, Injector, ChangeDetectorRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AuthService } from '../auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,27 +11,35 @@ import { User } from '../model/user.model';
 import { UserService } from './user.service';
 import {RxwebValidators} from '@rxweb/reactive-form-validators';
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
-import { debounceTime, switchMap, distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { CacheService } from '../../core/cache.service';
 
 @Component({
     selector: 'app-user-edit',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './user-edit.component.html'
 })
-export class UserEditComponent extends CommonEditComponent<User> implements OnInit{
+export class UserEditComponent extends CommonEditComponent<User> implements OnInit {
 
     ngForm: FormGroup;
     submitted = false;
+    paesi: string[];
 
     constructor(private formBuilder: FormBuilder,
                 private apiMessageService: ApiMessageService,
-                private userService: UserService,
+                protected userService: UserService,
+                protected cacheService: CacheService,
+                private cdr: ChangeDetectorRef,
                 protected route: ActivatedRoute,
                 private translateService: TranslateService,
                 private injector: Injector,
                 private authService: AuthService, 
                 protected router: Router) {
         super(userService, router, route);                
+    }
+
+    ngAfterViewChecked(){
+        //your code to update the model
+        this.cdr.detectChanges();
     }
 
     ngOnInit() {
@@ -41,11 +49,18 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
             this.setEntity(new User());
         }
         this.buildCreateForm();
+        this.cacheService.paesi().subscribe((paesi) => {
+            this.paesi = paesi;
+        });
         super.ngOnInit();
     }
     
     // convenience getter for easy access to form fields
     get f() { return this.ngForm.controls; }
+
+    public isStraniero(): boolean {
+        return this.ngForm.controls.straniero.value == 'true';
+    }
 
     public setEntity(entity: User) {
         this.entity = entity;
@@ -71,6 +86,7 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
             'codicefiscalealredyexist'
         );
         this.ngForm = this.formBuilder.group({
+            userName: [this.entity.userName],
             firstName: [this.entity.firstName, Validators.required],
             lastName: [this.entity.lastName, Validators.required],
             email: [this.entity.getEmail(), 
@@ -88,18 +104,21 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
             ],
             confirmpassword: ['', [Validators.required, RxwebValidators.compare({fieldName:'password' })]],
             straniero: [ this.entity.straniero ? String(this.entity.straniero) : 'false', Validators.required],
-            codicefiscale: [this.entity.codicefiscale, [Validators.required], [codicefisclaeUnique.validator.bind(codicefisclaeUnique)]],
+            codicefiscale: [this.entity.codicefiscale, [
+                Validators.required, 
+                Helpers.patternValidator(Helpers.regExpCodiceFiscale, {codicefiscale: true})
+            ], [codicefisclaeUnique.validator.bind(codicefisclaeUnique)]],
             sesso: [ String(this.entity.sesso || 'M'), Validators.required],
             dataDiNascita: [this.entity.dataDiNascita ? new Date(this.entity.dataDiNascita): undefined, Validators.required],
             statoestero: [this.entity.statoestero, Validators.required],
-
+            'cmis:objectTypeId':['cm:person']
         });
-        this.manageNgForm(this.entity.straniero ? String(this.entity.straniero) : 'false');
         if (this.entity.userName) {
             this.ngForm.controls.confirmemail.disable();
             this.ngForm.controls.password.disable();
             this.ngForm.controls.confirmpassword.disable();
         }
+        this.manageNgForm(this.entity.straniero ? String(this.entity.straniero) : 'false');
         this.ngForm.controls.straniero.valueChanges.pipe(distinctUntilChanged()).subscribe(newValue => {
             this.manageNgForm(newValue);
         })
@@ -120,7 +139,7 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
     }
 
     public buildInstance(): User {
-        return null;
+        return this.userService.buildInstance(this.ngForm.value);
     };
   
     onSubmit() {
@@ -132,6 +151,10 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
         if (this.ngForm.invalid) {
             this.translateService.get('message.form.invalid').subscribe((label) => {
                 this.apiMessageService.sendMessage(MessageType.WARNING, label);
+            });
+        } else {
+            this.userService.save(this.buildInstance()).subscribe((user:User) => {
+                console.log(user);
             });
         }
     }

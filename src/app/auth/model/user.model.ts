@@ -1,5 +1,7 @@
 import {JsonProperty, JsonObject} from 'json2typescript';
 import { Base } from '../../common/model/base.model';
+import { BooleanConverter } from '../../common/helpers/BooleanConverter';
+import { ISODateConverter } from '../../common/helpers/ISODateConverter';
 
 @JsonObject("Capabilities")
 export class Capabilities {
@@ -34,7 +36,7 @@ export class User implements Base{
   public lastName: string = undefined;
   @JsonProperty("firstName")
   public firstName: string = undefined;
-  @JsonProperty("enabled")
+  @JsonProperty("enabled", null, true)
   public enabled: boolean = undefined;
   @JsonProperty("codicefiscale", null, true)
   public codicefiscale: string = undefined;
@@ -56,17 +58,25 @@ export class User implements Base{
   public capabilities: Capabilities = undefined;
   @JsonProperty("organization", null, true)
   public organization: string = undefined;
-  @JsonProperty("cnrperson:sesso", null, true)
+  @JsonProperty("sesso", null, true)
   public sesso: string = undefined;
-  @JsonProperty("cnrperson:statoestero", null, true)
+  @JsonProperty("statoestero", null, true)
   public statoestero: string = undefined;
-  @JsonProperty("cnrperson:straniero", null, true)
+  @JsonProperty("straniero", BooleanConverter, true)
   public straniero: boolean = undefined;
-  @JsonProperty("cnrperson:dataDiNascita", null, true)
+  @JsonProperty("dataDiNascita", ISODateConverter, true)
   public dataDiNascita: Date = undefined;
   
   public getId(): string {
     return this.userName;
+  }
+
+  public getType(): string {
+    return 'cm:person';
+  }
+
+  public getBaseType(): string {
+    return this.getType();
   }
 
   public hasId(): boolean {
@@ -75,6 +85,10 @@ export class User implements Base{
 
   setAllowableActions(allowableActions: string[]) {}
   
+  public canDelete(): boolean {
+    return false;
+  }
+
   public getEmail(): string {
     if (this.email && this.email !== 'nomail') {
       return this.email;

@@ -46,8 +46,16 @@ export abstract class CommonService<T extends Base> {
     return jsonConvert.deserializeObject(json, this.createInstance(json['cmis:objectTypeId'], json['cmis:baseTypeId']));
   }
 
+  public serializeInstance(obj: T): any {
+    let jsonConvert: JsonConvert = new JsonConvert();
+        jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
+        jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL; // never allow null
+        
+    return jsonConvert.serializeObject(obj, this.createInstance(obj.getType(), obj.getBaseType()));
+  }
+
   protected createInstance(cmisType: string, cmisBaseType: string): { new (): T; } {
-    return ObjectType.classes[cmisType] || ObjectType.classes[cmisBaseType];
+    return ObjectType.classes[cmisType] || ObjectType.classes[cmisBaseType] || ObjectType.classes['cm:person'];
   }
 
   public getRequestMapping(): string {
@@ -248,13 +256,13 @@ export abstract class CommonService<T extends Base> {
 
     if (!entity.getId()) {
       return this.create(entity);
-    }
+    }    
 
-    return this.configService.getApiBase()
+    return this.configService.getGateway()
       .pipe(
-        switchMap((apiBase) => {
+        switchMap((gateway) => {
 
-          return this.httpClient.put<T>(apiBase + this.getRequestMapping() + '/update', Helpers.objToJsonObj(entity))
+          return this.httpClient.put<T>(this.getSaveURL(gateway), this.serializeInstance(entity))
             .pipe(
               map((result) => {
                this.apiMessageService.sendMessage(MessageType.SUCCESS, this.saveMessage());
@@ -270,6 +278,9 @@ export abstract class CommonService<T extends Base> {
       );
   }
 
+  protected getSaveURL(gateway: string): string {
+    return gateway + ConfigService.API_BASE + this.getRequestMapping() + '/update';
+  }
   /**
    * Delete entity.
    * @param {number} id

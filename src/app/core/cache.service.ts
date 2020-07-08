@@ -30,4 +30,19 @@ export class CacheService {
             );
         }));
     }
+
+    public paesi(): Observable<string[]> {
+        return this.configService.getGateway().pipe(switchMap((gateway) => {
+            return this.httpClient.get<string[]>(gateway + ConfigService.URL_PAESI).pipe(
+                map((paesi) => {
+                    return paesi;
+                }),
+                catchError((error: HttpErrorResponse) => {
+                    this.apiMessageService.sendMessage(MessageType.ERROR, error.error.error_description);
+                    return observableThrowError(error);
+                })
+            );
+        }));
+    }
+
 }

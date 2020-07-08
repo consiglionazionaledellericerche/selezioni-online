@@ -41,6 +41,10 @@ declare var $: any;   // not required
               {{ type.id | translate}}
             </option>
 
+            <option *ngFor="let string of strings" [value]="string" [selected]="isStringSelected(string)">
+              {{ string | translate}}
+            </option>
+
             <option *ngFor="let item of items" [value]=item.getId() [selected]="isItemSelected(item.getId())">
               {{ item.getLabel(detailedLabel) }}
             </option>
@@ -83,6 +87,8 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
   @Input() items: CmisObject[];
 
   @Input() enums: Enum[];
+
+  @Input() strings: string[];
 
   @Input() showAsList: false;
 
@@ -144,6 +150,11 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
       return;
     }
 
+    if (this.isSingleSyncString()) {
+      this.updateSigleSyncString(data);
+      return;
+    }
+
     if (this.isSingleAsync()) {
       this.updateSigleAsync(data);
       return;
@@ -196,6 +207,10 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
     return this.types && !this.multiple && !this.path;
   }
 
+  private isSingleSyncString() {
+    return this.strings && !this.multiple && !this.path;
+  }
+
   private isSingleAsync() {
     return !this.multiple && this.path;
   }
@@ -230,6 +245,17 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
     }
     // update value
     this.selected = this.types.filter((type) => type.id === data.id)[0].queryName;
+
+    this.completeOnChange();
+  }
+
+  private updateSigleSyncString(data) {
+    // same value prevent change detection
+    if (this.selected && this.selected && this.selected === +data.id) {
+      return;
+    }
+    // update value
+    this.selected = this.strings.filter((type) => type === data.id)[0];
 
     this.completeOnChange();
   }
@@ -358,6 +384,15 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
   isItemSelected(value: any) {
     if (this.isSingleSync() || this.isSingleAsync()) {
       return this.selected ? this.selected.getId() === value : false;
+    }
+    if (this.isMultiSync()) {
+      return false; // this.selected ? this.selected.filter(item => item === value).lenght > 0 : false;
+    }
+  }
+
+  isStringSelected(value: any) {
+    if (this.isSingleSyncString() || this.isSingleAsync()) {
+      return this.selected ? this.selected === value : false;
     }
     if (this.isMultiSync()) {
       return false; // this.selected ? this.selected.filter(item => item === value).lenght > 0 : false;

@@ -55,6 +55,14 @@ export abstract class CmisObject implements Base{
     return this.objectId;
   }
 
+  public getType(): string {
+    return this.objectTypeId;
+  }
+
+  public getBaseType(): string {
+    return this.baseTypeId;
+  }
+
   public referenceValue() {
     return this.getObjectId();
   }
@@ -78,6 +86,10 @@ export abstract class CmisObject implements Base{
 
   public hasAllowableActions(allowableAction: AllowableAction) {
     return this.allowableActions.includes(allowableAction);
+  }
+
+  canDelete(): boolean {
+    return this.hasAllowableActions(AllowableAction.CAN_DELETE_OBJECT);
   }
 
 }

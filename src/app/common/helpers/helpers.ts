@@ -6,6 +6,8 @@ import {DatePipe} from '@angular/common';
 import {JsonConvert, ValueCheckingMode} from 'json2typescript';
 
 export class Helpers {
+  public static regExpCodiceFiscale: RegExp = /^(?:[A-Z][AEIOU][AEIOUX]|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}(?:[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[15MR][\dLMNP-V]|[26NS][0-8LMNP-U])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM]|[AC-EHLMPR-T][26NS][9V])|(?:[02468LNQSU][048LQU]|[13579MPRTV][26NS])B[26NS][9V])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$/i;
+
   public static buildInstance(json: any, obj: any): any {
     let jsonConvert: JsonConvert = new JsonConvert();
         jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
@@ -107,6 +109,30 @@ export class Helpers {
     return jsonObj;
   }
 
+   /**
+   * Stesso oggetto ma con:
+   * Base value: id
+   * Enum value: enumValue
+   * Applicazione: Post e Put Http.
+   */
+  public static objToFormData(obj): FormData {
+    const formData: FormData = new FormData();
+    Object.keys(obj).forEach((key) => {
+      const value = obj[key];
+      if (value) {
+        if (value instanceof Array) {
+          value.forEach( item => {
+            formData.append(key, Helpers.valueToJson(item));
+          });
+          return;
+        } else {
+          formData.append(key, Helpers.valueToJson(value));
+        }  
+      }
+    });
+    return formData;
+  }
+
   public static objToQueryParam(obj) {
     let s = '';
     if (!obj) {
@@ -166,6 +192,21 @@ export class Helpers {
   
       // test the value of the control against the regexp supplied
       const valid = String(control.value).length >= minlength;
+  
+      // if true, return no error (no error), else return error passed in the second parameter
+      return valid ? null : error;
+    };
+  }
+
+  static lengthValidator(length: number, error: ValidationErrors): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } => {
+      if (!control.value) {
+        // if control is empty return no error
+        return null;
+      }
+  
+      // test the value of the control against the regexp supplied
+      const valid = String(control.value).length == length;
   
       // if true, return no error (no error), else return error passed in the second parameter
       return valid ? null : error;

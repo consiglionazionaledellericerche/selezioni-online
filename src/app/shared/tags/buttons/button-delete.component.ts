@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
-import {CmisObject} from '../../../common/model/cmisobject.model';
-import {AllowableAction} from '../../../common/model/allowableaction.enum';
+import { Base } from '../../../common/model/base.model';
 
 @Component({
   selector: 'app-button-delete',
@@ -40,7 +39,7 @@ export class ButtonDeleteComponent {
 
   @Input() disable = false;
 
-  @Input() entity: CmisObject;
+  @Input() entity: Base;
 
   @Input() style = {};
 
@@ -64,7 +63,7 @@ export class ButtonDeleteComponent {
   }
 
   canDelete() {
-    return this.entity.hasAllowableActions(AllowableAction.CAN_DELETE_OBJECT);
+    return this.entity.canDelete();
   }
 
 }

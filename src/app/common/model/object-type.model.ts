@@ -6,12 +6,14 @@ import { Call } from '../../core/call/call.model'
 
 import { Attachment } from './attachment.model';
 import { DocumentoRiconoscimento } from './documento_riconoscimento.model'
+import { User } from '../../auth/model/user.model';
 
 export class ObjectType {
     
   public static classes = {
     'cmis:document': Document,
     'cmis:folder': Folder,
+    'cm:person': User,
     'F:jconon_call:folder': Call,
     'F:jconon_call_tind:folder': Call,
     'F:jconon_call_tind:folder_concorsi_pubblici': Call,

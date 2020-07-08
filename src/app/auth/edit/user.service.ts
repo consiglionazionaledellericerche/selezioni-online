@@ -34,13 +34,13 @@ export class UserService extends CommonService<User> {
 
   public existingCodicefiscale(codicefiscale: string, id: string): Observable<boolean> {
     return this.getBoolean('/existingcodicefiscale', new HttpParams()
-      .set('codicefiscale', codicefiscale)
+      .set('codicefiscale', codicefiscale.toUpperCase())
       .set('id', id ? id : ''));
   }
 
   public existingEmail(email: string, id: string): Observable<boolean> {
     return this.getBoolean('/existingemail', new HttpParams()
-      .set('email', email)
+      .set('email', email.toLowerCase())
       .set('id', id ? id : ''));
   }
 

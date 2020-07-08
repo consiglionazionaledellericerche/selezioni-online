@@ -37,6 +37,7 @@ import {ListItemApplicationComponent} from './list/list-item-application.compone
 import {ListItemDocumentComponent} from './list/list-item-document.component';
 import {ButtonCrudComponent} from './buttons/button-crud.component';
 import {ButtonDeleteComponent} from './buttons/button-delete.component';
+import {ButtonConfirmComponent} from './buttons/button-confirm.component';
 import {ListHeaderLayoutComponent} from './list/list-header-layout.component';
 import {EditHeaderLayoutComponent} from './layout/layout-edit-header.component';
 import {FormTemplateCheckboxComponent} from './forms/form-template-checkbox.component';
@@ -98,6 +99,7 @@ import {HttpClient} from '@angular/common/http';
     ButtonBackComponent,
     ButtonCrudComponent,
     ButtonDeleteComponent,
+    ButtonConfirmComponent,
 
     // Show
     AdMetadata,
@@ -193,6 +195,7 @@ import {HttpClient} from '@angular/common/http';
     ButtonBackComponent,
     ButtonCrudComponent,
     ButtonDeleteComponent,
+    ButtonConfirmComponent,
 
     // Show
     ShowEnumComponent,
