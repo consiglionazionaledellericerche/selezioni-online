@@ -278,7 +278,8 @@
     "male": "Maschio",
     "female": "Femmina",
     "dataDiNascita": "Data di Nascita",
-    "statoestero": "Stato Estero"
+    "statoestero": "Stato Estero",
+    "information": "Informazioni account"
   },
   "document": {
     "last_modified": ", ultima modifica: {{value}}",

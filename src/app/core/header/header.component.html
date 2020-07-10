@@ -24,8 +24,8 @@
               </div>
             </app-dropdown-navbar>
           </ng-container>
-          <form class="form-inline pl-1 d-none d-lg-flex d-xl-flex" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
-              <div class="input-group">
+          <form class="form-inline pl-1 d-lg-flex d-xl-flex" [ngClass]="{'d-none': isAuthenticated()}" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
+              <div class="input-group d-none d-md-flex">
                 <input class="form-control col-md-6 col-sm-12 col-xl-12" formControlName="callCode" type="search" placeholder="{{'search'|translate}}">
                 <div class="input-group-append">
                     <button class="btn text-primary border" type="submit">
@@ -33,6 +33,9 @@
                     </button>
                 </div>    
               </div>
+              <button class="btn text-primary border d-sm-block d-md-none" tooltip="{{'search'|translate}}" type="submit">
+                <i class="fa fa-search" aria-hidden="true"></i> {{'search'|translate}}
+              </button>
           </form>
           <i *ngIf="spinner" class="fa fa-spinner fa-spin fa-2x fa-fw" [ngStyle]="{'color': 'white'}"></i>
         </ul>

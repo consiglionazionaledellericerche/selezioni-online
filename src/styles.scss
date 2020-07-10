@@ -86,6 +86,15 @@ body {
 .top-on-navbar {
   top: 65px;
 }
+
+.logo-small {
+  background: url('assets/images/logo-cnr.png') no-repeat center;
+  background-size: 40px 40px;  
+  width: 40px;
+  padding: 0;
+  height: 40px;
+}
+
 @media (max-width: 1024px) {
   .main-title {
       font-size: 30px;
@@ -234,4 +243,7 @@ body {
 }
 .lowercase {
   text-transform: lowercase;
+}
+.bb-lg{
+  border-bottom: solid 1px lightgray;
 }
