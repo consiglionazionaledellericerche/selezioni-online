@@ -2,13 +2,9 @@ import { Component, OnDestroy, OnInit, HostListener, ElementRef } from '@angular
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/model/user.model';
 import { Subscription } from 'rxjs';
-import {ApiMessage, ApiMessageService, MessageType} from '../api-message.service';
-import {NotificationsService} from 'angular2-notifications';
-import {ServiceReg} from '../../auth/auth.module';
-import {MenuService} from '../header/menu.service';
-import {NavbarMenu} from '../header/model/navbar-menu.model';
-import {TranslateService, LangChangeEvent} from '@ngx-translate/core';
-import { Title } from '@angular/platform-browser';
+import { NotificationsService} from 'angular2-notifications';
+import { MenuService} from '../header/menu.service';
+import { NavbarMenu} from '../header/model/navbar-menu.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -20,7 +16,7 @@ import { ApplicationState } from '../application/application-state.model';
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styles: [
-    '.sidenav {z-index: 1021; border-right:solid 1px lightgray;height: calc(100% - 58px);}',
+    '.sidenav {z-index: 1031; border-right:solid 1px lightgray;}',
     'ul.list-group-flush {top: 56px;}'
   ],
   animations: [
