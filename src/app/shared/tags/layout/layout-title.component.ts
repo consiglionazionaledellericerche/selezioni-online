@@ -3,7 +3,7 @@ import {Component, Input} from '@angular/core';
 @Component({
   selector: 'app-layout-title',
   template: `
-    <div class="bg-primary text-white pr-1 pl-1 pb-3 pt-3 mb-3">
+    <div class="bg-primary text-white pr-1 pl-1 pb-3 pt-3 mb-3 ml-n3 mr-n3">
       <h1 class="text-center" [ngClass]="titleClass">{{ title | translate}}</h1>
       <h3 *ngIf="subTitle" class="mt-3 text-center" [ngClass]="subTitleClass">{{ subTitle | translate}}</h3>
     </div>
