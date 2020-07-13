@@ -45,6 +45,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
     }
 
     public onUserActivated: Subscription = new Subscription();
+    public onUserModified: Subscription = new Subscription();
+
     public sidebarToggle: Subscription = new Subscription();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
     public isCollapsed: boolean = true;
     public user: User = null;
@@ -65,6 +67,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
             } else {
               this.user = null;
             }
+        });
+        this.onUserModified = this.authService.userModified.subscribe((user: User) => {
+          this.user = Helpers.buildInstance(user, User);
         });
         if (!this.navbarMenu) {
             this.menuService.evaluateNavbar();
@@ -87,6 +92,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     
     public ngOnDestroy() {
         this.onUserActivated.unsubscribe();
+        this.onUserModified.unsubscribe();
         this.sidebarToggle.unsubscribe();
         this.onNavbarEvaluated.unsubscribe();
     }

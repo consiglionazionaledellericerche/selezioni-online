@@ -13,6 +13,7 @@ import {RxwebValidators} from '@rxweb/reactive-form-validators';
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { CacheService } from '../../core/cache.service';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-user-edit',
@@ -21,8 +22,10 @@ import { CacheService } from '../../core/cache.service';
 export class UserEditComponent extends CommonEditComponent<User> implements OnInit {
 
     ngForm: FormGroup;
+    ngPasswordForm: FormGroup;
     submitted = false;
     paesi: string[];
+    public userActivated = new Subject<User>();
 
     constructor(private formBuilder: FormBuilder,
                 private apiMessageService: ApiMessageService,
@@ -113,6 +116,17 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
             statoestero: [this.entity.statoestero, Validators.required],
             'cmis:objectTypeId':['cm:person']
         });
+        this.ngPasswordForm = this.formBuilder.group({
+            password: ['', [
+                Validators.required, 
+                Helpers.patternValidator(/\d/, { hasNumber: true }),
+                Helpers.patternValidator(/[A-Z]/, { hasCapitalCase: true }),
+                Helpers.patternValidator(/[a-z]/, { hasSmallCase: true }),
+                Helpers.minlengthValidator(8, {minlength8: true})
+                ]
+            ],
+            confirmpassword: ['', [Validators.required, RxwebValidators.compare({fieldName:'password' })]],
+        });
         if (this.entity.userName) {
             this.ngForm.controls.confirmemail.disable();
             this.ngForm.controls.password.disable();
@@ -153,9 +167,15 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
                 this.apiMessageService.sendMessage(MessageType.WARNING, label);
             });
         } else {
-            this.userService.save(this.buildInstance()).subscribe((user:User) => {
-                console.log(user);
-            });
+            if (this.entity.userName) {
+                this.userService.save(this.buildInstance()).subscribe((user:User) => {
+                    this.authService.updateUserOnToken(user);
+                });
+            } else {
+                this.userService.create(this.buildInstance()).subscribe((user:User) => {
+                    this.router.navigateByUrl('/auth/signin');
+                });
+            }
         }
     }
 }

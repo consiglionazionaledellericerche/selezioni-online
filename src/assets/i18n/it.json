@@ -279,7 +279,11 @@
     "female": "Femmina",
     "dataDiNascita": "Data di Nascita",
     "statoestero": "Stato Estero",
-    "information": "Informazioni account"
+    "information":{
+      "title": "Informazioni account",
+      "detail": "Le informazioni personali possono essere variate in qualsiasi momento, se l'utenza non proviene da un account SPID o dal sistema centralizzato delle utenze del CNR. La variazione delle informazioni non si riflette sulle domande già inviate o in stato provvisorio, in tal caso una variazione dei dati anagrafici va comunicata tempestivamente aprendo una segnalazione",
+      "change.password": "Se si desidera invece cambiare la password basta attivare il seguente"
+    } 
   },
   "document": {
     "last_modified": ", ultima modifica: {{value}}",

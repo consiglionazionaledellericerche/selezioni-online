@@ -227,11 +227,10 @@ export abstract class CommonService<T extends Base> {
   public create(entity: T): Observable<T> {
 
     // return observableThrowError(null);
-    return this.configService.getApiBase()
+    return this.configService.getGateway()
       .pipe(
-        switchMap((apiBase) => {
-
-          return this.httpClient.post<T>(apiBase + this.getRequestMapping() + '/create', Helpers.objToJsonObj(entity))
+        switchMap((gateway) => {
+          return this.httpClient.post<T>(this.getCreateURL(gateway), this.serializeInstance(entity))
             .pipe(
               map(result => {
                 this.apiMessageService.sendMessage(MessageType.SUCCESS, this.saveMessage());
@@ -245,6 +244,10 @@ export abstract class CommonService<T extends Base> {
             );
         })
     );
+  }
+
+  protected getCreateURL(gateway: string): string {
+    return gateway + ConfigService.API_BASE + this.getRequestMapping() + '/create';
   }
 
   /**
@@ -261,7 +264,6 @@ export abstract class CommonService<T extends Base> {
     return this.configService.getGateway()
       .pipe(
         switchMap((gateway) => {
-
           return this.httpClient.put<T>(this.getSaveURL(gateway), this.serializeInstance(entity))
             .pipe(
               map((result) => {
@@ -281,6 +283,7 @@ export abstract class CommonService<T extends Base> {
   protected getSaveURL(gateway: string): string {
     return gateway + ConfigService.API_BASE + this.getRequestMapping() + '/update';
   }
+
   /**
    * Delete entity.
    * @param {number} id

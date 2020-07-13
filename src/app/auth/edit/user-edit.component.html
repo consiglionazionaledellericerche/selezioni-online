@@ -1,11 +1,22 @@
-<div class="p-2 row no-gutters">    
+<div class="p-2 row no-gutters" [ngSwitch]="entity.userName === undefined">    
   <div class="col-md-6" [ngClass]="{'col-md-12': !entity.userName}">
-    <h1>{{'user.new_registration.title'|translate}}</h1>
-    <span innerHtml="{{'user.new_registration.requisiti'|translate}}"></span>
+    <div *ngSwitchCase="true"> 
+      <h1>{{'user.new_registration.title'|translate}}</h1>
+      <span innerHtml="{{'user.new_registration.requisiti'|translate}}"></span>
+    </div>
+    <div *ngSwitchCase="false"> 
+      <h1>{{'user.profile.title'|translate}}</h1>
+      <span class="pr-1">{{'user.information.detail'|translate}}</span>
+      <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
+      <div>
+        <span class="font-weight-bold">{{'user.information.change.password'|translate}}</span>
+        <a class="btn btn-link pl-1 text-primary" (click)="onChangePassword()">link</a>
+      </div>
+    </div>
   </div>
   <div class="col-md-6" [ngClass]="{'col-md-12': !entity.userName}">
     <div class="card m-3">
-      <div class="card-header h1">{{'user.profile.title' | translate}}</div>
+      <div *ngSwitchCase="true" class="card-header h1">{{'user.profile.title' | translate}}</div>
       <div class="card-body">  
         <form [formGroup]="ngForm">
           <div [ngClass]="{'row': !entity.userName}">
@@ -109,6 +120,7 @@
                 [strings]="paesi"
                 [showValidation]="true"
                 [allowClear]="true"
+                [showValidation]="true"
                 [placeholder]="'placeholder.select.country'| translate"
                 formControlName="statoestero">
               </app-control-select-model>
@@ -116,7 +128,7 @@
           </div>
         </form>
       </div>
-      <div class="card-footer" [ngSwitch]="entity.userName === undefined">
+      <div class="card-footer">
         <app-button-confirm
           *ngSwitchCase="true"
           classes="btn-primary btn-block"

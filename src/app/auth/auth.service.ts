@@ -23,6 +23,7 @@ export class AuthService {
 
   // Emesso quando l'utente effettua login
   public userActivated = new Subject<User>();
+  public userModified = new Subject<User>();
 
 
   // Stored Token
@@ -42,6 +43,12 @@ export class AuthService {
     }
   }
 
+  public updateUserOnToken(user: User): void {
+    var token = this.getToken();
+    token.user = user;
+    this.setToken(token);
+    this.userModified.next(user);
+  }
   /**
    * Il token.
    * @returns {Token}
