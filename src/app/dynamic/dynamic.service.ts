@@ -27,7 +27,6 @@ export class DynamicService {
                 // find a declaration with the @Component decorator (not a @Directive) with the requested selector
                 return declarationAnnotation != null && declarationAnnotation.selector === selector;
             });
-            console.info("Find component with type: ", componentType);
             if (componentType) {
                 this.components.set(selector, this.componentFactoryResolver.resolveComponentFactory(componentType as Type<any>));
             } else {
@@ -44,7 +43,8 @@ export class DynamicService {
 }
 export function decoratorOfType<T>(decoratedType: Type<any>, decoratorType: Type<T>): T {
     // get all decorators off of the provided type
-	return Object.getOwnPropertyDescriptor(decoratedType, '__annotations__').value.find((annotation: any) =>
+    console.log(Reflect.get(decoratedType, '__annotations__'));
+	return Reflect.get(decoratedType, '__annotations__').find((annotation: any) =>
         // get the decorator that matches the requested type
 		annotation instanceof decoratorType
 	);
