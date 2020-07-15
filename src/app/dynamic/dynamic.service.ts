@@ -44,7 +44,7 @@ export class DynamicService {
 }
 export function decoratorOfType<T>(decoratedType: Type<any>, decoratorType: Type<T>): T {
     // get all decorators off of the provided type
-	return Reflect.getOwnPropertyDescriptor(decoratedType, '__annotations__').value.find((annotation: any) =>
+	return Object.getOwnPropertyDescriptor(decoratedType, '__annotations__').value.find((annotation: any) =>
         // get the decorator that matches the requested type
 		annotation instanceof decoratorType
 	);
