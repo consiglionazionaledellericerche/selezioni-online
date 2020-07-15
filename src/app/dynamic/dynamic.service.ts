@@ -26,6 +26,7 @@ export class DynamicService {
                 // find a declaration with the @Component decorator (not a @Directive) with the requested selector
                 return declarationAnnotation != null && declarationAnnotation.selector === selector;
             });
+            console.info("Find component with type: ", componentType);
             if (componentType) {
                 this.components.set(selector, this.componentFactoryResolver.resolveComponentFactory(componentType as Type<any>));
             } else {
