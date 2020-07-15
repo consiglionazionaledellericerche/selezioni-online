@@ -19,6 +19,7 @@ export class DynamicService {
         if (!this.components.has(selector)) {
             console.info("Try to find component with selector: ", selector);
             const ngModuleAnnotation = decoratorOfType(DynamicModule, NgModule);
+            console.info("ModuleAnnotation: ", ngModuleAnnotation);
             const componentType = ngModuleAnnotation.declarations.find((declaration: Type<any>) => {
                 // get the @Component decorator
                 const declarationAnnotation = decoratorOfType(declaration, Component);
