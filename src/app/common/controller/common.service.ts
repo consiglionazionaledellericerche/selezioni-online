@@ -55,7 +55,7 @@ export abstract class CommonService<T extends Base> {
   }
 
   protected createInstance(cmisType: string, cmisBaseType: string): { new (): T; } {
-    return ObjectType.classes[cmisType] || ObjectType.classes[cmisBaseType] || ObjectType.classes['cm:person'];
+    return ObjectType.getModel(cmisType, cmisBaseType);
   }
 
   public getRequestMapping(): string {

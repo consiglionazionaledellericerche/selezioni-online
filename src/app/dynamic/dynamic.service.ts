@@ -1,9 +1,8 @@
-import { Injectable, Type, NgModule, Component, ComponentFactoryResolver, ComponentFactory } from "@angular/core";
+import { Injectable, ComponentFactoryResolver, ComponentFactory } from "@angular/core";
 import { CmisObject } from "../common/model/cmisobject.model";
 import { AdMetadataComponent } from "../shared/tags/show/ad-metadata.component";
-import { DynamicModule } from "./dynamic.module";
 import { AdMetadata } from "../shared/tags/show/ad-metadata.directive";
-import { JcononAttachmentShowComponent } from "./attachment/jconon-attachment-show.component";
+import { ObjectType } from "../common/model/object-type.model";
 
 @Injectable({
     providedIn: 'root',
@@ -18,20 +17,7 @@ export class DynamicService {
     public loadComponent(selector: string, adMetadata: AdMetadata, cmisObject: CmisObject) {
         if (!this.components.has(selector)) {
             console.info("Try to find component with selector: ", selector);
-            
-            const ngModuleAnnotation = decoratorOfType(DynamicModule, NgModule);
-            const componentType = ngModuleAnnotation.declarations.find((declaration: Type<any>) => {
-                // get the @Component decorator
-                const declarationAnnotation = decoratorOfType(declaration, Component);
-          
-                // find a declaration with the @Component decorator (not a @Directive) with the requested selector
-                return declarationAnnotation != null && declarationAnnotation.selector === selector;
-            });
-            if (componentType) {
-                this.components.set(selector, this.componentFactoryResolver.resolveComponentFactory(componentType as Type<any>));
-            } else {
-                this.components.set(selector, this.componentFactoryResolver.resolveComponentFactory(JcononAttachmentShowComponent));   
-            }
+            this.components.set(selector, this.componentFactoryResolver.resolveComponentFactory(ObjectType.getComponent(selector)));
         }
         const viewContainerRef = adMetadata.viewContainerRef;
         viewContainerRef.clear();
@@ -40,12 +26,4 @@ export class DynamicService {
         (<AdMetadataComponent>componentRef.instance).data = cmisObject;
     }
 
-}
-export function decoratorOfType<T>(decoratedType: Type<any>, decoratorType: Type<T>): T {
-    // get all decorators off of the provided type
-    console.log(Reflect.get(decoratedType, '__annotations__'));
-	return Reflect.get(decoratedType, '__annotations__').find((annotation: any) =>
-        // get the decorator that matches the requested type
-		annotation instanceof decoratorType
-	);
 }
