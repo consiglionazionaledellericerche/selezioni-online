@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {catchError, map, switchMap} from 'rxjs/operators';
+import {HttpClient, HttpParams, HttpErrorResponse} from '@angular/common/http';
 import {CommonService} from '../../common/controller/common.service';
-import {ApiMessageService} from '../../core/api-message.service';
-import {of as observableOf, timer as observableTimer, Observable} from 'rxjs';
+import {ApiMessageService, MessageType} from '../../core/api-message.service';
+import {throwError as observableThrowError, Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {ConfigService} from '../../core/config.service';
 import {MODULE_CONFIGURAZIONE} from '../../app-routing.module';
 import {User} from '../model/user.model';
+import { SpringError } from '../../common/model/spring-error.model';
 
 @Injectable()
 export class UserService extends CommonService<User> {
@@ -40,8 +42,33 @@ export class UserService extends CommonService<User> {
 
   public existingEmail(email: string, id: string): Observable<boolean> {
     return this.getBoolean('/existingemail', new HttpParams()
-      .set('email', email.toLowerCase())
+      .set('email', encodeURIComponent(email.toLowerCase()))
       .set('id', id ? id : ''));
+  }
+
+  public changePassword(username: string, json: any): Observable<any> {
+    return this.configService.getProxy()
+      .pipe(
+        switchMap((proxy) => {
+          return this.httpClient.post<any>(proxy + '?url=service/api/person/changepassword/' + username, json)
+            .pipe(
+              map((result) => {
+               this.apiMessageService.sendMessage(MessageType.SUCCESS, this.saveMessage());
+               return result;
+              }),
+              catchError((httpErrorResponse: HttpErrorResponse) => {
+               if(httpErrorResponse.status === 401) {
+                this.apiMessageService.sendMessage(MessageType.ERROR, 'Password errata!');
+                return observableThrowError('Password errata!');
+               } else {
+                const springError = new SpringError(httpErrorResponse);
+                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
+                return observableThrowError(springError); 
+               }
+              })
+            );
+        })
+      );
   }
 
 }

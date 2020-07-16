@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Injector, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AuthService } from '../auth.service';
@@ -14,6 +14,7 @@ import { CommonEditComponent } from '../../common/controller/common-edit.compone
 import { distinctUntilChanged } from 'rxjs/operators';
 import { CacheService } from '../../core/cache.service';
 import { Subject } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'app-user-edit',
@@ -26,8 +27,10 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
     submitted = false;
     paesi: string[];
     public userActivated = new Subject<User>();
+    modalRef: BsModalRef;
 
     constructor(private formBuilder: FormBuilder,
+                private modalService: BsModalService,
                 private apiMessageService: ApiMessageService,
                 protected userService: UserService,
                 protected cacheService: CacheService,
@@ -41,7 +44,6 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
     }
 
     ngAfterViewChecked(){
-        //your code to update the model
         this.cdr.detectChanges();
     }
 
@@ -93,19 +95,22 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
             firstName: [this.entity.firstName, Validators.required],
             lastName: [this.entity.lastName, Validators.required],
             email: [this.entity.getEmail(), 
-                [Validators.email,Validators.required], 
+                [
+                    Validators.required,
+                    Validators.email,
+                ], 
                 [emailUnique.validator.bind(emailUnique)] 
             ],
-            confirmemail: ['', [Validators.required, Validators.email, RxwebValidators.compare({fieldName:'email' })]],
+            confirmemail: ['', [Validators.required, Validators.email, RxwebValidators.compare({fieldName: 'email'})]],
             password: ['', [
                     Validators.required, 
                     Helpers.patternValidator(/\d/, { hasNumber: true }),
                     Helpers.patternValidator(/[A-Z]/, { hasCapitalCase: true }),
                     Helpers.patternValidator(/[a-z]/, { hasSmallCase: true }),
-                    Helpers.minlengthValidator(8, {minlength8: true})
+                    Helpers.minlengthValidator(8, {minlength8: true}),
                 ]
             ],
-            confirmpassword: ['', [Validators.required, RxwebValidators.compare({fieldName:'password' })]],
+            confirmpassword: ['', [Validators.required, RxwebValidators.compare({fieldName: 'password'})]],
             straniero: [ this.entity.straniero ? String(this.entity.straniero) : 'false', Validators.required],
             codicefiscale: [this.entity.codicefiscale, [
                 Validators.required, 
@@ -117,7 +122,8 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
             'cmis:objectTypeId':['cm:person']
         });
         this.ngPasswordForm = this.formBuilder.group({
-            password: ['', [
+            oldpw: ['', [Validators.required]],
+            newpw: ['', [
                 Validators.required, 
                 Helpers.patternValidator(/\d/, { hasNumber: true }),
                 Helpers.patternValidator(/[A-Z]/, { hasCapitalCase: true }),
@@ -125,7 +131,7 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
                 Helpers.minlengthValidator(8, {minlength8: true})
                 ]
             ],
-            confirmpassword: ['', [Validators.required, RxwebValidators.compare({fieldName:'password' })]],
+            confirmpassword: ['', [Validators.required, RxwebValidators.compare({fieldName:'newpw' })]],
         });
         if (this.entity.userName) {
             this.ngForm.controls.confirmemail.disable();
@@ -176,6 +182,28 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
                     this.router.navigateByUrl('/auth/signin');
                 });
             }
+        }
+    }
+
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'modal-md' }));      
+        return false;
+    }
+    
+    changePassword(): void {
+        this.submitted = true;
+        Object.keys(this.ngPasswordForm.controls).forEach(control => {
+            this.ngPasswordForm.controls[control].markAsDirty({onlySelf: true});
+        });
+        if (this.ngPasswordForm.invalid) {
+            this.translateService.get('message.form.invalid').subscribe((label) => {
+                this.apiMessageService.sendMessage(MessageType.WARNING, label);
+            });
+        } else {
+            this.userService.changePassword(this.entity.userName, this.ngPasswordForm.value).subscribe((response:any) => {
+                this.submitted = false;
+                this.modalRef.hide();
+            });
         }
     }
 }

@@ -10,7 +10,7 @@
       <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
       <div>
         <span class="font-weight-bold">{{'user.information.change.password'|translate}}</span>
-        <a class="btn btn-link pl-1 text-primary" (click)="onChangePassword()">link</a>
+        <a class="btn btn-link pl-1 text-primary" (click)="openModal(templatechangepassword)">link</a>
       </div>
     </div>
   </div>
@@ -146,3 +146,52 @@
     </div>
   </div>      
 </div>
+
+<ng-template #templatechangepassword>
+  <div class="modal-header">
+    <h2 class="modal-title pull-left text-primary"><i class="fa fa-key"></i> {{'user.change.password.title' | translate}}</h2>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="ngPasswordForm">
+      <div class="form-group mb-0">
+        <label for="oldpw" class="font-weight-bold">{{'user.oldpassword'| translate}}</label>
+        <app-control-text 
+            (cut)="$event.preventDefault()" 
+            (copy)="$event.preventDefault()" 
+            (paste)="$event.preventDefault()" 
+            type="password" 
+            [inline]="true" 
+            [noLabel]="true" 
+            formControlName="oldpw"></app-control-text>
+      </div>
+      <div class="form-group mb-0">
+        <label for="newpw" class="font-weight-bold">{{'user.newpassword'| translate}}</label>
+        <app-control-text 
+            (cut)="$event.preventDefault()" 
+            (copy)="$event.preventDefault()" 
+            (paste)="$event.preventDefault()" 
+            type="password" 
+            [inline]="true" 
+            [noLabel]="true" 
+            formControlName="newpw"></app-control-text>
+      </div>
+      <div class="form-group mb-0">
+        <label for="confirmpassword" class="font-weight-bold">{{'user.confirmpassword'| translate}}</label>
+        <app-control-text 
+            type="password" 
+            (cut)="$event.preventDefault()" 
+            (copy)="$event.preventDefault()" 
+            (paste)="$event.preventDefault()" 
+            [inline]="true" 
+            [noLabel]="true" 
+            formControlName="confirmpassword"></app-control-text>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary btn-block" (click)="changePassword()">{{'save' | translate}}</button>
+  </div>
+</ng-template>

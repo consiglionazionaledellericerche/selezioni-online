@@ -38,6 +38,8 @@ export class User implements Base{
   public firstName: string = undefined;
   @JsonProperty("enabled", null, true)
   public enabled: boolean = undefined;
+  @JsonProperty("password", null, true)
+  public password: string = undefined;
   @JsonProperty("codicefiscale", null, true)
   public codicefiscale: string = undefined;
   @JsonProperty("departmentNumber", null, true)
