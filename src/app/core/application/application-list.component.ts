@@ -91,7 +91,7 @@ import { Observable, of } from 'rxjs';
       </div>
     </form>
     <!-- List -->
-    <app-list-layout [loading]="loading" [items]="items" [page]="getPage()"
+    <app-list-layout [loading]="loading" [items]="items" [page]="getPage()" [page_offset]="service.getPageOffset()"
                      [count]="count" (onChangePage)="onChangePage($event)">
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
         <app-list-item-application [item]="item" (onDelete)="onDelete(item.getId())">

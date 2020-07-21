@@ -19,7 +19,7 @@ import { Call } from '../call/call.model';
   `
     <app-layout-wait [loaded]="isLoaded()"></app-layout-wait>
     <div *ngIf="isLoaded()">
-      <div class="jumbotron jumbotron-fluid bg-primary text-white pr-1 pl-1 pb-3 pt-3">
+      <div class="bg-primary text-white px-1 py-3 mx-n3">
         <div class="text-right">
           <span>{{'application.call.title' | translate:{value: call.codice} }}</span>
           <app-show-children-modal 
