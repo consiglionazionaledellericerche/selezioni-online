@@ -2,8 +2,25 @@
 <div class="row no-gutters">
     <div class="col-lg-3">
         <form *ngIf="filterFormHome" class="sticky-top top-on-navbar" [formGroup]="filterFormHome">
+            <div class="d-xs-block d-sm-block d-md-none">
+                <select class="form-control mb-2" formControlName="type">
+                    <option value="jconon_call:folder">{{'F:jconon_call:folder' | translate}}</option>
+                    <ng-container *ngFor="let item of cache.jsonlistCallType">
+                        <ng-container *ngIf="item.display && !item.childs">
+                            <option value="{{item.queryName}}">{{item.key | translate}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="item.display && item.childs">
+                            <optgroup label="{{item.key | translate}}">
+                                <ng-container *ngFor="let child of item.childs">
+                                    <option value="{{child.queryName}}">{{child.key | translate}}</option>            
+                                </ng-container>    
+                            </optgroup>
+                        </ng-container>
+                    </ng-container>
+                </select>
+            </div>
             <div>
-                <div id="list-call-types" btnRadioGroup formControlName="type" class="list-group ml-1 pb-2">
+                <div id="list-call-types" btnRadioGroup formControlName="type" class="list-group ml-1 pb-2 d-none d-md-block">
                     <a class="list-group-item list-group-item-action" 
                         btnRadio="jconon_call:folder">
                         <span>{{'F:jconon_call:folder' | translate}}</span> 

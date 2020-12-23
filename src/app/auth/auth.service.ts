@@ -11,15 +11,12 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import {ApiMessageService, MessageType} from '../core/api-message.service';
 import {Injectable} from '@angular/core';
 import {ConfigService} from '../core/config.service';
-import {CommonService} from '../common/controller/common.service';
-
 
 @Injectable()
 export class AuthService {
 
   static tokenHeaders = new HttpHeaders()
-    .set('Content-Type', 'application/x-www-form-urlencoded')
-    .set('Authorization', 'Basic YWNlOnRoaXNpc3NlY3JldA==');
+    .set('Content-Type', 'application/x-www-form-urlencoded');
 
   // Emesso quando l'utente effettua login
   public userActivated = new Subject<User>();
