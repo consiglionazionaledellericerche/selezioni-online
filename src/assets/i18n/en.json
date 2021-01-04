@@ -90,6 +90,14 @@
     "title": "CNR E-Recruitment",
     "subtitle": "Online application system for recruitment of staff and other types of employment and training of the National Research Council of Italy."
   },
+  "header": {
+    "company": {
+      "title": "National Research Council of Italy",
+      "url": "https://www.cnr.it/en"
+    },
+    "title": "CNR E-Recruitment",
+    "subtitle": "Online application system for recruitment"
+  },
   "footer": {
     "first": "The platform is part of the e-government project of CNR, in coherence with the Administrative Digital Code and regulations concerning optimization of the productivity of public work and of efficiency and transparency of public administrations and their simplification and development*.*27 October 2009, legislative decree, n. 150, on \"Implementation of the 4 March 2009 law, n. 15, on the matter of optimization of the productivity of public work and of efficiency and transparency of public administrations\" and the recent 9 February 2012 legislative decree, n. 5, \"Urgent measures of simplification and development\" (art. 8  Simplification of participation in recruitment competitions and testing).",
     "second": "The hosts procedures developed to allow participation in the notices issued by the organization's structures. The procedures are developed starting from the specifications produced by the structures issuing the calls and must comply with the rules imposed by them.",

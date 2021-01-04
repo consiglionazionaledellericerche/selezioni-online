@@ -126,7 +126,6 @@ export class FormTemplateButtonEventComponent extends FormCommonTag implements C
   writeValue(value: any): void {
 
     this.selected = value;
-    console.log(this.selected);
 
     if (this.controlDir.control) {
       this.controlDir.control.markAsDirty();

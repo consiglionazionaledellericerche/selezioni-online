@@ -10,6 +10,7 @@ import { User } from '../../auth/model/user.model';
 import { JcononAttachmentCallShowComponent } from '../../dynamic/attachment/jconon-attachment-call-show.component';
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from '../../dynamic/attachment/jconon-attachment-documento-riconoscimento-show.component';
 import { JcononAttachmentShowComponent } from '../../dynamic/attachment/jconon-attachment-show.component';
+import { JcononAffixAnagraficaComponent } from '../../dynamic/affix/anagrafica.component';
 
 export class ObjectType {
     
@@ -78,6 +79,12 @@ export class ObjectType {
     'D:jconon_attachment:call_it' : {
       model: Attachment,
       showcomponent: JcononAttachmentCallShowComponent
+    },
+
+
+    'affix_tabAnagrafica' : {
+      model: Application,
+      showcomponent: JcononAffixAnagraficaComponent
     }
   };
 

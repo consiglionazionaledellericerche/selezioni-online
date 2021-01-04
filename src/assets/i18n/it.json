@@ -91,7 +91,8 @@
   },
   "placeholder": {
     "select": {
-      "country": "Seleziona paese..."
+      "country": "Seleziona paese...",
+      "place": "Seleziona comune..."
     }
   },
   "button": {
@@ -129,6 +130,14 @@
   "home" : {
     "title": "Selezioni online CNR",
     "subtitle": "Sistema di presentazione delle candidature online per il reclutamento del personale dipendente e degli altri rapporti di lavoro e formazione del Consiglio Nazionale delle Ricerche."
+  },
+  "header": {
+    "company": {
+      "title": "Consiglio Nazionale delle Ricerche",
+      "url": "https://www.cnr.it"
+    },
+    "title": "Selezioni online CNR",
+    "subtitle": "Sistema di presentazione delle candidature online"
   },
   "footer": {
     "first": "Il sistema si colloca nell'ambito del progetto e-goverment, in linea con il Codice dell'Amministrazione Digitale (art. 65 - Istanze e dichiarazioni presentate alle pubbliche amministrazioni per via telematica), il DL 27 ottobre 2009, n. 150, recante \"Attuazione della legge 4 marzo 2009, n. 15, in materia di ottimizzazione della produttivita' del lavoro pubblico e di efficienza e trasparenza delle pubbliche amministrazioni\" e il recente DL 9 febbraio 2012, n. 5 \"Disposizioni urgenti in materia di semplificazione e di sviluppo\" (art. 8 - Semplificazioni per la partecipazione a concorsi e  prove  selettive).",
@@ -203,6 +212,10 @@
     "lastname": "Cognome:",
     "codice_fiscale": "CF:",
     "data_nascita": "Data di nascita:",
+    "nazione_nascita": "Nazione di nascita",
+    "luogo_nascita": "Luogo di nascita",
+    "comune_nascita": "Comune di nascita",
+    "provincia_nascita": "Provincia",    
     "mine": {
       "title": "Le mie domande"
     },
@@ -295,6 +308,11 @@
       "numero": "Numero",
       "data_scadenza": "Data Scadenza",
       "rilasciato_da": "RIlasciato da"
+    }
+  },
+  "affix": {
+    "affix_tabAnagrafica": {
+      "title": "Dati Anagrafici"
     }
   }
 }

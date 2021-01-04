@@ -13,6 +13,7 @@ export class ConfigService {
   public static CONFIG_URL = '/assets/config/config.json';
   public static URL_CACHE = '/v1/cache';
   public static URL_PAESI = '/rest/static/json/paesi.json';
+  public static URL_COMUNI = '/rest/static/json/comuni.json';
 
   public static URL_OAUTH_LOGIN = '/security/login';
   public static URL_OAUTH_LOGOUT = '/security/logout';

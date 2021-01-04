@@ -30,7 +30,7 @@ export class ShowMetadataComponent implements OnInit {
     @Input() cmisObject: CmisObject;
 
     ngOnInit() {
-      this.dynamicService.loadComponent(this.cmisObject.getObjectTypeId(), this.adMetadata, this.cmisObject);
+      this.dynamicService.loadComponent(this.cmisObject.getObjectTypeId(), this.adMetadata, this.cmisObject, undefined);
     }
 
 }

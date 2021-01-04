@@ -40,7 +40,7 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
                 private injector: Injector,
                 private authService: AuthService, 
                 protected router: Router) {
-        super(userService, router, route);                
+        super(userService, router, route);
     }
 
     ngAfterViewChecked(){

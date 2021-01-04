@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AdMetadataComponent } from '../../shared/tags/show/ad-metadata.component';
 import { DocumentoRiconoscimento } from '../../common/model/documento_riconoscimento.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'D:jconon_documento_riconoscimento:attachment',
@@ -32,4 +33,6 @@ import { DocumentoRiconoscimento } from '../../common/model/documento_riconoscim
   })
 export class JcononAttachmentDocumentoRiconoscimentoShowComponent implements AdMetadataComponent {
     @Input() data: DocumentoRiconoscimento;
+    @Input() form: FormGroup;
+
 }

@@ -1,9 +1,14 @@
 import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {SharedModule} from '../shared/shared.module';
 
 import { JcononAttachmentCallShowComponent } from './attachment/jconon-attachment-call-show.component';
+import { JcononAffixAnagraficaComponent } from './affix/anagrafica.component';
 import { JcononAttachmentShowComponent } from './attachment/jconon-attachment-show.component';
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from './attachment/jconon-attachment-documento-riconoscimento-show.component';
+
+import {ButtonsModule} from 'ngx-bootstrap/buttons'
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -16,11 +21,16 @@ import {HttpClient} from '@angular/common/http';
 @NgModule({
     declarations: [
         JcononAttachmentCallShowComponent,
+        JcononAffixAnagraficaComponent,
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],
     imports: [
+        FormsModule,
+        ReactiveFormsModule,
         CommonModule,
+        SharedModule,
+        ButtonsModule.forRoot(),
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -31,6 +41,7 @@ import {HttpClient} from '@angular/common/http';
     ],
     entryComponents: [
         JcononAttachmentCallShowComponent,
+        JcononAffixAnagraficaComponent,
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],

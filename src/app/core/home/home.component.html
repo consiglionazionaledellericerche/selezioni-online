@@ -1,7 +1,7 @@
-<app-layout-title [title]="'home.title'" [titleClass]="'main-title'" [subTitle]="'home.subtitle'"></app-layout-title>
+<app-layout-title [titleClass]="'main-title'" [subTitle]="'home.subtitle'"></app-layout-title>
 <div class="row no-gutters">
     <div class="col-lg-3">
-        <form *ngIf="filterFormHome" class="sticky-top top-on-navbar" [formGroup]="filterFormHome">
+        <form *ngIf="filterFormHome" [formGroup]="filterFormHome">
             <div class="d-xs-block d-sm-block d-md-none">
                 <select class="form-control mb-2" formControlName="type">
                     <option value="jconon_call:folder">{{'F:jconon_call:folder' | translate}}</option>
@@ -52,9 +52,9 @@
                 <div class="ml-1 pb-1">
                     <!--Rounded checkbox buttons-->
                     <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="filterType">
-                        <label class="btn btn-outline-primary btn-toggle" btnRadio="active">{{'call.attivi' | translate}}</label>
-                        <label class="btn btn-outline-primary btn-toggle" btnRadio="expire">{{'call.scaduti' | translate}}</label>
-                        <label class="btn btn-outline-primary btn-toggle" btnRadio="all">{{'call.tutti' | translate}}</label>
+                        <label class="btn btn-primary btn-toggle" btnRadio="active">{{'call.attivi' | translate}}</label>
+                        <label class="btn btn-primary btn-toggle" btnRadio="expire">{{'call.scaduti' | translate}}</label>
+                        <label class="btn btn-primary btn-toggle" btnRadio="all">{{'call.tutti' | translate}}</label>
                     </div>
                 </div>
             </div>

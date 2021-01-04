@@ -106,7 +106,6 @@ export class ApplicationService extends CommonService<Application> {
   }
 
   public getPageOffset(): number {
-    console.log('sss');
     return 100;
   }
 }

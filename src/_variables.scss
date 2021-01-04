@@ -1,6 +1,4 @@
 
-@import '../node_modules/bootstrap/scss/bootstrap';
-
 $fa-font-path : '../node_modules/font-awesome/fonts';
 
 // ####################################################################################
@@ -13,58 +11,7 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 // ####################################################################################
 //                                    Colors
 // ####################################################################################
-
-$my-color-gray-0:            $gray-100;
-$my-color-gray-1:            $gray-300;
-$my-color-light:             $gray-700;
-
+$orange: transparent;
 // ####################################################################################
 //                                    Navbar Dropdown
 // ####################################################################################
-
-// I button della nav bar è caratterizzato dalla classe .btn.btn-navbar.
-// Dovrebbe avere i seguenti colori:
-$my-btn-navbar-bg:                $my-color-gray-0;
-$my-btn-navbar-border-color:      $my-color-gray-0;
-$my-btn-navbar-text-color:        $my-color-light;
-$my-btn-navbar-height:            3em;
-
-.li.nav-item {
-  height:           $my-btn-navbar-height;        // altezza
-  background-color: $my-btn-navbar-bg;            // colore sfondo
-  border-color:     $my-btn-navbar-border-color;  // colore dei bordi
-  color:            $my-btn-navbar-text-color;    // colore del testo
-}
-
-// Quando passo sopra col mouse dovrebbe cambiare sfondo.
-a.nav-link:hover {
-  background-color: $my-color-gray-1;
-  border-color: $my-color-gray-1;
-}
-
-// Quando il button è active dovrebbe ulteriormente cambiare sfondo e colore del testo
-a.nav-link.active {
-  background-color:       $gray-300;
-  border-color:           $gray-700;
-  box-shadow:             inset 0 3px 8px rgba(0, 0, 0, 0.125);
-}
-
-.dropdown-item.dropdown-item-navbar:active {
-  color: #fff;
-  text-decoration: none;
-  background-color: white;
-}
-
-nav.navbar {
-  padding-top: inherit;
-  padding-bottom: inherit;
-}
-
-ul.navbar-nav {
-  line-height: 40px;
-}
-
-// La distanza del contenuto del drop down - deve arrivare sotto la navbar.
-.dropdown-menu-navbar-cnr {
-  display: inherit !important;
-}

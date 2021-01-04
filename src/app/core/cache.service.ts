@@ -7,6 +7,7 @@ import {ApiMessageService, MessageType} from '../core/api-message.service';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {ConfigService} from '../core/config.service';
+import { Comune } from '../common/model/comune.model';
 
 @Injectable()
 export class CacheService {
@@ -36,6 +37,23 @@ export class CacheService {
             return this.httpClient.get<string[]>(gateway + ConfigService.URL_PAESI).pipe(
                 map((paesi) => {
                     return paesi;
+                }),
+                catchError((error: HttpErrorResponse) => {
+                    this.apiMessageService.sendMessage(MessageType.ERROR, error.error.error_description);
+                    return observableThrowError(error);
+                })
+            );
+        }));
+    }
+
+    public comuni(): Observable<Comune[]> {
+        return this.configService.getGateway().pipe(switchMap((gateway) => {
+            return this.httpClient.get<Comune[]>(gateway + ConfigService.URL_COMUNI).pipe(
+                map((comuni) => {
+                    return Object.keys(comuni)
+                        .map(e => {
+                            return new Comune(e, comuni[e]);
+                        });
                 }),
                 catchError((error: HttpErrorResponse) => {
                     this.apiMessageService.sendMessage(MessageType.ERROR, error.error.error_description);

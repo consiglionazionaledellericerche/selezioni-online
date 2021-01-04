@@ -22,11 +22,11 @@
           <div [ngClass]="{'row': !entity.userName}">
             <div class="form-group mb-0" [ngClass]="{'col-md-6': !entity.userName}">
               <label for="firstName" class="font-weight-bold">{{'user.firstname'| translate}}</label>
-              <app-control-text type="email" [inline]="true" [noLabel]="true" formControlName="firstName"></app-control-text>
+              <app-control-text type="text" [inline]="true" [noLabel]="true" formControlName="firstName"></app-control-text>
             </div>
             <div class="form-group mb-0" [ngClass]="{'col-md-6': !entity.userName}">
               <label for="lastName" class="font-weight-bold">{{'user.lastname'| translate}}</label>
-              <app-control-text type="email" [inline]="true" [noLabel]="true" formControlName="lastName"></app-control-text>
+              <app-control-text type="text" [inline]="true" [noLabel]="true" formControlName="lastName"></app-control-text>
             </div>
           </div>
           <div [ngClass]="{'row': !entity.userName}">
@@ -81,10 +81,10 @@
           </div>
           <div [ngClass]="{'row': !entity.userName}">
             <div class="form-group mb-0" [ngClass]="{'col-md-3': !entity.userName}">
-              <label for="cittadinanza" class="font-weight-bold">{{'user.cittadinanza.label'| translate}}</label>
+              <label for="cittadinanza" class="font-weight-bold active">{{'user.cittadinanza.label'| translate}}</label>
               <div class="btn-group btn-block" btnRadioGroup formControlName="straniero">
-                <label btnRadio="false" class="btn btn-outline-success" tabindex="0" role="button">{{'user.cittadinanza.italy'|translate}}</label>
-                <label btnRadio="true" class="btn btn-outline-success" tabindex="0" role="button">{{'user.cittadinanza.foreign'|translate}}</label>
+                <span btnRadio="false" class="btn btn-success" tabindex="0" role="button">{{'user.cittadinanza.italy'|translate}}</span>
+                <span btnRadio="true" class="btn btn-success" tabindex="0" role="button">{{'user.cittadinanza.foreign'|translate}}</span>
               </div>
             </div>
             <div *ngIf="!isStraniero()" class="form-group mb-0" [ngClass]="{'col-md-9': !entity.userName}">
@@ -96,11 +96,11 @@
                   [noLabel]="true"
                   formControlName="codicefiscale"></app-control-text>
             </div>
-            <div *ngIf="isStraniero()" class="form-group mb-0" [ngClass]="{'col-md-3': !entity.userName}">
-              <label for="sesso" class="font-weight-bold">{{'user.sex'| translate}}</label>
+            <div *ngIf="isStraniero()" class="form-group mb-0 mt-3" [ngClass]="{'col-md-3': !entity.userName}">
+              <label for="sesso" class="font-weight-bold active">{{'user.sex'| translate}}</label>
               <div class="btn-group btn-block" btnRadioGroup formControlName="sesso">
-                <label btnRadio="M" class="btn btn-outline-primary" tabindex="0" role="button">{{'user.male'|translate}}</label>
-                <label btnRadio="F" class="btn btn-outline-primary" tabindex="0" role="button">{{'user.female'|translate}}</label>
+                <span btnRadio="M" class="btn btn-primary" tabindex="0" role="button">{{'user.male'|translate}}</span>
+                <span btnRadio="F" class="btn btn-primary" tabindex="0" role="button">{{'user.female'|translate}}</span>
               </div>
             </div>
             <div *ngIf="isStraniero()" class="form-group mb-0" [ngClass]="{'col-md-3': !entity.userName}">

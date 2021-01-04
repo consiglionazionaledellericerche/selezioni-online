@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AdMetadataComponent } from '../../shared/tags/show/ad-metadata.component';
 import { Attachment } from '../../common/model/attachment.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'D:jconon_attachment:call_it',
@@ -18,4 +19,5 @@ import { Attachment } from '../../common/model/attachment.model';
   })
 export class JcononAttachmentCallShowComponent implements AdMetadataComponent {
     @Input() data: Attachment;
+    @Input() form: FormGroup;
 }

@@ -19,12 +19,12 @@ import { Call } from '../call/call.model';
   `
     <app-layout-wait [loaded]="isLoaded()"></app-layout-wait>
     <div *ngIf="isLoaded()">
-      <div class="bg-primary text-white px-1 py-3 mx-n3">
+      <div class="shadow-none p-3 mb-5 px-1 py-3 mx-n3">
         <div class="text-right">
           <span>{{'application.call.title' | translate:{value: call.codice} }}</span>
           <app-show-children-modal 
             [parentId] = "call.objectId" 
-            [buttonClass] = "'text-white'"
+            [buttonClass] = "'text-primary'"
             [modal_title]="'call.attach_to' | translate:{value: call.codice}">
           </app-show-children-modal>
         </div>
@@ -51,7 +51,12 @@ import { Call } from '../call/call.model';
         <h5 class="text-center" *ngIf="call.sede">{{call.sede}}</h5>
         <h5 class="text-center" *ngIf="call.elenco_settori_tecnologici">{{call.elenco_settori_tecnologici}}</h5>
         <h5 class="text-center" *ngIf="call.elenco_macroaree">{{call.elenco_macroaree}}</h5>
-        <progressbar [max]="call.elenco_sezioni_domanda.length" [value]="affixCompleted" [animate]="true" [striped]="true" type="danger">{{affixCompleted}}/{{call.elenco_sezioni_domanda.length}}</progressbar>
+      </div>
+      <div class="card">
+        <div class="card-header h1">{{'affix.' + call.elenco_sezioni_domanda[affixCompleted] + '.title' | translate}}</div>
+        <div class="card-body">  
+          <show-affix [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
+        </div>  
       </div>
     </div>  
   `
@@ -78,11 +83,10 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   public ngOnInit() {
-    this.affixCompleted = 1;
+    this.affixCompleted = 0;
     this.route.queryParams.subscribe((queryParams) => {
       this.callService.getById(queryParams['callId']).subscribe((call) => {
         this.call = call;
-        console.log(call.elenco_sezioni_domanda);
         this.user = this.authService.getUser();
         this.service.loadApplication(call.objectId, this.user.userName).subscribe((application) => {
           this.setEntity(application);

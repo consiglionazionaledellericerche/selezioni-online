@@ -7,6 +7,8 @@ import {LayoutTitleComponent} from './layout/layout-title.component';
 import {RouterModule} from '@angular/router';
 import {ShowLayoutComponent} from './show/show-layout.component';
 import {ShowMetadataComponent} from './show/show-metadata.component';
+import {ShowAffixComponent} from './show/show-affix.component';
+
 import {AdMetadata} from './show/ad-metadata.directive';
 
 import {ListLayoutComponent} from './list/list-layout.component';
@@ -105,6 +107,7 @@ import {HttpClient} from '@angular/common/http';
     AdMetadata,
     ShowLayoutComponent,
     ShowMetadataComponent,
+    ShowAffixComponent,
     ShowEnumComponent,
     ShowTextComponent,
     ShowTextModalComponent,
@@ -203,6 +206,7 @@ import {HttpClient} from '@angular/common/http';
     ShowTextModalComponent,
     ShowChildrenModalComponent,
     ShowMetadataComponent,
+    ShowAffixComponent,
     ShowMultiComponent,
     ShowColorComponent,
     ShowBooleanComponent,
@@ -242,6 +246,7 @@ import {HttpClient} from '@angular/common/http';
    ],
   entryComponents: [
     ShowMetadataComponent,
+    ShowAffixComponent,
   ]
 })
 export class TagsModule {}

@@ -41,8 +41,7 @@ import {Helpers} from '../../../common/helpers/helpers';
             <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
           </span>
       </div>
-      <div *ngIf=!isInvalid()>
-        &nbsp; </div>
+      <div *ngIf=!isInvalid()>&nbsp;</div>
     </div>
     `,
   styles: [

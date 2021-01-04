@@ -105,7 +105,7 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
     if (this.controlDir.control) {
       this.controlDir.control.markAsDirty();
       this.controlDir.control.updateValueAndValidity();
-      this.ref.detectChanges();
+      //this.ref.detectChanges();
     }
   }
 

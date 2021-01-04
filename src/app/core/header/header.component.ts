@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterContentInit, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/model/user.model';
 import { Subscription } from 'rxjs';
@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public searchForm: FormGroup;
   public isCollapsed = true;
+  public isSticky = false;
 
   public notificationOptions = {
     timeOut: 5000,
@@ -103,19 +104,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.lang = lang;
     if (lang == 'it') {
       this.translateService.use('it').subscribe((lang: string) =>{
-        this.flagIconCountry = 'flag-icon-gb';
-        this.country = 'en';
+        this.country = 'ita';
         this.logo = '/assets/images/logo-it.png';
         localStorage.setItem('lang', 'it');  
       });
     } else {
       this.translateService.use('en').subscribe((lang: string) =>{
-        this.flagIconCountry = 'flag-icon-it';
-        this.country = 'it';
+        this.country = 'eng';
         this.logo = '/assets/images/logo-en.png';
         localStorage.setItem('lang', 'en');
       });
     }
+    return false;
   }
 
   public onLogout() {
@@ -151,8 +151,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['search'],  { queryParams: searchData });
   }
 
-
   sidebarToggle() {
     this.menuService.sidebarEvaluated.next();
   }
+
+  @HostListener('window:scroll', ['$event', '$event.target'])
+  doSomethingOnScroll($event: Event) {
+    const elSticky = document.querySelector('.it-header-sticky');
+    const elApplicationContent = document.querySelector('.application-content');
+    if (window.scrollY >= 120) {
+      this.isSticky = true;
+      elApplicationContent['style'].paddingTop = '198px';
+    } else {
+      this.isSticky = false;
+      elApplicationContent['style'].paddingTop = '0px';
+    }
+  }
+
 }

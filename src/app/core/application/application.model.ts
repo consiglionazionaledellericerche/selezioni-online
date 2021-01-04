@@ -4,6 +4,7 @@ import { Call } from '../call/call.model';
 import { StatoDomanda, PropertyStatoDomandaConverter } from './stato-domanda.enum';
 import { EsclusioneRiununcia, PropertyEsclusioneRiununciaConverter } from './esclusione-rinuncia.enum';
 import { User } from '../../auth/model/user.model';
+import { DateConverter } from '../../common/helpers/DateConverter';
 
 @JsonObject("Application")
 export class Application extends Folder {
@@ -11,7 +12,7 @@ export class Application extends Folder {
   public cognome: string;
   @JsonProperty('jconon_application:nome')
   public nome: string;
-  @JsonProperty('jconon_application:data_nascita')
+  @JsonProperty('jconon_application:data_nascita', DateConverter, true)
   public data_nascita: Date;
   @JsonProperty('jconon_application:sesso')
   public sesso: string;

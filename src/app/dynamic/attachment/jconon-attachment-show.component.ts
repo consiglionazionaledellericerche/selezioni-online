@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AdMetadataComponent } from '../../shared/tags/show/ad-metadata.component';
 import { CmisObject } from '../../common/model/cmisobject.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'D:jconon_attachment:document',
@@ -16,4 +17,6 @@ import { CmisObject } from '../../common/model/cmisobject.model';
   })
 export class JcononAttachmentShowComponent implements AdMetadataComponent {
     @Input() data: CmisObject;
+    @Input() form: FormGroup;
+
 }
