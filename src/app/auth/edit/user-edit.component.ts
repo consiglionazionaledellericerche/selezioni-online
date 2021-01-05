@@ -15,6 +15,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { CacheService } from '../../core/cache.service';
 import { Subject } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { CheckboxModel } from '../../common/model/checkbox.model';
 
 @Component({
     selector: 'app-user-edit',
@@ -28,7 +29,9 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
     paesi: string[];
     public userActivated = new Subject<User>();
     modalRef: BsModalRef;
-
+    sexModel = CheckboxModel.SEXModel();
+    foreignModel = CheckboxModel.ForeignModel();
+    
     constructor(private formBuilder: FormBuilder,
                 private modalService: BsModalService,
                 private apiMessageService: ApiMessageService,

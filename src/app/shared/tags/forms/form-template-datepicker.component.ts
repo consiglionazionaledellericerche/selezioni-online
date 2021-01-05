@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, Optional, Self
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, Optional, Self, ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
 import {BsDatepickerConfig, BsLocaleService} from 'ngx-bootstrap/datepicker';
@@ -23,12 +23,16 @@ import {FormCommonTag} from './form-common-tag';
                        [showValidation]="showValidation"
                        [appendText]="appendText"
                        [ttipAppend]="ttipAppend"
-                       [ttip]="ttip">
+                       [labelactive]="labelactive"
+                       [ttip]="ttip"
+                       (click)="onFocusLabel()">
           <input class="form-control"
                type="{{type}}"
                #dp="bsDatepicker"
+               #input
                bsDatepicker
                (bsValueChange)="change($event)"
+               (focusout)="onFocusOut($event.target.value)"
 
                (blur)="onTouched()"
                [bsConfig]="bsConfig"
@@ -47,6 +51,9 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
   bsValue: Date;
 
   @Input() type = 'text';
+
+
+  @ViewChild('input', {static: true}) input: ElementRef;
 
   bsConfig: Partial<BsDatepickerConfig> =
     Object.assign({}, { containerClass: this.colorTheme });
@@ -82,6 +89,7 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
   writeValue(value: Date): void {
     if (value) {
       this.bsValue = value;
+      this.labelactive = true;
       this.ref.detectChanges();
     }
   }
@@ -114,9 +122,21 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
     this.onChange(value);
   }
 
+  onFocusLabel(value: string) {
+    this.labelactive = true;
+    this.input.nativeElement.focus();
+  }
+
+  onFocusOut(value: string) {
+    if (value === '') {
+      this.labelactive = false;
+    } else {
+      this.labelactive = true;
+    }
+  }
+
   classes() {
     return {
-      // 'is-valid': this.isValid(),
       'is-invalid': this.isInvalid()
     };
   }

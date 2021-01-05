@@ -11,17 +11,27 @@ import { Helpers } from '../../common/helpers/helpers';
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">
         <div class="form-row">
-          <div class="form-group mb-0 col-md-6">
-            <app-control-text type="text" [disabled]="true" [inline]="true" [noLabel]="true" formControlName="nome"></app-control-text>
-            <label for="nome" class="active">{{'user.firstname'| translate}}</label>
+          <div class="form-group col-md-6">
+            <app-control-text 
+              type="text" 
+              [disabled]="true" 
+              [inline]="true" 
+              [label]="'user.firstname'| translate"
+              formControlName="nome">
+            </app-control-text>
           </div>
-          <div class="form-group mb-0 col-md-6">
-            <app-control-text type="text" [disabled]="true" [inline]="true" [noLabel]="true" formControlName="cognome"></app-control-text>
-            <label for="cognome" class="active">{{'user.lastname'| translate}}</label>
+          <div class="form-group col-md-6">
+            <app-control-text 
+              type="text" 
+              [disabled]="true" 
+              [inline]="true" 
+              [label]="'user.lastname'| translate" 
+              formControlName="cognome">
+            </app-control-text>
           </div>
         </div>
         <div class="row">
-          <div class="form-group mb-0 col-md-3">
+          <div class="form-group col-md-3">
             <label for="statoestero" class="active">{{'application.nazione_nascita'| translate}}</label>
             <app-control-select-model
               [inline]="true"
@@ -34,11 +44,16 @@ import { Helpers } from '../../common/helpers/helpers';
               formControlName="nazione_nascita">
             </app-control-select-model>
           </div>
-          <div *ngIf="isForeign()" class="form-group mb-0 col-md-6">
-            <app-control-text *ngIf="isForeign()" type="text" [inline]="true" [noLabel]="true" formControlName="comune_nascita_estero"></app-control-text>
-            <label for="comune_nascita_estero" class="">{{'application.luogo_nascita'| translate}}</label>
+          <div *ngIf="isForeign()" class="form-group col-md-6">
+            <app-control-text 
+              *ngIf="isForeign()" 
+              type="text" 
+              [inline]="true" 
+              [label]="'application.luogo_nascita'| translate" 
+              formControlName="comune_nascita_estero">
+            </app-control-text>
           </div>
-          <div *ngIf="!isForeign()" class="form-group mb-0 col-md-5">
+          <div *ngIf="!isForeign()" class="form-group col-md-5">
             <app-control-select-model
               *ngIf="!isForeign()"
               [inline]="true"
@@ -51,24 +66,30 @@ import { Helpers } from '../../common/helpers/helpers';
               [placeholder]="'placeholder.select.place'| translate"
               formControlName="comune_nascita">
               </app-control-select-model>          
-            <label for="comune_nascita" class="">{{'application.comune_nascita'| translate}}</label>
+            <label for="comune_nascita" class="active">{{'application.comune_nascita'| translate}}</label>
           </div>
-          <div *ngIf="!isForeign()" class="form-group mb-0 col-md-1">
-            <app-control-text *ngIf="!isForeign()" [disabled]="true" [showValidation]="false" class="col-md-3 ml-n3" type="text" [inline]="true" [noLabel]="true" formControlName="provincia_nascita"></app-control-text>
-            <label for="provincia_nascita" class="active">{{'application.provincia_nascita'| translate}}</label>
+          <div *ngIf="!isForeign()" class="form-group col-md-1">
+            <app-control-text 
+              *ngIf="!isForeign()" 
+              [disabled]="true" 
+              [showValidation]="false" 
+              type="text" 
+              [inline]="true" 
+              [label]="'application.provincia_nascita'| translate" 
+              formControlName="provincia_nascita">
+            </app-control-text>
           </div>
-          <div class="form-group mb-0 col-md-3">
-            <label for="data_nascita" class="">{{'user.dataDiNascita'| translate}}</label>
+          <div class="form-group col-md-3">
             <app-control-datepicker
                 type="text"
                 [inline]="true" 
-                [noLabel]="true" 
+                [label]="'user.dataDiNascita'| translate" 
                 formControlName="data_nascita">
             </app-control-datepicker>
           </div>
         </div>
         <div class="row">
-          <div class="form-group mb-0 col-md-3">
+          <div class="form-group col-md-3">
             <div class="form-check form-check-inline">
               <input formControlName="sesso" type="radio" id="radiomale" value="M">
               <label for="radiomale">{{'user.male'|translate}}</label>
@@ -79,7 +100,7 @@ import { Helpers } from '../../common/helpers/helpers';
             </div>
             <label for="sesso" class="active">{{'user.sex'| translate}}</label>
           </div>
-          <div class="form-group mb-0 col-md-3">
+          <div class="form-group col-md-3">
             <div class="form-check form-check-inline">
               <input formControlName="fl_cittadino_italiano" type="radio" id="radioitaly" value="true">
               <label for="radioitaly">{{'user.cittadinanza.italy'|translate}}</label>
@@ -90,16 +111,15 @@ import { Helpers } from '../../common/helpers/helpers';
             </div>
             <label for="cittadinanza" class="active">{{'user.cittadinanza.label'| translate}}</label>
           </div>
-          <div *ngIf="!isStraniero()" class="form-group mb-0 col-md-6">
-            <label for="codicefiscale" class="">{{'user.codicefiscale'| translate}}</label>
+          <div *ngIf="!isStraniero()" class="form-group col-md-6">
             <app-control-text 
                 type="text" 
                 inputClass="uppercase"
                 [inline]="true" 
-                [noLabel]="true"
+                [label]="'user.codicefiscale'| translate"
                 formControlName="codicefiscale"></app-control-text>
           </div>
-          <div *ngIf="isStraniero()" class="form-group mb-0 col-md-6">
+          <div *ngIf="isStraniero()" class="form-group col-md-6">
             <label for="nazione_cittadinanza" class="active">{{'user.statoestero'| translate}}</label>
             <app-control-select-model
               [inline]="true"
@@ -112,7 +132,6 @@ import { Helpers } from '../../common/helpers/helpers';
               formControlName="nazione_cittadinanza">
             </app-control-select-model>
           </div>
-
         </div>
       </form>
     `

@@ -14,4 +14,18 @@ export class CheckboxModel {
     ];
   }
 
+  public static SEXModel(): CheckboxModel[] {
+    return [
+      new CheckboxModel('radiomale', 'user.male', 'M', undefined, undefined),
+      new CheckboxModel('radiofemale', 'user.female', 'F', undefined, undefined)
+    ];
+  }
+
+  public static ForeignModel(): CheckboxModel[] {
+    return [
+      new CheckboxModel('cittadinanzaitaly', 'user.cittadinanza.italy', false, undefined, undefined),
+      new CheckboxModel('cittadinanzaforeign', 'user.cittadinanza.foreign', true, undefined, undefined)
+    ];
+  }
+
 }

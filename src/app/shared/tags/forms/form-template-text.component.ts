@@ -29,17 +29,21 @@ import {FormCommonTag} from './form-common-tag';
               [appendText]="appendText"
               [ttipAppend]="ttipAppend"
               [noLabel]="noLabel"
+              [labelactive]="labelactive"
               [showValidation]="showValidation"
-      >
+              (click)="onFocusLabel()">
 
         <input class="form-control {{inputClass}}"
              type="{{ type }}"
              #input
              (input)="change($event.target.value)"
+             (focus)="onFocus($event.target.value)"
+             (focusout)="onFocusOut($event.target.value)"
+
              [disabled]="disabled"
              placeholder="{{ placeholder | translate }}"
-             [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}"
-        >
+             [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}">
+
         <div *ngIf="controlDir.dirty && controlDir.pending"
              [ngStyle]="{'position': 'absolute', 'top': '5px', 'right': '5px', 'z-index': '100'}">
           <i class="fa fa-circle-o-notch fa-spin fa-fw text-secondary"></i>
@@ -81,7 +85,9 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
     if (this.focus) {
       this.input.nativeElement.focus();
     }
-
+    if (this.input.nativeElement.value || this.disabled) {
+      this.labelactive = true;
+    }
   }
 
   change(value: string) {
@@ -127,6 +133,23 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
 
   isValid(): boolean  {
     return ValidationHelper.showValid(this.controlDir, this.showValidation);
+  }
+
+  onFocus(value: string) {
+    this.labelactive = true;
+  }
+
+  onFocusLabel(value: string) {
+    this.labelactive = true;
+    this.input.nativeElement.focus();
+  }
+
+  onFocusOut(value: string) {
+    if (value === '') {
+      this.labelactive = false;
+    } else {
+      this.labelactive = true;
+    }
   }
 
 }

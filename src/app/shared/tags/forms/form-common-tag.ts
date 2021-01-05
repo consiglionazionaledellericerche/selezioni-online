@@ -32,4 +32,6 @@ export abstract class FormCommonTag {
 
   @Input() nullIfEmpty = false;
 
+  @Input() labelactive = false;
+
 }
