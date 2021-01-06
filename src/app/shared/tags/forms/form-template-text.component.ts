@@ -139,7 +139,7 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
     this.labelactive = true;
   }
 
-  onFocusLabel(value: string) {
+  onFocusLabel() {
     this.labelactive = true;
     this.input.nativeElement.focus();
   }
