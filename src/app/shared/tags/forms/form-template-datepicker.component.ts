@@ -122,7 +122,7 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
     this.onChange(value);
   }
 
-  onFocusLabel(value: string) {
+  onFocusLabel() {
     this.labelactive = true;
     this.input.nativeElement.focus();
   }
