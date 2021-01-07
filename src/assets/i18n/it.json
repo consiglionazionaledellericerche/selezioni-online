@@ -314,6 +314,10 @@
   "affix": {
     "affix_tabAnagrafica": {
       "title": "Dati Anagrafici"
+    },
+    "affix_tabResidenza": {
+      "title": "Dati Residenza"
     }
+
   }
 }

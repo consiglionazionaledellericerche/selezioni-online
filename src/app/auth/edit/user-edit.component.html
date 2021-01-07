@@ -160,38 +160,50 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="ngPasswordForm">
-      <div class="form-group mb-0">
-        <label for="oldpw" class="font-weight-bold">{{'user.oldpassword'| translate}}</label>
+      <div class="form-group">
         <app-control-text 
             (cut)="$event.preventDefault()" 
             (copy)="$event.preventDefault()" 
             (paste)="$event.preventDefault()" 
             type="password" 
             [inline]="true" 
-            [noLabel]="true" 
+            [label]="'user.oldpassword'| translate" 
+            #oldpasswordfield
             formControlName="oldpw"></app-control-text>
+        <span class="password-icon" aria-hidden="true">
+          <svg *ngIf="oldpasswordfield.type=='password'" (click)="oldpasswordfield.type='text'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-visible"></use></svg>
+          <svg *ngIf="oldpasswordfield.type=='text'"     (click)="oldpasswordfield.type='password'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-invisible"></use></svg>
+        </span>
       </div>
-      <div class="form-group mb-0">
-        <label for="newpw" class="font-weight-bold">{{'user.newpassword'| translate}}</label>
+      <div class="form-group">
         <app-control-text 
             (cut)="$event.preventDefault()" 
             (copy)="$event.preventDefault()" 
             (paste)="$event.preventDefault()" 
             type="password" 
             [inline]="true" 
-            [noLabel]="true" 
+            [label]="'user.newpassword'| translate" 
+            #newpasswordfield
             formControlName="newpw"></app-control-text>
+            <span class="password-icon" aria-hidden="true">
+              <svg *ngIf="newpasswordfield.type=='password'" (click)="newpasswordfield.type='text'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-visible"></use></svg>
+              <svg *ngIf="newpasswordfield.type=='text'"     (click)="newpasswordfield.type='password'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-invisible"></use></svg>
+            </span>    
       </div>
-      <div class="form-group mb-0">
-        <label for="confirmpassword" class="font-weight-bold">{{'user.confirmpassword'| translate}}</label>
+      <div class="form-group">
         <app-control-text 
             type="password" 
             (cut)="$event.preventDefault()" 
             (copy)="$event.preventDefault()" 
             (paste)="$event.preventDefault()" 
             [inline]="true" 
-            [noLabel]="true" 
+            [label]="'user.confirmpassword'| translate" 
+            #confirmpasswordfield
             formControlName="confirmpassword"></app-control-text>
+            <span class="password-icon" aria-hidden="true">
+              <svg *ngIf="confirmpasswordfield.type=='password'" (click)="confirmpasswordfield.type='text'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-visible"></use></svg>
+              <svg *ngIf="confirmpasswordfield.type=='text'"     (click)="confirmpasswordfield.type='password'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-invisible"></use></svg>
+            </span>    
       </div>
     </form>
   </div>

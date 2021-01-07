@@ -30,8 +30,7 @@ declare var $: any;   // not required
                        [appendText]="appendText"
                        [prependText]="prependText"
                        [ttipAppend]="ttipAppend"
-                       [showValidation]="showValidation"
-                       >
+                       [showValidation]="showValidation">
 
           <select class="custom-select select2-single"
                   [ngClass]="selectClasses()">
@@ -66,8 +65,7 @@ declare var $: any;   // not required
                   </div>
                   <div class="ml-auto">
                     <button type="button" class="btn btn-outline-secondary btn-sm pt-0 pb-0 pl-1 pr-1"
-                            (click)="unselect(s)"
-                    >
+                            (click)="unselect(s)">
                       <i class="fa fa-times"></i>
                     </button>
                   </div>

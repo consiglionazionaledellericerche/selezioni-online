@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { AdMetadataComponent } from '../../shared/tags/show/ad-metadata.component';
 import { Application } from '../../core/application/application.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
@@ -41,6 +41,7 @@ import { Helpers } from '../../common/helpers/helpers';
               [allowClear]="true"
               [showValidation]="true"
               [placeholder]="'placeholder.select.country'| translate"
+              (onChangeEvent)="onChangeNazioneNascita()"
               formControlName="nazione_nascita">
             </app-control-select-model>
           </div>
@@ -102,11 +103,11 @@ import { Helpers } from '../../common/helpers/helpers';
           </div>
           <div class="form-group col-md-3">
             <div class="form-check form-check-inline">
-              <input formControlName="fl_cittadino_italiano" type="radio" id="radioitaly" value="true">
+              <input (change)="onChangeCittadinanza()" formControlName="fl_cittadino_italiano" type="radio" id="radioitaly" value="true">
               <label for="radioitaly">{{'user.cittadinanza.italy'|translate}}</label>
             </div>
             <div class="form-check form-check-inline">
-              <input formControlName="fl_cittadino_italiano" type="radio" id="radioforeign" value="false">
+              <input (change)="onChangeCittadinanza()" formControlName="fl_cittadino_italiano" type="radio" id="radioforeign" value="false">
               <label for="radioforeign">{{'user.cittadinanza.foreign'|translate}}</label>
             </div>
             <label for="cittadinanza" class="active">{{'user.cittadinanza.label'| translate}}</label>
@@ -163,20 +164,7 @@ export class JcononAffixAnagraficaComponent implements AdMetadataComponent, OnIn
       this.form.controls.nazione_nascita.setValidators([
         Validators.required
       ]);
-      this.form.addControl('comune_nascita_estero', new FormControl(this.data.comune_nascita));
-      this.form.controls.comune_nascita_estero.setValidators([
-        Validators.required
-      ]);
-      this.form.addControl(
-        'comune_nascita', 
-        new FormControl(
-          new Comune(this.data.comune_nascita, this.data.provincia_nascita)
-        )
-      );
-      this.form.controls.comune_nascita.setValidators([
-        Validators.required
-      ]);
-      this.form.addControl('provincia_nascita', new FormControl(this.data.provincia_nascita));
+      this.onChangeNazioneNascita();
       this.form.addControl('data_nascita', new FormControl(this.data.data_nascita||undefined));
       this.form.controls.data_nascita.setValidators([
         Validators.required
@@ -189,16 +177,7 @@ export class JcononAffixAnagraficaComponent implements AdMetadataComponent, OnIn
       this.form.controls.fl_cittadino_italiano.setValidators([
         Validators.required
       ]);
-      this.form.addControl('codicefiscale', new FormControl(this.data.codice_fiscale));
-      this.form.controls.codicefiscale.setValidators([
-        Validators.required,
-        Helpers.patternValidator(Helpers.regExpCodiceFiscale, {codicefiscale: true})
-      ]);
-      this.form.addControl('nazione_cittadinanza', new FormControl(this.data.nazione_cittadinanza));
-      this.form.controls.nazione_cittadinanza.setValidators([
-        Validators.required
-      ]);
-
+      this.onChangeCittadinanza();
     }
 
     public isForeign(): boolean {
@@ -211,6 +190,65 @@ export class JcononAffixAnagraficaComponent implements AdMetadataComponent, OnIn
 
     public isLoaded(): boolean {
       return this.form !== undefined;
+    }
+
+    protected comuneNascitaEsteroControl() : AbstractControl {
+      let comune_nascita_estero = new FormControl(this.data.comune_nascita);
+      comune_nascita_estero.setValidators([
+        Validators.required
+      ]);
+      return comune_nascita_estero;
+    }
+
+    protected comuneNascitaControl() : AbstractControl {
+      let comune_nascita = new FormControl(new Comune(this.data.comune_nascita, this.data.provincia_nascita));
+      comune_nascita.setValidators([
+        Validators.required
+      ]);
+      return comune_nascita;
+    }
+
+    protected codiceFiscaleControl() : AbstractControl {
+      let codiceFiscale = new FormControl(this.data.codice_fiscale);
+      codiceFiscale.setValidators([
+        Validators.required,
+        Helpers.patternValidator(Helpers.regExpCodiceFiscale, {codicefiscale: true})
+      ]);
+      return codiceFiscale;
+    }
+
+    protected nazioneCittadinanzaControl() : AbstractControl {
+      let nazioneCittadinanza = new FormControl(this.data.nazione_cittadinanza);
+      nazioneCittadinanza.setValidators([
+        Validators.required
+      ]);
+      return nazioneCittadinanza;
+    }
+
+    public onChangeNazioneNascita() {
+      if (this.form.controls.nazione_nascita.value === 'Italia') {
+        this.form.removeControl('comune_nascita_estero');
+        this.form.addControl('comune_nascita', this.comuneNascitaControl());
+        this.form.addControl('provincia_nascita', new FormControl(this.data.provincia_nascita));
+      } else {
+        if (this.form.contains('comune_nascita')) {
+          this.form.removeControl('comune_nascita');
+        }
+        if (this.form.contains('provincia_nascita')) {
+          this.form.removeControl('provincia_nascita');
+        }
+        this.form.addControl('comune_nascita_estero', this.comuneNascitaEsteroControl());
+      }
+    }
+
+    public onChangeCittadinanza() {
+      if (this.form.controls.fl_cittadino_italiano.value === 'false') {
+        this.form.removeControl('codicefiscale');
+        this.form.addControl('nazione_cittadinanza', this.nazioneCittadinanzaControl());
+      } else {
+        this.form.addControl('codicefiscale', this.codiceFiscaleControl());
+        this.form.removeControl('nazione_cittadinanza');
+      }
     }
  
     public onChangeComune(comune: any) {

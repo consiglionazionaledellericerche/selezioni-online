@@ -5,6 +5,8 @@ import {SharedModule} from '../shared/shared.module';
 
 import { JcononAttachmentCallShowComponent } from './attachment/jconon-attachment-call-show.component';
 import { JcononAffixAnagraficaComponent } from './affix/anagrafica.component';
+import { JcononAffixResidenzaComponent } from './affix/residenza.component';
+
 import { JcononAttachmentShowComponent } from './attachment/jconon-attachment-show.component';
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from './attachment/jconon-attachment-documento-riconoscimento-show.component';
 
@@ -22,6 +24,7 @@ import {HttpClient} from '@angular/common/http';
     declarations: [
         JcononAttachmentCallShowComponent,
         JcononAffixAnagraficaComponent,
+        JcononAffixResidenzaComponent,
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],
@@ -42,6 +45,7 @@ import {HttpClient} from '@angular/common/http';
     entryComponents: [
         JcononAttachmentCallShowComponent,
         JcononAffixAnagraficaComponent,
+        JcononAffixResidenzaComponent,
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],

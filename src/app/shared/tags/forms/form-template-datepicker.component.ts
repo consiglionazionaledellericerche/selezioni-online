@@ -33,11 +33,10 @@ import {FormCommonTag} from './form-common-tag';
                bsDatepicker
                (bsValueChange)="change($event)"
                (focusout)="onFocusOut($event.target.value)"
-
                (blur)="onTouched()"
                [bsConfig]="bsConfig"
                [(bsValue)]="bsValue"
-
+               (input)="change($event.target.value)"
                [disabled]="disabled"
                [ngClass]="classes()"
           >
@@ -51,7 +50,6 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
   bsValue: Date;
 
   @Input() type = 'text';
-
 
   @ViewChild('input', {static: true}) input: ElementRef;
 
@@ -72,10 +70,20 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
   }
 
   ngOnInit() {
-    // const control = this.controlDir.control;
+    const control = this.controlDir.control;
+
+    // se volessi aggiungere dei validatori di default al tag, nell'esempio required.
     // const validators = control.validator ? [control.validator, Validators.required] : Validators.required;
-    // control.setValidators(validators);
-    // control.updateValueAndValidity();
+    const validators = control.validator;
+    control.setValidators(validators);
+    control.updateValueAndValidity();
+    if (this.focus) {
+      this.input.nativeElement.focus();
+    }
+    if (this.input.nativeElement.value || this.disabled) {
+      this.labelactive = true;
+    }
+
   }
 
   /*
@@ -89,7 +97,7 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
   writeValue(value: Date): void {
     if (value) {
       this.bsValue = value;
-      this.labelactive = true;
+      this.labelactive = true;      
       this.ref.detectChanges();
     }
   }
@@ -119,6 +127,7 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
   }
 
   change(value: Date) {
+    this.labelactive = value !== undefined;
     this.onChange(value);
   }
 

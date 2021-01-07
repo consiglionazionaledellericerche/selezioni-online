@@ -11,6 +11,7 @@ import { JcononAttachmentCallShowComponent } from '../../dynamic/attachment/jcon
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from '../../dynamic/attachment/jconon-attachment-documento-riconoscimento-show.component';
 import { JcononAttachmentShowComponent } from '../../dynamic/attachment/jconon-attachment-show.component';
 import { JcononAffixAnagraficaComponent } from '../../dynamic/affix/anagrafica.component';
+import { JcononAffixResidenzaComponent } from '../../dynamic/affix/residenza.component';
 
 export class ObjectType {
     
@@ -81,11 +82,15 @@ export class ObjectType {
       showcomponent: JcononAttachmentCallShowComponent
     },
 
-
     'affix_tabAnagrafica' : {
       model: Application,
       showcomponent: JcononAffixAnagraficaComponent
+    },
+    'affix_tabResidenza' : {
+      model: Application,
+      showcomponent: JcononAffixResidenzaComponent
     }
+
   };
 
   static getModel(first: string, second: string): any {
