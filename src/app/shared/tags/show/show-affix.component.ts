@@ -20,7 +20,7 @@ export class ShowAffixComponent implements OnChanges {
     @Input() type: string;
     @Input() form: FormGroup;
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges) {
       this.dynamicService.loadComponent(this.type, this.adMetadata, this.cmisObject, this.form);
     }
 

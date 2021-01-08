@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {CommonEditComponent} from '../../common/controller/common-edit.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import { FormGroup } from '@angular/forms';
@@ -12,6 +12,7 @@ import { CacheService } from '../cache.service';
 import { CallService } from '../call/call.service';
 import { Call } from '../call/call.model';
 import { ApiMessageService, MessageType } from '../api-message.service';
+import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component';
 
 @Component({
   selector: 'manage-application',
@@ -19,7 +20,7 @@ import { ApiMessageService, MessageType } from '../api-message.service';
   `
     <app-layout-wait [loaded]="isLoaded()"></app-layout-wait>
     <div *ngIf="isLoaded()">
-      <div class="shadow-none p-3 mb-5 px-1 py-3 mx-n3">
+      <div class="shadow-none p-3 px-1 py-3 mx-n3">
         <div class="text-right">
           <span>{{'application.call.title' | translate:{value: call.codice} }}</span>
           <app-show-children-modal 
@@ -56,7 +57,7 @@ import { ApiMessageService, MessageType } from '../api-message.service';
       <div class="card card-bg border-bottom-card">
         <div class="card-header h1">{{'affix.' + call.elenco_sezioni_domanda[affixCompleted] + '.title' | translate}}</div>
         <div class="card-body">  
-          <show-affix [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
+          <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
           <div class="steppers">
             <nav class="steppers-nav">
               <button [ngClass]="{'disabled': affixCompleted == 0}" (click)="affixCompleted = affixCompleted - 1" type="button" class="btn btn-link steppers-btn-prev">
@@ -105,6 +106,9 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   cache: any = {};
   public affixCompleted: number;
   public affix: number[];
+
+  @ViewChild('affixComponent', {static: false}) affixComponent: ShowAffixComponent;
+
   public constructor(public service: ApplicationService,
                      public callService: CallService,
                      private apiMessageService: ApiMessageService,
@@ -158,13 +162,13 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.form.controls[control].markAsDirty({onlySelf: true});
       }
     });
+    this.affixComponent.ngOnChanges(undefined);
+    this.changeDetector.detectChanges();
     // stop here if form is invalid
     if (this.form.invalid) {
         this.translateService.get('message.form.invalid').subscribe((label) => {
             this.apiMessageService.sendMessage(MessageType.WARNING, label);
         });
-    } else {
-      this.affixCompleted = this.affixCompleted + 1;
     }
   }
 

@@ -170,6 +170,7 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
         Object.keys(this.ngForm.controls).forEach(control => {
             this.ngForm.controls[control].markAsDirty({onlySelf: true});
         });
+        this.cdr.detectChanges();
         // stop here if form is invalid
         if (this.ngForm.invalid) {
             this.translateService.get('message.form.invalid').subscribe((label) => {

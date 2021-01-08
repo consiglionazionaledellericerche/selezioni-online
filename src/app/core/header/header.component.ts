@@ -41,8 +41,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public notificationOptions = {
     timeOut: 5000,
     pauseOnHover: true,
+    preventDuplicates: true,
+    theClass: 'rounded shadow',
     clickToClose: true,
-    showProgressBar: false,
+    animate: 'fromTop',
+    showProgressBar: true,
     position: ['top', 'right']
   }
 
@@ -139,11 +142,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private showNotification(messageType: MessageType, message: string) {
     if (messageType === MessageType.SUCCESS) {
-      this.notificationService.success('Ok', message, this.notificationOptions);
+      this.notificationService.info('Ok', message, this.notificationOptions);
     } else if (messageType === MessageType.ERROR) {
       this.notificationService.error('Errore', message, this.notificationOptions);
     } else if (messageType === MessageType.WARNING) {
-      this.notificationService.alert('Alert', message, this.notificationOptions);
+      this.notificationService.warn('Alert', message, this.notificationOptions);
     }
   }
 

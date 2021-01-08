@@ -151,6 +151,4 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
       this.labelactive = true;
     }
   }
-
 }
-

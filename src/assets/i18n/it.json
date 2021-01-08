@@ -86,7 +86,7 @@
       "codicefiscalealredyexist": "Codice fiscale già presente!",
       "codicefiscale": "Codice fiscale non valido!"
     },
-    "form.invalid" : "La mappa contiene errori, impossibile procedere.",
+    "form.invalid" : "Corregere gli errori, per proseguire.",
     "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>"
   },
   "placeholder": {

@@ -30,7 +30,7 @@ import { Helpers } from '../../common/helpers/helpers';
             </app-control-text>
           </div>
         </div>
-        <div class="row">
+        <div class="form-row">
           <div class="form-group col-md-3">
             <label for="statoestero" class="active">{{'application.nazione_nascita'| translate}}</label>
             <app-control-select-model
@@ -89,7 +89,7 @@ import { Helpers } from '../../common/helpers/helpers';
             </app-control-datepicker>
           </div>
         </div>
-        <div class="row">
+        <div class="form-row">
           <div class="form-group col-md-3">
             <div class="form-check form-check-inline">
               <input formControlName="sesso" type="radio" id="radiomale" value="M">
