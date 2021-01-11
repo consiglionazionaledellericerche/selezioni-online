@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     timeOut: 5000,
     pauseOnHover: true,
     preventDuplicates: true,
-    theClass: 'rounded shadow',
+    theClass: 'rounded shadow alert',
     clickToClose: true,
     animate: 'fromTop',
     showProgressBar: true,
@@ -123,7 +123,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public onLogout() {
     this.authService.logout();
-    this.notificationService.success('Success', 'Logout effettuato');
+    this.showNotification(MessageType.SUCCESS, 'Logout effettuato');
   }
 
   public loginPage() {
@@ -140,13 +140,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.onNavbarEvaluated.unsubscribe();
   }
 
+  private notice(alertclass: string) : any {
+    let notice = this.notificationOptions;
+    notice.theClass = notice.theClass + ' ' + alertclass;
+    return notice;
+  }
+
   private showNotification(messageType: MessageType, message: string) {
     if (messageType === MessageType.SUCCESS) {
-      this.notificationService.info('Ok', message, this.notificationOptions);
+      this.notificationService.info('<h4 class="alert-heading">Informazione</h4>', message, this.notice('alert-info'));
     } else if (messageType === MessageType.ERROR) {
-      this.notificationService.error('Errore', message, this.notificationOptions);
+      this.notificationService.error('<h4 class="alert-heading">Errore!</h4>', message, this.notice('alert-danger'));
     } else if (messageType === MessageType.WARNING) {
-      this.notificationService.warn('Alert', message, this.notificationOptions);
+      this.notificationService.warn('<h4 class="alert-heading">Avvertimento!</h4>', message, this.notice('alert-warning'));
     }
   }
 
@@ -156,6 +162,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   sidebarToggle() {
     this.menuService.sidebarEvaluated.next();
+  }
+
+  sidebarMenuToggle() {
+    this.menuService.sidebarMenuEvaluated.next();
   }
 
   @HostListener('window:scroll', ['$event', '$event.target'])

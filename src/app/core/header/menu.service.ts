@@ -18,6 +18,7 @@ export class MenuService {
 
   public navbarEvaluated = new Subject<NavbarMenu>();
   public sidebarEvaluated = new Subject<boolean>();
+  public sidebarMenuEvaluated = new Subject<boolean>();
 
   public navbarMenu: NavbarMenu = null;
 

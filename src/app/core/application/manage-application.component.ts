@@ -53,9 +53,11 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
         <h5 class="text-center" *ngIf="call.elenco_settori_tecnologici">{{call.elenco_settori_tecnologici}}</h5>
         <h5 class="text-center" *ngIf="call.elenco_macroaree">{{call.elenco_macroaree}}</h5>
       </div>
-      <div class="card-wrapper card-space">
       <div class="card card-bg border-bottom-card">
-        <div class="card-header h1">{{'affix.' + call.elenco_sezioni_domanda[affixCompleted] + '.title' | translate}}</div>
+        <div class="card-header d-flex">
+          <div class="h1 flex-grow-1">{{'affix.' + call.elenco_sezioni_domanda[affixCompleted] + '.title' | translate}}</div>
+          <div class="h4">{{affixCompleted + 1}}/{{affix.length}}</div>
+        </div>
         <div class="card-body">  
           <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
           <div class="steppers">
@@ -93,7 +95,6 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
             </button>
           </div>     
         </div>
-      </div>
       </div>
     </div>  
   `

@@ -1,7 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CoreRoutingModule} from './core-routing.module';
 import {HeaderComponent} from './header/header.component';
+import {FooterComponent} from './footer/footer.component';
+
 import {SidenavComponent} from './sidenav/sidenav.component';
+import {SidenavMenuComponent} from './sidenav/sidenav-menu.component';
 
 import {HomeComponent} from './home/home.component';
 import {SearchComponent} from './search/search.component';
@@ -49,7 +52,9 @@ import {HttpClient} from '@angular/common/http';
 
   declarations: [
     HeaderComponent,
+    FooterComponent,
     SidenavComponent,
+    SidenavMenuComponent,
     DropdownNavbarComponent,
     HomeComponent,
     SearchComponent,
@@ -87,8 +92,10 @@ import {HttpClient} from '@angular/common/http';
     HomeComponent,
     SearchComponent,
     HeaderComponent,
+    FooterComponent,
     SidenavComponent,
-    BadRequestComponent,
+    SidenavMenuComponent,
+    BadRequestComponent,    
     CallListComponent,
     ApplicationListComponent,
     ApplicationUserListComponent,

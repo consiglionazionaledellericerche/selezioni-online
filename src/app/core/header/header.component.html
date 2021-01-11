@@ -48,7 +48,8 @@
               <div *ngSwitchCase="true" class="nav-item dropdown">
                 <a aria-expanded="false" class="nav-link dropdown-toggle"
                    data-toggle="dropdown" href="#">
-                  <span>{{user.firstName}} {{user.lastName}}</span>
+                  <span><i class="fa fa-fw fa-user pr-1" aria-hidden="true"></i></span>
+                  <span class="d-none d-md-block">{{user.firstName}} {{user.lastName}}</span>
                   <svg class="icon icon-white d-none d-lg-block">
                     <use
                       xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
@@ -87,7 +88,7 @@
         <div class="row">
           <div class="col-12">
             <div class="it-header-center-content-wrapper">
-              <div class="it-brand-wrapper">
+              <div class="it-brand-wrapper pl-0">
                 <a [routerLink]="['/']" class="navbar-brand logo">
                   <img src="/assets/images/logo_cnr.png">
                   <div class="it-brand-text pl-2">
@@ -99,7 +100,7 @@
               <div class="it-right-zone">
                 <div class="it-search-wrapper">
                   <form class="form-inline pl-1 d-lg-flex d-xl-flex" [ngClass]="{'d-none': isAuthenticated()}" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
-                    <div class="input-group d-none d-md-flex">
+                    <div class="input-group d-none d-lg-flex">
                       <input class="form-control col-md-6 col-sm-12 col-xl-12 rounded-left" formControlName="callCode" type="search" placeholder="{{'search'|translate}}">
                       <div class="input-group-append">
                           <button class="btn bg-white rounded-right" type="submit">
@@ -107,11 +108,18 @@
                           </button>
                       </div>    
                     </div>
-                    <button class="btn btn-light text-primary d-sm-block d-md-none" tooltip="{{'search'|translate}}" type="submit">
-                      <i class="fa fa-search" aria-hidden="true"></i>
-                    </button>
+                    <a class="search-link rounded-icon d-md-block d-lg-none" tooltip="{{'search'|translate}}" [routerLink]="['/search']">
+                      <svg class="icon">
+                        <use xlink:href="/assets/vendor/sprite.svg#it-search"></use>
+                      </svg>
+                    </a>
                   </form>
                 </div>
+                <a class="btn btn-link d-lg-none" (click)="sidebarMenuToggle()">
+                  <svg class="icon icon-white" id="toggle-menu-sidebar1">
+                    <use xlink:href="/assets/vendor/sprite.svg#it-burger"></use>
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
@@ -123,21 +131,7 @@
         <div class="row">
           <div class="col-12">
             <nav class="navbar navbar-expand-lg has-megamenu">
-              <button aria-controls="nav10" aria-expanded="false"
-                      aria-label="Toggle navigation" class="custom-navbar-toggler"
-                      data-target="#nav10" type="button">
-                <svg class="icon">
-                  <use
-                    xlink:href="/assets/vendor/sprite.svg#it-burger"></use>
-                </svg>
-              </button>
-              <div class="navbar-collapsable" id="nav10">
-                <div class="overlay"></div>
-                <div class="close-div sr-only">
-                  <button class="btn close-menu" type="button">
-                    <span class="it-close"></span>close
-                  </button>
-                </div>
+              <div class="navbar-collapsable">
                 <div class="menu-wrapper">
                   <div class="it-brand-wrapper cloned" *ngIf="isSticky">
                     <a [routerLink]="['/']" class="navbar-brand logo">
@@ -153,7 +147,7 @@
                       <a class="nav-link" *ngIf="menu.active" [routerLink]="[menu.path]" [routerLinkActive]="['active', 'text-primary']">
                         <span>{{ menu.name | translate}}</span>
                       </a>
-                    </li>  
+                    </li>
                   </ul>
                   <div class="it-search-wrapper cloned" *ngIf="isSticky">
                     <span class="d-none d-md-block">{{'search'|translate}}</span>
@@ -163,6 +157,11 @@
                       </svg>
                     </a>
                   </div>
+                  <a class="btn btn-link d-lg-none"  (click)="sidebarMenuToggle()">
+                    <svg class="icon icon-white" id="toggle-menu-sidebar2">
+                      <use xlink:href="/assets/vendor/sprite.svg#it-burger"></use>
+                    </svg>
+                  </a>  
                 </div>  
               </div>
             </nav>
