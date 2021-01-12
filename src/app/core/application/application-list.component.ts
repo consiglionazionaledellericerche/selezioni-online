@@ -19,12 +19,10 @@ import { Observable, of } from 'rxjs';
     <app-layout-title [title]="'application.mine.title'" [titleClass]="'main-title'"></app-layout-title>
     <form *ngIf="filterForm" class="clearfix" [formGroup]="filterForm">
       <div class="form-row col-md-12">
-        <div class="form-group mb-n3 col-md-4">
+        <div class="form-group col-md-4">
             <app-control-select-model
-                class="pr-1"
                 [inline]="true"
                 [noLabel]="true"
-                [prepend]="'list-ul'"
                 [types]="cache.jsonlistCallType"
                 [showValidation]="false"
                 [allowClear]="true"
@@ -34,58 +32,52 @@ import { Observable, of } from 'rxjs';
             </app-control-select-model>
         </div>
         <div class="form-group col-md-3">
-          <!--Rounded checkbox buttons-->
           <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="filterType">
-              <span class="btn btn-primary btn-toggle" btnRadio="active">{{'call.attivi' | translate}}</span>
-              <span class="btn btn-primary btn-toggle" btnRadio="expire">{{'call.scaduti' | translate}}</span>
-              <span class="btn btn-primary btn-toggle" btnRadio="all">{{'call.tutti' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="active" tooltip="{{'call.attivi' | translate}}">{{'call.attivi' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="expire" tooltip="{{'call.scaduti' | translate}}">{{'call.scaduti' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="all" tooltip="{{'call.tutti' | translate}}">{{'call.tutti' | translate}}</span>
           </div>
         </div>
-        <div class="form-group mb-n3 col-md-5">
+        <div class="form-group col-md-5">
             <app-control-text 
                 formControlName="callCode"
-                class="pr-1"
                 [inline]="true"
                 type="search"
                 [showValidation]="false"
-                [noLabel]="true"
                 [prepend]="'cube'"
-                [ttip]="'call.search.code'| translate"
-                [placeholder]="'call.search.code'| translate">
+                [label]="'call.search.code'| translate">
             </app-control-text>
         </div>
       </div>
       <div class="form-row col-md-12">
-        <div class="form-group mb-n3 col-md-2">
+        <div class="form-group col-md-2">
             <app-control-datepicker
-                class="pr-1"
                 type="search"
                 [inline]="true" 
-                [noLabel]="true" 
                 [showValidation]="false"
+                [label]="'call.search.scadenza.inizio'| translate" 
                 [ttip]="'call.search.scadenza.inizio'| translate" 
                 formControlName="inizioScadenza">            
             </app-control-datepicker>
         </div>
-        <div class="form-group mb-n3 col-md-2">
+        <div class="form-group col-md-2">
             <app-control-datepicker
-                class="pr-1"
                 type="search"
                 [inline]="true" 
-                [noLabel]="true" 
                 [showValidation]="false"
+                [label]="'call.search.scadenza.fine'| translate" 
                 [ttip]="'call.search.scadenza.fine'| translate" 
                 formControlName="fineScadenza">            
             </app-control-datepicker>    
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-8">
           <!--Rounded checkbox buttons-->
           <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="applicationStatus">
-              <span class="btn btn-primary btn-toggle" btnRadio="P">{{'application.status.temporary' | translate}}</span>
-              <span class="btn btn-primary btn-toggle" btnRadio="C">{{'application.status.confirmed' | translate}}</span>
-              <span class="btn btn-primary btn-toggle" btnRadio="all">{{'application.status.all' | translate}}</span>
-              <span class="btn btn-primary btn-toggle" btnRadio="active">{{'application.status.active' | translate}}</span>
-              <span class="btn btn-primary btn-toggle" btnRadio="excluded">{{'application.status.excluded' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="P" tooltip="{{'application.status.temporary' | translate}}">{{'application.status.temporary' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="C" tooltip="{{'application.status.confirmed' | translate}}">{{'application.status.confirmed' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="all" tooltip="{{'application.status.all' | translate}}">{{'application.status.all' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="active" tooltip="{{'application.status.active' | translate}}">{{'application.status.active' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="excluded" tooltip="{{'application.status.excluded' | translate}}">{{'application.status.excluded' | translate}}</span>
           </div>
         </div>
       </div>

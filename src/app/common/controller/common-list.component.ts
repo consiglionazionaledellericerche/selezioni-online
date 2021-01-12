@@ -255,7 +255,7 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
   public listItemClasses() {
     return {
       'list-group-item': true,
-      'list-group-item-action': true,
+      'list-group-item-action': false,
       'pt-0': true,
       'pb-0': true
     };

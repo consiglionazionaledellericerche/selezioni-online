@@ -22,12 +22,11 @@ import { Helpers } from '../../common/helpers/helpers';
     <app-layout-title [title]="'application.user.title'" [titleClass]="'main-title'"></app-layout-title>
     <form *ngIf="filterForm" class="clearfix" [formGroup]="filterForm">
       <div class="form-row col-md-12">
-        <div class="form-group mb-n3 col-md-4">        
+        <div class="form-group col-md-4">        
           <app-control-select-model
             [path]="service.getSelect2Mapping()"
             [template]="userSelect2"
             [noLabel]="true"
-            [prepend]="'users'"
             [inline]="'false'"
             [placeholder]="'Seleziona utente'"
             [resultName]="'people'"
@@ -36,53 +35,46 @@ import { Helpers } from '../../common/helpers/helpers';
             formControlName="user">
           </app-control-select-model>
         </div>
-        <div class="form-group mb-n3 col-md-2">
+        <div class="form-group col-md-2">
           <app-control-text 
             formControlName="firstname"
-            class="pr-1"
             [inline]="true"
             type="search"
             [showValidation]="false"
-            [noLabel]="true"
             [prepend]="'user-circle-o'"
             [ttip]="'user.firstname'| translate"
-            [placeholder]="'user.firstname'| translate">
+            [label]="'user.firstname'| translate">
           </app-control-text>
         </div>
-        <div class="form-group mb-n3 col-md-3">
+        <div class="form-group col-md-3">
           <app-control-text 
             formControlName="lastname"
-            class="pr-1"
             [inline]="true"
             type="search"
             [showValidation]="false"
-            [noLabel]="true"
             [prepend]="'user-circle'"
             [ttip]="'user.lastname'| translate"
-            [placeholder]="'user.lastname'| translate">
+            [label]="'user.lastname'| translate">
           </app-control-text>
         </div>
-        <div class="form-group mb-n3 col-md-3">
+        <div class="form-group col-md-3">
           <app-control-text 
             formControlName="codicefiscale"
-            class="pr-1"
             [inline]="true"
             type="search"
             [showValidation]="false"
-            [noLabel]="true"
             [prepend]="'address-card'"
             [ttip]="'user.codicefiscale'| translate"
-            [placeholder]="'user.codicefiscale'| translate">
+            [label]="'user.codicefiscale'| translate">
           </app-control-text>
         </div>
       </div>
       <div class="form-row col-md-12">
-        <div class="form-group mb-n3 col-md-6">        
+        <div class="form-group col-md-6">        
           <app-control-select-model
             [path]="callService.getSelect2Mapping()"
             [template]="callSelect2"
             [noLabel]="true"
-            [prepend]="'cubes'"
             [inline]="'false'"
             [resultName]="'items'"
             [resultId]="'cmis:objectId'"
@@ -91,15 +83,14 @@ import { Helpers } from '../../common/helpers/helpers';
             formControlName="call">
           </app-control-select-model>
         </div>
-
         <div class="form-group col-md-6">
           <!--Rounded checkbox buttons-->
           <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="applicationStatus">
-              <span class="btn btn-primary btn-toggle" btnRadio="P">{{'application.status.temporary' | translate}}</span>
-              <span class="btn btn-primary btn-toggle" btnRadio="C">{{'application.status.confirmed' | translate}}</span>
-              <span class="btn btn-primary btn-toggle" btnRadio="all">{{'application.status.all' | translate}}</span>
-              <span class="btn btn-primary btn-toggle" btnRadio="active">{{'application.status.active' | translate}}</span>
-              <span class="btn btn-primary btn-toggle" btnRadio="excluded">{{'application.status.excluded' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="P">{{'application.status.temporary' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="C">{{'application.status.confirmed' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="all">{{'application.status.all' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="active">{{'application.status.active' | translate}}</span>
+              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="excluded">{{'application.status.excluded' | translate}}</span>
           </div>
         </div>
       </div>

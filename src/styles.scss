@@ -62,3 +62,9 @@
 .was-validated .custom-select:invalid, .custom-select.is-invalid, .custom-select.is-valid  {
   background: none;
 }
+.card .card-body {
+  padding: 12px;
+}
+.card:after {
+  margin-top: 12px;
+}

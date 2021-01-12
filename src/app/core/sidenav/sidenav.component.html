@@ -1,12 +1,27 @@
 <div *ngIf="!isCollapsed" @slideInOut class="sidenav fixed-top h-100 p-0 col-10 col-sm-8 col-lg-4 col-xl-3">
-    <nav class="bg-light bg-faded h-100">
+    <nav class="bg-white bg-faded h-100">
         <ul class="list-group-flush p-0">
             <li class="list-group-item">
-                <div>
-                    <i class="fa fa-4x float-left fa-user-circle-o pr-2"></i> 
-                    <div class="h5 pl-1">
+                <div class="row">
+                    <div class="col-1">
+                        <span class="rounded-icon">
+                            <svg class="icon icon-primary">
+                              <use xlink:href="/assets/vendor/sprite.svg#it-user"></use>
+                            </svg>
+                        </span>    
+                    </div>
+                    <div class="h3 col-9">
                         <span class="pl-1">{{user.firstName|capitalizeFirst}}</span>
                         <span class="pl-1">{{user.lastName|capitalizeFirst}}</span>
+                    </div>
+                    <div class="col-2">
+                        <a class="btn btn-link" (click)="toggle()">
+                            <span class="rounded-icon">
+                                <svg class="icon icon-primary">
+                                    <use xlink:href="/assets/vendor/sprite.svg#it-close-big"></use>
+                                </svg>
+                            </span>    
+                        </a>
                     </div>
                     <div>
                         <small class="pl-1">{{'user.username' | translate }}:</small>
@@ -20,12 +35,22 @@
                 <div class="row no-gutters">
                     <div class="col-6">
                         <a class="btn btn-link" [routerLink]="['/create-account']" (click)="toggle()">
-                            <i class="fa fa-fw fa-address-card"></i> {{'user.settings'|translate}} 
+                            <span class="rounded-icon">
+                                <svg class="icon icon-primary">
+                                    <use xlink:href="/assets/vendor/sprite.svg#it-settings"></use>
+                                </svg>
+                            </span>    
+                            <span>{{'user.settings'|translate}}</span> 
                         </a>
                     </div>
                     <div class="col-6">
                         <a class="btn btn-link" [routerLink]="['/']" (click)="onLogout()">
-                            <i class="fa fa-fw fa-sign-out"></i> {{'user.logout'|translate}}
+                            <span class="rounded-icon">
+                                <svg class="icon icon-primary">
+                                    <use xlink:href="/assets/vendor/sprite.svg#it-close-circle"></use>
+                                </svg>
+                            </span>    
+                            <span>{{'user.logout'|translate}}</span>
                         </a>
                     </div>
                 </div>
@@ -45,10 +70,10 @@
             <ng-container *ngIf="applicationsState && applicationsState.length > 0">
                 <li class="list-group-item">
                     <ul class="list-group list-group-flush">
-                        <h5 class="font-weight-light font-italic">{{'application.all'| translate}}</h5>
+                        <h6 class="font-weight-light font-italic">{{'application.all'| translate}}</h6>
                         <ng-container *ngFor="let state of applicationsState">
                             <li class="list-group-item border-bottom-0 p-1">                         
-                                <a class="h5" [routerLink]="['/application']" [queryParams]="{applicationStatus: state.getFilterStato()}" routerLinkActive="active" (click)="toggle()">
+                                <a class="h6" [routerLink]="['/application']" [queryParams]="{applicationStatus: state.getFilterStato()}" routerLinkActive="active" (click)="toggle()">
                                     <span>{{ state.getLabel() | translate}}</span> 
                                     <span class="badge badge-pill float-right" 
                                         [ngClass]="{

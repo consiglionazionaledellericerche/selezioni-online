@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {CacheService} from '../cache.service';
 import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
 
@@ -11,7 +11,8 @@ export class HomeComponent implements OnInit {
   cache: any = {};
   public filterFormHome: FormGroup;
   public callCode: String;
-
+  @ViewChild('callList', {static: false}) callList: ElementRef;
+  
   constructor(
     private formBuilder: FormBuilder,
     private cacheService: CacheService) {}
@@ -34,4 +35,5 @@ export class HomeComponent implements OnInit {
       this.cache = cache;
     });
   }
+
 }

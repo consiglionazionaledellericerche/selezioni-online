@@ -12,6 +12,8 @@ import {ShowAffixComponent} from './show/show-affix.component';
 import {AdMetadata} from './show/ad-metadata.directive';
 
 import {ListLayoutComponent} from './list/list-layout.component';
+import {GridLayoutComponent} from './list/grid-layout.component';
+
 import {FormLayoutComponent} from './forms/form-layout.component';
 import {FormTemplateTextComponent} from './forms/form-template-text.component';
 import {FormTemplateDatepickerComponent} from './forms/form-template-datepicker.component';
@@ -118,6 +120,7 @@ import {HttpClient} from '@angular/common/http';
 
     // List
     ListLayoutComponent,
+    GridLayoutComponent,
     ListHeaderLayoutComponent,
     ListItemCallComponent,
     ListItemApplicationComponent,
@@ -214,6 +217,7 @@ import {HttpClient} from '@angular/common/http';
 
     // List
     ListLayoutComponent,
+    GridLayoutComponent,
     ListHeaderLayoutComponent,
     ListItemCallComponent,
     ListItemApplicationComponent,

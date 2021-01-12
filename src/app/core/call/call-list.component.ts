@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, SimpleChanges} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, Input} from '@angular/core';
 import {CommonListComponent} from '../../common/controller/common-list.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {NavigationService} from '../../core/navigation.service';
 import { Call } from './call.model';
 import { CallService } from './call.service';
@@ -12,11 +12,10 @@ import {TranslateService} from '@ngx-translate/core';
   template:
   `
     <!-- List -->
-    <app-list-layout [loading]="loading" [items]="items" [page]="getPage()" [showTotalOnTop]="showTotalOnTop"
-                     [count]="count" (onChangePage)="onChangePage($event)">
-      <li *ngFor="let item of items" [ngClass]="listItemClasses()">
+    <app-grid-layout [loading]="loading" [items]="items" [page]="getPage()" [showTotalOnTop]="showTotalOnTop"
+                     [count]="count" (onChangePage)="onChangePage($event)" [page_offset]="pageOffset">
+      <div *ngFor="let item of items" class="col-sm-12 px-2" [ngClass]="classForDisplayCard()">
         <app-list-item-call [item]="item" (onDelete)="onDelete(item.getId())">
-          <div class="col-sm-12 font-weight-bold">{{ item.objectTypeId | translate }}</div>
           <div class="col-sm-12">
             <app-show-text [label]="'call.profilo'" [value]="item.profilo" [strong]="false"></app-show-text>
           </div>  
@@ -36,6 +35,8 @@ import {TranslateService} from '@ngx-translate/core';
                 [modal_title]="'Info'" 
                 [modal_text]="translateService.currentLang == 'it'? item.descrizione: item.descrizione_en">
               </app-show-text-modal>
+          </div>  
+          <div class="col-sm-12">    
               <app-show-text [label]="'call.numero_gu'" [value]="item.numero_gu" [strong]="false"></app-show-text>
               <app-show-text [label]="'call.data_gu'" [value]="item.data_gu | date:'dd/MM/yyyy'" [strong]="false"></app-show-text>
               <app-show-text 
@@ -55,14 +56,15 @@ import {TranslateService} from '@ngx-translate/core';
               </app-show-text-modal>
           </div>
         </app-list-item-call>
-      </li>
-    </app-list-layout>
+      </div>
+    </app-grid-layout>
   `
 })
 export class CallListComponent extends CommonListComponent<Call> implements OnInit {
 
   public items: Call[] = [];
   @Input() showTotalOnTop: boolean = true;
+  pageOffset = CallService.PAGE_OFFSET;
 
   public constructor(public service: CallService,
                      protected route: ActivatedRoute,
@@ -83,6 +85,13 @@ export class CallListComponent extends CommonListComponent<Call> implements OnIn
 
   public buildFilterForm(): FormGroup {
     return this.filterForm;
+  }
+
+  public classForDisplayCard() {
+    return {
+      'col-md-12': this.count <= 2,
+      'col-lg-4': this.count > 2
+    };
   }
 
 }

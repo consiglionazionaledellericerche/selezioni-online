@@ -11,6 +11,7 @@ import { Call } from './call.model';
 export class CallService extends CommonService<Call> {
 
   public static ROUTE = 'call';
+  static PAGE_OFFSET = 12;
 
   public constructor(protected httpClient: HttpClient,
                      protected apiMessageService: ApiMessageService,
@@ -34,4 +35,9 @@ export class CallService extends CommonService<Call> {
   public getSelect2Mapping(): string {
     return ConfigService.API_BASE + super.getSelect2Mapping();
   }
+
+  public getPageOffset(): number {
+    return CallService.PAGE_OFFSET;
+  }
+
 }

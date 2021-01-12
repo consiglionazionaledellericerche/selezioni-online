@@ -56,7 +56,8 @@ export class ListPaginationComponent implements OnInit{
 
   pageChanged(event: PageChangedEvent): void {
     if (this.currentPage != event.page) {
-      this.onChangePage.emit(event.page - 1);      
+      this.onChangePage.emit(event.page - 1);
+      window.scrollTo(0, 0);
     }
   }
 

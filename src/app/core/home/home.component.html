@@ -1,6 +1,6 @@
 <app-layout-title [titleClass]="'main-title'" [subTitle]="'home.subtitle'"></app-layout-title>
 <div class="row no-gutters">
-    <div class="col-lg-3">
+    <div class="col-lg-3 position-sticky">
         <form *ngIf="filterFormHome" [formGroup]="filterFormHome">
             <div class="d-xs-block d-sm-block d-md-none">
                 <select class="form-control mb-2" formControlName="type">
@@ -21,7 +21,8 @@
             </div>
             <div>
                 <div id="list-call-types" btnRadioGroup formControlName="type" class="list-group ml-1 pb-2 d-none d-md-block">
-                    <a class="list-group-item list-group-item-action" 
+                    <a class="list-group-item list-group-item-action"
+                        href="#" 
                         btnRadio="jconon_call:folder">
                         <span>{{'F:jconon_call:folder' | translate}}</span> 
                         <i class="fa fa-angle-right pull-right"></i>
@@ -29,18 +30,19 @@
                     <ng-container *ngFor="let item of cache.jsonlistCallType">
                         <ng-container *ngIf="item.display && !item.childs">
                             <a class="list-group-item list-group-item-action" 
+                                href="#"
                                 btnRadio="{{item.queryName}}">
                                 <span>{{item.key | translate}}</span> 
                                 <i class="fa fa-angle-right pull-right"></i>
                             </a>
                         </ng-container>
                         <ng-container *ngIf="item.display && item.childs">
-                            <a class="list-group-item list-group-item-action">
+                            <a class="list-group-item list-group-item-action text-primary">
                                 <span class="font-weight-bolder">{{item.key | translate}}</span> 
                                 <i class="fa fa-angle-down pull-right text-primary"></i>
                             </a>
                             <ng-container *ngFor="let child of item.childs">
-                                <a class="list-group-item list-group-item-action" 
+                                <a href="#" class="list-group-item list-group-item-action" 
                                     btnRadio="{{child.queryName}}">
                                     <span class="ml-3">{{child.key | translate}}</span> 
                                     <i class="fa fa-angle-right pull-right"></i>
@@ -52,15 +54,14 @@
                 <div class="ml-1 pb-1">
                     <!--Rounded checkbox buttons-->
                     <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="filterType">
-                        <label class="btn btn-primary btn-toggle" btnRadio="active">{{'call.attivi' | translate}}</label>
-                        <label class="btn btn-primary btn-toggle" btnRadio="expire">{{'call.scaduti' | translate}}</label>
-                        <label class="btn btn-primary btn-toggle" btnRadio="all">{{'call.tutti' | translate}}</label>
+                        <a class="btn btn-primary btn-toggle text-truncate" href="#" btnRadio="active">{{'call.attivi' | translate}}</a>
+                        <a class="btn btn-primary btn-toggle text-truncate" href="#" btnRadio="expire">{{'call.scaduti' | translate}}</a>
+                        <a class="btn btn-primary btn-toggle text-truncate" href="#" btnRadio="all">{{'call.tutti' | translate}}</a>
                     </div>
                 </div>
             </div>
         </form>       
     </div>
-    <!--Rounded checkbox buttons-->          
     <div class="col-lg-9">
         <call-list *ngIf="filterFormHome" [filterForm]="filterFormHome" [showTotalOnTop]="false"></call-list>
     </div>
