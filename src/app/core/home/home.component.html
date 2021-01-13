@@ -1,6 +1,6 @@
 <app-layout-title [titleClass]="'main-title'" [subTitle]="'home.subtitle'"></app-layout-title>
 <div class="row no-gutters">
-    <div class="col-lg-3 position-sticky">
+    <div class="col-lg-3">
         <form *ngIf="filterFormHome" [formGroup]="filterFormHome">
             <div class="d-xs-block d-sm-block d-md-none">
                 <select class="form-control mb-2" formControlName="type">
@@ -54,9 +54,9 @@
                 <div class="ml-1 pb-1">
                     <!--Rounded checkbox buttons-->
                     <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="filterType">
-                        <a class="btn btn-primary btn-toggle text-truncate" href="#" btnRadio="active">{{'call.attivi' | translate}}</a>
-                        <a class="btn btn-primary btn-toggle text-truncate" href="#" btnRadio="expire">{{'call.scaduti' | translate}}</a>
-                        <a class="btn btn-primary btn-toggle text-truncate" href="#" btnRadio="all">{{'call.tutti' | translate}}</a>
+                        <a class="btn btn-primary btn-toggle text-truncate" href="#" tooltip="{{'call.attivi' | translate}}" btnRadio="active">{{'call.attivi' | translate}}</a>
+                        <a class="btn btn-primary btn-toggle text-truncate" href="#" tooltip="{{'call.scaduti' | translate}}" btnRadio="expire">{{'call.scaduti' | translate}}</a>
+                        <a class="btn btn-primary btn-toggle text-truncate" href="#" tooltip="{{'call.tutti' | translate}}" btnRadio="all">{{'call.tutti' | translate}}</a>
                     </div>
                 </div>
             </div>

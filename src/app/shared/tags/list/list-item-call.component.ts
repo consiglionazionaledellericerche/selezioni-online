@@ -11,7 +11,7 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
   `
     <div *ngIf="item" class="pb-2 h-100">
       <div class="card card-bg border-bottom-card h-100">        
-        <div class="card-header">
+        <div class="card-header pl-2 py-2">
           <div class="d-flex">
             <svg class="icon icon-primary bg-white">
               <use xlink:href="/assets/vendor/sprite.svg#it-card"></use>
@@ -32,6 +32,7 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
                 <svg class="icon icon-primary">
                   <use xlink:href="/assets/vendor/sprite.svg#it-pencil"></use>
                 </svg>
+                <small>{{'call.submit_application' | translate}}</small>
               </a>
               <app-show-children-modal 
                 [parentId] = "item.objectId" 
@@ -48,7 +49,7 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
                   <use xlink:href="/assets/vendor/sprite.svg#it-more-items"></use>
                 </svg>
               </button>
-              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-animated">
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right border" role="menu" aria-labelledby="button-animated">
                   <li role="menuitem" *ngIf="canCreateDocument()">
                     <a class="dropdown-item" 
                       [routerLink]="['/applications-user']"
@@ -65,7 +66,11 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
           </div>
       </div>
     </div>
-  `
+  `,
+  styles:
+      [
+        '.dropdown-menu:before { left: unset; right: 11px;border-left:1px solid #b1b1b3 !important; border-top: 1px solid #b1b1b3 !important; top: -10px}'
+      ]
 })
 export class ListItemCallComponent {
 

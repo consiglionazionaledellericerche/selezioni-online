@@ -89,7 +89,7 @@ export class CallListComponent extends CommonListComponent<Call> implements OnIn
     return this.filterForm;
   }
 
-  public classForDisplayCard() {
+  public classForDisplayCard() {    
     return {
       'col-md-12': this.count <= 1,
       'col-lg-4': this.count > 1

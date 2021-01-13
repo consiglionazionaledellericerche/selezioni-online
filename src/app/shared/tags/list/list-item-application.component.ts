@@ -12,13 +12,21 @@ import {ActivatedRoute, Router} from '@angular/router';
 
            <div class="ddd">
              <div class="btn-group border rounded" role="group" dropdown [ngStyle]="buttonStyle()">
-
-                <app-show-children-modal [show_date]="'true'" [type]="'jconon_attachment:generic_document'" [parentId] = "item.objectId" [modal_title]="'application.attach_to' | translate"></app-show-children-modal>
-                
-                <button id="button-basic" dropdownToggle class="btn text-dark" aria-controls="button-animated" tooltip="{{'more.actions' | translate}}">
-                  <i class="fa fa-fw fa-ellipsis-v"></i>
+                <app-show-children-modal 
+                  [show_date]="'true'" 
+                  [type]="'jconon_attachment:generic_document'" 
+                  [parentId] = "item.objectId" 
+                  [modal_title]="'application.attach_to' | translate">
+                </app-show-children-modal>                
+                <button dropdownToggle 
+                  class="btn text-dark p-1" 
+                  aria-controls="button-animated" 
+                  tooltip="{{'more.actions' | translate}}">
+                  <svg class="icon">
+                    <use xlink:href="/assets/vendor/sprite.svg#it-more-items"></use>
+                  </svg>
                 </button>
-                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right border" role="menu" aria-labelledby="button-animated">
                     <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
                     <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
                     <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
@@ -32,7 +40,8 @@ import {ActivatedRoute, Router} from '@angular/router';
   styles:
       [
         'div.ddd { display: none; }',
-        'div.row:hover div.ddd { display: block; }'
+        'div.row:hover div.ddd { display: block; }',
+        '.dropdown-menu:before { left: unset; right: 11px;border-left:1px solid #b1b1b3 !important; border-top: 1px solid #b1b1b3 !important; top: -10px}'
       ]
 })
 export class ListItemApplicationComponent {
@@ -72,7 +81,6 @@ export class ListItemApplicationComponent {
       'position': 'absolute',
       'top': '5px',
       'right': '5px',
-      'background-color': '#FEFEFE',
       'z-index': '100000'
     };
   }
