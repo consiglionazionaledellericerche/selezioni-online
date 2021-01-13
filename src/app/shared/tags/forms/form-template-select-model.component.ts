@@ -32,11 +32,10 @@ declare var $: any;   // not required
                        [ttipAppend]="ttipAppend"
                        [showValidation]="showValidation">
 
-          <select class="custom-select select2-single"
-                  [ngClass]="selectClasses()">
+          <select class="custom-select select2-single" [ngClass]="selectClasses()">
             <option *ngIf="allowClear"></option>
-
-            <option *ngFor="let type of types" [value]="type.id" [selected]="isItemSelected(type.id)">
+            
+            <option *ngFor="let type of types" [value]="type.id" [selected]="isItemSelected(type.queryName)">
               {{ type.id | translate}}
             </option>
 
@@ -341,7 +340,6 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
   onTouched = () => {};
 
   writeValue(value: any): void {
-    
     this.selected = value;
 
     if (this.asyncInitialized) {
@@ -355,8 +353,10 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
       this.controlDir.control.markAsDirty();
       this.controlDir.control.updateValueAndValidity();
     }
-
     this.ref.detectChanges();
+    
+    $(this.cssSelector()).trigger('change');
+
   }
 
   registerOnChange(fn: (value: CmisObject) => void): void {
@@ -383,6 +383,9 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
     if (this.isSingleSync() || this.isSingleAsync()) {
       return this.selected ? this.selected.getId() === value : false;
     }
+    if (this.isSingleSyncType()) {
+      return this.selected ? this.selected === value : false;
+    } 
     if (this.isMultiSync()) {
       return false; // this.selected ? this.selected.filter(item => item === value).lenght > 0 : false;
     }

@@ -7,7 +7,9 @@ import { Interpolation } from '@angular/compiler';
   template: `
     
     <button class="btn {{buttonClass}}" (click)="openModal(template)" tooltip="{{'attach' | translate}}">
-        <i class="fa fa-fw fa-download"></i>
+      <svg class="icon">
+        <use xlink:href="/assets/vendor/sprite.svg#it-download"></use>
+      </svg>
     </button>
 
     <ng-template #template>
@@ -29,7 +31,7 @@ import { Interpolation } from '@angular/compiler';
 export class ShowChildrenModalComponent {
 
   @Input() parentId;  
-  @Input() buttonClass = 'text-dark';
+  @Input() buttonClass = 'text-dark p-1';
   @Input() label;
   @Input() value;
   @Input() type;  

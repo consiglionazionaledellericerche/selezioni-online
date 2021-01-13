@@ -7,7 +7,7 @@ import { CommonService } from '../../../common/controller/common.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template:
      `
-    <div class="px-2">
+    <div class="px-md-2">
 
         <div *ngIf="loading ; else results_table" class="text-center">
           Caricamento ...

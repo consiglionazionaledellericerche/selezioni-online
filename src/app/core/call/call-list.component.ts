@@ -14,8 +14,8 @@ import {TranslateService} from '@ngx-translate/core';
     <!-- List -->
     <app-grid-layout [loading]="loading" [items]="items" [page]="getPage()" [showTotalOnTop]="showTotalOnTop"
                      [count]="count" (onChangePage)="onChangePage($event)" [page_offset]="pageOffset">
-      <div *ngFor="let item of items" class="col-sm-12 px-2" [ngClass]="classForDisplayCard()">
-        <app-list-item-call [item]="item" (onDelete)="onDelete(item.getId())">
+      <div *ngFor="let item of items" class="col-sm-12 px-md-2" [ngClass]="classForDisplayCard()">
+        <app-list-item-call [item]="item" [filterForm]="filterForm" (onDelete)="onDelete(item.getId())">
           <div class="col-sm-12">
             <app-show-text [label]="'call.profilo'" [value]="item.profilo" [strong]="false"></app-show-text>
           </div>  
@@ -39,6 +39,8 @@ import {TranslateService} from '@ngx-translate/core';
           <div class="col-sm-12">    
               <app-show-text [label]="'call.numero_gu'" [value]="item.numero_gu" [strong]="false"></app-show-text>
               <app-show-text [label]="'call.data_gu'" [value]="item.data_gu | date:'dd/MM/yyyy'" [strong]="false"></app-show-text>
+          </div>
+          <div class="col-sm-12">
               <app-show-text 
                 [label]="'call.data_fine_invio_domande'" 
                 [value]="item.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm'">
@@ -89,8 +91,8 @@ export class CallListComponent extends CommonListComponent<Call> implements OnIn
 
   public classForDisplayCard() {
     return {
-      'col-md-12': this.count <= 2,
-      'col-lg-4': this.count > 2
+      'col-md-12': this.count <= 1,
+      'col-lg-4': this.count > 1
     };
   }
 
