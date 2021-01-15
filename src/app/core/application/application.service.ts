@@ -11,6 +11,7 @@ import { Application } from './application.model';
 import { SpringError } from '../../common/model/spring-error.model';
 import { ApplicationState } from './application-state.model';
 import { Helpers } from '../../common/helpers/helpers';
+import { AuthService } from '../../auth/auth.service';
 
 @Injectable()
 export class ApplicationService extends CommonService<Application> {
@@ -70,6 +71,35 @@ export class ApplicationService extends CommonService<Application> {
       })
     );
   }
+  
+  public saveApplication(application: Application): Observable<Application> {
+    return this.configService.getApiBase()
+      .pipe(
+        switchMap((apiBase) => {
+          return this.httpClient.post<Application>(
+              apiBase + this.getApiPath() + '/save', 
+              this.serializeInstance(application)
+            )
+            .pipe(
+              map((item) => {
+                try {
+                  const instance: Application = this._buildInstance(item);
+                  return instance;
+                } catch (ex) {
+                  console.error(ex);
+                  this.apiMessageService.sendMessage(MessageType.ERROR, ex);
+                  observableThrowError(ex);
+                }
+              }),
+              catchError( (httpErrorResponse: HttpErrorResponse) => {
+                const springError = new SpringError(httpErrorResponse);
+                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
+                return observableThrowError(springError);
+              })
+            );
+        })
+      );
+  }
 
   public loadApplication(callId: string, userId: string): Observable<Application> {
     if (!callId) {
@@ -105,6 +135,7 @@ export class ApplicationService extends CommonService<Application> {
       );
   }
 
+  
   public getPageOffset(): number {
     return 100;
   }

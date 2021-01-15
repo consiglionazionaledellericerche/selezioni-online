@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {CommonEditComponent} from '../../common/controller/common-edit.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { NavigationService} from '../navigation.service';
 import { Application } from './application.model';
 import { ApplicationService } from './application.service';
@@ -20,7 +20,7 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
   `
     <app-layout-wait [loaded]="isLoaded()"></app-layout-wait>
     <div *ngIf="isLoaded()">
-      <div class="shadow-none p-3 px-1 py-3 mx-n3">
+      <div class="shadow-none p-3 px-1 py-3 mx-n3" #cardApplication>
         <div class="text-right">
           <span>{{'application.call.title' | translate:{value: call.codice} }}</span>
           <app-show-children-modal 
@@ -53,45 +53,49 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
         <h5 class="text-center" *ngIf="call.elenco_settori_tecnologici">{{call.elenco_settori_tecnologici}}</h5>
         <h5 class="text-center" *ngIf="call.elenco_macroaree">{{call.elenco_macroaree}}</h5>
       </div>
-      <div class="card card-bg border-bottom-card">
+      <div class="card card-bg border-bottom-card" >
         <div class="card-header d-flex">
           <div class="h1 flex-grow-1">{{'affix.' + call.elenco_sezioni_domanda[affixCompleted] + '.title' | translate}}</div>
           <div class="h4">{{affixCompleted + 1}}/{{affix.length}}</div>
         </div>
-        <div class="card-body">  
+        <div class="card-body mt-2">  
           <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
           <div class="steppers">
             <nav class="steppers-nav">
-              <button [ngClass]="{'disabled': affixCompleted == 0}" (click)="affixCompleted = affixCompleted - 1" type="button" class="btn btn-link steppers-btn-prev">
+              <a [ngClass]="{'disabled': affixCompleted == 0}" 
+                (click)="affixCompleted = affixCompleted - 1;scroll(cardApplication);" 
+                class="btn btn-link text-primary steppers-btn-prev">
                 <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-left"></use></svg>Indietro
-              </button>
+              </a>
               <ul class="steppers-dots d-flex">
                 <li [ngClass]="{'done': number <= affixCompleted}" 
                     class="btn"
                     *ngFor="let number of affix" 
-                    (click)="affixCompleted = number" 
+                    (click)="affixCompleted = number;scroll(cardApplication);" 
                     tooltip="{{'affix.' + call.elenco_sezioni_domanda[number] + '.title' | translate}}">
                 </li>
               </ul>
-              <button [ngClass]="{'disabled': affixCompleted == affix.length - 1}" (click)="affixCompleted = affixCompleted + 1" type="button" class="btn btn-link steppers-btn-next">Avanti
+              <a [ngClass]="{'disabled': affixCompleted == affix.length - 1}" 
+                (click)="affixCompleted = affixCompleted + 1;scroll(cardApplication);" 
+                class="btn btn-link text-primary steppers-btn-next">Avanti
                 <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-right"></use></svg>
-              </button>
+              </a>
             </nav>
           </div>
         </div>
         <div class="card-footer">
           <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-danger btn-lg btn-icon mr-2" tooltip="Stampa domanda">
+            <button class="btn btn-outline-danger btn-lg btn-icon mr-2" tooltip="Stampa domanda">
+              <span class="d-none d-md-block pr-1">Stampa</span>
               <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-print"></use></svg>
-              <span class="d-none d-md-block">Stampa</span>
             </button>
-            <button type="button" class="btn btn-outline-success btn-lg btn-icon mr-2" tooltip="Invia domanda">
-            <svg class="icon icon-success"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
-              <span class="d-none d-md-block">Invia</span>
+            <button (click)="sendApplication()" class="btn btn-outline-success btn-lg btn-icon mr-2" tooltip="Invia domanda">
+              <span class="d-none d-md-block pr-1">Invia</span>
+              <svg class="icon icon-success"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
             </button>
-            <button type="button" (click)="confirmApplication()" class="btn btn-outline-primary btn-lg btn-icon" tooltip="Conferma domanda">
-              <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-pencil"></use></svg>              
-              <span class="d-none d-md-block">Conferma</span>
+            <button (click)="confirmApplication();scroll(cardApplication);" class="btn btn-outline-primary btn-lg btn-icon" tooltip="{{'application.confirm' | translate}}">
+              <span class="d-none d-md-block pr-1">{{'application.confirm' | translate}}</span>
+              <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
             </button>
           </div>     
         </div>
@@ -142,22 +146,38 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     super.ngOnInit();
   }
 
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({
+      behavior:"smooth"
+    });
+  }
+  
   public setEntity(entity: Application) {
     this.entity = entity;
   }
 
   public buildUpdateForm(id: number, entity: Application) {
     this.form = new FormGroup({
-
     });
   }
   public buildCreateForm() {
     this.form = new FormGroup({
+      'jconon_application:user': new FormControl(this.user.userName),
+      'cmis:objectTypeId': new FormControl(this.entity.objectTypeId),
+      'cmis:objectId': new FormControl(this.entity.objectId),
+      'cmis:secondaryObjectTypeIds': new FormControl(this.entity.secondaryObjectTypeIds)
     });
   }
 
-
   public confirmApplication() {
+    this.service.saveApplication(this.buildInstance()).subscribe((application) => {
+      this.setEntity(application);
+      this.buildCreateForm();
+      this.affixCompleted++;
+    });
+  }
+
+  public sendApplication() {
     Object.keys(this.form.controls).forEach(control => {
       if (this.form.controls[control].status === 'INVALID') {
         this.form.controls[control].markAsDirty({onlySelf: true});
@@ -174,6 +194,6 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   public buildInstance(): Application {
-    return null;
+    return this.service.buildInstance(this.form.value);
   }
 }

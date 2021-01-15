@@ -3,22 +3,26 @@
         <div class="container">
         <section>
             <div class="row clearfix">
-            <div class="col-sm-12">
-                <div class="it-brand-wrapper">
-                <a [routerLink]="['/']" class="navbar-brand logo">
-                    <img src="/assets/images/logo_cnr.png">
-                    <div class="it-brand-text pl-2">
-                    <h2 class="no_toc">{{'header.title' | translate}}</h2>
-                    <h3 class="no_toc d-none d-md-block">{{'header.subtitle' | translate}}</h3>
+                <div class="col-sm-12">
+                    <div class="it-brand-wrapper">
+                    <a [routerLink]="['/']" class="navbar-brand logo">
+                        <img src="/assets/images/logo_cnr.png">
+                        <div class="it-brand-text pl-2">
+                        <h2 class="no_toc">{{'header.title' | translate}}</h2>
+                        <h3 class="no_toc d-none d-md-block">{{'header.subtitle' | translate}}</h3>
+                        </div>
+                    </a>
                     </div>
-                </a>
+                </div>
+                <div class="col-sm-12">
+                    <p class="text-justify">{{'footer.first' | translate}}</p>
+                    <p class="text-justify">{{'footer.second' | translate}}</p>
                 </div>
             </div>
-            </div>
         </section>
-        <section class="py-4">
+        <section class="py-4 border-white border-top">
             <div class="row">
-            <div class="col-lg-4 col-md-4 pb-2">
+            <div class="col-md-4 pb-2">
                 <h4>
                 <a href="https://www.cnr.it/it/amministrazione-trasparente" title="Vai alla pagina: Amministrazione">Amministrazione trasparente</a>
                 </h4>
@@ -28,7 +32,7 @@
                 d.lgs. 36/2006
                 </p>
             </div>
-            <div class="col-lg-4 col-md-4 pb-2">
+            <div class="col-md-5 pb-2">
                 <h4>
                 <a [routerLink]="['/configurazione/contacts']" title="Vai alla pagina: Contatti">Contatti</a>
                 </h4>
@@ -52,51 +56,55 @@
                 </ul>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 pb-2">
+            <div class="col-md-3 pb-2">
                 <h4>
-                <a href="#" title="Vai alla pagina: Seguici su">Seguici su</a>
+                    <a href="#" title="Vai alla pagina: Seguici su">Seguici su</a>
                 </h4>
                 <ul class="list-inline text-left social">
-                <li class="list-inline-item">
-                    <a class="p-2 text-white" href="#" target="_blank">
-                    <svg class="icon icon-sm icon-white align-top">
-                        <use
-                        xlink:href="/assets/vendor/sprite.svg#it-designers-italia"
-                        ></use>
-                    </svg>
-                    <span class="sr-only">Designers Italia</span></a
-                    >
-                </li>
-                <li class="list-inline-item">
-                    <a class="p-2 text-white" href="#" target="_blank">
-                    <svg class="icon icon-sm icon-white align-top">
-                        <use
-                        xlink:href="/assets/vendor/sprite.svg#it-twitter"
-                        ></use>
-                    </svg>
-                    <span class="sr-only">Twitter</span></a
-                    >
-                </li>
-                <li class="list-inline-item">
-                    <a class="p-2 text-white" href="#" target="_blank">
-                    <svg class="icon icon-sm icon-white align-top">
-                        <use
-                        xlink:href="/assets/vendor/sprite.svg#it-medium"
-                        ></use>
-                    </svg>
-                    <span class="sr-only">Medium</span></a
-                    >
-                </li>
-                <li class="list-inline-item">
-                    <a class="p-2 text-white" href="#" target="_blank">
-                    <svg class="icon icon-sm icon-white align-top">
-                        <use
-                        xlink:href="/assets/vendor/sprite.svg#it-behance"
-                        ></use>
-                    </svg>
-                    <span class="sr-only">Behance</span></a
-                    >
-                </li>
+                    <li class="list-inline-item">
+                        <a class="p-2 text-white" href="https://github.com/consiglionazionaledellericerche" target="_blank">
+                            <svg class="icon icon-sm icon-white align-top">
+                                <use xlink:href="/assets/vendor/sprite.svg#it-github"></use>
+                            </svg>
+                            <span class="sr-only">GitHub</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="p-2 text-white" href="https://www.facebook.com/CNRsocialFB" target="_blank">
+                            <svg class="icon icon-sm icon-white align-top">
+                                <use xlink:href="/assets/vendor/sprite.svg#it-facebook"></use>
+                            </svg>
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="p-2 text-white" href="https://twitter.com/CNRsocial_" target="_blank">
+                            <svg class="icon icon-sm icon-white align-top">
+                                <use xlink:href="/assets/vendor/sprite.svg#it-twitter"></use>
+                            </svg>
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="p-2 text-white" href="https://www.linkedin.com/company/283032" target="_blank">
+                            <svg class="icon icon-sm icon-white align-top">
+                                <use
+                                xlink:href="/assets/vendor/sprite.svg#it-linkedin"
+                                ></use>
+                            </svg>
+                            <span class="sr-only">Linkedin</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="p-2 text-white" href="https://www.youtube.com/channel/UCIo3c7BLuAqByu5b1HwarHA" target="_blank">
+                        <svg class="icon icon-sm icon-white align-top">
+                            <use
+                            xlink:href="/assets/vendor/sprite.svg#it-youtube"
+                            ></use>
+                        </svg>
+                        <span class="sr-only">Youtube</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             </div>
@@ -105,23 +113,18 @@
     </div>
     <div class="it-footer-small-prints clearfix">
         <div class="container">
-        <h3 class="sr-only">Sezione Link Utili</h3>
-        <ul
-            class="it-footer-small-prints-list list-inline mb-0 d-flex flex-column flex-md-row"
-        >
-            <li class="list-inline-item">
-            <a href="#" title="Note Legali">Media policy</a>
-            </li>
-            <li class="list-inline-item">
-            <a href="#" title="Note Legali">Note legali</a>
-            </li>
-            <li class="list-inline-item">
-            <a href="#" title="Privacy-Cookies">Privacy policy</a>
-            </li>
-            <li class="list-inline-item">
-            <a href="#" title="Mappa del sito">Mappa del sito</a>
-            </li>
-        </ul>
+            <h3 class="sr-only">Sezione Link Utili</h3>
+            <ul class="it-footer-small-prints-list list-inline mb-0 d-flex flex-column flex-md-row">
+                <li class="list-inline-item">
+                    <a href="#" title="Note Legali">Media policy</a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" title="Note Legali">Note legali</a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" title="Privacy-Cookies">Privacy policy</a>
+                </li>
+            </ul>
         </div>
     </div>
 </footer>
@@ -132,11 +135,8 @@
         <br />Proseguendo nella navigazione accetti l’utilizzo dei cookie.
     </p>
     <div class="cookiebar-buttons">
-        <a href="#" class="cookiebar-btn"
-        >Preferenze<span class="sr-only">cookies</span></a
-        >
-        <button data-accept="cookiebar" class="cookiebar-btn cookiebar-confirm">
-        Accetto<span class="sr-only"> i cookies</span>
+        <a href="#" class="cookiebar-btn">Preferenze<span class="sr-only">cookies</span></a>
+        <button data-accept="cookiebar" class="cookiebar-btn cookiebar-confirm">Accetto<span class="sr-only"> i cookies</span>
         </button>
     </div>
 </div>

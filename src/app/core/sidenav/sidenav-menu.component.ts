@@ -60,7 +60,7 @@ export class SidenavMenuComponent implements OnInit, OnDestroy {
       if (!targetElement) {
         return;
       }
-      const clickedInside = this._eref.nativeElement.contains(targetElement) || targetElement.id == 'toggle-menu-sidebar1' || targetElement.id == 'toggle-menu-sidebar2';
+      const clickedInside = this._eref.nativeElement.contains(targetElement) || targetElement.classList.contains('toggle-menu-sidebar');
       if (!clickedInside) {
         this.isCollapsed = true;
       }

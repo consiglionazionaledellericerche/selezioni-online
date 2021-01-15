@@ -22,7 +22,7 @@ import { Helpers } from '../../common/helpers/helpers';
               [showValidation]="true"
               [placeholder]="'placeholder.select.country'| translate"
               (onChangeEvent)="onChangeNazioneResidenza()"
-              formControlName="nazione_residenza">
+              formControlName="jconon_application:nazione_residenza">
             </app-control-select-model>
           </div>
           <div *ngIf="isForeign()" class="form-group col-md-6">
@@ -31,7 +31,7 @@ import { Helpers } from '../../common/helpers/helpers';
               type="text" 
               [inline]="true" 
               [label]="'application.luogo_nascita'| translate" 
-              formControlName="comune_residenza_estero">
+              formControlName="jconon_application:comune_residenza_estero">
             </app-control-text>
           </div>
           <div *ngIf="!isForeign()" class="form-group col-md-5">
@@ -45,7 +45,7 @@ import { Helpers } from '../../common/helpers/helpers';
               [allowClear]="true"
               [showValidation]="true"
               [placeholder]="'placeholder.select.place'| translate"
-              formControlName="comune_residenza">
+              formControlName="jconon_application:comune_residenza">
               </app-control-select-model>          
             <label for="comune_residenza" class="active">{{'application.comune_residenza'| translate}}</label>
           </div>
@@ -57,7 +57,7 @@ import { Helpers } from '../../common/helpers/helpers';
               type="text" 
               [inline]="true" 
               [label]="'application.provincia_residenza'| translate" 
-              formControlName="provincia_residenza">
+              formControlName="jconon_application:provincia_residenza">
             </app-control-text>
           </div>
         </div>
@@ -85,24 +85,24 @@ export class JcononAffixResidenzaComponent implements AdMetadataComponent, OnIni
       this.cacheService.comuni().subscribe((comuni) => {
         this.comuni = comuni;
       });
-      this.form.addControl('nazione_residenza', new FormControl(this.data.nazione_residenza));
-      this.form.controls.nazione_residenza.setValidators([
+      this.form.addControl('jconon_application:nazione_residenza', new FormControl(this.data.nazione_residenza));
+      this.form.controls['jconon_application:nazione_residenza'].setValidators([
         Validators.required
       ]);
       this.onChangeNazioneResidenza();
-      this.form.addControl('cap_residenza', new FormControl(this.data.cap_residenza));
-      this.form.controls.cap_residenza.setValidators([
+      this.form.addControl('jconon_application:cap_residenza', new FormControl(this.data.cap_residenza));
+      this.form.controls['jconon_application:cap_residenza'].setValidators([
         Validators.required
       ]);
-      this.form.addControl('indirizzo_residenza', new FormControl(this.data.indirizzo_residenza));
-      this.form.controls.indirizzo_residenza.setValidators([
+      this.form.addControl('jconon_application:indirizzo_residenza', new FormControl(this.data.indirizzo_residenza));
+      this.form.controls['jconon_application:indirizzo_residenza'].setValidators([
         Validators.required
       ]);
-      this.form.addControl('num_civico_residenza', new FormControl(this.data.num_civico_residenza));
+      this.form.addControl('jconon_application:num_civico_residenza', new FormControl(this.data.num_civico_residenza));
     }
 
     public isForeign(): boolean {
-      return this.form.controls.nazione_residenza.value !== 'Italia';
+      return this.form.controls['jconon_application:nazione_residenza'].value !== 'Italia';
     }
     
     public isLoaded(): boolean {
@@ -111,7 +111,7 @@ export class JcononAffixResidenzaComponent implements AdMetadataComponent, OnIni
  
     public onChangeComune(comune: any) {
       if (comune) {
-        this.form.controls.provincia_residenza.setValue(comune.provincia);
+        this.form.controls['jconon_application:provincia_residenza'].setValue(comune.provincia);
       }
     }
 
@@ -132,18 +132,18 @@ export class JcononAffixResidenzaComponent implements AdMetadataComponent, OnIni
     }
 
     public onChangeNazioneResidenza() {
-      if (this.form.controls.nazione_residenza.value === 'Italia') {
-        this.form.removeControl('comune_residenza_estero');
-        this.form.addControl('comune_residenza', this.comuneResidenzaControl());
-        this.form.addControl('provincia_residenza', new FormControl(this.data.provincia_residenza));
+      if (this.form.controls['jconon_application:nazione_residenza'].value === 'Italia') {
+        this.form.removeControl('jconon_application:comune_residenza_estero');
+        this.form.addControl('jconon_application:comune_residenza', this.comuneResidenzaControl());
+        this.form.addControl('jconon_application:provincia_residenza', new FormControl(this.data.provincia_residenza));
       } else {
-        if (this.form.contains('comune_residenza')) {
-          this.form.removeControl('comune_residenza');
+        if (this.form.contains('jconon_application:comune_residenza')) {
+          this.form.removeControl('jconon_application:comune_residenza');
         }
-        if (this.form.contains('provincia_residenza')) {
-          this.form.removeControl('provincia_residenza');
+        if (this.form.contains('jconon_application:provincia_residenza')) {
+          this.form.removeControl('jconon_application:provincia_residenza');
         }
-        this.form.addControl('comune_residenza_estero', this.comuneResidenzaEsteroControl());
+        this.form.addControl('jconon_application:comune_residenza_estero', this.comuneResidenzaEsteroControl());
       }
     }
 }

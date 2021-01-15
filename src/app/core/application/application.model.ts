@@ -4,7 +4,8 @@ import { Call } from '../call/call.model';
 import { StatoDomanda, PropertyStatoDomandaConverter } from './stato-domanda.enum';
 import { EsclusioneRiununcia, PropertyEsclusioneRiununciaConverter } from './esclusione-rinuncia.enum';
 import { User } from '../../auth/model/user.model';
-import { DateConverter } from '../../common/helpers/DateConverter';
+import { ISODateConverter } from '../../common/helpers/ISODateConverter';
+import { ObjectToIdConverter } from '../../common/helpers/ObjectToIdConverter';
 
 @JsonObject("Application")
 export class Application extends Folder {
@@ -12,13 +13,13 @@ export class Application extends Folder {
   public cognome: string;
   @JsonProperty('jconon_application:nome')
   public nome: string;
-  @JsonProperty('jconon_application:data_nascita', DateConverter, true)
+  @JsonProperty('jconon_application:data_nascita', ISODateConverter, true)
   public data_nascita: Date;
   @JsonProperty('jconon_application:sesso')
   public sesso: string;
   @JsonProperty('jconon_application:nazione_nascita')
   public nazione_nascita: string;
-  @JsonProperty('jconon_application:comune_nascita')
+  @JsonProperty('jconon_application:comune_nascita', ObjectToIdConverter, true)
   public comune_nascita: string;
   @JsonProperty('jconon_application:provincia_nascita')
   public provincia_nascita: string;
@@ -26,7 +27,7 @@ export class Application extends Folder {
   public codice_fiscale: string;
   @JsonProperty('jconon_application:nazione_residenza')
   public nazione_residenza: string;
-  @JsonProperty('jconon_application:comune_residenza')
+  @JsonProperty('jconon_application:comune_residenza', ObjectToIdConverter, true)
   public comune_residenza: string;
   @JsonProperty('jconon_application:provincia_residenza')
   public provincia_residenza: string;
@@ -58,9 +59,9 @@ export class Application extends Folder {
   public email_pec_comunicazioni: string;
   @JsonProperty('jconon_application:telefono_comunicazioni')
   public telefono_comunicazioni: string;
-  @JsonProperty('jconon_application:data_domanda')
+  @JsonProperty('jconon_application:data_domanda', ISODateConverter, true)
   public data_domanda: Date;
-  @JsonProperty('jconon_application:stato_domanda', PropertyStatoDomandaConverter)
+  @JsonProperty('jconon_application:stato_domanda', PropertyStatoDomandaConverter, true)
   public stato_domanda: StatoDomanda;
   @JsonProperty('jconon_application:esclusione_rinuncia', PropertyEsclusioneRiununciaConverter, true)
   public esclusione_rinuncia: EsclusioneRiununcia;
@@ -94,46 +95,46 @@ export class Application extends Folder {
   
   constructor() {
     super();
-    this.cognome = undefined;
-    this.nome = undefined;
-    this.data_nascita = undefined;
-    this.sesso = undefined;
-    this.nazione_nascita = undefined;
-    this.comune_nascita = undefined;
-    this.provincia_nascita = undefined;
-    this.codice_fiscale = undefined;
-    this.nazione_residenza = undefined;
-    this.comune_residenza = undefined;
-    this.provincia_residenza = undefined;
-    this.indirizzo_residenza = undefined;
-    this.num_civico_residenza = undefined;
-    this.cap_residenza = undefined;
-    this.fl_cittadino_italiano = undefined;
-    this.nazione_cittadinanza = undefined;
-    this.nazione_comunicazioni = undefined;
-    this.comune_comunicazioni = undefined;
-    this.provincia_comunicazioni = undefined;
-    this.indirizzo_comunicazioni = undefined;
-    this.num_civico_comunicazioni = undefined;
-    this.cap_comunicazioni = undefined;
-    this.email_comunicazioni = undefined;
-    this.email_pec_comunicazioni = undefined;
-    this.telefono_comunicazioni = undefined;
-    this.data_domanda = undefined;
-    this.stato_domanda = undefined;
-    this.esclusione_rinuncia = undefined;
-    this.fl_ritiro = undefined;
-    this.user = undefined;
-    this.fl_dichiarazione_sanzioni_penali = undefined;
-    this.fl_dichiarazione_dati_personali = undefined;
-    this.dummy = undefined;
-    this.graduatoria = undefined;
-    this.totale_punteggio = undefined;
-    this.esito_call = undefined;
-    this.protocollo_data_graduatoria = undefined;
-    this.protocollo_numero_graduatoria = undefined;
-    this.protocollo_data_assunzione_idoneo = undefined;
-    this.protocollo_numero_assunzione_idoneo = undefined;
+    this.cognome = null;
+    this.nome = null;
+    this.data_nascita = null;
+    this.sesso = null;
+    this.nazione_nascita = null;
+    this.comune_nascita = null;
+    this.provincia_nascita = null;
+    this.codice_fiscale = null;
+    this.nazione_residenza = null;
+    this.comune_residenza = null;
+    this.provincia_residenza = null;
+    this.indirizzo_residenza = null;
+    this.num_civico_residenza = null;
+    this.cap_residenza = null;
+    this.fl_cittadino_italiano = null;
+    this.nazione_cittadinanza = null;
+    this.nazione_comunicazioni = null;
+    this.comune_comunicazioni = null;
+    this.provincia_comunicazioni = null;
+    this.indirizzo_comunicazioni = null;
+    this.num_civico_comunicazioni = null;
+    this.cap_comunicazioni = null;
+    this.email_comunicazioni = null;
+    this.email_pec_comunicazioni = null;
+    this.telefono_comunicazioni = null;
+    this.data_domanda = null;
+    this.stato_domanda = null;
+    this.esclusione_rinuncia = null;
+    this.fl_ritiro = null;
+    this.user = null;
+    this.fl_dichiarazione_sanzioni_penali = null;
+    this.fl_dichiarazione_dati_personali = null;
+    this.dummy = null;
+    this.graduatoria = null;
+    this.totale_punteggio = null;
+    this.esito_call = null;
+    this.protocollo_data_graduatoria = null;
+    this.protocollo_numero_graduatoria = null;
+    this.protocollo_data_assunzione_idoneo = null;
+    this.protocollo_numero_assunzione_idoneo = null;
   }
 
   public isProvvisoria(): boolean {

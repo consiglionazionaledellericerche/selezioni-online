@@ -8,9 +8,9 @@ export abstract class CmisObject implements Base{
   public objectId: string;
   @JsonProperty('cmis:name')
   public name: string;
-  @JsonProperty('cmis:description')
+  @JsonProperty('cm:description')
   public description: string;
-  @JsonProperty('cm:title', null, true)
+  @JsonProperty('cm:title')
   public title: string;
   @JsonProperty('cmis:objectTypeId')
   public objectTypeId: string;

@@ -114,8 +114,8 @@
     "address": "Piazzale Aldo Moro, 7 - 00185 Roma, Italia",
     "telefono": "telefono 0039 06 4993 2172/2140",
     "fax": "fax 0039 06 4993 3852",
-    "email": "e-mail <a href=\"mailto:concorsi@cnr.it\">concorsi@cnr.it</a>",
-    "pec": "PEC <a href=\"mailto:concorsi@pec.cnr.it\">concorsi@pec.cnr.it</a>",
+    "email": "e-mail <a class=\"d-inline-block\" href=\"mailto:concorsi@cnr.it\">concorsi@cnr.it</a>",
+    "pec": "PEC <a class=\"d-inline-block\" href=\"mailto:concorsi@pec.cnr.it\">concorsi@pec.cnr.it</a>",
     "helpdesk" : {
       "info": "Per ricevere assistenza a problemi tecnici/informatici o normativi utilizzare il servizio",
       "name": "HelpDesk",
@@ -185,6 +185,8 @@
     "elenco_titoli_studio": "Requisiti:",
     "submit_application": "Compila domanda",
     "attach_to": "Allegati al Bando {{value}}",
+    "filter_for_code": "Filtra per tipologia",
+    "remove_filter_for_code": "Rimuovi filtro per la tipologia",
     "search" : {
       "title": "Filtra Bandi",
       "code": "Codice bando",
@@ -216,7 +218,7 @@
     "nazione_nascita": "Nazione di nascita",
     "luogo_nascita": "Luogo di nascita",
     "comune_nascita": "Comune di nascita",
-    "provincia_nascita": "Provincia",    
+    "provincia_nascita": "Provincia",
     "mine": {
       "title": "Le mie domande"
     },
@@ -231,6 +233,8 @@
       "modified": " - modificata il {{value}}",
       "send": " il {{value}}"
     },
+    "edit": "Modifica domanda",
+    "confirm": "Salva in bozza e continua",
     "status": {
       "temporary": "Provvisorie",
       "confirmed": "Inviate",

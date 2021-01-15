@@ -42,7 +42,7 @@ export abstract class CommonService<T extends Base> {
     let jsonConvert: JsonConvert = new JsonConvert();
         jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
         jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL; // never allow null
-        
+        jsonConvert.ignoreRequiredCheck = true;
     return jsonConvert.deserializeObject(json, this.createInstance(json['cmis:objectTypeId'], json['cmis:baseTypeId']));
   }
 
@@ -50,7 +50,7 @@ export abstract class CommonService<T extends Base> {
     let jsonConvert: JsonConvert = new JsonConvert();
         jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
         jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL; // never allow null
-        
+        jsonConvert.ignoreRequiredCheck = true;
     return jsonConvert.serializeObject(obj, this.createInstance(obj.getType(), obj.getBaseType()));
   }
 

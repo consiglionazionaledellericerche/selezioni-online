@@ -4,7 +4,7 @@ import {JsonProperty, JsonObject} from 'json2typescript';
 @JsonObject("Folder")
 export class Folder extends CmisObject{
   @JsonProperty('cmis:parentId')
-  protected parentId: string;
+  public parentId: string;
   @JsonProperty('cmis:allowedChildObjectTypeIds')
   protected allowedChildObjectTypeIds: string[];
   @JsonProperty('cmis:path')

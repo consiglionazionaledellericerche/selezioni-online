@@ -16,7 +16,10 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
             <svg class="icon icon-primary bg-white">
               <use xlink:href="/assets/vendor/sprite.svg#it-card"></use>
             </svg>
-            <a href="javascript:window.scrollTo(0,0);" class="font-weight-bold text-truncate text-primary pl-md-1" (click)="changeType(item)">
+            <a href="javascript:window.scrollTo(0,0);" 
+              tooltip="{{getMessageType(item) | translate }} {{ item.objectTypeId | translate }}" 
+              class="font-weight-bold text-truncate text-primary pl-md-1" 
+              (click)="changeType(item)">
               {{ item.objectTypeId | translate }}
             </a>
           </div>  
@@ -101,7 +104,21 @@ export class ListItemCallComponent {
     return this.item.allowableActions.indexOf(AllowableAction.CAN_CREATE_DOCUMENT) !== -1;
   }
 
+  public getMessageType(item: CmisObject): string {
+    let type = item.objectTypeId.substr(2);
+    if (this.filterForm.controls.type.value === type) {
+      return 'call.remove_filter_for_code';
+    } else {
+      return 'call.filter_for_code';
+    }
+  }
+
   public changeType(item: CmisObject) {
-    this.filterForm.controls.type.patchValue(item.objectTypeId.substr(2));
+    let type = item.objectTypeId.substr(2);
+    if (this.filterForm.controls.type.value === type) {
+      this.filterForm.controls.type.patchValue('jconon_call:folder');
+    } else {
+      this.filterForm.controls.type.patchValue(type);
+    }
   }
 }

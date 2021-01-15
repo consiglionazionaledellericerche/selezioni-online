@@ -20,15 +20,6 @@ export class ApplicationUserService extends CommonService<Application> {
     super(httpClient, apiMessageService, router, configService);
   }
 
-
-  public buildInstance(json: any): Application {
-    let jsonConvert: JsonConvert = new JsonConvert();
-        jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
-        jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL; // never allow null
-        
-    return jsonConvert.deserializeObject(json, Application);
-  }
-
   public getModule(): string {
     return MODULE_CONFIGURAZIONE;
   }

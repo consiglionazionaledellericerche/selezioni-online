@@ -4,18 +4,18 @@
       <div class="row">
         <div class="col-12">
           <div class="it-header-slim-wrapper-content">
-            <div class="d-flex">
+            <div class="d-flex w-100">
               <a class="btn btn-link navbar-brand" *ngSwitchCase="true" (click)="sidebarToggle()">
                 <img id="toggle-sidebar" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTkuMnB4IiBoZWlnaHQ9IjE2cHgiIHZpZXdCb3g9IjAgMCAxMiAxMCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSIxMDI0dXAiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSItLWhvbWUtLS1wYXJhbGxheC0tLW1vYmlsZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI0LjAwMDAwMCwgLTIwLjAwMDAwMCkiIGZpbGw9IiNGRkZGRkYiPgogICAgICAgICAgICA8ZyBpZD0iLW5ldHdvcmstc2xpbS1oZWFkZXIiPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTI0LDI0IEwzNiwyNCBMMzYsMjYgTDI0LDI2IEwyNCwyNCBaIE0yNCwyMCBMMzIsMjAgTDMyLDIyIEwyNCwyMiBMMjQsMjAgWiBNMjQsMjggTDMyLDI4IEwzMiwzMCBMMjQsMzAgTDI0LDI4IFoiIGlkPSJpY29uLXNtYWxsLWJ1cmdlciI+PC9wYXRoPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4=" alt="Menu toggle">
               </a>        
-              <a class="d-lg-block navbar-brand" href="{{'header.company.url' | translate}}">{{'header.company.title' | translate}}</a>
+              <a class="d-block navbar-brand" target="_company" href="{{'header.company.url' | translate}}">{{'header.company.title' | translate}}</a>
             </div>
             <div class="it-header-slim-right-zone">
               <div class="nav-item dropdown">
                 <a aria-expanded="false" class="nav-link dropdown-toggle"
                    data-toggle="dropdown" href="#">
                   <span>{{country | uppercase}}</span>
-                  <svg class="icon icon-white d-none d-lg-block">
+                  <svg class="icon icon-white">
                     <use
                       xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
                   </svg>
@@ -48,9 +48,11 @@
               <div *ngSwitchCase="true" class="nav-item dropdown">
                 <a aria-expanded="false" class="nav-link dropdown-toggle"
                    data-toggle="dropdown" href="#">
-                  <span><i class="fa fa-fw fa-user pr-1" aria-hidden="true"></i></span>
+                  <span>
+                    <i class="fa fa-fw fa-user pr-1" aria-hidden="true"></i>
+                  </span>
                   <span class="d-none d-md-block">{{user.firstName}} {{user.lastName}}</span>
-                  <svg class="icon icon-white d-none d-lg-block">
+                  <svg class="icon icon-white">
                     <use
                       xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
                   </svg>
@@ -115,8 +117,8 @@
                     </a>
                   </form>
                 </div>
-                <a class="btn btn-link d-lg-none" (click)="sidebarMenuToggle()">
-                  <svg class="icon icon-white" id="toggle-menu-sidebar1">
+                <a class="btn btn-link d-lg-none toggle-menu-sidebar" (click)="sidebarMenuToggle()">
+                  <svg class="icon icon-white toggle-menu-sidebar">
                     <use xlink:href="/assets/vendor/sprite.svg#it-burger"></use>
                   </svg>
                 </a>
@@ -144,7 +146,7 @@
                   </div>
                   <ul class="navbar-nav">
                     <li class="nav-item" *ngFor="let menu of navbarMenu.menus">
-                      <a class="nav-link" *ngIf="menu.active" [routerLink]="[menu.path]" [routerLinkActive]="['active', 'text-primary']">
+                      <a class="nav-link" *ngIf="menu.active" [routerLink]="[menu.path]" [routerLinkActive]="['active']">
                         <span>{{ menu.name | translate}}</span>
                       </a>
                     </li>
@@ -157,8 +159,8 @@
                       </svg>
                     </a>
                   </div>
-                  <a class="btn btn-link d-lg-none"  (click)="sidebarMenuToggle()">
-                    <svg class="icon icon-white" id="toggle-menu-sidebar2">
+                  <a class="btn btn-link d-lg-none toggle-menu-sidebar" (click)="sidebarMenuToggle()">
+                    <svg class="icon icon-white toggle-menu-sidebar">
                       <use xlink:href="/assets/vendor/sprite.svg#it-burger"></use>
                     </svg>
                   </a>  

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Application} from '../../../core/application/application.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import { AllowableAction } from '../../../common/model/allowableaction.enum';
 
 @Component({
   selector: 'app-list-item-application',
@@ -11,7 +12,13 @@ import {ActivatedRoute, Router} from '@angular/router';
            <ng-content></ng-content>
 
            <div class="ddd">
-             <div class="btn-group border rounded" role="group" dropdown [ngStyle]="buttonStyle()">
+             <div class="btn-group border rounded bg-white" role="group" dropdown [ngStyle]="buttonStyle()">
+                <a *ngIf="isActive()" class="btn btn-link p-1" href="javascript:"
+                  (click)="newApplication()" tooltip="{{'application.edit' | translate}}">
+                  <svg class="icon icon-primary">
+                    <use xlink:href="/assets/vendor/sprite.svg#it-pencil"></use>
+                  </svg>
+                </a>
                 <app-show-children-modal 
                   [show_date]="'true'" 
                   [type]="'jconon_attachment:generic_document'" 
@@ -68,12 +75,24 @@ export class ListItemApplicationComponent {
 
   @Input() page;
 
-  public navigateShow() {
-    this.router.navigate([this.showRoute + this.item.getObjectId()],
+  public newApplication() {
+    this.router.navigate(['/manage-application'],
       {
         relativeTo: this.route,
-        queryParams: { page: 'prova'}
+        queryParams: { 
+          callId: this.item.call.getObjectId(), 
+          applicationId: this.item.getObjectId()
+        }
       });
+  }
+
+  public canEditApplication(): boolean {
+    return this.item.allowableActions.indexOf(AllowableAction.CAN_CREATE_DOCUMENT) !== -1;
+  }
+
+  public isActive(): boolean {
+    const now = new Date();
+    return now >= new Date(this.item.call.data_inizio_invio_domande) && now <= new Date(this.item.call.data_fine_invio_domande);
   }
 
   buttonStyle() {
