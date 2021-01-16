@@ -160,8 +160,11 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     this.form = new FormGroup({
     });
   }
+  
   public buildCreateForm() {
     this.form = new FormGroup({
+      'jconon_application:nome': new FormControl(this.user.firstName),
+      'jconon_application:cognome': new FormControl(this.user.lastName),
       'jconon_application:user': new FormControl(this.user.userName),
       'cmis:objectTypeId': new FormControl(this.entity.objectTypeId),
       'cmis:objectId': new FormControl(this.entity.objectId),

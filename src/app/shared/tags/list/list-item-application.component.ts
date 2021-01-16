@@ -18,6 +18,7 @@ import { AllowableAction } from '../../../common/model/allowableaction.enum';
                   <svg class="icon icon-primary">
                     <use xlink:href="/assets/vendor/sprite.svg#it-pencil"></use>
                   </svg>
+                  <span class="d-none d-md-inline-block">{{'application.edit' | translate}}</span>
                 </a>
                 <app-show-children-modal 
                   [show_date]="'true'" 
