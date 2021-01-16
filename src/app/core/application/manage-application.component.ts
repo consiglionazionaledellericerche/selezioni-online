@@ -134,7 +134,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.call = call;
         this.user = this.authService.getUser();
         this.affix = Array(call.elenco_sezioni_domanda.length).fill(0).map((x,i)=>i);
-        this.service.loadApplication(call.objectId, this.user.userName).subscribe((application) => {
+        this.service.loadApplication(call.objectId, queryParams['applicationId'], this.user.userName).subscribe((application) => {
           this.setEntity(application);
           this.buildCreateForm();
         });
@@ -163,9 +163,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   
   public buildCreateForm() {
     this.form = new FormGroup({
-      'jconon_application:nome': new FormControl(this.user.firstName),
-      'jconon_application:cognome': new FormControl(this.user.lastName),
-      'jconon_application:user': new FormControl(this.user.userName),
+      'jconon_application:user': new FormControl(this.entity.user),
       'cmis:objectTypeId': new FormControl(this.entity.objectTypeId),
       'cmis:objectId': new FormControl(this.entity.objectId),
       'cmis:secondaryObjectTypeIds': new FormControl(this.entity.secondaryObjectTypeIds)

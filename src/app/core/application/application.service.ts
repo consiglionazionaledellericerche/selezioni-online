@@ -101,13 +101,14 @@ export class ApplicationService extends CommonService<Application> {
       );
   }
 
-  public loadApplication(callId: string, userId: string): Observable<Application> {
+  public loadApplication(callId: string, applicationId: string, userId: string): Observable<Application> {
     if (!callId) {
       this.apiMessageService.sendMessage(MessageType.ERROR, 'Id richiesta mancante');
       observableThrowError(null);
     }
     const params = new HttpParams()
           .set('callId', callId)
+          .set('applicationId', applicationId)
           .set('userId', userId);
 
     return this.configService.getGateway()

@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Application} from '../../../core/application/application.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import { AllowableAction } from '../../../common/model/allowableaction.enum';
+import { User } from '../../../auth/model/user.model';
 
 @Component({
   selector: 'app-list-item-application',
@@ -13,7 +14,7 @@ import { AllowableAction } from '../../../common/model/allowableaction.enum';
 
            <div class="ddd">
              <div class="btn-group border rounded bg-white" role="group" dropdown [ngStyle]="buttonStyle()">
-                <a *ngIf="isActive()" class="btn btn-link p-1" href="javascript:"
+                <a *ngIf="isActive() || user.capabilities.isAdmin" class="btn btn-link p-1" href="javascript:"
                   (click)="newApplication()" tooltip="{{'application.edit' | translate}}">
                   <svg class="icon icon-primary">
                     <use xlink:href="/assets/vendor/sprite.svg#it-pencil"></use>
@@ -57,6 +58,8 @@ export class ListItemApplicationComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   @Input() item: Application = null;
+
+  @Input() user: User;
 
   @Input() showRoute = 'show/';
 

@@ -99,7 +99,7 @@ import { Helpers } from '../../common/helpers/helpers';
     <app-list-layout [loading]="loading" [items]="items" [page]="getPage()"
                      [count]="count" (onChangePage)="onChangePage($event)">
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
-        <app-list-item-application [item]="item" (onDelete)="onDelete(item.getId())">
+        <app-list-item-application [item]="item" [user]="user" (onDelete)="onDelete(item.getId())">
           <div class="col-sm-12 h5">
             <span class="badge" [ngClass]="{'badge-warning' : item.isProvvisoria(), 'badge-success' : !item.isProvvisoria()}">
               <span>{{'application.state.' + item.stato_domanda | translate}}</span>
