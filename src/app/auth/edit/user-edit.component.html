@@ -1,4 +1,4 @@
-<div class="p-2 row no-gutters" [ngSwitch]="entity.userName === undefined">    
+<div class="p-md-2 row no-gutters" [ngSwitch]="entity.userName === undefined">    
   <div class="col-md-6" [ngClass]="{'col-md-12': !entity.userName}">
     <div *ngSwitchCase="true"> 
       <h1>{{'user.new_registration.title'|translate}}</h1>
@@ -9,15 +9,15 @@
       <span class="pr-1">{{'user.information.detail'|translate}}</span>
       <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
       <div>
-        <span class="font-weight-bold">{{'user.information.change.password'|translate}}</span>
-        <a class="btn btn-link pl-1 text-primary" (click)="openModal(templatechangepassword)">link</a>
+        <span class="font-weight-semibold">{{'user.information.change.password.title'|translate}}</span>
+        <a class="btn btn-link pl-1 text-primary" href="javascript:" (click)="openModal(templatechangepassword)">{{'user.information.change.password.link'|translate}}</a>
       </div>
     </div>
   </div>
   <div class="col-md-6" [ngClass]="{'col-md-12': !entity.userName}">
-    <div class="card m-3">
+    <div class="card">
       <div *ngSwitchCase="true" class="card-header h1">{{'user.profile.title' | translate}}</div>
-      <div class="card-body">  
+      <div class="card-body" [ngClass]="{'px-0': entity.userName}">  
         <form [formGroup]="ngForm">
           <div [ngClass]="{'row': !entity.userName}">
             <div class="form-group" [ngClass]="{'col-md-6': !entity.userName}">
