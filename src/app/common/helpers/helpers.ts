@@ -7,6 +7,7 @@ import {JsonConvert, ValueCheckingMode} from 'json2typescript';
 
 export class Helpers {
   public static regExpCodiceFiscale: RegExp = /^(?:[A-Z][AEIOU][AEIOUX]|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}(?:[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[15MR][\dLMNP-V]|[26NS][0-8LMNP-U])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM]|[AC-EHLMPR-T][26NS][9V])|(?:[02468LNQSU][048LQU]|[13579MPRTV][26NS])B[26NS][9V])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$/i;
+  public static ITALIA: string = 'Italia';
 
   public static buildInstance(json: any, obj: any): any {
     let jsonConvert: JsonConvert = new JsonConvert();
@@ -192,6 +193,21 @@ export class Helpers {
   
       // test the value of the control against the regexp supplied
       const valid = String(control.value).length >= minlength;
+  
+      // if true, return no error (no error), else return error passed in the second parameter
+      return valid ? null : error;
+    };
+  }
+
+  static maxlengthValidator(maxlength: number, error: ValidationErrors): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } => {
+      if (!control.value) {
+        // if control is empty return no error
+        return null;
+      }
+  
+      // test the value of the control against the regexp supplied
+      const valid = String(control.value).length <= maxlength;
   
       // if true, return no error (no error), else return error passed in the second parameter
       return valid ? null : error;

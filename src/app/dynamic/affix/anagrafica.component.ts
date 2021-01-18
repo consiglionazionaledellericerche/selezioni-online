@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { AdMetadataComponent } from '../../shared/tags/show/ad-metadata.component';
 import { Application } from '../../core/application/application.model';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
@@ -103,11 +103,11 @@ import { Helpers } from '../../common/helpers/helpers';
           </div>
           <div class="form-group col-md-3">
             <div class="form-check form-check-inline">
-              <input (change)="onChangeCittadinanza()" formControlName="jconon_application:fl_cittadino_italiano" type="radio" id="radioitaly" value="true">
+              <input (change)="onChangeCittadinanza(true)" formControlName="jconon_application:fl_cittadino_italiano" type="radio" id="radioitaly" value="true">
               <label for="radioitaly">{{'user.cittadinanza.italy'|translate}}</label>
             </div>
             <div class="form-check form-check-inline">
-              <input (change)="onChangeCittadinanza()" formControlName="jconon_application:fl_cittadino_italiano" type="radio" id="radioforeign" value="false">
+              <input (change)="onChangeCittadinanza(true)" formControlName="jconon_application:fl_cittadino_italiano" type="radio" id="radioforeign" value="false">
               <label for="radioforeign">{{'user.cittadinanza.foreign'|translate}}</label>
             </div>
             <label for="cittadinanza" class="active">{{'user.cittadinanza.label'| translate}}</label>
@@ -160,28 +160,30 @@ export class JcononAffixAnagraficaComponent implements AdMetadataComponent, OnIn
       });
       this.form.addControl('jconon_application:nome', new FormControl(this.data.nome));
       this.form.addControl('jconon_application:cognome', new FormControl(this.data.cognome));
-      this.form.addControl('jconon_application:nazione_nascita', new FormControl(this.data.nazione_nascita));
-      this.form.controls['jconon_application:nazione_nascita'].setValidators([
-        Validators.required
-      ]);
-      this.onChangeNazioneNascita();
-      this.form.addControl('jconon_application:data_nascita', new FormControl(this.data.data_nascita||undefined));
-      this.form.controls['jconon_application:data_nascita'].setValidators([
-        Validators.required
-      ]);
-      this.form.addControl('jconon_application:sesso', new FormControl(String(this.data.sesso || 'M')));
-      this.form.controls['jconon_application:sesso'].setValidators([
-        Validators.required
-      ]);
-      this.form.addControl('jconon_application:fl_cittadino_italiano', new FormControl(this.data.fl_cittadino_italiano ? String(this.data.fl_cittadino_italiano) : 'false'));
-      this.form.controls['jconon_application:fl_cittadino_italiano'].setValidators([
-        Validators.required
-      ]);
-      this.onChangeCittadinanza();
+      this.form.addControl('jconon_application:nazione_nascita', new FormControl(this.data.nazione_nascita, Validators.required));
+      
+      this.form.addControl('jconon_application:comune_nascita', 
+        new FormControl(
+            this.isForeign() ? this.data.comune_nascita : new Comune(this.data.comune_nascita, this.data.provincia_nascita),
+            Validators.required
+        )
+      );
+      this.form.addControl('jconon_application:provincia_nascita', new FormControl(this.data.provincia_nascita));
+      this.form.addControl('jconon_application:data_nascita', new FormControl(this.data.data_nascita||undefined, Validators.required));
+      this.form.addControl('jconon_application:sesso', new FormControl(String(this.data.sesso || 'M'),Validators.required));
+
+      this.form.addControl('jconon_application:fl_cittadino_italiano', new FormControl(
+          this.data.fl_cittadino_italiano ? String(this.data.fl_cittadino_italiano) : 'false',
+          Validators.required
+        )
+      );
+      this.form.addControl('jconon_application:nazione_cittadinanza', new FormControl(this.data.nazione_cittadinanza));
+      this.form.addControl('jconon_application:codice_fiscale', new FormControl(this.data.codice_fiscale));
+      this.onChangeCittadinanza(false);
     }
 
     public isForeign(): boolean {
-      return this.form.controls['jconon_application:nazione_nascita'].value !== 'Italia';
+      return this.form.controls['jconon_application:nazione_nascita'].value !== Helpers.ITALIA;
     }
     
     public isStraniero(): boolean {
@@ -192,68 +194,31 @@ export class JcononAffixAnagraficaComponent implements AdMetadataComponent, OnIn
       return this.form !== undefined;
     }
 
-    protected comuneNascitaEsteroControl() : AbstractControl {
-      let comune_nascita_estero = new FormControl(this.data.comune_nascita);
-      comune_nascita_estero.setValidators([
-        Validators.required
-      ]);
-      return comune_nascita_estero;
-    }
-
-    protected comuneNascitaControl() : AbstractControl {
-      let comune_nascita = new FormControl(new Comune(this.data.comune_nascita, this.data.provincia_nascita));
-      comune_nascita.setValidators([
-        Validators.required
-      ]);
-      return comune_nascita;
-    }
-
-    protected codiceFiscaleControl() : AbstractControl {
-      let codiceFiscale = new FormControl(this.data.codice_fiscale);
-      codiceFiscale.setValidators([
-        Validators.required,
-        Helpers.patternValidator(Helpers.regExpCodiceFiscale, {codicefiscale: true})
-      ]);
-      return codiceFiscale;
-    }
-
-    protected nazioneCittadinanzaControl() : AbstractControl {
-      let nazioneCittadinanza = new FormControl(this.data.nazione_cittadinanza);
-      nazioneCittadinanza.setValidators([
-        Validators.required
-      ]);
-      return nazioneCittadinanza;
-    }
-
     public onChangeNazioneNascita() {
-      if (this.form.controls['jconon_application:nazione_nascita'].value === 'Italia') {
-        this.form.removeControl('jconon_application:comune_nascita');
-        this.form.addControl('jconon_application:comune_nascita', this.comuneNascitaControl());
-        this.form.addControl('jconon_application:provincia_nascita', new FormControl(this.data.provincia_nascita));
-      } else {
-        if (this.form.contains('jconon_application:comune_nascita')) {
-          this.form.removeControl('jconon_application:comune_nascita');
-        }
-        if (this.form.contains('jconon_application:provincia_nascita')) {
-          this.form.removeControl('jconon_application:provincia_nascita');
-        }
-        this.form.addControl('jconon_application:comune_nascita', this.comuneNascitaEsteroControl());
-      }
+      this.form.controls['jconon_application:comune_nascita'].patchValue(null);
+      this.form.controls['jconon_application:provincia_nascita'].patchValue(null);
     }
 
-    public onChangeCittadinanza() {
+    public onChangeCittadinanza(reset: boolean) {
+      if (reset) {
+        this.form.controls['jconon_application:codice_fiscale'].patchValue(null);
+        this.form.controls['jconon_application:nazione_cittadinanza'].patchValue(null);
+      }
       if (this.form.controls['jconon_application:fl_cittadino_italiano'].value === 'false') {
-        this.form.removeControl('jconon_application:codice_fiscale');
-        this.form.addControl('jconon_application:nazione_cittadinanza', this.nazioneCittadinanzaControl());
+        this.form.controls['jconon_application:codice_fiscale'].setValidators(undefined);
+        this.form.controls['jconon_application:nazione_cittadinanza'].setValidators(Validators.required);
       } else {
-        this.form.addControl('jconon_application:codice_fiscale', this.codiceFiscaleControl());
-        this.form.removeControl('jconon_application:nazione_cittadinanza');
+        this.form.controls['jconon_application:codice_fiscale'].setValidators([
+          Validators.required,
+          Helpers.patternValidator(Helpers.regExpCodiceFiscale, {codicefiscale: true})
+        ]);
+        this.form.controls['jconon_application:nazione_cittadinanza'].setValidators(undefined);
       }
     }
  
     public onChangeComune(comune: any) {
       if (comune) {
-        this.form.controls['jconon_application:provincia_nascita'].setValue(comune.provincia);
+        this.form.controls['jconon_application:provincia_nascita'].patchValue(comune.provincia);
       }
     }
 

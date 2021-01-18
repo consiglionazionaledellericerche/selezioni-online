@@ -80,9 +80,12 @@
       "emailalredyexist": "E-Mail già presente!",
       "compare": "Il valore del campo non corrisponde!",
       "hasNumber": "Deve contenere almeno un numero!",
+      "hasOnlyNumber": "Deve contenere solo numeri!",
       "hasCapitalCase": "Deve contenere almeno una lettera Maiuscola!",
       "hasSmallCase": "Deve contenere almeno una lettera Minuscola!",
       "minlength8": "Deve essere lunga almeno 8 caratteri!",
+      "minlength5": "Deve contenere almeno 5 caratteri",
+      "maxlength5": "Deve contenere non più di 5 caratteri",
       "codicefiscalealredyexist": "Codice fiscale già presente!",
       "codicefiscale": "Codice fiscale non valido!"
     },
@@ -219,6 +222,15 @@
     "luogo_nascita": "Luogo di nascita",
     "comune_nascita": "Comune di nascita",
     "provincia_nascita": "Provincia",
+    "nazione_residenza": "Nazione di residenza",
+    "luogo_residenza": "Luogo di residenza",
+    "comune_residenza": "Comune di residenza",
+    "provincia_residenza": "Provincia",
+    "cap_residenza": "CAP",
+    "indirizzo_residenza": "Indirizzo",
+    "num_civico_residenza": "Num. Civico",
+    "fl_dichiarazione_sanzioni_penali": "Il sottoscritto consapevole delle sanzioni penali previste dall'art. 76 del D.P.R. n.445/2000 nel caso di dichiarazioni mendaci e di falsità negli atti ed a conoscenza che i dati forniti con autocertificazione saranno soggetti ad eventuale controllo da parte dell’Amministrazione, ai sensi degli articoli 46 e 47 del D.P.R. n.445/2000, DICHIARA che le notizie fornite con la presente domanda e quanto dichiarato nell’allegato curriculum vitae e professionale, comprensivo delle informazioni sulla produzione scientifica, corrispondono a verità.",
+    "fl_dichiarazione_dati_personali" : "Il sottoscritto prende atto, ai sensi dell'art. 13 della Legge n.196/2003 sul trattamento dei dati personali, che i dati contenuti nella presente autocertificazione verranno trattati prevalentemente con procedure informatizzate e potranno essere forniti ad altri organismi pubblici per il raggiungimento delle rispettive finalità istituzionali.",
     "mine": {
       "title": "Le mie domande"
     },

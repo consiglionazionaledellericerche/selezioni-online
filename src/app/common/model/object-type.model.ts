@@ -12,6 +12,7 @@ import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from '../../dyna
 import { JcononAttachmentShowComponent } from '../../dynamic/attachment/jconon-attachment-show.component';
 import { JcononAffixAnagraficaComponent } from '../../dynamic/affix/anagrafica.component';
 import { JcononAffixResidenzaComponent } from '../../dynamic/affix/residenza.component';
+import { JcononAffixDichiarazioniConclusiveComponent } from '../../dynamic/affix/dichiarazioni_conclusive.component';
 
 export class ObjectType {
     
@@ -89,6 +90,10 @@ export class ObjectType {
     'affix_tabResidenza' : {
       model: Application,
       showcomponent: JcononAffixResidenzaComponent
+    },
+    'affix_tabDichiarazioniConclusive' : {
+      model: Application,
+      showcomponent: JcononAffixDichiarazioniConclusiveComponent
     }
 
   };

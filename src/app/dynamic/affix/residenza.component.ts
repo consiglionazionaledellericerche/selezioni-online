@@ -12,7 +12,7 @@ import { Helpers } from '../../common/helpers/helpers';
       <form [formGroup]="form" *ngIf="isLoaded()">
         <div class="form-row">
           <div class="form-group col-md-3">
-            <label for="statoestero" class="active">{{'application.nazione_nascita'| translate}}</label>
+            <label for="statoestero" class="active">{{'application.nazione_residenza'| translate}}</label>
             <app-control-select-model
               [inline]="true"
               [noLabel]="true"
@@ -30,8 +30,8 @@ import { Helpers } from '../../common/helpers/helpers';
               *ngIf="isForeign()" 
               type="text" 
               [inline]="true" 
-              [label]="'application.luogo_nascita'| translate" 
-              formControlName="jconon_application:comune_residenza_estero">
+              [label]="'application.luogo_residenza'| translate" 
+              formControlName="jconon_application:comune_residenza">
             </app-control-text>
           </div>
           <div *ngIf="!isForeign()" class="form-group col-md-5">
@@ -60,6 +60,32 @@ import { Helpers } from '../../common/helpers/helpers';
               formControlName="jconon_application:provincia_residenza">
             </app-control-text>
           </div>
+          <div class="form-group col-md-3">
+            <app-control-text 
+              type="text" 
+              [inline]="true" 
+              [label]="'application.cap_residenza'| translate" 
+              formControlName="jconon_application:cap_residenza">
+            </app-control-text>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-9">
+            <app-control-text 
+              type="text" 
+              [inline]="true" 
+              [label]="'application.indirizzo_residenza'| translate" 
+              formControlName="jconon_application:indirizzo_residenza">
+            </app-control-text>
+          </div>
+          <div class="form-group col-md-3">
+            <app-control-text 
+              type="text" 
+              [inline]="true" 
+              [label]="'application.num_civico_residenza'| translate" 
+              formControlName="jconon_application:num_civico_residenza">
+            </app-control-text>
+          </div>
         </div>
       </form>
     `
@@ -85,24 +111,31 @@ export class JcononAffixResidenzaComponent implements AdMetadataComponent, OnIni
       this.cacheService.comuni().subscribe((comuni) => {
         this.comuni = comuni;
       });
-      this.form.addControl('jconon_application:nazione_residenza', new FormControl(this.data.nazione_residenza));
-      this.form.controls['jconon_application:nazione_residenza'].setValidators([
-        Validators.required
-      ]);
-      this.onChangeNazioneResidenza();
-      this.form.addControl('jconon_application:cap_residenza', new FormControl(this.data.cap_residenza));
-      this.form.controls['jconon_application:cap_residenza'].setValidators([
-        Validators.required
-      ]);
-      this.form.addControl('jconon_application:indirizzo_residenza', new FormControl(this.data.indirizzo_residenza));
-      this.form.controls['jconon_application:indirizzo_residenza'].setValidators([
-        Validators.required
-      ]);
+      this.form.addControl('jconon_application:nazione_residenza', new FormControl(this.data.nazione_residenza, Validators.required));
+      this.form.addControl('jconon_application:comune_residenza', 
+        new FormControl(
+            this.isForeign() ? this.data.comune_residenza : new Comune(this.data.comune_residenza, this.data.provincia_residenza),
+            Validators.required
+        )
+      );
+      this.form.addControl('jconon_application:provincia_residenza', new FormControl(this.data.provincia_residenza));
+      this.form.addControl('jconon_application:cap_residenza', new FormControl(
+          this.data.cap_residenza,
+          [
+            Validators.required,
+            Helpers.minlengthValidator(5, {minlength5: true}),
+            Helpers.maxlengthValidator(5, {maxlength5: true}),
+            Helpers.patternValidator(/^\d+$/, { hasOnlyNumber: true })
+          ]
+        )
+      );
+
+      this.form.addControl('jconon_application:indirizzo_residenza', new FormControl(this.data.indirizzo_residenza, Validators.required));
       this.form.addControl('jconon_application:num_civico_residenza', new FormControl(this.data.num_civico_residenza));
     }
 
     public isForeign(): boolean {
-      return this.form.controls['jconon_application:nazione_residenza'].value !== 'Italia';
+      return this.form.controls['jconon_application:nazione_residenza'].value !== Helpers.ITALIA;
     }
     
     public isLoaded(): boolean {
@@ -111,39 +144,12 @@ export class JcononAffixResidenzaComponent implements AdMetadataComponent, OnIni
  
     public onChangeComune(comune: any) {
       if (comune) {
-        this.form.controls['jconon_application:provincia_residenza'].setValue(comune.provincia);
+        this.form.controls['jconon_application:provincia_residenza'].patchValue(comune.provincia);
       }
-    }
-
-    protected comuneResidenzaEsteroControl() : AbstractControl {
-      let comune_residenza_estero = new FormControl(this.data.comune_residenza);
-      comune_residenza_estero.setValidators([
-        Validators.required
-      ]);
-      return comune_residenza_estero;
-    }
-
-    protected comuneResidenzaControl() : AbstractControl {
-      let comune_residenza = new FormControl(new Comune(this.data.comune_residenza, this.data.provincia_residenza));
-      comune_residenza.setValidators([
-        Validators.required
-      ]);
-      return comune_residenza;
     }
 
     public onChangeNazioneResidenza() {
-      if (this.form.controls['jconon_application:nazione_residenza'].value === 'Italia') {
-        this.form.removeControl('jconon_application:comune_residenza_estero');
-        this.form.addControl('jconon_application:comune_residenza', this.comuneResidenzaControl());
-        this.form.addControl('jconon_application:provincia_residenza', new FormControl(this.data.provincia_residenza));
-      } else {
-        if (this.form.contains('jconon_application:comune_residenza')) {
-          this.form.removeControl('jconon_application:comune_residenza');
-        }
-        if (this.form.contains('jconon_application:provincia_residenza')) {
-          this.form.removeControl('jconon_application:provincia_residenza');
-        }
-        this.form.addControl('jconon_application:comune_residenza_estero', this.comuneResidenzaEsteroControl());
-      }
-    }
+      this.form.controls['jconon_application:comune_residenza'].patchValue(null);
+      this.form.controls['jconon_application:provincia_residenza'].patchValue(null);
+   }
 }

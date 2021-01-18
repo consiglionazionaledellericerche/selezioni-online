@@ -61,11 +61,12 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
         <div class="card-body mt-2">  
           <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
           <div class="steppers">
-            <nav class="steppers-nav">
+            <nav class="steppers-nav px-0">
               <a [ngClass]="{'disabled': affixCompleted == 0}" 
                 (click)="affixCompleted = affixCompleted - 1;scroll(cardApplication);" 
-                class="btn btn-link text-primary steppers-btn-prev">
-                <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-left"></use></svg>Indietro
+                class="btn btn-link text-primary steppers-btn-prev px-1">
+                <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-left"></use></svg>
+                <span>Indietro</span>
               </a>
               <ul class="steppers-dots d-flex">
                 <li [ngClass]="{'done': number <= affixCompleted}" 
@@ -77,7 +78,8 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
               </ul>
               <a [ngClass]="{'disabled': affixCompleted == affix.length - 1}" 
                 (click)="affixCompleted = affixCompleted + 1;scroll(cardApplication);" 
-                class="btn btn-link text-primary steppers-btn-next">Avanti
+                class="btn btn-link text-primary steppers-btn-next px-1">
+                <span>Avanti</span>
                 <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-right"></use></svg>
               </a>
             </nav>
@@ -89,11 +91,12 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
               <span class="d-none d-md-block pr-1">Stampa</span>
               <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-print"></use></svg>
             </button>
-            <button (click)="sendApplication()" class="btn btn-outline-success btn-lg btn-icon mr-2" tooltip="Invia domanda">
+            <button *ngIf="affixCompleted == affix.length - 1" (click)="sendApplication()" class="btn btn-outline-success btn-lg btn-icon mr-2" tooltip="Invia domanda">
               <span class="d-none d-md-block pr-1">Invia</span>
               <svg class="icon icon-success"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
             </button>
-            <button (click)="confirmApplication();scroll(cardApplication);" class="btn btn-outline-primary btn-lg btn-icon" tooltip="{{'application.confirm' | translate}}">
+            <button *ngIf="affixCompleted < affix.length - 1" (click)="confirmApplication();scroll(cardApplication);" 
+              class="btn btn-outline-primary btn-lg btn-icon" tooltip="{{'application.confirm' | translate}}">
               <span class="d-none d-md-block pr-1">{{'application.confirm' | translate}}</span>
               <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
             </button>
@@ -134,7 +137,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.call = call;
         this.user = this.authService.getUser();
         this.affix = Array(call.elenco_sezioni_domanda.length).fill(0).map((x,i)=>i);
-        this.service.loadApplication(call.objectId, queryParams['applicationId'], this.user.userName).subscribe((application) => {
+        this.service.loadApplication(call.objectId, queryParams['applicationId']||'', this.user.userName).subscribe((application) => {
           this.setEntity(application);
           this.buildCreateForm();
         });
