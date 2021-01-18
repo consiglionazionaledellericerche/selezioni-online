@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { AdMetadataComponent } from '../../shared/tags/show/ad-metadata.component';
-import { Application } from '../../core/application/application.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
+import { DynamicComponent } from '../dynamic.component';
 
 @Component({
     selector: 'affix_tabAnagrafica',
@@ -137,18 +136,14 @@ import { Helpers } from '../../common/helpers/helpers';
       </form>
     `
   })
-export class JcononAffixAnagraficaComponent implements AdMetadataComponent, OnInit {
-    @Input() data: Application;
-    @Input() form: FormGroup;
+export class JcononAffixAnagraficaComponent extends DynamicComponent {
     paesi: string[];
     comuni: Comune[];
     constructor(
       protected cacheService: CacheService,
-      private changeDetectorRef: ChangeDetectorRef,
-    ) {}
-
-    ngAfterViewChecked() {
-      this.changeDetectorRef.detectChanges();
+      protected changeDetectorRef: ChangeDetectorRef,
+    ) {
+      super(cacheService, changeDetectorRef);
     }
 
     ngOnInit(): void {
@@ -180,6 +175,7 @@ export class JcononAffixAnagraficaComponent implements AdMetadataComponent, OnIn
       this.form.addControl('jconon_application:nazione_cittadinanza', new FormControl(this.data.nazione_cittadinanza));
       this.form.addControl('jconon_application:codice_fiscale', new FormControl(this.data.codice_fiscale));
       this.onChangeCittadinanza(false);
+      super.ngOnInit();
     }
 
     public isForeign(): boolean {
@@ -188,10 +184,6 @@ export class JcononAffixAnagraficaComponent implements AdMetadataComponent, OnIn
     
     public isStraniero(): boolean {
       return this.form.controls['jconon_application:fl_cittadino_italiano'].value == 'false';
-    }
-
-    public isLoaded(): boolean {
-      return this.form !== undefined;
     }
 
     public onChangeNazioneNascita() {
@@ -221,5 +213,4 @@ export class JcononAffixAnagraficaComponent implements AdMetadataComponent, OnIn
         this.form.controls['jconon_application:provincia_nascita'].patchValue(comune.provincia);
       }
     }
-
 }

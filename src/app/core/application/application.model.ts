@@ -93,6 +93,10 @@ export class Application extends Folder {
   @JsonProperty('call', Call, true)
   public call: Call = undefined;
   
+  @JsonProperty('jconon_application:fl_possesso_requisiti')
+  public fl_possesso_requisiti: boolean;
+  
+
   constructor() {
     super();
     this.cognome = undefined;
@@ -135,6 +139,8 @@ export class Application extends Folder {
     this.protocollo_numero_graduatoria = undefined;
     this.protocollo_data_assunzione_idoneo = undefined;
     this.protocollo_numero_assunzione_idoneo = undefined;
+
+    this.fl_possesso_requisiti = undefined;
   }
 
   public isProvvisoria(): boolean {

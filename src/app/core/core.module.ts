@@ -11,6 +11,8 @@ import {SearchComponent} from './search/search.component';
 
 import {AppRoutingModule} from '../app-routing.module';
 import {SharedModule} from '../shared/shared.module';
+import {TagsModule} from '../shared/tags/tags.module';
+
 import {NotificationsService, SimpleNotificationsModule} from 'angular2-notifications';
 import {ApiMessageService} from './api-message.service';
 import {DropdownNavbarComponent} from './header/dropdown/dropdown-navbar.component';
@@ -69,6 +71,7 @@ import {HttpClient} from '@angular/common/http';
     AppRoutingModule,
     CoreRoutingModule,
     SharedModule,                       // Componenti condivisi da tutta l'applicazione (ex. Tags).
+    TagsModule,
     AuthModule,
     FormsModule,
     ReactiveFormsModule,
@@ -88,7 +91,7 @@ import {HttpClient} from '@angular/common/http';
   exports: [
     AuthModule,
     SharedModule,
-
+    TagsModule,
     HomeComponent,
     SearchComponent,
     HeaderComponent,

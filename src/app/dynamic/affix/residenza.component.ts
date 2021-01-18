@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { AdMetadataComponent } from '../../shared/tags/show/ad-metadata.component';
-import { Application } from '../../core/application/application.model';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
+import { DynamicComponent } from '../dynamic.component';
 
 @Component({
     selector: 'affix_tabResidenza',
@@ -90,18 +89,14 @@ import { Helpers } from '../../common/helpers/helpers';
       </form>
     `
   })
-export class JcononAffixResidenzaComponent implements AdMetadataComponent, OnInit {
-    @Input() data: Application;
-    @Input() form: FormGroup;
+export class JcononAffixResidenzaComponent extends DynamicComponent {
     paesi: string[];
     comuni: Comune[];
     constructor(
       protected cacheService: CacheService,
-      private changeDetectorRef: ChangeDetectorRef,
-    ) {}
-
-    ngAfterViewChecked() {
-      this.changeDetectorRef.detectChanges();
+      protected changeDetectorRef: ChangeDetectorRef,
+    ) {
+      super(cacheService, changeDetectorRef);
     }
 
     ngOnInit(): void {
@@ -132,16 +127,13 @@ export class JcononAffixResidenzaComponent implements AdMetadataComponent, OnIni
 
       this.form.addControl('jconon_application:indirizzo_residenza', new FormControl(this.data.indirizzo_residenza, Validators.required));
       this.form.addControl('jconon_application:num_civico_residenza', new FormControl(this.data.num_civico_residenza));
+      super.ngOnInit();
     }
 
     public isForeign(): boolean {
       return this.form.controls['jconon_application:nazione_residenza'].value !== Helpers.ITALIA;
     }
     
-    public isLoaded(): boolean {
-      return this.form !== undefined;
-    }
- 
     public onChangeComune(comune: any) {
       if (comune) {
         this.form.controls['jconon_application:provincia_residenza'].patchValue(comune.provincia);

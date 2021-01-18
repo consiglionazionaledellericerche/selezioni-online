@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
+import {TagsModule} from '../shared/tags/tags.module';
 
 import {ConfigurazioneRoutingModule} from './configurazione-routing.module';
 import {ConfigurazioneSectionComponent} from './configurazione-section.component';
@@ -31,6 +32,7 @@ import {HttpClient} from '@angular/common/http';
     ReactiveFormsModule,
 
     SharedModule,
+    TagsModule,
 
     ConfigurazioneRoutingModule,
     TranslateModule.forChild({

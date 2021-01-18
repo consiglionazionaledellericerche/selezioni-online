@@ -86,11 +86,11 @@ import { Helpers } from '../../common/helpers/helpers';
         <div class="form-group col-md-6">
           <!--Rounded checkbox buttons-->
           <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="applicationStatus">
-              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="P">{{'application.status.temporary' | translate}}</span>
-              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="C">{{'application.status.confirmed' | translate}}</span>
-              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="all">{{'application.status.all' | translate}}</span>
-              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="active">{{'application.status.active' | translate}}</span>
-              <span class="btn btn-primary btn-toggle text-truncate" btnRadio="excluded">{{'application.status.excluded' | translate}}</span>
+            <span class="btn btn-primary btn-toggle text-truncate" btnRadio="P" tooltip="{{'application.status.temporary' | translate}}">{{'application.status.temporary' | translate}}</span>
+            <span class="btn btn-primary btn-toggle text-truncate" btnRadio="C" tooltip="{{'application.status.confirmed' | translate}}">{{'application.status.confirmed' | translate}}</span>
+            <span class="btn btn-primary btn-toggle text-truncate" btnRadio="all" tooltip="{{'application.status.all' | translate}}">{{'application.status.all' | translate}}</span>
+            <span class="btn btn-primary btn-toggle text-truncate" btnRadio="active" tooltip="{{'application.status.active' | translate}}">{{'application.status.active' | translate}}</span>
+            <span class="btn btn-primary btn-toggle text-truncate" btnRadio="excluded" tooltip="{{'application.status.excluded' | translate}}">{{'application.status.excluded' | translate}}</span>
           </div>
         </div>
       </div>

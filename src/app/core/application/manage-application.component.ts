@@ -138,6 +138,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.user = this.authService.getUser();
         this.affix = Array(call.elenco_sezioni_domanda.length).fill(0).map((x,i)=>i);
         this.service.loadApplication(call.objectId, queryParams['applicationId']||'', this.user.userName).subscribe((application) => {
+          application.call = call;
           this.setEntity(application);
           this.buildCreateForm();
         });
@@ -175,6 +176,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
 
   public confirmApplication() {
     this.service.saveApplication(this.buildInstance()).subscribe((application) => {
+      application.call = this.call;
       this.setEntity(application);
       this.buildCreateForm();
       this.affixCompleted++;

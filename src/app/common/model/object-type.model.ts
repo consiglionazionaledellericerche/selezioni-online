@@ -13,6 +13,8 @@ import { JcononAttachmentShowComponent } from '../../dynamic/attachment/jconon-a
 import { JcononAffixAnagraficaComponent } from '../../dynamic/affix/anagrafica.component';
 import { JcononAffixResidenzaComponent } from '../../dynamic/affix/residenza.component';
 import { JcononAffixDichiarazioniConclusiveComponent } from '../../dynamic/affix/dichiarazioni_conclusive.component';
+import { JcononAffixDichiarazioniComponent } from '../../dynamic/affix/dichiarazioni.component';
+import { JcononAspectPossessoRequisitiComponent } from '../../dynamic/aspect/possesso-requisiti.component';
 
 export class ObjectType {
     
@@ -91,11 +93,20 @@ export class ObjectType {
       model: Application,
       showcomponent: JcononAffixResidenzaComponent
     },
+    'affix_tabDichiarazioni' : {
+      model: Application,
+      showcomponent: JcononAffixDichiarazioniComponent
+    },
     'affix_tabDichiarazioniConclusive' : {
       model: Application,
       showcomponent: JcononAffixDichiarazioniConclusiveComponent
     }
 
+    ,
+    'P:jconon_application:aspect_possesso_requisiti' : {
+      model: Application,
+      showcomponent: JcononAspectPossessoRequisitiComponent
+    }
   };
 
   static getModel(first: string, second: string): any {

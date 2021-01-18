@@ -2,11 +2,15 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
+import {TagsModule} from '../shared/tags/tags.module';
 
 import { JcononAttachmentCallShowComponent } from './attachment/jconon-attachment-call-show.component';
 import { JcononAffixAnagraficaComponent } from './affix/anagrafica.component';
 import { JcononAffixResidenzaComponent } from './affix/residenza.component';
+import { JcononAffixDichiarazioniComponent } from './affix/dichiarazioni.component';
 import { JcononAffixDichiarazioniConclusiveComponent } from './affix/dichiarazioni_conclusive.component';
+
+import { JcononAspectPossessoRequisitiComponent } from './aspect/possesso-requisiti.component';
 
 import { JcononAttachmentShowComponent } from './attachment/jconon-attachment-show.component';
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from './attachment/jconon-attachment-documento-riconoscimento-show.component';
@@ -26,7 +30,9 @@ import {HttpClient} from '@angular/common/http';
         JcononAttachmentCallShowComponent,
         JcononAffixAnagraficaComponent,
         JcononAffixResidenzaComponent,
+        JcononAffixDichiarazioniComponent,
         JcononAffixDichiarazioniConclusiveComponent,
+        JcononAspectPossessoRequisitiComponent,
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],
@@ -35,6 +41,7 @@ import {HttpClient} from '@angular/common/http';
         ReactiveFormsModule,
         CommonModule,
         SharedModule,
+        TagsModule,
         ButtonsModule.forRoot(),
         TranslateModule.forChild({
             loader: {
@@ -48,7 +55,9 @@ import {HttpClient} from '@angular/common/http';
         JcononAttachmentCallShowComponent,
         JcononAffixAnagraficaComponent,
         JcononAffixResidenzaComponent,
+        JcononAffixDichiarazioniComponent,
         JcononAffixDichiarazioniConclusiveComponent,
+        JcononAspectPossessoRequisitiComponent,
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],

@@ -18,7 +18,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" innerHtml="{{modal_text}}"></div>
+      <div class="modal-body" [innerHtml]="modal_text | safeHtml"></div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary" (click)="modalRef.hide()">Close</button>
       </div>

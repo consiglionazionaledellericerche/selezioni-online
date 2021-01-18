@@ -31,14 +31,14 @@ import { Observable, of } from 'rxjs';
                 formControlName="type">
             </app-control-select-model>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="filterType">
               <span class="btn btn-primary btn-toggle text-truncate" btnRadio="active" tooltip="{{'call.attivi' | translate}}">{{'call.attivi' | translate}}</span>
               <span class="btn btn-primary btn-toggle text-truncate" btnRadio="expire" tooltip="{{'call.scaduti' | translate}}">{{'call.scaduti' | translate}}</span>
               <span class="btn btn-primary btn-toggle text-truncate" btnRadio="all" tooltip="{{'call.tutti' | translate}}">{{'call.tutti' | translate}}</span>
           </div>
         </div>
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-4">
             <app-control-text 
                 formControlName="callCode"
                 [inline]="true"

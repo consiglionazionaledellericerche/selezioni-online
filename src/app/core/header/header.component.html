@@ -11,8 +11,9 @@
               <a class="d-block navbar-brand" target="_company" href="{{'header.company.url' | translate}}">{{'header.company.title' | translate}}</a>
             </div>
             <div class="it-header-slim-right-zone">
-              <div class="nav-item dropdown">
-                <a aria-expanded="false" class="nav-link dropdown-toggle"
+              <div class="dropdown" dropdown placement="bottom right">
+                <a aria-expanded="false" dropdownToggle
+                  class="dropdown-toggle pr-2"
                    data-toggle="dropdown" href="#">
                   <span>{{country | uppercase}}</span>
                   <svg class="icon icon-white">
@@ -20,22 +21,10 @@
                       xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
                   </svg>
                 </a>
-                <div class="dropdown-menu">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="link-list-wrapper">
-                        <ul class="link-list">
-                          <li>
-                            <a class="list-item" href="#" (click)="language('it', true)"><span>ITA</span></a>
-                          </li>
-                          <li>
-                            <a class="list-item" href="#" (click)="language('en', true)"><span>ENG</span></a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <ul class="dropdown-menu dropdown-menu-right border" *dropdownMenu>
+                  <li role="menuitem"><a class="dropdown-item text-primary" href="javascript:" (click)="language('it', true)">ITA</a></li>
+                  <li role="menuitem"><a class="dropdown-item text-primary" href="javascript:" (click)="language('en', true)">ENG</a></li>
+                </ul>
               </div>  
               <a *ngSwitchCase="false" class="btn btn-primary btn-icon rounded-0 btn-full" (click)="loginPage()">
                 <span class="rounded-icon">
@@ -45,9 +34,9 @@
                 </span>
                 <span class="d-none d-lg-inline-block">{{'signin.title' | translate}}</span>
               </a>
-              <div *ngSwitchCase="true" class="nav-item dropdown">
-                <a aria-expanded="false" class="nav-link dropdown-toggle"
-                   data-toggle="dropdown" href="#">
+              <div *ngSwitchCase="true" class="nav-item dropdown" dropdown placement="bottom right">
+                <a aria-expanded="false" class="dropdown-toggle pr-2" dropdownToggle
+                   data-toggle="dropdown" href="javascript:">
                   <span>
                     <i class="fa fa-fw fa-user pr-1" aria-hidden="true"></i>
                   </span>
@@ -57,26 +46,20 @@
                       xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
                   </svg>
                 </a>
-                <div class="dropdown-menu">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="link-list-wrapper">
-                        <ul class="link-list">
-                          <li>
-                            <a class="list-item" [routerLink]="['/create-account']">
-                              <span>{{'user.settings'|translate}}</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a class="list-item" [routerLink]="['/']" (click)="onLogout()">
-                              <span>{{'user.logout'|translate}}</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <ul class="dropdown-menu dropdown-menu-right border" *dropdownMenu>
+                  <li role="menuitem">
+                    <a class="dropdown-item text-primary" [routerLink]="['/create-account']" [routerLinkActive]="'disabled'">
+                      <i class="fa fa-fw fa-address-card-o pr-1" aria-hidden="true"></i>
+                      <span>{{'user.settings'|translate}}</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item text-primary" [routerLink]="['/']" (click)="onLogout()">
+                      <i class="fa fa-fw fa-sign-out pr-1" aria-hidden="true"></i>
+                      <span>{{'user.logout'|translate}}</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

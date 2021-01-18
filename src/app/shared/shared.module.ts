@@ -1,21 +1,19 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {TagsModule} from './tags/tags.module';
 import {CapitalizeFirstPipe} from './pipes/capitalizefirst.pipe';
+import {SafeHtmlPipe} from './pipes/safehtml.pipe';
 
 @NgModule({
   declarations: [
     // DropdownDirective
-    CapitalizeFirstPipe
-  ],
-  imports: [
-    TagsModule
+    CapitalizeFirstPipe,
+    SafeHtmlPipe
   ],
   exports: [
     CommonModule,
-    TagsModule,
     // DropdownDirective
-    CapitalizeFirstPipe
+    CapitalizeFirstPipe,
+    SafeHtmlPipe
   ],
   providers: [
   ]

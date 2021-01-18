@@ -27,8 +27,7 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/select2/dist/js/select2.full.js",
-              "node_modules/html2canvas/dist/html2canvas.js",
-              "node_modules/bootstrap-italia/dist/js/bootstrap-italia.min.js"
+              "node_modules/html2canvas/dist/html2canvas.js"
             ]
           },
           "configurations": {

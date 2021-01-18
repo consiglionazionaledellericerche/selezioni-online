@@ -1,5 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+
+import {SharedModule} from '../shared.module';
+
 import {ShowTextComponent} from './show/show-text.component';
 import {ShowTextModalComponent} from './show/show-text-modal.component';
 import {ShowChildrenModalComponent} from './show/show-children-modal.component';
@@ -75,7 +78,6 @@ import {HttpClient} from '@angular/common/http';
 
 @NgModule({
   declarations: [
-
     // Layout
     LayoutTitleComponent,
     LayoutBreadcrumbsComponent,
@@ -143,6 +145,7 @@ import {HttpClient} from '@angular/common/http';
 
   ],
   imports: [
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,

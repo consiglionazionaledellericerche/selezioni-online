@@ -231,6 +231,7 @@
     "num_civico_residenza": "Num. Civico",
     "fl_dichiarazione_sanzioni_penali": "Il sottoscritto consapevole delle sanzioni penali previste dall'art. 76 del D.P.R. n.445/2000 nel caso di dichiarazioni mendaci e di falsità negli atti ed a conoscenza che i dati forniti con autocertificazione saranno soggetti ad eventuale controllo da parte dell’Amministrazione, ai sensi degli articoli 46 e 47 del D.P.R. n.445/2000, DICHIARA che le notizie fornite con la presente domanda e quanto dichiarato nell’allegato curriculum vitae e professionale, comprensivo delle informazioni sulla produzione scientifica, corrispondono a verità.",
     "fl_dichiarazione_dati_personali" : "Il sottoscritto prende atto, ai sensi dell'art. 13 della Legge n.196/2003 sul trattamento dei dati personali, che i dati contenuti nella presente autocertificazione verranno trattati prevalentemente con procedure informatizzate e potranno essere forniti ad altri organismi pubblici per il raggiungimento delle rispettive finalità istituzionali.",
+    "possesso_requisiti": "di essere in possesso dei requisiti di cui all'{{value}}",
     "mine": {
       "title": "Le mie domande"
     },

@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
+import {TagsModule} from '../shared/tags/tags.module';
 
 import {SigninComponent} from './signin/signin.component';
 import {UserEditComponent} from './edit/user-edit.component';
@@ -47,6 +48,7 @@ export enum ServiceReg {
   ],
   imports: [
     SharedModule,
+    TagsModule,
     FormsModule,
     ReactiveFormsModule,
     AuthRoutingModule,
