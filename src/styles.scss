@@ -80,3 +80,7 @@
   border-top: 1px solid #b1b1b3 !important; 
   top: -10px
 }
+
+.toggles label input.ng-invalid[type=checkbox] + .lever:after {
+  background-color: $red;
+}

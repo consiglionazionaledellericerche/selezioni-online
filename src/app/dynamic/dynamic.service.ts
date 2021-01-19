@@ -28,6 +28,11 @@ export class DynamicService {
         if (form) {
             (<AdMetadataComponent>componentRef.instance).form = form;
         }
+        let params = ObjectType.getParams(selector);
+        if (params) {
+            Object.keys(params).forEach(key => {
+                (<AdMetadataComponent>componentRef.instance)[key] = params[key];
+            });
+        }
     }
-
 }

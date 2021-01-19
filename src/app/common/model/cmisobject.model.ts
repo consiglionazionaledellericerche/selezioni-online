@@ -26,6 +26,8 @@ export abstract class CmisObject implements Base{
   public lastModificationDate: Date;
   @JsonProperty('cmis:secondaryObjectTypeIds')
   public secondaryObjectTypeIds: string[];
+  @JsonProperty('aspect')
+  public aspect: string[];
 
   public allowableActions: AllowableAction[];
 
@@ -41,6 +43,7 @@ export abstract class CmisObject implements Base{
     this.lastModifiedBy = undefined;
     this.lastModificationDate = undefined;
     this.secondaryObjectTypeIds = undefined;
+    this.aspect = undefined;
   }
 
   public getObjectId(): string {

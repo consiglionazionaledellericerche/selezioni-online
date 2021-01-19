@@ -91,7 +91,7 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
               <span class="d-none d-md-block pr-1">Stampa</span>
               <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-print"></use></svg>
             </button>
-            <button *ngIf="affixCompleted == affix.length - 1" (click)="sendApplication()" class="btn btn-outline-success btn-lg btn-icon mr-2" tooltip="Invia domanda">
+            <button (click)="sendApplication()" class="btn btn-outline-success btn-lg btn-icon mr-2" tooltip="Invia domanda">
               <span class="d-none d-md-block pr-1">Invia</span>
               <svg class="icon icon-success"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
             </button>
@@ -142,11 +142,16 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
           this.setEntity(application);
           this.buildCreateForm();
         });
+        this.callService.loadLabels(call.objectId).subscribe((labels) => {
+          if (labels) {
+            this.translateService.setTranslation('it', labels, true);
+          }
+        });
       });  
     }); 
     this.cacheService.cache().subscribe((cache) => {
       this.cache = cache;
-    });
+    });    
     super.ngOnInit();
   }
 
@@ -170,7 +175,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       'jconon_application:user': new FormControl(this.entity.user),
       'cmis:objectTypeId': new FormControl(this.entity.objectTypeId),
       'cmis:objectId': new FormControl(this.entity.objectId),
-      'cmis:secondaryObjectTypeIds': new FormControl(this.entity.secondaryObjectTypeIds)
+      'aspect': new FormControl(this.entity.secondaryObjectTypeIds)
     });
   }
 

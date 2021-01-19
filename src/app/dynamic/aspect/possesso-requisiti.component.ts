@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { ValidationHelper } from '../../common/validation/validation-helper';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 
@@ -15,6 +16,11 @@ import { DynamicComponent } from '../dynamic.component';
                     <label for="fl_possesso_requisiti">
                         <input type="checkbox" id="fl_possesso_requisiti" formControlName="jconon_application:fl_possesso_requisiti">
                         <span class="lever"></span>
+                        <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
+                          <span *ngFor="let error of hasErrors()" class="pr-1">
+                            <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
+                          </span>
+                        </div>
                     </label>
                 </div>
             </div>
@@ -29,14 +35,12 @@ export class JcononAspectPossessoRequisitiComponent extends DynamicComponent {
     ) {
       super(cacheService, changeDetectorRef);
     }
-
+    
     ngOnInit(): void {
-      console.log(this.data.call.requisiti);
-      this.form.addControl('jconon_application:fl_possesso_requisiti', new FormControl(
-          this.data.fl_possesso_requisiti, 
-          Validators.required
-        )
-      );
+      this.propertyName = 'jconon_application:fl_possesso_requisiti';
+      this.control = new FormControl(this.data.fl_possesso_requisiti, Validators.requiredTrue);
+      this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }
+
 }

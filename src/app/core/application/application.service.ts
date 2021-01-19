@@ -1,4 +1,4 @@
-import {throwError as observableThrowError, of as observableOf, Observable} from 'rxjs';
+import {throwError as observableThrowError, Observable} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
@@ -11,7 +11,6 @@ import { Application } from './application.model';
 import { SpringError } from '../../common/model/spring-error.model';
 import { ApplicationState } from './application-state.model';
 import { Helpers } from '../../common/helpers/helpers';
-import { AuthService } from '../../auth/auth.service';
 
 @Injectable()
 export class ApplicationService extends CommonService<Application> {

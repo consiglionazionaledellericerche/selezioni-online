@@ -11,7 +11,7 @@ import { JcononAffixDichiarazioniComponent } from './affix/dichiarazioni.compone
 import { JcononAffixDichiarazioniConclusiveComponent } from './affix/dichiarazioni_conclusive.component';
 
 import { JcononAspectPossessoRequisitiComponent } from './aspect/possesso-requisiti.component';
-
+import { JcononAspectsDichiarazioneComponent } from './aspect/dichiarazione.component';
 import { JcononAttachmentShowComponent } from './attachment/jconon-attachment-show.component';
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from './attachment/jconon-attachment-documento-riconoscimento-show.component';
 
@@ -33,6 +33,7 @@ import {HttpClient} from '@angular/common/http';
         JcononAffixDichiarazioniComponent,
         JcononAffixDichiarazioniConclusiveComponent,
         JcononAspectPossessoRequisitiComponent,
+        JcononAspectsDichiarazioneComponent,
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],
@@ -58,6 +59,7 @@ import {HttpClient} from '@angular/common/http';
         JcononAffixDichiarazioniComponent,
         JcononAffixDichiarazioniConclusiveComponent,
         JcononAspectPossessoRequisitiComponent,
+        JcononAspectsDichiarazioneComponent,
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],

@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, SimpleChanges, ViewChildren } from '@angular/core';
+import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 
@@ -10,7 +11,7 @@ import { DynamicComponent } from '../dynamic.component';
           <ul class="it-list">
             <ng-container *ngFor="let aspect of data.call.elenco_aspects">
               <li class="pb-2">
-                  <show-affix [form]="form" [cmisObject]="data" [type]="aspect"></show-affix>
+                  <show-affix #dichiarazioniComponent [form]="form" [cmisObject]="data" [type]="aspect"></show-affix>
               </li>
             </ng-container>
           </ul>
@@ -25,5 +26,10 @@ export class JcononAffixDichiarazioniComponent extends DynamicComponent {
       protected changeDetectorRef: ChangeDetectorRef,
     ) {
       super(cacheService, changeDetectorRef);
+    }
+    @ViewChildren('dichiarazioniComponent') dichiarazioniComponents: ShowAffixComponent[];
+
+    public ngOnChanges(changes: SimpleChanges) {
+      this.dichiarazioniComponents.forEach(dichiarazioniComponent => dichiarazioniComponent.ngOnChanges(changes));
     }
 }

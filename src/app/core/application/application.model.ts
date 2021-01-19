@@ -95,6 +95,16 @@ export class Application extends Folder {
   
   @JsonProperty('jconon_application:fl_possesso_requisiti')
   public fl_possesso_requisiti: boolean;
+  @JsonProperty('jconon_application:fl_dichiarazione_1')
+  public fl_dichiarazione_1: boolean;
+  @JsonProperty('jconon_application:fl_dichiarazione_2')
+  public fl_dichiarazione_2: boolean;
+  @JsonProperty('jconon_application:fl_dichiarazione_3')
+  public fl_dichiarazione_3: boolean;
+  @JsonProperty('jconon_application:fl_dichiarazione_4')
+  public fl_dichiarazione_4: boolean;
+  @JsonProperty('jconon_application:fl_residenza_generica')
+  public fl_residenza_generica: boolean;
   
 
   constructor() {
@@ -141,6 +151,11 @@ export class Application extends Folder {
     this.protocollo_numero_assunzione_idoneo = undefined;
 
     this.fl_possesso_requisiti = undefined;
+    this.fl_dichiarazione_1 = undefined;
+    this.fl_dichiarazione_2 = undefined;
+    this.fl_dichiarazione_3 = undefined;
+    this.fl_dichiarazione_4 = undefined;
+    this.fl_residenza_generica = undefined;
   }
 
   public isProvvisoria(): boolean {
