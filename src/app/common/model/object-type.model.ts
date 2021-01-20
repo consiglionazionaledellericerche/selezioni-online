@@ -17,6 +17,7 @@ import { JcononAffixDichiarazioniComponent } from '../../dynamic/affix/dichiaraz
 import { JcononAspectPossessoRequisitiComponent } from '../../dynamic/aspect/possesso-requisiti.component';
 import { JcononAspectsDichiarazioneComponent } from '../../dynamic/aspect/dichiarazione.component';
 import { JcononAspectIscrizioneListeElettoraliComponent } from '../../dynamic/aspect/iscrizione-liste-elettorali.component';
+import { JcononAspectGodimentoDirittiComponent } from '../../dynamic/aspect/godimento-diritti.component';
 
 export class ObjectType {
     
@@ -110,6 +111,10 @@ export class ObjectType {
     'P:jconon_application:aspect_iscrizione_liste_elettorali' : {
       model: Application,
       showcomponent: JcononAspectIscrizioneListeElettoraliComponent
+    },
+    'P:jconon_application:aspect_godimento_diritti' : {
+      model: Application,
+      showcomponent: JcononAspectGodimentoDirittiComponent
     },
 
 

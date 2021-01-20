@@ -16,7 +16,7 @@ import { DynamicComponent } from '../dynamic.component';
                     <input type="checkbox" (change)="onChangeFlIscrittoListeElettorali(true)" id="fl_iscritto_liste_elettorali" formControlName="jconon_application:fl_iscritto_liste_elettorali">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-1">
+                      <span *ngFor="let error of hasErrors()" class="pr-2">
                         <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
                       </span>
                     </div>

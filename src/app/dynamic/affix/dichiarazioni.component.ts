@@ -10,7 +10,7 @@ import { DynamicComponent } from '../dynamic.component';
         <div class="it-list-wrapper">
           <ul class="it-list">
             <ng-container *ngFor="let aspect of data.call.elenco_aspects">
-              <li class="pb-2">
+              <li class="shadow-sm p-0 mb-1 bg-white">
                   <show-affix #dichiarazioniComponent [form]="form" [cmisObject]="data" [type]="aspect"></show-affix>
               </li>
             </ng-container>

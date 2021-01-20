@@ -21,7 +21,9 @@ import {ButtonsModule} from 'ngx-bootstrap/buttons'
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
+
 import { JcononAspectIscrizioneListeElettoraliComponent } from './aspect/iscrizione-liste-elettorali.component';
+import { JcononAspectGodimentoDirittiComponent } from './aspect/godimento-diritti.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -35,6 +37,7 @@ import { JcononAspectIscrizioneListeElettoraliComponent } from './aspect/iscrizi
         JcononAffixDichiarazioniConclusiveComponent,
         JcononAspectPossessoRequisitiComponent,
         JcononAspectIscrizioneListeElettoraliComponent,
+        JcononAspectGodimentoDirittiComponent,
         JcononAspectsDichiarazioneComponent,
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
@@ -62,6 +65,7 @@ import { JcononAspectIscrizioneListeElettoraliComponent } from './aspect/iscrizi
         JcononAffixDichiarazioniConclusiveComponent,
         JcononAspectPossessoRequisitiComponent,
         JcononAspectIscrizioneListeElettoraliComponent,
+        JcononAspectGodimentoDirittiComponent,
         JcononAspectsDichiarazioneComponent,
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent

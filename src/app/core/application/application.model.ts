@@ -105,6 +105,11 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:motivazione_no_iscrizione_liste_elettorali')
   public motivazione_no_iscrizione_liste_elettorali: string = undefined;
 
+  @JsonProperty('jconon_application:fl_godimento_diritti')
+  public fl_godimento_diritti: boolean = undefined;
+  @JsonProperty('jconon_application:motivazione_no_godimento_diritti')
+  public motivazione_no_godimento_diritti: string = undefined;
+
 
   @JsonProperty('jconon_application:fl_dichiarazione_1')
   public fl_dichiarazione_1: boolean;
