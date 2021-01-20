@@ -26,6 +26,8 @@ import { JcononAspectIscrizioneListeElettoraliComponent } from './aspect/iscrizi
 import { JcononAspectGodimentoDirittiComponent } from './aspect/godimento-diritti.component';
 import { JcononAspectCondannePenaliComponent } from './aspect/condanne-penali.component';
 import { JcononAspectDecadutoAltroImpiegoComponent } from './aspect/decaduto-altro-impiego.component';
+import { JcononAspectDestituitoAltroImpiegoComponent } from './aspect/destituito-altro-impiego.component';
+import { JcononAspectServizioCNRComponent } from './aspect/servizio-cnr.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -44,6 +46,8 @@ import { JcononAspectDecadutoAltroImpiegoComponent } from './aspect/decaduto-alt
         JcononAspectGodimentoDirittiComponent,
         JcononAspectCondannePenaliComponent,
         JcononAspectDecadutoAltroImpiegoComponent,
+        JcononAspectDestituitoAltroImpiegoComponent,
+        JcononAspectServizioCNRComponent,
 
 
         JcononAttachmentShowComponent,
@@ -77,7 +81,10 @@ import { JcononAspectDecadutoAltroImpiegoComponent } from './aspect/decaduto-alt
         JcononAspectGodimentoDirittiComponent,
         JcononAspectCondannePenaliComponent,
         JcononAspectDecadutoAltroImpiegoComponent,
+        JcononAspectDestituitoAltroImpiegoComponent,
+        JcononAspectServizioCNRComponent,
 
+        
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],

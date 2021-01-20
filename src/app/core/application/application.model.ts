@@ -120,6 +120,20 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:motivazione_decaduto_altro_impiego')
   public motivazione_decaduto_altro_impiego: string = undefined;
 
+  @JsonProperty('jconon_application:fl_destituito_altro_impiego')
+  public fl_destituito_altro_impiego: boolean = undefined;
+  @JsonProperty('jconon_application:motivazione_destituito_altro_impiego')
+  public motivazione_destituito_altro_impiego: string = undefined;
+
+  @JsonProperty('jconon_application:fl_servizioCNR')
+  public fl_servizioCNR: boolean = undefined;
+  @JsonProperty('jconon_application:struttura_cnr')
+  public struttura_cnr: string = undefined;
+  @JsonProperty('jconon_application:titolo_servizio_cnr')
+  public titolo_servizio_cnr: string = undefined;
+  @JsonProperty('jconon_application:fl_direttore')
+  public fl_direttore: boolean = undefined;
+
 
   @JsonProperty('jconon_application:fl_dichiarazione_1')
   public fl_dichiarazione_1: boolean;

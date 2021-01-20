@@ -20,6 +20,8 @@ import { JcononAspectIscrizioneListeElettoraliComponent } from '../../dynamic/as
 import { JcononAspectGodimentoDirittiComponent } from '../../dynamic/aspect/godimento-diritti.component';
 import { JcononAspectCondannePenaliComponent } from '../../dynamic/aspect/condanne-penali.component';
 import { JcononAspectDecadutoAltroImpiegoComponent } from '../../dynamic/aspect/decaduto-altro-impiego.component';
+import { JcononAspectDestituitoAltroImpiegoComponent } from '../../dynamic/aspect/destituito-altro-impiego.component';
+import { JcononAspectServizioCNRComponent } from '../../dynamic/aspect/servizio-cnr.component';
 
 export class ObjectType {
     
@@ -135,6 +137,14 @@ export class ObjectType {
     'P:jconon_application:aspect_decaduto_altro_impiego' : {
       model: Application,
       showcomponent: JcononAspectDecadutoAltroImpiegoComponent
+    },
+    'P:jconon_application:aspect_destituito_altro_impiego' : {
+      model: Application,
+      showcomponent: JcononAspectDestituitoAltroImpiegoComponent
+    },
+    'P:jconon_application:aspect_servizioCNR' : {
+      model: Application,
+      showcomponent: JcononAspectServizioCNRComponent
     },
 
 
