@@ -68,13 +68,13 @@
     </div>
   </div>
   <div class="it-nav-wrapper">
-    <div class="it-header-center-wrapper">
+    <div class="it-header-center-wrapper px-0">
       <div class="container">
         <div class="row">
           <div class="col-12">
             <div class="it-header-center-content-wrapper">
               <div class="it-brand-wrapper pl-0">
-                <a [routerLink]="['/']" class="navbar-brand logo">
+                <a [routerLink]="['/']" class="navbar-brand logo mr-0">
                   <img src="/assets/images/logo_cnr.png">
                   <div class="it-brand-text pl-2">
                     <h2 class="no_toc">{{'header.title' | translate}}</h2>
@@ -100,7 +100,7 @@
                     </a>
                   </form>
                 </div>
-                <a class="btn btn-link d-lg-none toggle-menu-sidebar" (click)="sidebarMenuToggle()">
+                <a class="btn btn-link d-lg-none toggle-menu-sidebar px-3" (click)="sidebarMenuToggle()">
                   <svg class="icon icon-white toggle-menu-sidebar">
                     <use xlink:href="/assets/vendor/sprite.svg#it-burger"></use>
                   </svg>
@@ -119,7 +119,7 @@
               <div class="navbar-collapsable">
                 <div class="menu-wrapper">
                   <div class="it-brand-wrapper cloned" *ngIf="isSticky">
-                    <a [routerLink]="['/']" class="navbar-brand logo">
+                    <a [routerLink]="['/']" class="navbar-brand logo mr-0">
                       <img src="/assets/images/logo_cnr.png">
                       <div class="it-brand-text pl-2">
                         <h2 class="no_toc">{{'header.title' | translate}}</h2>
@@ -142,7 +142,7 @@
                       </svg>
                     </a>
                   </div>
-                  <a class="btn btn-link d-lg-none toggle-menu-sidebar" (click)="sidebarMenuToggle()">
+                  <a class="btn btn-link d-lg-none toggle-menu-sidebar px-3" (click)="sidebarMenuToggle()">
                     <svg class="icon icon-white toggle-menu-sidebar">
                       <use xlink:href="/assets/vendor/sprite.svg#it-burger"></use>
                     </svg>

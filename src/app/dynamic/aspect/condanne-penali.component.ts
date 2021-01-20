@@ -4,16 +4,16 @@ import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 
 @Component({
-    selector: 'P:jconon_application:aspect_godimento_diritti',
+    selector: 'P:jconon_application:aspect_condanne_penali',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlGodimentoDiritti()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlCondannePenali()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_godimento_diritti' | translate }}</label>
+            <label class="text-dark">{{'label.jconon_application.fl_condanne_penali' | translate }}</label>
             <div class="toggles mr-1">
-                <label for="fl_godimento_diritti">
-                    <input type="checkbox" (change)="onChangeFlGodimentoDiritti(true)" id="fl_godimento_diritti" 
-                      formControlName="jconon_application:fl_godimento_diritti">
+                <label for="fl_condanne_penali">
+                    <input type="checkbox" (change)="onChangeFlCondannePenali(true)" id="fl_condanne_penali" 
+                      formControlName="jconon_application:fl_condanne_penali">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
                       <span *ngFor="let error of hasErrors()" class="pr-2">
@@ -29,8 +29,8 @@ import { DynamicComponent } from '../dynamic.component';
                 [showValidation]="true"
                 rows="5" 
                 [inline]="true" 
-                [label]="'label.jconon_application.motivazione_no_godimento_diritti'| translate" 
-                formControlName="jconon_application:motivazione_no_godimento_diritti">
+                [label]="'label.jconon_application.estremi_sentenze_penali'| translate" 
+                formControlName="jconon_application:estremi_sentenze_penali">
               </app-control-textarea>
             </div>
           </div>  
@@ -38,7 +38,7 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `
   })
-export class JcononAspectGodimentoDirittiComponent extends DynamicComponent {
+export class JcononAspectCondannePenaliComponent extends DynamicComponent {
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,
@@ -47,26 +47,26 @@ export class JcononAspectGodimentoDirittiComponent extends DynamicComponent {
     }
 
     ngOnInit(): void {
-      this.propertyName = 'jconon_application:fl_godimento_diritti';
-      this.control = new FormControl(this.data.fl_godimento_diritti, Validators.required);
+      this.propertyName = 'jconon_application:fl_condanne_penali';
+      this.control = new FormControl(this.data.fl_condanne_penali, Validators.required);
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl(
-        'jconon_application:motivazione_no_godimento_diritti', 
-        new FormControl(this.data.motivazione_no_godimento_diritti)
+        'jconon_application:estremi_sentenze_penali', 
+        new FormControl(this.data.estremi_sentenze_penali)
       );
-      this.onChangeFlGodimentoDiritti(false);
+      this.onChangeFlCondannePenali(false);
       super.ngOnInit();
     }
 
-    public onChangeFlGodimentoDiritti(reset: boolean) {
+    public onChangeFlCondannePenali(reset: boolean) {
       if (reset) {
-        this.form.controls['jconon_application:motivazione_no_godimento_diritti'].patchValue(null);
+        this.form.controls['jconon_application:estremi_sentenze_penali'].patchValue(null);
       }
-      this.form.controls['jconon_application:motivazione_no_godimento_diritti']
-        .setValidators(this.isFlGodimentoDiritti()? undefined : Validators.required);
+      this.form.controls['jconon_application:estremi_sentenze_penali']
+        .setValidators(this.isFlCondannePenali()? undefined: Validators.required);
     }
 
-    public isFlGodimentoDiritti(): boolean {
-      return this.form.controls['jconon_application:fl_godimento_diritti'].value;      
+    public isFlCondannePenali(): boolean {
+      return this.form.controls['jconon_application:fl_condanne_penali'].value;      
     }
 }

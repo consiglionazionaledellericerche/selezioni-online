@@ -110,6 +110,16 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:motivazione_no_godimento_diritti')
   public motivazione_no_godimento_diritti: string = undefined;
 
+  @JsonProperty('jconon_application:fl_condanne_penali')
+  public fl_condanne_penali: boolean = undefined;
+  @JsonProperty('jconon_application:estremi_sentenze_penali')
+  public estremi_sentenze_penali: string = undefined;
+
+  @JsonProperty('jconon_application:fl_decaduto_altro_impiego')
+  public fl_decaduto_altro_impiego: boolean = undefined;
+  @JsonProperty('jconon_application:motivazione_decaduto_altro_impiego')
+  public motivazione_decaduto_altro_impiego: string = undefined;
+
 
   @JsonProperty('jconon_application:fl_dichiarazione_1')
   public fl_dichiarazione_1: boolean;

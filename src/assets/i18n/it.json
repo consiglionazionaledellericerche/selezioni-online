@@ -359,6 +359,11 @@
       "motivazione_no_iscrizione_liste_elettorali": "Motivo di non iscrizione o cancellazione",
       "fl_godimento_diritti": "di godere dei diritti civili e politici nello Stato di appartenenza o di provenienza",
       "motivazione_no_godimento_diritti": "Motivo di non godimento dei diritti civili e politici",
+      "fl_condanne_penali": "di non aver riportato condanne penali, né avere procedimenti penali in corso, anche all'estero",
+      "estremi_sentenze_penali": "Indicare le eventuali condanne penali riportate, gli estremi delle relative sentenze (anche nei casi in cui sia stata concessa la non menzione nei certificati rilasciati dal casellario giudiziale a richiesta di privati ovvero siano intervenuti amnistia, indulto, grazia, perdono giudiziale o riabilitazione) e i procedimenti penali eventualmente pendenti:",
+      "fl_decaduto_altro_impiego":"di non essere stato dichiarato decaduto da un impiego statale ai sensi dell'art.127 lettera d) del D.P.R. 10.01.1957, n.3",
+      "motivazione_decaduto_altro_impiego":"Motivo di avvenuta risoluzione",
+      
       "fl_dichiarazione_1": "Dichiarazione 1",
       "fl_dichiarazione_2": "Dichiarazione 2",
       "fl_dichiarazione_3": "Dichiarazione obbligatoria 3",

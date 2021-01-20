@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {AbstractControlDirective, NgControl} from '@angular/forms';
 import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {Helpers} from '../../../common/helpers/helpers';
@@ -15,7 +15,7 @@ import {Helpers} from '../../../common/helpers/helpers';
             {{ prependText }}
           </div>
         </div>
-        <label *ngIf="!noLabel" [ngClass]="labelClasses()">{{getLabel() | translate}}</label>
+        <label *ngIf="!noLabel" #label [ngClass]="labelClasses()" placement="right" tooltip="{{getLabelTruncated() | translate}}">{{getLabel() | translate}}</label>
         <ng-content></ng-content>
         <div *ngIf="append || appendText" class="input-group-append" tooltip="{{ ttipAppend | translate }}" placement="left">
           <div class="input-group-text">
@@ -64,6 +64,8 @@ export class FormLayoutComponent {
 
   @Input() labelactive;
 
+  @ViewChild('label', {static: false}) labelElement: ElementRef;
+
   /*
     Utils.
   */
@@ -81,6 +83,14 @@ export class FormLayoutComponent {
       return;
     }
     return ValidationHelper.getValidationCodes((<AbstractControlDirective>this.controlDir).control);
+  }
+
+  isLabelTruncated(): boolean {
+    if (this.labelElement) {
+      const e = this.labelElement.nativeElement;
+      return e.scrollWidth > e.clientWidth;  
+    }
+    return false;
   }
 
   labelClasses() {
@@ -107,6 +117,13 @@ export class FormLayoutComponent {
     if (this.controlDir && this.controlDir.control) {
       return Helpers.getLabelFromControl(this.label, this.controlDir);
     }
+  }
+
+  getLabelTruncated() {
+    if (this.isLabelTruncated()) {
+      return this.getLabel();
+    }
+    return '';
   }
 
   onFocus() {

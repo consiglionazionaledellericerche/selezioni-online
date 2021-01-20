@@ -18,6 +18,8 @@ import { JcononAspectPossessoRequisitiComponent } from '../../dynamic/aspect/pos
 import { JcononAspectsDichiarazioneComponent } from '../../dynamic/aspect/dichiarazione.component';
 import { JcononAspectIscrizioneListeElettoraliComponent } from '../../dynamic/aspect/iscrizione-liste-elettorali.component';
 import { JcononAspectGodimentoDirittiComponent } from '../../dynamic/aspect/godimento-diritti.component';
+import { JcononAspectCondannePenaliComponent } from '../../dynamic/aspect/condanne-penali.component';
+import { JcononAspectDecadutoAltroImpiegoComponent } from '../../dynamic/aspect/decaduto-altro-impiego.component';
 
 export class ObjectType {
     
@@ -116,6 +118,25 @@ export class ObjectType {
       model: Application,
       showcomponent: JcononAspectGodimentoDirittiComponent
     },
+    'P:jconon_application:aspect_condanne_penali' : {
+      model: Application,
+      showcomponent: JcononAspectCondannePenaliComponent
+    },
+    'P:jconon_application:aspect_condanne_penali_required' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_condanne_penali',
+        name: 'fl_condanne_penali',
+        required: true,
+        label: 'label.jconon_application.fl_condanne_penali'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_decaduto_altro_impiego' : {
+      model: Application,
+      showcomponent: JcononAspectDecadutoAltroImpiegoComponent
+    },
+
 
 
 

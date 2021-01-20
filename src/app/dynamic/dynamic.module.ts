@@ -24,6 +24,8 @@ import {HttpClient} from '@angular/common/http';
 
 import { JcononAspectIscrizioneListeElettoraliComponent } from './aspect/iscrizione-liste-elettorali.component';
 import { JcononAspectGodimentoDirittiComponent } from './aspect/godimento-diritti.component';
+import { JcononAspectCondannePenaliComponent } from './aspect/condanne-penali.component';
+import { JcononAspectDecadutoAltroImpiegoComponent } from './aspect/decaduto-altro-impiego.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -35,10 +37,15 @@ import { JcononAspectGodimentoDirittiComponent } from './aspect/godimento-diritt
         JcononAffixResidenzaComponent,
         JcononAffixDichiarazioniComponent,
         JcononAffixDichiarazioniConclusiveComponent,
+        /** Apllication Aspect */
+        JcononAspectsDichiarazioneComponent,
         JcononAspectPossessoRequisitiComponent,
         JcononAspectIscrizioneListeElettoraliComponent,
         JcononAspectGodimentoDirittiComponent,
-        JcononAspectsDichiarazioneComponent,
+        JcononAspectCondannePenaliComponent,
+        JcononAspectDecadutoAltroImpiegoComponent,
+
+
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],
@@ -63,10 +70,14 @@ import { JcononAspectGodimentoDirittiComponent } from './aspect/godimento-diritt
         JcononAffixResidenzaComponent,
         JcononAffixDichiarazioniComponent,
         JcononAffixDichiarazioniConclusiveComponent,
+        /** Apllication Aspect */
+        JcononAspectsDichiarazioneComponent,
         JcononAspectPossessoRequisitiComponent,
         JcononAspectIscrizioneListeElettoraliComponent,
         JcononAspectGodimentoDirittiComponent,
-        JcononAspectsDichiarazioneComponent,
+        JcononAspectCondannePenaliComponent,
+        JcononAspectDecadutoAltroImpiegoComponent,
+
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],
