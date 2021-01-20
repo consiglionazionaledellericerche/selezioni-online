@@ -95,6 +95,17 @@ export class Application extends Folder {
   
   @JsonProperty('jconon_application:fl_possesso_requisiti')
   public fl_possesso_requisiti: boolean;
+
+  @JsonProperty('jconon_application:fl_iscritto_liste_elettorali')
+  public fl_iscritto_liste_elettorali: boolean = undefined;
+  @JsonProperty('jconon_application:comune_liste_elettorali', ObjectToIdConverter)
+  public comune_liste_elettorali: string = undefined;
+  @JsonProperty('jconon_application:provincia_liste_elettorali')
+  public provincia_liste_elettorali: string = undefined;
+  @JsonProperty('jconon_application:motivazione_no_iscrizione_liste_elettorali')
+  public motivazione_no_iscrizione_liste_elettorali: string = undefined;
+
+
   @JsonProperty('jconon_application:fl_dichiarazione_1')
   public fl_dichiarazione_1: boolean;
   @JsonProperty('jconon_application:fl_dichiarazione_2')
@@ -151,11 +162,14 @@ export class Application extends Folder {
     this.protocollo_numero_assunzione_idoneo = undefined;
 
     this.fl_possesso_requisiti = undefined;
+
     this.fl_dichiarazione_1 = undefined;
     this.fl_dichiarazione_2 = undefined;
     this.fl_dichiarazione_3 = undefined;
     this.fl_dichiarazione_4 = undefined;
     this.fl_residenza_generica = undefined;
+
+
   }
 
   public isProvvisoria(): boolean {

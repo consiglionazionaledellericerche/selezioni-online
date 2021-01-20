@@ -175,7 +175,9 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       'jconon_application:user': new FormControl(this.entity.user),
       'cmis:objectTypeId': new FormControl(this.entity.objectTypeId),
       'cmis:objectId': new FormControl(this.entity.objectId),
-      'aspect': new FormControl(this.entity.secondaryObjectTypeIds)
+      'aspect': new FormControl(
+        this.entity.call.elenco_aspects
+      )
     });
   }
 

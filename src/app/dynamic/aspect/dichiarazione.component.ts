@@ -8,9 +8,9 @@ import { DynamicComponent } from '../dynamic.component';
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">
         <a class="it-has-checkbox flex-column">
-            <div class="it-right-zone w-100">
+            <div class="it-right-zone w-100 border-bottom-0">
                 <label class="text-dark">{{label | translate }}</label>
-                <div class="toggles">
+                <div class="toggles mr-1">
                     <label for="{{name}}">
                         <input type="checkbox" id="{{name}}" formControlName="{{propertyName}}">
                         <span class="lever"></span>

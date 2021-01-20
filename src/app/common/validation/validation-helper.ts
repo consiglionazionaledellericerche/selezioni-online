@@ -159,8 +159,4 @@ export class ValidationHelper {
       && !controlDir.pending // && (controlDir.control.dirty || controlDir.control.touched)
       && controlDir.control.valid;
   }
-
-
-
 }
-

@@ -350,5 +350,13 @@
     "affix_tabDichiarazioniConclusive": {
       "title": "Dichiarazioni Sostitutive"
     }
+  },
+  "label": {
+    "jconon_application": {
+      "fl_iscritto_liste_elettorali": "di essere iscritto nelle liste elettorali",
+      "comune_liste_elettorali": "Comune",
+      "provincia_liste_elettorali": "Provincia",
+      "motivazione_no_iscrizione_liste_elettorali": "Motivo di non iscrizione o cancellazione"
+    }
   }
 }

@@ -33,7 +33,7 @@ import { DynamicComponent } from '../dynamic.component';
               formControlName="jconon_application:comune_residenza">
             </app-control-text>
           </div>
-          <div *ngIf="!isForeign()" class="form-group col-md-5">
+          <div [hidden]="isForeign()" class="form-group col-md-5">
             <app-control-select-model
               *ngIf="!isForeign()"
               [inline]="true"

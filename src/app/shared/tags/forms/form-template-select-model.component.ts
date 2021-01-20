@@ -440,4 +440,3 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
     return data.id;
   }
 }
-

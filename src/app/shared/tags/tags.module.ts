@@ -19,6 +19,7 @@ import {GridLayoutComponent} from './list/grid-layout.component';
 
 import {FormLayoutComponent} from './forms/form-layout.component';
 import {FormTemplateTextComponent} from './forms/form-template-text.component';
+import {FormTemplateTextAreaComponent} from './forms/form-template-textarea.component';
 import {FormTemplateDatepickerComponent} from './forms/form-template-datepicker.component';
 import {ButtonNewComponent} from './buttons/button-new.component';
 import {ButtonCsvComponent} from './buttons/button-csv.component';
@@ -89,6 +90,7 @@ import {HttpClient} from '@angular/common/http';
     FormValidationErrorLayoutComponent,
 
     FormTemplateTextComponent,
+    FormTemplateTextAreaComponent,
     FormTemplateCheckboxComponent,
     FormTemplateDatepickerComponent,
     FormTemplateSelectModelComponent,
@@ -187,6 +189,7 @@ import {HttpClient} from '@angular/common/http';
 
     // Form
     FormTemplateTextComponent,
+    FormTemplateTextAreaComponent,
     FormTemplateCheckboxComponent,
     FormTemplateDatepickerComponent,
     FormTemplateSelectModelComponent,
