@@ -8,7 +8,7 @@ import { DynamicComponent } from '../dynamic.component';
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()" class="pb-2">
         <div class="it-list-wrapper">
-          <ul class="it-list">
+          <ul class="it-list pl-2">
             <ng-container *ngFor="let aspect of data.call.elenco_aspects">
               <li class="shadow-sm p-0 mb-1 bg-white">
                   <show-affix #dichiarazioniComponent [form]="form" [cmisObject]="data" [type]="aspect"></show-affix>
@@ -17,7 +17,10 @@ import { DynamicComponent } from '../dynamic.component';
           </ul>
         </div>  
       </form>
-    `
+    `,
+    styles: [
+      'ul.it-list {list-style-type: upper-alpha;}'
+    ]
   })
 export class JcononAffixDichiarazioniComponent extends DynamicComponent {
 

@@ -24,19 +24,19 @@ import {FormCommonTag} from './form-common-tag';
                        [appendText]="appendText"
                        [ttipAppend]="ttipAppend"
                        [labelactive]="labelactive"
-                       [ttip]="ttip"
-                       (click)="onFocusLabel()">
+                       [ttip]="ttip">
           <input class="form-control"
                type="{{type}}"
                #dp="bsDatepicker"
                #input
                bsDatepicker
                (bsValueChange)="change($event)"
+               (focus)="onShow($event.target.value)"
                (focusout)="onFocusOut($event.target.value)"
+               (onShown)="onShow($event)"
                (blur)="onTouched()"
                [bsConfig]="bsConfig"
                [(bsValue)]="bsValue"
-               (input)="change($event.target.value)"
                [disabled]="disabled"
                [ngClass]="classes()"
           >
@@ -130,10 +130,9 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
     this.labelactive = value !== undefined;
     this.onChange(value);
   }
-
-  onFocusLabel() {
-    this.labelactive = true;
-    this.input.nativeElement.focus();
+  
+  onShow(event: any) {
+    this.labelactive = true;  
   }
 
   onFocusOut(value: string) {
@@ -150,4 +149,3 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
     };
   }
 }
-

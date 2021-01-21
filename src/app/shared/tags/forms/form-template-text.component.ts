@@ -30,8 +30,7 @@ import {FormCommonTag} from './form-common-tag';
               [ttipAppend]="ttipAppend"
               [noLabel]="noLabel"
               [labelactive]="labelactive"
-              [showValidation]="showValidation"
-              (click)="onFocusLabel()">
+              [showValidation]="showValidation">
 
         <input class="form-control {{inputClass}}"
              type="{{ type }}"
@@ -137,11 +136,6 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
 
   onFocus(value: string) {
     this.labelactive = true;
-  }
-
-  onFocusLabel() {
-    this.labelactive = true;
-    this.input.nativeElement.focus();
   }
 
   onFocusOut(value: string) {

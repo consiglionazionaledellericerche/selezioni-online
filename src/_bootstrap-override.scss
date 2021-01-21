@@ -1,6 +1,9 @@
 // ####################################################################################
 //                              Bootstrap variables override
 // ####################################################################################
-.form-group label {
-    z-index: 1;
+input.form-control {
+    background: none;
+}
+textarea.form-control {
+    background: none;
 }

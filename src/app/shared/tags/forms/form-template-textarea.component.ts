@@ -3,7 +3,6 @@ import {
   Component, ElementRef, Input, OnInit, Optional, Self, ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
-import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {FormCommonTag} from './form-common-tag';
 
 /**
@@ -30,8 +29,7 @@ import {FormCommonTag} from './form-common-tag';
               [ttipAppend]="ttipAppend"
               [noLabel]="noLabel"
               [labelactive]="labelactive"
-              [showValidation]="showValidation"
-              (click)="onFocusLabel()">
+              [showValidation]="showValidation">
 
         <textarea class="form-control border-bottom"
              rows="{{ rows }}"
@@ -120,11 +118,6 @@ export class FormTemplateTextAreaComponent extends FormCommonTag implements Cont
 
   onFocus(value: string) {
     this.labelactive = true;
-  }
-
-  onFocusLabel() {
-    this.labelactive = true;
-    this.input.nativeElement.focus();
   }
 
   onFocusOut(value: string) {
