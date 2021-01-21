@@ -22,6 +22,7 @@ import { JcononAspectCondannePenaliComponent } from '../../dynamic/aspect/condan
 import { JcononAspectDecadutoAltroImpiegoComponent } from '../../dynamic/aspect/decaduto-altro-impiego.component';
 import { JcononAspectDestituitoAltroImpiegoComponent } from '../../dynamic/aspect/destituito-altro-impiego.component';
 import { JcononAspectServizioCNRComponent } from '../../dynamic/aspect/servizio-cnr.component';
+import { JcononAspectServizioAltreAmministrazioniComponent } from '../../dynamic/aspect/servizio-altre-amministrazioni.component';
 
 export class ObjectType {
     
@@ -146,6 +147,37 @@ export class ObjectType {
       model: Application,
       showcomponent: JcononAspectServizioCNRComponent
     },
+    'P:jconon_application:aspect_servizioCNRWithoutDirettore' : {
+      model: Application,
+      showcomponent: JcononAspectServizioCNRComponent,
+      params: {
+        hiddenDirettore: true
+      }
+    },
+    'P:jconon_application:aspect_servizio_altre_amministrazioni' : {
+      model: Application,
+      showcomponent: JcononAspectServizioAltreAmministrazioniComponent
+    },
+    'P:jconon_application:aspect_servizio_altre_amministrazioniWithoutDirettore' : {
+      model: Application,
+      showcomponent: JcononAspectServizioAltreAmministrazioniComponent,
+      params: {
+        hiddenRisoluzione: false
+      }
+    },
+    'P:jconon_application:aspect_idoneita_fisica' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_idoneita_fisica',
+        name: 'fl_idoneita_fisica',
+        required: true,
+        label: 'label.jconon_application.fl_idoneita_fisica'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+
+
+
 
 
 

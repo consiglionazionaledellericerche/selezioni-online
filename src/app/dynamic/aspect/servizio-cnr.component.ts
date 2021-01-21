@@ -42,7 +42,7 @@ import { DynamicComponent } from '../dynamic.component';
                 formControlName="jconon_application:titolo_servizio_cnr">
               </app-control-text>
             </div>
-            <div *ngSwitchCase="true" class="form-group col-md-4">
+            <div [hidden]="hiddenDirettore" *ngSwitchCase="true" class="form-group col-md-4">
               <div class="form-check w-100">
                 <input id="fl_direttore" type="checkbox" formControlName="jconon_application:fl_direttore">
                 <label for="fl_direttore" class="pl-5">{{'label.jconon_application.fl_direttore'| translate}}</label>
@@ -60,6 +60,8 @@ export class JcononAspectServizioCNRComponent extends DynamicComponent {
     ) {
       super(cacheService, changeDetectorRef);
     }
+
+    public hiddenDirettore = false;
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_servizioCNR';

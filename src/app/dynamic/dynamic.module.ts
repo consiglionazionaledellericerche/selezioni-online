@@ -28,6 +28,7 @@ import { JcononAspectCondannePenaliComponent } from './aspect/condanne-penali.co
 import { JcononAspectDecadutoAltroImpiegoComponent } from './aspect/decaduto-altro-impiego.component';
 import { JcononAspectDestituitoAltroImpiegoComponent } from './aspect/destituito-altro-impiego.component';
 import { JcononAspectServizioCNRComponent } from './aspect/servizio-cnr.component';
+import { JcononAspectServizioAltreAmministrazioniComponent } from './aspect/servizio-altre-amministrazioni.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -48,6 +49,7 @@ import { JcononAspectServizioCNRComponent } from './aspect/servizio-cnr.componen
         JcononAspectDecadutoAltroImpiegoComponent,
         JcononAspectDestituitoAltroImpiegoComponent,
         JcononAspectServizioCNRComponent,
+        JcononAspectServizioAltreAmministrazioniComponent,
 
 
         JcononAttachmentShowComponent,
@@ -83,8 +85,8 @@ import { JcononAspectServizioCNRComponent } from './aspect/servizio-cnr.componen
         JcononAspectDecadutoAltroImpiegoComponent,
         JcononAspectDestituitoAltroImpiegoComponent,
         JcononAspectServizioCNRComponent,
+        JcononAspectServizioAltreAmministrazioniComponent,
 
-        
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent
     ],

@@ -24,7 +24,7 @@ import { DynamicComponent } from '../dynamic.component';
               formControlName="jconon_application:nazione_residenza">
             </app-control-select-model>
           </div>
-          <div *ngIf="isForeign()" class="form-group col-md-6">
+          <div [hidden]="!isForeign()" class="form-group col-md-6">
             <app-control-text 
               *ngIf="isForeign()" 
               type="text" 
@@ -48,7 +48,7 @@ import { DynamicComponent } from '../dynamic.component';
               </app-control-select-model>          
             <label for="comune_residenza" class="active">{{'application.comune_residenza'| translate}}</label>
           </div>
-          <div *ngIf="!isForeign()" class="form-group col-md-1">
+          <div [hidden]="isForeign()" class="form-group col-md-1">
             <app-control-text 
               *ngIf="!isForeign()" 
               [disabled]="true" 

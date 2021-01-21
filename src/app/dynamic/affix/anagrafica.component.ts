@@ -111,7 +111,7 @@ import { DynamicComponent } from '../dynamic.component';
             </div>
             <label for="cittadinanza" class="active">{{'user.cittadinanza.label'| translate}}</label>
           </div>
-          <div *ngIf="!isStraniero()" class="form-group col-md-6">
+          <div [hidden]="isStraniero()" class="form-group col-md-6">
             <app-control-text 
                 type="text" 
                 inputClass="uppercase"
@@ -192,10 +192,6 @@ export class JcononAffixAnagraficaComponent extends DynamicComponent {
     }
 
     public onChangeCittadinanza(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:codice_fiscale'].patchValue(null);
-        this.form.controls['jconon_application:nazione_cittadinanza'].patchValue(null);
-      }
       if (this.isStraniero()) {
         this.form.controls['jconon_application:codice_fiscale'].setValidators(undefined);
         this.form.controls['jconon_application:nazione_cittadinanza'].setValidators(Validators.required);
@@ -205,6 +201,10 @@ export class JcononAffixAnagraficaComponent extends DynamicComponent {
           Helpers.patternValidator(Helpers.regExpCodiceFiscale, {codicefiscale: true})
         ]);
         this.form.controls['jconon_application:nazione_cittadinanza'].setValidators(undefined);
+      }
+      if (reset) {
+        this.form.controls['jconon_application:codice_fiscale'].patchValue(null);
+        this.form.controls['jconon_application:nazione_cittadinanza'].patchValue(null);
       }
     }
  

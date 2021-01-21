@@ -134,6 +134,15 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:fl_direttore')
   public fl_direttore: boolean = undefined;
 
+  @JsonProperty('jconon_application:fl_servizio_altre_amministrazioni')
+  public fl_servizio_altre_amministrazioni: boolean = undefined;
+  @JsonProperty('jconon_application:struttura_altre_amministrazioni')
+  public struttura_altre_amministrazioni: string = undefined;
+  @JsonProperty('jconon_application:titolo_servizio_altre_amministrazioni')
+  public titolo_servizio_altre_amministrazioni: string = undefined;
+  @JsonProperty('jconon_application:cause_risoluzione_servizio_altre_amministrazioni')
+  public cause_risoluzione_servizio_altre_amministrazioni: string = undefined;
+
 
   @JsonProperty('jconon_application:fl_dichiarazione_1')
   public fl_dichiarazione_1: boolean;

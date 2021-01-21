@@ -369,6 +369,12 @@
       "struttura_cnr": "Struttura",
       "titolo_servizio_cnr": "in qualità di",
       "fl_direttore": "Direttore in carica/f.f.",
+      "fl_servizio_altre_amministrazioni": "di essere dipendente di altra Pubblica Amministrazione",
+      "struttura_altre_amministrazioni": "Denominazione P.A.",
+      "titolo_servizio_altre_amministrazioni": "in qualità di",
+      "servizio_altre_amministrazioni_etichetta": "pertanto, dichiara la disponibilita' a formulare la richiesta di aspettativa all'amministrazione di appartenenza e a rimuovere ogni eventuale causa di incompatibilita' secondo quanto previsto dalle leggi e regolamenti",
+      "cause_risoluzione_servizio_altre_amministrazioni": "Eventuali cause di risoluzione",
+      "fl_idoneita_fisica": "di avere idoneità fisica all'impiego",
 
 
       "fl_dichiarazione_1": "Dichiarazione 1",

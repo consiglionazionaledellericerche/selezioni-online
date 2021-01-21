@@ -50,6 +50,9 @@ export class Helpers {
     if (date === null) {
       return null;
     }
+    if (String(date) === 'Invalid Date') {
+      return '';
+    }
     return new DatePipe('en-US').transform(date,"yyyy-MM-dd");
   }
 
