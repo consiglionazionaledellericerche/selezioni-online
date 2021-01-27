@@ -23,6 +23,9 @@ import { JcononAspectDecadutoAltroImpiegoComponent } from '../../dynamic/aspect/
 import { JcononAspectDestituitoAltroImpiegoComponent } from '../../dynamic/aspect/destituito-altro-impiego.component';
 import { JcononAspectServizioCNRComponent } from '../../dynamic/aspect/servizio-cnr.component';
 import { JcononAspectServizioAltreAmministrazioniComponent } from '../../dynamic/aspect/servizio-altre-amministrazioni.component';
+import { JcononAspectTitoloRiservaPostiComponent } from '../../dynamic/aspect/titolo-riserva-posti.component';
+import { JcononAspectDiplomaComponent } from '../../dynamic/aspect/diploma.component';
+import { JcononAspectLaureaComponent } from '../../dynamic/aspect/laurea.component';
 
 export class ObjectType {
     
@@ -174,6 +177,32 @@ export class ObjectType {
         label: 'label.jconon_application.fl_idoneita_fisica'
       },
       showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_titolo_riserva_posti' : {
+      model: Application,
+      showcomponent: JcononAspectTitoloRiservaPostiComponent
+    },
+    'P:jconon_application:aspect_diploma' : {
+      model: Application,
+      showcomponent: JcononAspectDiplomaComponent
+    },
+    'P:jconon_application:aspect_diploma_not_required' : {
+      model: Application,
+      params: {
+        isFlRequired: false
+      },
+      showcomponent: JcononAspectDiplomaComponent
+    },
+    'P:jconon_application:aspect_laurea' : {
+      model: Application,
+      showcomponent: JcononAspectLaureaComponent
+    },
+    'P:jconon_application:aspect_laurea_not_required' : {
+      model: Application,
+      params: {
+        isFlRequired: false
+      },
+      showcomponent: JcononAspectLaureaComponent
     },
 
 

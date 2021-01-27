@@ -143,6 +143,41 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:cause_risoluzione_servizio_altre_amministrazioni')
   public cause_risoluzione_servizio_altre_amministrazioni: string = undefined;
 
+  @JsonProperty('jconon_application:fl_titolo_riserva_posti')
+  public fl_titolo_riserva_posti: boolean = undefined;
+  @JsonProperty('jconon_application:motivazione_riserva_posti')
+  public motivazione_riserva_posti: string = undefined;
+
+  @JsonProperty('jconon_application:fl_diploma')
+  public fl_diploma: boolean = undefined;
+  @JsonProperty('jconon_application:tipo_diploma')
+  public tipo_diploma: string = undefined;
+  @JsonProperty('jconon_application:data_diploma', ISODateConverter, true)
+  public data_diploma: Date = undefined;
+  @JsonProperty('jconon_application:punteggio_diploma')
+  public punteggio_diploma: string = undefined;
+  @JsonProperty('jconon_application:istituto_diploma')
+  public istituto_diploma: string = undefined;
+
+  @JsonProperty('jconon_application:fl_laurea')
+  public fl_laurea: boolean = undefined;
+  @JsonProperty('jconon_application:tipo_laurea')
+  public tipo_laurea: string = undefined;
+  @JsonProperty('jconon_application:data_laurea', ISODateConverter, true)
+  public data_laurea: Date = undefined;
+  @JsonProperty('jconon_application:punteggio_laurea')
+  public punteggio_laurea: string = undefined;
+  @JsonProperty('jconon_application:istituto_laurea')
+  public istituto_laurea: string = undefined;
+  @JsonProperty('jconon_application:fl_laurea_equipollente')
+  public fl_laurea_equipollente: boolean = undefined;
+
+
+
+
+
+
+
 
   @JsonProperty('jconon_application:fl_dichiarazione_1')
   public fl_dichiarazione_1: boolean;

@@ -1,17 +1,20 @@
-<carousel [interval]="-1">
-    <ng-container *ngFor="let faqType of faqs | keyvalue">
-        <slide>
-            <div>
-                <div class="bg-primary text-white pr-1 pl-1 pb-3 pt-3">
-                    <h1 class="text-center main-title pt-3">{{faqType.key | translate}}</h1>
-                </div>
-                <div *ngFor="let faq of faqType.value" class="lead pb-3 pt-3 text-dark">
-                    <div>
-                        <h4 class="text-center">{{faq.question}}</h4>
-                        <div class="p-3" innerHtml={{faq.answer}}></div>
+<div class="mx-n3 mt-n3">
+    <carousel [interval]="-1" >
+        <ng-container *ngFor="let faqType of faqs | keyvalue">
+            <slide>
+                <div>
+                    <div class="bg-primary text-white pr-1 pl-1 pb-3 pt-3">
+                        <h1 class="text-center main-title pt-3">{{faqType.key | translate}}</h1>
+                    </div>
+                    <div *ngFor="let faq of faqType.value" class="lead pb-3 pt-3 text-dark">
+                        <div>
+                            <h4 class="text-center">{{faq.question}}</h4>
+                            <div class="p-3" innerHtml={{faq.answer}}></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </slide>
-    </ng-container>        
-</carousel>
+            </slide>
+        </ng-container>        
+    </carousel>
+</div>
+

@@ -29,6 +29,9 @@ import { JcononAspectDecadutoAltroImpiegoComponent } from './aspect/decaduto-alt
 import { JcononAspectDestituitoAltroImpiegoComponent } from './aspect/destituito-altro-impiego.component';
 import { JcononAspectServizioCNRComponent } from './aspect/servizio-cnr.component';
 import { JcononAspectServizioAltreAmministrazioniComponent } from './aspect/servizio-altre-amministrazioni.component';
+import { JcononAspectTitoloRiservaPostiComponent } from './aspect/titolo-riserva-posti.component';
+import { JcononAspectDiplomaComponent } from './aspect/diploma.component';
+import { JcononAspectLaureaComponent } from './aspect/laurea.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -50,6 +53,9 @@ import { JcononAspectServizioAltreAmministrazioniComponent } from './aspect/serv
         JcononAspectDestituitoAltroImpiegoComponent,
         JcononAspectServizioCNRComponent,
         JcononAspectServizioAltreAmministrazioniComponent,
+        JcononAspectTitoloRiservaPostiComponent,
+        JcononAspectDiplomaComponent,
+        JcononAspectLaureaComponent,
 
 
         JcononAttachmentShowComponent,
@@ -86,6 +92,10 @@ import { JcononAspectServizioAltreAmministrazioniComponent } from './aspect/serv
         JcononAspectDestituitoAltroImpiegoComponent,
         JcononAspectServizioCNRComponent,
         JcononAspectServizioAltreAmministrazioniComponent,
+        JcononAspectTitoloRiservaPostiComponent,
+        JcononAspectDiplomaComponent,
+        JcononAspectLaureaComponent,
+        
 
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent

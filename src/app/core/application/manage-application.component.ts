@@ -13,6 +13,7 @@ import { CallService } from '../call/call.service';
 import { Call } from '../call/call.model';
 import { ApiMessageService, MessageType } from '../api-message.service';
 import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component';
+import { Helpers } from '../../common/helpers/helpers';
 
 @Component({
   selector: 'manage-application',
@@ -43,7 +44,7 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
         </h5>
         <h5 class="text-center" *ngIf="call.objectTypeId == 'F:jconon_call_employees:folder'">
           <span>{{'user.matricola_value' | translate:{value: user.matricola} }}</span>
-          <span class="pl-1">{{'user.email_value' | translate:{value: user.email} }}</span>
+          <span class="pl-1">{{'user.email_value' | translate:{value: entity.email_comunicazioni} }}</span>
         </h5>
         <h5 class="text-center" *ngIf="call.objectTypeId != 'F:jconon_call_mobility_open:folder'">
           {{'application.richiesta.partecipazione'| translate}}
@@ -144,7 +145,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         });
         this.callService.loadLabels(call.objectId).subscribe((labels) => {
           if (labels) {
-            this.translateService.setTranslation('it', labels, true);
+            this.translateService.setTranslation('it', Helpers.convertProperties(labels), true);
           }
         });
       });  

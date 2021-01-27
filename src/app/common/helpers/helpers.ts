@@ -232,6 +232,21 @@ export class Helpers {
     };
   }
 
+  static convertProperties(obj: any) : any {
+    // iterate over the property names
+    Object.keys(obj).forEach(function(k) {
+      var prop = k.split('.');
+      var last = prop.pop();
+      if (prop.length > 0) {
+        prop.reduce(function(o, key) {
+          return o[key] = o[key] || {};
+        }, obj)[last] = obj[k];
+        delete obj[k];  
+      }
+    });
+    console.log(obj);
+    return obj;    
+  }
   /**
    * Metodo per eseguire in modo sequenziale un numero arbitrario di chiamate async.
    * @param {number[]} array contiene gli input da fornire a fn
