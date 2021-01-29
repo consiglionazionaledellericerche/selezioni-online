@@ -407,6 +407,10 @@
       "fl_condizione_esclusione": "di non trovarsi nelle condizioni di esclusione previste dal bando",
       "area_scientifica": "Area Scientifica di competenza",
       "area_scientifica_placeholder": "Selezionare un'area Scientifica di competenza",
+      "settore_scientifico_tecnologico": "Settore Tecnologico di competenza",
+      "settore_scientifico_tecnologico_placeholder": "Selezionare un settore tecnologico di competenza",
+      "profilo": "Profilo",
+      "profilo_placeholder": "Selezionare il profilo",
       
 
 

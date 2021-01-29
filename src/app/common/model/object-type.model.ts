@@ -31,6 +31,8 @@ import { JcononAspectDiversmenteAbileComponent } from '../../dynamic/aspect/dive
 import { JcononAspectTempiAggiuntiviComponent } from '../../dynamic/aspect/tempi-aggiuntivi.component';
 import { JcononAspectAltreBorseStudioComponent } from '../../dynamic/aspect/altre-borse-studio.component';
 import { JcononAspectAreaScientificaComponent } from '../../dynamic/aspect/area-scientifica.component';
+import { JcononAspectSettoreScientificoTecnologicoComponent } from '../../dynamic/aspect/settore-scientifico-tecnologico.component';
+import { JcononAspectInquadramentoComponent } from '../../dynamic/aspect/inquadramento.component';
 
 export class ObjectType {
     
@@ -276,6 +278,29 @@ export class ObjectType {
       model: Application,
       showcomponent: JcononAspectAreaScientificaComponent
     },
+    'P:jconon_application:aspect_area_scientifica_not_required' : {
+      model: Application,
+      params: {
+        isRequired: false
+      },
+      showcomponent: JcononAspectAreaScientificaComponent
+    },
+    'P:jconon_application:aspect_settore_scientifico_tecnologico' : {
+      model: Application,
+      showcomponent: JcononAspectSettoreScientificoTecnologicoComponent
+    },
+    'P:jconon_application:aspect_settore_scientifico_tecnologico_not_required' : {
+      model: Application,
+      params: {
+        isRequired: false
+      },
+      showcomponent: JcononAspectSettoreScientificoTecnologicoComponent
+    },
+    'P:jconon_application:aspect_inquadramento' : {
+      model: Application,
+      showcomponent: JcononAspectInquadramentoComponent
+    },
+
 
 
 

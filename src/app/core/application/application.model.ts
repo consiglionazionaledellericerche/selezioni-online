@@ -215,7 +215,11 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:area_scientifica')
   public area_scientifica: string[] = undefined;
 
+  @JsonProperty('jconon_application:settore_scientifico_tecnologico')
+  public settore_scientifico_tecnologico: string[] = undefined;
 
+  @JsonProperty('jconon_application:profilo')
+  public profilo: string = undefined;
 
 
   @JsonProperty('jconon_application:fl_dichiarazione_1')

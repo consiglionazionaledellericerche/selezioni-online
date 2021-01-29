@@ -37,6 +37,8 @@ import { JcononAspectDiversmenteAbileComponent } from './aspect/diversamente-abi
 import { JcononAspectTempiAggiuntiviComponent } from './aspect/tempi-aggiuntivi.component';
 import { JcononAspectAltreBorseStudioComponent } from './aspect/altre-borse-studio.component';
 import { JcononAspectAreaScientificaComponent } from './aspect/area-scientifica.component';
+import { JcononAspectSettoreScientificoTecnologicoComponent } from './aspect/settore-scientifico-tecnologico.component';
+import { JcononAspectInquadramentoComponent } from './aspect/inquadramento.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -66,6 +68,8 @@ import { JcononAspectAreaScientificaComponent } from './aspect/area-scientifica.
         JcononAspectTempiAggiuntiviComponent,
         JcononAspectAltreBorseStudioComponent,
         JcononAspectAreaScientificaComponent,
+        JcononAspectSettoreScientificoTecnologicoComponent,
+        JcononAspectInquadramentoComponent,
 
 
         JcononAttachmentShowComponent,
@@ -110,6 +114,8 @@ import { JcononAspectAreaScientificaComponent } from './aspect/area-scientifica.
         JcononAspectTempiAggiuntiviComponent,
         JcononAspectAltreBorseStudioComponent,
         JcononAspectAreaScientificaComponent,
+        JcononAspectSettoreScientificoTecnologicoComponent,
+        JcononAspectInquadramentoComponent,
 
 
 
