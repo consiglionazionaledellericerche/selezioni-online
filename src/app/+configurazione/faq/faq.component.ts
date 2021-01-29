@@ -7,7 +7,7 @@ import {FAQService} from './faq.service';
     templateUrl: './faq.component.html',
     styles: [
         '.carousel-control {top: 50px;bottom: auto; width: 5%}',
-        '.carousel-indicators {top: 0;bottom: auto}'
+        '.carousel-indicators {top: 0;bottom: auto;}'
     ]
 })
 export class FAQComponent implements OnInit{

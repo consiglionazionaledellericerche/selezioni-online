@@ -10,7 +10,7 @@ import {Helpers} from '../../../common/helpers/helpers';
     <div class="mb-1 my-form-layout-row" [ngClass]="{ 'row': !inline}" >
       <div class="input-group" [ngClass]="contentClasses()">
         <div *ngIf="prepend || prependText" class="input-group-prepend" tooltip="{{ ttip | translate }}">
-          <div class="input-group-text">
+          <div class="input-group-text" [ngClass]="{ 'text-danger border-danger': isInvalid()}">
             <i *ngIf="prepend" class="fa fa-{{ prepend }}" aria-hidden="true"></i>
             {{ prependText }}
           </div>

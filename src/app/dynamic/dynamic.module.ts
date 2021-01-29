@@ -32,6 +32,11 @@ import { JcononAspectServizioAltreAmministrazioniComponent } from './aspect/serv
 import { JcononAspectTitoloRiservaPostiComponent } from './aspect/titolo-riserva-posti.component';
 import { JcononAspectDiplomaComponent } from './aspect/diploma.component';
 import { JcononAspectLaureaComponent } from './aspect/laurea.component';
+import { JcononAspectDottoratoComponent } from './aspect/dottorato.component';
+import { JcononAspectDiversmenteAbileComponent } from './aspect/diversamente-abile.component';
+import { JcononAspectTempiAggiuntiviComponent } from './aspect/tempi-aggiuntivi.component';
+import { JcononAspectAltreBorseStudioComponent } from './aspect/altre-borse-studio.component';
+import { JcononAspectAreaScientificaComponent } from './aspect/area-scientifica.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -56,6 +61,11 @@ import { JcononAspectLaureaComponent } from './aspect/laurea.component';
         JcononAspectTitoloRiservaPostiComponent,
         JcononAspectDiplomaComponent,
         JcononAspectLaureaComponent,
+        JcononAspectDottoratoComponent,
+        JcononAspectDiversmenteAbileComponent,
+        JcononAspectTempiAggiuntiviComponent,
+        JcononAspectAltreBorseStudioComponent,
+        JcononAspectAreaScientificaComponent,
 
 
         JcononAttachmentShowComponent,
@@ -95,7 +105,13 @@ import { JcononAspectLaureaComponent } from './aspect/laurea.component';
         JcononAspectTitoloRiservaPostiComponent,
         JcononAspectDiplomaComponent,
         JcononAspectLaureaComponent,
-        
+        JcononAspectDottoratoComponent,
+        JcononAspectDiversmenteAbileComponent,
+        JcononAspectTempiAggiuntiviComponent,
+        JcononAspectAltreBorseStudioComponent,
+        JcononAspectAreaScientificaComponent,
+
+
 
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent

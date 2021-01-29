@@ -27,6 +27,7 @@ import { DynamicComponent } from '../dynamic.component';
             <div *ngSwitchCase="false" class="form-group col-md-12">
               <app-control-textarea 
                 [showValidation]="true"
+                [focus]="true"
                 rows="5" 
                 [inline]="true" 
                 [label]="'label.jconon_application.motivazione_destituito_altro_impiego'| translate" 

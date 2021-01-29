@@ -20,6 +20,8 @@ import {BadRequestComponent} from './badrequest/badrequest.component';
 import {ConfigService} from './config.service';
 import {NavigationService} from './navigation.service';
 import {CacheService} from './cache.service';
+import {ObjectTypeService} from './object-type.service';
+
 import {AuthModule} from '../auth/auth.module';
 import {MenuService} from './header/menu.service';
 import {CallListComponent} from './call/call-list.component';
@@ -113,6 +115,7 @@ import {HttpClient} from '@angular/common/http';
     NavigationService,
     MenuService,
     CacheService,
+    ObjectTypeService,
     CallService,
     ApplicationService,
     ApplicationUserService,

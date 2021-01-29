@@ -27,6 +27,7 @@ import { DynamicComponent } from '../dynamic.component';
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-textarea 
                 [showValidation]="true"
+                [focus]="true"
                 rows="5" 
                 [inline]="true" 
                 [label]="'label.jconon_application.motivazione_riserva_posti'| translate" 

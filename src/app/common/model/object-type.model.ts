@@ -26,6 +26,11 @@ import { JcononAspectServizioAltreAmministrazioniComponent } from '../../dynamic
 import { JcononAspectTitoloRiservaPostiComponent } from '../../dynamic/aspect/titolo-riserva-posti.component';
 import { JcononAspectDiplomaComponent } from '../../dynamic/aspect/diploma.component';
 import { JcononAspectLaureaComponent } from '../../dynamic/aspect/laurea.component';
+import { JcononAspectDottoratoComponent } from '../../dynamic/aspect/dottorato.component';
+import { JcononAspectDiversmenteAbileComponent } from '../../dynamic/aspect/diversamente-abile.component';
+import { JcononAspectTempiAggiuntiviComponent } from '../../dynamic/aspect/tempi-aggiuntivi.component';
+import { JcononAspectAltreBorseStudioComponent } from '../../dynamic/aspect/altre-borse-studio.component';
+import { JcononAspectAreaScientificaComponent } from '../../dynamic/aspect/area-scientifica.component';
 
 export class ObjectType {
     
@@ -203,6 +208,73 @@ export class ObjectType {
         isFlRequired: false
       },
       showcomponent: JcononAspectLaureaComponent
+    },
+    'P:jconon_application:aspect_dottorato' : {
+      model: Application,
+      showcomponent: JcononAspectDottoratoComponent
+    },
+    'P:jconon_application:aspect_dottorato_not_required' : {
+      model: Application,
+      params: {
+        isFlRequired: false
+      },
+      showcomponent: JcononAspectDottoratoComponent
+    },
+    'P:jconon_application:aspect_diversamente_abile' : {
+      model: Application,
+      showcomponent: JcononAspectDiversmenteAbileComponent
+    },
+    'P:jconon_application:aspect_tempi_aggiuntivi' : {
+      model: Application,
+      showcomponent: JcononAspectTempiAggiuntiviComponent
+    },
+    'P:jconon_application:aspect_conoscenza_lingua_italiana' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_conoscenza_lingua_italiana',
+        name: 'fl_conoscenza_lingua_italiana',
+        required: true,
+        label: 'label.jconon_application.fl_conoscenza_lingua_italiana'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_conoscenza_inglese_informatica' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_conoscenza_inglese_informatica',
+        name: 'fl_conoscenza_inglese_informatica',
+        required: true,
+        label: 'label.jconon_application.fl_conoscenza_inglese_informatica'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_esperienza' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_esperienza',
+        name: 'fl_esperienza',
+        required: true,
+        label: 'label.jconon_application.fl_esperienza'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_altre_borse_studio' : {
+      model: Application,
+      showcomponent: JcononAspectAltreBorseStudioComponent
+    },
+    'P:jconon_application:aspect_condizione_esclusione' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_condizione_esclusione',
+        name: 'fl_condizione_esclusione',
+        required: true,
+        label: 'label.jconon_application.fl_condizione_esclusione'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_area_scientifica' : {
+      model: Application,
+      showcomponent: JcononAspectAreaScientificaComponent
     },
 
 

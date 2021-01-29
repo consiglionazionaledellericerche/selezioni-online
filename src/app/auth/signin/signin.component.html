@@ -31,8 +31,8 @@
             <div class="form-group">
               <app-control-text #passwordfield type="password" [prepend]="'key'" [label]="'signin.password'| translate" [inline]="true" formControlName="password"></app-control-text>
               <span class="password-icon" aria-hidden="true">
-                <svg *ngIf="passwordfield.type=='password'" (click)="passwordfield.type='text'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-visible"></use></svg>
-                <svg *ngIf="passwordfield.type=='text'"     (click)="passwordfield.type='password'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-invisible"></use></svg>
+                <svg *ngIf="passwordfield.type=='password'" (click)="passwordfield.type='text'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-invisible"></use></svg>
+                <svg *ngIf="passwordfield.type=='text'"     (click)="passwordfield.type='password'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-visible"></use></svg>
               </span>
               <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                 <div *ngIf="f.password.errors.required">{{ 'signin.message.required.password' | translate }}</div>

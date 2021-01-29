@@ -388,6 +388,37 @@
       "punteggio_laurea": "Punteggio",
       "istituto_laurea": "Università",
       "fl_laurea_equipollente": "Equipollente e/o Equivalente",
+      "fl_dottorato": "di aver conseguito il seguente Dottorato di Ricerca (o titolo estero equivalente)",
+      "tipo_dottorato": "Tipologia",
+      "data_dottorato": "Data conseguimento",
+      "istituto_dottorato": "Università",
+      "fl_diversamente_abile": "di appartenere ad una delle categorie di cui alla legge 68/1999",
+      "fl_diversamente_abile_subtitle": "di aver necessità, in sede d'esame, in relazione allo specifico handicap di:",
+      "tempi_aggiuntivi_diversamente_abile": "Tempi aggiuntivi",
+      "ausili_diversamente_abile": "Ausili necessari",
+      "fl_tempi_aggiuntivi": "Necessità di Tempi aggiuntivi o Ausili",
+      "tempi_aggiuntivi": "Tempi Aggiuntivi",
+      "ausili": "Ausili necessari",
+      "fl_conoscenza_lingua_italiana": "di avere adeguata conoscenza della lingua italiana",
+      "fl_conoscenza_inglese_informatica": "di essere a conoscenza della lingua Inglese e dell'informatica di base",
+      "fl_esperienza": "di aver acquisito le conoscenze e/o competenze e/o esperienze e/o capacità richieste dal bando",
+      "fl_altre_borse_studio": "di non aver usufruito di altre borse di studio",
+      "descrizione_altre_borse_studio": "Descrizione altre borse di studio",
+      "fl_condizione_esclusione": "di non trovarsi nelle condizioni di esclusione previste dal bando",
+      "area_scientifica": "Area Scientifica di competenza",
+      "area_scientifica_placeholder": "Selezionare un'area Scientifica di competenza",
+      
+
+
+
+
+
+
+
+
+
+
+
 
 
       "fl_residenza_generica": "Residenza generica",

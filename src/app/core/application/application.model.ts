@@ -172,9 +172,48 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:fl_laurea_equipollente')
   public fl_laurea_equipollente: boolean = undefined;
 
+  @JsonProperty('jconon_application:fl_dottorato')
+  public fl_dottorato: boolean = undefined;
+  @JsonProperty('jconon_application:tipo_dottorato')
+  public tipo_dottorato: string = undefined;
+  @JsonProperty('jconon_application:data_dottorato', ISODateConverter, true)
+  public data_dottorato: Date = undefined;
+  @JsonProperty('jconon_application:istituto_dottorato')
+  public istituto_dottorato: string = undefined;
 
+  @JsonProperty('jconon_application:fl_diversamente_abile')
+  public fl_diversamente_abile: boolean = undefined;
+  @JsonProperty('jconon_application:tempi_aggiuntivi_diversamente_abile')
+  public tempi_aggiuntivi_diversamente_abile: string = undefined;
+  @JsonProperty('jconon_application:ausili_diversamente_abile')
+  public ausili_diversamente_abile: string = undefined;
 
+  @JsonProperty('jconon_application:fl_tempi_aggiuntivi')
+  public fl_tempi_aggiuntivi: boolean = undefined;
+  @JsonProperty('jconon_application:tempi_aggiuntivi')
+  public tempi_aggiuntivi: string = undefined;
+  @JsonProperty('jconon_application:ausili')
+  public ausili: string = undefined;
 
+  @JsonProperty('jconon_application:fl_conoscenza_lingua_italiana')
+  public fl_conoscenza_lingua_italiana: boolean = undefined;
+
+  @JsonProperty('jconon_application:fl_conoscenza_inglese_informatica')
+  public fl_conoscenza_inglese_informatica: boolean = undefined;
+
+  @JsonProperty('jconon_application:fl_esperienza')
+  public fl_esperienza: boolean = undefined;
+
+  @JsonProperty('jconon_application:fl_altre_borse_studio')
+  public fl_altre_borse_studio: boolean = undefined;
+  @JsonProperty('jconon_application:descrizione_altre_borse_studio')
+  public descrizione_altre_borse_studio: string = undefined;
+
+  @JsonProperty('jconon_application:fl_condizione_esclusione')
+  public fl_condizione_esclusione: boolean = undefined;
+
+  @JsonProperty('jconon_application:area_scientifica')
+  public area_scientifica: string[] = undefined;
 
 
 

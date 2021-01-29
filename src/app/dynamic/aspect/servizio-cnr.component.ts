@@ -27,6 +27,7 @@ import { DynamicComponent } from '../dynamic.component';
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"
+                [focus]="true"
                 [inline]="true" 
                 [label]="'label.jconon_application.struttura_cnr'| translate" 
                 formControlName="jconon_application:struttura_cnr">

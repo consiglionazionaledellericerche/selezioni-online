@@ -82,7 +82,10 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
     control.updateValueAndValidity();
 
     if (this.focus) {
-      this.input.nativeElement.focus();
+      setTimeout(() => {
+        this.input.nativeElement.focus();
+        this.input.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 0);
     }
     if (this.input.nativeElement.value || this.disabled) {
       this.labelactive = true;

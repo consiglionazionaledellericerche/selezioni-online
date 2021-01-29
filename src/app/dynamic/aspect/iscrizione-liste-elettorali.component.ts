@@ -27,6 +27,7 @@ import { DynamicComponent } from '../dynamic.component';
             <div [hidden]="!isFlIscrittoListeElettorali()" class="form-group col-md-9">
               <app-control-select-model
                 [inline]="true"
+                [focus]="true"
                 [noLabel]="true"
                 [items]="comuni"
                 (onChangeEvent)="onChangeComune($event)"
