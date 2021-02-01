@@ -73,8 +73,9 @@ import { Helpers } from '../../common/helpers/helpers';
                 <li [ngClass]="{'done': number <= affixCompleted}" 
                     class="btn"
                     *ngFor="let number of affix" 
-                    (click)="affixCompleted = number;scroll(cardApplication);" 
-                    tooltip="{{'affix.' + call.elenco_sezioni_domanda[number] + '.title' | translate}}">
+                    (click)="affixCompleted = number;scroll(cardApplication);"
+                    [popover]="'affix.' + call.elenco_sezioni_domanda[number] + '.title' | translate"
+                    triggers="mouseenter:mouseleave">
                 </li>
               </ul>
               <a [ngClass]="{'disabled': affixCompleted == affix.length - 1}" 

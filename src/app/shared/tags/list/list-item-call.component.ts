@@ -17,7 +17,8 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
               <use xlink:href="/assets/vendor/sprite.svg#it-card"></use>
             </svg>
             <a href="javascript:window.scrollTo(0,0);" 
-              tooltip="{{getMessageType(item) | translate }} {{ item.objectTypeId | translate }}" 
+              popover="{{getMessageType(item) | translate }} {{ item.objectTypeId | translate }}" 
+              triggers="mouseenter:mouseleave"
               class="font-weight-bold text-truncate text-primary pl-md-1" 
               (click)="changeType(item)">
               {{ item.objectTypeId | translate }}

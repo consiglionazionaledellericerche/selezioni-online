@@ -29,12 +29,19 @@ import {TranslateService} from '@ngx-translate/core';
             <app-show-text [label]="'call.sede'" [value]="item.sede" ></app-show-text>
           </div>  
           <div class="col-sm-12">
-              <app-show-text-modal 
+              <ng-template #popTemplate>
+                <h5>
+                  <svg class="icon icon-secondary"><use xlink:href="/assets/vendor/sprite.svg#it-info-circle"></use></svg> Info
+                </h5>
+                <hr>
+                <div [innerHtml]="translateService.currentLang == 'it'? item.descrizione: item.descrizione_en"></div>
+              </ng-template>
+              <app-show-text 
                 [label]="'call.codice'" 
                 [value]="item.codice" 
-                [modal_title]="'Info'" 
-                [modal_text]="translateService.currentLang == 'it'? item.descrizione: item.descrizione_en">
-              </app-show-text-modal>
+                [popover]="popTemplate"
+                triggers="mouseenter:mouseleave">
+              </app-show-text>
           </div>  
           <div class="col-sm-12">    
               <app-show-text [label]="'call.numero_gu'" [value]="item.numero_gu" [strong]="false"></app-show-text>
