@@ -23,9 +23,11 @@ import { DynamicComponent } from '../dynamic.component';
                 </label>
             </div>
           </div>
+          <div class="form-row w-100 py-1">
+            <label *ngSwitchCase="true" class="px-2">{{'label.jconon_application.fl_diversamente_abile_subtitle'| translate}}</label>
+          </div>
           <div class="form-row w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
-              <h5 class="pb-3">{{'label.jconon_application.fl_diversamente_abile_subtitle'| translate}}</h5>
               <app-control-text 
                 [showValidation]="true"
                 [focus]="true"

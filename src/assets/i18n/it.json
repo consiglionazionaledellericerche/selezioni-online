@@ -80,6 +80,7 @@
       "emailalredyexist": "E-Mail già presente!",
       "compare": "Il valore del campo non corrisponde!",
       "hasNumber": "Deve contenere almeno un numero!",
+      "onlyNumber": "Può contenere solo numeri!",
       "hasOnlyNumber": "Deve contenere solo numeri!",
       "hasCapitalCase": "Deve contenere almeno una lettera Maiuscola!",
       "hasSmallCase": "Deve contenere almeno una lettera Minuscola!",
@@ -411,6 +412,16 @@
       "settore_scientifico_tecnologico_placeholder": "Selezionare un settore tecnologico di competenza",
       "profilo": "Profilo",
       "profilo_placeholder": "Selezionare il profilo",
+      "struttura_appartenenza": "Struttura di appartenenza",
+      "h_index_fonte": "H-Index Fonte",
+      "h_index_fonte_placeholder": "Selezionare la fonte",
+      "h_index_valore": "Valore",
+      "fl_servizio_altra_attivita": "di svolgere altra attività",
+      "servizio_altra_attivita_etichetta": "(Solo per coloro che non sono in servizio presso il CNR e non sono dipendenti di altra Pubblica Amministrazione)",
+      "ruolo_altra_attivita": "Ruolo",
+      "sede_altra_attivita": "Sede",
+      "fl_conoscenza_informatica_avanzata": "di essere a conoscenza dell'informatica a livello avanzato",
+      "fl_possesso_cittadinanza_italiana": "di possedere la cittadinanza italiana",
       
 
 

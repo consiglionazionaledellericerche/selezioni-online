@@ -33,6 +33,9 @@ import { JcononAspectAltreBorseStudioComponent } from '../../dynamic/aspect/altr
 import { JcononAspectAreaScientificaComponent } from '../../dynamic/aspect/area-scientifica.component';
 import { JcononAspectSettoreScientificoTecnologicoComponent } from '../../dynamic/aspect/settore-scientifico-tecnologico.component';
 import { JcononAspectInquadramentoComponent } from '../../dynamic/aspect/inquadramento.component';
+import { JcononAspectStrutturaAppartenenzaComponent } from '../../dynamic/aspect/struttura-appartenenza.component';
+import { JcononAspectHIndexComponent } from '../../dynamic/aspect/h-index.component';
+import { JcononAspectServizioAltraAttivitaComponent } from '../../dynamic/aspect/servizio-altra-attivita.component';
 
 export class ObjectType {
     
@@ -300,6 +303,39 @@ export class ObjectType {
       model: Application,
       showcomponent: JcononAspectInquadramentoComponent
     },
+    'P:jconon_application:aspect_struttura_appartenenza' : {
+      model: Application,
+      showcomponent: JcononAspectStrutturaAppartenenzaComponent
+    },
+    'P:jconon_application:aspect_h_index' : {
+      model: Application,
+      showcomponent: JcononAspectHIndexComponent
+    },
+    'P:jconon_application:aspect_servizio_altra_attivita' : {
+      model: Application,
+      showcomponent: JcononAspectServizioAltraAttivitaComponent
+    },
+    'P:jconon_application:aspect_conoscenza_informatica_avanzata' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_conoscenza_informatica_avanzata',
+        name: 'fl_conoscenza_informatica_avanzata',
+        required: true,
+        label: 'label.jconon_application.fl_conoscenza_informatica_avanzata'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_possesso_cittadinanza_italiana' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_possesso_cittadinanza_italiana',
+        name: 'fl_possesso_cittadinanza_italiana',
+        required: true,
+        label: 'label.jconon_application.fl_possesso_cittadinanza_italiana'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+
 
 
 

@@ -39,6 +39,9 @@ import { JcononAspectAltreBorseStudioComponent } from './aspect/altre-borse-stud
 import { JcononAspectAreaScientificaComponent } from './aspect/area-scientifica.component';
 import { JcononAspectSettoreScientificoTecnologicoComponent } from './aspect/settore-scientifico-tecnologico.component';
 import { JcononAspectInquadramentoComponent } from './aspect/inquadramento.component';
+import { JcononAspectStrutturaAppartenenzaComponent } from './aspect/struttura-appartenenza.component';
+import { JcononAspectHIndexComponent } from './aspect/h-index.component';
+import { JcononAspectServizioAltraAttivitaComponent } from './aspect/servizio-altra-attivita.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -70,6 +73,9 @@ import { JcononAspectInquadramentoComponent } from './aspect/inquadramento.compo
         JcononAspectAreaScientificaComponent,
         JcononAspectSettoreScientificoTecnologicoComponent,
         JcononAspectInquadramentoComponent,
+        JcononAspectStrutturaAppartenenzaComponent,
+        JcononAspectHIndexComponent,
+        JcononAspectServizioAltraAttivitaComponent,
 
 
         JcononAttachmentShowComponent,
@@ -116,6 +122,9 @@ import { JcononAspectInquadramentoComponent } from './aspect/inquadramento.compo
         JcononAspectAreaScientificaComponent,
         JcononAspectSettoreScientificoTecnologicoComponent,
         JcononAspectInquadramentoComponent,
+        JcononAspectStrutturaAppartenenzaComponent,
+        JcononAspectHIndexComponent,
+        JcononAspectServizioAltraAttivitaComponent,
 
 
 

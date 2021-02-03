@@ -224,6 +224,31 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:profilo')
   public profilo: string = undefined;
 
+  @JsonProperty('jconon_application:struttura_appartenenza')
+  public struttura_appartenenza: string = undefined;
+  
+  @JsonProperty('jconon_application:h_index_fonte')
+  public h_index_fonte: string = undefined;
+  @JsonProperty('jconon_application:h_index_valore')
+  public h_index_valore: number = undefined;
+
+  @JsonProperty('jconon_application:fl_servizio_altra_attivita')
+  public fl_servizio_altra_attivita: boolean = undefined;
+  @JsonProperty('jconon_application:ruolo_altra_attivita')
+  public ruolo_altra_attivita: string = undefined;
+  @JsonProperty('jconon_application:sede_altra_attivita')
+  public sede_altra_attivita: string = undefined;
+
+  @JsonProperty('jconon_application:fl_conoscenza_informatica_avanzata')
+  public fl_conoscenza_informatica_avanzata: boolean = undefined;
+
+  @JsonProperty('jconon_application:fl_possesso_cittadinanza_italiana')
+  public fl_possesso_cittadinanza_italiana: boolean = undefined;
+
+
+
+
+
 
   @JsonProperty('jconon_application:fl_dichiarazione_1')
   public fl_dichiarazione_1: boolean;

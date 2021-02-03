@@ -30,7 +30,7 @@ import {TranslateService} from '@ngx-translate/core';
           </div>  
           <div class="col-sm-12">
               <ng-template #popTemplate>
-                <h5>
+                <h5 class="font-weight-semibold">
                   <svg class="icon icon-secondary"><use xlink:href="/assets/vendor/sprite.svg#it-info-circle"></use></svg> Info
                 </h5>
                 <hr>
@@ -38,10 +38,11 @@ import {TranslateService} from '@ngx-translate/core';
               </ng-template>
               <app-show-text 
                 [label]="'call.codice'" 
-                [value]="item.codice" 
-                [popover]="popTemplate"
-                triggers="mouseenter:mouseleave">
+                [value]="item.codice">
               </app-show-text>
+              <a class="btn btn-sm btn-link p-0 mb-3 ml-n1" [popover]="popTemplate" [outsideClick]="true">
+                <svg class="icon icon-xs icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-info-circle"></use></svg>
+              </a>
           </div>  
           <div class="col-sm-12">    
               <app-show-text [label]="'call.numero_gu'" [value]="item.numero_gu" [strong]="false"></app-show-text>

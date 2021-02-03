@@ -18,7 +18,6 @@ import { DynamicComponent } from '../dynamic.component';
                   [strings]="choice"
                   [showValidation]="true"
                   [allowClear]="true"
-                  [showValidation]="true"
                   [placeholder]="'label.jconon_application.area_scientifica_placeholder'| translate"
                   formControlName="jconon_application:area_scientifica">
                 </app-control-select-model>
