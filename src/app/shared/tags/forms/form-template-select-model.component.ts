@@ -55,22 +55,13 @@ declare var $: any;   // not required
           </select>
 
         <div *ngIf="showList()" class="col-12 p-0 mt-0">
-            <ul class="list-group">
-              <li *ngFor="let s of showListItems()" class="list-group-item pt-1 pb-1 pr-1">
-                <div class="d-flex">
-                  <div *ngIf="template" [innerHtml]=template(s)></div>
-                  <div *ngIf="!template">
-                    {{ s.getLabel() }}
-                  </div>
-                  <div class="ml-auto">
-                    <button type="button" class="btn btn-outline-secondary btn-sm pt-0 pb-0 pl-1 pr-1"
-                            (click)="unselect(s)">
-                      <i class="fa fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-              </li>
-            </ul>
+          <div class="chip chip-primary chip-lg" *ngFor="let s of showListItems()">
+            <span class="chip-label">{{ s }}</span>
+            <button (click)="unselect(s)">
+              <svg class="icon"><use xlink:href="/assets/vendor/sprite.svg#it-close"></use></svg>
+              <span class="sr-only">Elimina</span>
+            </button>
+          </div>
         </div>
 
     </app-form-layout>
@@ -290,14 +281,25 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
 
     // same value prevent change detection
     if (this.selected.length > 0) {
-      const values = this.selected.filter( item =>  item.getObjectId() === +data.id);
+      var values;
+      if (this.items) {
+        values = this.selected.filter( item =>  item.getObjectId() === +data.id);
+      } else if (this.strings) {
+        values = this.selected.filter( item =>  {
+          return item == data.id;
+        });      
+      }
       if (values.length > 0) {
         return;
       }
     }
 
     // update value
-    this.selected.push(this.items.filter((item) => item.getObjectId() === data.id)[0]);
+    if (this.items) {
+      this.selected.push(this.items.filter((item) => item.getObjectId() === data.id)[0]);
+    } else if (this.strings) {
+      this.selected.push(this.strings.filter((item) => item === data.id)[0]);
+    }
 
     this.completeOnChange();
   }

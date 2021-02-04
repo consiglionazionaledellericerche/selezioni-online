@@ -49,15 +49,8 @@ import { DynamicComponent } from '../dynamic.component';
             <label for="comune_residenza" class="active">{{'application.comune_residenza'| translate}}</label>
           </div>
           <div [hidden]="isForeign()" class="form-group col-md-1">
-            <app-control-text 
-              *ngIf="!isForeign()" 
-              [disabled]="true" 
-              [showValidation]="false" 
-              type="text" 
-              [inline]="true" 
-              [label]="'application.provincia_residenza'| translate" 
-              formControlName="jconon_application:provincia_residenza">
-            </app-control-text>
+            <label class="form-label active">{{'application.provincia_residenza' | translate}}</label>
+            <input class="form-control" id="jconon_application:provincia_residenza" type="text" formControlName="jconon_application:provincia_residenza" />
           </div>
           <div class="form-group col-md-3">
             <app-control-text 
@@ -113,7 +106,7 @@ export class JcononAffixResidenzaComponent extends DynamicComponent {
             Validators.required
         )
       );
-      this.form.addControl('jconon_application:provincia_residenza', new FormControl(this.data.provincia_residenza));
+      this.form.addControl('jconon_application:provincia_residenza', new FormControl({value:this.data.provincia_residenza, disabled:true}));
       this.form.addControl('jconon_application:cap_residenza', new FormControl(
           this.data.cap_residenza,
           [

@@ -245,6 +245,51 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:fl_possesso_cittadinanza_italiana')
   public fl_possesso_cittadinanza_italiana: boolean = undefined;
 
+  @JsonProperty('jconon_application:afl_cittadinanza_italiana_lista')
+  public afl_cittadinanza_italiana_lista: boolean = undefined;
+  @JsonProperty('jconon_application:possesso_cittadinanza')
+  public possesso_cittadinanza: string = undefined;
+  @JsonProperty('jconon_application:cittadinanza_stato_estero')
+  public cittadinanza_stato_estero: string = undefined;
+
+  @JsonProperty('jconon_application:fl_categorie_riservatarie_art1')
+  public fl_categorie_riservatarie_art1: boolean = undefined;
+  @JsonProperty('jconon_application:categorie_riservatarie_percentuale')
+  public categorie_riservatarie_percentuale: number = undefined;
+
+  @JsonProperty('jconon_application:fl_categorie_riservatarie_art18')
+  public fl_categorie_riservatarie_art18: boolean = undefined;
+  @JsonProperty('jconon_application:categorie_riservatarie_codice')
+  public categorie_riservatarie_codice: string = undefined;
+
+  @JsonProperty('jconon_application:fl_lista_disoccupazione_art1')
+  public fl_lista_disoccupazione_art1: boolean = undefined;
+
+  @JsonProperty('jconon_application:fl_lista_disoccupazione_art18')
+  public fl_lista_disoccupazione_art18: boolean = undefined;
+
+  @JsonProperty('jconon_application:fl_patente_guida')
+  public fl_patente_guida: boolean = undefined;
+  @JsonProperty('jconon_application:lista_patente_guida')
+  public lista_patente_guida: string = undefined;
+  
+  @JsonProperty('jconon_application:fl_atto_interruttivo_anzianita')
+  public fl_atto_interruttivo_anzianita: boolean = undefined;
+  @JsonProperty('jconon_application:provvedimenti_atto_interruttivo')
+  public provvedimenti_atto_interruttivo: string = undefined;
+
+  @JsonProperty('jconon_application:fl_titolo_preferenza_posti')
+  public fl_titolo_preferenza_posti: boolean = undefined;
+  @JsonProperty('jconon_application:motivazione_preferenza_posti')
+  public motivazione_preferenza_posti: string = undefined;
+
+  @JsonProperty('jconon_application:fl_conoscenza_lingue')
+  public fl_conoscenza_lingue: boolean = undefined;
+  @JsonProperty('jconon_application:elenco_lingue_conosciute')
+  public elenco_lingue_conosciute: string[] = undefined;
+
+
+
 
 
 

@@ -96,7 +96,8 @@
   "placeholder": {
     "select": {
       "country": "Seleziona paese...",
-      "place": "Seleziona comune..."
+      "place": "Seleziona comune...",
+      "generic": "Seleziona..."
     }
   },
   "button": {
@@ -422,8 +423,27 @@
       "sede_altra_attivita": "Sede",
       "fl_conoscenza_informatica_avanzata": "di essere a conoscenza dell'informatica a livello avanzato",
       "fl_possesso_cittadinanza_italiana": "di possedere la cittadinanza italiana",
+      "afl_cittadinanza_italiana_lista": "di essere in possesso della Cittadinanza Italiana",
+      "possesso_cittadinanza": "Possesso Cittadinanza",
+      "possesso_cittadinanza_placeholder": "@:placeholder.select.generic",
+      "cittadinanza_stato_estero": "Stato estero",
+      "cittadinanza_stato_estero_placeholder": "@:placeholder.select.country",
+      "fl_categorie_riservatarie_art1": "di appartenere ad una delle categorie riservatarie di cui all'articolo 1 della Legge 68/99",
+      "categorie_riservatarie_percentuale": "Con una percentuale di invalidità pari al",
+      "fl_categorie_riservatarie_art18":"di appartenere ad una delle categorie riservatarie di cui all'articolo 18 della Legge 68/99",
+      "categorie_riservatarie_codice": "Categoria",
+      "fl_lista_disoccupazione_art1": "di essere iscritto nelle liste di disoccupazione riservata agli appartenenti alle categorie di cui all'art. 1 della legge 68/99",
+      "fl_lista_disoccupazione_art18": "di essere iscritto nelle liste di disoccupazione riservata agli appartenenti alle categorie di cui all'art. 18 della legge 68/99",
+      "fl_patente_guida": "di essere in possesso della patente di guida",
+      "lista_patente_guida": "Categoria",
+      "lista_patente_guida_placeholder": "@:placeholder.select.generic",
+      "fl_atto_interruttivo_anzianita": "di aver usufruito di periodi di aspettativa per motivi familiari o di altro atto interruttivo del computo dell'anzianità di servizio",
+      "provvedimenti_atto_interruttivo": "Estremi dei provvedimenti e durata dei periodi stessi",
+      "fl_titolo_preferenza_posti": "di essere in possesso di titoli di preferenza da far valere a 'parità di valutazione', previsti dall'art.5 del DPR n.487/1994, e successive modificazioni ed integrazioni",
+      "motivazione_preferenza_posti": "Motivazione preferenza posti",
+      "fl_conoscenza_lingue": "di avere conoscenza delle seguenti lingue straniere tra quelle previste dal bando",
+      "elenco_lingue_conosciute_placeholder": "Seleziona lingue...",
       
-
 
 
 

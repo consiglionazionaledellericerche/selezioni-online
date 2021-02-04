@@ -36,6 +36,13 @@ import { JcononAspectInquadramentoComponent } from '../../dynamic/aspect/inquadr
 import { JcononAspectStrutturaAppartenenzaComponent } from '../../dynamic/aspect/struttura-appartenenza.component';
 import { JcononAspectHIndexComponent } from '../../dynamic/aspect/h-index.component';
 import { JcononAspectServizioAltraAttivitaComponent } from '../../dynamic/aspect/servizio-altra-attivita.component';
+import { JcononAspectPossessoCittadinanzaComponent } from '../../dynamic/aspect/possesso-cittadinanza.component';
+import { JcononAspectCategorieRiservatarieArt1Component } from '../../dynamic/aspect/categorie-riservatarie-art1.component';
+import { JcononAspectCategorieRiservatarieArt18Component } from '../../dynamic/aspect/categorie-riservatarie-art18.component';
+import { JcononAspectPatenteGuidaComponent } from '../../dynamic/aspect/patente-guida.component';
+import { JcononAspectAttoInterruttivoAnzianitaComponent } from '../../dynamic/aspect/atto-interruttivo-anzianita.component';
+import { JcononAspectTitoloPreferenzaPostiComponent } from '../../dynamic/aspect/titolo-preferenza-posti.component';
+import { JcononAspectConoscenzaLingueComponent } from '../../dynamic/aspect/conoscenza-lingue.component';
 
 export class ObjectType {
     
@@ -335,6 +342,55 @@ export class ObjectType {
       },
       showcomponent: JcononAspectsDichiarazioneComponent
     },
+    'P:jconon_application:aspect_possesso_cittadinanza' : {
+      model: Application,
+      showcomponent: JcononAspectPossessoCittadinanzaComponent
+    },
+    'P:jconon_application:aspect_categorie_riservatarie_art1' : {
+      model: Application,
+      showcomponent: JcononAspectCategorieRiservatarieArt1Component
+    },
+    'P:jconon_application:aspect_categorie_riservatarie_art18' : {
+      model: Application,
+      showcomponent: JcononAspectCategorieRiservatarieArt18Component
+    },
+    'P:jconon_application:aspect_lista_disoccupazione_art1' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_lista_disoccupazione_art1',
+        name: 'fl_lista_disoccupazione_art1',
+        required: true,
+        label: 'label.jconon_application.fl_lista_disoccupazione_art1'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_lista_disoccupazione_art18' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_lista_disoccupazione_art18',
+        name: 'fl_lista_disoccupazione_art18',
+        required: true,
+        label: 'label.jconon_application.fl_lista_disoccupazione_art18'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_patente_guida' : {
+      model: Application,
+      showcomponent: JcononAspectPatenteGuidaComponent
+    },
+    'P:jconon_application:aspect_atto_interruttivo_anzianita' : {
+      model: Application,
+      showcomponent: JcononAspectAttoInterruttivoAnzianitaComponent
+    },
+    'P:jconon_application:aspect_titolo_preferenza_posti' : {
+      model: Application,
+      showcomponent: JcononAspectTitoloPreferenzaPostiComponent
+    },
+    'P:jconon_application:aspect_conoscenza_lingue' : {
+      model: Application,
+      showcomponent: JcononAspectConoscenzaLingueComponent
+    },
+
 
 
 

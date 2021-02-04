@@ -28,7 +28,7 @@ export abstract class Select2AngularComponent extends FormCommonTag {
 
   @Input() baseBuilder;
 
-  @Input() multiple;
+  @Input() multiple = false;
 
   @Input() resultName: string = 'results';
   @Input() resultId: string = 'id';
@@ -261,4 +261,3 @@ export abstract class Select2AngularComponent extends FormCommonTag {
     };
   }
 }
-

@@ -73,9 +73,10 @@ import {ChildrenListComponent} from '../../core/children/children-list.component
 import {ChildrenService} from '../../core/children//children.service';
 
 // import ngx-translate and the http loader
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
+import { CustomTranslationCompiler } from '../../common/helpers/translation-compiler';
 
 @NgModule({
   declarations: [
@@ -162,7 +163,8 @@ import {HttpClient} from '@angular/common/http';
     ButtonsModule.forRoot(),
     PopoverModule.forRoot(),
     ColorPickerModule,
-    TranslateModule.forChild({
+    TranslateModule.forRoot({
+      compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
       loader: {
           provide: TranslateLoader,
           useFactory: CustomHttpLoaderFactory,

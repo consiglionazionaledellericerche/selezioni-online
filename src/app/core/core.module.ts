@@ -40,9 +40,10 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 // import ngx-translate and the http loader
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
+import { CustomTranslationCompiler } from '../common/helpers/translation-compiler';
 
 /**
  * Nel core module inserisco tutti i components necessari all'avvio dell'applicazione.
@@ -78,8 +79,9 @@ import {HttpClient} from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     ButtonsModule.forRoot(),
-    TranslateModule.forChild({
-      loader: {
+    TranslateModule.forRoot({
+      compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
+      loader: {        
           provide: TranslateLoader,
           useFactory: CustomHttpLoaderFactory,
           deps: [HttpClient]

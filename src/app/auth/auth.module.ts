@@ -22,9 +22,10 @@ import { ApplicationService } from '../core/application/application.service';
 import { ApplicationUserService } from '../core/application/application-user.service';
 
 // import ngx-translate and the http loader
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
+import { CustomTranslationCompiler } from '../common/helpers/translation-compiler';
 
 export enum ServiceReg {
   CONFIGURAZIONE = 'configurazione',
@@ -56,7 +57,8 @@ export enum ServiceReg {
     TooltipModule,
     PopoverModule,
     ButtonsModule.forRoot(),
-    TranslateModule.forChild({
+    TranslateModule.forRoot({
+      compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
       loader: {
           provide: TranslateLoader,
           useFactory: CustomHttpLoaderFactory,

@@ -14,9 +14,10 @@ import {AppRoutingModule} from './app-routing.module';
 import {GlobalErrorHandler} from './core/global-error-handler.service';
 
 // import ngx-translate and the http loader
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
+import { CustomTranslationCompiler } from './common/helpers/translation-compiler';
 
 @NgModule({
 
@@ -30,6 +31,7 @@ import {HttpClient} from '@angular/common/http';
     // ngx-translate and the loader module
     HttpClientModule,
     TranslateModule.forRoot({
+        compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
         loader: {
             provide: TranslateLoader,
             useFactory: CustomHttpLoaderFactory,

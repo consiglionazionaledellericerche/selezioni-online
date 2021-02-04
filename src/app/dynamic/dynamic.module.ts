@@ -18,9 +18,10 @@ import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from './attachme
 import {ButtonsModule} from 'ngx-bootstrap/buttons'
 
 // import ngx-translate and the http loader
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
+import { CustomTranslationCompiler } from '../common/helpers/translation-compiler';
 
 import { JcononAspectIscrizioneListeElettoraliComponent } from './aspect/iscrizione-liste-elettorali.component';
 import { JcononAspectGodimentoDirittiComponent } from './aspect/godimento-diritti.component';
@@ -42,6 +43,13 @@ import { JcononAspectInquadramentoComponent } from './aspect/inquadramento.compo
 import { JcononAspectStrutturaAppartenenzaComponent } from './aspect/struttura-appartenenza.component';
 import { JcononAspectHIndexComponent } from './aspect/h-index.component';
 import { JcononAspectServizioAltraAttivitaComponent } from './aspect/servizio-altra-attivita.component';
+import { JcononAspectPossessoCittadinanzaComponent } from './aspect/possesso-cittadinanza.component';
+import { JcononAspectCategorieRiservatarieArt1Component } from './aspect/categorie-riservatarie-art1.component';
+import { JcononAspectCategorieRiservatarieArt18Component } from './aspect/categorie-riservatarie-art18.component';
+import { JcononAspectPatenteGuidaComponent } from './aspect/patente-guida.component';
+import { JcononAspectAttoInterruttivoAnzianitaComponent } from './aspect/atto-interruttivo-anzianita.component';
+import { JcononAspectTitoloPreferenzaPostiComponent } from './aspect/titolo-preferenza-posti.component';
+import { JcononAspectConoscenzaLingueComponent } from './aspect/conoscenza-lingue.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -76,6 +84,13 @@ import { JcononAspectServizioAltraAttivitaComponent } from './aspect/servizio-al
         JcononAspectStrutturaAppartenenzaComponent,
         JcononAspectHIndexComponent,
         JcononAspectServizioAltraAttivitaComponent,
+        JcononAspectPossessoCittadinanzaComponent,
+        JcononAspectCategorieRiservatarieArt1Component,
+        JcononAspectCategorieRiservatarieArt18Component,
+        JcononAspectPatenteGuidaComponent,
+        JcononAspectAttoInterruttivoAnzianitaComponent,
+        JcononAspectTitoloPreferenzaPostiComponent,
+        JcononAspectConoscenzaLingueComponent,
 
 
         JcononAttachmentShowComponent,
@@ -88,7 +103,8 @@ import { JcononAspectServizioAltraAttivitaComponent } from './aspect/servizio-al
         SharedModule,
         TagsModule,
         ButtonsModule.forRoot(),
-        TranslateModule.forChild({
+        TranslateModule.forRoot({
+            compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
             loader: {
                 provide: TranslateLoader,
                 useFactory: CustomHttpLoaderFactory,
@@ -125,6 +141,13 @@ import { JcononAspectServizioAltraAttivitaComponent } from './aspect/servizio-al
         JcononAspectStrutturaAppartenenzaComponent,
         JcononAspectHIndexComponent,
         JcononAspectServizioAltraAttivitaComponent,
+        JcononAspectPossessoCittadinanzaComponent,
+        JcononAspectCategorieRiservatarieArt1Component,
+        JcononAspectCategorieRiservatarieArt18Component,
+        JcononAspectPatenteGuidaComponent,
+        JcononAspectAttoInterruttivoAnzianitaComponent,
+        JcononAspectTitoloPreferenzaPostiComponent,
+        JcononAspectConoscenzaLingueComponent,
 
 
 

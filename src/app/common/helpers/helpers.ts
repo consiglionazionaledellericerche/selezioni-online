@@ -244,7 +244,6 @@ export class Helpers {
         delete obj[k];  
       }
     });
-    console.log(obj);
     return obj;    
   }
   /**

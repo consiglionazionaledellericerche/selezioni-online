@@ -11,22 +11,12 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <app-control-text 
-              type="text" 
-              [disabled]="true" 
-              [inline]="true" 
-              [label]="'user.firstname'| translate"
-              formControlName="jconon_application:nome">
-            </app-control-text>
+            <label class="form-label active">{{'user.firstname' | translate}}</label>
+            <input class="form-control" id="jconon_application:nome" type="text" formControlName="jconon_application:nome" />
           </div>
           <div class="form-group col-md-6">
-            <app-control-text 
-              type="text" 
-              [disabled]="true" 
-              [inline]="true" 
-              [label]="'user.lastname'| translate" 
-              formControlName="jconon_application:cognome">
-            </app-control-text>
+            <label class="form-label active">{{'user.lastname' | translate}}</label>
+            <input class="form-control" id="jconon_application:cognome" type="text" formControlName="jconon_application:cognome" />
           </div>
         </div>
         <div class="form-row">
@@ -69,15 +59,8 @@ import { DynamicComponent } from '../dynamic.component';
             <label for="comune_nascita" class="active">{{'application.comune_nascita'| translate}}</label>
           </div>
           <div *ngIf="!isForeign()" class="form-group col-md-1">
-            <app-control-text 
-              *ngIf="!isForeign()" 
-              [disabled]="true" 
-              [showValidation]="false" 
-              type="text" 
-              [inline]="true" 
-              [label]="'application.provincia_nascita'| translate" 
-              formControlName="jconon_application:provincia_nascita">
-            </app-control-text>
+            <label class="form-label active">{{'application.provincia_nascita' | translate}}</label>
+            <input class="form-control" id="jconon_application:provincia_nascita" type="text" formControlName="jconon_application:provincia_nascita" />
           </div>
           <div class="form-group col-md-3">
             <app-control-datepicker
@@ -153,8 +136,8 @@ export class JcononAffixAnagraficaComponent extends DynamicComponent {
       this.cacheService.comuni().subscribe((comuni) => {
         this.comuni = comuni;
       });
-      this.form.addControl('jconon_application:nome', new FormControl(this.data.nome));
-      this.form.addControl('jconon_application:cognome', new FormControl(this.data.cognome));
+      this.form.addControl('jconon_application:nome', new FormControl({value:this.data.nome, disabled: true}));
+      this.form.addControl('jconon_application:cognome', new FormControl({value:this.data.cognome, disabled: true}));
       this.form.addControl('jconon_application:nazione_nascita', new FormControl(this.data.nazione_nascita, Validators.required));
       
       this.form.addControl('jconon_application:comune_nascita', 
@@ -163,7 +146,7 @@ export class JcononAffixAnagraficaComponent extends DynamicComponent {
             Validators.required
         )
       );
-      this.form.addControl('jconon_application:provincia_nascita', new FormControl(this.data.provincia_nascita));
+      this.form.addControl('jconon_application:provincia_nascita', new FormControl({value:this.data.provincia_nascita, disabled:true}));
       this.form.addControl('jconon_application:data_nascita', new FormControl(this.data.data_nascita||undefined, Validators.required));
       this.form.addControl('jconon_application:sesso', new FormControl(String(this.data.sesso || 'M'),Validators.required));
 
