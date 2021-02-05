@@ -29,6 +29,7 @@ import { ObjectTypeService } from '../../core/object-type.service';
                 [inline]="true"
                 [focus]="true"
                 [multiple]="true"
+                [multiSelectIcon]="'fa-flag-checkered'"
                 [noLabel]="true"
                 [strings]="choice"
                 [showValidation]="true"

@@ -7,14 +7,19 @@ declare var $: any;
   templateUrl: './footer.component.html'
 })
 export class FooterComponent {
+  protected isScrolling : boolean = false; 
   @HostListener('window:scroll', ['$event', '$event.target'])
   doSomethingOnScroll($event: Event) {
     let backToTop = $('.back-to-top');
     if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
-      backToTop.addClass('back-to-top-show');
-      setTimeout(function(){
-        backToTop.removeClass('back-to-top-show');
-      },5000);
+      if (!this.isScrolling) {
+        backToTop.addClass('back-to-top-show');
+        this.isScrolling = true;
+        setTimeout(() => {
+          backToTop.removeClass('back-to-top-show');
+          this.isScrolling = false;
+        }, 5000);  
+      }
     } else {
       backToTop.removeClass('back-to-top-show');
     }

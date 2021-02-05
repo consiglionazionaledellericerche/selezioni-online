@@ -38,10 +38,11 @@ declare var $: any;   // not required
             <option *ngFor="let type of types" [value]="type.id" [selected]="isItemSelected(type.queryName)">
               {{ type.id | translate}}
             </option>
-
-            <option *ngFor="let string of strings" [value]="string" [selected]="isStringSelected(string)">
-              {{ string | translate}}
-            </option>
+            <ng-container *ngFor="let string of strings">
+              <option *ngIf="isOptionStringVisible(string)" [value]="string" [selected]="isStringSelected(string)">
+                {{ string | translate}}
+              </option>
+            </ng-container>
 
             <option *ngFor="let item of items" [value]=item.getId() [selected]="isItemSelected(item.getId())">
               {{ item.getLabel(detailedLabel) }}
@@ -56,10 +57,10 @@ declare var $: any;   // not required
 
         <div *ngIf="showList()" class="col-12 p-0 mt-0">
           <div class="chip chip-primary chip-lg" *ngFor="let s of showListItems()">
-            <span class="chip-label">{{ s }}</span>
+            <span class="chip-label"><i *ngIf="multiSelectIcon" class="fa {{multiSelectIcon}} pr-1" aria-hidden="true"></i>{{ s }}</span>
             <button (click)="unselect(s)">
               <svg class="icon"><use xlink:href="/assets/vendor/sprite.svg#it-close"></use></svg>
-              <span class="sr-only">Elimina</span>
+              <span class="sr-only" translate>delete</span>
             </button>
           </div>
         </div>
@@ -81,6 +82,8 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
   @Input() showAsList: false;
 
   @Input() detailedLabel: false;
+
+  @Input() multiSelectIcon;
 
   @Output() onChangeEvent = new EventEmitter<any>();
 
@@ -215,6 +218,13 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
     return this.multiple && this.path;
   }
 
+  private isOptionStringVisible(value: string): boolean {
+    if (!this.isMultiSync()) {
+      return true;
+    }
+    return !this.isStringSelected(value);
+  }
+
   private updateSigleSync(data) {
     // same value prevent change detection
     if (this.selected && this.selected.getId && this.selected.getId() === +data.id) {
@@ -285,9 +295,7 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
       if (this.items) {
         values = this.selected.filter( item =>  item.getObjectId() === +data.id);
       } else if (this.strings) {
-        values = this.selected.filter( item =>  {
-          return item == data.id;
-        });      
+        values = this.selected.filter( item =>  item == data.id);      
       }
       if (values.length > 0) {
         return;
@@ -398,7 +406,7 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
       return this.selected ? this.selected === value : false;
     }
     if (this.isMultiSync()) {
-      return false; // this.selected ? this.selected.filter(item => item === value).lenght > 0 : false;
+      return this.selected ? this.selected.filter(item => item === value).length > 0 : false;
     }
   }
 
