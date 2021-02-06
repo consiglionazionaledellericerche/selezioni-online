@@ -10,10 +10,10 @@ import { ObjectTypeService } from '../../core/object-type.service';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isAflCittadinanzaItalianaLista()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.afl_cittadinanza_italiana_lista' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.afl_cittadinanza_italiana_lista' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="afl_cittadinanza_italiana_lista">
-                    <input type="checkbox" (change)="onChangeAflCittadinanzaItalianaLista(true)" id="afl_cittadinanza_italiana_lista" formControlName="jconon_application:afl_cittadinanza_italiana_lista">
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="afl_cittadinanza_italiana_lista" formControlName="jconon_application:afl_cittadinanza_italiana_lista">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
                       <span *ngFor="let error of hasErrors()" class="pr-2">
@@ -84,11 +84,11 @@ export class JcononAspectPossessoCittadinanzaComponent extends DynamicComponent 
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl('jconon_application:possesso_cittadinanza', new FormControl(this.data.possesso_cittadinanza));
       this.form.addControl('jconon_application:cittadinanza_stato_estero', new FormControl(this.data.cittadinanza_stato_estero));
-      this.onChangeAflCittadinanzaItalianaLista(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeAflCittadinanzaItalianaLista(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:possesso_cittadinanza'].patchValue(null);
         this.form.controls['jconon_application:cittadinanza_stato_estero'].patchValue(null);

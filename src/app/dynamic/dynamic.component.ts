@@ -37,10 +37,18 @@ export abstract class DynamicComponent implements AdMetadataComponent, OnInit{
     isValid(): boolean  {
       if (this.form.controls[this.propertyName])
           return this.form.controls[this.propertyName].status !== 'INVALID';
-      return true;    
+      return true;
     }
 
     hasErrors() {
       return ValidationHelper.getValidationCodes(this.control);
-    }    
+    }
+
+    toggle() {
+      this.form.controls[this.propertyName].patchValue(!this.form.controls[this.propertyName].value);
+      this.onChangeToggle(true);
+    }
+
+    abstract onChangeToggle(reset: boolean);
+
 }

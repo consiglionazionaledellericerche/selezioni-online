@@ -196,4 +196,7 @@ export class JcononAffixAnagraficaComponent extends DynamicComponent {
         this.form.controls['jconon_application:provincia_nascita'].patchValue(comune.provincia);
       }
     }
+
+    onChangeToggle(reset: boolean){      
+    }
 }

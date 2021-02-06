@@ -9,7 +9,7 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()">
         <a class="it-has-checkbox flex-column">
             <div class="it-right-zone w-100 border-bottom-0">
-                <label class="text-dark">{{label | translate }}</label>
+                <label class="text-dark c-pointer" (click)="toggle()">{{label | translate }}</label>
                 <div class="toggles mr-1">
                     <label for="{{name}}">
                         <input type="checkbox" id="{{name}}" formControlName="{{propertyName}}">
@@ -45,4 +45,6 @@ export class JcononAspectsDichiarazioneComponent extends DynamicComponent {
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }
+
+    onChangeToggle(reset: boolean){}
 }

@@ -126,7 +126,7 @@ export class JcononAffixResidenzaComponent extends DynamicComponent {
     public isForeign(): boolean {
       return this.form.controls['jconon_application:nazione_residenza'].value !== Helpers.ITALIA;
     }
-    
+      
     public onChangeComune(comune: any) {
       if (comune) {
         this.form.controls['jconon_application:provincia_residenza'].patchValue(comune.provincia);
@@ -136,5 +136,8 @@ export class JcononAffixResidenzaComponent extends DynamicComponent {
     public onChangeNazioneResidenza() {
       this.form.controls['jconon_application:comune_residenza'].patchValue(null);
       this.form.controls['jconon_application:provincia_residenza'].patchValue(null);
-   }
+    }
+
+    onChangeToggle(reset: boolean){      
+    }
 }

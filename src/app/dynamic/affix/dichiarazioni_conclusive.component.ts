@@ -51,4 +51,7 @@ export class JcononAffixDichiarazioniConclusiveComponent extends DynamicComponen
       );
       super.ngOnInit();
     }
+    
+    onChangeToggle(reset: boolean){      
+    }
 }

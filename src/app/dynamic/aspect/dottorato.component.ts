@@ -9,10 +9,10 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlDottorato()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_dottorato' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_dottorato' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_dottorato">
-                    <input type="checkbox" (change)="onChangeFlDottorato(true)" id="fl_dottorato" 
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_dottorato" 
                       formControlName="jconon_application:fl_dottorato">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
@@ -86,11 +86,11 @@ export class JcononAspectDottoratoComponent extends DynamicComponent {
         new FormControl(this.data.data_dottorato)
       );
 
-      this.onChangeFlDottorato(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeFlDottorato(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:tipo_dottorato'].patchValue(null);
         this.form.controls['jconon_application:istituto_dottorato'].patchValue(null);

@@ -9,10 +9,10 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isflDecadutoAltroImpiego()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_decaduto_altro_impiego' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_decaduto_altro_impiego' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_decaduto_altro_impiego">
-                    <input type="checkbox" (change)="onChangeflDecadutoAltroImpiego(true)" id="fl_decaduto_altro_impiego" 
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_decaduto_altro_impiego" 
                       formControlName="jconon_application:fl_decaduto_altro_impiego">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
@@ -55,11 +55,11 @@ export class JcononAspectDecadutoAltroImpiegoComponent extends DynamicComponent 
         'jconon_application:motivazione_decaduto_altro_impiego', 
         new FormControl(this.data.motivazione_decaduto_altro_impiego)
       );
-      this.onChangeflDecadutoAltroImpiego(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeflDecadutoAltroImpiego(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:motivazione_decaduto_altro_impiego'].patchValue(null);
       }

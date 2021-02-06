@@ -10,10 +10,10 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlIscrittoListeElettorali()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_iscritto_liste_elettorali' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_iscritto_liste_elettorali' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_iscritto_liste_elettorali">
-                    <input type="checkbox" (change)="onChangeFlIscrittoListeElettorali(true)" id="fl_iscritto_liste_elettorali" formControlName="jconon_application:fl_iscritto_liste_elettorali">
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_iscritto_liste_elettorali" formControlName="jconon_application:fl_iscritto_liste_elettorali">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
                       <span *ngFor="let error of hasErrors()" class="pr-2">
@@ -89,7 +89,7 @@ export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicCompo
         'jconon_application:motivazione_no_iscrizione_liste_elettorali', 
         new FormControl(this.data.motivazione_no_iscrizione_liste_elettorali)
       );
-      this.onChangeFlIscrittoListeElettorali(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
@@ -99,7 +99,7 @@ export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicCompo
       }
     }
 
-    public onChangeFlIscrittoListeElettorali(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:comune_liste_elettorali'].patchValue(null);
         this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(null);

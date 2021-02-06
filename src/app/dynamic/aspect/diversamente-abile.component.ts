@@ -9,10 +9,10 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlDiversamenteAbile()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_diversamente_abile' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_diversamente_abile' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_diversamente_abile">
-                    <input type="checkbox" (change)="onChangeFlDiversamenteAbile(true)" id="fl_diversamente_abile" 
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_diversamente_abile" 
                       formControlName="jconon_application:fl_diversamente_abile">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
@@ -73,11 +73,11 @@ export class JcononAspectDiversmenteAbileComponent extends DynamicComponent {
         new FormControl(this.data.ausili_diversamente_abile)
       );
 
-      this.onChangeFlDiversamenteAbile(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeFlDiversamenteAbile(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:tempi_aggiuntivi_diversamente_abile'].patchValue(null);
         this.form.controls['jconon_application:ausili_diversamente_abile'].patchValue(null);

@@ -49,4 +49,8 @@ export class JcononAspectInquadramentoComponent extends DynamicComponent {
       super.ngOnInit();
     }
 
+    onChangeToggle(reset: boolean){
+      
+    }
+
 }

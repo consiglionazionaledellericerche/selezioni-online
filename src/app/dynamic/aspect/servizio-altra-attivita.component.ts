@@ -9,10 +9,10 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlServizioAltraAttivita()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_servizio_altra_attivita' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_servizio_altra_attivita' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_servizio_altra_attivita">
-                    <input type="checkbox" (change)="onChangeFlServizioAltraAttivita(true)" id="fl_servizio_altra_attivita" 
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_servizio_altra_attivita" 
                       formControlName="jconon_application:fl_servizio_altra_attivita">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
@@ -72,11 +72,11 @@ export class JcononAspectServizioAltraAttivitaComponent extends DynamicComponent
         new FormControl(this.data.sede_altra_attivita)
       );
 
-      this.onChangeFlServizioAltraAttivita(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeFlServizioAltraAttivita(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:sede_altra_attivita'].patchValue(null);
         this.form.controls['jconon_application:ruolo_altra_attivita'].patchValue(null);

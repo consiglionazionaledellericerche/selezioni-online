@@ -10,10 +10,10 @@ import { ObjectTypeService } from '../../core/object-type.service';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlPatenteGuida()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_patente_guida' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_patente_guida' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_patente_guida">
-                    <input type="checkbox" (change)="onChangeFlPatenteGuida(true)" id="fl_patente_guida" formControlName="jconon_application:fl_patente_guida">
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_patente_guida" formControlName="jconon_application:fl_patente_guida">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
                       <span *ngFor="let error of hasErrors()" class="pr-2">
@@ -65,11 +65,11 @@ export class JcononAspectPatenteGuidaComponent extends DynamicComponent {
       this.control = new FormControl(this.data.fl_patente_guida, Validators.required);
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl('jconon_application:lista_patente_guida', new FormControl(this.data.lista_patente_guida));
-      this.onChangeFlPatenteGuida(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeFlPatenteGuida(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:lista_patente_guida'].patchValue(null);
       }

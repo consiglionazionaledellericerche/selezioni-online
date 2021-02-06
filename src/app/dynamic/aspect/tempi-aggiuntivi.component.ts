@@ -9,10 +9,10 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlTempiAggiuntivi()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_tempi_aggiuntivi' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_tempi_aggiuntivi' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_tempi_aggiuntivi">
-                    <input type="checkbox" (change)="onChangeFlTempiAggiuntivi(true)" id="fl_tempi_aggiuntivi" 
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_tempi_aggiuntivi" 
                       formControlName="jconon_application:fl_tempi_aggiuntivi">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
@@ -70,11 +70,11 @@ export class JcononAspectTempiAggiuntiviComponent extends DynamicComponent {
         new FormControl(this.data.ausili)
       );
 
-      this.onChangeFlTempiAggiuntivi(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeFlTempiAggiuntivi(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:tempi_aggiuntivi'].patchValue(null);
         this.form.controls['jconon_application:ausili'].patchValue(null);

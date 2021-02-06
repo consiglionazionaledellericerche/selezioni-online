@@ -9,10 +9,10 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlLaurea()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_laurea' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_laurea' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_laurea">
-                    <input type="checkbox" (change)="onChangeFlLaurea(true)" id="fl_laurea" 
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_laurea" 
                       formControlName="jconon_application:fl_laurea">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
@@ -110,11 +110,11 @@ export class JcononAspectLaureaComponent extends DynamicComponent {
         new FormControl(this.data.fl_laurea_equipollente)
       );
 
-      this.onChangeFlLaurea(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeFlLaurea(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:tipo_laurea'].patchValue(null);
         this.form.controls['jconon_application:istituto_laurea'].patchValue(null);

@@ -9,10 +9,10 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlAltreBorseStudio()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_altre_borse_studio' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_altre_borse_studio' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_altre_borse_studio">
-                    <input type="checkbox" (change)="onChangeFlAltreBorseStudio(true)" id="fl_altre_borse_studio" 
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_altre_borse_studio" 
                       formControlName="jconon_application:fl_altre_borse_studio">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
@@ -57,11 +57,11 @@ export class JcononAspectAltreBorseStudioComponent extends DynamicComponent {
         'jconon_application:descrizione_altre_borse_studio', 
         new FormControl(this.data.descrizione_altre_borse_studio)
       );
-      this.onChangeFlAltreBorseStudio(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeFlAltreBorseStudio(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:descrizione_altre_borse_studio'].patchValue(null);
       }

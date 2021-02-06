@@ -50,4 +50,8 @@ export class JcononAspectSettoreScientificoTecnologicoComponent extends DynamicC
       super.ngOnInit();
     }
 
+    onChangeToggle(reset: boolean){
+      
+    }
+
 }

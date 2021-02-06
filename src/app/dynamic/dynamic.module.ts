@@ -23,6 +23,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
 import { CustomTranslationCompiler } from '../common/helpers/translation-compiler';
 
+
 import { JcononAspectIscrizioneListeElettoraliComponent } from './aspect/iscrizione-liste-elettorali.component';
 import { JcononAspectGodimentoDirittiComponent } from './aspect/godimento-diritti.component';
 import { JcononAspectCondannePenaliComponent } from './aspect/condanne-penali.component';

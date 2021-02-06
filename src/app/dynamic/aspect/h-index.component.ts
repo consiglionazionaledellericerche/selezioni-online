@@ -61,4 +61,7 @@ export class JcononAspectHIndexComponent extends DynamicComponent {
       super.ngOnInit();
     }
 
+    onChangeToggle(reset: boolean) {
+      
+    }
 }

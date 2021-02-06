@@ -39,4 +39,7 @@ export class JcononAspectStrutturaAppartenenzaComponent extends DynamicComponent
       super.ngOnInit();
     }
 
+    onChangeToggle(reset: boolean){
+      
+    }
 }

@@ -9,10 +9,10 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlServizioAltreAmministrazioni()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_servizio_altre_amministrazioni' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_servizio_altre_amministrazioni' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_servizio_altre_amministrazioni">
-                    <input type="checkbox" (change)="onChangeFlServizioAltreAmministrazioni(true)" id="fl_servizio_altre_amministrazioni" 
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_servizio_altre_amministrazioni" 
                       formControlName="jconon_application:fl_servizio_altre_amministrazioni">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
@@ -89,11 +89,11 @@ export class JcononAspectServizioAltreAmministrazioniComponent extends DynamicCo
         new FormControl(this.data.cause_risoluzione_servizio_altre_amministrazioni)
       );
 
-      this.onChangeFlServizioAltreAmministrazioni(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeFlServizioAltreAmministrazioni(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:struttura_altre_amministrazioni'].patchValue(null);
         this.form.controls['jconon_application:titolo_servizio_altre_amministrazioni'].patchValue(null);

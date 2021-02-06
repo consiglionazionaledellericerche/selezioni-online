@@ -9,10 +9,10 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlTitoloPreferenzaPosti()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_titolo_preferenza_posti' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_titolo_preferenza_posti' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_titolo_preferenza_posti">
-                    <input type="checkbox" (change)="onChangeFlTitoloPreferenzaPosti(true)" id="fl_titolo_preferenza_posti" 
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_titolo_preferenza_posti" 
                       formControlName="jconon_application:fl_titolo_preferenza_posti">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
@@ -55,11 +55,11 @@ export class JcononAspectTitoloPreferenzaPostiComponent extends DynamicComponent
         'jconon_application:motivazione_preferenza_posti', 
         new FormControl(this.data.motivazione_preferenza_posti)
       );
-      this.onChangeFlTitoloPreferenzaPosti(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeFlTitoloPreferenzaPosti(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:motivazione_preferenza_posti'].patchValue(null);
       }

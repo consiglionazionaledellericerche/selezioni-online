@@ -10,10 +10,10 @@ import { ObjectTypeService } from '../../core/object-type.service';
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlConoscenzaLingue()">
         <a class="it-has-checkbox flex-column">
           <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark">{{'label.jconon_application.fl_conoscenza_lingue' | translate }}</label>
+            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_conoscenza_lingue' | translate }}</label>
             <div class="toggles mr-1">
                 <label for="fl_conoscenza_lingue">
-                    <input type="checkbox" (change)="onChangeFlConoscenzaLingue(true)" id="fl_conoscenza_lingue" formControlName="jconon_application:fl_conoscenza_lingue">
+                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_conoscenza_lingue" formControlName="jconon_application:fl_conoscenza_lingue">
                     <span class="lever"></span>
                     <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
                       <span *ngFor="let error of hasErrors()" class="pr-2">
@@ -66,11 +66,11 @@ export class JcononAspectConoscenzaLingueComponent extends DynamicComponent {
       this.control = new FormControl(this.data.fl_conoscenza_lingue, Validators.required);
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl('jconon_application:elenco_lingue_conosciute', new FormControl(this.data.elenco_lingue_conosciute));
-      this.onChangeFlConoscenzaLingue(false);
+      this.onChangeToggle(false);
       super.ngOnInit();
     }
 
-    public onChangeFlConoscenzaLingue(reset: boolean) {
+    public onChangeToggle(reset: boolean) {
       if (reset) {
         this.form.controls['jconon_application:elenco_lingue_conosciute'].patchValue(null);
       }

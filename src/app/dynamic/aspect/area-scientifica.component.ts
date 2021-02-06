@@ -50,4 +50,7 @@ export class JcononAspectAreaScientificaComponent extends DynamicComponent {
       super.ngOnInit();
     }
 
+    onChangeToggle(reset: boolean){
+      
+    }
 }
