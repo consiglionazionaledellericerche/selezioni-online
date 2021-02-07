@@ -6,23 +6,14 @@ import { DynamicComponent } from '../dynamic.component';
 @Component({
     selector: 'P:jconon_application:aspect_condanne_penali',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlCondannePenali()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_condanne_penali' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="fl_condanne_penali">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_condanne_penali" 
-                      formControlName="jconon_application:fl_condanne_penali">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.fl_condanne_penali' | translate" 
+            formControlName="jconon_application:fl_condanne_penali">
+          </app-control-toggle>
           <div class="form-row w-100 pt-1">
             <div *ngSwitchCase="false" class="form-group col-md-12">
               <app-control-textarea 
@@ -64,10 +55,10 @@ export class JcononAspectCondannePenaliComponent extends DynamicComponent {
         this.form.controls['jconon_application:estremi_sentenze_penali'].patchValue(null);
       }
       this.form.controls['jconon_application:estremi_sentenze_penali']
-        .setValidators(this.isFlCondannePenali()? undefined: Validators.required);
+        .setValidators(this.isToggle()? undefined: Validators.required);
     }
 
-    public isFlCondannePenali(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:fl_condanne_penali'].value;      
     }
 }

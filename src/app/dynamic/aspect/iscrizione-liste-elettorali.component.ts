@@ -7,28 +7,21 @@ import { DynamicComponent } from '../dynamic.component';
 @Component({
     selector: 'P:jconon_application:aspect_iscrizione_liste_elettorali',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlIscrittoListeElettorali()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_iscritto_liste_elettorali' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="fl_iscritto_liste_elettorali">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_iscritto_liste_elettorali" formControlName="jconon_application:fl_iscritto_liste_elettorali">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.fl_iscritto_liste_elettorali' | translate" 
+            formControlName="jconon_application:fl_iscritto_liste_elettorali">
+          </app-control-toggle>
           <div class="form-row w-100 pt-1">
-            <div [hidden]="!isFlIscrittoListeElettorali()" class="form-group col-md-9">
+            <div [hidden]="!isToggle()" class="form-group col-md-9">
               <app-control-select-model
                 [inline]="true"
                 [focus]="true"
-                [noLabel]="true"
+                [label]="'label.jconon_application.comune_liste_elettorali'| translate"
+                [labelactive]="'true'"
                 [items]="comuni"
                 (onChangeEvent)="onChangeComune($event)"
                 [showValidation]="true"
@@ -37,7 +30,6 @@ import { DynamicComponent } from '../dynamic.component';
                 [placeholder]="'placeholder.select.place'| translate"
                 formControlName="jconon_application:comune_liste_elettorali">
                 </app-control-select-model>          
-              <label for="comune_liste_elettorali" class="active">{{'label.jconon_application.comune_liste_elettorali'| translate}}</label>
             </div>
             <div *ngSwitchCase="true" class="form-group col-md-3">
               <app-control-text 
@@ -96,6 +88,8 @@ export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicCompo
     public onChangeComune(comune: any) {
       if (comune) {
         this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(comune.provincia);
+      } else {
+        this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(null);
       }
     }
 
@@ -105,7 +99,7 @@ export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicCompo
         this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(null);
         this.form.controls['jconon_application:motivazione_no_iscrizione_liste_elettorali'].patchValue(null);
       }
-      if (this.isFlIscrittoListeElettorali()) {
+      if (this.isToggle()) {
         this.form.controls['jconon_application:motivazione_no_iscrizione_liste_elettorali'].setValidators(undefined);
         this.form.controls['jconon_application:comune_liste_elettorali'].setValidators(Validators.required);
       } else {
@@ -114,7 +108,7 @@ export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicCompo
       }
     }
 
-    public isFlIscrittoListeElettorali(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:fl_iscritto_liste_elettorali'].value;      
     }
 }

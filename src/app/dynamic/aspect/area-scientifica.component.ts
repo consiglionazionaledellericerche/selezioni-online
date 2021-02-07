@@ -11,10 +11,10 @@ import { DynamicComponent } from '../dynamic.component';
           <div class="pt-3" [ngClass]="hoverClass" (mouseover)="hoverClass='shadow-lg'" (mouseout)="hoverClass=''">
             <div class="form-row w-100 pt-3 pl-2">
               <div class="form-group col-md-12">
-                <label for="jconon_application:area_scientifica" class="font-weight-bold active">{{'label.jconon_application.area_scientifica'| translate}}</label>
                 <app-control-select-model
                   [inline]="true"
-                  [noLabel]="true"
+                  [label]="'label.jconon_application.area_scientifica'| translate"
+                  [labelactive]="'true'"
                   [strings]="choice"
                   [showValidation]="true"
                   [allowClear]="true"
@@ -48,9 +48,5 @@ export class JcononAspectAreaScientificaComponent extends DynamicComponent {
         this.isRequired ? Validators.required : undefined);
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
-    }
-
-    onChangeToggle(reset: boolean){
-      
     }
 }

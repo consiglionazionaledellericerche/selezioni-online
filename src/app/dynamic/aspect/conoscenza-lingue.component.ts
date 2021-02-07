@@ -7,24 +7,16 @@ import { ObjectTypeService } from '../../core/object-type.service';
 @Component({
     selector: 'P:jconon_application:aspect_conoscenza_lingue',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlConoscenzaLingue()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_conoscenza_lingue' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="fl_conoscenza_lingue">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_conoscenza_lingue" formControlName="jconon_application:fl_conoscenza_lingue">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.fl_conoscenza_lingue' | translate" 
+            formControlName="jconon_application:fl_conoscenza_lingue">
+          </app-control-toggle>
           <div class="form-row w-100 pt-1">
-            <div [hidden]="!isFlConoscenzaLingue()" class="form-group col-md-12">
+            <div [hidden]="!isToggle()" class="form-group col-md-12">
               <app-control-select-model
                 [inline]="true"
                 [focus]="true"
@@ -74,14 +66,14 @@ export class JcononAspectConoscenzaLingueComponent extends DynamicComponent {
       if (reset) {
         this.form.controls['jconon_application:elenco_lingue_conosciute'].patchValue(null);
       }
-      if (this.isFlConoscenzaLingue()) {
+      if (this.isToggle()) {
         this.form.controls['jconon_application:elenco_lingue_conosciute'].setValidators(Validators.required);
       } else {
         this.form.controls['jconon_application:elenco_lingue_conosciute'].setValidators(undefined);
       }
     }
 
-    public isFlConoscenzaLingue(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:fl_conoscenza_lingue'].value;      
     }
 }

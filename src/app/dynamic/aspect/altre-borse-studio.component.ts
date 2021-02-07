@@ -6,23 +6,14 @@ import { DynamicComponent } from '../dynamic.component';
 @Component({
     selector: 'P:jconon_application:aspect_altre_borse_studio',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlAltreBorseStudio()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_altre_borse_studio' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="fl_altre_borse_studio">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_altre_borse_studio" 
-                      formControlName="jconon_application:fl_altre_borse_studio">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.fl_altre_borse_studio' | translate" 
+            formControlName="jconon_application:fl_altre_borse_studio">
+          </app-control-toggle>
           <div class="form-row w-100 pt-1">
             <div *ngSwitchCase="false" class="form-group col-md-12">
               <app-control-textarea 
@@ -66,10 +57,10 @@ export class JcononAspectAltreBorseStudioComponent extends DynamicComponent {
         this.form.controls['jconon_application:descrizione_altre_borse_studio'].patchValue(null);
       }
       this.form.controls['jconon_application:descrizione_altre_borse_studio']
-        .setValidators(!this.isFlAltreBorseStudio()? Validators.required : undefined);
+        .setValidators(!this.isToggle()? Validators.required : undefined);
     }
 
-    public isFlAltreBorseStudio(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:fl_altre_borse_studio'].value;      
     }
 }

@@ -6,23 +6,14 @@ import { DynamicComponent } from '../dynamic.component';
 @Component({
     selector: 'P:jconon_application:aspect_laurea',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlLaurea()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_laurea' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="fl_laurea">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_laurea" 
-                      formControlName="jconon_application:fl_laurea">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.fl_laurea' | translate" 
+            formControlName="jconon_application:fl_laurea">
+          </app-control-toggle>            
           <div class="form-row w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
@@ -123,19 +114,19 @@ export class JcononAspectLaureaComponent extends DynamicComponent {
         this.form.controls['jconon_application:fl_laurea_equipollente'].patchValue(null);
       }
       this.form.controls['jconon_application:tipo_laurea']
-        .setValidators(this.isFlLaurea()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
         this.form.controls['jconon_application:istituto_laurea']
-        .setValidators(this.isFlLaurea()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
         this.form.controls['jconon_application:data_laurea']
-        .setValidators(this.isFlLaurea()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
         this.form.controls['jconon_application:punteggio_laurea']
-        .setValidators(this.isFlLaurea()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
         this.form.controls['jconon_application:fl_laurea_equipollente']
-        .setValidators(this.isFlLaurea()? Validators.requiredTrue : undefined);
+        .setValidators(this.isToggle()? Validators.requiredTrue : undefined);
 
     }
 
-    public isFlLaurea(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:fl_laurea'].value;      
     }
 }

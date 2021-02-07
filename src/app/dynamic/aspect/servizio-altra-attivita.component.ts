@@ -6,23 +6,14 @@ import { DynamicComponent } from '../dynamic.component';
 @Component({
     selector: 'P:jconon_application:aspect_servizio_altra_attivita',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlServizioAltraAttivita()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_servizio_altra_attivita' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="fl_servizio_altra_attivita">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_servizio_altra_attivita" 
-                      formControlName="jconon_application:fl_servizio_altra_attivita">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.fl_servizio_altra_attivita' | translate" 
+            formControlName="jconon_application:fl_servizio_altra_attivita">
+          </app-control-toggle>   
           <div class="form-row w-100 py-1">
             <label *ngSwitchCase="true" class="px-2">{{'label.jconon_application.servizio_altra_attivita_etichetta'| translate}}</label>
           </div>
@@ -82,13 +73,13 @@ export class JcononAspectServizioAltraAttivitaComponent extends DynamicComponent
         this.form.controls['jconon_application:ruolo_altra_attivita'].patchValue(null);
       }
       this.form.controls['jconon_application:sede_altra_attivita']
-        .setValidators(this.isFlServizioAltraAttivita()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
         this.form.controls['jconon_application:ruolo_altra_attivita']
-        .setValidators(this.isFlServizioAltraAttivita()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
 
     }
 
-    public isFlServizioAltraAttivita(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:fl_servizio_altra_attivita'].value;      
     }
 }

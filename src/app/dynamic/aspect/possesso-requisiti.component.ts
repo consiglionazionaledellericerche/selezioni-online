@@ -41,8 +41,4 @@ export class JcononAspectPossessoRequisitiComponent extends DynamicComponent {
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }
-
-    onChangeToggle(reset: boolean) {
-      
-    }
 }

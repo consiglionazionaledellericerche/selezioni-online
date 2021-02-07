@@ -3,6 +3,7 @@ import {
   Component, ElementRef, Input, OnInit, Optional, Self, ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
+import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {FormCommonTag} from './form-common-tag';
 
 /**
@@ -38,6 +39,7 @@ import {FormCommonTag} from './form-common-tag';
              (focus)="onFocus($event.target.value)"
              (focusout)="onFocusOut($event.target.value)"
              [disabled]="disabled"
+             [ngClass]="{'border-danger': isInvalid()}"
              placeholder="{{ placeholder | translate }}"></textarea>
 
       </app-form-layout>
@@ -115,6 +117,14 @@ export class FormTemplateTextAreaComponent extends FormCommonTag implements Cont
   /*
   Utils.
    */
+
+  isInvalid(): boolean {
+    return ValidationHelper.showInvalid(this.controlDir, this.showValidation);
+  }
+
+  isValid(): boolean  {
+    return ValidationHelper.showValid(this.controlDir, this.showValidation);
+  }
 
   onFocus(value: string) {
     this.labelactive = true;

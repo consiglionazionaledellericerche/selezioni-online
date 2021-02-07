@@ -6,23 +6,14 @@ import { DynamicComponent } from '../dynamic.component';
 @Component({
     selector: 'P:jconon_application:aspect_tempi_aggiuntivi',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlTempiAggiuntivi()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_tempi_aggiuntivi' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="fl_tempi_aggiuntivi">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_tempi_aggiuntivi" 
-                      formControlName="jconon_application:fl_tempi_aggiuntivi">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.fl_tempi_aggiuntivi' | translate" 
+            formControlName="jconon_application:fl_tempi_aggiuntivi">
+          </app-control-toggle>            
           <div class="form-row w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
@@ -80,12 +71,12 @@ export class JcononAspectTempiAggiuntiviComponent extends DynamicComponent {
         this.form.controls['jconon_application:ausili'].patchValue(null);
       }
       this.form.controls['jconon_application:tempi_aggiuntivi']
-        .setValidators(this.isFlTempiAggiuntivi()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
         this.form.controls['jconon_application:ausili']
-        .setValidators(this.isFlTempiAggiuntivi()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
     }
 
-    public isFlTempiAggiuntivi(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:fl_tempi_aggiuntivi'].value;      
     }
 }

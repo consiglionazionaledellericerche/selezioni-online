@@ -21,10 +21,10 @@ import { DynamicComponent } from '../dynamic.component';
         </div>
         <div class="form-row">
           <div class="form-group col-md-3">
-            <label for="statoestero" class="active">{{'application.nazione_nascita'| translate}}</label>
             <app-control-select-model
               [inline]="true"
-              [noLabel]="true"
+              [label]="'application.nazione_nascita'| translate"
+              [labelactive]="'true'"
               [strings]="paesi"
               [showValidation]="true"
               [allowClear]="true"
@@ -47,7 +47,8 @@ import { DynamicComponent } from '../dynamic.component';
             <app-control-select-model
               *ngIf="!isForeign()"
               [inline]="true"
-              [noLabel]="true"
+              [label]="'application.comune_nascita'| translate"
+              [labelactive]="'true'"
               [items]="comuni"
               (onChangeEvent)="onChangeComune($event)"
               [showValidation]="true"
@@ -56,7 +57,6 @@ import { DynamicComponent } from '../dynamic.component';
               [placeholder]="'placeholder.select.place'| translate"
               formControlName="jconon_application:comune_nascita">
               </app-control-select-model>          
-            <label for="comune_nascita" class="active">{{'application.comune_nascita'| translate}}</label>
           </div>
           <div *ngIf="!isForeign()" class="form-group col-md-1">
             <label class="form-label active">{{'application.provincia_nascita' | translate}}</label>
@@ -195,8 +195,5 @@ export class JcononAffixAnagraficaComponent extends DynamicComponent {
       if (comune) {
         this.form.controls['jconon_application:provincia_nascita'].patchValue(comune.provincia);
       }
-    }
-
-    onChangeToggle(reset: boolean){      
     }
 }

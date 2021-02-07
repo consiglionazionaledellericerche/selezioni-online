@@ -54,7 +54,4 @@ export class JcononAffixDichiarazioniComponent extends DynamicComponent {
         return this.cache.jsonlistApplicationNoAspectsForeign.some(x => x.key !== aspect);
       }
     }
-
-    onChangeToggle(reset: boolean){      
-    }
 }

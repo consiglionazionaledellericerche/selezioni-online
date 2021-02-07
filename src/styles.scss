@@ -81,6 +81,6 @@
   top: -10px
 }
 
-.toggles label input.ng-invalid[type=checkbox] + .lever:after {
+.toggles label input.is-invalid[type=checkbox] + .lever:after {
   background-color: $red;
 }

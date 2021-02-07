@@ -6,23 +6,14 @@ import { DynamicComponent } from '../dynamic.component';
 @Component({
     selector: 'P:jconon_application:aspect_diploma',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlDiploma()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_diploma' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="fl_diploma">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_diploma" 
-                      formControlName="jconon_application:fl_diploma">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.fl_diploma' | translate" 
+            formControlName="jconon_application:fl_diploma">
+          </app-control-toggle>            
           <div class="form-row w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
@@ -111,16 +102,16 @@ export class JcononAspectDiplomaComponent extends DynamicComponent {
 
       }
       this.form.controls['jconon_application:tipo_diploma']
-        .setValidators(this.isFlDiploma()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
         this.form.controls['jconon_application:istituto_diploma']
-        .setValidators(this.isFlDiploma()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
         this.form.controls['jconon_application:data_diploma']
-        .setValidators(this.isFlDiploma()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
         this.form.controls['jconon_application:punteggio_diploma']
-        .setValidators(this.isFlDiploma()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.required : undefined);
     }
 
-    public isFlDiploma(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:fl_diploma'].value;      
     }
 }

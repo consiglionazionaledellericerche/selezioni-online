@@ -7,23 +7,14 @@ import { DynamicComponent } from '../dynamic.component';
 @Component({
     selector: 'P:jconon_application:aspect_categorie_riservatarie_art1',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlCategorieRiservatarieArt1()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_categorie_riservatarie_art1' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="fl_categorie_riservatarie_art1">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_categorie_riservatarie_art1" 
-                      formControlName="jconon_application:fl_categorie_riservatarie_art1">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.fl_categorie_riservatarie_art1' | translate" 
+            formControlName="jconon_application:fl_categorie_riservatarie_art1">
+          </app-control-toggle>
           <div class="form-row w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-6">
               <app-control-text 
@@ -65,11 +56,11 @@ export class JcononAspectCategorieRiservatarieArt1Component extends DynamicCompo
         this.form.controls['jconon_application:categorie_riservatarie_percentuale'].patchValue(null);
       }
       this.form.controls['jconon_application:categorie_riservatarie_percentuale']
-        .setValidators(this.isFlCategorieRiservatarieArt1()? 
+        .setValidators(this.isToggle()? 
         [Validators.required, Helpers.patternValidator(/^[0-9]+$/, { onlyNumber: true })] : undefined);
     }
 
-    public isFlCategorieRiservatarieArt1(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:fl_categorie_riservatarie_art1'].value;      
     }
 }

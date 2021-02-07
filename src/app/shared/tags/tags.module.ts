@@ -19,6 +19,7 @@ import {GridLayoutComponent} from './list/grid-layout.component';
 
 import {FormLayoutComponent} from './forms/form-layout.component';
 import {FormTemplateTextComponent} from './forms/form-template-text.component';
+import {FormTemplateToggleComponent} from './forms/form-template-toggle.component';
 import {FormTemplateTextAreaComponent} from './forms/form-template-textarea.component';
 import {FormTemplateDatepickerComponent} from './forms/form-template-datepicker.component';
 import {ButtonNewComponent} from './buttons/button-new.component';
@@ -91,6 +92,7 @@ import { CustomTranslationCompiler } from '../../common/helpers/translation-comp
     FormValidationErrorLayoutComponent,
 
     FormTemplateTextComponent,
+    FormTemplateToggleComponent,
     FormTemplateTextAreaComponent,
     FormTemplateCheckboxComponent,
     FormTemplateDatepickerComponent,
@@ -191,6 +193,7 @@ import { CustomTranslationCompiler } from '../../common/helpers/translation-comp
 
     // Form
     FormTemplateTextComponent,
+    FormTemplateToggleComponent,
     FormTemplateTextAreaComponent,
     FormTemplateCheckboxComponent,
     FormTemplateDatepickerComponent,

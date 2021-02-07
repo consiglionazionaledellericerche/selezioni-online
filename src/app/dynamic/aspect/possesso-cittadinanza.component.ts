@@ -7,28 +7,21 @@ import { ObjectTypeService } from '../../core/object-type.service';
 @Component({
     selector: 'P:jconon_application:aspect_possesso_cittadinanza',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isAflCittadinanzaItalianaLista()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.afl_cittadinanza_italiana_lista' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="afl_cittadinanza_italiana_lista">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="afl_cittadinanza_italiana_lista" formControlName="jconon_application:afl_cittadinanza_italiana_lista">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.afl_cittadinanza_italiana_lista' | translate" 
+            formControlName="jconon_application:afl_cittadinanza_italiana_lista">
+          </app-control-toggle>            
           <div class="form-row w-100 pt-1">
-            <div [hidden]="isAflCittadinanzaItalianaLista()" class="form-group col-md-8">
+            <div [hidden]="isToggle()" class="form-group col-md-8">
               <app-control-select-model
                 [inline]="true"
                 [focus]="true"
-                [noLabel]="true"
+                [label]="'label.jconon_application.possesso_cittadinanza'| translate"
+                [labelactive]="'true'"
                 [strings]="choice"
                 [showValidation]="true"
                 [allowClear]="true"
@@ -36,13 +29,13 @@ import { ObjectTypeService } from '../../core/object-type.service';
                 [placeholder]="'label.jconon_application.possesso_cittadinanza_placeholder'| translate"
                 formControlName="jconon_application:possesso_cittadinanza">
                 </app-control-select-model>          
-              <label for="possesso_cittadinanza" class="active">{{'label.jconon_application.possesso_cittadinanza'| translate}}</label>
             </div>
-            <div [hidden]="isAflCittadinanzaItalianaLista()" class="form-group col-md-4">
+            <div [hidden]="isToggle()" class="form-group col-md-4">
               <app-control-select-model
                 [inline]="true"
                 [focus]="true"
-                [noLabel]="true"
+                [label]="'label.jconon_application.cittadinanza_stato_estero'| translate"
+                [labelactive]="'true'"
                 [strings]="paesi"
                 [showValidation]="true"
                 [allowClear]="true"
@@ -50,7 +43,6 @@ import { ObjectTypeService } from '../../core/object-type.service';
                 [placeholder]="'label.jconon_application.cittadinanza_stato_estero_placeholder'| translate"
                 formControlName="jconon_application:cittadinanza_stato_estero">
               </app-control-select-model>          
-              <label for="cittadinanza_stato_estero" class="active">{{'label.jconon_application.cittadinanza_stato_estero'| translate}}</label>
             </div>
           </div>  
         </a>
@@ -93,7 +85,7 @@ export class JcononAspectPossessoCittadinanzaComponent extends DynamicComponent 
         this.form.controls['jconon_application:possesso_cittadinanza'].patchValue(null);
         this.form.controls['jconon_application:cittadinanza_stato_estero'].patchValue(null);
       }
-      if (this.isAflCittadinanzaItalianaLista()) {
+      if (this.isToggle()) {
         this.form.controls['jconon_application:possesso_cittadinanza'].setValidators(undefined);
         this.form.controls['jconon_application:cittadinanza_stato_estero'].setValidators(undefined);
       } else {
@@ -102,7 +94,7 @@ export class JcononAspectPossessoCittadinanzaComponent extends DynamicComponent 
       }
     }
 
-    public isAflCittadinanzaItalianaLista(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:afl_cittadinanza_italiana_lista'].value;      
     }
 }

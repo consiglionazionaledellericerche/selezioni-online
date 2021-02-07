@@ -29,6 +29,7 @@ declare var $: any;   // not required
                        [append]="append"
                        [appendText]="appendText"
                        [prependText]="prependText"
+                       [labelactive]="labelactive"
                        [ttipAppend]="ttipAppend"
                        [showValidation]="showValidation">
 

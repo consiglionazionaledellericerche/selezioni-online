@@ -11,10 +11,10 @@ import { Helpers } from '../../common/helpers/helpers';
           <div class="pt-3" [ngClass]="hoverClass" (mouseover)="hoverClass='shadow-lg'" (mouseout)="hoverClass=''">
             <div class="form-row w-100 pt-3 pl-2">
               <div class="form-group col-md-8">
-                <label for="jconon_application:h_index_fonte" class="font-weight-bold active">{{'label.jconon_application.h_index_fonte'| translate}}</label>
                 <app-control-select-model
                   [inline]="true"
-                  [noLabel]="true"
+                  [label]="'label.jconon_application.h_index_fonte'| translate"
+                  [labelactive]="'true'"
                   [strings]="choice"
                   [showValidation]="true"
                   [allowClear]="true"
@@ -59,9 +59,5 @@ export class JcononAspectHIndexComponent extends DynamicComponent {
         )
       );
       super.ngOnInit();
-    }
-
-    onChangeToggle(reset: boolean) {
-      
     }
 }

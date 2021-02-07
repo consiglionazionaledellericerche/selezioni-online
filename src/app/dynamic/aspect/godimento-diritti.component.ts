@@ -6,23 +6,14 @@ import { DynamicComponent } from '../dynamic.component';
 @Component({
     selector: 'P:jconon_application:aspect_godimento_diritti',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isFlGodimentoDiritti()">
+      <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">
         <a class="it-has-checkbox flex-column">
-          <div class="it-right-zone w-100 border-bottom-0">
-            <label class="text-dark c-pointer" (click)="toggle()">{{'label.jconon_application.fl_godimento_diritti' | translate }}</label>
-            <div class="toggles mr-1">
-                <label for="fl_godimento_diritti">
-                    <input type="checkbox" (change)="onChangeToggle(true)" id="fl_godimento_diritti" 
-                      formControlName="jconon_application:fl_godimento_diritti">
-                    <span class="lever"></span>
-                    <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
-                      <span *ngFor="let error of hasErrors()" class="pr-2">
-                        <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
-                      </span>
-                    </div>
-                </label>
-            </div>
-          </div>
+          <app-control-toggle
+            class="it-right-zone w-100 border-bottom-0" 
+            (onChangeToggle)="onChangeToggle(true)"
+            [label]="'label.jconon_application.fl_godimento_diritti' | translate" 
+            formControlName="jconon_application:fl_godimento_diritti">
+          </app-control-toggle>    
           <div class="form-row w-100 pt-1">
             <div *ngSwitchCase="false" class="form-group col-md-12">
               <app-control-textarea 
@@ -64,10 +55,10 @@ export class JcononAspectGodimentoDirittiComponent extends DynamicComponent {
         this.form.controls['jconon_application:motivazione_no_godimento_diritti'].patchValue(null);
       }
       this.form.controls['jconon_application:motivazione_no_godimento_diritti']
-        .setValidators(this.isFlGodimentoDiritti()? undefined : Validators.required);
+        .setValidators(this.isToggle()? undefined : Validators.required);
     }
 
-    public isFlGodimentoDiritti(): boolean {
+    public isToggle(): boolean {
       return this.form.controls['jconon_application:fl_godimento_diritti'].value;      
     }
 }

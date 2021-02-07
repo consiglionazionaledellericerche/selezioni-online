@@ -100,13 +100,15 @@ export class FormLayoutComponent {
       'text-sm-right': true,
       'text-xs-left': true,
       'pt-0' : this.checkbox,
-      'active' : this.labelactive
+      'active' : this.labelactive,
+      'text-danger': this.isInvalid()
     };
   }
 
   contentClasses() {
     return {
-      'col-sm-10': !this.inline
+      'col-sm-10': !this.inline,
+      'is-invalid': this.isInvalid()
     };
   }
 

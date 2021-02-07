@@ -38,8 +38,4 @@ export class JcononAspectStrutturaAppartenenzaComponent extends DynamicComponent
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }
-
-    onChangeToggle(reset: boolean){
-      
-    }
 }
