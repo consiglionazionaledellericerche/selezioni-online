@@ -13,14 +13,15 @@ import {FormCommonTag} from './form-common-tag';
     <div class="it-right-zone w-100 border-bottom-0 p-0 ml-0">
       <label class="text-dark c-pointer" (click)="toggle()" translate>{{label}}</label>
       <div class="toggles mr-1">
-          <label for="{{name}}">
+          <label for="{{formControlName}}" (click)="toggle()">
               <input 
                 type="{{ type }}"
+                id="{{formControlName}}"
                 (change)="change($event.target.checked)"
                 #input
                 [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}"
                 [disabled]="disabled">
-              <span class="lever" (click)="toggle()"></span>
+              <span class="lever"></span>
               <div *ngIf=isInvalid() class="text-truncate text-danger mt-n2">
                 <span *ngFor="let error of hasErrors()" class="pr-2">
                   <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
@@ -36,6 +37,8 @@ export class FormTemplateToggleComponent extends FormCommonTag implements Contro
   @Input() type = 'checkbox';
 
   @Input() inputClass = ''; 
+
+  @Input() formControlName = ''; 
 
   @Input() nullIfEmpty = false;
 
