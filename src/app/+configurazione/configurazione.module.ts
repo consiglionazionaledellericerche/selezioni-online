@@ -36,7 +36,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     TagsModule,
 
     ConfigurazioneRoutingModule,
-    TranslateModule.forRoot({
+    TranslateModule.forChild({
       compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
       loader: {
           provide: TranslateLoader,

@@ -57,7 +57,7 @@ export enum ServiceReg {
     TooltipModule,
     PopoverModule,
     ButtonsModule.forRoot(),
-    TranslateModule.forRoot({
+    TranslateModule.forChild({
       compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
       loader: {
           provide: TranslateLoader,

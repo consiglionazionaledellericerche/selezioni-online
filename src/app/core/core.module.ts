@@ -79,7 +79,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     FormsModule,
     ReactiveFormsModule,
     ButtonsModule.forRoot(),
-    TranslateModule.forRoot({
+    TranslateModule.forChild({
       compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
       loader: {        
           provide: TranslateLoader,

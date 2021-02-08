@@ -104,7 +104,7 @@ import { JcononAspectConoscenzaLingueComponent } from './aspect/conoscenza-lingu
         SharedModule,
         TagsModule,
         ButtonsModule.forRoot(),
-        TranslateModule.forRoot({
+        TranslateModule.forChild({
             compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
             loader: {
                 provide: TranslateLoader,

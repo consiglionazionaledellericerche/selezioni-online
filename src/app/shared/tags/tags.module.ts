@@ -165,7 +165,7 @@ import { CustomTranslationCompiler } from '../../common/helpers/translation-comp
     ButtonsModule.forRoot(),
     PopoverModule.forRoot(),
     ColorPickerModule,
-    TranslateModule.forRoot({
+    TranslateModule.forChild({
       compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
       loader: {
           provide: TranslateLoader,

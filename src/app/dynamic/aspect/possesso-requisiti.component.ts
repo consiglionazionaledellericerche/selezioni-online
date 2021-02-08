@@ -41,4 +41,9 @@ export class JcononAspectPossessoRequisitiComponent extends DynamicComponent {
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }
+
+    toggle() {
+      let control = this.form.controls['jconon_application:fl_possesso_requisiti'];
+      control.patchValue(!control.value); 
+    }  
 }
