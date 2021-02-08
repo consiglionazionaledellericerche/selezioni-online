@@ -8,6 +8,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import {Injectable} from '@angular/core';
 import {ConfigService} from '../core/config.service';
 import { Comune } from '../common/model/comune.model';
+import { Sede } from '../common/model/sede.model';
 
 @Injectable()
 export class CacheService {
@@ -63,4 +64,19 @@ export class CacheService {
         }));
     }
 
+    public sedi(): Observable<Sede[]> {
+        return this.configService.getGateway().pipe(switchMap((gateway) => {
+            return this.httpClient.get<Sede[]>(gateway + ConfigService.URL_SEDI).pipe(
+                map((sedi) => {
+                    return sedi.map((sede) => {
+                        return new Sede(sede.sedeId, sede.label);
+                    });
+                }),
+                catchError((error: HttpErrorResponse) => {
+                    this.apiMessageService.sendMessage(MessageType.ERROR, error.error.error_description);
+                    return observableThrowError(error);
+                })
+            );
+        }));
+    }
 }

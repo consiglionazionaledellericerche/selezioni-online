@@ -288,6 +288,10 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:elenco_lingue_conosciute')
   public elenco_lingue_conosciute: string[] = undefined;
 
+  @JsonProperty('jconon_application:sede')
+  public sede: string[] = undefined;
+  @JsonProperty('jconon_application:descrizione_sede')
+  public descrizione_sede: string[] = undefined;
 
 
 

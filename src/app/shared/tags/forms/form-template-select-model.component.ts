@@ -44,11 +44,12 @@ declare var $: any;   // not required
                 {{ string | translate}}
               </option>
             </ng-container>
-
-            <option *ngFor="let item of items" [value]=item.getId() [selected]="isItemSelected(item.getId())">
-              {{ item.getLabel(detailedLabel) }}
-            </option>
-
+            <ng-container *ngFor="let item of items">
+              <option *ngIf="isOptionItemVisible(item)" [value]=item.getId() [selected]="isItemSelected(item.getId())">
+                {{ item.getLabel(detailedLabel) }}
+              </option>
+            </ng-container>
+            
             <option *ngFor="let item of enums" [value]=item.getEnumValue() [selected]="isEnumSelected(item.getEnumValue())">
               {{ item.getEnumValue() | translate }}
             </option>
@@ -58,7 +59,9 @@ declare var $: any;   // not required
 
         <div *ngIf="showList()" class="col-12 p-0 mt-0">
           <div class="chip chip-primary chip-lg" *ngFor="let s of showListItems()">
-            <span class="chip-label"><i *ngIf="multiSelectIcon" class="fa {{multiSelectIcon}} pr-1" aria-hidden="true"></i>{{ s }}</span>
+            <span class="chip-label">
+              <i *ngIf="multiSelectIcon" class="fa {{multiSelectIcon}} pr-1" aria-hidden="true"></i>{{ s }}
+            </span>
             <button (click)="unselect(s)">
               <svg class="icon"><use xlink:href="/assets/vendor/sprite.svg#it-close"></use></svg>
               <span class="sr-only" translate>delete</span>
@@ -226,6 +229,13 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
     return !this.isStringSelected(value);
   }
 
+  private isOptionItemVisible(value: any): boolean {
+    if (!this.isMultiSync()) {
+      return true;
+    }
+    return !this.isItemSelected(value);
+  }
+
   private updateSigleSync(data) {
     // same value prevent change detection
     if (this.selected && this.selected.getId && this.selected.getId() === +data.id) {
@@ -294,7 +304,7 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
     if (this.selected.length > 0) {
       var values;
       if (this.items) {
-        values = this.selected.filter( item =>  item.getObjectId() === +data.id);
+        values = this.selected.filter( item =>  item.getId() === data.id);
       } else if (this.strings) {
         values = this.selected.filter( item =>  item == data.id);      
       }
@@ -398,7 +408,9 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
       return this.selected ? this.selected === value : false;
     } 
     if (this.isMultiSync()) {
-      return false; // this.selected ? this.selected.filter(item => item === value).lenght > 0 : false;
+      return this.selected ? this.selected.filter(item => {
+        return item.id === value.id;
+      }).length > 0 : false;
     }
   }
 

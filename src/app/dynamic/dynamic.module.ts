@@ -51,6 +51,7 @@ import { JcononAspectPatenteGuidaComponent } from './aspect/patente-guida.compon
 import { JcononAspectAttoInterruttivoAnzianitaComponent } from './aspect/atto-interruttivo-anzianita.component';
 import { JcononAspectTitoloPreferenzaPostiComponent } from './aspect/titolo-preferenza-posti.component';
 import { JcononAspectConoscenzaLingueComponent } from './aspect/conoscenza-lingue.component';
+import { JcononAspectSedeComponent } from './aspect/sede.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -92,6 +93,7 @@ import { JcononAspectConoscenzaLingueComponent } from './aspect/conoscenza-lingu
         JcononAspectAttoInterruttivoAnzianitaComponent,
         JcononAspectTitoloPreferenzaPostiComponent,
         JcononAspectConoscenzaLingueComponent,
+        JcononAspectSedeComponent,
 
 
         JcononAttachmentShowComponent,
@@ -149,6 +151,7 @@ import { JcononAspectConoscenzaLingueComponent } from './aspect/conoscenza-lingu
         JcononAspectAttoInterruttivoAnzianitaComponent,
         JcononAspectTitoloPreferenzaPostiComponent,
         JcononAspectConoscenzaLingueComponent,
+        JcononAspectSedeComponent,
 
 
 

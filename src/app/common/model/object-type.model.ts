@@ -43,6 +43,7 @@ import { JcononAspectPatenteGuidaComponent } from '../../dynamic/aspect/patente-
 import { JcononAspectAttoInterruttivoAnzianitaComponent } from '../../dynamic/aspect/atto-interruttivo-anzianita.component';
 import { JcononAspectTitoloPreferenzaPostiComponent } from '../../dynamic/aspect/titolo-preferenza-posti.component';
 import { JcononAspectConoscenzaLingueComponent } from '../../dynamic/aspect/conoscenza-lingue.component';
+import { JcononAspectSedeComponent } from '../../dynamic/aspect/sede.component';
 
 export class ObjectType {
     
@@ -389,6 +390,10 @@ export class ObjectType {
     'P:jconon_application:aspect_conoscenza_lingue' : {
       model: Application,
       showcomponent: JcononAspectConoscenzaLingueComponent
+    },
+    'P:jconon_application:aspect_sede' : {
+      model: Application,
+      showcomponent: JcononAspectSedeComponent
     },
 
 

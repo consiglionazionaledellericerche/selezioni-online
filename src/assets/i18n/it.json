@@ -87,6 +87,7 @@
       "minlength8": "Deve essere lunga almeno 8 caratteri!",
       "minlength5": "Deve contenere almeno 5 caratteri",
       "maxlength5": "Deve contenere non più di 5 caratteri",
+      "maxlengtharray2": "Deve contenere non più di 2 elementi",
       "codicefiscalealredyexist": "Codice fiscale già presente!",
       "codicefiscale": "Codice fiscale non valido!"
     },
@@ -443,6 +444,8 @@
       "motivazione_preferenza_posti": "Motivazione preferenza posti",
       "fl_conoscenza_lingue": "di avere conoscenza delle seguenti lingue straniere tra quelle previste dal bando",
       "elenco_lingue_conosciute_placeholder": "Seleziona lingue...",
+      "sede": "Sede di lavoro prescelta",
+      "sede_placeholder": "@:placeholder.select.generic",
       
 
 
