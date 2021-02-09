@@ -60,7 +60,7 @@ declare var $: any;   // not required
         <div *ngIf="showList()" class="col-12 p-0 mt-0">
           <div class="chip chip-primary chip-lg col-auto" *ngFor="let s of showListItems()">
             <i *ngIf="multiSelectIcon" class="fa {{multiSelectIcon}} pr-1 label" aria-hidden="true"></i>
-            <div class="label text-truncate">{{ s }}</div>
+            <div class="label font-weight-semibold text-truncate">{{ s }}</div>
             <button (click)="unselect(s)">
               <svg class="icon"><use xlink:href="/assets/vendor/sprite.svg#it-close"></use></svg>
               <span class="sr-only" translate>delete</span>
