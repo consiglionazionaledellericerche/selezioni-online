@@ -10,3 +10,7 @@ textarea.form-control {
 .c-pointer {
     cursor: pointer;
 }
+
+.chip.chip-primary:hover > .label {
+    color: white;
+}
