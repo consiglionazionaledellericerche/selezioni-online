@@ -44,6 +44,12 @@ import { JcononAspectAttoInterruttivoAnzianitaComponent } from '../../dynamic/as
 import { JcononAspectTitoloPreferenzaPostiComponent } from '../../dynamic/aspect/titolo-preferenza-posti.component';
 import { JcononAspectConoscenzaLingueComponent } from '../../dynamic/aspect/conoscenza-lingue.component';
 import { JcononAspectSedeComponent } from '../../dynamic/aspect/sede.component';
+import { JcononAspectSanzioneDisciplinareComponent } from '../../dynamic/aspect/sanzione-disciplinare.component';
+import { JcononAspectSpecializzazioneComponent } from '../../dynamic/aspect/specializzazione.component';
+import { JcononAspectEnteCompartoRicercaAppartenenzaComponent } from '../../dynamic/aspect/ente-comparto-ricerca-appartenenza.component';
+import { JcononAspectEnteCompartoUniversitaAppartenenzaComponent } from '../../dynamic/aspect/ente-comparto-universita-appartenenza.component';
+import { JcononAspectEnteAppartenenzaComponent } from '../../dynamic/aspect/ente-appartenenza.component';
+import { JcononAspectSingleFieldComponent } from '../../dynamic/aspect/single-field.component';
 
 export class ObjectType {
     
@@ -394,6 +400,102 @@ export class ObjectType {
     'P:jconon_application:aspect_sede' : {
       model: Application,
       showcomponent: JcononAspectSedeComponent
+    },
+    'P:jconon_application:aspect_sanzione_disciplinare' : {
+      model: Application,
+      showcomponent: JcononAspectSanzioneDisciplinareComponent
+    },
+    'P:jconon_application:aspect_specializzazione' : {
+      model: Application,
+      showcomponent: JcononAspectSpecializzazioneComponent
+    },
+    'P:jconon_application:aspect_nulla_osta' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_nulla_osta',
+        name: 'fl_nulla_osta',
+        required: false,
+        label: 'label.jconon_application.fl_nulla_osta'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_nulla_osta_obbligatorio' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_nulla_osta',
+        name: 'fl_nulla_osta',
+        required: true,
+        label: 'label.jconon_application.fl_nulla_osta'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_superato_periodo_prova' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_superato_periodo_prova',
+        name: 'fl_superato_periodo_prova',
+        required: true,
+        label: 'label.jconon_application.fl_superato_periodo_prova'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_ente_comparto_ricerca_appartenenza' : {
+      model: Application,
+      showcomponent: JcononAspectEnteCompartoRicercaAppartenenzaComponent
+    },
+    'P:jconon_application:aspect_ente_comparto_universita_appartenenza' : {
+      model: Application,
+      showcomponent: JcononAspectEnteCompartoUniversitaAppartenenzaComponent
+    },
+    'P:jconon_application:aspect_ente_appartenenza' : {
+      model: Application,
+      showcomponent: JcononAspectEnteAppartenenzaComponent
+    },
+    'P:jconon_application:aspect_anzianita_servizio' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:anzianita_servizio',
+        name: 'anzianita_servizio',
+        required: true,
+        label: 'label.jconon_application.anzianita_servizio',
+        type: 'date',
+        class: 'col-md-4'
+      },
+      showcomponent: JcononAspectSingleFieldComponent
+    },
+    'P:jconon_application:aspect_anzianita_profilo' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:anzianita_profilo',
+        name: 'anzianita_profilo',
+        required: true,
+        label: 'label.jconon_application.anzianita_profilo',
+        type: 'date',
+        class: 'col-md-4'
+      },
+      showcomponent: JcononAspectSingleFieldComponent
+    },
+    'P:jconon_application:aspect_anzianita_livello' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:anzianita_livello',
+        name: 'anzianita_livello',
+        required: true,
+        label: 'label.jconon_application.anzianita_livello',
+        type: 'date',
+        class: 'col-md-4'
+      },
+      showcomponent: JcononAspectSingleFieldComponent
+    },
+    'P:jconon_application:aspect_area_amministrativa' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_area_amministrativa',
+        name: 'fl_area_amministrativa',
+        required: false,
+        label: 'label.jconon_application.fl_area_amministrativa'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
     },
 
 

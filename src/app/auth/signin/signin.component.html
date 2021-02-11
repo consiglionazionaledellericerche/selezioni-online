@@ -23,7 +23,7 @@
       <div class="card-body">
         <form (keyup.enter)="onSignin()" [formGroup]="ngForm">
             <div class="form-group">
-              <app-control-text type="text" [prepend]="'user'" [label]="'signin.username'| translate" [inline]="true" formControlName="username"></app-control-text>
+              <app-control-text type="text" [focus]="true" [prepend]="'user'" [label]="'signin.username'| translate" [inline]="true" formControlName="username"></app-control-text>
               <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                 <div *ngIf="f.username.errors.required">{{ 'signin.message.required.username' | translate }}</div>
               </div>

@@ -18,6 +18,7 @@ import { Helpers } from '../../common/helpers/helpers';
                   [labelactive]="'true'"
                   [multiple]="true"
                   [multiSelectIcon]="'fa-building'"
+                  [popoverMulti]="true"
                   (onChangeEvent)="onChangeSede($event)"
                   [strings]="sediLabel"
                   [showValidation]="true"
@@ -45,7 +46,7 @@ export class JcononAspectSedeComponent extends DynamicComponent {
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:descrizione_sede';
-      this.cacheService.sedi().subscribe((sedi) => {
+      this.cacheService.sedi('true').subscribe((sedi) => {
         this.sedi = sedi;
         this.sediLabel = sedi.map((sede: Sede) => {
           return sede.label;

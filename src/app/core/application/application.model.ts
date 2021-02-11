@@ -293,7 +293,72 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:descrizione_sede')
   public descrizione_sede: string[] = undefined;
 
+  @JsonProperty('jconon_application:fl_sanzione_disciplinare')
+  public fl_sanzione_disciplinare: boolean = undefined;
+  @JsonProperty('jconon_application:estremi_sanzione_disciplinare')
+  public estremi_sanzione_disciplinare: string = undefined;
 
+  @JsonProperty('jconon_application:fl_specializzazione')
+  public fl_specializzazione: boolean = undefined;
+  @JsonProperty('jconon_application:tipo_specializzazione')
+  public tipo_specializzazione: string = undefined;
+  @JsonProperty('jconon_application:data_specializzazione', ISODateConverter, true)
+  public data_specializzazione: Date = undefined;
+  @JsonProperty('jconon_application:istituto_specializzazione')
+  public istituto_specializzazione: string = undefined;
+
+  @JsonProperty('jconon_application:fl_ente_comparto_ricerca_appartenenza')
+  public fl_ente_comparto_ricerca_appartenenza: boolean = undefined;
+  @JsonProperty('jconon_application:ente_comparto_ricerca_appartenenza')
+  public ente_comparto_ricerca_appartenenza: string = undefined;
+  @JsonProperty('jconon_application:comune_ente_comparto_ricerca_appartenenza', ObjectToIdConverter)
+  public comune_ente_comparto_ricerca_appartenenza: string = undefined;
+  @JsonProperty('jconon_application:provincia_ente_comparto_ricerca_appartenenza')
+  public provincia_ente_comparto_ricerca_appartenenza: string = undefined;
+  @JsonProperty('jconon_application:profilo_ente_comparto_ricerca_appartenenza')
+  public profilo_ente_comparto_ricerca_appartenenza: string = undefined;
+  @JsonProperty('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_servizio', ISODateConverter, true)
+  public ente_comparto_ricerca_appartenenza_anzianita_servizio: Date = undefined;
+  @JsonProperty('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_profilo', ISODateConverter, true)
+  public ente_comparto_ricerca_appartenenza_anzianita_profilo: Date = undefined;
+  @JsonProperty('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_livello', ISODateConverter, true)
+  public ente_comparto_ricerca_appartenenza_anzianita_livello: Date = undefined;
+
+
+  @JsonProperty('jconon_application:fl_ente_comparto_universita_appartenenza')
+  public fl_ente_comparto_universita_appartenenza: boolean = undefined;
+  @JsonProperty('jconon_application:ente_comparto_universita_appartenenza')
+  public ente_comparto_universita_appartenenza: string = undefined;
+  @JsonProperty('jconon_application:comune_ente_comparto_universita_appartenenza', ObjectToIdConverter)
+  public comune_ente_comparto_universita_appartenenza: string = undefined;
+  @JsonProperty('jconon_application:provincia_ente_comparto_universita_appartenenza')
+  public provincia_ente_comparto_universita_appartenenza: string = undefined;
+  @JsonProperty('jconon_application:categoria_ente_comparto_universita_appartenenza')
+  public categoria_ente_comparto_universita_appartenenza: string = undefined;
+  @JsonProperty('jconon_application:ente_comparto_universita_appartenenza_anzianita_servizio', ISODateConverter, true)
+  public ente_comparto_universita_appartenenza_anzianita_servizio: Date = undefined;
+  @JsonProperty('jconon_application:ente_comparto_universita_appartenenza_anzianita_profilo', ISODateConverter, true)
+  public ente_comparto_universita_appartenenza_anzianita_profilo: Date = undefined;
+
+  @JsonProperty('jconon_application:ente_appartenenza')
+  public ente_appartenenza: string = undefined;
+  @JsonProperty('jconon_application:comune_ente_appartenenza', ObjectToIdConverter)
+  public comune_ente_appartenenza: string = undefined;
+  @JsonProperty('jconon_application:provincia_ente_appartenenza')
+  public provincia_ente_appartenenza: string = undefined;
+
+  @JsonProperty('jconon_application:anzianita_servizio', ISODateConverter, true)
+  public anzianita_servizio: Date = undefined;
+
+  @JsonProperty('jconon_application:anzianita_profilo', ISODateConverter, true)
+  public anzianita_profilo: Date = undefined;
+
+  @JsonProperty('jconon_application:anzianita_livello', ISODateConverter, true)
+  public anzianita_livello: Date = undefined;
+
+  @JsonProperty('jconon_application:fl_area_amministrativa')
+  public fl_area_amministrativa: boolean = undefined;
+  
 
 
 

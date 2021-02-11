@@ -52,6 +52,12 @@ import { JcononAspectAttoInterruttivoAnzianitaComponent } from './aspect/atto-in
 import { JcononAspectTitoloPreferenzaPostiComponent } from './aspect/titolo-preferenza-posti.component';
 import { JcononAspectConoscenzaLingueComponent } from './aspect/conoscenza-lingue.component';
 import { JcononAspectSedeComponent } from './aspect/sede.component';
+import { JcononAspectSanzioneDisciplinareComponent } from './aspect/sanzione-disciplinare.component';
+import { JcononAspectSpecializzazioneComponent } from './aspect/specializzazione.component';
+import { JcononAspectEnteCompartoRicercaAppartenenzaComponent } from './aspect/ente-comparto-ricerca-appartenenza.component';
+import { JcononAspectEnteCompartoUniversitaAppartenenzaComponent } from './aspect/ente-comparto-universita-appartenenza.component';
+import { JcononAspectEnteAppartenenzaComponent } from './aspect/ente-appartenenza.component';
+import { JcononAspectSingleFieldComponent } from './aspect/single-field.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -94,6 +100,15 @@ import { JcononAspectSedeComponent } from './aspect/sede.component';
         JcononAspectTitoloPreferenzaPostiComponent,
         JcononAspectConoscenzaLingueComponent,
         JcononAspectSedeComponent,
+        JcononAspectSanzioneDisciplinareComponent,
+        JcononAspectSpecializzazioneComponent,
+        JcononAspectEnteCompartoRicercaAppartenenzaComponent,
+        JcononAspectEnteCompartoUniversitaAppartenenzaComponent,
+        JcononAspectEnteAppartenenzaComponent,
+        JcononAspectSingleFieldComponent,
+
+
+
 
 
         JcononAttachmentShowComponent,
@@ -152,6 +167,14 @@ import { JcononAspectSedeComponent } from './aspect/sede.component';
         JcononAspectTitoloPreferenzaPostiComponent,
         JcononAspectConoscenzaLingueComponent,
         JcononAspectSedeComponent,
+        JcononAspectSanzioneDisciplinareComponent,
+        JcononAspectSpecializzazioneComponent,
+        JcononAspectEnteCompartoRicercaAppartenenzaComponent,
+        JcononAspectEnteCompartoUniversitaAppartenenzaComponent,
+        JcononAspectEnteAppartenenzaComponent,
+        JcononAspectSingleFieldComponent,
+
+
 
 
 

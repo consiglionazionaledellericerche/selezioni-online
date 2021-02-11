@@ -21,7 +21,7 @@
         <form [formGroup]="ngForm">
           <div [ngClass]="{'row': !entity.userName}">
             <div class="form-group" [ngClass]="{'col-md-6': !entity.userName}">
-              <app-control-text type="text" [label]="'user.firstname'| translate" [inline]="true" formControlName="firstName"></app-control-text>
+              <app-control-text type="text" [focus]="true" [label]="'user.firstname'| translate" [inline]="true" formControlName="firstName"></app-control-text>
             </div>
             <div class="form-group" [ngClass]="{'col-md-6': !entity.userName}">
               <app-control-text type="text" [label]="'user.lastname'| translate" [inline]="true" formControlName="lastName"></app-control-text>
