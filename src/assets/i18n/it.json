@@ -459,6 +459,7 @@
       "comune_ente_comparto_ricerca_appartenenza": "Sede di servizio",
       "provincia_ente_comparto_ricerca_appartenenza": "Provincia",
       "profilo_ente_comparto_ricerca_appartenenza": "Profilo",
+      "profilo_ente_comparto_ricerca_appartenenza_placeholder": "@:placeholder.select.generic",
       "ente_comparto_ricerca_appartenenza_anzianita_servizio": "Anzianità di servizio dal",
       "ente_comparto_ricerca_appartenenza_anzianita_profilo": "Anzianità nel profilo dal",
       "ente_comparto_ricerca_appartenenza_anzianita_livello": "Anzianità nel livello dal",

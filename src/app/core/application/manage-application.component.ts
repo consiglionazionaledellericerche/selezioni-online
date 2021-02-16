@@ -144,6 +144,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
           this.setEntity(application);
           this.buildCreateForm();
         });
+        this.translateService.reloadLang('it');
         this.callService.loadLabels(call.objectId).subscribe((labels) => {
           if (labels) {
             this.translateService.setTranslation('it', Helpers.convertProperties(labels), true);

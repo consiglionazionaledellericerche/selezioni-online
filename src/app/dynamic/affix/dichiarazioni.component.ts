@@ -19,7 +19,8 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `,
     styles: [
-      'ul.it-list {list-style-type: upper-alpha;}'
+      'ul.it-list {list-style-type: upper-alpha;}',
+      'ul.it-list li::marker {font-weight: bold;}'
     ]
   })
 export class JcononAffixDichiarazioniComponent extends DynamicComponent {

@@ -63,7 +63,7 @@ import { Comune } from '../../common/model/comune.model';
                 [showValidation]="true"
                 [allowClear]="true"
                 [showValidation]="true"
-                [placeholder]="'jconon_application:profilo_ente_comparto_ricerca_appartenenza_placeholder'| translate"
+                [placeholder]="'label.jconon_application.profilo_ente_comparto_ricerca_appartenenza_placeholder'| translate"
                 formControlName="jconon_application:profilo_ente_comparto_ricerca_appartenenza">
               </app-control-select-model>          
             </div>

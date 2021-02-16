@@ -20,7 +20,7 @@ import { DynamicComponent } from '../dynamic.component';
                 </app-control-text>
               </div>
             </div>
-            <div class="form-row w-100 pt-1">
+            <div class="form-row w-100 pt-1 pl-2">
               <div class="form-group col-md-9">
                   <app-control-select-model
                   [inline]="true"
