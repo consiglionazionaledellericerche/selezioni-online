@@ -477,11 +477,20 @@
       "anzianita_profilo": "Anzianità nel profilo dal",
       "anzianita_livello": "Anzianità nel livello dal",
       "fl_area_amministrativa": "Area amministrativa",
-
-
-
-
-
+      "fl_area_tecnica": "Area Tecnica",
+      "area_tecnica": "Tipologia",
+      "area_tecnica_placeholder": "@:placeholder.select.generic",
+      "fl_precedente_servizio_cnr": "di aver avuto precedenti rapporti con il Consiglio Nazionale delle Ricerche",
+      "profilo_precedente_servizio_cnr": "in qualità di",
+      "fl_precedente_servizio_altre_amministrazioni": "di avere avuto precedenti rapporti con altre amministrazioni pubbliche o private",
+      "profilo_precedente_servizio_altre_amministrazioni": "in qualità di",
+      "fl_alta_qualificazione": "di essere in possesso di alta qualificazione tecnico-scientifica nel campo della ricerca",
+      "alta_qualificazione": "",
+      "fl_esperienza_gestionale": "di essere in possesso di esperienza gestionale di enti ed istituzioni pubbliche o private",
+      "esperienza_gestionale": "",
+      "fl_incompatibilita": "che non sussistono cause di inconferibilità e di incompatibilità, ai sensi degli artt. 20 del D.Lgs. n. 39 del 2013 e 15 dello Statuto del CNR, di impegnarsi ad informare tempestivamente l’Amministrazione qualora si verifichino circostanze modificative della presente dichiarazione",
+      "fl_obblighi_militari": "di essere in posizione regolare nei confronti degli obblighi militari, qualora soggetti",
+      "obblighi_militari_motivazione": "Indicare le eventuali motivazioni: (es. non soggetto, esonerato, riformato ecc.)",
 
 
 

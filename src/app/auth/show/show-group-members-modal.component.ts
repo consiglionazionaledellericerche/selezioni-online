@@ -18,7 +18,7 @@ import {throwError as observableThrowError, of as observableOf, Observable} from
 
     <ng-template #template>
       <div class="modal-header">
-        <h2 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{displayName | translate}}</h2>
+        <h4 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{displayName | translate}}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
         </button>

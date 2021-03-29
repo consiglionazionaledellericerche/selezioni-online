@@ -359,6 +359,41 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:fl_area_amministrativa')
   public fl_area_amministrativa: boolean = undefined;
   
+  @JsonProperty('jconon_application:fl_area_tecnica')
+  public fl_area_tecnica: boolean = undefined;
+  @JsonProperty('jconon_application:area_tecnica')
+  public area_tecnica: string[] = undefined;
+
+  @JsonProperty('jconon_application:fl_precedente_servizio_cnr')
+  public fl_precedente_servizio_cnr: boolean = undefined;
+  @JsonProperty('jconon_application:profilo_precedente_servizio_cnr')
+  public profilo_precedente_servizio_cnr: string = undefined;
+
+  @JsonProperty('jconon_application:fl_precedente_servizio_altre_amministrazioni')
+  public fl_precedente_servizio_altre_amministrazioni: boolean = undefined;
+  @JsonProperty('jconon_application:profilo_precedente_servizio_altre_amministrazioni')
+  public profilo_precedente_servizio_altre_amministrazioni: string = undefined;
+
+  @JsonProperty('jconon_application:fl_alta_qualificazione')
+  public fl_alta_qualificazione: boolean = undefined;
+  @JsonProperty('jconon_application:alta_qualificazione')
+  public alta_qualificazione: string = undefined;
+
+  @JsonProperty('jconon_application:fl_esperienza_gestionale')
+  public fl_esperienza_gestionale: boolean = undefined;
+  @JsonProperty('jconon_application:esperienza_gestionale')
+  public esperienza_gestionale: string = undefined;
+
+  @JsonProperty('jconon_application:fl_incompatibilita')
+  public fl_incompatibilita: boolean = undefined;
+  
+  @JsonProperty('jconon_application:fl_obblighi_militari')
+  public fl_obblighi_militari: boolean = undefined;
+  @JsonProperty('jconon_application:obblighi_militari_motivazione')
+  public obblighi_militari_motivazione: string = undefined;
+
+
+
 
 
 

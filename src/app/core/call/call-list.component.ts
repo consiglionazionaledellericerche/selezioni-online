@@ -14,7 +14,7 @@ import {TranslateService} from '@ngx-translate/core';
     <!-- List -->
     <app-grid-layout [loading]="loading" [items]="items" [page]="getPage()" [showTotalOnTop]="showTotalOnTop"
                      [count]="count" (onChangePage)="onChangePage($event)" [page_offset]="pageOffset">
-      <div *ngFor="let item of items" class="col-sm-12 px-md-2" [ngClass]="classForDisplayCard()">
+      <div *ngFor="let item of items" class="col-sm-12 px-md-2 pb-2" [ngClass]="classForDisplayCard()">
         <app-list-item-call [item]="item" [filterForm]="filterForm" (onDelete)="onDelete(item.getId())">
           <div class="col-sm-12">
             <app-show-text [label]="'call.profilo'" [value]="item.profilo" [strong]="false"></app-show-text>

@@ -58,6 +58,8 @@ import { JcononAspectEnteCompartoRicercaAppartenenzaComponent } from './aspect/e
 import { JcononAspectEnteCompartoUniversitaAppartenenzaComponent } from './aspect/ente-comparto-universita-appartenenza.component';
 import { JcononAspectEnteAppartenenzaComponent } from './aspect/ente-appartenenza.component';
 import { JcononAspectSingleFieldComponent } from './aspect/single-field.component';
+import { JcononAspectAreaTecnicaComponent } from './aspect/area-tecnica.component';
+import { JcononAspectToggleWithSingleFieldComponent } from './aspect/toggle-with-single-field.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -106,6 +108,8 @@ import { JcononAspectSingleFieldComponent } from './aspect/single-field.componen
         JcononAspectEnteCompartoUniversitaAppartenenzaComponent,
         JcononAspectEnteAppartenenzaComponent,
         JcononAspectSingleFieldComponent,
+        JcononAspectAreaTecnicaComponent,
+        JcononAspectToggleWithSingleFieldComponent,
 
 
 
@@ -173,6 +177,8 @@ import { JcononAspectSingleFieldComponent } from './aspect/single-field.componen
         JcononAspectEnteCompartoUniversitaAppartenenzaComponent,
         JcononAspectEnteAppartenenzaComponent,
         JcononAspectSingleFieldComponent,
+        JcononAspectAreaTecnicaComponent,
+        JcononAspectToggleWithSingleFieldComponent,
 
 
 

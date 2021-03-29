@@ -50,6 +50,8 @@ import { JcononAspectEnteCompartoRicercaAppartenenzaComponent } from '../../dyna
 import { JcononAspectEnteCompartoUniversitaAppartenenzaComponent } from '../../dynamic/aspect/ente-comparto-universita-appartenenza.component';
 import { JcononAspectEnteAppartenenzaComponent } from '../../dynamic/aspect/ente-appartenenza.component';
 import { JcononAspectSingleFieldComponent } from '../../dynamic/aspect/single-field.component';
+import { JcononAspectAreaTecnicaComponent } from '../../dynamic/aspect/area-tecnica.component';
+import { JcononAspectToggleWithSingleFieldComponent } from '../../dynamic/aspect/toggle-with-single-field.component';
 
 export class ObjectType {
     
@@ -497,6 +499,88 @@ export class ObjectType {
       },
       showcomponent: JcononAspectsDichiarazioneComponent
     },
+    'P:jconon_application:aspect_area_tecnica' : {
+      model: Application,
+      showcomponent: JcononAspectAreaTecnicaComponent
+    },
+    'P:jconon_application:aspect_precedente_servizio_cnr' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_precedente_servizio_cnr',
+        toggleName: 'fl_precedente_servizio_cnr',
+        toggleLabel: 'label.jconon_application.fl_precedente_servizio_cnr',
+        textPropertyName: 'jconon_application:profilo_precedente_servizio_cnr',
+        textName: 'profilo_precedente_servizio_cnr',
+        textLabel: 'label.jconon_application.profilo_precedente_servizio_cnr'
+      },
+      showcomponent: JcononAspectToggleWithSingleFieldComponent
+    },
+    'P:jconon_application:aspect_precedente_servizio_altre_amministrazioni' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_precedente_servizio_altre_amministrazioni',
+        toggleName: 'fl_precedente_servizio_altre_amministrazioni',
+        toggleLabel: 'label.jconon_application.fl_precedente_servizio_altre_amministrazioni',
+        textPropertyName: 'jconon_application:profilo_precedente_servizio_altre_amministrazioni',
+        textName: 'profilo_precedente_servizio_altre_amministrazioni',
+        textLabel: 'label.jconon_application.profilo_precedente_servizio_altre_amministrazioni'
+      },
+      showcomponent: JcononAspectToggleWithSingleFieldComponent
+    },
+    'P:jconon_application:aspect_alta_qualificazione' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_alta_qualificazione',
+        toggleName: 'fl_alta_qualificazione',
+        requiredTrue: true,
+        textType: "textarea",
+        toggleLabel: 'label.jconon_application.fl_alta_qualificazione',
+        textPropertyName: 'jconon_application:alta_qualificazione',
+        textName: 'alta_qualificazione',
+        textLabel: 'label.jconon_application.alta_qualificazione'
+      },
+      showcomponent: JcononAspectToggleWithSingleFieldComponent
+    },
+    'P:jconon_application:aspect_esperienza_gestionale' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_esperienza_gestionale',
+        toggleName: 'fl_esperienza_gestionale',
+        requiredTrue: true,
+        textType: "textarea",
+        toggleLabel: 'label.jconon_application.fl_esperienza_gestionale',
+        textPropertyName: 'jconon_application:esperienza_gestionale',
+        textName: 'esperienza_gestionale',
+        textLabel: 'label.jconon_application.esperienza_gestionale'
+      },
+      showcomponent: JcononAspectToggleWithSingleFieldComponent
+    },
+    'P:jconon_application:aspect_incompatibilita' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_incompatibilita',
+        name: 'fl_incompatibilita',
+        required: true,
+        label: 'label.jconon_application.fl_incompatibilita'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_obblighi_militari' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_obblighi_militari',
+        toggleName: 'fl_obblighi_militari',
+        toggle: false,
+        required: true,
+        toggleLabel: 'label.jconon_application.fl_obblighi_militari',
+        textPropertyName: 'jconon_application:obblighi_militari_motivazione',
+        textName: 'obblighi_militari_motivazione',
+        textLabel: 'label.jconon_application.obblighi_militari_motivazione'
+      },
+      showcomponent: JcononAspectToggleWithSingleFieldComponent
+    },
+
+
 
 
 

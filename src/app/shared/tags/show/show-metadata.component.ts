@@ -8,7 +8,7 @@ import { DynamicService} from '../../../dynamic/dynamic.service';
     selector: 'show-metadata',
     template: `
               <div class="modal-header">
-                  <h2 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{'properties' | translate}}</h2>
+                  <h4 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{'properties' | translate}}</h4>
                   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                   <span aria-hidden="true">&times;</span>
                 </button>

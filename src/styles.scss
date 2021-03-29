@@ -59,6 +59,12 @@
   }  
 }
 
+@media (min-width: 1400px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl {
+      max-width: calc(100vw - 200px);
+  }
+}
+
 .was-validated .custom-select:invalid, .custom-select.is-invalid, .custom-select.is-valid  {
   background: none;
 }
@@ -83,4 +89,10 @@
 
 .toggles label input.is-invalid[type=checkbox] + .lever:after {
   background-color: $red;
+}
+.page-item.active .page-link {
+  z-index: 1;
+  color: $pagination-active-color;
+  background-color: $pagination-active-bg;
+  border-color: $pagination-active-border-color;
 }
