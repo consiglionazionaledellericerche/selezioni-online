@@ -7,6 +7,9 @@ import { Attachment } from './attachment.model';
 import { DocumentoRiconoscimento } from './documento_riconoscimento.model'
 import { User } from '../../auth/model/user.model';
 
+import { Validators } from '@angular/forms';
+import { Helpers } from '../helpers/helpers';
+
 import { JcononAttachmentCallShowComponent } from '../../dynamic/attachment/jconon-attachment-call-show.component';
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from '../../dynamic/attachment/jconon-attachment-documento-riconoscimento-show.component';
 import { JcononAttachmentShowComponent } from '../../dynamic/attachment/jconon-attachment-show.component';
@@ -52,6 +55,11 @@ import { JcononAspectEnteAppartenenzaComponent } from '../../dynamic/aspect/ente
 import { JcononAspectSingleFieldComponent } from '../../dynamic/aspect/single-field.component';
 import { JcononAspectAreaTecnicaComponent } from '../../dynamic/aspect/area-tecnica.component';
 import { JcononAspectToggleWithSingleFieldComponent } from '../../dynamic/aspect/toggle-with-single-field.component';
+import { JcononAspectContrattoTDConcorsoComponent } from '../../dynamic/aspect/contratto-td-concorso.component';
+import { JcononAspectIdoneoPrecedentiGraduatorieComponent } from '../../dynamic/aspect/idoneo-precedenti-graduatorie.component';
+import { JcononAspectAbilitazioneProfessioneIngegnereComponent } from '../../dynamic/aspect/abilitazione-professione-ingegnere.component';
+import { JcononAspectUlterioreLaureaComponent } from '../../dynamic/aspect/ulteriore-laurea.component';
+import { JcononAspectUlterioreDottoratoComponent } from '../../dynamic/aspect/ulteriore-dottorato.component';
 
 export class ObjectType {
     
@@ -579,6 +587,141 @@ export class ObjectType {
       },
       showcomponent: JcononAspectToggleWithSingleFieldComponent
     },
+    'P:jconon_application:aspect_licenziamento_disciplinare' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_licenziamento_disciplinare',
+        toggleName: 'fl_licenziamento_disciplinare',
+        toggle: false,
+        required: true,
+        textType: "textarea",
+        toggleLabel: 'label.jconon_application.fl_licenziamento_disciplinare',
+        textPropertyName: 'jconon_application:motivazione_licenziamento_disciplinare',
+        textName: 'motivazione_licenziamento_disciplinare',
+        textLabel: 'label.jconon_application.motivazione_licenziamento_disciplinare'
+      },
+      showcomponent: JcononAspectToggleWithSingleFieldComponent
+    },
+    'P:jconon_application:aspect_vincolo_sede' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_vincolo_sede',
+        name: 'fl_vincolo_sede',
+        required: true,
+        label: 'label.jconon_application.fl_vincolo_sede'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_contratto_altra_pa' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_contratto_altra_pa',
+        name: 'fl_contratto_altra_pa',
+        required: true,
+        label: 'label.jconon_application.fl_contratto_altra_pa'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_contratto_td_concorso' : {
+      model: Application,
+      showcomponent: JcononAspectContrattoTDConcorsoComponent
+    },
+    'P:jconon_application:aspect_idoneo_precedenti_graduatorie' : {
+      model: Application,
+      showcomponent: JcononAspectIdoneoPrecedentiGraduatorieComponent
+    },
+    'P:jconon_application:aspect_servizi_collocamento' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_dichiarazione_servizi_collocamento',
+        name: 'fl_dichiarazione_servizi_collocamento',
+        required: true,
+        label: 'label.jconon_application.fl_dichiarazione_servizi_collocamento'
+      },
+      showcomponent: JcononAspectsDichiarazioneComponent
+    },
+    'P:jconon_application:aspect_motivazioni_candidatura' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:motivazioni_candidatura',
+        name: 'motivazioni_candidatura',
+        required: true,
+        label: 'label.jconon_application.motivazioni_candidatura',
+        type: 'textarea',
+        validators: [Validators.required, Helpers.maxlengthValidator(1800, {maxlength1800: true})]
+      },
+      showcomponent: JcononAspectSingleFieldComponent
+    },
+    'P:jconon_application:aspect_abilitazione_professione_ingegnere' : {
+      model: Application,
+      showcomponent: JcononAspectAbilitazioneProfessioneIngegnereComponent
+    },
+    'P:jconon_application:aspect_abilitazione_professione_forense' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_abilitazione_professione_forense',
+        toggleName: 'fl_abilitazione_professione_forense',
+        toggleLabel: 'label.jconon_application.fl_abilitazione_professione_forense',
+        textType: 'date',
+        textClass: 'col-md-4',
+        textPropertyName: 'jconon_application:data_abilitazione_professione_forense',
+        textName: 'data_abilitazione_professione_forense',
+        textLabel: 'label.jconon_application.data_abilitazione_professione_forense',
+        validators: [Validators.requiredTrue]
+      },
+      showcomponent: JcononAspectToggleWithSingleFieldComponent
+    },
+    'P:jconon_application:aspect_area_territoriale' : {
+      model: Application,
+      params: {
+        aspectName: 'P:jconon_application:aspect_area_territoriale',
+        propertyName: 'jconon_application:fl_area_territoriale',
+        toggleName: 'fl_area_territoriale',
+        toggleLabel: 'label.jconon_application.fl_area_territoriale',
+        textType: 'select',
+        textPropertyName: 'jconon_application:area_territoriale',
+        textName: 'area_territoriale',
+        textLabel: 'label.jconon_application.area_territoriale',
+        validators: [Validators.requiredTrue]
+      },
+      showcomponent: JcononAspectToggleWithSingleFieldComponent
+    },
+    'P:jconon_application:aspect_profili' : {
+      model: Application,
+      params: {
+        aspectName: 'P:jconon_application:aspect_profili',
+        propertyName: 'jconon_application:profilo_componente',
+        name: 'profilo_componente',
+        required: true,
+        label: 'label.jconon_application.profilo_componente',
+        type: 'select'
+      },
+      showcomponent: JcononAspectSingleFieldComponent
+    },
+    'P:jconon_application:aspect_ulteriore_laurea' : {
+      model: Application,
+      showcomponent: JcononAspectUlterioreLaureaComponent
+    },
+    'P:jconon_application:aspect_ulteriore_dottorato' : {
+      model: Application,
+      showcomponent: JcononAspectUlterioreDottoratoComponent
+    },
+    'P:jconon_application:aspect_altri_assegni' : {
+      model: Application,
+      params: {
+        propertyName: 'jconon_application:fl_altri_assegni',
+        toggleName: 'fl_altri_assegni',
+        toggleLabel: 'label.jconon_application.fl_altri_assegni',
+        textType: 'textarea',
+        textPropertyName: 'jconon_application:testo_altri_assegni',
+        textName: 'testo_altri_assegni',
+        textLabel: 'label.jconon_application.testo_altri_assegni',
+      },
+      showcomponent: JcononAspectToggleWithSingleFieldComponent
+    },
+
+
+
 
 
 

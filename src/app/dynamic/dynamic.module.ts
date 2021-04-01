@@ -60,6 +60,11 @@ import { JcononAspectEnteAppartenenzaComponent } from './aspect/ente-appartenenz
 import { JcononAspectSingleFieldComponent } from './aspect/single-field.component';
 import { JcononAspectAreaTecnicaComponent } from './aspect/area-tecnica.component';
 import { JcononAspectToggleWithSingleFieldComponent } from './aspect/toggle-with-single-field.component';
+import { JcononAspectContrattoTDConcorsoComponent } from './aspect/contratto-td-concorso.component';
+import { JcononAspectIdoneoPrecedentiGraduatorieComponent } from './aspect/idoneo-precedenti-graduatorie.component';
+import { JcononAspectAbilitazioneProfessioneIngegnereComponent } from './aspect/abilitazione-professione-ingegnere.component';
+import { JcononAspectUlterioreLaureaComponent } from './aspect/ulteriore-laurea.component';
+import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dottorato.component';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -110,6 +115,11 @@ import { JcononAspectToggleWithSingleFieldComponent } from './aspect/toggle-with
         JcononAspectSingleFieldComponent,
         JcononAspectAreaTecnicaComponent,
         JcononAspectToggleWithSingleFieldComponent,
+        JcononAspectContrattoTDConcorsoComponent,
+        JcononAspectIdoneoPrecedentiGraduatorieComponent,
+        JcononAspectAbilitazioneProfessioneIngegnereComponent,
+        JcononAspectUlterioreLaureaComponent,
+        JcononAspectUlterioreDottoratoComponent,
 
 
 
@@ -179,6 +189,11 @@ import { JcononAspectToggleWithSingleFieldComponent } from './aspect/toggle-with
         JcononAspectSingleFieldComponent,
         JcononAspectAreaTecnicaComponent,
         JcononAspectToggleWithSingleFieldComponent,
+        JcononAspectContrattoTDConcorsoComponent,
+        JcononAspectIdoneoPrecedentiGraduatorieComponent,
+        JcononAspectAbilitazioneProfessioneIngegnereComponent,
+        JcononAspectUlterioreLaureaComponent,
+        JcononAspectUlterioreDottoratoComponent,
 
 
 

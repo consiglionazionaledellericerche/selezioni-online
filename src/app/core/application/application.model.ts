@@ -392,6 +392,69 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:obblighi_militari_motivazione')
   public obblighi_militari_motivazione: string = undefined;
 
+  @JsonProperty('jconon_application:fl_licenziamento_disciplinare')
+  public fl_licenziamento_disciplinare: boolean = undefined;
+  @JsonProperty('jconon_application:motivazione_licenziamento_disciplinare')
+  public motivazione_licenziamento_disciplinare: string = undefined;
+
+  @JsonProperty('jconon_application:fl_contratto_td_concorso_presso')
+  public fl_contratto_td_concorso_presso: boolean = undefined;
+  @JsonProperty('jconon_application:contratto_td_concorso_ente')
+  public contratto_td_concorso_ente: string = undefined;
+  @JsonProperty('jconon_application:contratto_td_concorso_altro_ente')
+  public contratto_td_concorso_altro_ente: string = undefined;
+  @JsonProperty('jconon_application:contratto_td_concorso_codice_riferimento')
+  public contratto_td_concorso_codice_riferimento: string = undefined;
+
+  @JsonProperty('jconon_application:fl_idoneo_precedenti_graduatorie')
+  public fl_idoneo_precedenti_graduatorie: boolean = undefined;
+  @JsonProperty('jconon_application:numero_bando_idoneo_precedenti_graduatorie')
+  public numero_bando_idoneo_precedenti_graduatorie: string = undefined;
+  @JsonProperty('jconon_application:anno_bando_idoneo_precedenti_graduatorie')
+  public anno_bando_idoneo_precedenti_graduatorie: BigInteger = undefined;
+  @JsonProperty('jconon_application:numero_protocollo_idoneo_precedenti_graduatorie')
+  public numero_protocollo_idoneo_precedenti_graduatorie: string = undefined;
+  @JsonProperty('jconon_application:data_graduatoria_idoneo_precedenti_graduatorie', ISODateConverter)
+  public data_graduatoria_idoneo_precedenti_graduatorie: Date = undefined;
+
+  @JsonProperty('jconon_application:fl_abilitazione_professione_ingegnere')
+  public fl_abilitazione_professione_ingegnere: boolean = undefined;
+  @JsonProperty('jconon_application:data_abilitazione_professione_ingegnere', ISODateConverter)
+  public data_abilitazione_professione_ingegnere: Date = undefined;
+  @JsonProperty('jconon_application:fl_iscrizione_albo_professione_ingegnere')
+  public fl_iscrizione_albo_professione_ingegnere: boolean = undefined;
+  @JsonProperty('jconon_application:data_iscrizione_albo_professione_ingegnere', ISODateConverter)
+  public data_iscrizione_albo_professione_ingegnere: Date = undefined;
+  @JsonProperty('jconon_application:provincia_iscrizione_albo_professione_ingegnere')
+  public provincia_iscrizione_albo_professione_ingegnere: string = undefined;
+  @JsonProperty('jconon_application:sezione_iscrizione_albo_professione_ingegnere')
+  public sezione_iscrizione_albo_professione_ingegnere: string = undefined;
+  @JsonProperty('jconon_application:settore_iscrizione_albo_professione_ingegnere')
+  public settore_iscrizione_albo_professione_ingegnere: string = undefined;
+
+  @JsonProperty('jconon_application:fl_ulteriore_laurea')
+  public fl_ulteriore_laurea: boolean = undefined;
+  @JsonProperty('jconon_application:tipo_ulteriore_laurea')
+  public tipo_ulteriore_laurea: string = undefined;
+  @JsonProperty('jconon_application:data_ulteriore_laurea', ISODateConverter, true)
+  public data_ulteriore_laurea: Date = undefined;
+  @JsonProperty('jconon_application:punteggio_ulteriore_laurea')
+  public punteggio_ulteriore_laurea: string = undefined;
+  @JsonProperty('jconon_application:istituto_ulteriore_laurea')
+  public istituto_ulteriore_laurea: string = undefined;
+  @JsonProperty('jconon_application:fl_ulteriore_laurea_equipollente')
+  public fl_ulteriore_laurea_equipollente: boolean = undefined;
+
+  @JsonProperty('jconon_application:fl_ulteriore_dottorato')
+  public fl_ulteriore_dottorato: boolean = undefined;
+  @JsonProperty('jconon_application:tipo_ulteriore_dottorato')
+  public tipo_ulteriore_dottorato: string = undefined;
+  @JsonProperty('jconon_application:data_ulteriore_dottorato', ISODateConverter, true)
+  public data_ulteriore_dottorato: Date = undefined;
+  @JsonProperty('jconon_application:istituto_ulteriore_dottorato')
+  public istituto_ulteriore_dottorato: string = undefined;
+
+
 
 
 
