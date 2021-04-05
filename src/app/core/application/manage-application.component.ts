@@ -180,6 +180,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       'cmis:objectId': new FormControl(this.entity.objectId),
       'aspect': new FormControl(
         this.entity.call.elenco_aspects
+          .concat(this.entity.call.elenco_aspects_sezione_cnr)
+          .concat(this.entity.call.elenco_aspects_ulteriori_dati)
       )
     });
   }

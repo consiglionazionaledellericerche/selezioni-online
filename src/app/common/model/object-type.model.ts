@@ -129,7 +129,6 @@ export class ObjectType {
       model: Attachment,
       showcomponent: JcononAttachmentCallShowComponent
     },
-
     'affix_tabAnagrafica' : {
       model: Application,
       showcomponent: JcononAffixAnagraficaComponent
@@ -140,7 +139,24 @@ export class ObjectType {
     },
     'affix_tabDichiarazioni' : {
       model: Application,
-      showcomponent: JcononAffixDichiarazioniComponent
+      showcomponent: JcononAffixDichiarazioniComponent,
+      params: {
+        callProperty : "elenco_aspects"
+      }
+    },
+    'affix_tabDatiCNR' : {
+      model: Application,
+      showcomponent: JcononAffixDichiarazioniComponent,
+      params: {
+        callProperty : "elenco_aspects_sezione_cnr"
+      }
+    },
+    'affix_tabUlterioriDati' : {
+      model: Application,
+      showcomponent: JcononAffixDichiarazioniComponent,
+      params: {
+        callProperty : "elenco_aspects_ulteriori_dati"
+      }
     },
     'affix_tabDichiarazioniConclusive' : {
       model: Application,

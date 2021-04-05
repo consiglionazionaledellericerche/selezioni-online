@@ -346,6 +346,12 @@
     "affix_tabDichiarazioni": {
       "title": "Dichiarazioni"
     },
+    "affix_tabDatiCNR": {
+      "title": "Dati CNR"
+    },
+    "affix_tabUlterioriDati": {
+      "title": "Ulteriori Dati"
+    },
     "affix_tabReperibilita": {
       "title": "Reperibilità"
     },

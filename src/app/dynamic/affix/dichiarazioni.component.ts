@@ -9,7 +9,7 @@ import { DynamicComponent } from '../dynamic.component';
       <form [formGroup]="form" *ngIf="isLoaded() && cache !== undefined" class="pb-2">
         <div class="it-list-wrapper">
           <ul class="it-list pl-2">
-            <ng-container *ngFor="let aspect of data.call.elenco_aspects">
+            <ng-container *ngFor="let aspect of data.call[callProperty]">
               <li class="shadow-sm p-0 mb-1 bg-white" *ngIf="isShow(aspect)">
                   <show-affix #dichiarazioniComponent [form]="form" [cmisObject]="data" [type]="aspect"></show-affix>
               </li>
@@ -32,6 +32,8 @@ export class JcononAffixDichiarazioniComponent extends DynamicComponent {
       super(cacheService, changeDetectorRef);
     }
     cache: any;
+    public callProperty: string;
+
     @ViewChildren('dichiarazioniComponent') dichiarazioniComponents: ShowAffixComponent[];
     ngOnInit(): void {
       this.cacheService.cache().subscribe((cache) => {
