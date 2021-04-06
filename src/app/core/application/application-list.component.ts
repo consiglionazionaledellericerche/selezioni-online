@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, SimpleChanges} from '@angular/core';
-import {CommonListComponent} from '../../common/controller/common-list.component';
-import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
-import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
-import {NavigationService} from '../navigation.service';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CommonListComponent } from '../../common/controller/common-list.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, FormBuilder} from '@angular/forms';
+import { NavigationService } from '../navigation.service';
 import { Application } from './application.model';
 import { ApplicationService } from './application.service';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService} from '@ngx-translate/core';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/model/user.model';
 import { CacheService } from '../cache.service';

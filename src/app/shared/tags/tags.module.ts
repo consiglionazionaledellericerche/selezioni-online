@@ -73,6 +73,9 @@ import {ShowBooleanComponent} from './show/show-boolean.component';
 import {ChildrenListComponent} from '../../core/children/children-list.component';
 import {ChildrenService} from '../../core/children//children.service';
 
+import {WizardDocumentModalComponent} from './wizard/wizard-document.component';
+
+
 // import ngx-translate and the http loader
 import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -143,6 +146,7 @@ import { CustomTranslationCompiler } from '../../common/helpers/translation-comp
     WizardComponent,
     WizardItemComponent,
     WizardItemContentComponent,
+    WizardDocumentModalComponent,
 
     // Attachement
     AttachmentComponent,
@@ -244,6 +248,7 @@ import { CustomTranslationCompiler } from '../../common/helpers/translation-comp
     WizardComponent,
     WizardItemComponent,
     WizardItemContentComponent,
+    WizardDocumentModalComponent,
 
     // Attachment
     AttachmentComponent,

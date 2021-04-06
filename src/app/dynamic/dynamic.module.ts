@@ -8,6 +8,7 @@ import { JcononAttachmentCallShowComponent } from './attachment/jconon-attachmen
 import { JcononAffixAnagraficaComponent } from './affix/anagrafica.component';
 import { JcononAffixResidenzaComponent } from './affix/residenza.component';
 import { JcononAffixDichiarazioniComponent } from './affix/dichiarazioni.component';
+import { JcononAffixAllegatiComponent } from './affix/allegati.component';
 import { JcononAffixDichiarazioniConclusiveComponent } from './affix/dichiarazioni_conclusive.component';
 
 import { JcononAspectPossessoRequisitiComponent } from './aspect/possesso-requisiti.component';
@@ -16,6 +17,7 @@ import { JcononAttachmentShowComponent } from './attachment/jconon-attachment-sh
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from './attachment/jconon-attachment-documento-riconoscimento-show.component';
 
 import {ButtonsModule} from 'ngx-bootstrap/buttons'
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 // import ngx-translate and the http loader
 import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -75,6 +77,7 @@ import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dott
         JcononAffixAnagraficaComponent,
         JcononAffixResidenzaComponent,
         JcononAffixDichiarazioniComponent,
+        JcononAffixAllegatiComponent,
         JcononAffixDichiarazioniConclusiveComponent,
         /** Apllication Aspect */
         JcononAspectsDichiarazioneComponent,
@@ -135,6 +138,7 @@ import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dott
         SharedModule,
         TagsModule,
         ButtonsModule.forRoot(),
+        AccordionModule.forRoot(),
         TranslateModule.forChild({
             compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
             loader: {
@@ -149,6 +153,7 @@ import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dott
         JcononAffixAnagraficaComponent,
         JcononAffixResidenzaComponent,
         JcononAffixDichiarazioniComponent,
+        JcononAffixAllegatiComponent,
         JcononAffixDichiarazioniConclusiveComponent,
         /** Apllication Aspect */
         JcononAspectsDichiarazioneComponent,

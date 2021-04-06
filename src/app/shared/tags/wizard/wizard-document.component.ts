@@ -2,24 +2,24 @@ import {Component, Input, TemplateRef} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-show-children-modal',
+  selector: 'app-wizard-document',
   template: `
     
-    <button class="btn {{buttonClass}}" (click)="openModal(template)" tooltip="{{'attach' | translate}}">
-      <svg class="icon">
-        <use xlink:href="/assets/vendor/sprite.svg#it-download"></use>
-      </svg>
+    <button class="btn p-0" (click)="openModal(template)">
+        <svg class="icon icon-primary">
+            <use xlink:href="/assets/vendor/sprite.svg#it-plus-circle"></use>
+        </svg>
     </button>
 
     <ng-template #template>
       <div class="modal-header">
-        <h4 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{modal_title}}</h4>
+        <h4 class="modal-title pull-left text-primary" translate><i class="fa fa-info-circle"></i> {{typeId}}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-         <children-list [show_date]="show_date" [parentId]="parentId" [typeId]="typeId" [queryName]="queryName"></children-list>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary" (click)="modalRef.hide()">{{'close' | translate}}</button>
@@ -27,16 +27,11 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
     </ng-template>
   `
 })
-export class ShowChildrenModalComponent {
+export class WizardDocumentModalComponent {
 
-  @Input() parentId;  
-  @Input() buttonClass = 'text-dark p-1';
-  @Input() label;
-  @Input() value;
+  @Input() objectId;  
+  @Input() buttonClass;
   @Input() typeId;
-  @Input() queryName;
-  @Input() modal_title;
-  @Input() show_date = 'false';
   modalRef: BsModalRef;
   constructor(private modalService: BsModalService) {}
  

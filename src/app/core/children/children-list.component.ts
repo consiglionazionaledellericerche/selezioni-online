@@ -11,6 +11,8 @@ import {ConfigService} from '../config.service';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {ErrorObservable} from 'rxjs-compat/observable/ErrorObservable';
 import {ApiMessageService} from '../api-message.service';
+import { ObjectTypeService } from '../object-type.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'children-list',
@@ -45,15 +47,17 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
 
   public items: Attachment[] = [];
 
-  @Input() parentId: String;
-  @Input() type: String;
-  @Input() show_date: String;
+  @Input() parentId: string;
+  @Input() typeId: string;
+  @Input() queryName: string;
+  @Input() show_date: string;
 
   public constructor(public service: ChildrenService,
                      protected configService: ConfigService,
                      protected apiMessageService: ApiMessageService,
                      private httpClient: HttpClient,
                      protected route: ActivatedRoute,
+                     protected objectTypeService: ObjectTypeService,
                      protected router: Router,
                      protected changeDetector: ChangeDetectorRef,
                      protected navigationService: NavigationService,
@@ -69,11 +73,22 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
     return this.items;
   }
 
+  public beforeOnInit(): Observable<any> {
+    if (this.queryName === undefined && this.typeId !== undefined) {
+      return this.objectTypeService.type(this.typeId).pipe(switchMap((result) => {
+        this.queryName = result.queryName;
+        return of(null);
+      }));
+    } else {
+      return of(null);
+    } 
+  }
+  
   public buildFilterForm(): FormGroup {
     return new FormGroup({
       parentId: new FormControl(this.parentId),
       fetchObject: new FormControl(true),
-      type:  new FormControl(this.type)
+      type:  new FormControl(this.queryName)
     });
   }
 

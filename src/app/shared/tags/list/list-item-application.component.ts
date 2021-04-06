@@ -23,7 +23,8 @@ import { User } from '../../../auth/model/user.model';
                 </a>
                 <app-show-children-modal 
                   [show_date]="'true'" 
-                  [type]="'jconon_attachment:generic_document'" 
+                  [typeId]="'P:jconon_attachment:generic_document'" 
+                  [queryName]="'jconon_attachment:generic_document'" 
                   [parentId] = "item.objectId" 
                   [modal_title]="'application.attach_to' | translate">
                 </app-show-children-modal>                

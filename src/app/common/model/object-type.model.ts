@@ -17,6 +17,9 @@ import { JcononAffixAnagraficaComponent } from '../../dynamic/affix/anagrafica.c
 import { JcononAffixResidenzaComponent } from '../../dynamic/affix/residenza.component';
 import { JcononAffixDichiarazioniConclusiveComponent } from '../../dynamic/affix/dichiarazioni_conclusive.component';
 import { JcononAffixDichiarazioniComponent } from '../../dynamic/affix/dichiarazioni.component';
+import { JcononAffixAllegatiComponent } from '../../dynamic/affix/allegati.component';
+
+
 import { JcononAspectPossessoRequisitiComponent } from '../../dynamic/aspect/possesso-requisiti.component';
 import { JcononAspectsDichiarazioneComponent } from '../../dynamic/aspect/dichiarazione.component';
 import { JcononAspectIscrizioneListeElettoraliComponent } from '../../dynamic/aspect/iscrizione-liste-elettorali.component';
@@ -149,6 +152,13 @@ export class ObjectType {
       showcomponent: JcononAffixDichiarazioniComponent,
       params: {
         callProperty : "elenco_aspects_sezione_cnr"
+      }
+    },
+    'affix_tabTitoli' : {
+      model: Application,
+      showcomponent: JcononAffixAllegatiComponent,
+      params: {
+        callProperty : "elenco_association"
       }
     },
     'affix_tabUlterioriDati' : {
