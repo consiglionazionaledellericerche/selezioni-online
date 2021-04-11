@@ -1,15 +1,13 @@
 
 import {of as observableOf, Observable} from 'rxjs';
-
-import {map, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {CommonService} from './common.service';
 import {SpringError} from '../model/spring-error.model';
 import {ValidationHelper} from '../validation/validation-helper';
 import {OnInit} from '@angular/core';
 import {Breadcrumbs} from '../model/breadcrumbs.model';
-import { Base } from '../model/base.model';
+import {Base} from '../model/base.model';
 
 export abstract class CommonEditComponent<T extends Base> implements OnInit {
 

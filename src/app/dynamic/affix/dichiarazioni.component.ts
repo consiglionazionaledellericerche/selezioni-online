@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, SimpleChanges, ViewChildren } from '@angu
 import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'affix_tabDichiarazioni',
@@ -23,7 +24,7 @@ import { DynamicComponent } from '../dynamic.component';
       'ul.it-list li::marker {font-weight: bold;}'
     ]
   })
-export class JcononAffixDichiarazioniComponent extends DynamicComponent {
+export class JcononAffixDichiarazioniComponent extends DynamicComponent<Application> {
 
   constructor(
       protected cacheService: CacheService,

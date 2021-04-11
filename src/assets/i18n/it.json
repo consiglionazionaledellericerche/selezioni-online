@@ -328,13 +328,7 @@
     } 
   },
   "document": {
-    "last_modified": ", ultima modifica: {{value}}",
-    "docummento_riconoscimento": {
-      "tipologia": "Tipologia",
-      "numero": "Numero",
-      "data_scadenza": "Data Scadenza",
-      "rilasciato_da": "RIlasciato da"
-    }
+    "last_modified": ", ultima modifica: {{value}}"
   },
   "affix": {
     "affix_tabAnagrafica": {
@@ -545,17 +539,17 @@
       "istituto_ulteriore_dottorato": "Università",
       "fl_altri_assegni": "di aver usufruito di altri assegni di ricerca dal 01/05/2011 alla data di scadenza del bando",
       "testo_altri_assegni": "intercorsi con",
-
-
-
-
-
-
       "fl_residenza_generica": "Residenza generica",
       "fl_dichiarazione_1": "Dichiarazione 1",
       "fl_dichiarazione_2": "Dichiarazione 2",
       "fl_dichiarazione_3": "Dichiarazione obbligatoria 3",
       "fl_dichiarazione_4": "Dichiarazione obbligatoria 4"
+    },
+    "jconon_documento_riconoscimento" : {
+        "tipologia": "Tipologia",
+        "numero": "Numero",
+        "data_scadenza": "Data Scadenza",
+        "emittente": "Rilasciato da"
     }
   }
 }

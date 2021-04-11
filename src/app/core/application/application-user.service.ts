@@ -6,7 +6,6 @@ import {Router} from '@angular/router';
 import {ConfigService} from '../config.service';
 import {MODULE_CONFIGURAZIONE} from '../../app-routing.module';
 import { Application } from './application.model';
-import {JsonConvert, ValueCheckingMode} from 'json2typescript';
 
 @Injectable()
 export class ApplicationUserService extends CommonService<Application> {

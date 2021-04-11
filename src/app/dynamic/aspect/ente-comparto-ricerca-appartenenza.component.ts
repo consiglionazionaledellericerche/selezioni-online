@@ -4,6 +4,7 @@ import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 import { ObjectTypeService } from '../../core/object-type.service';
 import { Comune } from '../../common/model/comune.model';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'P:jconon_application:aspect_ente_comparto_ricerca_appartenenza',
@@ -98,7 +99,7 @@ import { Comune } from '../../common/model/comune.model';
       </form>
     `
   })
-export class JcononAspectEnteCompartoRicercaAppartenenzaComponent extends DynamicComponent {
+export class JcononAspectEnteCompartoRicercaAppartenenzaComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected objectTypeService: ObjectTypeService,

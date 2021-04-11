@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'P:jconon_application:aspect_condanne_penali',
@@ -30,7 +31,7 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `
   })
-export class JcononAspectCondannePenaliComponent extends DynamicComponent {
+export class JcononAspectCondannePenaliComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,

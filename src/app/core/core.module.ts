@@ -29,9 +29,11 @@ import {CallService} from './call/call.service';
 import {ApplicationListComponent} from './application/application-list.component';
 import {ApplicationUserListComponent} from './application/application-user-list.component';
 import { ManageApplicationComponent } from './application/manage-application.component';
-
 import {ApplicationService} from './application/application.service';
 import {ApplicationUserService} from './application/application-user.service';
+
+import { ManageDocumentComponent } from './document/manage-document.component';
+import { DocumentService} from './document/document.service';
 
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -67,6 +69,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     ApplicationListComponent,
     ApplicationUserListComponent,
     ManageApplicationComponent,
+    ManageDocumentComponent,
     BadRequestComponent,
   ],
 
@@ -107,6 +110,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     ApplicationListComponent,
     ApplicationUserListComponent,
     ManageApplicationComponent,
+    ManageDocumentComponent
   ],
 
   providers: [
@@ -121,7 +125,13 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     CallService,
     ApplicationService,
     ApplicationUserService,
+    DocumentService,
   ],
+
+  entryComponents: [
+    ManageDocumentComponent    
+
+  ]
 })
 export class CoreModule {}
 

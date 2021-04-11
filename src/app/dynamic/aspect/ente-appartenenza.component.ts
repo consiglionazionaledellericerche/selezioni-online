@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Comune } from '../../common/model/comune.model';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'P:jconon_application:aspect_ente_appartenenza',
@@ -50,7 +51,7 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `
   })
-export class JcononAspectEnteAppartenenzaComponent extends DynamicComponent {
+export class JcononAspectEnteAppartenenzaComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,

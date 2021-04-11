@@ -3,6 +3,7 @@ import { FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { ObjectTypeService } from '../../core/object-type.service';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'P:jconon_application:aspect_toggle_with_single_field',
@@ -60,7 +61,7 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `
   })
-export class JcononAspectToggleWithSingleFieldComponent extends DynamicComponent {
+export class JcononAspectToggleWithSingleFieldComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected objectTypeService: ObjectTypeService,

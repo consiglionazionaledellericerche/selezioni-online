@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'affix_tabDichiarazioniConclusive',
@@ -30,7 +31,7 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `
   })
-export class JcononAffixDichiarazioniConclusiveComponent extends DynamicComponent {
+export class JcononAffixDichiarazioniConclusiveComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,

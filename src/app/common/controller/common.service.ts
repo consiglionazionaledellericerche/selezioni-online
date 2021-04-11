@@ -9,12 +9,11 @@ import {Helpers} from '../helpers/helpers';
 import {Router} from '@angular/router';
 import {Enum} from '../model/enum.model';
 import {ConfigService} from '../../core/config.service';
-import {ErrorObservable} from 'rxjs-compat/observable/ErrorObservable';
 import {ActivatedRoute} from '@angular/router';
-import { ObjectType } from '../model/object-type.model';
 import {JsonConvert, ValueCheckingMode} from 'json2typescript';
 import { Base } from '../model/base.model';
 import { CmisObject } from '../model/cmisobject.model';
+import { ObjectType } from '../model/object-type.model';
 
 export abstract class CommonService<T extends Base> {
 
@@ -55,7 +54,7 @@ export abstract class CommonService<T extends Base> {
   }
 
   protected createInstance(cmisType: string, cmisBaseType: string): { new (): T; } {
-    return ObjectType.getModel(cmisType, cmisBaseType);
+    return ObjectType.createInstance(cmisType, cmisBaseType);
   }
 
   public getRequestMapping(): string {
@@ -446,66 +445,6 @@ export abstract class CommonService<T extends Base> {
                 const springError = new SpringError(httpErrorResponse);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError);
-              })
-            );
-        })
-      );
-  }
-
-
-  /**
-   * Delete entity.
-   * @param {number} id
-   * @returns {any}
-   */
-  public deleteFile(key: string) {
-
-    return this.configService.getApiBase()
-      .pipe(
-        switchMap((apiBase) => {
-
-          const deletePath = '/ace/v1/docs/delete';
-
-          const queryParams = {'key': key};
-
-          return this.httpClient.delete<any>(apiBase + deletePath, {params: queryParams})
-            .pipe(
-              map((result) => {
-                this.apiMessageService.sendMessage(MessageType.SUCCESS, 'Allegato eliminato correttamente');
-              }),
-              catchError((httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
-                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
-                return ErrorObservable.create(springError);
-              })
-            );
-        })
-      );
-  }
-
-  public postFile(entity: T, fileToUpload: File, descr: string): Observable<any> {
-
-    const endpoint = '/' + entity.getId + '/docs/upload';
-
-    const formData: FormData = new FormData();
-
-    formData.append('file', fileToUpload, fileToUpload.name);
-    formData.append('descr', descr);
-
-    return this.configService.getApiBase()
-      .pipe(
-        switchMap((apiBase) => {
-
-          return this.httpClient.post(apiBase + this.getRequestMapping() + endpoint, formData, { headers: {} })
-            .pipe(
-              map((response) => {
-                this.apiMessageService.sendMessage(MessageType.SUCCESS, 'Allegato inserito con successo.');
-                return true;
-              }),
-              catchError((httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
-                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
-                return ErrorObservable.create(springError);
               })
             );
         })

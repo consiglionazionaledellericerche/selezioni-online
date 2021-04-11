@@ -16,6 +16,10 @@ import { JcononAspectsDichiarazioneComponent } from './aspect/dichiarazione.comp
 import { JcononAttachmentShowComponent } from './attachment/jconon-attachment-show.component';
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from './attachment/jconon-attachment-documento-riconoscimento-show.component';
 
+import { JcononAttachmentDocumentoRiconoscimentoEditComponent } from './attachment/jconon-attachment-documento-riconoscimento-edit.component';
+
+
+
 import {ButtonsModule} from 'ngx-bootstrap/buttons'
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 
@@ -124,12 +128,10 @@ import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dott
         JcononAspectUlterioreLaureaComponent,
         JcononAspectUlterioreDottoratoComponent,
 
-
-
-
-
         JcononAttachmentShowComponent,
-        JcononAttachmentDocumentoRiconoscimentoShowComponent
+        JcononAttachmentDocumentoRiconoscimentoShowComponent,
+
+        JcononAttachmentDocumentoRiconoscimentoEditComponent
     ],
     imports: [
         FormsModule,
@@ -200,12 +202,10 @@ import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dott
         JcononAspectUlterioreLaureaComponent,
         JcononAspectUlterioreDottoratoComponent,
 
-
-
-
-
         JcononAttachmentShowComponent,
-        JcononAttachmentDocumentoRiconoscimentoShowComponent
+        JcononAttachmentDocumentoRiconoscimentoShowComponent,
+
+        JcononAttachmentDocumentoRiconoscimentoEditComponent
     ],
 })
 export class DynamicModule {}

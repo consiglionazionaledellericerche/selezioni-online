@@ -4,6 +4,7 @@ import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 import { Sede } from '../../common/model/sede.model';
 import { Helpers } from '../../common/helpers/helpers';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'P:jconon_application:aspect_sede',
@@ -33,7 +34,7 @@ import { Helpers } from '../../common/helpers/helpers';
       </form>
     `
   })
-export class JcononAspectSedeComponent extends DynamicComponent {
+export class JcononAspectSedeComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,

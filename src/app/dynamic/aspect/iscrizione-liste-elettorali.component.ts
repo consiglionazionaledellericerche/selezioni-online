@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Comune } from '../../common/model/comune.model';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'P:jconon_application:aspect_iscrizione_liste_elettorali',
@@ -55,7 +56,7 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `
   })
-export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicComponent {
+export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,

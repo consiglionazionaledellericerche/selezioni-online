@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ObjectTypeService } from '../../core/object-type.service';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'P:jconon_application:aspect_settore_scientifico_tecnologico',
@@ -27,7 +28,7 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `
   })
-export class JcononAspectSettoreScientificoTecnologicoComponent extends DynamicComponent {
+export class JcononAspectSettoreScientificoTecnologicoComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected objectTypeService: ObjectTypeService,

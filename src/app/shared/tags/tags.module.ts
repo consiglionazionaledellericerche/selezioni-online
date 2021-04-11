@@ -12,6 +12,8 @@ import {ShowLayoutComponent} from './show/show-layout.component';
 import {ShowMetadataComponent} from './show/show-metadata.component';
 import {ShowAffixComponent} from './show/show-affix.component';
 
+import {EditMetdataComponent} from './wizard/edit-metadata.component';
+
 import {AdMetadata} from './show/ad-metadata.directive';
 
 import {ListLayoutComponent} from './list/list-layout.component';
@@ -72,9 +74,6 @@ import {ShowBooleanComponent} from './show/show-boolean.component';
 
 import {ChildrenListComponent} from '../../core/children/children-list.component';
 import {ChildrenService} from '../../core/children//children.service';
-
-import {WizardDocumentModalComponent} from './wizard/wizard-document.component';
-
 
 // import ngx-translate and the http loader
 import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -141,12 +140,12 @@ import { CustomTranslationCompiler } from '../../common/helpers/translation-comp
 
     // Edit
     EditHeaderLayoutComponent,
+    EditMetdataComponent,
 
     // Wizard
     WizardComponent,
     WizardItemComponent,
     WizardItemContentComponent,
-    WizardDocumentModalComponent,
 
     // Attachement
     AttachmentComponent,
@@ -243,12 +242,12 @@ import { CustomTranslationCompiler } from '../../common/helpers/translation-comp
 
     // Edit
     EditHeaderLayoutComponent,
+    EditMetdataComponent,
 
     // Wizard
     WizardComponent,
     WizardItemComponent,
     WizardItemContentComponent,
-    WizardDocumentModalComponent,
 
     // Attachment
     AttachmentComponent,
@@ -267,6 +266,7 @@ import { CustomTranslationCompiler } from '../../common/helpers/translation-comp
   entryComponents: [
     ShowMetadataComponent,
     ShowAffixComponent,
+
   ]
 })
 export class TagsModule {}

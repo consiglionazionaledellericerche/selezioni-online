@@ -4,6 +4,7 @@ import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
 import { DynamicComponent } from '../dynamic.component';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'affix_tabResidenza',
@@ -82,7 +83,7 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `
   })
-export class JcononAffixResidenzaComponent extends DynamicComponent {
+export class JcononAffixResidenzaComponent extends DynamicComponent<Application> {
     paesi: string[];
     comuni: Comune[];
     constructor(

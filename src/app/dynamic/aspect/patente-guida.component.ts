@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 import { ObjectTypeService } from '../../core/object-type.service';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'P:jconon_application:aspect_patente_guida',
@@ -35,7 +36,7 @@ import { ObjectTypeService } from '../../core/object-type.service';
       </form>
     `
   })
-export class JcononAspectPatenteGuidaComponent extends DynamicComponent {
+export class JcononAspectPatenteGuidaComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected objectTypeService: ObjectTypeService,

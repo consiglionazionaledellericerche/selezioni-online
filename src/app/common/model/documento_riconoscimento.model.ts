@@ -1,5 +1,6 @@
 import { Document } from './document.model';
 import {JsonProperty, JsonObject} from 'json2typescript';
+import { ISODateConverter } from '../helpers/ISODateConverter';
 
 @JsonObject("DocumentoRiconoscimento")
 export class DocumentoRiconoscimento extends Document{
@@ -9,7 +10,7 @@ export class DocumentoRiconoscimento extends Document{
     public tipologia: string;
     @JsonProperty('jconon_documento_riconoscimento:emittente')
     public emittente: string;
-    @JsonProperty('jconon_documento_riconoscimento:data_scadenza')
+    @JsonProperty('jconon_documento_riconoscimento:data_scadenza', ISODateConverter, true)
     public data_scadenza: Date;
     constructor() {
         super();

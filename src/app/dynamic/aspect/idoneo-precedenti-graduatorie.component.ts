@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Helpers } from '../../common/helpers/helpers';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'P:jconon_application:aspect_idoneo_precedenti_graduatorie',
@@ -56,7 +57,7 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `
   })
-export class JcononAspectIdoneoPrecedentiGraduatorieComponent extends DynamicComponent {
+export class JcononAspectIdoneoPrecedentiGraduatorieComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,

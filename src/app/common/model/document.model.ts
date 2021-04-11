@@ -3,6 +3,8 @@ import {JsonProperty, JsonObject} from 'json2typescript';
 
 @JsonObject("Document")
 export class Document extends CmisObject{
+  @JsonProperty('cmis:parentId')
+  protected parentId: string;
   @JsonProperty('cmis:isImmutable')
   protected isImmutable: boolean;
   @JsonProperty('cmis:isLatestVersion')
@@ -43,6 +45,7 @@ export class Document extends CmisObject{
 
   constructor() {
     super();
+    this.parentId = undefined;
     this.isImmutable = undefined;
     this.isLatestVersion = undefined;
     this.isMajorVersion = undefined;

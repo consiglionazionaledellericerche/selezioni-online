@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ObjectTypeService } from '../../core/object-type.service';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
+import { Application } from '../../core/application/application.model';
 
 @Component({
     selector: 'P:jconon_application:aspect_contratto_td_concorso',
@@ -56,7 +57,7 @@ import { DynamicComponent } from '../dynamic.component';
       </form>
     `
   })
-export class JcononAspectContrattoTDConcorsoComponent extends DynamicComponent {
+export class JcononAspectContrattoTDConcorsoComponent extends DynamicComponent<Application> {
     constructor(
       protected cacheService: CacheService,
       protected objectTypeService: ObjectTypeService,
