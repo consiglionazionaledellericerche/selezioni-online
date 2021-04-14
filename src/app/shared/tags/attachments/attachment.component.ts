@@ -22,12 +22,11 @@ import {ValidationHelper} from '../../../common/validation/validation-helper';
               [ttipAppend]="ttipAppend"
               [noLabel]="noLabel"
               [showValidation]="showValidation">
-          <label 
+          <button
             #label 
-            tabindex="0"
             (click)="onInputClick()" 
-            class="border-bottom w-100 mb-0" 
-            [ngClass]="{'is-valid border-dark text-dark': !isInvalid(), 'is-invalid border-danger text-danger': isInvalid()}">{{ 'upload' | translate }}</label>
+            class="btn btn-link border-bottom w-100 mb-0" 
+            [ngClass]="{'is-valid border-dark text-dark': !isInvalid(), 'is-invalid border-danger text-danger': isInvalid()}">{{ 'upload' | translate }}</button>
           <input class="form-control d-none"
              type="file"
              #input
