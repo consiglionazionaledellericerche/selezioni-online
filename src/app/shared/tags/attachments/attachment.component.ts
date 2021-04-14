@@ -25,7 +25,6 @@ import {ValidationHelper} from '../../../common/validation/validation-helper';
           <label
             #label 
             for="upload"
-            (click)="onInputClick()" 
             class="border-bottom w-100 mb-0" 
             [ngClass]="{'is-valid border-dark text-dark': !isInvalid(), 'is-invalid border-danger text-danger': isInvalid()}">{{ 'upload' | translate }}</label>
           <input class="form-control d-none"
