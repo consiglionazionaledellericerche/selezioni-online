@@ -1,9 +1,12 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, Input, ViewChild, ViewChildren } from '@angular/core';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageDocumentComponent } from '../../core/document/manage-document.component';
 import { Document } from '../../common/model/document.model';
+import { ChildrenListComponent } from '../../core/children/children-list.component';
+import { ApiMessageService, MessageType } from '../../core/api-message.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'affix_tabAllegati',
@@ -30,7 +33,7 @@ import { Document } from '../../common/model/document.model';
                   </h4>                
                 </div>
               </div>
-              <children-list [show_date]="true" [parentId]="data.objectId" [typeId]="attachment"></children-list>
+              <children-list #childrenlist [show_date]="true" [parentId]="data.objectId" [typeId]="attachment"></children-list>
             </accordion-group>
           </ng-container>  
         </accordion>
@@ -43,18 +46,20 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Document> {
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,
       private modalService: BsModalService,
-      private componentFactoryResolver: ComponentFactoryResolver
+      protected apiMessageService: ApiMessageService,
+      protected translateService: TranslateService
     ) {
       super(cacheService, changeDetectorRef);
     }
     cache: any;
     public callProperty: string;
     bsModalRef: BsModalRef;
+    @ViewChildren('childrenlist') childrenListComponent: ChildrenListComponent[];
     
     ngOnInit(): void {
       this.cacheService.cache().subscribe((cache) => {
         this.cache = cache;
-      });
+      });      
       super.ngOnInit();
     }
     
@@ -70,6 +75,12 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Document> {
       };
 
       this.bsModalRef = this.modalService.show(ManageDocumentComponent, Object.assign({initialState}, { animated: true, class: 'modal-lg' }));
+      this.bsModalRef.content.event.subscribe((document: Document) => {
+        this.translateService.get('message.document.upload.success', {value: document.name}).subscribe((label) => {
+          this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
+        });
+        this.childrenListComponent.forEach(comp => comp.loadList());
+      });
       return false; 
     }
 }

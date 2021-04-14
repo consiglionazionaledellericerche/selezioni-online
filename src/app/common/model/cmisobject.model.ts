@@ -95,4 +95,8 @@ export abstract class CmisObject implements Base{
     return this.hasAllowableActions(AllowableAction.CAN_DELETE_OBJECT);
   }
 
+  canEdit(): boolean {
+    return this.hasAllowableActions(AllowableAction.CAN_UPDATE_PROPERTIES);
+  }
+
 }

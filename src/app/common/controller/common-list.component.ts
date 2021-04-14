@@ -156,7 +156,7 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
     return null;
   }
 
-  private loadList() {
+  public loadList() {
     this.filterForm.updateValueAndValidity({ onlySelf: false, emitEvent: true })
   }
 
@@ -177,18 +177,6 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
     this.executePageable().subscribe((pageResult: Page<T>) => {
       this.pageableResult(pageResult);
     });
-  }
-
-  // -------------------------------
-  // Delete event.
-  // -------------------------------
-
-  public onDelete(id: number) {
-    this.service.delete(id).subscribe(
-      (response) => {
-        this.loadList();
-      }
-    );
   }
 
   // -------------------------------

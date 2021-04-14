@@ -9,12 +9,13 @@ import { Application } from '../core/application/application.model'
 
 import { Helpers } from '../common/helpers/helpers';
 
+import { JcononAttachmentShowComponent } from './attachment/jconon-attachment-show.component';
 import { JcononAttachmentCallShowComponent } from './attachment/jconon-attachment-call-show.component';
-
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from './attachment/jconon-attachment-documento-riconoscimento-show.component';
+
+import { JcononAttachmentEditComponent } from './attachment/jconon-attachment-edit.component';
 import { JcononAttachmentDocumentoRiconoscimentoEditComponent } from './attachment/jconon-attachment-documento-riconoscimento-edit.component';
 
-import { JcononAttachmentShowComponent } from './attachment/jconon-attachment-show.component';
 import { JcononAffixAnagraficaComponent } from './affix/anagrafica.component';
 import { JcononAffixResidenzaComponent } from './affix/residenza.component';
 import { JcononAffixDichiarazioniConclusiveComponent } from './affix/dichiarazioni_conclusive.component';
@@ -75,7 +76,10 @@ export class DynamicService {
     public classes = {
         'D:jconon_documento_riconoscimento:attachment': {
           showcomponent: JcononAttachmentDocumentoRiconoscimentoShowComponent,
-          editcomponent: JcononAttachmentDocumentoRiconoscimentoEditComponent      
+          editcomponent: JcononAttachmentDocumentoRiconoscimentoEditComponent,
+          params: {
+            aspect : ["P:jconon_attachment:generic_document"]
+          }
         },
         'D:jconon_attachment:call_it' : {
           showcomponent: JcononAttachmentCallShowComponent
@@ -819,7 +823,7 @@ export class DynamicService {
         var instance = this.classes[selector];
         if (instance && instance.editcomponent)
             return instance.editcomponent;
-        return JcononAttachmentShowComponent;
+        return JcononAttachmentEditComponent;
     }
 
     getParams(selector: string): any {

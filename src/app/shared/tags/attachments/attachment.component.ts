@@ -21,26 +21,25 @@ import {ValidationHelper} from '../../../common/validation/validation-helper';
               [appendText]="appendText"
               [ttipAppend]="ttipAppend"
               [noLabel]="noLabel"
-              [showValidation]="showValidation"
-      >
-          <input class="form-control"
+              [showValidation]="showValidation">
+          <label 
+            #label 
+            tabindex="0"
+            (click)="onInputClick()" 
+            class="border-bottom w-100 mb-0" 
+            [ngClass]="{'is-valid border-dark text-dark': !isInvalid(), 'is-invalid border-danger text-danger': isInvalid()}">{{ 'upload' | translate }}</label>
+          <input class="form-control d-none"
              type="file"
              #input
-             id="file"
-             class="upload"
              (change)="handleFileInput($event.target.files)"
              [disabled]="disabled"
-             placeholder="{{ placeholder | translate }}"
-             [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}"
-          >
-          <label for="file">
-            <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>
-            <span>Upload</span>
-          </label>
-          <div *ngIf="fileToUpload" class="pl-2 d-flex text-truncate">
-            <span class="h4 text-primary text-truncate"><svg class="icon icon-primary h4" aria-hidden="true"><use xlink:href="/assets/vendor/sprite.svg#it-file"></use></svg> {{fileToUpload.name}}</span>
-            <span class="h6 pl-2">{{fileSize}}</span>
+             placeholder="{{ placeholder | translate }}">
+
+          <div *ngIf="controlDir.dirty && controlDir.pending"
+             [ngStyle]="{'position': 'absolute', 'top': '5px', 'right': '17px', 'z-index': '100'}">
+            <i class="fa fa-circle-o-notch fa-spin fa-fw text-secondary"></i>
           </div>
+
       </app-form-layout>
     `
 })
@@ -48,13 +47,13 @@ export class AttachmentComponent implements ControlValueAccessor, OnInit {
 
   @Input() disabled = false;
 
-  @Input() inline = false;
+  @Input() inline = true;
 
   @Input() label;
 
   @Input() noLabel = true;
 
-  @Input() prepend;
+  @Input() prepend = 'paperclip';
 
   @Input() prependText;
 
@@ -73,6 +72,8 @@ export class AttachmentComponent implements ControlValueAccessor, OnInit {
   @Input() focus = false;
 
   @ViewChild('input', {static: true}) input: ElementRef;
+
+  @ViewChild('label', {static: true}) labelFile: ElementRef;
 
   fileToUpload: File = null;
 
@@ -109,17 +110,8 @@ export class AttachmentComponent implements ControlValueAccessor, OnInit {
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
+    this.labelFile.nativeElement.innerText = this.fileToUpload ? this.fileToUpload.name : 'Carica file...';
     this.onChange(this.fileToUpload);
-  }
-
-  get fileSize(): string {
-    var suffix = ["bytes", "Kb", "Mb", "Gb", "Tb", "Pb"], tier = 0;
-    var bytes = this.fileToUpload.size;
-    while (bytes >= 1024) {
-      bytes = bytes / 1024;
-      tier++;
-    }
-    return Math.round(bytes * 10) / 10 + " " + suffix[tier];
   }
 
   /*
@@ -156,8 +148,7 @@ export class AttachmentComponent implements ControlValueAccessor, OnInit {
   }
 
   isValid(): boolean  {
-    return false;
-    // return ValidationHelper.showValid(this.controlDir, this.showValidation);
+    return ValidationHelper.showValid(this.controlDir, this.showValidation);
   }
 
 }

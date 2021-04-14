@@ -7,6 +7,8 @@ export class ISODateConverter implements JsonCustomConvert<Date> {
         return new DatePipe('en-US').transform(date,"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ");
     }
     deserialize(date: any): Date {
+        if (date === null)
+            return null;
         return new Date(date);
     }
 }

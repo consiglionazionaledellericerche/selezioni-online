@@ -32,7 +32,7 @@ import {FormCommonTag} from './form-common-tag';
               [labelactive]="labelactive"
               [showValidation]="showValidation">
 
-        <textarea class="form-control border-bottom"
+        <textarea class="form-control border-bottom border-dark"
              rows="{{ rows }}"
              #input
              (input)="change($event.target.value)"

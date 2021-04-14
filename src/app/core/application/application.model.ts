@@ -13,13 +13,13 @@ export class Application extends Folder {
   public cognome: string;
   @JsonProperty('jconon_application:nome')
   public nome: string;
-  @JsonProperty('jconon_application:data_nascita', ISODateConverter, true)
+  @JsonProperty('jconon_application:data_nascita', ISODateConverter)
   public data_nascita: Date;
   @JsonProperty('jconon_application:sesso')
   public sesso: string;
   @JsonProperty('jconon_application:nazione_nascita')
   public nazione_nascita: string;
-  @JsonProperty('jconon_application:comune_nascita', ObjectToIdConverter, true)
+  @JsonProperty('jconon_application:comune_nascita', ObjectToIdConverter)
   public comune_nascita: string;
   @JsonProperty('jconon_application:provincia_nascita')
   public provincia_nascita: string;
@@ -27,7 +27,7 @@ export class Application extends Folder {
   public codice_fiscale: string;
   @JsonProperty('jconon_application:nazione_residenza')
   public nazione_residenza: string;
-  @JsonProperty('jconon_application:comune_residenza', ObjectToIdConverter, true)
+  @JsonProperty('jconon_application:comune_residenza', ObjectToIdConverter)
   public comune_residenza: string;
   @JsonProperty('jconon_application:provincia_residenza')
   public provincia_residenza: string;
@@ -59,7 +59,7 @@ export class Application extends Folder {
   public email_pec_comunicazioni: string;
   @JsonProperty('jconon_application:telefono_comunicazioni')
   public telefono_comunicazioni: string;
-  @JsonProperty('jconon_application:data_domanda', ISODateConverter, true)
+  @JsonProperty('jconon_application:data_domanda', ISODateConverter)
   public data_domanda: Date;
   @JsonProperty('jconon_application:stato_domanda', PropertyStatoDomandaConverter, true)
   public stato_domanda: StatoDomanda;
@@ -155,7 +155,7 @@ export class Application extends Folder {
   public fl_diploma: boolean = undefined;
   @JsonProperty('jconon_application:tipo_diploma')
   public tipo_diploma: string = undefined;
-  @JsonProperty('jconon_application:data_diploma', ISODateConverter, true)
+  @JsonProperty('jconon_application:data_diploma', ISODateConverter)
   public data_diploma: Date = undefined;
   @JsonProperty('jconon_application:punteggio_diploma')
   public punteggio_diploma: string = undefined;
@@ -166,7 +166,7 @@ export class Application extends Folder {
   public fl_laurea: boolean = undefined;
   @JsonProperty('jconon_application:tipo_laurea')
   public tipo_laurea: string = undefined;
-  @JsonProperty('jconon_application:data_laurea', ISODateConverter, true)
+  @JsonProperty('jconon_application:data_laurea', ISODateConverter)
   public data_laurea: Date = undefined;
   @JsonProperty('jconon_application:punteggio_laurea')
   public punteggio_laurea: string = undefined;
@@ -179,7 +179,7 @@ export class Application extends Folder {
   public fl_dottorato: boolean = undefined;
   @JsonProperty('jconon_application:tipo_dottorato')
   public tipo_dottorato: string = undefined;
-  @JsonProperty('jconon_application:data_dottorato', ISODateConverter, true)
+  @JsonProperty('jconon_application:data_dottorato', ISODateConverter)
   public data_dottorato: Date = undefined;
   @JsonProperty('jconon_application:istituto_dottorato')
   public istituto_dottorato: string = undefined;
@@ -302,7 +302,7 @@ export class Application extends Folder {
   public fl_specializzazione: boolean = undefined;
   @JsonProperty('jconon_application:tipo_specializzazione')
   public tipo_specializzazione: string = undefined;
-  @JsonProperty('jconon_application:data_specializzazione', ISODateConverter, true)
+  @JsonProperty('jconon_application:data_specializzazione', ISODateConverter)
   public data_specializzazione: Date = undefined;
   @JsonProperty('jconon_application:istituto_specializzazione')
   public istituto_specializzazione: string = undefined;
@@ -317,11 +317,11 @@ export class Application extends Folder {
   public provincia_ente_comparto_ricerca_appartenenza: string = undefined;
   @JsonProperty('jconon_application:profilo_ente_comparto_ricerca_appartenenza')
   public profilo_ente_comparto_ricerca_appartenenza: string = undefined;
-  @JsonProperty('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_servizio', ISODateConverter, true)
+  @JsonProperty('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_servizio', ISODateConverter)
   public ente_comparto_ricerca_appartenenza_anzianita_servizio: Date = undefined;
-  @JsonProperty('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_profilo', ISODateConverter, true)
+  @JsonProperty('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_profilo', ISODateConverter)
   public ente_comparto_ricerca_appartenenza_anzianita_profilo: Date = undefined;
-  @JsonProperty('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_livello', ISODateConverter, true)
+  @JsonProperty('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_livello', ISODateConverter)
   public ente_comparto_ricerca_appartenenza_anzianita_livello: Date = undefined;
 
 
@@ -335,9 +335,9 @@ export class Application extends Folder {
   public provincia_ente_comparto_universita_appartenenza: string = undefined;
   @JsonProperty('jconon_application:categoria_ente_comparto_universita_appartenenza')
   public categoria_ente_comparto_universita_appartenenza: string = undefined;
-  @JsonProperty('jconon_application:ente_comparto_universita_appartenenza_anzianita_servizio', ISODateConverter, true)
+  @JsonProperty('jconon_application:ente_comparto_universita_appartenenza_anzianita_servizio', ISODateConverter)
   public ente_comparto_universita_appartenenza_anzianita_servizio: Date = undefined;
-  @JsonProperty('jconon_application:ente_comparto_universita_appartenenza_anzianita_profilo', ISODateConverter, true)
+  @JsonProperty('jconon_application:ente_comparto_universita_appartenenza_anzianita_profilo', ISODateConverter)
   public ente_comparto_universita_appartenenza_anzianita_profilo: Date = undefined;
 
   @JsonProperty('jconon_application:ente_appartenenza')
@@ -347,13 +347,13 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:provincia_ente_appartenenza')
   public provincia_ente_appartenenza: string = undefined;
 
-  @JsonProperty('jconon_application:anzianita_servizio', ISODateConverter, true)
+  @JsonProperty('jconon_application:anzianita_servizio', ISODateConverter)
   public anzianita_servizio: Date = undefined;
 
-  @JsonProperty('jconon_application:anzianita_profilo', ISODateConverter, true)
+  @JsonProperty('jconon_application:anzianita_profilo', ISODateConverter)
   public anzianita_profilo: Date = undefined;
 
-  @JsonProperty('jconon_application:anzianita_livello', ISODateConverter, true)
+  @JsonProperty('jconon_application:anzianita_livello', ISODateConverter)
   public anzianita_livello: Date = undefined;
 
   @JsonProperty('jconon_application:fl_area_amministrativa')
@@ -436,7 +436,7 @@ export class Application extends Folder {
   public fl_ulteriore_laurea: boolean = undefined;
   @JsonProperty('jconon_application:tipo_ulteriore_laurea')
   public tipo_ulteriore_laurea: string = undefined;
-  @JsonProperty('jconon_application:data_ulteriore_laurea', ISODateConverter, true)
+  @JsonProperty('jconon_application:data_ulteriore_laurea', ISODateConverter)
   public data_ulteriore_laurea: Date = undefined;
   @JsonProperty('jconon_application:punteggio_ulteriore_laurea')
   public punteggio_ulteriore_laurea: string = undefined;
@@ -449,7 +449,7 @@ export class Application extends Folder {
   public fl_ulteriore_dottorato: boolean = undefined;
   @JsonProperty('jconon_application:tipo_ulteriore_dottorato')
   public tipo_ulteriore_dottorato: string = undefined;
-  @JsonProperty('jconon_application:data_ulteriore_dottorato', ISODateConverter, true)
+  @JsonProperty('jconon_application:data_ulteriore_dottorato', ISODateConverter)
   public data_ulteriore_dottorato: Date = undefined;
   @JsonProperty('jconon_application:istituto_ulteriore_dottorato')
   public istituto_ulteriore_dottorato: string = undefined;

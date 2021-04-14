@@ -16,9 +16,8 @@ import { JcononAspectsDichiarazioneComponent } from './aspect/dichiarazione.comp
 import { JcononAttachmentShowComponent } from './attachment/jconon-attachment-show.component';
 import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from './attachment/jconon-attachment-documento-riconoscimento-show.component';
 
+import { JcononAttachmentEditComponent } from './attachment/jconon-attachment-edit.component';
 import { JcononAttachmentDocumentoRiconoscimentoEditComponent } from './attachment/jconon-attachment-documento-riconoscimento-edit.component';
-
-
 
 import {ButtonsModule} from 'ngx-bootstrap/buttons'
 import { AccordionModule } from 'ngx-bootstrap/accordion';
@@ -131,6 +130,7 @@ import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dott
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent,
 
+        JcononAttachmentEditComponent,
         JcononAttachmentDocumentoRiconoscimentoEditComponent
     ],
     imports: [
@@ -205,6 +205,7 @@ import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dott
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent,
 
+        JcononAttachmentEditComponent,
         JcononAttachmentDocumentoRiconoscimentoEditComponent
     ],
 })

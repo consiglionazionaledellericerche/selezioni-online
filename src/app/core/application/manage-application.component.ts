@@ -93,7 +93,7 @@ import { Helpers } from '../../common/helpers/helpers';
               <span class="d-none d-md-block pr-1">Stampa</span>
               <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-print"></use></svg>
             </button>
-            <button (click)="sendApplication()" class="btn btn-outline-success btn-lg btn-icon mr-2" tooltip="Invia domanda">
+            <button *ngIf="affixCompleted == affix.length - 1" (click)="sendApplication()" class="btn btn-outline-success btn-lg btn-icon mr-2" tooltip="Invia domanda">
               <span class="d-none d-md-block pr-1">Invia</span>
               <svg class="icon icon-success"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
             </button>
@@ -187,28 +187,37 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   public confirmApplication() {
-    this.service.saveApplication(this.buildInstance()).subscribe((application) => {
-      application.call = this.call;
-      this.setEntity(application);
-      this.buildCreateForm();
-      this.affixCompleted++;
-    });
+    if (this.isFormValid) {
+      this.service.saveApplication(this.buildInstance()).subscribe((application) => {
+        application.call = this.call;
+        this.setEntity(application);
+        this.buildCreateForm();
+        this.affixCompleted++;
+      });  
+    }
   }
 
   public sendApplication() {
+    if (this.isFormValid) {
+    }
+  }
+
+  get isFormValid() : boolean {
     Object.keys(this.form.controls).forEach(control => {
       if (this.form.controls[control].status === 'INVALID') {
         this.form.controls[control].markAsDirty({onlySelf: true});
-      }
+        this.form.controls[control].markAsTouched({onlySelf: true});
+      }      
     });
-    this.affixComponent.ngOnChanges(undefined);
-    this.changeDetector.detectChanges();
+    //this.affixComponent.ngOnChanges(undefined);
+    //this.changeDetector.detectChanges();
     // stop here if form is invalid
     if (this.form.invalid) {
         this.translateService.get('message.form.invalid').subscribe((label) => {
             this.apiMessageService.sendMessage(MessageType.WARNING, label);
         });
     }
+    return !this.form.invalid;
   }
 
   public buildInstance(): Application {

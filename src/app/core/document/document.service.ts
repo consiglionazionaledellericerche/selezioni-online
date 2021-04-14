@@ -44,20 +44,18 @@ export class DocumentService extends CommonService<Document>{
     return DocumentService.ROUTE;
   }
 
-  public postDocument(parentId: string, entity: Document, fileToUpload: File): Observable<any> {
+  public createDocument(parentId: string, entity: Document, fileToUpload: File): Observable<Document> {
     const formData: FormData = new FormData();
-
     formData.append('file', fileToUpload, fileToUpload.name);
     formData.append('properties', new Blob([JSON.stringify(this.serializeInstance(entity))]));
 
     return this.configService.getApiBase()
       .pipe(
         switchMap((apiBase) => {
-          return this.httpClient.post(apiBase + this.getApiPath() + "/" + parentId, formData)
+          return this.httpClient.post(apiBase + this.getApiPath() + "/create/" + parentId, formData)
             .pipe(
               map((response) => {
-                this.apiMessageService.sendMessage(MessageType.SUCCESS, 'Allegato inserito con successo.');
-                return true;
+                return this.buildInstance(response);
               }),
               catchError((httpErrorResponse: HttpErrorResponse) => {
                 const springError = new SpringError(httpErrorResponse);
@@ -69,5 +67,49 @@ export class DocumentService extends CommonService<Document>{
       );
   }
 
+  public updateDocument(entity: Document, fileToUpload: File): Observable<Document> {
+    const formData: FormData = new FormData();
+    if (fileToUpload) {
+      formData.append('file', fileToUpload, fileToUpload.name);
+    }
+    formData.append('properties', new Blob([JSON.stringify(this.serializeInstance(entity))]));
+
+    return this.configService.getApiBase()
+      .pipe(
+        switchMap((apiBase) => {
+          return this.httpClient.post(apiBase + this.getApiPath() + "/update", formData)
+            .pipe(
+              map((response) => {
+                return this.buildInstance(response);
+              }),
+              catchError((httpErrorResponse: HttpErrorResponse) => {
+                const springError = new SpringError(httpErrorResponse);
+                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
+                return ErrorObservable.create(springError);
+              })
+            );
+        })
+      );
+  }
+
+  public deleteDocument(objectId: string): Observable<any> {
+    const params = new HttpParams().set('objectId', objectId);
+    return this.configService.getApiBase()
+      .pipe(
+        switchMap((apiBase) => {
+          return this.httpClient.delete(apiBase + this.getApiPath() + "/delete", {params: params})
+            .pipe(
+              map((response) => {
+                return response;
+              }),
+              catchError((httpErrorResponse: HttpErrorResponse) => {
+                const springError = new SpringError(httpErrorResponse);
+                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
+                return ErrorObservable.create(springError);
+              })
+            );
+        })
+      );
+  }
   
 }

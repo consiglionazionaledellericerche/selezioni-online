@@ -10,7 +10,7 @@ export class DocumentoRiconoscimento extends Document{
     public tipologia: string;
     @JsonProperty('jconon_documento_riconoscimento:emittente')
     public emittente: string;
-    @JsonProperty('jconon_documento_riconoscimento:data_scadenza', ISODateConverter, true)
+    @JsonProperty('jconon_documento_riconoscimento:data_scadenza', ISODateConverter)
     public data_scadenza: Date;
     constructor() {
         super();

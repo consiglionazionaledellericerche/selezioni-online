@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, Optional, Self, ViewChild
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, Optional, Renderer2, Self, ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
 import {BsDatepickerConfig, BsLocaleService} from 'ngx-bootstrap/datepicker';
@@ -12,7 +12,6 @@ import {FormCommonTag} from './form-common-tag';
 
 @Component({
   selector: 'app-control-datepicker',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template:
      `
       <app-form-layout [controlDir]="controlDir"
@@ -20,7 +19,7 @@ import {FormCommonTag} from './form-common-tag';
                        [noLabel]="noLabel"
                        [label]="label"
                        [prepend]="'calendar'"
-                       [showValidation]="showValidation"
+                       [showValidation]="showValidation && controlDir.touched"
                        [appendText]="appendText"
                        [ttipAppend]="ttipAppend"
                        [labelactive]="labelactive"
@@ -63,7 +62,8 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
    * @param {NgControl} controlDir
    */
   constructor(@Optional() @Self() public controlDir: NgControl, private ref: ChangeDetectorRef,
-              private _localeService: BsLocaleService) {
+              private _localeService: BsLocaleService,
+              private renderer: Renderer2) {
     super();
     this._localeService.use('it');
     controlDir.valueAccessor = this;
@@ -90,7 +90,7 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
   ControlValueAccess Impl.
   */
 
-  onChange(value: Date) {}
+  onChange(value: Date|string) {}
 
   onTouched = () => {};
 
@@ -119,16 +119,16 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
   }
 
   isInvalid(): boolean {
-    return this.controlDir.control && ValidationHelper.showInvalid(this.controlDir, this.showValidation);
+    return this.controlDir.control && ValidationHelper.showInvalid(this.controlDir, this.showValidation && this.controlDir.touched);
   }
 
   isValid(): boolean  {
-    return this.controlDir.control && ValidationHelper.showValid(this.controlDir, this.showValidation);
+    return this.controlDir.control && ValidationHelper.showValid(this.controlDir, this.showValidation && this.controlDir.touched);
   }
 
-  change(value: Date) {
+  change(value: Date | string) {
     this.labelactive = value !== undefined;
-    this.onChange(value);
+    this.onChange(value == 'Invalid Date' ? null : value);
   }
   
   onShow(event: any) {
@@ -145,7 +145,8 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
 
   classes() {
     return {
-      'is-invalid': this.isInvalid()
+      'is-invalid': this.isInvalid(),
+      'is-valid': this.isValid()
     };
   }
 }

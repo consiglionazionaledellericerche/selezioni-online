@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { DocumentService } from './document.service';
@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ApiMessageService, MessageType } from '../api-message.service';
 import { Document } from '../../common/model/document.model';
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'manage-document',
@@ -18,8 +19,8 @@ import { CommonEditComponent } from '../../common/controller/common-edit.compone
         </button>
       </div>
       <div class="modal-body">
-        <edit-metadata [cmisObject]="cmisObject" [typeId]="typeId" [form]="form"></edit-metadata>
-        <form [formGroup]="form">
+        <edit-metadata [cmisObject]="entity" [typeId]="typeId" [form]="form"></edit-metadata>
+        <form [formGroup]="form" class="mt-3">
           <app-control-attachment formControlName="file" [disabled]="disabled"></app-control-attachment>
         </form>
       </div>
@@ -36,13 +37,15 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
     protected router: Router,
     protected route: ActivatedRoute,
     private apiMessageService: ApiMessageService,
-    protected translateService: TranslateService
+    protected translateService: TranslateService,
+    private el: ElementRef
   ) {    
     super(service, router, route);
   }
 
   @Input() parentId;  
   @Input() typeId;  
+  public event: EventEmitter<Document> = new EventEmitter();
 
   public setEntity(entity: Document) {
     this.entity = entity;
@@ -54,8 +57,10 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
 
   public buildCreateForm() {
     this.form = new FormGroup({
+      'cmis:objectId': new FormControl(this.entity ? this.entity.objectId : undefined),
       'cmis:objectTypeId': new FormControl(this.typeId),
-      'file': new FormControl("", Validators.required)
+      'cmis:baseTypeId': new FormControl('cmis:document'),
+      'file': new FormControl("", this.entity ? undefined : Validators.required)
     });
   }
 
@@ -72,12 +77,27 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
     Object.keys(this.form.controls).forEach(control => {
       if (this.form.controls[control].status === 'INVALID') {
         this.form.controls[control].markAsDirty({onlySelf: true});
+        this.form.controls[control].markAsTouched({onlySelf: true});
+        const invalidControl = this.el.nativeElement
+          .querySelector('[formcontrolname="' + control + '"]')
+          .querySelector('input');
+        if (invalidControl) {
+          invalidControl.focus();
+        }
       }
     });
     if (!this.form.invalid) {
-      this.service.postDocument(this.parentId, this.buildInstance(), this.form.value.file).subscribe((result) => {
-        this.modalRef.hide();
-      });
+      if(this.entity) {
+        this.service.updateDocument(this.buildInstance(), this.form.value.file).subscribe((result) => {
+          this.event.emit(result);
+          this.modalRef.hide();
+        });
+      } else {
+        this.service.createDocument(this.parentId, this.buildInstance(), this.form.value.file).subscribe((result) => {
+          this.event.emit(result);
+          this.modalRef.hide();
+        });  
+      }
     }
   }
 }

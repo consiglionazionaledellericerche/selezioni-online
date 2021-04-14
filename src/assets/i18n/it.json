@@ -49,6 +49,7 @@
   "back": "Indietro",
   "new": "Nuovo",
   "delete": "Elimina",
+  "upload": "Carica file....",
   "edit": "Modifica",
   "remove": "Rimuovi",
   "add": "Aggiungi",
@@ -94,7 +95,16 @@
       "codicefiscale": "Codice fiscale non valido!"
     },
     "form.invalid" : "Corregere gli errori, per proseguire.",
-    "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>"
+    "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>",
+    "document": {
+      "upload": {
+        "success": "Il documento {{value}} è stato correttamente caricato."
+      },
+      "delete": {
+        "success": "Il documento è stato correttamente cancellato."
+      }
+
+    }  
   },
   "placeholder": {
     "select": {

@@ -10,9 +10,14 @@ import {catchError, map, switchMap} from 'rxjs/operators';
 import {ConfigService} from '../config.service';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {ErrorObservable} from 'rxjs-compat/observable/ErrorObservable';
-import {ApiMessageService} from '../api-message.service';
+import {ApiMessageService, MessageType} from '../api-message.service';
 import { ObjectTypeService } from '../object-type.service';
 import { Observable, of } from 'rxjs';
+import { DocumentService } from '../document/document.service';
+import { CmisObject } from '../../common/model/cmisobject.model';
+import { ManageDocumentComponent } from '../document/manage-document.component';
+import { Document } from '../../common/model/document.model';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'children-list',
@@ -23,7 +28,7 @@ import { Observable, of } from 'rxjs';
     <app-list-layout [loading]="loading" [items]="items" [page]="getPage()"
                      [count]="count" [page_offset]="service.getPageOffset()" (onChangePage)="onChangePage($event)">
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
-        <app-list-item-document [item]="item" (onDelete)="onDelete(item.getId())">
+        <app-list-item-document [item]="item" (onDelete)="onDelete(item.getId())" (onEdit)="onEdit(item)">
           <div class="col-sm-12 font-weight-bold"> 
             <button 
               class="btn btn-link pl-0 pb-0 text-truncate"
@@ -37,7 +42,6 @@ import { Observable, of } from 'rxjs';
             <span class="font-weight-bold">{{item.getFileSize()}}</span>
             <span *ngIf="show_date">{{'document.last_modified'| translate:{value: item.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</span>
           </div> 
-
         </app-list-item-document>
       </li>
     </app-list-layout>
@@ -51,8 +55,11 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
   @Input() typeId: string;
   @Input() queryName: string;
   @Input() show_date: string;
+  bsModalRef: BsModalRef;
 
   public constructor(public service: ChildrenService,
+                     protected documentService: DocumentService,  
+                     private modalService: BsModalService,                   
                      protected configService: ConfigService,
                      protected apiMessageService: ApiMessageService,
                      private httpClient: HttpClient,
@@ -84,6 +91,31 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
     } 
   }
   
+  public onDelete(objectId: string) {
+    this.documentService.deleteDocument(objectId).subscribe((result) => {
+      this.translateService.get('message.document.delete.success').subscribe((label) => {
+        this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
+      });
+      this.loadList();
+    });
+  }
+
+  public onEdit(cmisObject: CmisObject) {
+    const initialState = {
+      entity: cmisObject,
+      typeId: cmisObject.objectTypeId
+    };
+
+    this.bsModalRef = this.modalService.show(ManageDocumentComponent, Object.assign({initialState}, { animated: true, class: 'modal-lg' }));
+    this.bsModalRef.content.event.subscribe((document: Document) => {
+      this.translateService.get('message.document.upload.success', {value: document.name}).subscribe((label) => {
+        this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
+      });
+      this.loadList();
+    });
+
+  }
+
   public buildFilterForm(): FormGroup {
     return new FormGroup({
       parentId: new FormControl(this.parentId),

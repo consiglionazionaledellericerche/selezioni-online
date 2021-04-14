@@ -50,7 +50,12 @@ export abstract class CommonService<T extends Base> {
         jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
         jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL; // never allow null
         jsonConvert.ignoreRequiredCheck = true;
-    return jsonConvert.serializeObject(obj, this.createInstance(obj.getType(), obj.getBaseType()));
+    try {
+      return jsonConvert.serializeObject(obj, this.createInstance(obj.getType(), obj.getBaseType()));
+    } catch (ex) {
+      console.log(ex);
+      this.apiMessageService.sendMessage(MessageType.ERROR, ex.message);
+    }   
   }
 
   protected createInstance(cmisType: string, cmisBaseType: string): { new (): T; } {

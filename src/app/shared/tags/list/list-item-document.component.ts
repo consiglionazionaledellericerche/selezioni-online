@@ -15,12 +15,20 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
 
            <div class="ddd">
              <div class="btn-group border rounded" role="group" dropdown [ngStyle]="buttonStyle()">
-                <button class="btn text-dark" [disabled]="!item.hasId()"
+                <button class="btn text-dark p-2" [disabled]="!item.hasId()"
                       (click)="openModalWithComponent(item)" tooltip="{{'show' | translate}}">
                       <i class="fa fa-fw fa-eye text-primary"></i>
                 </button>
+                <button class="btn text-primary p-2" *ngIf="item.canEdit()" [disabled]="!item.hasId()"
+                      (click)="edit(item)" tooltip="{{'edit' | translate}}">
+                      <i class="fa fa-fw fa-edit text-primary"></i>
+                </button>
+                <button class="btn text-danger p-2" *ngIf="item.canDelete()" [disabled]="!item.hasId()"
+                      (click)="delete(item)" tooltip="{{'delete' | translate}}">
+                      <i class="fa fa-fw fa-trash text-danger"></i>
+                </button>
           
-                <button id="button-basic" dropdownToggle class="btn text-dark" aria-controls="button-animated" tooltip="{{'more.actions' | translate}}">
+                <button id="button-basic" dropdownToggle class="btn text-dark p-2" aria-controls="button-animated" tooltip="{{'more.actions' | translate}}">
                   <i class="fa fa-fw fa-ellipsis-v"></i>
                 </button>
                 <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
@@ -60,6 +68,8 @@ export class ListItemDocumentComponent {
 
   @Output() onDelete = new EventEmitter();
 
+  @Output() onEdit = new EventEmitter();
+
   @Input() filterForm;
 
   @Input() page;
@@ -82,6 +92,14 @@ export class ListItemDocumentComponent {
       'background-color': '#FEFEFE',
       'z-index': '100000'
     };
+  }
+
+  delete(cmisObject: CmisObject) {
+    this.onDelete.emit(cmisObject);
+  }
+
+  edit(cmisObject: CmisObject) {
+    this.onEdit.emit(cmisObject);
   }
 
   openModalWithComponent(cmisObject: CmisObject) {

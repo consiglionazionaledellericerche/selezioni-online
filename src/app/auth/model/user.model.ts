@@ -66,7 +66,7 @@ export class User implements Base{
   public statoestero: string = undefined;
   @JsonProperty("straniero", BooleanConverter, true)
   public straniero: boolean = undefined;
-  @JsonProperty("dataDiNascita", ISODateConverter, true)
+  @JsonProperty("dataDiNascita", ISODateConverter)
   public dataDiNascita: Date = undefined;
   
   public getId(): string {
