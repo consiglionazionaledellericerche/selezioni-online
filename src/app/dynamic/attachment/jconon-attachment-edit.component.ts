@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DynamicComponent } from '../dynamic.component';
 import { CacheService } from '../../core/cache.service';
-import { Document } from '@src/app/common/model/document.model';
+import { Document } from '../../common/model/document.model';
 
 @Component({
     selector: 'D:jconon_attachment:document',
