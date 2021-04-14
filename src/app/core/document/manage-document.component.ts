@@ -21,7 +21,7 @@ import { Subject } from 'rxjs';
       <div class="modal-body">
         <edit-metadata [cmisObject]="entity" [typeId]="typeId" [form]="form"></edit-metadata>
         <form [formGroup]="form" class="mt-3">
-          <app-control-attachment formControlName="file" [disabled]="'disabled'"></app-control-attachment>
+          <app-control-attachment formControlName="file"></app-control-attachment>
         </form>
       </div>
       <div class="modal-footer">
