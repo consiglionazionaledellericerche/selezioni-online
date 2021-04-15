@@ -63,8 +63,8 @@ import { AffixComponent } from './affix.component';
             <input 
               class="form-control" 
               id="jconon_application:provincia_nascita" 
-              type="text" 
-              readonly
+              type="text"
+              readonly               
               formControlName="jconon_application:provincia_nascita" />
           </div>
           <div class="form-group col-md-3">
@@ -144,7 +144,8 @@ export class JcononAffixAnagraficaComponent extends AffixComponent {
       });
       this.form.addControl('jconon_application:nome', new FormControl({value:this.data.nome, disabled: true}));
       this.form.addControl('jconon_application:cognome', new FormControl({value:this.data.cognome, disabled: true}));
-      this.form.addControl('jconon_application:nazione_nascita', new FormControl(this.data.nazione_nascita, Validators.required));
+      this.form.addControl('jconon_application:nazione_nascita', 
+        new FormControl(this.data.nazione_nascita, [Validators.required, Validators.nullValidator]));
       
       this.form.addControl('jconon_application:comune_nascita', 
         new FormControl(

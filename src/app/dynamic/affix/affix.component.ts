@@ -17,6 +17,7 @@ export abstract class AffixComponent extends DynamicComponent<Application>{
         'jconon_application:user',
         'cmis:objectTypeId',
         'cmis:objectId',
+        'jconon_application:last_section_completed',
         'aspect'
     ];
     ngOnInit(): void {

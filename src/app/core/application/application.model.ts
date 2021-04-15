@@ -89,6 +89,8 @@ export class Application extends Folder {
   public protocollo_data_assunzione_idoneo: Date;
   @JsonProperty('jconon_application:protocollo_numero_assunzione_idoneo')
   public protocollo_numero_assunzione_idoneo: string;
+  @JsonProperty('jconon_application:last_section_completed')
+  public last_section_completed: number;
 
   @JsonProperty('call', Call, true)
   public call: Call = undefined;
@@ -516,6 +518,7 @@ export class Application extends Folder {
     this.protocollo_numero_graduatoria = undefined;
     this.protocollo_data_assunzione_idoneo = undefined;
     this.protocollo_numero_assunzione_idoneo = undefined;
+    this.last_section_completed = undefined;
 
     this.fl_possesso_requisiti = undefined;
 

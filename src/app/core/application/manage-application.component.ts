@@ -114,7 +114,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
 
   public user: User = null;
   cache: any = {};
-  public affixCompleted: number;
+  public affixCompleted: number = 0;
   public affix: number[];
 
   @ViewChild('affixComponent', {static: false}) affixComponent: ShowAffixComponent;
@@ -133,7 +133,6 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
   
   public ngOnInit() {
-    this.affixCompleted = 0;
     this.route.queryParams.subscribe((queryParams) => {
       this.callService.getById(queryParams['callId']).subscribe((call) => {
         this.call = call;
@@ -142,6 +141,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.service.loadApplication(call.objectId, queryParams['applicationId']||'', this.user.userName).subscribe((application) => {
           application.call = call;
           this.setEntity(application);
+          this.affixCompleted = this.entity.last_section_completed || 0;
           this.buildCreateForm();
         });
         this.translateService.reloadLang('it');
@@ -178,6 +178,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       'jconon_application:user': new FormControl(this.entity.user),
       'cmis:objectTypeId': new FormControl(this.entity.objectTypeId),
       'cmis:objectId': new FormControl(this.entity.objectId),
+      'jconon_application:last_section_completed': new FormControl(this.affixCompleted),
       'aspect': new FormControl(
         this.entity.call.elenco_aspects
           .concat(this.entity.call.elenco_aspects_sezione_cnr)
@@ -187,8 +188,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   public confirmApplication() {
-    console.log(this.form);
     if (this.isFormValid) {
+      this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted + 1);
       this.service.saveApplication(this.buildInstance()).subscribe((application) => {
         application.call = this.call;
         this.setEntity(application);
@@ -208,6 +209,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       if (this.form.controls[control].status === 'INVALID') {
         this.form.controls[control].markAsDirty({onlySelf: true});
         this.form.controls[control].markAsTouched({onlySelf: true});
+        this.form.controls[control].patchValue(null);
       }      
     });
     // stop here if form is invalid
