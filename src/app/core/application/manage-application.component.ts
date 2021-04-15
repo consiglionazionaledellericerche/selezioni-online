@@ -209,8 +209,6 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.form.controls[control].markAsTouched({onlySelf: true});
       }      
     });
-    //this.affixComponent.ngOnChanges(undefined);
-    //this.changeDetector.detectChanges();
     // stop here if form is invalid
     if (this.form.invalid) {
         this.translateService.get('message.form.invalid').subscribe((label) => {

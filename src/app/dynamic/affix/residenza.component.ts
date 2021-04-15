@@ -3,8 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
-import { DynamicComponent } from '../dynamic.component';
-import { Application } from '../../core/application/application.model';
+import { AffixComponent } from './affix.component';
 
 @Component({
     selector: 'affix_tabResidenza',
@@ -83,7 +82,7 @@ import { Application } from '../../core/application/application.model';
       </form>
     `
   })
-export class JcononAffixResidenzaComponent extends DynamicComponent<Application> {
+export class JcononAffixResidenzaComponent extends AffixComponent {
     paesi: string[];
     comuni: Comune[];
     constructor(
@@ -94,6 +93,7 @@ export class JcononAffixResidenzaComponent extends DynamicComponent<Application>
     }
 
     ngOnInit(): void {
+      super.ngOnInit();
       this.cacheService.paesi().subscribe((paesi) => {
         this.paesi = paesi;
       });
@@ -103,7 +103,8 @@ export class JcononAffixResidenzaComponent extends DynamicComponent<Application>
       this.form.addControl('jconon_application:nazione_residenza', new FormControl(this.data.nazione_residenza, Validators.required));
       this.form.addControl('jconon_application:comune_residenza', 
         new FormControl(
-            this.isForeign() ? this.data.comune_residenza : new Comune(this.data.comune_residenza, this.data.provincia_residenza),
+            this.isForeign() ? this.data.comune_residenza : 
+            (this.data.comune_residenza ? new Comune(this.data.comune_residenza, this.data.provincia_residenza):undefined),
             Validators.required
         )
       );
@@ -121,7 +122,6 @@ export class JcononAffixResidenzaComponent extends DynamicComponent<Application>
 
       this.form.addControl('jconon_application:indirizzo_residenza', new FormControl(this.data.indirizzo_residenza, Validators.required));
       this.form.addControl('jconon_application:num_civico_residenza', new FormControl(this.data.num_civico_residenza));
-      super.ngOnInit();
     }
 
     public isForeign(): boolean {

@@ -3,8 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
-import { DynamicComponent } from '../dynamic.component';
-import { Application } from '../../core/application/application.model';
+import { AffixComponent } from './affix.component';
 
 @Component({
     selector: 'affix_tabAnagrafica',
@@ -120,7 +119,7 @@ import { Application } from '../../core/application/application.model';
       </form>
     `
   })
-export class JcononAffixAnagraficaComponent extends DynamicComponent<Application> {
+export class JcononAffixAnagraficaComponent extends AffixComponent {
     paesi: string[];
     comuni: Comune[];
     constructor(
@@ -131,6 +130,7 @@ export class JcononAffixAnagraficaComponent extends DynamicComponent<Application
     }
 
     ngOnInit(): void {
+      super.ngOnInit();
       this.cacheService.paesi().subscribe((paesi) => {
         this.paesi = paesi;
       });
@@ -143,7 +143,8 @@ export class JcononAffixAnagraficaComponent extends DynamicComponent<Application
       
       this.form.addControl('jconon_application:comune_nascita', 
         new FormControl(
-            this.isForeign() ? this.data.comune_nascita : new Comune(this.data.comune_nascita, this.data.provincia_nascita),
+            this.isForeign() ? this.data.comune_nascita : 
+              (this.data.comune_nascita ? new Comune(this.data.comune_nascita, this.data.provincia_nascita): undefined),
             Validators.required
         )
       );
@@ -159,7 +160,6 @@ export class JcononAffixAnagraficaComponent extends DynamicComponent<Application
       this.form.addControl('jconon_application:nazione_cittadinanza', new FormControl(this.data.nazione_cittadinanza));
       this.form.addControl('jconon_application:codice_fiscale', new FormControl(this.data.codice_fiscale));
       this.onChangeCittadinanza(false);
-      super.ngOnInit();
     }
 
     public isForeign(): boolean {
