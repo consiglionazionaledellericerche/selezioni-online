@@ -60,7 +60,12 @@ import { AffixComponent } from './affix.component';
           </div>
           <div *ngIf="!isForeign()" class="form-group col-md-1">
             <label class="form-label active">{{'application.provincia_nascita' | translate}}</label>
-            <input class="form-control" id="jconon_application:provincia_nascita" type="text" formControlName="jconon_application:provincia_nascita" />
+            <input 
+              class="form-control" 
+              id="jconon_application:provincia_nascita" 
+              type="text" 
+              readonly
+              formControlName="jconon_application:provincia_nascita" />
           </div>
           <div class="form-group col-md-3">
             <app-control-datepicker
@@ -148,7 +153,7 @@ export class JcononAffixAnagraficaComponent extends AffixComponent {
             Validators.required
         )
       );
-      this.form.addControl('jconon_application:provincia_nascita', new FormControl({value:this.data.provincia_nascita, disabled:true}));
+      this.form.addControl('jconon_application:provincia_nascita', new FormControl(this.data.provincia_nascita));
       this.form.addControl('jconon_application:data_nascita', new FormControl(this.data.data_nascita||undefined, Validators.required));
       this.form.addControl('jconon_application:sesso', new FormControl(String(this.data.sesso || 'M'),Validators.required));
 

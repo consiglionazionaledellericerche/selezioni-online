@@ -187,6 +187,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   public confirmApplication() {
+    console.log(this.form);
     if (this.isFormValid) {
       this.service.saveApplication(this.buildInstance()).subscribe((application) => {
         application.call = this.call;

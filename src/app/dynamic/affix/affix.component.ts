@@ -22,7 +22,6 @@ export abstract class AffixComponent extends DynamicComponent<Application>{
     ngOnInit(): void {
         Object.keys(this.form.controls).forEach(control => {
             if (this.controlExcluded.indexOf(control) == -1) {
-                console.log(control);
                 this.form.removeControl(control);
             }
         });
