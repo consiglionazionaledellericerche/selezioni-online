@@ -37,8 +37,12 @@ import { Application } from '../../core/application/application.model';
             </div>
             <div [hidden]="hiddenDirettore" *ngSwitchCase="true" class="form-group col-md-4">
               <div class="form-check w-100">
-                <input id="fl_direttore" type="checkbox" formControlName="jconon_application:fl_direttore">
-                <label for="fl_direttore" class="pl-5">{{'label.jconon_application.fl_direttore'| translate}}</label>
+                <app-control-checkbox 
+                  [showValidation]="true"
+                  [inline]="true" 
+                  [label]="'label.jconon_application.fl_direttore'| translate" 
+                  formControlName="jconon_application:fl_direttore">
+                </app-control-checkbox>
               </div>
             </div>
           </div>
