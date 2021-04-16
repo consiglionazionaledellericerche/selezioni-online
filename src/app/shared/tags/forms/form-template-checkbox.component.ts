@@ -1,57 +1,57 @@
-import {Component, Input, OnInit, Optional, Self} from '@angular/core';
 import {
-  ControlValueAccessor, NgControl
-} from '@angular/forms';
-import {CheckboxModel} from '../../../common/model/checkbox.model';
+  ChangeDetectorRef,
+  Component, ElementRef, Input, OnInit, Optional, Self, ViewChild
+} from '@angular/core';
+import {AbstractControlDirective, ControlValueAccessor, NgControl} from '@angular/forms';
+import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {FormCommonTag} from './form-common-tag';
 
+/**
+ * IMPORTANTE
+ *
+ * Dal tab tag input è statp rimossa la callback (blur)="onTouched()" perchè conflittava con la direttiva *ngFor,
+ * causando la necessità di cliccare due volte per abilitare il component, in particolare nella CommonList.
+ * Il motivo del malfunzionamento non è noto.
+ * https://stackoverflow.com/questions/48176172/angular-click-not-working-after-ngfor-backing-array-updated
+ */
 @Component({
   selector: 'app-control-checkbox',
   template:
      `
-      <app-form-layout
-              [controlDir]="controlDir"
-              [inline]="inline"
-              [label]="label"
-              [prepend]="prepend"
-              [ttip]="ttip"
-              [append]="append"
-              [ttipAppend]="ttipAppend"
-              [noLabel]="noLabel"
-              [showValidation]="showValidation"
-              [checkbox]="true"
-      >
+        <input class="form-control {{inputClass}}"
+             type="{{ type }}"
+             #input
+             id="checkbox"
+             (input)="change($event.target.checked)"
+             [disabled]="disabled">
 
-        <div class="btn-group btn-block" btnRadioGroup>
-          <ng-container *ngFor="let option of options">
-            <label class="btn btn-primary" 
-              btnRadio="{{ option.value }}" 
-              tabindex="0" role="button">{{ option.label | translate }}</label>
-          </ng-container>
+        <label for="checkbox" class="label-checkbox pl-5" [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}">
+          {{label| translate}}
+        </label>
+        <div *ngIf="showValidation">
+          <div *ngIf=isInvalid() class="text-truncate text-danger">
+              <span *ngFor="let error of hasErrors()" class="pr-1">
+                <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
+              </span>
+          </div>
         </div>
-
-        <div *ngIf="controlDir.dirty && controlDir.pending"
-             [ngStyle]="{'position': 'absolute', 'top': '5px', 'right': '17px', 'z-index': '100'}">
-          <i class="fa fa-circle-o-notch fa-spin fa-fw text-secondary"></i>
-        </div>
-
-      </app-form-layout>
     `,
 })
 export class FormTemplateCheckboxComponent extends FormCommonTag implements ControlValueAccessor, OnInit {
 
-  @Input() options: CheckboxModel[];
+  @Input() type = 'checkbox';
 
-  @Input() booleanBoxDisabled = false;
+  @Input() inputClass = ''; 
 
-  booleanBox = false;
+  @ViewChild('input', {static: true}) input: ElementRef;
 
   /**
    * Self permette di poter innestare form controls... ci assicuriamo
    * che sia esattamente quello fornito dal parent.
    * @param {NgControl} controlDir
    */
-  constructor(@Optional() @Self() public controlDir: NgControl) {
+  constructor(@Optional() @Self() public controlDir: NgControl,
+              private ref: ChangeDetectorRef) {
     super();
     controlDir.valueAccessor = this;
   }
@@ -64,47 +64,38 @@ export class FormTemplateCheckboxComponent extends FormCommonTag implements Cont
     const validators = control.validator;
     control.setValidators(validators);
     control.updateValueAndValidity();
+
+    if (this.focus) {
+      setTimeout(() => {
+        this.input.nativeElement.focus();
+        this.input.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 0);
+    }
   }
 
-  change(checked: boolean, option: CheckboxModel) {
-    // console.log(checked);
-    // console.log(option);
-    option.selected = checked;
-
-    if (this.booleanBox) {
-      // nel caso di boolean box ritorno il valore.
-      // console.log(option.selected);
-      this.onChange(option.selected);
-      return;
-    }
-
-    // altrimenti ritorno la lista di valori
-    // console.log(this.options);
-    this.onChange(this.options);
+  change(value: boolean) {
+    this.onChange(value);
   }
 
   /*
     ControlValueAccess Impl.
   */
 
-  onChange = (value: any) => {};
+  onChange = (value: boolean) => {};
 
   onTouched = () => {};
 
   writeValue(value: any): void {
-    if (typeof(value) === 'boolean') {
-      // trasformo il valore boolean nella checkbox
-      this.booleanBox = true;
-      this.options = CheckboxModel.booleanBox(value, this.booleanBoxDisabled);
-      return;
-    }
-    console.log(value);
-    if (value) {
-      this.options = value;
+
+    this.input.nativeElement.checked = value;
+    if (this.controlDir.control) {
+      this.controlDir.control.markAsDirty();
+      this.controlDir.control.updateValueAndValidity();
+      //this.ref.detectChanges();
     }
   }
 
-  registerOnChange(fn: (value: any) => void): void {
+  registerOnChange(fn: (value: boolean) => void): void {
     this.onChange = fn;
   }
 
@@ -112,11 +103,23 @@ export class FormTemplateCheckboxComponent extends FormCommonTag implements Cont
     this.onTouched = fn;
   }
 
-  public styles() {
-    return {
-      'position': 'absolute',
-      'top': '-5px'
-    };
-  }
-}
+  /*
+  Utils.
+   */
 
+  isInvalid(): boolean {
+    return ValidationHelper.showInvalid(this.controlDir, this.showValidation);
+  }
+
+  isValid(): boolean  {
+    return ValidationHelper.showValid(this.controlDir, this.showValidation);
+  }
+
+  hasErrors() {
+    if (!this.controlDir || !this.controlDir.control) {
+      return;
+    }
+    return ValidationHelper.getValidationCodes((<AbstractControlDirective>this.controlDir).control);
+  }
+
+}

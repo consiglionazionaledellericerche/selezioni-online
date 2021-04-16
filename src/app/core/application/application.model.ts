@@ -399,6 +399,12 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:motivazione_licenziamento_disciplinare')
   public motivazione_licenziamento_disciplinare: string = undefined;
 
+  @JsonProperty('jconon_application:fl_vincolo_sede')
+  public fl_vincolo_sede: boolean = undefined;
+
+  @JsonProperty('jconon_application:fl_contratto_altra_pa')
+  public fl_contratto_altra_pa: boolean = undefined;
+
   @JsonProperty('jconon_application:fl_contratto_td_concorso_presso')
   public fl_contratto_td_concorso_presso: boolean = undefined;
   @JsonProperty('jconon_application:contratto_td_concorso_ente')
@@ -419,6 +425,12 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:data_graduatoria_idoneo_precedenti_graduatorie', ISODateConverter)
   public data_graduatoria_idoneo_precedenti_graduatorie: Date = undefined;
 
+  @JsonProperty('jconon_application:fl_dichiarazione_servizi_collocamento')
+  public fl_dichiarazione_servizi_collocamento: boolean = undefined;
+
+  @JsonProperty('jconon_application:motivazioni_candidatura')
+  public motivazioni_candidatura: string = undefined;
+
   @JsonProperty('jconon_application:fl_abilitazione_professione_ingegnere')
   public fl_abilitazione_professione_ingegnere: boolean = undefined;
   @JsonProperty('jconon_application:data_abilitazione_professione_ingegnere', ISODateConverter)
@@ -433,6 +445,20 @@ export class Application extends Folder {
   public sezione_iscrizione_albo_professione_ingegnere: string = undefined;
   @JsonProperty('jconon_application:settore_iscrizione_albo_professione_ingegnere')
   public settore_iscrizione_albo_professione_ingegnere: string = undefined;
+
+
+  @JsonProperty('jconon_application:fl_abilitazione_professione_forense')
+  public fl_abilitazione_professione_forense: boolean = undefined;
+  @JsonProperty('jconon_application:data_abilitazione_professione_forense', ISODateConverter)
+  public data_abilitazione_professione_forense: Date = undefined;
+  
+  @JsonProperty('jconon_application:fl_area_territoriale')
+  public fl_area_territoriale: boolean = undefined;
+  @JsonProperty('jconon_application:area_territoriale')
+  public area_territoriale: string = undefined;
+
+  @JsonProperty('jconon_application:profilo_componente')
+  public profilo_componente: string = undefined;
 
   @JsonProperty('jconon_application:fl_ulteriore_laurea')
   public fl_ulteriore_laurea: boolean = undefined;

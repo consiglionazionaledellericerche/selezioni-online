@@ -107,3 +107,7 @@
   background-color: $pagination-active-bg;
   border-color: $pagination-active-border-color;
 }
+
+label.label-checkbox.is-invalid {
+  color: $red;
+}

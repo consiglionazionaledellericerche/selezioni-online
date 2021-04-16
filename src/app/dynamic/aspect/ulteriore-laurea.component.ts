@@ -55,8 +55,12 @@ import { Application } from '../../core/application/application.model';
             </div>
             <div *ngSwitchCase="true" class="form-group col-md-4">
               <div class="form-check w-100">
-                <input id="fl_ulteriore_laurea_equipollente" type="checkbox" formControlName="jconon_application:fl_ulteriore_laurea_equipollente">
-                <label for="fl_ulteriore_laurea_equipollente" class="pl-5">{{'label.jconon_application.fl_ulteriore_laurea_equipollente'| translate}}</label>
+                <app-control-checkbox 
+                  [showValidation]="true"
+                  [inline]="true" 
+                  [label]="'label.jconon_application.fl_ulteriore_laurea_equipollente'| translate" 
+                  formControlName="jconon_application:fl_ulteriore_laurea_equipollente">
+                </app-control-checkbox>
               </div>
             </div>
           </div>

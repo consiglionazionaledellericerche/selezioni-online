@@ -207,6 +207,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   get isFormValid() : boolean {
     Object.keys(this.form.controls).forEach(control => {
       if (this.form.controls[control].status === 'INVALID') {
+        console.log(control);
         this.form.controls[control].markAsDirty({onlySelf: true});
         this.form.controls[control].markAsTouched({onlySelf: true});
         this.form.controls[control].patchValue(null);

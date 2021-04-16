@@ -30,12 +30,12 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
         <app-list-item-document [item]="item" (onDelete)="onDelete(item.getId())" (onEdit)="onEdit(item)">
           <div class="col-sm-12 font-weight-bold"> 
-            <button 
-              class="btn btn-link pl-0 pb-0 text-truncate"
-              style="max-width: inherit;" 
+            <a 
+              class="pl-0 pb-0 text-truncate d-block"
+              href="javascript:"
               (click)="getBlob(item.objectId, item.name)">
               <i class="fa fa-fw {{ item.getMimeTypeIcon() }}"></i> {{ item.name }}
-            </button>
+            </a>
           </div>
           <div class="col-sm-12 pt-1">{{item.objectTypeId | translate}}</div> 
           <div class="col-sm-12 pt-1">
