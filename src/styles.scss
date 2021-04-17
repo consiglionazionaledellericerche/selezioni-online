@@ -26,9 +26,12 @@
   border-radius: 0 !important;
   border-bottom: 1px solid #17324d !important;
 };
+
 .select2-dropdown {
   border: none !important;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%) !important;
 }
+
 .select2-selection__rendered {
   font-weight: bold;
   color: #17324d !important;
@@ -73,6 +76,9 @@
 @media (min-width: 1400px) {
   .container, .container-lg, .container-md, .container-sm, .container-xl {
       max-width: calc(100vw - 200px);
+  }
+  .modal-lg, .modal-xl {
+    max-width: calc(100vw - 400px);
   }
 }
 

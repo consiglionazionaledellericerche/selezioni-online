@@ -15,7 +15,6 @@ import { Application } from '../../core/application/application.model';
                 <app-control-text
                   *ngIf="type == 'text'"
                   [inline]="true"
-                  [focus]="true"
                   [showValidation]="true"
                   [label]="label| translate"
                   formControlName="{{propertyName}}">
@@ -23,7 +22,6 @@ import { Application } from '../../core/application/application.model';
                 <app-control-textarea
                   *ngIf="type == 'textarea'"
                   [inline]="true"
-                  [focus]="true"
                   rows="{{rows}}"
                   [showValidation]="true"
                   [label]="label| translate"
@@ -32,7 +30,6 @@ import { Application } from '../../core/application/application.model';
                 <app-control-datepicker
                   *ngIf="type == 'date'"
                   [inline]="true"
-                  [focus]="true"
                   [showValidation]="true"
                   [label]="label | translate"
                   formControlName="{{propertyName}}">
@@ -40,7 +37,6 @@ import { Application } from '../../core/application/application.model';
                 <app-control-select-model
                   *ngIf="type == 'select'"
                   [inline]="true"
-                  [focus]="true"
                   [label]="label|translate"
                   [labelactive]="'true'"
                   [strings]="choice"

@@ -4,6 +4,8 @@ import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
 import { AffixComponent } from './affix.component';
+import { Select2Template } from '../../common/template/select2-template';
+import { CallService } from '../../core/call/call.service';
 
 @Component({
     selector: 'affix_tabResidenza',
@@ -13,6 +15,7 @@ import { AffixComponent } from './affix.component';
           <div class="form-group col-md-3">
             <app-control-select-model
               [inline]="true"
+              [focus]="true"
               [label]="'application.nazione_residenza'| translate"
               [labelactive]="'true'"
               [strings]="paesi"
@@ -36,17 +39,18 @@ import { AffixComponent } from './affix.component';
           <div [hidden]="isForeign()" class="form-group col-md-5">
             <app-control-select-model
               *ngIf="!isForeign()"
-              [inline]="true"
+              [term]="''"
+              [template]="comuniTemplate"
+              [path]="callService.getComuniMapping()"
               [label]="'application.comune_residenza'| translate"
               [labelactive]="'true'"
-              [items]="comuni"
               (onChangeEvent)="onChangeComune($event)"
-              [showValidation]="true"
-              [allowClear]="true"
-              [showValidation]="true"
+              [inline]="'false'"
+              [resultName]="'comuni'"
+              [allowClear]="'true'"
               [placeholder]="'placeholder.select.place'| translate"
               formControlName="jconon_application:comune_residenza">
-              </app-control-select-model>          
+            </app-control-select-model>          
           </div>
           <div [hidden]="isForeign()" class="form-group col-md-1">
             <label class="form-label active">{{'application.provincia_residenza' | translate}}</label>
@@ -88,10 +92,12 @@ import { AffixComponent } from './affix.component';
   })
 export class JcononAffixResidenzaComponent extends AffixComponent {
     paesi: string[];
-    comuni: Comune[];
+    public comuniTemplate = Select2Template.comuni;
+
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,
+      protected callService: CallService,
     ) {
       super(cacheService, changeDetectorRef);
     }
@@ -100,9 +106,6 @@ export class JcononAffixResidenzaComponent extends AffixComponent {
       super.ngOnInit();
       this.cacheService.paesi().subscribe((paesi) => {
         this.paesi = paesi;
-      });
-      this.cacheService.comuni().subscribe((comuni) => {
-        this.comuni = comuni;
       });
       this.form.addControl('jconon_application:nazione_residenza', new FormControl(this.data.nazione_residenza, Validators.required));
       this.form.addControl('jconon_application:comune_residenza', 
@@ -132,12 +135,16 @@ export class JcononAffixResidenzaComponent extends AffixComponent {
       return this.form.controls['jconon_application:nazione_residenza'].value !== Helpers.ITALIA;
     }
       
-    public onChangeComune(comune: any) {
+    public onChangeComune(comune: string) {
       if (comune) {
-        this.form.controls['jconon_application:provincia_residenza'].patchValue(comune.provincia);
+        this.callService.getComune(comune).subscribe((result) => {
+          this.form.controls['jconon_application:provincia_residenza'].patchValue(result.provincia);
+        });
+      } else {
+        this.form.controls['jconon_application:provincia_residenza'].patchValue(null);
       }
     }
-
+    
     public onChangeNazioneResidenza() {
       this.form.controls['jconon_application:comune_residenza'].patchValue(null);
       this.form.controls['jconon_application:provincia_residenza'].patchValue(null);

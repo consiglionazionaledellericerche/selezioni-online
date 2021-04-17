@@ -9,6 +9,7 @@ import { Call } from './call.model';
 import {throwError as observableThrowError, Observable} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import { SpringError } from '../../common/model/spring-error.model';
+import { Comune } from '../../common/model/comune.model';
 
 @Injectable()
 export class CallService extends CommonService<Call> {
@@ -49,6 +50,28 @@ export class CallService extends CommonService<Call> {
       );
   }
 
+  public getComune(comune: string): Observable<Comune> {
+    const params = new HttpParams()
+          .set('filter', comune);
+
+    return this.configService.getGateway()
+      .pipe(
+        switchMap((gateway) => {
+          return this.httpClient.get<any>(gateway + this.getComuniMapping(), {params: params})
+            .pipe(
+              map((item) => {
+                return item.comuni[0];
+              }),
+              catchError( (httpErrorResponse: HttpErrorResponse) => {
+                const springError = new SpringError(httpErrorResponse);
+                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
+                return observableThrowError(springError);
+              })
+            );
+        })
+      );
+  }
+
   public getModule(): string {
     return MODULE_CONFIGURAZIONE;
   }
@@ -65,8 +88,13 @@ export class CallService extends CommonService<Call> {
     return ConfigService.API_BASE + super.getSelect2Mapping();
   }
 
+  public getComuniMapping(): string {
+    return ConfigService.API_BASE + this.getRequestMapping() + '/comuni';
+  }
+
   public getPageOffset(): number {
     return CallService.PAGE_OFFSET;
   }
+
 
 }

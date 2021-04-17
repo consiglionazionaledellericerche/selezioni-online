@@ -19,8 +19,8 @@ import { Application } from '../../core/application/application.model';
           <div class="form-row w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-select-model
-                [inline]="true"
-                [focus]="true"
+              [focus]="true"
+              [inline]="true"
                 [label]="'label.jconon_application.contratto_td_concorso_ente'| translate"
                 [labelactive]="'true'"
                 [strings]="choice"
@@ -105,7 +105,7 @@ export class JcononAspectContrattoTDConcorsoComponent extends DynamicComponent<A
       this.form.controls['jconon_application:contratto_td_concorso_ente']
         .setValidators(this.isToggle()? Validators.required : undefined);
       this.form.controls['jconon_application:contratto_td_concorso_altro_ente']
-        .setValidators(this.isToggle() && ! this.isCNR()? Validators.required : undefined);
+        .setValidators(this.isToggle() && !this.isCNR()? Validators.required : undefined);
       this.form.controls['jconon_application:contratto_td_concorso_codice_riferimento']
         .setValidators(this.isToggle()? Validators.required : undefined);
     }

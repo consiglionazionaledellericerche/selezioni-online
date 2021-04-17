@@ -367,7 +367,10 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
     if (this.asyncInitialized) {
       // Quando injetto nuovi valori nella form async devo creare le option, per comodità la reinizializzo.
       this.asyncInitialized = false;
-      $(this.cssSelector()).data('select2').destroy();
+      var select2 = $(this.cssSelector()).data('select2');
+      if (select2) {
+        select2.destroy();
+      }
       this.initializeSelect2();
     }
 
@@ -375,10 +378,10 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
       this.controlDir.control.markAsDirty();
       this.controlDir.control.updateValueAndValidity();
     }
-    this.ref.detectChanges();
-    
+    if (!this.ref['destroyed']) {
+      this.ref.detectChanges();
+    }
     $(this.cssSelector()).trigger('change');
-
   }
 
   registerOnChange(fn: (value: CmisObject) => void): void {

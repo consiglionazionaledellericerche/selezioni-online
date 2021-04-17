@@ -32,6 +32,7 @@ export abstract class Select2AngularComponent extends FormCommonTag {
 
   @Input() resultName: string = 'results';
   @Input() resultId: string = 'id';
+  @Input() term: string = '*';
 
   id = 'select' + this.randomId();
 
@@ -111,6 +112,7 @@ export abstract class Select2AngularComponent extends FormCommonTag {
       this.configService.getGateway().subscribe( gateway => {
           const resultName = this.resultName;
           const resultId = this.resultId;
+          const term = this.term;
           obj['ajax'] = {
             'url': gateway + this.path,
             'delay': '600',
@@ -118,7 +120,7 @@ export abstract class Select2AngularComponent extends FormCommonTag {
             'transport': this.transport.bind(this),
             'data': function (params) {
               return {
-                filter: '*' + params.term + '*', // search term,                
+                filter: term + params.term + term, // search term,                
               };
             },
             'processResults': function (data) {
@@ -145,6 +147,7 @@ export abstract class Select2AngularComponent extends FormCommonTag {
       $(selector).select2(obj);
       $(selector).on('select2:select', this.select.bind(this));
       $(selector).on('select2:unselecting', this.unselect.bind(this));
+      // on first focus (bubbles up to document), open the menu
     }
 
     this.fixDropDown();
@@ -195,9 +198,11 @@ export abstract class Select2AngularComponent extends FormCommonTag {
     // FIX https://github.com/select2/select2/issues/4614
     const selector = this.cssSelector();
     const select2Instance = $(selector).data('select2');
-    select2Instance.on('results:message', function(params){
-      this.dropdown._resizeDropdown();
-      this.dropdown._positionDropdown();
+    $(document).on('focus', '.select2-selection.select2-selection--single', function (e) {
+      $(this).closest(".select2-container").siblings('select:enabled').select2('open');
+    });
+    $(selector).one('select2:open', function(e) {
+      $('input.select2-search__field').prop('placeholder', 'Cerca opzioni');
     });
   }
 

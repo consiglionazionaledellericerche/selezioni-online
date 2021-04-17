@@ -5,6 +5,8 @@ import { DynamicComponent } from '../dynamic.component';
 import { ObjectTypeService } from '../../core/object-type.service';
 import { Comune } from '../../common/model/comune.model';
 import { Application } from '../../core/application/application.model';
+import { CallService } from '../../core/call/call.service';
+import { Select2Template } from '../../common/template/select2-template';
 
 @Component({
     selector: 'P:jconon_application:aspect_ente_comparto_universita_appartenenza',
@@ -31,14 +33,15 @@ import { Application } from '../../core/application/application.model';
           <div class="form-row w-100 pt-1">
             <div [hidden]="!isToggle()" class="form-group col-md-5">
               <app-control-select-model
-                [inline]="true"
-                [focus]="true"
+                [term]="''"
+                [template]="comuniTemplate"
+                [path]="callService.getComuniMapping()"
                 [label]="'label.jconon_application.comune_ente_comparto_universita_appartenenza'| translate"
                 [labelactive]="'true'"
-                [items]="comuni"
                 (onChangeEvent)="onChangeComune($event)"
-                [allowClear]="true"
-                [showValidation]="true"
+                [inline]="'false'"
+                [resultName]="'comuni'"
+                [allowClear]="'true'"
                 [placeholder]="'placeholder.select.place'| translate"
                 formControlName="jconon_application:comune_ente_comparto_universita_appartenenza">
               </app-control-select-model>          
@@ -89,17 +92,15 @@ export class JcononAspectEnteCompartoUniversitaAppartenenzaComponent extends Dyn
       protected cacheService: CacheService,
       protected objectTypeService: ObjectTypeService,
       protected changeDetectorRef: ChangeDetectorRef,
+      protected callService: CallService,
     ) {
       super(cacheService, changeDetectorRef);
     }
-    public comuni: Comune[];
+    public comuniTemplate = Select2Template.comuni;
     public isFlRequired = false;
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_ente_comparto_universita_appartenenza';
-      this.cacheService.comuni().subscribe((comuni) => {
-        this.comuni = comuni;
-      });
       this.control = new FormControl(this.data.fl_ente_comparto_universita_appartenenza);
       this.form.addControl(this.propertyName, this.control);
       this.form.controls[this.propertyName]
@@ -111,7 +112,9 @@ export class JcononAspectEnteCompartoUniversitaAppartenenzaComponent extends Dyn
       );
       this.form.addControl(
         'jconon_application:comune_ente_comparto_universita_appartenenza', 
-        new FormControl(new Comune(this.data.comune_ente_comparto_universita_appartenenza,this.data.provincia_ente_comparto_universita_appartenenza))
+        new FormControl(this.data.comune_ente_comparto_universita_appartenenza ? 
+          new Comune(this.data.comune_ente_comparto_universita_appartenenza,
+                    this.data.provincia_ente_comparto_universita_appartenenza): undefined)
       );
       this.form.addControl(
         'jconon_application:provincia_ente_comparto_universita_appartenenza', 
@@ -133,9 +136,11 @@ export class JcononAspectEnteCompartoUniversitaAppartenenzaComponent extends Dyn
       super.ngOnInit();
     }
 
-    public onChangeComune(comune: any) {
+    public onChangeComune(comune: string) {
       if (comune) {
-        this.form.controls['jconon_application:provincia_ente_comparto_universita_appartenenza'].patchValue(comune.provincia);
+        this.callService.getComune(comune).subscribe((result) => {
+          this.form.controls['jconon_application:provincia_ente_comparto_universita_appartenenza'].patchValue(result.provincia);
+        });
       } else {
         this.form.controls['jconon_application:provincia_ente_comparto_universita_appartenenza'].patchValue(null);
       }

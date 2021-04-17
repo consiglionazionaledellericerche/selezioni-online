@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
               <div class="d-flex" accordion-heading>
                 <h4 class="p-1 text-truncate text-primary" translate>{{attachment}}</h4>
                 <div class="p-1 h4">
-                  <button class="btn p-0" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
+                  <button class="btn p-0" [popover]="'new'| translate" triggers="mouseenter:mouseleave" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
                     <svg class="icon icon-primary">
                       <use xlink:href="/assets/vendor/sprite.svg#it-plus-circle"></use>
                     </svg>

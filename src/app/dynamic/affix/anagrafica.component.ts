@@ -4,6 +4,8 @@ import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
 import { AffixComponent } from './affix.component';
+import { CallService } from '../../core/call/call.service';
+import { Select2Template } from '../../common/template/select2-template';
 
 @Component({
     selector: 'affix_tabAnagrafica',
@@ -23,6 +25,7 @@ import { AffixComponent } from './affix.component';
           <div class="form-group col-md-3">
             <app-control-select-model
               [inline]="true"
+              [focus]="true"
               [label]="'application.nazione_nascita'| translate"
               [labelactive]="'true'"
               [strings]="paesi"
@@ -46,17 +49,18 @@ import { AffixComponent } from './affix.component';
           <div [hidden]="isForeign()" class="form-group col-md-5">
             <app-control-select-model
               *ngIf="!isForeign()"
-              [inline]="true"
+              [term]="''"
+              [template]="comuniTemplate"
+              [path]="callService.getComuniMapping()"
               [label]="'application.comune_nascita'| translate"
               [labelactive]="'true'"
-              [items]="comuni"
               (onChangeEvent)="onChangeComune($event)"
-              [showValidation]="true"
-              [allowClear]="true"
-              [showValidation]="true"
+              [inline]="'false'"
+              [resultName]="'comuni'"
+              [allowClear]="'true'"
               [placeholder]="'placeholder.select.place'| translate"
               formControlName="jconon_application:comune_nascita">
-              </app-control-select-model>          
+            </app-control-select-model>
           </div>
           <div *ngIf="!isForeign()" class="form-group col-md-1">
             <label class="form-label active">{{'application.provincia_nascita' | translate}}</label>
@@ -102,7 +106,7 @@ import { AffixComponent } from './affix.component';
           <div [hidden]="isStraniero()" class="form-group col-md-6">
             <app-control-text 
                 type="text" 
-                inputClass="uppercase"
+                inputClass="text-uppercase"
                 [inline]="true" 
                 [label]="'user.codicefiscale'| translate"
                 formControlName="jconon_application:codice_fiscale"></app-control-text>
@@ -126,10 +130,12 @@ import { AffixComponent } from './affix.component';
   })
 export class JcononAffixAnagraficaComponent extends AffixComponent {
     paesi: string[];
-    comuni: Comune[];
+    public comuniTemplate = Select2Template.comuni;
+
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,
+      protected callService: CallService,
     ) {
       super(cacheService, changeDetectorRef);
     }
@@ -139,9 +145,7 @@ export class JcononAffixAnagraficaComponent extends AffixComponent {
       this.cacheService.paesi().subscribe((paesi) => {
         this.paesi = paesi;
       });
-      this.cacheService.comuni().subscribe((comuni) => {
-        this.comuni = comuni;
-      });
+
       this.form.addControl('jconon_application:nome', new FormControl({value:this.data.nome, disabled: true}));
       this.form.addControl('jconon_application:cognome', new FormControl({value:this.data.cognome, disabled: true}));
       this.form.addControl('jconon_application:nazione_nascita', 
@@ -198,9 +202,13 @@ export class JcononAffixAnagraficaComponent extends AffixComponent {
       }
     }
  
-    public onChangeComune(comune: any) {
+    public onChangeComune(comune: string) {
       if (comune) {
-        this.form.controls['jconon_application:provincia_nascita'].patchValue(comune.provincia);
+        this.callService.getComune(comune).subscribe((result) => {
+          this.form.controls['jconon_application:provincia_nascita'].patchValue(result.provincia);
+        });
+      } else {
+        this.form.controls['jconon_application:provincia_nascita'].patchValue(null);
       }
     }
 }

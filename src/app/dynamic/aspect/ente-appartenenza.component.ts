@@ -4,6 +4,8 @@ import { Comune } from '../../common/model/comune.model';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 import { Application } from '../../core/application/application.model';
+import { Select2Template } from '../../common/template/select2-template';
+import { CallService } from '../../core/call/call.service';
 
 @Component({
     selector: 'P:jconon_application:aspect_ente_appartenenza',
@@ -23,15 +25,16 @@ import { Application } from '../../core/application/application.model';
             </div>
             <div class="form-row w-100 pt-1 pl-2">
               <div class="form-group col-md-9">
-                  <app-control-select-model
-                  [inline]="true"
-                  [focus]="true"
+                <app-control-select-model
+                  [term]="''"
+                  [template]="comuniTemplate"
+                  [path]="callService.getComuniMapping()"
                   [label]="'label.jconon_application.comune_ente_appartenenza'| translate"
                   [labelactive]="'true'"
-                  [items]="comuni"
                   (onChangeEvent)="onChangeComune($event)"
-                  [allowClear]="true"
-                  [showValidation]="true"
+                  [inline]="'false'"
+                  [resultName]="'comuni'"
+                  [allowClear]="'true'"
                   [placeholder]="'placeholder.select.place'| translate"
                   formControlName="jconon_application:comune_ente_appartenenza">
                 </app-control-select-model>          
@@ -55,23 +58,23 @@ export class JcononAspectEnteAppartenenzaComponent extends DynamicComponent<Appl
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,
+      protected callService: CallService,
     ) {
       super(cacheService, changeDetectorRef);
     }
+    public comuniTemplate = Select2Template.comuni;
     public hoverClass : string;
-    public comuni: Comune[];
     public isRequired = true;
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:ente_appartenenza';
-      this.cacheService.comuni().subscribe((comuni) => {
-        this.comuni = comuni;
-      });
       this.control = new FormControl(this.data.ente_appartenenza, this.isRequired ? Validators.required : undefined);
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl(
         'jconon_application:comune_ente_appartenenza', 
-        new FormControl(new Comune(this.data.comune_ente_appartenenza,this.data.provincia_ente_appartenenza), Validators.required)
+        new FormControl(this.data.comune_ente_appartenenza ? 
+            new Comune(this.data.comune_ente_appartenenza,
+                        this.data.provincia_ente_appartenenza) : undefined, Validators.required)
       );
       this.form.addControl(
         'jconon_application:provincia_ente_appartenenza', 
@@ -79,9 +82,12 @@ export class JcononAspectEnteAppartenenzaComponent extends DynamicComponent<Appl
       );
       super.ngOnInit();
     }
-    public onChangeComune(comune: any) {
+
+    public onChangeComune(comune: string) {
       if (comune) {
-        this.form.controls['jconon_application:provincia_ente_appartenenza'].patchValue(comune.provincia);
+        this.callService.getComune(comune).subscribe((result) => {
+          this.form.controls['jconon_application:provincia_ente_appartenenza'].patchValue(result.provincia);
+        });
       } else {
         this.form.controls['jconon_application:provincia_ente_appartenenza'].patchValue(null);
       }

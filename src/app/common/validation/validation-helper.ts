@@ -34,7 +34,6 @@ export class ValidationHelper {
     const controlErrors: ValidationErrors = control.errors;
     if (controlErrors != null) {
       Object.keys(controlErrors).forEach(keyError => {
-
         // FIXME: questo check dei valori andrebbe perfezionato
 
         if (keyError === '_isScalar' || keyError === 'scheduler' || keyError === '_subscribe') {

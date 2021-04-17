@@ -5,6 +5,7 @@ import { StatoDomanda, PropertyStatoDomandaConverter } from './stato-domanda.enu
 import { EsclusioneRiununcia, PropertyEsclusioneRiununciaConverter } from './esclusione-rinuncia.enum';
 import { User } from '../../auth/model/user.model';
 import { ISODateConverter } from '../../common/helpers/ISODateConverter';
+import { UppercaseConverter } from '../../common/helpers/UppercaseConverter';
 import { ObjectToIdConverter } from '../../common/helpers/ObjectToIdConverter';
 
 @JsonObject("Application")
@@ -23,7 +24,7 @@ export class Application extends Folder {
   public comune_nascita: string;
   @JsonProperty('jconon_application:provincia_nascita')
   public provincia_nascita: string;
-  @JsonProperty('jconon_application:codice_fiscale')
+  @JsonProperty('jconon_application:codice_fiscale', UppercaseConverter)
   public codice_fiscale: string;
   @JsonProperty('jconon_application:nazione_residenza')
   public nazione_residenza: string;

@@ -47,23 +47,6 @@ export class CacheService {
         }));
     }
 
-    public comuni(): Observable<Comune[]> {
-        return this.configService.getGateway().pipe(switchMap((gateway) => {
-            return this.httpClient.get<Comune[]>(gateway + ConfigService.URL_COMUNI).pipe(
-                map((comuni) => {
-                    return Object.keys(comuni)
-                        .map(e => {
-                            return new Comune(e, comuni[e]);
-                        });
-                }),
-                catchError((error: HttpErrorResponse) => {
-                    this.apiMessageService.sendMessage(MessageType.ERROR, error.error.error_description);
-                    return observableThrowError(error);
-                })
-            );
-        }));
-    }
-
     public sedi(attive: string): Observable<Sede[]> {
         const params = new HttpParams()
         .set('attive', attive);

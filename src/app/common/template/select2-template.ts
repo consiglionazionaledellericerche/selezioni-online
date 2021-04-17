@@ -64,4 +64,19 @@ export class Select2Template {
     }
   }
 
+  public static comuni(entity, selection: boolean, placeholder: string): string {
+    if (entity instanceof Array) {
+      return placeholder;
+    }
+    if (selection) {
+      return entity.id;
+    } else {
+      let html = '<div class="align-items-start">';
+      html += '<span class="font-weight-bold">' + entity.obj.nomeComune + '</span>';
+      html += '<span> [' + entity.obj.provincia + ']</span>';
+      html += '</div>';
+      return html;
+    }
+  }
+
 }

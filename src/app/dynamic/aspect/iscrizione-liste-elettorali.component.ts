@@ -4,6 +4,8 @@ import { Comune } from '../../common/model/comune.model';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 import { Application } from '../../core/application/application.model';
+import { CallService } from '../../core/call/call.service';
+import { Select2Template } from '../../common/template/select2-template';
 
 @Component({
     selector: 'P:jconon_application:aspect_iscrizione_liste_elettorali',
@@ -19,18 +21,18 @@ import { Application } from '../../core/application/application.model';
           <div class="form-row w-100 pt-1">
             <div [hidden]="!isToggle()" class="form-group col-md-9">
               <app-control-select-model
-                [inline]="true"
-                [focus]="true"
+                [term]="''"
+                [template]="comuniTemplate"
+                [path]="callService.getComuniMapping()"
                 [label]="'label.jconon_application.comune_liste_elettorali'| translate"
                 [labelactive]="'true'"
-                [items]="comuni"
                 (onChangeEvent)="onChangeComune($event)"
-                [showValidation]="true"
-                [allowClear]="true"
-                [showValidation]="true"
+                [inline]="'false'"
+                [resultName]="'comuni'"
+                [allowClear]="'true'"
                 [placeholder]="'placeholder.select.place'| translate"
                 formControlName="jconon_application:comune_liste_elettorali">
-                </app-control-select-model>          
+              </app-control-select-model>          
             </div>
             <div *ngSwitchCase="true" class="form-group col-md-3">
               <app-control-text 
@@ -60,21 +62,20 @@ export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicCompo
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,
+      protected callService: CallService,      
     ) {
       super(cacheService, changeDetectorRef);
     }
-    comuni: Comune[];
+    public comuniTemplate = Select2Template.comuni;    
 
     ngOnInit(): void {
-      this.cacheService.comuni().subscribe((comuni) => {
-        this.comuni = comuni;
-      });
 
       this.propertyName = 'jconon_application:fl_iscritto_liste_elettorali';
       this.control = new FormControl(this.data.fl_iscritto_liste_elettorali, Validators.required);
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl('jconon_application:comune_liste_elettorali', new FormControl(
-          new Comune(this.data.comune_liste_elettorali, this.data.provincia_liste_elettorali)
+          this.data.comune_liste_elettorali ? 
+            new Comune(this.data.comune_liste_elettorali, this.data.provincia_liste_elettorali) : undefined
         )
       );
       this.form.addControl('jconon_application:provincia_liste_elettorali', new FormControl(this.data.provincia_liste_elettorali));
@@ -85,10 +86,12 @@ export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicCompo
       this.onChangeToggle(false);
       super.ngOnInit();
     }
-
-    public onChangeComune(comune: any) {
+    
+    public onChangeComune(comune: string) {
       if (comune) {
-        this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(comune.provincia);
+        this.callService.getComune(comune).subscribe((result) => {
+          this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(result.provincia);
+        });
       } else {
         this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(null);
       }
