@@ -10,8 +10,9 @@ import {FormCommonTag} from './form-common-tag';
   selector: 'app-control-toggle',
   template:
      `
-    <div class="it-right-zone w-100 border-bottom-0 p-0 ml-0">
-      <label class="text-dark c-pointer" (click)="toggle()" translate>{{label}}</label>
+    <div [ngClass]="divToggleClass">
+      <label *ngIf="label" [ngClass]="labelClass" (click)="toggle()" translate>{{label}}</label>
+      <div *ngIf="innerHtml" class="text-dark c-pointer" (click)="toggle()" [innerHtml]="innerHtml"></div>
       <div class="toggles mr-1">
           <label for="{{formControlName}}" (click)="toggle()">
               <input 
@@ -36,9 +37,13 @@ export class FormTemplateToggleComponent extends FormCommonTag implements Contro
 
   @Input() type = 'checkbox';
 
-  @Input() inputClass = ''; 
+  @Input() divToggleClass = 'it-right-zone w-100 border-bottom-0 p-0 ml-0';
+
+  @Input() labelClass = 'text-dark c-pointer'; 
 
   @Input() formControlName = ''; 
+
+  @Input() innerHtml;
 
   @Input() nullIfEmpty = false;
 

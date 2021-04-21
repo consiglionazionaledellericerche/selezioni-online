@@ -93,7 +93,10 @@
       "maxlength1800": "Deve contenere non più di 1800 caratteri",
       "maxlengtharray2": "Deve contenere non più di 2 elementi",
       "codicefiscalealredyexist": "Codice fiscale già presente!",
-      "codicefiscale": "Codice fiscale non valido!"
+      "codicefiscale": "Codice fiscale non valido!",
+      "application": {
+        "section_not_confirmed": "Confermare prima le sezioni precedenti"
+      }
     },
     "form.invalid" : "Corregere gli errori, per proseguire.",
     "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>",
@@ -104,7 +107,6 @@
       "delete": {
         "success": "Il documento è stato correttamente cancellato."
       }
-
     }  
   },
   "placeholder": {
@@ -230,23 +232,6 @@
   "application": {
     "title": "DOMANDA DI PARTECIPAZIONE",
     "all": "Domande presentate",
-    "firstname": "Nome:",
-    "lastname": "Cognome:",
-    "codice_fiscale": "CF:",
-    "data_nascita": "Data di nascita:",
-    "nazione_nascita": "Nazione di nascita",
-    "luogo_nascita": "Luogo di nascita",
-    "comune_nascita": "Comune di nascita",
-    "provincia_nascita": "Provincia",
-    "nazione_residenza": "Nazione di residenza",
-    "luogo_residenza": "Luogo di residenza",
-    "comune_residenza": "Comune di residenza",
-    "provincia_residenza": "Provincia",
-    "cap_residenza": "CAP",
-    "indirizzo_residenza": "Indirizzo",
-    "num_civico_residenza": "Num. Civico",
-    "fl_dichiarazione_sanzioni_penali": "Il sottoscritto consapevole delle sanzioni penali previste dall'art. 76 del D.P.R. n.445/2000 nel caso di dichiarazioni mendaci e di falsità negli atti ed a conoscenza che i dati forniti con autocertificazione saranno soggetti ad eventuale controllo da parte dell’Amministrazione, ai sensi degli articoli 46 e 47 del D.P.R. n.445/2000, DICHIARA che le notizie fornite con la presente domanda e quanto dichiarato nell’allegato curriculum vitae e professionale, comprensivo delle informazioni sulla produzione scientifica, corrispondono a verità.",
-    "fl_dichiarazione_dati_personali" : "Il sottoscritto prende atto, ai sensi dell'art. 13 della Legge n.196/2003 sul trattamento dei dati personali, che i dati contenuti nella presente autocertificazione verranno trattati prevalentemente con procedure informatizzate e potranno essere forniti ad altri organismi pubblici per il raggiungimento delle rispettive finalità istituzionali.",
     "possesso_requisiti": "di essere in possesso dei requisiti di cui all'{{value}}",
     "mine": {
       "title": "Le mie domande"
@@ -264,6 +249,7 @@
     },
     "edit": "Modifica domanda",
     "confirm": "Salva in bozza e continua",
+    "send": "Invia domanda",
     "status": {
       "temporary": "Provvisorie",
       "confirmed": "Inviate",
@@ -372,9 +358,37 @@
   },
   "label": {
     "jconon_application": {
+      "firstname": "Nome",
+      "lastname": "Cognome",
+      "codice_fiscale": "Codice Fiscale",
+      "data_nascita": "Data di nascita",
+      "nazione_nascita": "Nazione di nascita",
+      "luogo_nascita": "Luogo di nascita",
+      "comune_nascita": "Comune di nascita",
+      "provincia_nascita": "Provincia",
+      "nazione_residenza": "Nazione di residenza",
+      "luogo_residenza": "Luogo di residenza",
+      "comune_residenza": "Comune di residenza",
+      "provincia_residenza": "Provincia",
+      "cap_residenza": "CAP",
+      "indirizzo_residenza": "Indirizzo",
+      "num_civico_residenza": "Num. Civico",
+      "nazione_comunicazioni": "Nazione",
+      "luogo_comunicazioni": "Luogo",
+      "comune_comunicazioni": "Luogo",
+      "provincia_comunicazioni": "Provincia",
+      "cap_comunicazioni": "CAP",
+      "indirizzo_comunicazioni": "Indirizzo",
+      "num_civico_comunicazioni": "Num. Civico",
+      "telefono_comunicazioni": "Telefono",
+      "email_pec_comunicazioni": "Email PEC",
+      "email_comunicazioni": "Email",
+      "fl_possesso_requisiti": "Possesso requisiti previsti dal bando",
       "fl_iscritto_liste_elettorali": "di essere iscritto nelle liste elettorali",
       "comune_liste_elettorali": "Comune",
       "provincia_liste_elettorali": "Provincia",
+      "fl_dichiarazione_sanzioni_penali": "Il sottoscritto consapevole delle sanzioni penali previste dall'art. 76 del D.P.R. n.445/2000 nel caso di dichiarazioni mendaci e di falsità negli atti ed a conoscenza che i dati forniti con autocertificazione saranno soggetti ad eventuale controllo da parte dell’Amministrazione, ai sensi degli articoli 46 e 47 del D.P.R. n.445/2000, DICHIARA che le notizie fornite con la presente domanda e quanto dichiarato nell’allegato curriculum vitae e professionale, comprensivo delle informazioni sulla produzione scientifica, corrispondono a verità.",
+      "fl_dichiarazione_dati_personali" : "Il sottoscritto prende atto, ai sensi dell'art. 13 della Legge n.196/2003 sul trattamento dei dati personali, che i dati contenuti nella presente autocertificazione verranno trattati prevalentemente con procedure informatizzate e potranno essere forniti ad altri organismi pubblici per il raggiungimento delle rispettive finalità istituzionali.",  
       "motivazione_no_iscrizione_liste_elettorali": "Motivo di non iscrizione o cancellazione",
       "fl_godimento_diritti": "di godere dei diritti civili e politici nello Stato di appartenenza o di provenienza",
       "motivazione_no_godimento_diritti": "Motivo di non godimento dei diritti civili e politici",
@@ -461,6 +475,7 @@
       "fl_conoscenza_lingue": "di avere conoscenza delle seguenti lingue straniere tra quelle previste dal bando",
       "elenco_lingue_conosciute_placeholder": "Seleziona lingue...",
       "sede": "Sede di lavoro prescelta",
+      "descrizione_sede": "Sede di lavoro prescelta",
       "sede_placeholder": "@:placeholder.select.generic",
       "fl_sanzione_disciplinare": "di non aver riportato sanzioni disciplinari superiori al rimprovero verbale nel biennio antecedente la data di scadenza del termine per la presentazione della domanda di partecipazione al concorso",
       "estremi_sanzione_disciplinare": "Indicare le eventuali sanzioni disciplinari riportate e gli estremi dei relativi provvedimenti",
@@ -501,9 +516,9 @@
       "fl_precedente_servizio_altre_amministrazioni": "di avere avuto precedenti rapporti con altre amministrazioni pubbliche o private",
       "profilo_precedente_servizio_altre_amministrazioni": "in qualità di",
       "fl_alta_qualificazione": "di essere in possesso di alta qualificazione tecnico-scientifica nel campo della ricerca",
-      "alta_qualificazione": "",
+      "alta_qualificazione": "Indicare gli estremi",
       "fl_esperienza_gestionale": "di essere in possesso di esperienza gestionale di enti ed istituzioni pubbliche o private",
-      "esperienza_gestionale": "",
+      "esperienza_gestionale": "Indicare gli estremi",
       "fl_incompatibilita": "che non sussistono cause di inconferibilità e di incompatibilità, ai sensi degli artt. 20 del D.Lgs. n. 39 del 2013 e 15 dello Statuto del CNR, di impegnarsi ad informare tempestivamente l’Amministrazione qualora si verifichino circostanze modificative della presente dichiarazione",
       "fl_obblighi_militari": "di essere in posizione regolare nei confronti degli obblighi militari, qualora soggetti",
       "obblighi_militari_motivazione": "Indicare le eventuali motivazioni: (es. non soggetto, esonerato, riformato ecc.)",
@@ -536,7 +551,7 @@
       "fl_abilitazione_professione_forense": "di essere abilitato all'esercizio della professione forense",
       "data_abilitazione_professione_forense": "Data abilitazione",
       "fl_area_territoriale": "dichiara che la sua sede di lavoro è all'interno dell'Area della Ricerca",
-      "area_territoriale": "",
+      "area_territoriale": "Selezionare l'Area della Ricerca",
       "profilo_componente": "Profilo componente",
       "fl_ulteriore_laurea": "di aver conseguito il seguente titolo di studio (o titolo estero equivalente)",
       "tipo_ulteriore_laurea": "Tipologia",

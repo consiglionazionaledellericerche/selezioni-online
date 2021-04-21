@@ -108,14 +108,14 @@ import { Helpers } from '../../common/helpers/helpers';
             </span>
           </div>
           <div class="col-sm-12">
-            <app-show-text [label]="'application.firstname'" [value]="item.nome | uppercase" [strong]="true"></app-show-text>
-            <app-show-text [label]="'application.lastname'"  [value]="item.cognome | uppercase" [strong]="true"></app-show-text>
+            <app-show-text [label]="'label.jconon_application.firstname'" [value]="item.nome | uppercase" [strong]="true"></app-show-text>
+            <app-show-text [label]="'label.jconon_application.lastname'"  [value]="item.cognome | uppercase" [strong]="true"></app-show-text>
             <app-show-user-modal [label]="'utente.show'" [username]="item.user" [groups]="'true'"></app-show-user-modal>
           </div>
           <div class="col-sm-12">
-            <app-show-text [label]="'application.codice_fiscale'" [value]="item.codice_fiscale" [strong]="false"></app-show-text>
+            <app-show-text [label]="'label.jconon_application.codice_fiscale'" [value]="item.codice_fiscale" [strong]="false"></app-show-text>
             <app-show-text 
-                [label]="'application.data_nascita'" 
+                [label]="'label.jconon_application.data_nascita'" 
                 [value]="item.data_nascita | date:'dd/MM/yyyy'">
             </app-show-text>
           </div>

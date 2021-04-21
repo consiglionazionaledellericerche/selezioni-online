@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  zuul_uri: 'http://localhost:8080'
+  zuul_uri: 'http://cool-jconon.test.si.cnr.it'
 };

@@ -15,10 +15,10 @@
     </div>
   </div>
   <div class="col-md-6" [ngClass]="{'col-md-12': !entity.userName}">
-    <div class="card">
+    <div class="card shadow-lg">
       <div *ngSwitchCase="true" class="card-header h1">{{'user.profile.title' | translate}}</div>
-      <div class="card-body" [ngClass]="{'px-0': entity.userName}">  
-        <form [formGroup]="ngForm">
+      <div class="card-body px-2" [ngClass]="{'px-0': entity.userName}">  
+        <form [formGroup]="ngForm" class="pt-2">
           <div [ngClass]="{'row': !entity.userName}">
             <div class="form-group" [ngClass]="{'col-md-6': !entity.userName}">
               <app-control-text type="text" [focus]="true" [label]="'user.firstname'| translate" [inline]="true" formControlName="firstName"></app-control-text>
@@ -77,8 +77,8 @@
                   formControlName="confirmpassword"></app-control-text>
             </div>
           </div>
-          <div [ngClass]="{'row': !entity.userName}">
-            <div class="form-group" [ngClass]="{'col-md-3': !entity.userName}">
+          <div class="row">
+            <div class="form-group" [ngClass]="{'col-md-3': !entity.userName, 'col-md-6': entity.userName}">
               <div class="form-check form-check-inline">
                 <input id="cittadinanzaitaly" name="straniero" formControlName="straniero" type="radio" value="false">
                 <label for="cittadinanzaitaly">{{'user.cittadinanza.italy'| translate}}</label>
@@ -89,7 +89,7 @@
               </div>
               <label class="active">{{'user.cittadinanza.label'| translate}}</label>
             </div>
-            <div *ngIf="!isStraniero()" class="form-group" [ngClass]="{'col-md-9': !entity.userName}">
+            <div *ngIf="!isStraniero()" class="form-group" [ngClass]="{'col-md-9': !entity.userName, 'col-md-6': entity.userName}">
               <app-control-text 
                   type="text" 
                   inputClass="text-uppercase"
@@ -97,7 +97,7 @@
                   [label]="'user.codicefiscale'| translate"
                   formControlName="codicefiscale"></app-control-text>
             </div>
-            <div *ngIf="isStraniero()" class="form-group" [ngClass]="{'col-md-3': !entity.userName}">
+            <div *ngIf="isStraniero()" class="form-group" [ngClass]="{'col-md-3': !entity.userName, 'col-md-6': entity.userName}">
               <div class="form-check form-check-inline">
                 <input id="usermale" name="sesso" formControlName="sesso" type="radio" value="M">
                 <label for="usermale">{{'user.male'| translate}}</label>
@@ -108,7 +108,7 @@
               </div>
               <label class="active">{{'user.sex'| translate}}</label>
             </div>
-            <div *ngIf="isStraniero()" class="form-group" [ngClass]="{'col-md-3': !entity.userName}">
+            <div *ngIf="isStraniero()" class="form-group" [ngClass]="{'col-md-3': !entity.userName, 'col-md-6': entity.userName}">
               <app-control-datepicker
                   type="text"
                   [inline]="true" 
@@ -116,7 +116,7 @@
                   formControlName="dataDiNascita">            
               </app-control-datepicker>
             </div>
-            <div *ngIf="isStraniero()" class="form-group" [ngClass]="{'col-md-3': !entity.userName}">
+            <div *ngIf="isStraniero()" class="form-group" [ngClass]="{'col-md-3': !entity.userName, 'col-md-6': entity.userName}">
               <label for="statoestero" class="font-weight-bold active">{{'user.statoestero'| translate}}</label>
               <app-control-select-model
                 [inline]="true"

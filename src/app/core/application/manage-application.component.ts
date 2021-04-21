@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {CommonEditComponent} from '../../common/controller/common-edit.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -89,20 +89,33 @@ import { Helpers } from '../../common/helpers/helpers';
         </div>
         <div class="card-footer">
           <div class="d-flex justify-content-end">
-            <button class="btn btn-outline-danger btn-lg btn-icon mr-2" tooltip="Stampa domanda">
-              <span class="d-none d-md-block pr-1">Stampa</span>
-              <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-print"></use></svg>
-            </button>
-            <button *ngIf="affixCompleted == affix.length - 1" (click)="sendApplication()" class="btn btn-outline-success btn-lg btn-icon mr-2" tooltip="Invia domanda">
-              <span class="d-none d-md-block pr-1">Invia</span>
-              <svg class="icon icon-success"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
-            </button>
-            <button *ngIf="affixCompleted < affix.length - 1" (click)="confirmApplication();scroll(cardApplication);" 
-              class="btn btn-outline-primary btn-lg btn-icon" tooltip="{{'application.confirm' | translate}}">
-              <span class="d-none d-md-block pr-1">{{'application.confirm' | translate}}</span>
-              <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
-            </button>
-          </div>     
+            <div class="form-group text-right">
+              <button class="btn btn-outline-danger btn-lg btn-icon mr-2" tooltip="Stampa domanda">
+                <span class="d-none d-md-block pr-1">Stampa</span>
+                <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-print"></use></svg>
+              </button>
+            </div>
+            <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-right">  
+              <button (click)="sendApplication()" 
+                [disabled]="isDisableConfirm"
+                class="btn btn-outline-success btn-lg btn-icon mr-2" 
+                tooltip="{{'application.send' | translate}}">
+                <span class="d-none d-md-block pr-1" translate>application.send</span>
+                <svg class="icon icon-success"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
+              </button>
+              <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
+            </div>  
+            <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-right">
+              <button (click)="confirmApplication()" 
+                [disabled]="isDisableConfirm"
+                class="btn btn-outline-primary btn-lg btn-icon" 
+                tooltip="{{'application.confirm' | translate}}">
+                <span class="d-none d-md-block pr-1" translate>application.confirm</span>
+                <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
+              </button>
+              <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
+            </div>  
+          </div>
         </div>
       </div>
     </div>  
@@ -125,6 +138,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
                      private authService: AuthService,
                      private cacheService: CacheService,
                      protected router: Router,
+                     private el: ElementRef,
                      protected route: ActivatedRoute,
                      protected changeDetector: ChangeDetectorRef,
                      protected navigationService: NavigationService,
@@ -179,11 +193,11 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       'cmis:objectTypeId': new FormControl(this.entity.objectTypeId),
       'cmis:objectId': new FormControl(this.entity.objectId),
       'jconon_application:last_section_completed': new FormControl(this.affixCompleted),
-      'aspect': new FormControl(
-        this.entity.call.elenco_aspects
-          .concat(this.entity.call.elenco_aspects_sezione_cnr)
-          .concat(this.entity.call.elenco_aspects_ulteriori_dati)
-      )
+      'aspect': new FormControl([
+        ...this.entity.call.elenco_aspects||[], 
+        ...this.entity.call.elenco_aspects_sezione_cnr||[], 
+        ...this.entity.call.elenco_aspects_ulteriori_dati||[]
+      ])
     });
   }
 
@@ -205,23 +219,39 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   get isFormValid() : boolean {
+    var invalidControls = [];
     Object.keys(this.form.controls).forEach(control => {
       if (this.form.controls[control].status === 'INVALID') {
-        console.log(control);
         this.form.controls[control].markAsDirty({onlySelf: true});
         this.form.controls[control].markAsTouched({onlySelf: true});
-        this.form.controls[control].patchValue(null);
+        this.form.controls[control].patchValue(this.form.controls[control].value);
+        this.translateService.get('label.'+ control.replace(':', '.')).subscribe((label) => {
+          invalidControls.push('<li class="font-weight-bold pt-2">' + label + '</li>');
+        });
+        const invalidControl = this.el.nativeElement.querySelector('input.is-invalid,textarea.invalid,select.is-invalid') || 
+        document
+          .querySelector('[formcontrolname="' + control + '"], .is-invalid')
+          .querySelector('input,textarea');
+        if (invalidControl) {
+          invalidControl.focus();
+        }
       }      
     });
-    // stop here if form is invalid
     if (this.form.invalid) {
+        if (invalidControls.length > 3) {
+          invalidControls = invalidControls.slice(0, 3);
+          invalidControls.push('<li class="font-weight-bold pt-2">ecc...</li>');
+        }
         this.translateService.get('message.form.invalid').subscribe((label) => {
-            this.apiMessageService.sendMessage(MessageType.WARNING, label);
+            this.apiMessageService.sendMessage(MessageType.WARNING, label + '<ul class="list-unstyled">' + invalidControls.join('') + '</ul>');
         });
     }
     return !this.form.invalid;
   }
 
+  get isDisableConfirm() : boolean {
+    return this.entity.last_section_completed < this.affixCompleted;
+  }
   public buildInstance(): Application {
     return this.service.buildInstance(this.form.value);
   }

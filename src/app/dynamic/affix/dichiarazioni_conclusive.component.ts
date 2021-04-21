@@ -8,24 +8,20 @@ import { AffixComponent } from './affix.component';
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()" class="pb-2">
         <div class="form-row">
-          <div class="form-check col-12">
-            <div class="toggles">
-              <label for="fl_dichiarazione_sanzioni_penali">
-                <span class="text-justify">{{'application.fl_dichiarazione_sanzioni_penali' | translate}}</span>
-                <input type="checkbox" id="fl_dichiarazione_sanzioni_penali" formControlName="jconon_application:fl_dichiarazione_sanzioni_penali">
-                <span class="lever"></span>
-              </label>
-            </div>
-          </div>
-          <div class="form-check col-12">
-            <div class="toggles">
-              <label for="fl_dichiarazione_dati_personali">
-                <span class="text-justify">{{'application.fl_dichiarazione_dati_personali' | translate}}</span>
-                <input type="checkbox" id="fl_dichiarazione_dati_personali" formControlName="jconon_application:fl_dichiarazione_dati_personali">
-                <span class="lever"></span>
-              </label>
-            </div>
-          </div>
+          <app-control-toggle
+            divToggleClass="d-flex border-bottom-0"
+            labelClass="text-dark c-pointer text-justify" 
+            [label]="'label.jconon_application.fl_dichiarazione_sanzioni_penali' | translate" 
+            formControlName="jconon_application:fl_dichiarazione_sanzioni_penali">
+          </app-control-toggle>
+        </div>  
+        <div class="form-row">
+          <app-control-toggle
+            divToggleClass="d-flex border-bottom-0" 
+            labelClass="text-dark c-pointer text-justify"
+            [label]="'label.jconon_application.fl_dichiarazione_dati_personali' | translate" 
+            formControlName="jconon_application:fl_dichiarazione_dati_personali">
+          </app-control-toggle>
         </div>
       </form>
     `
@@ -39,16 +35,16 @@ export class JcononAffixDichiarazioniConclusiveComponent extends AffixComponent 
     }
 
     ngOnInit(): void {
+      super.ngOnInit();
       this.form.addControl('jconon_application:fl_dichiarazione_sanzioni_penali', new FormControl(
           this.data.fl_dichiarazione_sanzioni_penali,
-          Validators.required
+          Validators.requiredTrue
         )
       );
       this.form.addControl('jconon_application:fl_dichiarazione_dati_personali', new FormControl(
           this.data.fl_dichiarazione_dati_personali,
-          Validators.required
+          Validators.requiredTrue
         )
       );
-      super.ngOnInit();
     }
 }

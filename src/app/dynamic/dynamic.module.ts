@@ -10,6 +10,7 @@ import { JcononAffixResidenzaComponent } from './affix/residenza.component';
 import { JcononAffixDichiarazioniComponent } from './affix/dichiarazioni.component';
 import { JcononAffixAllegatiComponent } from './affix/allegati.component';
 import { JcononAffixDichiarazioniConclusiveComponent } from './affix/dichiarazioni_conclusive.component';
+import { JcononAffixReperibilitaComponent } from './affix/reperibilita.component';
 
 import { JcononAspectPossessoRequisitiComponent } from './aspect/possesso-requisiti.component';
 import { JcononAspectsDichiarazioneComponent } from './aspect/dichiarazione.component';
@@ -82,6 +83,7 @@ import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dott
         JcononAffixDichiarazioniComponent,
         JcononAffixAllegatiComponent,
         JcononAffixDichiarazioniConclusiveComponent,
+        JcononAffixReperibilitaComponent,
         /** Apllication Aspect */
         JcononAspectsDichiarazioneComponent,
         JcononAspectPossessoRequisitiComponent,
@@ -157,6 +159,7 @@ import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dott
         JcononAffixDichiarazioniComponent,
         JcononAffixAllegatiComponent,
         JcononAffixDichiarazioniConclusiveComponent,
+        JcononAffixReperibilitaComponent,
         /** Apllication Aspect */
         JcononAspectsDichiarazioneComponent,
         JcononAspectPossessoRequisitiComponent,

@@ -16,7 +16,7 @@ import { CallService } from '../../core/call/call.service';
             <app-control-select-model
               [inline]="true"
               [focus]="true"
-              [label]="'application.nazione_residenza'| translate"
+              [label]="'label.jconon_application.nazione_residenza'| translate"
               [labelactive]="'true'"
               [strings]="paesi"
               [showValidation]="true"
@@ -32,7 +32,7 @@ import { CallService } from '../../core/call/call.service';
               *ngIf="isForeign()" 
               type="text" 
               [inline]="true" 
-              [label]="'application.luogo_residenza'| translate" 
+              [label]="'label.jconon_application.luogo_residenza'| translate" 
               formControlName="jconon_application:comune_residenza">
             </app-control-text>
           </div>
@@ -42,7 +42,7 @@ import { CallService } from '../../core/call/call.service';
               [term]="''"
               [template]="comuniTemplate"
               [path]="callService.getComuniMapping()"
-              [label]="'application.comune_residenza'| translate"
+              [label]="'label.jconon_application.comune_residenza'| translate"
               [labelactive]="'true'"
               (onChangeEvent)="onChangeComune($event)"
               [inline]="'false'"
@@ -53,7 +53,7 @@ import { CallService } from '../../core/call/call.service';
             </app-control-select-model>          
           </div>
           <div [hidden]="isForeign()" class="form-group col-md-1">
-            <label class="form-label active">{{'application.provincia_residenza' | translate}}</label>
+            <label class="form-label active">{{'label.jconon_application.provincia_residenza' | translate}}</label>
             <input class="form-control" 
               id="jconon_application:provincia_residenza" 
               type="text" 
@@ -64,7 +64,7 @@ import { CallService } from '../../core/call/call.service';
             <app-control-text 
               type="text" 
               [inline]="true" 
-              [label]="'application.cap_residenza'| translate" 
+              [label]="'label.jconon_application.cap_residenza'| translate" 
               formControlName="jconon_application:cap_residenza">
             </app-control-text>
           </div>
@@ -74,7 +74,7 @@ import { CallService } from '../../core/call/call.service';
             <app-control-text 
               type="text" 
               [inline]="true" 
-              [label]="'application.indirizzo_residenza'| translate" 
+              [label]="'label.jconon_application.indirizzo_residenza'| translate" 
               formControlName="jconon_application:indirizzo_residenza">
             </app-control-text>
           </div>
@@ -82,7 +82,7 @@ import { CallService } from '../../core/call/call.service';
             <app-control-text 
               type="text" 
               [inline]="true" 
-              [label]="'application.num_civico_residenza'| translate" 
+              [label]="'label.jconon_application.num_civico_residenza'| translate" 
               formControlName="jconon_application:num_civico_residenza">
             </app-control-text>
           </div>
@@ -144,7 +144,7 @@ export class JcononAffixResidenzaComponent extends AffixComponent {
         this.form.controls['jconon_application:provincia_residenza'].patchValue(null);
       }
     }
-    
+
     public onChangeNazioneResidenza() {
       this.form.controls['jconon_application:comune_residenza'].patchValue(null);
       this.form.controls['jconon_application:provincia_residenza'].patchValue(null);

@@ -1,5 +1,5 @@
 <div class="row no-gutters pt-3">
-  <div class="col-md-6">
+  <div class="col-md-6 col-xl-8">
       <div class="ml-3">
         <p>{{'signin.concorsi' | translate}}</p>
         <p>{{'signin.registration' | translate}}</p>
@@ -17,12 +17,12 @@
         <p innerHtml="{{'signin.candidaticnr' | translate}}"></p>
       </div>
   </div>
-  <div class="col-md-6">
-    <div class="card">
+  <div class="col-md-6 col-xl-4">
+    <div class="card shadow-lg">
       <div class="card-header h1">{{'signin.title' | translate}}</div>
       <div class="card-body">
         <form (keyup.enter)="onSignin()" [formGroup]="ngForm">
-            <div class="form-group">
+            <div class="form-group pt-2">
               <app-control-text type="text" [focus]="true" [prepend]="'user'" [label]="'signin.username'| translate" [inline]="true" formControlName="username"></app-control-text>
               <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                 <div *ngIf="f.username.errors.required">{{ 'signin.message.required.username' | translate }}</div>

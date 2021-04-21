@@ -39,7 +39,7 @@ import {FormCommonTag} from './form-common-tag';
              (focus)="onFocus($event.target.value)"
              (focusout)="onFocusOut($event.target.value)"
              [disabled]="disabled"
-             [ngClass]="{'border-danger': isInvalid()}"
+             [ngClass]="{'border-danger invalid': isInvalid()}"
              placeholder="{{ placeholder | translate }}"></textarea>
 
       </app-form-layout>
@@ -139,4 +139,3 @@ export class FormTemplateTextAreaComponent extends FormCommonTag implements Cont
   }
 
 }
-

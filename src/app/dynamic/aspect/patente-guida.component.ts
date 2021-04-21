@@ -63,13 +63,13 @@ export class JcononAspectPatenteGuidaComponent extends DynamicComponent<Applicat
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:lista_patente_guida'].patchValue(null);
-      }
       if (this.isToggle()) {
         this.form.controls['jconon_application:lista_patente_guida'].setValidators(Validators.required);
       } else {
         this.form.controls['jconon_application:lista_patente_guida'].setValidators(undefined);
+      }
+      if (reset) {
+        this.form.controls['jconon_application:lista_patente_guida'].patchValue(null);
       }
     }
 

@@ -21,6 +21,7 @@ import { JcononAffixResidenzaComponent } from './affix/residenza.component';
 import { JcononAffixDichiarazioniConclusiveComponent } from './affix/dichiarazioni_conclusive.component';
 import { JcononAffixDichiarazioniComponent } from './affix/dichiarazioni.component';
 import { JcononAffixAllegatiComponent } from './affix/allegati.component';
+import { JcononAffixReperibilitaComponent } from "./affix/reperibilita.component";
 
 import { JcononAspectPossessoRequisitiComponent } from './aspect/possesso-requisiti.component';
 import { JcononAspectsDichiarazioneComponent } from './aspect/dichiarazione.component';
@@ -91,6 +92,10 @@ export class DynamicService {
         'affix_tabResidenza' : {
           model: Application,
           showcomponent: JcononAffixResidenzaComponent
+        },
+        'affix_tabReperibilita' : {
+          model: Application,
+          showcomponent: JcononAffixReperibilitaComponent
         },
         'affix_tabDichiarazioni' : {
           model: Application,

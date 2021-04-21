@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     timeOut: 5000,
     pauseOnHover: true,
     preventDuplicates: true,
-    theClass: 'rounded shadow alert',
+    theClass: 'rounded shadow-lg alert',
     clickToClose: true,
     animate: 'fromTop',
     showProgressBar: true,

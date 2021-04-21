@@ -13,11 +13,11 @@ import { Select2Template } from '../../common/template/select2-template';
       <form [formGroup]="form" *ngIf="isLoaded()">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label class="form-label active">{{'user.firstname' | translate}}</label>
+            <label class="form-label active">{{'label.jconon_application.firstname' | translate}}</label>
             <input class="form-control" id="jconon_application:nome" type="text" formControlName="jconon_application:nome" />
           </div>
           <div class="form-group col-md-6">
-            <label class="form-label active">{{'user.lastname' | translate}}</label>
+            <label class="form-label active">{{'label.jconon_application.lastname' | translate}}</label>
             <input class="form-control" id="jconon_application:cognome" type="text" formControlName="jconon_application:cognome" />
           </div>
         </div>
@@ -26,7 +26,7 @@ import { Select2Template } from '../../common/template/select2-template';
             <app-control-select-model
               [inline]="true"
               [focus]="true"
-              [label]="'application.nazione_nascita'| translate"
+              [label]="'label.jconon_application.nazione_nascita'| translate"
               [labelactive]="'true'"
               [strings]="paesi"
               [showValidation]="true"
@@ -42,7 +42,7 @@ import { Select2Template } from '../../common/template/select2-template';
               *ngIf="isForeign()" 
               type="text" 
               [inline]="true" 
-              [label]="'application.luogo_nascita'| translate" 
+              [label]="'label.jconon_application.luogo_nascita'| translate" 
               formControlName="jconon_application:comune_nascita">
             </app-control-text>
           </div>
@@ -52,7 +52,7 @@ import { Select2Template } from '../../common/template/select2-template';
               [term]="''"
               [template]="comuniTemplate"
               [path]="callService.getComuniMapping()"
-              [label]="'application.comune_nascita'| translate"
+              [label]="'label.jconon_application.comune_nascita'| translate"
               [labelactive]="'true'"
               (onChangeEvent)="onChangeComune($event)"
               [inline]="'false'"
@@ -63,7 +63,7 @@ import { Select2Template } from '../../common/template/select2-template';
             </app-control-select-model>
           </div>
           <div *ngIf="!isForeign()" class="form-group col-md-1">
-            <label class="form-label active">{{'application.provincia_nascita' | translate}}</label>
+            <label class="form-label active">{{'label.jconon_application.provincia_nascita' | translate}}</label>
             <input 
               class="form-control" 
               id="jconon_application:provincia_nascita" 
@@ -108,7 +108,7 @@ import { Select2Template } from '../../common/template/select2-template';
                 type="text" 
                 inputClass="text-uppercase"
                 [inline]="true" 
-                [label]="'user.codicefiscale'| translate"
+                [label]="'label.jconon_application.codice_fiscale'| translate"
                 formControlName="jconon_application:codice_fiscale"></app-control-text>
           </div>
           <div [hidden]="!isStraniero()" class="form-group col-md-6">

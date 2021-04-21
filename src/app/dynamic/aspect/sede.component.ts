@@ -15,7 +15,7 @@ import { Application } from '../../core/application/application.model';
               <div class="form-group col-md-12">
                 <app-control-select-model
                   [inline]="true"
-                  [label]="'label.jconon_application.sede'| translate"
+                  [label]="'label.jconon_application.descrizione_sede'| translate"
                   [labelactive]="'true'"
                   [multiple]="true"
                   [multiSelectIcon]="'fa-building'"

@@ -29,7 +29,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
                      [count]="count" [page_offset]="service.getPageOffset()" (onChangePage)="onChangePage($event)">
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
         <app-list-item-document [item]="item" (onDelete)="onDelete(item.getId())" (onEdit)="onEdit(item)">
-          <div class="col-sm-12 font-weight-bold"> 
+          <div class="col-sm-12 font-weight-bolder"> 
             <a 
               class="pl-0 pb-0 text-truncate d-block"
               href="javascript:"
