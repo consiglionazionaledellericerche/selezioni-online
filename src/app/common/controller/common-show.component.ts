@@ -20,7 +20,6 @@ export abstract class CommonShowComponent<T extends Base> implements OnInit {
     this.route.params.subscribe((params) => {
       this.route.queryParams.subscribe( (queryParams) => {
         this.parseQueryParams(queryParams);
-        console.log(params);
         this.fetchEntity(params['id']).subscribe(
           (entity) => {
             this.setEntity(entity);

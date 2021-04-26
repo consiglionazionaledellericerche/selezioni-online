@@ -46,7 +46,6 @@ export abstract class CommonService<T extends Base> {
   }
 
   public serializeInstance(obj: T): any {
-    console.log(obj);
     let jsonConvert: JsonConvert = new JsonConvert();
         jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
         jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL; // never allow null

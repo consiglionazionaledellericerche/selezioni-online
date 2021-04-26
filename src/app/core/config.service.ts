@@ -1,14 +1,15 @@
 
-import {of as observableOf, Observable} from 'rxjs';
+import {of as observableOf, Observable, forkJoin } from 'rxjs';
 
-import {map, catchError} from 'rxjs/operators';
+import {map, catchError, switchMap, mergeMap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Config} from './config.model';
 import {environment} from '../../environments/environment';
+import { TranslateLoader } from '@ngx-translate/core';
 
 @Injectable()
-export class ConfigService {
+export class ConfigService implements TranslateLoader{
 
   public static CONFIG_URL = '/assets/config/config.json';
   public static URL_CACHE = '/v1/cache';
@@ -73,4 +74,26 @@ export class ConfigService {
     }));
   }
 
+  getTranslation(lang: string): Observable<any> {
+    return forkJoin(
+      [
+        this.getRemoteTranslation(lang),
+        this.httpClient.get(`/assets/i18n/${lang}.json`)
+      ]
+    ).pipe(map((data:any) => {
+      return {...data[0], ...data[1]};
+    }));
+  }  
+
+  getRemoteTranslation(lang: string): Observable<any> {    
+    return this.getApiBase()
+      .pipe(
+        switchMap((apibase) => {
+          return this.httpClient.get<any>( apibase + ConfigService.URL_CACHE + `/labels`)
+            .pipe(
+              catchError( _ => this.httpClient.get(`/assets/i18n/${lang}.json`))
+            );
+        })
+      );
+  }
 }

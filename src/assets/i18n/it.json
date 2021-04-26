@@ -20,12 +20,10 @@
   "D:jconon_attachment:trattamento_dati_personali": "Modulo Trattamento Dati Personali",
   "D:jconon_allegato_generico:attachment": "Allegato generico Multiplo",
   "D:jconon_curriculum_vitae:attachment": "Curriculum Vitae",
-  "D:jconon_documento_riconoscimento:attachment": "Documento Riconoscimento",
   "D:jconon_curriculum_vitae:attachment_strutturato": "Curriculum strutturato",
   "D:jconon_esclusione:attachment": "Provvedimento di Esclusione",
   "D:jconon_convocazione:attachment": "Convocazione",
   "D:jconon_rinuncia:attachment": "Rinuncia",
-
 
   "presents": "Sono presenti",
 
@@ -250,6 +248,7 @@
     "edit": "Modifica domanda",
     "confirm": "Salva in bozza e continua",
     "send": "Invia domanda",
+    "print": "Stampa domanda",
     "status": {
       "temporary": "Provvisorie",
       "confirmed": "Inviate",

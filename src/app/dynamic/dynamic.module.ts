@@ -25,7 +25,6 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 // import ngx-translate and the http loader
 import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
 import { CustomTranslationCompiler } from '../common/helpers/translation-compiler';
 
@@ -71,6 +70,7 @@ import { JcononAspectIdoneoPrecedentiGraduatorieComponent } from './aspect/idone
 import { JcononAspectAbilitazioneProfessioneIngegnereComponent } from './aspect/abilitazione-professione-ingegnere.component';
 import { JcononAspectUlterioreLaureaComponent } from './aspect/ulteriore-laurea.component';
 import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dottorato.component';
+import { ConfigService } from '../core/config.service';
 
 /**
  * Nel dynamic module inserisco tutti i components necessari alla gestione specifica di un tipo.
@@ -217,5 +217,5 @@ export class DynamicModule {}
 
 // required for AOT compilation
 export function CustomHttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http);
+    return new ConfigService(http);
 }

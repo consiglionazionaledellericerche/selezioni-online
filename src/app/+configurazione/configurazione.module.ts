@@ -15,9 +15,9 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 // import ngx-translate and the http loader
 import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
 import { CustomTranslationCompiler } from '../common/helpers/translation-compiler';
+import { ConfigService } from '../core/config.service';
 
 @NgModule({
   declarations: [
@@ -57,5 +57,5 @@ export class ConfigurazioneModule {}
 
 // required for AOT compilation
 export function CustomHttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new ConfigService(http);
 }

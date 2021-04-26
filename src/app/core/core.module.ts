@@ -137,5 +137,5 @@ export class CoreModule {}
 
 // required for AOT compilation
 export function CustomHttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new ConfigService(http);
 }

@@ -90,28 +90,28 @@ import { Helpers } from '../../common/helpers/helpers';
         <div class="card-footer">
           <div class="d-flex justify-content-end">
             <div class="form-group text-right">
-              <button class="btn btn-outline-danger btn-lg btn-icon mr-2" tooltip="Stampa domanda">
-                <span class="d-none d-md-block pr-1">Stampa</span>
+              <button class="btn btn-outline-danger btn-lg btn-icon mr-2" tooltip="{{'application.print'| translate}}">
+                <span class="d-none d-md-block pr-1" translate>application.print</span>
                 <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-print"></use></svg>
               </button>
             </div>
             <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-right">  
               <button (click)="sendApplication()" 
                 [disabled]="isDisableConfirm"
-                class="btn btn-outline-success btn-lg btn-icon mr-2" 
+                class="btn btn-success btn-lg btn-block btn-icon mr-2" 
                 tooltip="{{'application.send' | translate}}">
-                <span class="d-none d-md-block pr-1" translate>application.send</span>
-                <svg class="icon icon-success"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
+                <span class="pr-1 w-100 text-right" translate>application.send</span>
+                <svg class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
               </button>
               <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
             </div>  
             <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-right">
               <button (click)="confirmApplication()" 
                 [disabled]="isDisableConfirm"
-                class="btn btn-outline-primary btn-lg btn-icon" 
+                class="btn btn-primary btn-block btn-lg btn-icon" 
                 tooltip="{{'application.confirm' | translate}}">
-                <span class="d-none d-md-block pr-1" translate>application.confirm</span>
-                <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
+                <span class="pr-1 w-100 text-right" translate>application.confirm</span>
+                <svg class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
               </button>
               <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
             </div>  
@@ -224,7 +224,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       if (this.form.controls[control].status === 'INVALID') {
         this.form.controls[control].markAsDirty({onlySelf: true});
         this.form.controls[control].markAsTouched({onlySelf: true});
-        this.form.controls[control].patchValue(this.form.controls[control].value);
+        this.form.controls[control].patchValue(this.form.controls[control].value || null);
         this.translateService.get('label.'+ control.replace(':', '.')).subscribe((label) => {
           invalidControls.push('<li class="font-weight-bold pt-2">' + label + '</li>');
         });
