@@ -1,4 +1,4 @@
-import {throwError as observableThrowError, Observable} from 'rxjs';
+import {throwError as observableThrowError, Observable } from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
@@ -11,6 +11,7 @@ import { Application } from './application.model';
 import { SpringError } from '../../common/model/spring-error.model';
 import { ApplicationState } from './application-state.model';
 import { Helpers } from '../../common/helpers/helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class ApplicationService extends CommonService<Application> {
@@ -20,6 +21,7 @@ export class ApplicationService extends CommonService<Application> {
   public constructor(protected httpClient: HttpClient,
                      protected apiMessageService: ApiMessageService,
                      protected router: Router,
+                     protected translateService: TranslateService,
                      protected configService: ConfigService) {
     super(httpClient, apiMessageService, router, configService);
   }
@@ -100,6 +102,35 @@ export class ApplicationService extends CommonService<Application> {
       );
   }
 
+  public sendApplication(application: Application): Observable<any> {
+    return this.configService.getApiBase()
+      .pipe(
+        switchMap((apiBase) => {
+          return this.httpClient.post<any>(
+              apiBase + this.getApiPath() + '/send', 
+              this.serializeInstance(application)
+            )
+            .pipe(
+              map((result) => {
+                try {
+                  return result;
+                } catch (ex) {
+                  this.apiMessageService.sendMessage(MessageType.ERROR, ex);
+                  observableThrowError(ex);
+                }
+              }),
+              catchError( (httpErrorResponse: HttpErrorResponse) => {
+                const springError = new SpringError(httpErrorResponse);
+                this.translateService.get(springError.getRestErrorMessage()).subscribe((label) => {
+                  this.apiMessageService.sendMessage(MessageType.ERROR, label);
+                });
+                return observableThrowError(springError);
+              })
+            );
+        })
+      );
+  }
+
   public loadApplication(callId: string, applicationId: string, userId: string): Observable<Application> {
     if (!callId) {
       this.apiMessageService.sendMessage(MessageType.ERROR, 'Id richiesta mancante');
@@ -127,14 +158,37 @@ export class ApplicationService extends CommonService<Application> {
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
                 const springError = new SpringError(httpErrorResponse);
-                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
-                return observableThrowError(springError);
+                return observableThrowError(springError.getRestErrorMessage());
               })
             );
         })
       );
   }
 
+  public reopenApplication(applicationId: string): Observable<boolean> {
+    if (!applicationId) {
+      this.apiMessageService.sendMessage(MessageType.ERROR, 'Id richiesta mancante');
+      observableThrowError(null);
+    }
+    const params = new HttpParams()
+          .set('objectId', applicationId);
+
+    return this.configService.getApiBase()
+      .pipe(
+        switchMap((apiBase) => {
+          return this.httpClient.post<boolean>(apiBase + this.getApiPath() + '/reopen', params)
+            .pipe(
+              map((result) => {
+                return result;
+              }),
+              catchError( (httpErrorResponse: HttpErrorResponse) => {
+                const springError = new SpringError(httpErrorResponse);
+                return observableThrowError(springError.getRestErrorMessage());
+              })
+            );
+        })
+      );
+  }
   
   public getPageOffset(): number {
     return 100;

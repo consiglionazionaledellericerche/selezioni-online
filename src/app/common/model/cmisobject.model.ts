@@ -1,6 +1,7 @@
 import {AllowableAction} from './allowableaction.enum';
 import {JsonProperty, JsonObject} from 'json2typescript';
 import { Base } from './base.model';
+import { ISODateConverter } from '../helpers/ISODateConverter';
 
 @JsonObject("CmisObject")
 export abstract class CmisObject implements Base{
@@ -18,11 +19,11 @@ export abstract class CmisObject implements Base{
   public baseTypeId: string;
   @JsonProperty('cmis:createdBy')
   public createdBy: string;
-  @JsonProperty('cmis:creationDate')
+  @JsonProperty('cmis:creationDate', ISODateConverter)
   public creationDate: Date;
   @JsonProperty('cmis:lastModifiedBy')
   public lastModifiedBy: string;
-  @JsonProperty('cmis:lastModificationDate')
+  @JsonProperty('cmis:lastModificationDate', ISODateConverter)
   public lastModificationDate: Date;
   @JsonProperty('cmis:secondaryObjectTypeIds')
   public secondaryObjectTypeIds: string[];

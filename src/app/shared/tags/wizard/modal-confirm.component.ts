@@ -2,23 +2,16 @@ import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-button-confirm',
+  selector: 'modal-confirm',
   template: `
-    <button type="button"
-            class="btn" [ngClass]="classes"
-            (click)="openModal(template)"
-            [ngStyle]="style">
-      <i *ngIf="fa" class="fa fa-{{fa}}"></i> <span *ngIf="showLabel"> {{ buttonLabel | translate }}</span>
-    </button>
 
-    <ng-template #template>
       <div class="modal-header border-bottom">
         <h4 class="modal-title pull-left text-warning pb-2"><i class="fa fa-info-circle"></i>  {{'modal.title.confirm'|translate}}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" innerHtml="{{body}}"></div>
+      <div class="modal-body" innerHtml="{{body | translate}}"></div>
       <div class="modal-footer">
         <div class="container">
           <div class="row mt-2">
@@ -38,10 +31,9 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
           </div>
         </div>  
      </div>
-    </ng-template>
   `
 })
-export class ButtonConfirmComponent {
+export class ModalConfirmComponent {
 
   @Input() disable = false;
 
@@ -59,13 +51,10 @@ export class ButtonConfirmComponent {
 
   @Output() confirm = new EventEmitter();
 
-  modalRef: BsModalRef;
-
-  constructor(private modalService: BsModalService) {}
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, {'class': 'modal-dialog-centered'});
-  }
+  constructor(
+      private modalService: BsModalService,
+      public modalRef: BsModalRef
+  ) {}
 
   onConfirm() {
     this.confirm.emit();

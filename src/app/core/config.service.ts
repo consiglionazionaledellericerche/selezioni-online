@@ -1,7 +1,7 @@
 
 import {of as observableOf, Observable, forkJoin } from 'rxjs';
 
-import {map, catchError, switchMap, mergeMap} from 'rxjs/operators';
+import {map, catchError, switchMap } from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Config} from './config.model';

@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, SimpleChanges} from '@angular/core';
-import {CommonListComponent} from '../../common/controller/common-list.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
-import {NavigationService} from '../navigation.service';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CommonListComponent } from '../../common/controller/common-list.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { NavigationService } from '../navigation.service';
 import { Application } from './application.model';
 import { ApplicationUserService } from './application-user.service';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Select2Template } from '../../common/template/select2-template';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/model/user.model';
@@ -14,6 +14,8 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Call } from '../call/call.model';
 import { Helpers } from '../../common/helpers/helpers';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ButtonConfirmComponent } from '../../shared/tags/buttons/button-confirm.component';
 
 @Component({
   selector: 'application-user-list',
@@ -99,7 +101,7 @@ import { Helpers } from '../../common/helpers/helpers';
     <app-list-layout [loading]="loading" [items]="items" [page]="getPage()"
                      [count]="count" (onChangePage)="onChangePage($event)">
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
-        <app-list-item-application [item]="item" [user]="user" (onDelete)="onDelete(item.getId())">
+        <app-list-item-application [item]="item" [user]="user">
           <div class="col-sm-12 h5">
             <span class="badge" [ngClass]="{'badge-warning' : item.isProvvisoria(), 'badge-success' : !item.isProvvisoria()}">
               <span>{{'application.state.' + item.stato_domanda | translate}}</span>
@@ -176,6 +178,7 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
   public user: User;
   protected callId: string;
   protected callSearch: Call;
+  bsModalRef: BsModalRef;
 
   public constructor(public service: ApplicationUserService,
                      private authService: AuthService,

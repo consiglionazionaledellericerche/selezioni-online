@@ -60,6 +60,9 @@ import {TableItemComponent} from './table/table-item.component';
 import {WizardComponent} from './wizard/wizard.component';
 import {WizardItemComponent} from './wizard/wizard-item.component';
 import {WizardItemContentComponent} from './wizard/wizard-item-content.component';
+import {ModalConfirmComponent} from './wizard/modal-confirm.component';
+import {ModalInfoComponent} from './wizard/modal-info.component';
+
 import {FormValidationErrorLayoutComponent} from './forms/form-validation-error-layout.component';
 import {ShowMultiComponent} from './show/show-multi.component';
 import {LayoutBreadcrumbsComponent} from './layout/layout-breadcrumbs.component';
@@ -146,6 +149,8 @@ import { ConfigService } from '../../core/config.service';
     WizardComponent,
     WizardItemComponent,
     WizardItemContentComponent,
+    ModalConfirmComponent,
+    ModalInfoComponent,
 
     // Attachement
     AttachmentComponent,
@@ -248,6 +253,8 @@ import { ConfigService } from '../../core/config.service';
     WizardComponent,
     WizardItemComponent,
     WizardItemContentComponent,
+    ModalConfirmComponent,
+    ModalInfoComponent,
 
     // Attachment
     AttachmentComponent,
@@ -266,7 +273,8 @@ import { ConfigService } from '../../core/config.service';
   entryComponents: [
     ShowMetadataComponent,
     ShowAffixComponent,
-
+    ModalConfirmComponent,
+    ModalInfoComponent,
   ]
 })
 export class TagsModule {}

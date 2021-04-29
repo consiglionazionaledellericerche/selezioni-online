@@ -19,6 +19,8 @@ export abstract class CommonEditComponent<T extends Base> implements OnInit {
 
   public breadcrumbs;
 
+  public entityError;
+
   public constructor(protected service: CommonService<T>, protected router: Router, protected route: ActivatedRoute) {}
 
   public ngOnInit() {
@@ -152,6 +154,10 @@ export abstract class CommonEditComponent<T extends Base> implements OnInit {
 
   public isEntityFetched(): boolean {
     return this.entity ? true : false;
+  }
+
+  get isEntityError(): boolean {
+    return this.entityError ? true : false;
   }
 
   public isLoaded(): boolean {

@@ -98,13 +98,19 @@
     },
     "form.invalid" : "Corregere gli errori, per proseguire.",
     "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>",
+    "error.domanda.inviata.accesso" : "La domanda per il bando selezionato risulta inviata. Per visualizzarla accedere alla sezione <a href=\"application\">Le mie domande</a>",
     "document": {
       "upload": {
         "success": "Il documento {{value}} è stato correttamente caricato."
       },
       "delete": {
+        "confirm": "Sei sicuro di voler eliminare il documento {{value}}?",
         "success": "Il documento è stato correttamente cancellato."
       }
+    },
+    "application": {
+      "reopen": "Con la riapertura della domanda la stessa si intenderà come mai inviata e quindi, in caso di mancato successivo invio, la stessa non sarà considerata valida ai fini della selezione. Desideri continuare?",
+      "send": "<p>La domanda é stata correttamente inviata.</p><p>Riceverà all'indirizzo {{email}} una email contenente la stampa della stessa.</p><p>La domanda sarà considerata valida ai fini della selezione anche in caso di mancata ricezione della email per motivi tecnici.</p>"
     }  
   },
   "placeholder": {
@@ -116,11 +122,13 @@
   },
   "button": {
     "confirm": "Conferma",
-    "cancel": "Annulla"
+    "cancel": "Annulla",
+    "ok": "Ok"
   },
   "modal": {
     "title": {
-      "confirm": "Attenzione"
+      "confirm": "Attenzione",
+      "info": "Informazione"
     }
   },
   "protocollo": {
@@ -249,6 +257,8 @@
     "confirm": "Salva in bozza e continua",
     "send": "Invia domanda",
     "print": "Stampa domanda",
+    "reopen": "Riapri domanda",
+    "copy": "Copia domanda",
     "status": {
       "temporary": "Provvisorie",
       "confirmed": "Inviate",

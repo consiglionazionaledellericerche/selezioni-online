@@ -1,22 +1,23 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {CommonService} from '../../common/controller/common.service';
 import {ApiMessageService} from '../api-message.service';
 import {Router} from '@angular/router';
 import {ConfigService} from '../config.service';
 import {MODULE_CONFIGURAZIONE} from '../../app-routing.module';
-import { Application } from './application.model';
+import { ApplicationService } from './application.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
-export class ApplicationUserService extends CommonService<Application> {
+export class ApplicationUserService extends ApplicationService {
 
   public static ROUTE = 'application/user';
   
   public constructor(protected httpClient: HttpClient,
                      protected apiMessageService: ApiMessageService,
                      protected router: Router,
+                     protected translateService: TranslateService,
                      protected configService: ConfigService) {
-    super(httpClient, apiMessageService, router, configService);
+    super(httpClient, apiMessageService, router, translateService, configService);
   }
 
   public getModule(): string {

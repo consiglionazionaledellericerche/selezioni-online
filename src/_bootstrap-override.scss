@@ -20,3 +20,10 @@ textarea.form-control {
 .panel-heading.card-header {
     padding: 1rem 1rem;
 }
+.simple-notification-wrapper {
+    z-index: 1100 !important;
+}
+.simple-notification .sn-content{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

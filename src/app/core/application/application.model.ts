@@ -44,7 +44,7 @@ export class Application extends Folder {
   public nazione_cittadinanza: string;
   @JsonProperty('jconon_application:nazione_comunicazioni')
   public nazione_comunicazioni: string;
-  @JsonProperty('jconon_application:comune_comunicazioni')
+  @JsonProperty('jconon_application:comune_comunicazioni', ObjectToIdConverter)
   public comune_comunicazioni: string;
   @JsonProperty('jconon_application:provincia_comunicazioni')
   public provincia_comunicazioni: string;
@@ -92,6 +92,8 @@ export class Application extends Folder {
   public protocollo_numero_assunzione_idoneo: string;
   @JsonProperty('jconon_application:last_section_completed')
   public last_section_completed: number;
+  @JsonProperty('aspect')
+  public aspect: string[];
 
   @JsonProperty('call', Call, true)
   public call: Call = undefined;

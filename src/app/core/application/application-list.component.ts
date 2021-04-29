@@ -11,6 +11,8 @@ import { User } from '../../auth/model/user.model';
 import { CacheService } from '../cache.service';
 import { Helpers } from '../../common/helpers/helpers';
 import { Observable, of } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.component';
 
 @Component({
   selector: 'application-list',
@@ -86,7 +88,7 @@ import { Observable, of } from 'rxjs';
     <app-list-layout [loading]="loading" [items]="items" [page]="getPage()" [page_offset]="service.getPageOffset()"
                      [count]="count" (onChangePage)="onChangePage($event)">
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
-        <app-list-item-application [item]="item" [user]="user" (onDelete)="onDelete(item.getId())">
+        <app-list-item-application [item]="item" [user]="user" (onReopen)="onReopen(item)">
           <div class="col-sm-12 h5">
             <span class="badge" [ngClass]="{'badge-warning' : item.isProvvisoria(), 'badge-success' : !item.isProvvisoria()}">
               <span>{{'application.state.' + item.stato_domanda | translate}}</span>
@@ -147,11 +149,13 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
   public user: User = null;
   cache: any = {};
   protected applicationStatus: string;
+  bsModalRef: BsModalRef;
   
   public constructor(public service: ApplicationService,
                      private authService: AuthService,
                      private formBuilder: FormBuilder,
                      private cacheService: CacheService,
+                     private modalService: BsModalService,
                      protected router: Router,
                      protected route: ActivatedRoute,
                      protected changeDetector: ChangeDetectorRef,
@@ -159,6 +163,16 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
                      protected translateService: TranslateService) {
     super(service, route, router, changeDetector, navigationService);
     
+  }
+
+  public ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.user = Helpers.buildInstance(this.authService.getUser(), User);
+    }
+    this.cacheService.cache().subscribe((cache) => {
+      this.cache = cache;
+    });
+    super.ngOnInit();
   }
 
   public beforeOnInit(): Observable<any> {
@@ -189,13 +203,24 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
     });
   }
 
-  public ngOnInit() {
-    if (this.authService.isAuthenticated()) {
-      this.user = Helpers.buildInstance(this.authService.getUser(), User);
-    }
-    this.cacheService.cache().subscribe((cache) => {
-      this.cache = cache;
+  public onReopen(application: Application) {
+    const initialState = {
+      'body': 'message.application.reopen'
+    };
+
+    this.bsModalRef = this.modalService.show(ModalConfirmComponent, Object.assign({initialState}, { animated: true, class: 'modal-dialog-centered' }));
+    this.bsModalRef.content.confirm.subscribe(() => {
+      this.service.reopenApplication(application.objectId).subscribe(result => {
+        this.router.navigate(['/manage-application'],
+        {
+          relativeTo: this.route,
+          queryParams: { 
+            callId: application.call.getObjectId(), 
+            applicationId: application.getObjectId()
+          }
+        });
+      });  
     });
-    super.ngOnInit();
   }
+
 }

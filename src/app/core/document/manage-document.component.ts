@@ -4,10 +4,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { DocumentService } from './document.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { ApiMessageService, MessageType } from '../api-message.service';
 import { Document } from '../../common/model/document.model';
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'manage-document',
@@ -36,7 +34,6 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
     public modalRef: BsModalRef,
     protected router: Router,
     protected route: ActivatedRoute,
-    private apiMessageService: ApiMessageService,
     protected translateService: TranslateService,
     private el: ElementRef
   ) {    
@@ -45,6 +42,7 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
 
   @Input() parentId;  
   @Input() typeId;  
+  @Input() aspect;  
   public event: EventEmitter<Document> = new EventEmitter();
 
   public setEntity(entity: Document) {
@@ -60,6 +58,7 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
       'cmis:objectId': new FormControl(this.entity ? this.entity.objectId : undefined),
       'cmis:objectTypeId': new FormControl(this.typeId),
       'cmis:baseTypeId': new FormControl('cmis:document'),
+      'aspect': new FormControl(this.aspect),
       'file': new FormControl("", this.entity ? undefined : Validators.required)
     });
   }

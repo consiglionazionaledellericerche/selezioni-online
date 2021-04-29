@@ -14,12 +14,19 @@ import { User } from '../../../auth/model/user.model';
 
            <div class="ddd">
              <div class="btn-group border rounded bg-white" role="group" dropdown [ngStyle]="buttonStyle()">
-                <a *ngIf="isActive() || user.capabilities.isAdmin" class="btn btn-link p-1" href="javascript:"
+                <a *ngIf="(isActive && isDomandaProvvisoria) || user.capabilities.isAdmin" class="btn btn-link p-1" href="javascript:"
                   (click)="newApplication()" tooltip="{{'application.edit' | translate}}">
                   <svg class="icon icon-primary">
                     <use xlink:href="/assets/vendor/sprite.svg#it-pencil"></use>
                   </svg>
                   <span class="d-none d-md-inline-block">{{'application.edit' | translate}}</span>
+                </a>
+                <a *ngIf="isActive && isDomandaConfermata" class="btn btn-link p-1" href="javascript:"
+                  (click)="reopenApplication()" tooltip="{{'application.reopen' | translate}}">
+                  <svg class="icon icon-primary">
+                    <use xlink:href="/assets/vendor/sprite.svg#it-exchange-circle"></use>
+                  </svg>
+                  <span class="d-none d-md-inline-block">{{'application.reopen' | translate}}</span>
                 </a>
                 <app-show-children-modal 
                   [show_date]="'true'" 
@@ -37,9 +44,8 @@ import { User } from '../../../auth/model/user.model';
                   </svg>
                 </button>
                 <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right border" role="menu" aria-labelledby="button-animated">
-                    <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-                    <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
-                    <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li role="menuitem"><a class="dropdown-item" href="javascript:" (click)="printApplication()" translate>application.print</a></li>
+                    <li role="menuitem"><a class="dropdown-item" href="javascript:" (click)="copyApplication()" translate>application.copy</a></li>
                     <li class="divider dropdown-divider"></li>
                     <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>
@@ -74,7 +80,11 @@ export class ListItemApplicationComponent {
 
   @Input() noEdit = false;
 
-  @Output() onDelete = new EventEmitter();
+  @Output() onReopen = new EventEmitter();
+
+  @Output() onCopy = new EventEmitter();
+
+  @Output() onPrint = new EventEmitter();
 
   @Input() filterForm;
 
@@ -91,13 +101,33 @@ export class ListItemApplicationComponent {
       });
   }
 
+  public reopenApplication() {
+    this.onReopen.emit();
+  }
+
+  public copyApplication() {
+    this.onCopy.emit();
+  }
+
+  public printApplication() {
+    this.onPrint.emit();
+  }
+
   public canEditApplication(): boolean {
     return this.item.allowableActions.indexOf(AllowableAction.CAN_CREATE_DOCUMENT) !== -1;
   }
 
-  public isActive(): boolean {
+  get isActive(): boolean {
     const now = new Date();
     return now >= new Date(this.item.call.data_inizio_invio_domande) && now <= new Date(this.item.call.data_fine_invio_domande);
+  }
+
+  get isDomandaProvvisoria(): boolean {
+    return this.item.isProvvisoria();
+  }
+
+  get isDomandaConfermata(): boolean {
+    return this.item.isConfermata();
   }
 
   buttonStyle() {

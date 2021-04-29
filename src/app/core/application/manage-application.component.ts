@@ -14,13 +14,18 @@ import { Call } from '../call/call.model';
 import { ApiMessageService, MessageType } from '../api-message.service';
 import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component';
 import { Helpers } from '../../common/helpers/helpers';
+import { ModalInfoComponent } from '../../shared/tags/wizard/modal-info.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'manage-application',
   template:
   `
-    <app-layout-wait [loaded]="isLoaded()"></app-layout-wait>
-    <div *ngIf="isLoaded()">
+    <app-layout-wait *ngIf="!isEntityError" [loaded]="isLoaded()"></app-layout-wait>
+    <div *ngIf="isEntityError" class="alert alert-danger">
+      <strong innerHtml="{{entityError | translate}}"></strong>
+    </div>
+    <div *ngIf="isLoaded() && !isEntityError">
       <div class="shadow-none p-3 px-1 py-3 mx-n3" #cardApplication>
         <div class="text-right">
           <span>{{'application.call.title' | translate:{value: call.codice} }}</span>
@@ -97,21 +102,29 @@ import { Helpers } from '../../common/helpers/helpers';
             </div>
             <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-right">  
               <button (click)="sendApplication()" 
-                [disabled]="isDisableConfirm"
-                class="btn btn-success btn-lg btn-block btn-icon mr-2" 
+                [disabled]="isDisableConfirm || loading"
+                class="btn btn-primary btn-lg btn-block btn-icon mr-2" 
                 tooltip="{{'application.send' | translate}}">
                 <span class="pr-1 w-100 text-right" translate>application.send</span>
-                <svg class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
+                <svg *ngIf="!loading" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
+                <div *ngIf="loading" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
+                  <div class="progress-spinner-inner"></div>
+                  <div class="progress-spinner-inner"></div>
+                </div>
               </button>
               <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
             </div>  
             <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-right">
               <button (click)="confirmApplication()" 
-                [disabled]="isDisableConfirm"
+                [disabled]="isDisableConfirm || loading"
                 class="btn btn-primary btn-block btn-lg btn-icon" 
                 tooltip="{{'application.confirm' | translate}}">
                 <span class="pr-1 w-100 text-right" translate>application.confirm</span>
-                <svg class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
+                <svg *ngIf="!loading" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
+                <div *ngIf="loading" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
+                  <div class="progress-spinner-inner"></div>
+                  <div class="progress-spinner-inner"></div>
+                </div>
               </button>
               <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
             </div>  
@@ -129,12 +142,14 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   cache: any = {};
   public affixCompleted: number = 0;
   public affix: number[];
+  bsModalRefSend: BsModalRef;
 
   @ViewChild('affixComponent', {static: false}) affixComponent: ShowAffixComponent;
 
   public constructor(public service: ApplicationService,
                      public callService: CallService,
                      private apiMessageService: ApiMessageService,
+                     private modalService: BsModalService,
                      private authService: AuthService,
                      private cacheService: CacheService,
                      protected router: Router,
@@ -157,6 +172,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
           this.setEntity(application);
           this.affixCompleted = this.entity.last_section_completed || 0;
           this.buildCreateForm();
+        }, error => {
+          this.entityError = error;
         });
         this.translateService.reloadLang('it');
         this.callService.loadLabels(call.objectId).subscribe((labels) => {
@@ -201,6 +218,14 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     });
   }
 
+  get loading(): boolean {
+    return this.apiMessageService.isLoading;
+  }
+  
+  ngAfterContentChecked() : void {
+    this.changeDetector.detectChanges();
+  }
+  
   public confirmApplication() {
     if (this.isFormValid) {
       this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted + 1);
@@ -215,6 +240,25 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
 
   public sendApplication() {
     if (this.isFormValid) {
+      this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted);
+      this.service.saveApplication(this.buildInstance()).subscribe((application) => {
+        application.aspect = [
+          ...this.entity.call.elenco_aspects||[], 
+          ...this.entity.call.elenco_aspects_sezione_cnr||[], 
+          ...this.entity.call.elenco_aspects_ulteriori_dati||[]
+        ];
+        this.service.sendApplication(application).subscribe((result) => {
+          this.translateService.get('message.application.send', {email: result.email_comunicazione}).subscribe((label) => {
+            const initialState = {
+              'body': label
+            };        
+            this.bsModalRefSend = this.modalService.show(ModalInfoComponent, Object.assign({ initialState}, { animated: true, class: 'modal-dialog-centered' }));
+            this.bsModalRefSend.content.close.subscribe(() => {
+              this.router.navigate(['/application'],{relativeTo: this.route,});
+            });
+          });  
+        });
+      });
     }
   }
 

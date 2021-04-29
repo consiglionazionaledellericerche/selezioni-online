@@ -18,6 +18,7 @@ import { CmisObject } from '../../common/model/cmisobject.model';
 import { ManageDocumentComponent } from '../document/manage-document.component';
 import { Document } from '../../common/model/document.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.component';
 
 @Component({
   selector: 'children-list',
@@ -28,7 +29,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
     <app-list-layout [loading]="loading" [items]="items" [page]="getPage()"
                      [count]="count" [page_offset]="service.getPageOffset()" (onChangePage)="onChangePage($event)">
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
-        <app-list-item-document [item]="item" (onDelete)="onDelete(item.getId())" (onEdit)="onEdit(item)">
+        <app-list-item-document [item]="item" (onDelete)="onDelete(item)" (onEdit)="onEdit(item)">
           <div class="col-sm-12 font-weight-bolder"> 
             <a 
               class="pl-0 pb-0 text-truncate d-block"
@@ -91,12 +92,20 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
     } 
   }
   
-  public onDelete(objectId: string) {
-    this.documentService.deleteDocument(objectId).subscribe((result) => {
-      this.translateService.get('message.document.delete.success').subscribe((label) => {
-        this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
-      });
-      this.loadList();
+  public onDelete(cmisObject: CmisObject) {
+    this.translateService.get('message.document.delete.confirm', {value : cmisObject.name}).subscribe((label) => {
+      const initialState = {
+        'body': label
+      };
+      this.bsModalRef = this.modalService.show(ModalConfirmComponent, Object.assign({initialState}, { animated: true, class: 'modal-dialog-centered' }));
+      this.bsModalRef.content.confirm.subscribe(() => {
+        this.documentService.deleteDocument(cmisObject.getObjectId()).subscribe((result) => {
+          this.translateService.get('message.document.delete.success').subscribe((label) => {
+            this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
+          });
+          this.loadList();
+        });  
+      });      
     });
   }
 

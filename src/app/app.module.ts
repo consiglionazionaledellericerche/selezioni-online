@@ -14,9 +14,11 @@ import {AppRoutingModule} from './app-routing.module';
 import {GlobalErrorHandler} from './core/global-error-handler.service';
 
 // import ngx-translate and the http loader
-import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {HttpClient} from '@angular/common/http';
+import { TranslateCompiler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 import { CustomTranslationCompiler } from './common/helpers/translation-compiler';
+import { LoadingInterceptor } from './auth/loading.interceptor';
 import { ConfigService } from './core/config.service';
 
 @NgModule({
@@ -46,6 +48,7 @@ import { ConfigService } from './core/config.service';
 
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
     DynamicService
   ],

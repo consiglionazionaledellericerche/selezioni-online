@@ -71,7 +71,8 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Document> {
       }
       const initialState = {
         parentId: parentId,
-        typeId: typeId
+        typeId: typeId,
+        aspect: ['P:jconon_attachment:generic_document']
       };
 
       this.bsModalRef = this.modalService.show(ManageDocumentComponent, Object.assign({initialState}, { animated: true, class: 'modal-lg' }));

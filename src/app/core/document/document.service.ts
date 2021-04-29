@@ -8,7 +8,6 @@ import {Router} from '@angular/router';
 import {ConfigService} from '../config.service';
 import {MODULE_CONFIGURAZIONE} from '../../app-routing.module';
 import { SpringError } from '../../common/model/spring-error.model';
-import { Helpers } from '../../common/helpers/helpers';
 import { Document } from '../../common/model/document.model';
 import { ErrorObservable } from 'rxjs-compat/observable/ErrorObservable';
 
