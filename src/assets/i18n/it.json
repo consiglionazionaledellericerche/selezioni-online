@@ -256,7 +256,17 @@
     "edit": "Modifica domanda",
     "confirm": "Salva in bozza e continua",
     "send": "Invia domanda",
-    "print": "Stampa domanda",
+    "print": {
+      "application" : "Stampa domanda",
+      "dic_sost": {
+        "button": "Stampa",
+        "popover": "Stampa modulo dichiarazioni sostitutive da firmare e allegare"
+      },
+      "trattamento_dati_personali": {
+        "button": "Stampa",
+        "popover": "Stampa modulo trattamento dati personali da firmare e allegare"
+      }
+    },
     "reopen": "Riapri domanda",
     "copy": "Copia domanda",
     "status": {

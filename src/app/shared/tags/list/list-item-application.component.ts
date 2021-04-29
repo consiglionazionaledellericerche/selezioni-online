@@ -44,7 +44,7 @@ import { User } from '../../../auth/model/user.model';
                   </svg>
                 </button>
                 <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right border" role="menu" aria-labelledby="button-animated">
-                    <li role="menuitem"><a class="dropdown-item" href="javascript:" (click)="printApplication()" translate>application.print</a></li>
+                    <li role="menuitem"><a class="dropdown-item" href="javascript:" (click)="printApplication()" translate>application.print.application</a></li>
                     <li role="menuitem"><a class="dropdown-item" href="javascript:" (click)="copyApplication()" translate>application.copy</a></li>
                     <li class="divider dropdown-divider"></li>
                     <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a></li>

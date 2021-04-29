@@ -134,31 +134,7 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
   }
 
   getBlob(key: string, filename: string) {
-
-    const endpoint = '/rest/content?nodeRef=' + key;
-
-    return this.configService.getGateway().pipe(switchMap((gateway) => {
-
-      return this.httpClient.get(gateway + endpoint, {responseType: 'blob'}).pipe(map( (res) => {
-
-        const url = window.URL.createObjectURL(res);
-        const a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.href = url;
-        a.download = filename;
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove(); // remove the element
-
-        return res;
-      }),catchError((responseError: HttpErrorResponse) => {
-
-        this.apiMessageService.onApiMessage.error('Immpossibile scaricare il file allegato');
-
-        return ErrorObservable.create(responseError);
-      }),);
-    })).subscribe( () => {});
+    this.service.getBlob('/rest/content?nodeRef=' + key, filename);
   }
 
 }

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {CommonEditComponent} from '../../common/controller/common-edit.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -16,6 +16,10 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
 import { Helpers } from '../../common/helpers/helpers';
 import { ModalInfoComponent } from '../../shared/tags/wizard/modal-info.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { LoadingInterceptor } from '../../auth/loading.interceptor';
+import { LoadingState } from '../../auth/loading-state.enum';
+import { url } from '@rxweb/reactive-form-validators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'manage-application',
@@ -95,19 +99,19 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
         <div class="card-footer">
           <div class="d-flex justify-content-end">
             <div class="form-group text-right">
-              <button class="btn btn-outline-danger btn-lg btn-icon mr-2" tooltip="{{'application.print'| translate}}">
-                <span class="d-none d-md-block pr-1" translate>application.print</span>
+              <button class="btn btn-outline-danger btn-lg btn-icon mr-2" tooltip="{{'application.print.application'| translate}}">
+                <span class="d-none d-md-block pr-1" translate>application.print.application</span>
                 <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-print"></use></svg>
               </button>
             </div>
             <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-right">  
               <button (click)="sendApplication()" 
-                [disabled]="isDisableConfirm || loading"
+                [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
                 class="btn btn-primary btn-lg btn-block btn-icon mr-2" 
                 tooltip="{{'application.send' | translate}}">
                 <span class="pr-1 w-100 text-right" translate>application.send</span>
-                <svg *ngIf="!loading" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
-                <div *ngIf="loading" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
+                <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
+                <div *ngIf="loadingStateSend.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>
                   <div class="progress-spinner-inner"></div>
                 </div>
@@ -116,12 +120,12 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
             </div>  
             <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-right">
               <button (click)="confirmApplication()" 
-                [disabled]="isDisableConfirm || loading"
+                [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
                 class="btn btn-primary btn-block btn-lg btn-icon" 
                 tooltip="{{'application.confirm' | translate}}">
                 <span class="pr-1 w-100 text-right" translate>application.confirm</span>
-                <svg *ngIf="!loading" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
-                <div *ngIf="loading" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
+                <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
+                <div *ngIf="loadingStateConfirm.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>
                   <div class="progress-spinner-inner"></div>
                 </div>
@@ -134,7 +138,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
     </div>  
   `
 })
-export class ManageApplicationComponent extends CommonEditComponent<Application> implements OnInit {
+export class ManageApplicationComponent extends CommonEditComponent<Application> implements OnInit, OnDestroy {
 
   public call: Call = undefined;
 
@@ -143,6 +147,10 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   public affixCompleted: number = 0;
   public affix: number[];
   bsModalRefSend: BsModalRef;
+  
+  subscription: Subscription;
+  loadingStateConfirm: LoadingState = LoadingState.DEFAULT;
+  loadingStateSend: LoadingState = LoadingState.DEFAULT;
 
   @ViewChild('affixComponent', {static: false}) affixComponent: ShowAffixComponent;
 
@@ -159,6 +167,16 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
                      protected navigationService: NavigationService,
                      protected translateService: TranslateService) {
     super(service, router, route);
+    this.subscription = this.apiMessageService.loadingEvent$.subscribe((loadingState: LoadingState) => {
+      if (loadingState.url) {
+        if (loadingState.url.indexOf('/save') !== -1) {
+          this.loadingStateConfirm = loadingState;
+        }
+        if (loadingState.url.indexOf('/send') !== -1 || loadingState.url.indexOf('/save') !== -1) {
+          this.loadingStateSend = loadingState;
+        }
+      }
+    });
   }
   
   public ngOnInit() {
@@ -216,10 +234,6 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         ...this.entity.call.elenco_aspects_ulteriori_dati||[]
       ])
     });
-  }
-
-  get loading(): boolean {
-    return this.apiMessageService.isLoading;
   }
   
   ngAfterContentChecked() : void {
@@ -298,5 +312,9 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
   public buildInstance(): Application {
     return this.service.buildInstance(this.form.value);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

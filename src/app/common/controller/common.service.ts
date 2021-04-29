@@ -14,6 +14,7 @@ import {JsonConvert, ValueCheckingMode} from 'json2typescript';
 import { Base } from '../model/base.model';
 import { CmisObject } from '../model/cmisobject.model';
 import { ObjectType } from '../model/object-type.model';
+import { ErrorObservable } from 'rxjs-compat/observable/ErrorObservable';
 
 export abstract class CommonService<T extends Base> {
 
@@ -542,6 +543,32 @@ export abstract class CommonService<T extends Base> {
             );
         })
       );
+  }
+
+  public getBlob(endpoint: string, filename: string) {
+
+    return this.configService.getGateway().pipe(switchMap((gateway) => {
+
+      return this.httpClient.get(gateway + endpoint, {responseType: 'blob'}).pipe(map( (res) => {
+
+        const url = window.URL.createObjectURL(res);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove(); // remove the element
+
+        return res;
+      }),catchError((responseError: HttpErrorResponse) => {
+
+        this.apiMessageService.onApiMessage.error('Immpossibile scaricare il file allegato');
+
+        return ErrorObservable.create(responseError);
+      }),);
+    })).subscribe( () => {});
   }
 
   public turnIdsIntoEntities(ids: string[], list: T[]): T[] {
