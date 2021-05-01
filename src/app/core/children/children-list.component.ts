@@ -6,10 +6,9 @@ import {NavigationService} from '../../core/navigation.service';
 import { Attachment } from './attachment.model';
 import {TranslateService} from '@ngx-translate/core';
 import {ChildrenService} from './children.service';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 import {ConfigService} from '../config.service';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {ErrorObservable} from 'rxjs-compat/observable/ErrorObservable';
+import {HttpClient} from '@angular/common/http';
 import {ApiMessageService, MessageType} from '../api-message.service';
 import { ObjectTypeService } from '../object-type.service';
 import { Observable, of } from 'rxjs';
@@ -109,7 +108,7 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
     });
   }
 
-  public onEdit(cmisObject: CmisObject) {
+  public onEdit(cmisObject: Document) {
     const initialState = {
       entity: cmisObject,
       typeId: cmisObject.objectTypeId

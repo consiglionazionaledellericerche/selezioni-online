@@ -695,6 +695,7 @@ export class DynamicService {
             propertyName: 'jconon_application:fl_altri_assegni',
             toggleName: 'fl_altri_assegni',
             toggleLabel: 'label.jconon_application.fl_altri_assegni',
+            required: true,
             textType: 'textarea',
             textPropertyName: 'jconon_application:testo_altri_assegni',
             textName: 'testo_altri_assegni',

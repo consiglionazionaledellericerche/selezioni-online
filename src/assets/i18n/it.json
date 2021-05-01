@@ -177,6 +177,7 @@
   },
   "signin": {
     "title": "Accedi",
+    "unauthorized": "Nome utente e/o password errate, utilizzare il nome utente assegnato in fase di registrazione e non l'indirizzo email.",
     "concorsi": "Per partecipare alle selezioni online del Consiglio Nazionale delle Ricerche occorre accedere all'area utenti inserendo Nome utente e password scelti in fase di registrazione al sito.",
     "registration": "Si ricorda che, qualora si avesse già partecipato ad una precedente selezione sempre su questo sito, non é necessario ripetere la registrazione.",
     "altri": "Per registrarsi utilizzare il link",
@@ -385,6 +386,7 @@
       "luogo_nascita": "Luogo di nascita",
       "comune_nascita": "Comune di nascita",
       "provincia_nascita": "Provincia",
+      "nazione_cittadinanza": "Nazione cittadinanza",
       "nazione_residenza": "Nazione di residenza",
       "luogo_residenza": "Luogo di residenza",
       "comune_residenza": "Comune di residenza",

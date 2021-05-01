@@ -1,9 +1,12 @@
 import {Injectable} from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import {Subject} from 'rxjs';
 import { LoadingState } from '../auth/loading-state.enum';
 
 @Injectable()
 export class ApiMessageService {
+    constructor(public translateService: TranslateService) {}
+
     private loadingEventSource: Subject<LoadingState> = new Subject();
     // Observable LoadingState streams
     loadingEvent$ = this.loadingEventSource.asObservable();
@@ -15,7 +18,9 @@ export class ApiMessageService {
     public onLoad = new Subject<boolean>();
 
     public sendMessage(type: MessageType, message: string) {
-        this.onApiMessage.next(new ApiMessage(type, message));
+        this.translateService.get(message).subscribe((label: string) => {
+            this.onApiMessage.next(new ApiMessage(type, label));
+        });
     }
 
     public addLoading(loadingState: LoadingState) {

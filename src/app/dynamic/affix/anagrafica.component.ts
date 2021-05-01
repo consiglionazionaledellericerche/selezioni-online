@@ -112,7 +112,7 @@ import { Select2Template } from '../../common/template/select2-template';
                 formControlName="jconon_application:codice_fiscale"></app-control-text>
           </div>
           <div [hidden]="!isStraniero()" class="form-group col-md-6">
-            <label for="nazione_cittadinanza" class="active">{{'user.statoestero'| translate}}</label>
+            <label for="nazione_cittadinanza" class="active" translate>label.jconon_application.nazione_cittadinanza</label>
             <app-control-select-model
               [inline]="true"
               [noLabel]="true"

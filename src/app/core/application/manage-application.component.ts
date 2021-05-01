@@ -119,7 +119,7 @@ import { Subscription } from 'rxjs';
               <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
             </div>  
             <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-right">
-              <button (click)="confirmApplication()" 
+              <button (click)="confirmApplication();" 
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
                 class="btn btn-primary btn-block btn-lg btn-icon" 
                 tooltip="{{'application.confirm' | translate}}">
@@ -153,6 +153,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   loadingStateSend: LoadingState = LoadingState.DEFAULT;
 
   @ViewChild('affixComponent', {static: false}) affixComponent: ShowAffixComponent;
+  @ViewChild('cardApplication', {static: false}) cardApplication: ElementRef;
 
   public constructor(public service: ApplicationService,
                      public callService: CallService,
@@ -248,6 +249,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.setEntity(application);
         this.buildCreateForm();
         this.affixCompleted++;
+        this.scroll(this.cardApplication.nativeElement);
       });  
     }
   }

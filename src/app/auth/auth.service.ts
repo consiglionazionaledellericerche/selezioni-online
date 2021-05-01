@@ -81,7 +81,7 @@ export class AuthService {
           }),
         catchError(
           (error: HttpErrorResponse) => {
-            this.apiMessageService.sendMessage(MessageType.ERROR, error.statusText);
+            this.apiMessageService.sendMessage(MessageType.ERROR, 'signin.unauthorized');
             return observableThrowError(error);
           }));
     }));

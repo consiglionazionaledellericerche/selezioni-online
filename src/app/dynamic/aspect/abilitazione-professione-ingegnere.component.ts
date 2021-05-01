@@ -168,7 +168,7 @@ export class JcononAspectAbilitazioneProfessioneIngegnereComponent extends Dynam
       this.form.controls['jconon_application:data_abilitazione_professione_ingegnere']
         .setValidators(this.isToggle()? Validators.required : undefined);
         this.form.controls['jconon_application:fl_iscrizione_albo_professione_ingegnere']
-        .setValidators(this.isToggle()? Validators.required : undefined);
+        .setValidators(this.isToggle()? Validators.requiredTrue : undefined);
       
       this.form.controls['jconon_application:data_iscrizione_albo_professione_ingegnere']
         .setValidators(this.isToggle() && this.isIscrizioneAlbo()? Validators.required : undefined);

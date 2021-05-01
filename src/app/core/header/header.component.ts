@@ -140,9 +140,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.onNavbarEvaluated.unsubscribe();
   }
 
-  private notice(alertclass: string) : any {
-    let notice = this.notificationOptions;
+  private notice(alertclass: string, timeOut?: number) : any {
+    var notice = Object.assign({}, this.notificationOptions);
     notice.theClass = notice.theClass + ' ' + alertclass;
+    if (timeOut !== undefined) {
+      notice.timeOut = timeOut;
+    }
+    console.log(notice);
     return notice;
   }
 
@@ -150,7 +154,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (messageType === MessageType.SUCCESS) {
       this.notificationService.info('<h4 class="alert-heading">Informazione</h4>', message, this.notice('alert-info'));
     } else if (messageType === MessageType.ERROR) {
-      this.notificationService.error('<h4 class="alert-heading">Errore!</h4>', message, this.notice('alert-danger'));
+      this.notificationService.error('<h4 class="alert-heading">Errore!</h4>', message, this.notice('alert-danger', 0));
     } else if (messageType === MessageType.WARNING) {
       this.notificationService.warn('<h4 class="alert-heading">Avvertimento!</h4>', message, this.notice('alert-warning'));
     }

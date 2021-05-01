@@ -485,6 +485,10 @@ export class Application extends Folder {
   @JsonProperty('jconon_application:istituto_ulteriore_dottorato')
   public istituto_ulteriore_dottorato: string = undefined;
 
+  @JsonProperty('jconon_application:fl_altri_assegni')
+  public fl_altri_assegni: boolean = undefined;
+  @JsonProperty('jconon_application:testo_altri_assegni')
+  public testo_altri_assegni: string = undefined;
 
 
 
