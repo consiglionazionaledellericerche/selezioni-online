@@ -103,7 +103,8 @@ import { Subscription } from 'rxjs';
               </button>
             </div>
             <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-right">  
-              <button (click)="sendApplication()" 
+              <button (click)="sendApplication($event)" 
+                #sendApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
                 class="btn btn-primary btn-lg btn-block btn-icon mr-2" 
                 tooltip="{{'application.send' | translate}}">
@@ -117,7 +118,8 @@ import { Subscription } from 'rxjs';
               <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
             </div>  
             <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-right">
-              <button (click)="confirmApplication();" 
+              <button (click)="confirmApplication($event);"
+                #confirmApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
                 class="btn btn-primary btn-block btn-lg btn-icon" 
                 tooltip="{{'application.confirm' | translate}}">
@@ -156,6 +158,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   };
   @ViewChild('affixComponent', {static: false}) affixComponent: ShowAffixComponent;
   @ViewChild('cardApplication', {static: false}) cardApplication: ElementRef;
+  @ViewChild('confirmApplicationButton', {static: false}) confirmApplicationButton: ElementRef;
+  @ViewChild('sendApplicationButton', {static: false}) sendApplicationButton: ElementRef;
 
   public constructor(public service: ApplicationService,
                      public callService: CallService,
@@ -300,8 +304,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   @HostListener('document:keydown.enter', ['$event'])  
-  public confirmApplication() {
-    if (this.isFormValid && !this.isDisableConfirm) {
+  public confirmApplication(event: Event) {
+    if (this.isFormValid && !this.isDisableConfirm && this.confirmApplicationButton) {
       this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted + 1);
       this.service.saveApplication(this.buildInstance()).subscribe((application) => {
         application.call = this.call;
@@ -313,7 +317,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     }
   }
 
-  public sendApplication() {
+  public sendApplication(event: Event) {
     if (this.isFormValid) {
       this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted);
       this.service.saveApplication(this.buildInstance()).subscribe((application) => {

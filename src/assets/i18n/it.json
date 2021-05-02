@@ -98,7 +98,22 @@
     },
     "form.invalid" : "Corregere gli errori, per proseguire.",
     "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>",
-    "error.domanda.inviata.accesso" : "La domanda per il bando selezionato risulta inviata. Per visualizzarla accedere alla sezione <a href=\"application\">Le mie domande</a>",
+    "error": {
+      "domanda.inviata.accesso" : "La domanda per il bando selezionato risulta inviata. Per visualizzarla accedere alla sezione <a href=\"application\">Le mie domande</a>",
+      "codice": {
+        "fiscale": {
+          "nullo": "Codice fiscale non valido: codice fiscale nullo!",
+          "lung.errata": "Codice fiscale non valido: lunghezza del codice errata!",
+          "cognome": "Codice fiscale non valido: cognome!",
+          "nome": "Codice fiscale non valido: nome!",
+          "anno": "Codice fiscale non valido: anno!",
+          "mese": "Codice fiscale non valido: mese!",
+          "giorno.sesso": "Codice fiscale non valido: giorno di nascita o sesso non corretti!",
+          "comune": "Codice fiscale non valido: codice comune di nascita non corretto!",
+          "carattere": "Codice fiscale non valido: errato carattere di controllo!"
+        }
+      }      
+    },
     "document": {
       "upload": {
         "success": "Il documento {{value}} è stato correttamente caricato."
