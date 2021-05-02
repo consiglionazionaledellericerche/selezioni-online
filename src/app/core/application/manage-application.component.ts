@@ -1,6 +1,6 @@
-import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {CommonEditComponent} from '../../common/controller/common-edit.component';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { CommonEditComponent } from '../../common/controller/common-edit.component';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NavigationService} from '../navigation.service';
 import { Application } from './application.model';
@@ -16,9 +16,7 @@ import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component'
 import { Helpers } from '../../common/helpers/helpers';
 import { ModalInfoComponent } from '../../shared/tags/wizard/modal-info.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { LoadingInterceptor } from '../../auth/loading.interceptor';
 import { LoadingState } from '../../auth/loading-state.enum';
-import { url } from '@rxweb/reactive-form-validators';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -151,7 +149,11 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   subscription: Subscription;
   loadingStateConfirm: LoadingState = LoadingState.DEFAULT;
   loadingStateSend: LoadingState = LoadingState.DEFAULT;
-
+  touch1 = {
+    x:0,
+    y:0,
+    time:0
+  };
   @ViewChild('affixComponent', {static: false}) affixComponent: ShowAffixComponent;
   @ViewChild('cardApplication', {static: false}) cardApplication: ElementRef;
 
@@ -236,13 +238,70 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       ])
     });
   }
-  
+
+  @HostListener('touchstart', ['$event'])
+  @HostListener('touchend', ['$event'])
+  @HostListener('touchcancel', ['$event'])
+  handleTouch(ev){
+    var touch = ev.touches[0] || ev.changedTouches[0];
+    if (ev.type === 'touchstart'){
+      this.touch1.x = touch.pageX;
+      this.touch1.y = touch.pageY;
+      this.touch1.time = ev.timeStamp;
+    } else if (ev.type === 'touchend'){
+      var dx = touch.pageX - this.touch1.x;
+      var dy = touch.pageY - this.touch1.y;
+      var dt = ev.timeStamp - this.touch1.time;
+
+      if (dt < 500){
+        // swipe lasted less than 500 ms
+        if (Math.abs(dx) > 60){
+          // delta x is at least 60 pixels
+          if (dx > 0){
+            this.doSwipeLeft();
+          } else {
+            this.doSwipeRight();
+          }
+        }
+      }
+    } 
+  }
+
+  private doSwipeLeft() {
+    if (this.affixCompleted !== 0) {
+      this.affixCompleted = this.affixCompleted - 1;
+      setTimeout(() => {
+        this.scroll(this.cardApplication.nativeElement);
+      }, 1000);  
+    }
+  }
+
+  private doSwipeRight() {
+    if (this.affixCompleted !== this.affix.length - 1) {
+      this.affixCompleted = this.affixCompleted + 1;
+      setTimeout(() => {
+        this.scroll(this.cardApplication.nativeElement);
+      }, 1000);  
+    }
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+      if (event.key === 'ArrowRight') {
+        this.doSwipeRight();
+      }
+      if (event.key === 'ArrowLeft') {
+        this.doSwipeLeft();  
+      }
+  }
+
   ngAfterContentChecked() : void {
     this.changeDetector.detectChanges();
   }
-  
+
+  @HostListener('document:keydown.enter', ['$event'])  
   public confirmApplication() {
-    if (this.isFormValid) {
+    if (this.isFormValid && !this.isDisableConfirm) {
       this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted + 1);
       this.service.saveApplication(this.buildInstance()).subscribe((application) => {
         application.call = this.call;
