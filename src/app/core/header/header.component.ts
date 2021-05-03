@@ -146,7 +146,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (timeOut !== undefined) {
       notice.timeOut = timeOut;
     }
-    console.log(notice);
     return notice;
   }
 

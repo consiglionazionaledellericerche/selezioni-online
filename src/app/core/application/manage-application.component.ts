@@ -291,11 +291,14 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-      if (event.key === 'ArrowRight') {
-        this.doSwipeRight();
-      }
-      if (event.key === 'ArrowLeft') {
-        this.doSwipeLeft();  
+      const checkInside = this.el.nativeElement.contains(event.target);
+      if (!checkInside) {
+        if (event.key === 'ArrowRight') {
+          this.doSwipeRight();
+        }
+        if (event.key === 'ArrowLeft') {
+          this.doSwipeLeft();  
+        }  
       }
   }
 
@@ -305,7 +308,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
 
   @HostListener('document:keydown.enter', ['$event'])  
   public confirmApplication(event: Event) {
-    if (this.isFormValid && !this.isDisableConfirm && this.confirmApplicationButton) {
+    if (!this.isDisableConfirm && this.isFormValid && this.confirmApplicationButton) {
       this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted + 1);
       this.service.saveApplication(this.buildInstance()).subscribe((application) => {
         application.call = this.call;
@@ -353,8 +356,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         });
         const invalidControl = this.el.nativeElement.querySelector('input.is-invalid,textarea.invalid,select.is-invalid') || 
         document
-          .querySelector('[formcontrolname="' + control + '"], .is-invalid')
-          .querySelector('input,textarea');
+          .querySelector('[formcontrolname="' + control + '"], .is-invalid, input,textarea');
         if (invalidControl) {
           invalidControl.focus();
         }
