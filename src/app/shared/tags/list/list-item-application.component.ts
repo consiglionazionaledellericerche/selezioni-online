@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {Application} from '../../../core/application/application.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import { AllowableAction } from '../../../common/model/allowableaction.enum';
@@ -12,7 +12,7 @@ import { User } from '../../../auth/model/user.model';
          <div class="row pt-2 pb-2">
            <ng-content></ng-content>
 
-           <div class="ddd">
+           <div class="ddd" #buttonGroup>
              <div class="btn-group border rounded bg-white" role="group" dropdown [ngStyle]="buttonStyle()">
                 <a *ngIf="(isActive && isDomandaProvvisoria) || user.capabilities.isAdmin" class="btn btn-link p-1" href="javascript:"
                   (click)="newApplication()" tooltip="{{'application.edit' | translate}}">
@@ -29,6 +29,7 @@ import { User } from '../../../auth/model/user.model';
                   <span class="d-none d-md-inline-block">{{'application.reopen' | translate}}</span>
                 </a>
                 <app-show-children-modal 
+                  (click)="hideButtonGroup()"
                   [show_date]="'true'" 
                   [typeId]="'P:jconon_attachment:generic_document'" 
                   [queryName]="'jconon_attachment:generic_document'" 
@@ -90,6 +91,8 @@ export class ListItemApplicationComponent {
 
   @Input() page;
 
+  @ViewChild('buttonGroup', {static: false}) buttonGroup: ElementRef;  
+
   public newApplication() {
     this.router.navigate(['/manage-application'],
       {
@@ -101,15 +104,25 @@ export class ListItemApplicationComponent {
       });
   }
 
+  hideButtonGroup() {
+    this.buttonGroup.nativeElement.classList.add('d-none');
+    setTimeout(() => {
+      this.buttonGroup.nativeElement.classList.remove('d-none');
+    });
+  }
+
   public reopenApplication() {
+    this.hideButtonGroup();
     this.onReopen.emit();
   }
 
   public copyApplication() {
+    this.hideButtonGroup();
     this.onCopy.emit();
   }
 
   public printApplication() {
+    this.hideButtonGroup();
     this.onPrint.emit();
   }
 

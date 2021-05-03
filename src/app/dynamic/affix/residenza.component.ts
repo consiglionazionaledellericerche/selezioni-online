@@ -128,7 +128,7 @@ export class JcononAffixResidenzaComponent extends AffixComponent {
       );
 
       this.form.addControl('jconon_application:indirizzo_residenza', new FormControl(this.data.indirizzo_residenza, Validators.required));
-      this.form.addControl('jconon_application:num_civico_residenza', new FormControl(this.data.num_civico_residenza));
+      this.form.addControl('jconon_application:num_civico_residenza', new FormControl(this.data.num_civico_residenza, Validators.required));
     }
 
     public isForeign(): boolean {

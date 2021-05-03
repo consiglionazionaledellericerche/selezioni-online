@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Document } from '../../../common/model/document.model';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ShowMetadataComponent } from '../show/show-metadata.component';
 import { CmisObject } from '../../../common/model/cmisobject.model';
@@ -13,7 +13,7 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
          <div class="row pt-2 pb-2">
            <ng-content></ng-content>
 
-           <div class="ddd" >
+           <div class="ddd" #buttonGroup>
              <div class="btn-group border rounded" role="group" dropdown [ngStyle]="buttonStyle()">
                 <button class="btn text-dark p-2" [disabled]="!item.hasId()"
                     (click)="openModalWithComponent(item)" tooltip="{{'show' | translate}}">
@@ -51,7 +51,11 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
 })
 export class ListItemDocumentComponent {
 
-  constructor(private router: Router, private route: ActivatedRoute, private modalService: BsModalService) {}
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private modalService: BsModalService
+  ) {}
 
   @Input() item: Document = null;
 
@@ -77,6 +81,8 @@ export class ListItemDocumentComponent {
   
   bsModalRef: BsModalRef;
 
+  @ViewChild('buttonGroup', {static: false}) buttonGroup: ElementRef;
+
   public navigateShow() {
     this.router.navigate([this.showRoute + this.item.getObjectId()],
       {
@@ -95,15 +101,25 @@ export class ListItemDocumentComponent {
     };
   }
 
+  hideButtonGroup() {
+    this.buttonGroup.nativeElement.classList.add('d-none');
+    setTimeout(() => {
+      this.buttonGroup.nativeElement.classList.remove('d-none');
+    });
+  }
+
   delete(cmisObject: CmisObject) {
+    this.hideButtonGroup();
     this.onDelete.emit(cmisObject);
   }
 
   edit(cmisObject: CmisObject) {
+    this.hideButtonGroup();
     this.onEdit.emit(cmisObject);
   }
 
   openModalWithComponent(cmisObject: CmisObject) {
+    this.hideButtonGroup();
     const initialState = {
       cmisObject: cmisObject
     };
