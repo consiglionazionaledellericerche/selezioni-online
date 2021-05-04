@@ -96,10 +96,10 @@ export class JcononAspectToggleWithSingleFieldComponent extends DynamicComponent
         });
       }
       if (this.required) {
-        this.validators.push(Validators.required);
+        this.validators.push(this.isRequiredValidator(this.propertyName, this.data.call));
       }
       if (this.requiredTrue) {
-        this.validators.push(Validators.requiredTrue);
+        this.validators.push(this.isRequiredValidator(this.propertyName, this.data.call, Validators.requiredTrue));
       }
 
       this.control = new FormControl(this.data[this.toggleName], this.validators);
@@ -110,12 +110,11 @@ export class JcononAspectToggleWithSingleFieldComponent extends DynamicComponent
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls[this.textPropertyName].patchValue(null);
+      if (this.toggle) {
+        this.addRequiredValidatorForm(this.textPropertyName, this.data.call, Validators.required, this.isToggle(), reset);
+      } else {
+        this.addRequiredValidatorForm(this.textPropertyName, this.data.call, Validators.required, !this.isToggle(), reset);
       }
-      this.form.controls[this.textPropertyName]
-        .setValidators(this.toggle ? (this.isToggle()? Validators.required : undefined) :
-          (this.isToggle()? undefined : Validators.required));
     }
 
     public isToggle(): boolean {

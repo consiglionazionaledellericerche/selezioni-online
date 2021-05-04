@@ -122,7 +122,10 @@ export class JcononAspectAbilitazioneProfessioneIngegnereComponent extends Dynam
       });
 
       this.propertyName = 'jconon_application:fl_abilitazione_professione_ingegnere';
-      this.control = new FormControl(this.data.fl_abilitazione_professione_ingegnere, Validators.requiredTrue);
+      this.control = new FormControl(
+        this.data.fl_abilitazione_professione_ingegnere, 
+        this.isRequiredValidator('jconon_application:fl_abilitazione_professione_ingegnere', this.data.call, Validators.requiredTrue)
+      );
       this.form.addControl(this.propertyName, this.control);
 
       this.form.addControl(
@@ -156,46 +159,22 @@ export class JcononAspectAbilitazioneProfessioneIngegnereComponent extends Dynam
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:data_abilitazione_professione_ingegnere'].patchValue(null);
-        this.form.controls['jconon_application:fl_iscrizione_albo_professione_ingegnere'].patchValue(null);
-        this.form.controls['jconon_application:data_iscrizione_albo_professione_ingegnere'].patchValue(null);
-        this.form.controls['jconon_application:provincia_iscrizione_albo_professione_ingegnere'].patchValue(null);
-        this.form.controls['jconon_application:sezione_iscrizione_albo_professione_ingegnere'].patchValue(null);
-        this.form.controls['jconon_application:settore_iscrizione_albo_professione_ingegnere'].patchValue(null);
-      }
-
-      this.form.controls['jconon_application:data_abilitazione_professione_ingegnere']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:fl_iscrizione_albo_professione_ingegnere']
-        .setValidators(this.isToggle()? Validators.requiredTrue : undefined);
-      
-      this.form.controls['jconon_application:data_iscrizione_albo_professione_ingegnere']
-        .setValidators(this.isToggle() && this.isIscrizioneAlbo()? Validators.required : undefined);
-      this.form.controls['jconon_application:provincia_iscrizione_albo_professione_ingegnere']
-        .setValidators(this.isToggle() && this.isIscrizioneAlbo()? Validators.required : undefined);
-      this.form.controls['jconon_application:sezione_iscrizione_albo_professione_ingegnere']
-        .setValidators(this.isToggle() && this.isIscrizioneAlbo()? Validators.required : undefined);
-      this.form.controls['jconon_application:settore_iscrizione_albo_professione_ingegnere']
-        .setValidators(this.isToggle() && this.isIscrizioneAlbo()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:data_abilitazione_professione_ingegnere',
+        this.data.call, Validators.required, this.isToggle() && this.isIscrizioneAlbo(), reset);
+      this.addRequiredValidatorForm('jconon_application:fl_iscrizione_albo_professione_ingegnere',
+        this.data.call, Validators.requiredTrue, this.isToggle() && this.isIscrizioneAlbo(), reset);
+      this.onChangeIscrizione(reset);
     }
 
     public onChangeIscrizione(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:data_iscrizione_albo_professione_ingegnere'].patchValue(null);
-        this.form.controls['jconon_application:provincia_iscrizione_albo_professione_ingegnere'].patchValue(null);
-        this.form.controls['jconon_application:sezione_iscrizione_albo_professione_ingegnere'].patchValue(null);
-        this.form.controls['jconon_application:settore_iscrizione_albo_professione_ingegnere'].patchValue(null);
-      }
-      
-      this.form.controls['jconon_application:data_iscrizione_albo_professione_ingegnere']
-        .setValidators(this.isToggle() && this.isIscrizioneAlbo()? Validators.required : undefined);
-      this.form.controls['jconon_application:provincia_iscrizione_albo_professione_ingegnere']
-        .setValidators(this.isToggle() && this.isIscrizioneAlbo()? Validators.required : undefined);
-      this.form.controls['jconon_application:sezione_iscrizione_albo_professione_ingegnere']
-        .setValidators(this.isToggle() && this.isIscrizioneAlbo()? Validators.required : undefined);
-      this.form.controls['jconon_application:settore_iscrizione_albo_professione_ingegnere']
-        .setValidators(this.isToggle() && this.isIscrizioneAlbo()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:data_iscrizione_albo_professione_ingegnere', 
+        this.data.call, Validators.required, this.isToggle() && this.isIscrizioneAlbo(), reset);
+      this.addRequiredValidatorForm('jconon_application:provincia_iscrizione_albo_professione_ingegnere', 
+        this.data.call, Validators.required, this.isToggle() && this.isIscrizioneAlbo(), reset);
+      this.addRequiredValidatorForm('jconon_application:sezione_iscrizione_albo_professione_ingegnere', 
+        this.data.call, Validators.required, this.isToggle() && this.isIscrizioneAlbo(), reset);
+      this.addRequiredValidatorForm('jconon_application:settore_iscrizione_albo_professione_ingegnere', 
+        this.data.call, Validators.required, this.isToggle() && this.isIscrizioneAlbo(), reset);;
     }
 
     public isIscrizioneAlbo(): boolean {

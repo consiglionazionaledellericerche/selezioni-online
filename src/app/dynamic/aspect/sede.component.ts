@@ -55,7 +55,7 @@ export class JcononAspectSedeComponent extends DynamicComponent<Application> {
       });
 
       this.control = new FormControl(this.data.descrizione_sede, [
-        Validators.required,
+        this.isRequiredValidator(this.propertyName, this.data.call),
         Helpers.maxLengthArrayValidator(2, {maxlengtharray2: true})
       ]);
       this.form.addControl(this.propertyName, this.control);

@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, Input, OnInit } from "@angular/core";
-import { AbstractControl, FormControl, FormGroup } from "@angular/forms";
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { CmisObject } from "../common/model/cmisobject.model";
 import { ValidationHelper } from "../common/validation/validation-helper";
 import { CacheService } from "../core/cache.service";
+import { Call } from "../core/call/call.model";
 import { AdMetadataComponent } from "../shared/tags/show/ad-metadata.component";
 
 export abstract class DynamicComponent<T extends CmisObject> implements AdMetadataComponent, OnInit{
@@ -42,6 +43,22 @@ export abstract class DynamicComponent<T extends CmisObject> implements AdMetada
       if (this.form.controls[this.propertyName])
           return this.form.controls[this.propertyName].status !== 'INVALID';
       return true;
+    }
+
+    protected addRequiredValidatorForm(property: string, call: Call, validator?: ValidatorFn, condition?: boolean, reset?: boolean) {
+      if (reset) {
+        this.form.controls[property].patchValue(null);
+      }
+      this.form.controls[property]
+        .setValidators(this.isRequiredValidator(property, call, validator, condition));
+    }
+
+    protected isRequiredValidator(property: string, call: Call, validator?: ValidatorFn, condition?: boolean): ValidatorFn {
+      let elenco = call.elenco_field_not_required || []; 
+      if (condition == undefined) {
+        condition = true;
+      }
+      return elenco.indexOf(property) === -1 && condition? validator||Validators.required : Validators.nullValidator;
     }
 
     hasErrors() {

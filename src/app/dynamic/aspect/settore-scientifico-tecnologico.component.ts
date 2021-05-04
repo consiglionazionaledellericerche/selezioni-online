@@ -38,7 +38,6 @@ export class JcononAspectSettoreScientificoTecnologicoComponent extends DynamicC
     }
     public choice: string[];
     public hoverClass : string;
-    public isRequired = true;
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:settore_scientifico_tecnologico';
@@ -46,7 +45,7 @@ export class JcononAspectSettoreScientificoTecnologicoComponent extends DynamicC
         this.choice = choice;
       });
       this.control = new FormControl(this.data.settore_scientifico_tecnologico ? this.data.settore_scientifico_tecnologico[0] : undefined, 
-        this.isRequired ? Validators.required : undefined);
+        this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }

@@ -69,15 +69,8 @@ export class JcononAspectServizioAltraAttivitaComponent extends DynamicComponent
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:sede_altra_attivita'].patchValue(null);
-        this.form.controls['jconon_application:ruolo_altra_attivita'].patchValue(null);
-      }
-      this.form.controls['jconon_application:sede_altra_attivita']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:ruolo_altra_attivita']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-
+      this.addRequiredValidatorForm('jconon_application:sede_altra_attivita', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:ruolo_altra_attivita', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

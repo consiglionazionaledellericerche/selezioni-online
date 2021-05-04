@@ -55,7 +55,7 @@ export class JcononAspectPatenteGuidaComponent extends DynamicComponent<Applicat
       });
 
       this.propertyName = 'jconon_application:fl_patente_guida';
-      this.control = new FormControl(this.data.fl_patente_guida, Validators.required);
+      this.control = new FormControl(this.data.fl_patente_guida, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl('jconon_application:lista_patente_guida', new FormControl(this.data.lista_patente_guida));
       this.onChangeToggle(false);
@@ -63,14 +63,7 @@ export class JcononAspectPatenteGuidaComponent extends DynamicComponent<Applicat
     }
 
     public onChangeToggle(reset: boolean) {
-      if (this.isToggle()) {
-        this.form.controls['jconon_application:lista_patente_guida'].setValidators(Validators.required);
-      } else {
-        this.form.controls['jconon_application:lista_patente_guida'].setValidators(undefined);
-      }
-      if (reset) {
-        this.form.controls['jconon_application:lista_patente_guida'].patchValue(null);
-      }
+      this.addRequiredValidatorForm('jconon_application:lista_patente_guida', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

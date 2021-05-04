@@ -71,10 +71,6 @@ export class JcononAspectTempiAggiuntiviComponent extends DynamicComponent<Appli
         this.form.controls['jconon_application:tempi_aggiuntivi'].patchValue(null);
         this.form.controls['jconon_application:ausili'].patchValue(null);
       }
-      this.form.controls['jconon_application:tempi_aggiuntivi']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:ausili']
-        .setValidators(this.isToggle()? Validators.required : undefined);
     }
 
     public isToggle(): boolean {

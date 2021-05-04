@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
@@ -107,19 +107,24 @@ export class JcononAffixResidenzaComponent extends AffixComponent {
       this.cacheService.paesi().subscribe((paesi) => {
         this.paesi = paesi;
       });
-      this.form.addControl('jconon_application:nazione_residenza', new FormControl(this.data.nazione_residenza, Validators.required));
+      this.form.addControl('jconon_application:nazione_residenza', 
+        new FormControl(
+          this.data.nazione_residenza, 
+          this.isRequiredValidator('jconon_application:nazione_residenza', this.data.call)
+        )
+      );
       this.form.addControl('jconon_application:comune_residenza', 
         new FormControl(
             this.isForeign() ? this.data.comune_residenza : 
             (this.data.comune_residenza ? new Comune(this.data.comune_residenza, this.data.provincia_residenza):undefined),
-            Validators.required
+            this.isRequiredValidator('jconon_application:comune_residenza', this.data.call)
         )
       );
       this.form.addControl('jconon_application:provincia_residenza', new FormControl(this.data.provincia_residenza));
       this.form.addControl('jconon_application:cap_residenza', new FormControl(
           this.data.cap_residenza,
           [
-            Validators.required,
+            this.isRequiredValidator('jconon_application:cap_residenza', this.data.call),
             Helpers.minlengthValidator(5, {minlength5: true}),
             Helpers.maxlengthValidator(5, {maxlength5: true}),
             Helpers.patternValidator(/^\d+$/, { hasOnlyNumber: true })
@@ -127,8 +132,18 @@ export class JcononAffixResidenzaComponent extends AffixComponent {
         )
       );
 
-      this.form.addControl('jconon_application:indirizzo_residenza', new FormControl(this.data.indirizzo_residenza, Validators.required));
-      this.form.addControl('jconon_application:num_civico_residenza', new FormControl(this.data.num_civico_residenza, Validators.required));
+      this.form.addControl('jconon_application:indirizzo_residenza', 
+        new FormControl(
+          this.data.indirizzo_residenza, 
+          this.isRequiredValidator('jconon_application:indirizzo_residenza', this.data.call)
+        )
+      );
+      this.form.addControl('jconon_application:num_civico_residenza', 
+        new FormControl(
+          this.data.num_civico_residenza, 
+          this.isRequiredValidator('jconon_application:num_civico_residenza', this.data.call)
+        )
+      );
     }
 
     public isForeign(): boolean {

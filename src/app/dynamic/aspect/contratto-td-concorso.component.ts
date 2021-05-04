@@ -77,7 +77,10 @@ export class JcononAspectContrattoTDConcorsoComponent extends DynamicComponent<A
       });
 
       this.propertyName = 'jconon_application:fl_contratto_td_concorso_presso';
-      this.control = new FormControl(this.data.fl_contratto_td_concorso_presso, Validators.requiredTrue);
+      this.control = new FormControl(
+        this.data.fl_contratto_td_concorso_presso, 
+        this.isRequiredValidator(this.propertyName, this.data.call, Validators.requiredTrue)
+      );
       this.form.addControl(this.propertyName, this.control);
 
       this.form.addControl(
@@ -98,17 +101,9 @@ export class JcononAspectContrattoTDConcorsoComponent extends DynamicComponent<A
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:contratto_td_concorso_ente'].patchValue(null);
-        this.form.controls['jconon_application:contratto_td_concorso_altro_ente'].patchValue(null);
-        this.form.controls['jconon_application:contratto_td_concorso_codice_riferimento'].patchValue(null);
-      }
-      this.form.controls['jconon_application:contratto_td_concorso_ente']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:contratto_td_concorso_altro_ente']
-        .setValidators(this.isToggle() && !this.isCNR()? Validators.required : undefined);
-      this.form.controls['jconon_application:contratto_td_concorso_codice_riferimento']
-        .setValidators(this.isToggle()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:contratto_td_concorso_ente', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:contratto_td_concorso_altro_ente', this.data.call, Validators.required, this.isToggle() && !this.isCNR(), reset);
+      this.addRequiredValidatorForm('jconon_application:contratto_td_concorso_codice_riferimento', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isCNR(): boolean {

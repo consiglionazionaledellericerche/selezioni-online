@@ -41,7 +41,7 @@ export class JcononAspectDestituitoAltroImpiegoComponent extends DynamicComponen
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_destituito_altro_impiego';
-      this.control = new FormControl(this.data.fl_destituito_altro_impiego, Validators.required);
+      this.control = new FormControl(this.data.fl_destituito_altro_impiego, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl(
         'jconon_application:motivazione_destituito_altro_impiego', 
@@ -52,11 +52,7 @@ export class JcononAspectDestituitoAltroImpiegoComponent extends DynamicComponen
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:motivazione_destituito_altro_impiego'].patchValue(null);
-      }
-      this.form.controls['jconon_application:motivazione_destituito_altro_impiego']
-        .setValidators(this.isToggle()? undefined : Validators.required);
+      this.addRequiredValidatorForm('jconon_application:motivazione_destituito_altro_impiego', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

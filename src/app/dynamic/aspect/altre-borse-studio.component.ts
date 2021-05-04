@@ -41,9 +41,8 @@ export class JcononAspectAltreBorseStudioComponent extends DynamicComponent<Appl
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_altre_borse_studio';
-      this.control = new FormControl(this.data.fl_altre_borse_studio, Validators.required);
+      this.control = new FormControl(this.data.fl_altre_borse_studio, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
-      this.form.controls[this.propertyName].setValidators(Validators.required);
 
       this.form.addControl(
         'jconon_application:descrizione_altre_borse_studio', 
@@ -54,11 +53,7 @@ export class JcononAspectAltreBorseStudioComponent extends DynamicComponent<Appl
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:descrizione_altre_borse_studio'].patchValue(null);
-      }
-      this.form.controls['jconon_application:descrizione_altre_borse_studio']
-        .setValidators(!this.isToggle()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:descrizione_altre_borse_studio', this.data.call, Validators.required, !this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

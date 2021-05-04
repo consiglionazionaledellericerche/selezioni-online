@@ -76,14 +76,12 @@ export class JcononAspectLaureaComponent extends DynamicComponent<Application> {
       super(cacheService, changeDetectorRef);
     }
 
-    public isFlRequired = true;
-
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_laurea';
       this.control = new FormControl(this.data.fl_laurea);
       this.form.addControl(this.propertyName, this.control);
       this.form.controls[this.propertyName]
-        .setValidators(this.isFlRequired? Validators.requiredTrue : undefined);
+        .setValidators(this.isRequiredValidator(this.propertyName, this.data.call));
 
       this.form.addControl(
         'jconon_application:tipo_laurea', 
@@ -111,24 +109,11 @@ export class JcononAspectLaureaComponent extends DynamicComponent<Application> {
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:tipo_laurea'].patchValue(null);
-        this.form.controls['jconon_application:istituto_laurea'].patchValue(null);
-        this.form.controls['jconon_application:data_laurea'].patchValue(null);
-        this.form.controls['jconon_application:punteggio_laurea'].patchValue(null);
-        this.form.controls['jconon_application:fl_laurea_equipollente'].patchValue(null);
-      }
-      this.form.controls['jconon_application:tipo_laurea']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:istituto_laurea']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:data_laurea']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:punteggio_laurea']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:fl_laurea_equipollente']
-        .setValidators(this.isToggle()? Validators.requiredTrue : undefined);
-
+      this.addRequiredValidatorForm('jconon_application:tipo_laurea', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:istituto_laurea', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:data_laurea', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:punteggio_laurea', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:fl_laurea_equipollente', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

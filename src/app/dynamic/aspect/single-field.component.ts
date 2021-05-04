@@ -80,10 +80,10 @@ export class JcononAspectSingleFieldComponent extends DynamicComponent<Applicati
           this.choice = choice;
         });
       }
-      this.control = new FormControl(this.data[this.name], this.isRequired ? Validators.required : undefined);
-      if (this.validators) {
-        this.control.setValidators(this.validators);
-      } 
+      this.control = new FormControl(this.data[this.name]);
+      let validators = this.validators||[];
+      validators.push(this.isRequiredValidator(this.propertyName, this.data.call));
+      this.control.setValidators(validators);
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }

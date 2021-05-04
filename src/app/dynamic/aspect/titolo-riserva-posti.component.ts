@@ -41,7 +41,7 @@ export class JcononAspectTitoloRiservaPostiComponent extends DynamicComponent<Ap
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_titolo_riserva_posti';
-      this.control = new FormControl(this.data.fl_titolo_riserva_posti, Validators.required);
+      this.control = new FormControl(this.data.fl_titolo_riserva_posti, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl(
         'jconon_application:motivazione_riserva_posti', 
@@ -52,11 +52,7 @@ export class JcononAspectTitoloRiservaPostiComponent extends DynamicComponent<Ap
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:motivazione_riserva_posti'].patchValue(null);
-      }
-      this.form.controls['jconon_application:motivazione_riserva_posti']
-        .setValidators(this.isToggle()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:motivazione_riserva_posti', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

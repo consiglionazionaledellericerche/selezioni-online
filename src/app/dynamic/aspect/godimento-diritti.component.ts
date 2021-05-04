@@ -41,7 +41,7 @@ export class JcononAspectGodimentoDirittiComponent extends DynamicComponent<Appl
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_godimento_diritti';
-      this.control = new FormControl(this.data.fl_godimento_diritti, Validators.required);
+      this.control = new FormControl(this.data.fl_godimento_diritti, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl(
         'jconon_application:motivazione_no_godimento_diritti', 
@@ -52,11 +52,7 @@ export class JcononAspectGodimentoDirittiComponent extends DynamicComponent<Appl
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:motivazione_no_godimento_diritti'].patchValue(null);
-      }
-      this.form.controls['jconon_application:motivazione_no_godimento_diritti']
-        .setValidators(this.isToggle()? undefined : Validators.required);
+      this.addRequiredValidatorForm('jconon_application:motivazione_no_godimento_diritti', this.data.call, Validators.required, !this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

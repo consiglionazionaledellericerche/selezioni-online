@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { Comune } from '../../common/model/comune.model';
 import { Helpers } from '../../common/helpers/helpers';
@@ -149,22 +149,24 @@ export class JcononAffixAnagraficaComponent extends AffixComponent {
       this.form.addControl('jconon_application:nome', new FormControl({value:this.data.nome, disabled: true}));
       this.form.addControl('jconon_application:cognome', new FormControl({value:this.data.cognome, disabled: true}));
       this.form.addControl('jconon_application:nazione_nascita', 
-        new FormControl(this.data.nazione_nascita, Validators.required));
+        new FormControl(this.data.nazione_nascita, this.isRequiredValidator('jconon_application:nazione_nascita', this.data.call)));
       
       this.form.addControl('jconon_application:comune_nascita', 
         new FormControl(
             this.isForeign() ? this.data.comune_nascita : 
               (this.data.comune_nascita ? new Comune(this.data.comune_nascita, this.data.provincia_nascita): undefined),
-            Validators.required
+              this.isRequiredValidator('jconon_application:comune_nascita', this.data.call)
         )
       );
       this.form.addControl('jconon_application:provincia_nascita', new FormControl(this.data.provincia_nascita));
-      this.form.addControl('jconon_application:data_nascita', new FormControl(this.data.data_nascita||undefined, Validators.required));
-      this.form.addControl('jconon_application:sesso', new FormControl(String(this.data.sesso || 'M'),Validators.required));
+      this.form.addControl('jconon_application:data_nascita', 
+        new FormControl(this.data.data_nascita||undefined, this.isRequiredValidator('jconon_application:data_nascita', this.data.call)));
+      this.form.addControl('jconon_application:sesso', 
+        new FormControl(String(this.data.sesso || 'M'),this.isRequiredValidator('jconon_application:sesso', this.data.call)));
 
       this.form.addControl('jconon_application:fl_cittadino_italiano', new FormControl(
           this.data.fl_cittadino_italiano ? String(this.data.fl_cittadino_italiano) : 'false',
-          Validators.required
+          this.isRequiredValidator('jconon_application:fl_cittadino_italiano', this.data.call)
         )
       );
       this.form.addControl('jconon_application:nazione_cittadinanza', new FormControl(this.data.nazione_cittadinanza));
@@ -188,10 +190,12 @@ export class JcononAffixAnagraficaComponent extends AffixComponent {
     public onChangeCittadinanza(reset: boolean) {
       if (this.isStraniero()) {
         this.form.controls['jconon_application:codice_fiscale'].setValidators(undefined);
-        this.form.controls['jconon_application:nazione_cittadinanza'].setValidators(Validators.required);
+        this.form.controls['jconon_application:nazione_cittadinanza'].setValidators(
+          this.isRequiredValidator('jconon_application:nazione_cittadinanza', this.data.call)
+        );
       } else {
         this.form.controls['jconon_application:codice_fiscale'].setValidators([
-          Validators.required,
+          this.isRequiredValidator('jconon_application:codice_fiscale', this.data.call),
           Helpers.patternValidator(Helpers.regExpCodiceFiscale, {codicefiscale: true})
         ]);
         this.form.controls['jconon_application:nazione_cittadinanza'].setValidators(undefined);

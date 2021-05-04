@@ -70,14 +70,8 @@ export class JcononAspectDiversmenteAbileComponent extends DynamicComponent<Appl
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:tempi_aggiuntivi_diversamente_abile'].patchValue(null);
-        this.form.controls['jconon_application:ausili_diversamente_abile'].patchValue(null);
-      }
-      this.form.controls['jconon_application:tempi_aggiuntivi_diversamente_abile']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:ausili_diversamente_abile']
-        .setValidators(this.isToggle()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:tempi_aggiuntivi_diversamente_abile', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:ausili_diversamente_abile', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

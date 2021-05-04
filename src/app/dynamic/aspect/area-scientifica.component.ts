@@ -38,7 +38,6 @@ export class JcononAspectAreaScientificaComponent extends DynamicComponent<Appli
     }
     public choice: string[];
     public hoverClass : string;
-    public isRequired = true;
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:area_scientifica';
@@ -46,7 +45,7 @@ export class JcononAspectAreaScientificaComponent extends DynamicComponent<Appli
         this.choice = choice;
       });
       this.control = new FormControl(this.data.area_scientifica ? this.data.area_scientifica[0] : undefined, 
-        this.isRequired ? Validators.required : undefined);
+        this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }

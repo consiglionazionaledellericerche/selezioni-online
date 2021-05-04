@@ -97,14 +97,11 @@ export class JcononAspectEnteCompartoUniversitaAppartenenzaComponent extends Dyn
       super(cacheService, changeDetectorRef);
     }
     public comuniTemplate = Select2Template.comuni;
-    public isFlRequired = false;
-
+    
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_ente_comparto_universita_appartenenza';
       this.control = new FormControl(this.data.fl_ente_comparto_universita_appartenenza);
       this.form.addControl(this.propertyName, this.control);
-      this.form.controls[this.propertyName]
-        .setValidators(this.isFlRequired? Validators.requiredTrue : undefined);
 
       this.form.addControl(
         'jconon_application:ente_comparto_universita_appartenenza', 
@@ -147,26 +144,18 @@ export class JcononAspectEnteCompartoUniversitaAppartenenzaComponent extends Dyn
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:ente_comparto_universita_appartenenza'].patchValue(null);
-        this.form.controls['jconon_application:comune_ente_comparto_universita_appartenenza'].patchValue(null);
-        this.form.controls['jconon_application:provincia_ente_comparto_universita_appartenenza'].patchValue(null);
-        this.form.controls['jconon_application:categoria_ente_comparto_universita_appartenenza'].patchValue(null);
-        this.form.controls['jconon_application:ente_comparto_universita_appartenenza_anzianita_servizio'].patchValue(null);
-        this.form.controls['jconon_application:ente_comparto_universita_appartenenza_anzianita_profilo'].patchValue(null);
-      }
-      this.form.controls['jconon_application:ente_comparto_universita_appartenenza']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:comune_ente_comparto_universita_appartenenza']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:provincia_ente_comparto_universita_appartenenza']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:categoria_ente_comparto_universita_appartenenza']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:ente_comparto_universita_appartenenza_anzianita_servizio']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:ente_comparto_universita_appartenenza_anzianita_profilo']
-        .setValidators(this.isToggle()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:ente_comparto_universita_appartenenza', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:comune_ente_comparto_universita_appartenenza', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:provincia_ente_comparto_universita_appartenenza', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:categoria_ente_comparto_universita_appartenenza', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:ente_comparto_universita_appartenenza_anzianita_servizio', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:ente_comparto_universita_appartenenza_anzianita_profilo', 
+        this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

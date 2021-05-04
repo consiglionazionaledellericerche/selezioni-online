@@ -41,7 +41,7 @@ export class JcononAspectSanzioneDisciplinareComponent extends DynamicComponent<
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_sanzione_disciplinare';
-      this.control = new FormControl(this.data.fl_sanzione_disciplinare, Validators.required);
+      this.control = new FormControl(this.data.fl_sanzione_disciplinare, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl(
         'jconon_application:estremi_sanzione_disciplinare', 
@@ -52,11 +52,7 @@ export class JcononAspectSanzioneDisciplinareComponent extends DynamicComponent<
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:estremi_sanzione_disciplinare'].patchValue(null);
-      }
-      this.form.controls['jconon_application:estremi_sanzione_disciplinare']
-        .setValidators(this.isToggle()? undefined: Validators.required);
+      this.addRequiredValidatorForm('jconon_application:contratto_td_concorso_ente', this.data.call, Validators.required, !this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

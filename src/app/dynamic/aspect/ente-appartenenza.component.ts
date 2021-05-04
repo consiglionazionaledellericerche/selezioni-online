@@ -64,21 +64,22 @@ export class JcononAspectEnteAppartenenzaComponent extends DynamicComponent<Appl
     }
     public comuniTemplate = Select2Template.comuni;
     public hoverClass : string;
-    public isRequired = true;
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:ente_appartenenza';
-      this.control = new FormControl(this.data.ente_appartenenza, this.isRequired ? Validators.required : undefined);
+      this.control = new FormControl(this.data.ente_appartenenza, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl(
         'jconon_application:comune_ente_appartenenza', 
         new FormControl(this.data.comune_ente_appartenenza ? 
             new Comune(this.data.comune_ente_appartenenza,
-                        this.data.provincia_ente_appartenenza) : undefined, Validators.required)
+                        this.data.provincia_ente_appartenenza) : undefined, 
+            this.isRequiredValidator('jconon_application:comune_ente_appartenenza', this.data.call)
+        )
       );
       this.form.addControl(
         'jconon_application:provincia_ente_appartenenza', 
-        new FormControl(this.data.provincia_ente_appartenenza, Validators.required)
+        new FormControl(this.data.provincia_ente_appartenenza, this.isRequiredValidator('jconon_application:provincia_ente_appartenenza', this.data.call))
       );
       super.ngOnInit();
     }

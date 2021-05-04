@@ -81,16 +81,9 @@ export class JcononAspectServizioCNRComponent extends DynamicComponent<Applicati
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:struttura_cnr'].patchValue(null);
-        this.form.controls['jconon_application:titolo_servizio_cnr'].patchValue(null);
-        this.form.controls['jconon_application:fl_direttore'].patchValue(null);
-      }
-      this.form.controls['jconon_application:struttura_cnr']
-        .setValidators(!this.isToggle()? undefined : Validators.required);
-        this.form.controls['jconon_application:titolo_servizio_cnr']
-        .setValidators(!this.isToggle()? undefined : Validators.required);
-
+      this.addRequiredValidatorForm('jconon_application:struttura_cnr', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:titolo_servizio_cnr', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:fl_direttore', this.data.call, Validators.nullValidator, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

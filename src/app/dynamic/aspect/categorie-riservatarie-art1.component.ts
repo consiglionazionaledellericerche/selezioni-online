@@ -42,7 +42,8 @@ export class JcononAspectCategorieRiservatarieArt1Component extends DynamicCompo
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_categorie_riservatarie_art1';
-      this.control = new FormControl(this.data.fl_categorie_riservatarie_art1, Validators.requiredTrue);
+      this.control = new FormControl(this.data.fl_categorie_riservatarie_art1, 
+        this.isRequiredValidator(this.propertyName, this.data.call,Validators.requiredTrue));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl(
         'jconon_application:categorie_riservatarie_percentuale', 
@@ -57,8 +58,10 @@ export class JcononAspectCategorieRiservatarieArt1Component extends DynamicCompo
         this.form.controls['jconon_application:categorie_riservatarie_percentuale'].patchValue(null);
       }
       this.form.controls['jconon_application:categorie_riservatarie_percentuale']
-        .setValidators(this.isToggle()? 
-        [Validators.required, Helpers.patternValidator(/^[0-9]+$/, { onlyNumber: true })] : undefined);
+        .setValidators(this.isToggle()? [
+          this.isRequiredValidator('jconon_application:categorie_riservatarie_percentuale', this.data.call), 
+          Helpers.patternValidator(/^[0-9]+$/, { onlyNumber: true })
+        ] : undefined);
     }
 
     public isToggle(): boolean {

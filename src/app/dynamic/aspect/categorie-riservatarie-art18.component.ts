@@ -40,7 +40,8 @@ export class JcononAspectCategorieRiservatarieArt18Component extends DynamicComp
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_categorie_riservatarie_art18';
-      this.control = new FormControl(this.data.fl_categorie_riservatarie_art18, Validators.requiredTrue);
+      this.control = new FormControl(this.data.fl_categorie_riservatarie_art18, 
+        this.isRequiredValidator(this.propertyName, this.data.call, Validators.requiredTrue));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl(
         'jconon_application:categorie_riservatarie_codice', 
@@ -51,12 +52,7 @@ export class JcononAspectCategorieRiservatarieArt18Component extends DynamicComp
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:categorie_riservatarie_codice'].patchValue(null);
-      }
-      this.form.controls['jconon_application:categorie_riservatarie_codice']
-        .setValidators(this.isToggle()? 
-        [Validators.required] : undefined);
+      this.addRequiredValidatorForm('jconon_application:categorie_riservatarie_codice', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

@@ -631,7 +631,7 @@ export class DynamicService {
             required: true,
             label: 'label.jconon_application.motivazioni_candidatura',
             type: 'textarea',
-            validators: [Validators.required, Helpers.maxlengthValidator(1800, {maxlength1800: true})]
+            validators: [Helpers.maxlengthValidator(1800, {maxlength1800: true})]
           },
           showcomponent: JcononAspectSingleFieldComponent
         },

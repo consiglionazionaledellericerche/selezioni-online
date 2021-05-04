@@ -38,14 +38,13 @@ export class JcononAspectInquadramentoComponent extends DynamicComponent<Applica
     }
     public choice: string[];
     public hoverClass : string;
-    public isRequired = true;
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:profilo';
       this.objectTypeService.listChoice('P:jconon_application:aspect_inquadramento',this.propertyName).subscribe((choice) => {
         this.choice = choice;
       });
-      this.control = new FormControl(this.data.profilo, this.isRequired ? Validators.required : undefined);
+      this.control = new FormControl(this.data.profilo, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }

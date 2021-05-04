@@ -63,14 +63,7 @@ export class JcononAspectAreaTecnicaComponent extends DynamicComponent<Applicati
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:area_tecnica'].patchValue(null);
-      }
-      if (this.isToggle()) {
-        this.form.controls['jconon_application:area_tecnica'].setValidators(Validators.required);
-      } else {
-        this.form.controls['jconon_application:area_tecnica'].setValidators(undefined);
-      }
+      this.addRequiredValidatorForm('jconon_application:area_tecnica', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

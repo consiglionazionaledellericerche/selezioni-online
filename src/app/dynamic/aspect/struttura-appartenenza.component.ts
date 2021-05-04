@@ -31,11 +31,10 @@ export class JcononAspectStrutturaAppartenenzaComponent extends DynamicComponent
       super(cacheService, changeDetectorRef);
     }
     public hoverClass : string;
-    public isRequired = true;
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:struttura_appartenenza';
-      this.control = new FormControl(this.data.struttura_appartenenza, this.isRequired ? Validators.required : undefined);
+      this.control = new FormControl(this.data.struttura_appartenenza, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }

@@ -56,7 +56,7 @@ export class JcononAspectConoscenzaLingueComponent extends DynamicComponent<Appl
       });
 
       this.propertyName = 'jconon_application:fl_conoscenza_lingue';
-      this.control = new FormControl(this.data.fl_conoscenza_lingue, Validators.required);
+      this.control = new FormControl(this.data.fl_conoscenza_lingue, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl('jconon_application:elenco_lingue_conosciute', new FormControl(this.data.elenco_lingue_conosciute));
       this.onChangeToggle(false);
@@ -64,14 +64,7 @@ export class JcononAspectConoscenzaLingueComponent extends DynamicComponent<Appl
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:elenco_lingue_conosciute'].patchValue(null);
-      }
-      if (this.isToggle()) {
-        this.form.controls['jconon_application:elenco_lingue_conosciute'].setValidators(Validators.required);
-      } else {
-        this.form.controls['jconon_application:elenco_lingue_conosciute'].setValidators(undefined);
-      }
+      this.addRequiredValidatorForm('jconon_application:elenco_lingue_conosciute', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

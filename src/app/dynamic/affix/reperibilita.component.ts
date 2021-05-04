@@ -142,21 +142,24 @@ export class JcononAffixReperibilitaComponent extends AffixComponent {
       });
       this.form.addControl(
         'jconon_application:nazione_comunicazioni', 
-        new FormControl(this.data.nazione_comunicazioni||this.data.nazione_residenza, Validators.required)
+        new FormControl(
+          this.data.nazione_comunicazioni||this.data.nazione_residenza, 
+          this.isRequiredValidator('jconon_application:nazione_comunicazioni', this.data.call)
+        )
       );
       this.form.addControl('jconon_application:comune_comunicazioni', 
         new FormControl(
             this.isForeignComunicazioni() ? this.data.comune_comunicazioni||this.data.comune_residenza : 
             (this.data.comune_comunicazioni||this.data.comune_residenza ? 
               new Comune(this.data.comune_comunicazioni||this.data.comune_residenza, this.data.provincia_comunicazioni||this.data.provincia_residenza):undefined),
-            Validators.required
+              this.isRequiredValidator('jconon_application:comune_comunicazioni', this.data.call)
         )
       );
       this.form.addControl('jconon_application:provincia_comunicazioni', new FormControl(this.data.provincia_comunicazioni||this.data.provincia_residenza));
       this.form.addControl('jconon_application:cap_comunicazioni', new FormControl(
           this.data.cap_comunicazioni||this.data.cap_residenza,
           [
-            Validators.required,
+            this.isRequiredValidator('jconon_application:cap_comunicazioni', this.data.call),
             Helpers.minlengthValidator(5, {minlength5: true}),
             Helpers.maxlengthValidator(5, {maxlength5: true}),
             Helpers.patternValidator(/^\d+$/, { hasOnlyNumber: true })
@@ -164,17 +167,30 @@ export class JcononAffixReperibilitaComponent extends AffixComponent {
         )
       );
 
-      this.form.addControl('jconon_application:indirizzo_comunicazioni', new FormControl(this.data.indirizzo_comunicazioni||this.data.indirizzo_residenza, Validators.required));
-      this.form.addControl('jconon_application:num_civico_comunicazioni', new FormControl(this.data.num_civico_comunicazioni||this.data.num_civico_residenza));
-      this.form.addControl('jconon_application:telefono_comunicazioni', new FormControl(this.data.telefono_comunicazioni, Validators.required));
+      this.form.addControl('jconon_application:indirizzo_comunicazioni', 
+        new FormControl(
+          this.data.indirizzo_comunicazioni||this.data.indirizzo_residenza, 
+          this.isRequiredValidator('jconon_application:indirizzo_comunicazioni', this.data.call)
+        )
+      );
+      this.form.addControl('jconon_application:num_civico_comunicazioni', 
+        new FormControl(this.data.num_civico_comunicazioni||this.data.num_civico_residenza));
+      this.form.addControl('jconon_application:telefono_comunicazioni', 
+        new FormControl(this.data.telefono_comunicazioni, this.isRequiredValidator('jconon_application:telefono_comunicazioni', this.data.call)));
       this.form.addControl('jconon_application:email_comunicazioni', 
           new FormControl(this.data.email_comunicazioni||this.user.email||this.user.emailcertificatoperpuk));
       this.form.addControl('jconon_application:email_pec_comunicazioni', new FormControl(this.data.email_pec_comunicazioni));
 
       if (this.isForeign()) {
-        this.form.controls['jconon_application:email_comunicazioni'].setValidators([Validators.required, Validators.email]);
+        this.form.controls['jconon_application:email_comunicazioni'].setValidators([
+          this.isRequiredValidator('jconon_application:email_comunicazioni', this.data.call), 
+          Validators.email
+        ]);
       } else {
-        this.form.controls['jconon_application:email_pec_comunicazioni'].setValidators([Validators.required, Validators.email]);
+        this.form.controls['jconon_application:email_pec_comunicazioni'].setValidators([
+          this.isRequiredValidator('jconon_application:email_pec_comunicazioni', this.data.call), 
+          Validators.email
+        ]);
       }
     }
 

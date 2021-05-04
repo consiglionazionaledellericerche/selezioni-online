@@ -71,7 +71,7 @@ export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicCompo
     ngOnInit(): void {
 
       this.propertyName = 'jconon_application:fl_iscritto_liste_elettorali';
-      this.control = new FormControl(this.data.fl_iscritto_liste_elettorali, Validators.required);
+      this.control = new FormControl(this.data.fl_iscritto_liste_elettorali, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl('jconon_application:comune_liste_elettorali', new FormControl(
           this.data.comune_liste_elettorali ? 
@@ -98,18 +98,9 @@ export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicCompo
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:comune_liste_elettorali'].patchValue(null);
-        this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(null);
-        this.form.controls['jconon_application:motivazione_no_iscrizione_liste_elettorali'].patchValue(null);
-      }
-      if (this.isToggle()) {
-        this.form.controls['jconon_application:motivazione_no_iscrizione_liste_elettorali'].setValidators(undefined);
-        this.form.controls['jconon_application:comune_liste_elettorali'].setValidators(Validators.required);
-      } else {
-        this.form.controls['jconon_application:motivazione_no_iscrizione_liste_elettorali'].setValidators(Validators.required);
-        this.form.controls['jconon_application:comune_liste_elettorali'].setValidators(undefined);
-      }
+      this.addRequiredValidatorForm('jconon_application:comune_liste_elettorali', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:provincia_liste_elettorali', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:motivazione_no_iscrizione_liste_elettorali', this.data.call, Validators.required, !this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

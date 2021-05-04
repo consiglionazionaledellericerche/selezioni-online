@@ -56,14 +56,10 @@ export class JcononAspectSpecializzazioneComponent extends DynamicComponent<Appl
       super(cacheService, changeDetectorRef);
     }
 
-    public isFlRequired = false;
-
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_specializzazione';
       this.control = new FormControl(this.data.fl_specializzazione);
       this.form.addControl(this.propertyName, this.control);
-      this.form.controls[this.propertyName]
-        .setValidators(this.isFlRequired? Validators.requiredTrue : undefined);
 
       this.form.addControl(
         'jconon_application:tipo_specializzazione', 
@@ -83,17 +79,9 @@ export class JcononAspectSpecializzazioneComponent extends DynamicComponent<Appl
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:tipo_specializzazione'].patchValue(null);
-        this.form.controls['jconon_application:istituto_specializzazione'].patchValue(null);
-        this.form.controls['jconon_application:data_specializzazione'].patchValue(null);
-      }
-      this.form.controls['jconon_application:tipo_specializzazione']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:istituto_specializzazione']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:data_specializzazione']
-        .setValidators(this.isToggle()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:tipo_specializzazione', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:istituto_specializzazione', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:data_specializzazione', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

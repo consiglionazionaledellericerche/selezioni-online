@@ -111,7 +111,6 @@ export class JcononAspectEnteCompartoRicercaAppartenenzaComponent extends Dynami
       super(cacheService, changeDetectorRef);
     }
     public choice: string[];
-    public isFlRequired = false;
     public comuniTemplate = Select2Template.comuni;
 
     ngOnInit(): void {
@@ -125,9 +124,7 @@ export class JcononAspectEnteCompartoRicercaAppartenenzaComponent extends Dynami
       );
       this.control = new FormControl(this.data.fl_ente_comparto_ricerca_appartenenza);
       this.form.addControl(this.propertyName, this.control);
-      this.form.controls[this.propertyName]
-        .setValidators(this.isFlRequired? Validators.requiredTrue : undefined);
-
+      
       this.form.addControl(
         'jconon_application:ente_comparto_ricerca_appartenenza', 
         new FormControl(this.data.ente_comparto_ricerca_appartenenza)
@@ -173,30 +170,20 @@ export class JcononAspectEnteCompartoRicercaAppartenenzaComponent extends Dynami
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:ente_comparto_ricerca_appartenenza'].patchValue(null);
-        this.form.controls['jconon_application:comune_ente_comparto_ricerca_appartenenza'].patchValue(null);
-        this.form.controls['jconon_application:provincia_ente_comparto_ricerca_appartenenza'].patchValue(null);
-        this.form.controls['jconon_application:profilo_ente_comparto_ricerca_appartenenza'].patchValue(null);
-        this.form.controls['jconon_application:ente_comparto_ricerca_appartenenza_anzianita_servizio'].patchValue(null);
-        this.form.controls['jconon_application:ente_comparto_ricerca_appartenenza_anzianita_profilo'].patchValue(null);
-        this.form.controls['jconon_application:ente_comparto_ricerca_appartenenza_anzianita_livello'].patchValue(null);
-      }
-      this.form.controls['jconon_application:ente_comparto_ricerca_appartenenza']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:comune_ente_comparto_ricerca_appartenenza']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:provincia_ente_comparto_ricerca_appartenenza']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:profilo_ente_comparto_ricerca_appartenenza']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:ente_comparto_ricerca_appartenenza_anzianita_servizio']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:ente_comparto_ricerca_appartenenza_anzianita_profilo']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:ente_comparto_ricerca_appartenenza_anzianita_livello']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-
+      this.addRequiredValidatorForm('jconon_application:ente_comparto_ricerca_appartenenza', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:comune_ente_comparto_ricerca_appartenenza', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:provincia_ente_comparto_ricerca_appartenenza', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:profilo_ente_comparto_ricerca_appartenenza', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_servizio', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_profilo', 
+        this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:ente_comparto_ricerca_appartenenza_anzianita_livello', 
+        this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

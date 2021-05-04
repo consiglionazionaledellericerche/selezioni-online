@@ -29,7 +29,7 @@ export class JcononAspectPossessoRequisitiComponent extends DynamicComponent<App
     
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_possesso_requisiti';
-      this.control = new FormControl(this.data.fl_possesso_requisiti, Validators.requiredTrue);
+      this.control = new FormControl(this.data.fl_possesso_requisiti, this.isRequiredValidator(this.propertyName, this.data.call, Validators.requiredTrue));
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }

@@ -31,9 +31,7 @@ export class JcononAspectsDichiarazioneComponent extends DynamicComponent<Applic
 
     ngOnInit(): void {
       this.control = new FormControl(this.data[this.name]);
-      if (this.required) {
-        this.control.setValidators(Validators.requiredTrue);
-      }  
+      this.control.setValidators(this.isRequiredValidator(this.propertyName, this.data.call, Validators.requiredTrue, this.required));
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }

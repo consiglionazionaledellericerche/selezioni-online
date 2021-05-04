@@ -45,16 +45,15 @@ export class JcononAspectHIndexComponent extends DynamicComponent<Application> {
     }
     public choice: string[] = ['Google Scholar', 'ISI-Wos'];
     public hoverClass : string;
-    public isRequired = true;
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:h_index_fonte';
-      this.control = new FormControl(this.data.h_index_fonte, this.isRequired ? Validators.required : undefined);
+      this.control = new FormControl(this.data.h_index_fonte, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl('jconon_application:h_index_valore', 
         new FormControl(
           this.data.h_index_valore, [
-            Validators.required, 
+            this.isRequiredValidator('jconon_application:h_index_valore', this.data.call), 
             Helpers.patternValidator(/^[0-9]+$/, { onlyNumber: true })
           ]
         )

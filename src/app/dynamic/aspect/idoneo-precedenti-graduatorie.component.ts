@@ -67,7 +67,7 @@ export class JcononAspectIdoneoPrecedentiGraduatorieComponent extends DynamicCom
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_idoneo_precedenti_graduatorie';
-      this.control = new FormControl(this.data.fl_idoneo_precedenti_graduatorie, Validators.required);
+      this.control = new FormControl(this.data.fl_idoneo_precedenti_graduatorie, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
 
       this.form.addControl(
@@ -92,21 +92,10 @@ export class JcononAspectIdoneoPrecedentiGraduatorieComponent extends DynamicCom
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:numero_bando_idoneo_precedenti_graduatorie'].patchValue(null);
-        this.form.controls['jconon_application:anno_bando_idoneo_precedenti_graduatorie'].patchValue(null);
-        this.form.controls['jconon_application:numero_protocollo_idoneo_precedenti_graduatorie'].patchValue(null);
-        this.form.controls['jconon_application:data_graduatoria_idoneo_precedenti_graduatorie'].patchValue(null);
-      }
-      this.form.controls['jconon_application:numero_bando_idoneo_precedenti_graduatorie']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:anno_bando_idoneo_precedenti_graduatorie']
-        .setValidators(this.isToggle()? [Helpers.patternValidator(/^\d{4}$/, { hasYear: true }), Validators.required] : undefined);
-      this.form.controls['jconon_application:numero_protocollo_idoneo_precedenti_graduatorie']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-      this.form.controls['jconon_application:data_graduatoria_idoneo_precedenti_graduatorie']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-
+      this.addRequiredValidatorForm('jconon_application:numero_bando_idoneo_precedenti_graduatorie', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:anno_bando_idoneo_precedenti_graduatorie', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:numero_protocollo_idoneo_precedenti_graduatorie', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:data_graduatoria_idoneo_precedenti_graduatorie', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

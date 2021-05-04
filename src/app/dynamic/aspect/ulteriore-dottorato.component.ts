@@ -56,14 +56,12 @@ export class JcononAspectUlterioreDottoratoComponent extends DynamicComponent<Ap
       super(cacheService, changeDetectorRef);
     }
 
-    public isFlRequired = true;
-
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_ulteriore_dottorato';
       this.control = new FormControl(this.data.fl_ulteriore_dottorato);
       this.form.addControl(this.propertyName, this.control);
       this.form.controls[this.propertyName]
-        .setValidators(this.isFlRequired? Validators.requiredTrue : undefined);
+        .setValidators(this.isRequiredValidator(this.propertyName, this.data.call, Validators.requiredTrue));
 
       this.form.addControl(
         'jconon_application:tipo_ulteriore_dottorato', 
@@ -83,17 +81,9 @@ export class JcononAspectUlterioreDottoratoComponent extends DynamicComponent<Ap
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:tipo_ulteriore_dottorato'].patchValue(null);
-        this.form.controls['jconon_application:istituto_ulteriore_dottorato'].patchValue(null);
-        this.form.controls['jconon_application:data_ulteriore_dottorato'].patchValue(null);
-      }
-      this.form.controls['jconon_application:tipo_ulteriore_dottorato']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:istituto_ulteriore_dottorato']
-        .setValidators(this.isToggle()? Validators.required : undefined);
-        this.form.controls['jconon_application:data_ulteriore_dottorato']
-        .setValidators(this.isToggle()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:tipo_ulteriore_dottorato', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:istituto_ulteriore_dottorato', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:data_ulteriore_dottorato', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

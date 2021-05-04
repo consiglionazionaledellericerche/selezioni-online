@@ -73,7 +73,7 @@ export class JcononAspectPossessoCittadinanzaComponent extends DynamicComponent<
       });
 
       this.propertyName = 'jconon_application:afl_cittadinanza_italiana_lista';
-      this.control = new FormControl(this.data.afl_cittadinanza_italiana_lista, Validators.required);
+      this.control = new FormControl(this.data.afl_cittadinanza_italiana_lista, this.isRequiredValidator(this.propertyName, this.data.call));
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl('jconon_application:possesso_cittadinanza', new FormControl(this.data.possesso_cittadinanza));
       this.form.addControl('jconon_application:cittadinanza_stato_estero', new FormControl(this.data.cittadinanza_stato_estero));
@@ -82,17 +82,8 @@ export class JcononAspectPossessoCittadinanzaComponent extends DynamicComponent<
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:possesso_cittadinanza'].patchValue(null);
-        this.form.controls['jconon_application:cittadinanza_stato_estero'].patchValue(null);
-      }
-      if (this.isToggle()) {
-        this.form.controls['jconon_application:possesso_cittadinanza'].setValidators(undefined);
-        this.form.controls['jconon_application:cittadinanza_stato_estero'].setValidators(undefined);
-      } else {
-        this.form.controls['jconon_application:possesso_cittadinanza'].setValidators(Validators.required);
-        this.form.controls['jconon_application:cittadinanza_stato_estero'].setValidators(Validators.required);
-      }
+      this.addRequiredValidatorForm('jconon_application:possesso_cittadinanza', this.data.call, Validators.required, !this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:cittadinanza_stato_estero', this.data.call, Validators.required, !this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

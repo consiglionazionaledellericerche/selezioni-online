@@ -52,11 +52,7 @@ export class JcononAspectTitoloPreferenzaPostiComponent extends DynamicComponent
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:motivazione_preferenza_posti'].patchValue(null);
-      }
-      this.form.controls['jconon_application:motivazione_preferenza_posti']
-        .setValidators(this.isToggle()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:motivazione_preferenza_posti', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

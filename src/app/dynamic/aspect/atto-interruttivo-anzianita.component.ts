@@ -52,11 +52,7 @@ export class JcononAspectAttoInterruttivoAnzianitaComponent extends DynamicCompo
     }
 
     public onChangeToggle(reset: boolean) {
-      if (reset) {
-        this.form.controls['jconon_application:provvedimenti_atto_interruttivo'].patchValue(null);
-      }
-      this.form.controls['jconon_application:provvedimenti_atto_interruttivo']
-        .setValidators(this.isToggle()? Validators.required : undefined);
+      this.addRequiredValidatorForm('jconon_application:provvedimenti_atto_interruttivo', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {
