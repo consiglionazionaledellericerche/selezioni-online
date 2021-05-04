@@ -8,6 +8,7 @@ import { SpringError } from '../../common/model/spring-error.model';
 import {ApiMessageService, MessageType} from '../../core/api-message.service';
 import {throwError as observableThrowError, of as observableOf, Observable} from 'rxjs';
 import { Helpers } from '../../common/helpers/helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-user-modal',
@@ -66,6 +67,7 @@ export class ShowUserModalComponent {
   constructor(private modalService: BsModalService,               
               private httpClient: HttpClient,
               protected apiMessageService: ApiMessageService,
+              public translateService: TranslateService,
               private configService: ConfigService) {}
    
   openModal(template: TemplateRef<any>) {
@@ -91,7 +93,7 @@ export class ShowUserModalComponent {
                 return user;
             }),
             catchError( (httpErrorResponse: HttpErrorResponse) => {
-              const springError = new SpringError(httpErrorResponse);
+              const springError = new SpringError(httpErrorResponse, this.translateService);
               this.apiMessageService.sendMessage(MessageType.ERROR,  springError.getRestErrorMessage());
               return observableThrowError(springError);
             })

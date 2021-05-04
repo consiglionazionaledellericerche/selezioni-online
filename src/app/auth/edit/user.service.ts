@@ -9,6 +9,7 @@ import {ConfigService} from '../../core/config.service';
 import {MODULE_CONFIGURAZIONE} from '../../app-routing.module';
 import {User} from '../model/user.model';
 import { SpringError } from '../../common/model/spring-error.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class UserService extends CommonService<User> {
@@ -18,8 +19,10 @@ export class UserService extends CommonService<User> {
   public constructor(protected httpClient: HttpClient,
                      protected apiMessageService: ApiMessageService,
                      protected router: Router,
-                     protected configService: ConfigService) {
-    super(httpClient, apiMessageService, router, configService);
+                     protected configService: ConfigService,
+                     public translateService: TranslateService
+                     ) {
+    super(httpClient, apiMessageService, translateService, router, configService);
   }
 
   public getModule(): string {
@@ -61,7 +64,7 @@ export class UserService extends CommonService<User> {
                 this.apiMessageService.sendMessage(MessageType.ERROR, 'Password errata!');
                 return observableThrowError('Password errata!');
                } else {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError); 
                }

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnIn
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { NavigationService} from '../navigation.service';
+import { NavigationService } from '../navigation.service';
 import { Application } from './application.model';
 import { ApplicationService } from './application.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -256,11 +256,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       var dx = touch.pageX - this.touch1.x;
       var dy = touch.pageY - this.touch1.y;
       var dt = ev.timeStamp - this.touch1.time;
-
       if (dt < 500){
-        // swipe lasted less than 500 ms
         if (Math.abs(dx) > 60){
-          // delta x is at least 60 pixels
           if (dx > 0){
             this.doSwipeLeft();
           } else {
@@ -290,7 +287,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
+  handleKeyboardEvent(event) {
       const checkInside = this.el.nativeElement.contains(event.target);
       if (!checkInside) {
         if (event.key === 'ArrowRight') {
@@ -354,11 +351,15 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.translateService.get('label.'+ control.replace(':', '.')).subscribe((label) => {
           invalidControls.push('<li class="font-weight-bold pt-2">' + label + '</li>');
         });
-        const invalidControl = this.el.nativeElement.querySelector('input.is-invalid,textarea.invalid,select.is-invalid') || 
-        document
-          .querySelector('[formcontrolname="' + control + '"], .is-invalid, input,textarea');
+        const invalidControl = this.el.nativeElement.querySelector('input.is-invalid,textarea.invalid,select.is-invalid');
+        const invalidFormControl = document.querySelector('[formcontrolname="' + control + '"], .is-invalid');
         if (invalidControl) {
           invalidControl.focus();
+        } else if (invalidFormControl) {
+          var inv = invalidFormControl.querySelector('input, textarea')[0];
+          if (inv) {
+            inv.focus();
+          }
         }
       }      
     });
@@ -377,6 +378,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   get isDisableConfirm() : boolean {
     return this.entity.last_section_completed < this.affixCompleted;
   }
+
   public buildInstance(): Application {
     return this.service.buildInstance(this.form.value);
   }

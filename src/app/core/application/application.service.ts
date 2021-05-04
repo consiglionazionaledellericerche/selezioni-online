@@ -1,12 +1,12 @@
-import {throwError as observableThrowError, Observable } from 'rxjs';
-import {catchError, map, switchMap} from 'rxjs/operators';
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {CommonService} from '../../common/controller/common.service';
-import {ApiMessageService, MessageType} from '../api-message.service';
-import {Router} from '@angular/router';
-import {ConfigService} from '../config.service';
-import {MODULE_CONFIGURAZIONE} from '../../app-routing.module';
+import { throwError as observableThrowError, Observable } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { CommonService } from '../../common/controller/common.service';
+import { ApiMessageService, MessageType } from '../api-message.service';
+import { Router } from '@angular/router';
+import { ConfigService } from '../config.service';
+import { MODULE_CONFIGURAZIONE } from '../../app-routing.module';
 import { Application } from './application.model';
 import { SpringError } from '../../common/model/spring-error.model';
 import { ApplicationState } from './application-state.model';
@@ -23,7 +23,7 @@ export class ApplicationService extends CommonService<Application> {
                      protected router: Router,
                      protected translateService: TranslateService,
                      protected configService: ConfigService) {
-    super(httpClient, apiMessageService, router, configService);
+    super(httpClient, apiMessageService, translateService, router, configService);
   }
 
   public getModule(): string {
@@ -64,7 +64,7 @@ export class ApplicationService extends CommonService<Application> {
               }
             }),
             catchError( (httpErrorResponse: HttpErrorResponse) => {
-              const springError = new SpringError(httpErrorResponse);
+              const springError = new SpringError(httpErrorResponse, this.translateService);
               this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
               return observableThrowError(springError);
             })
@@ -93,7 +93,7 @@ export class ApplicationService extends CommonService<Application> {
                 }
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError);
               })
@@ -120,10 +120,8 @@ export class ApplicationService extends CommonService<Application> {
                 }
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
-                this.translateService.get(springError.getRestErrorMessage()).subscribe((label) => {
-                  this.apiMessageService.sendMessage(MessageType.ERROR, label);
-                });
+                const springError = new SpringError(httpErrorResponse, this.translateService);
+                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError);
               })
             );
@@ -157,7 +155,7 @@ export class ApplicationService extends CommonService<Application> {
                 }
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 return observableThrowError(springError.getRestErrorMessage());
               })
             );
@@ -182,7 +180,7 @@ export class ApplicationService extends CommonService<Application> {
                 return result;
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 return observableThrowError(springError.getRestErrorMessage());
               })
             );

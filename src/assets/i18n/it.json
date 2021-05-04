@@ -100,6 +100,8 @@
     "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>",
     "error": {
       "domanda.inviata.accesso" : "La domanda per il bando selezionato risulta inviata. Per visualizzarla accedere alla sezione <a href=\"application\">Le mie domande</a>",
+      "contentalredyexist": "Il file <b>{{filename}}</b> è già presente!",
+      "maxuploadfilesize":"Il file <b>{{readableFileSize}}</b> supera la dimensione massima consentita <b>{{maxFileSize}}</b>",
       "codice": {
         "fiscale": {
           "nullo": "Codice fiscale non valido: codice fiscale nullo!",

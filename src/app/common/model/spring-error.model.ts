@@ -1,5 +1,6 @@
-import {HttpErrorResponse} from '@angular/common/http';
-import {ValidationHelper} from '../validation/validation-helper';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
+import { ValidationHelper } from '../validation/validation-helper';
 
 /**
  * Spring ritorna un messaggio di errore che Angular wrappa in un oggetto HttpErrorResponse.
@@ -10,13 +11,18 @@ export class SpringError {
 
   public restError: SpringRestError;
 
-  public constructor(public httpErrorResponse: HttpErrorResponse) {
+  public constructor(public httpErrorResponse: HttpErrorResponse, public translateService: TranslateService) {
 
     let message = this.httpErrorResponse.error.error;
     if (httpErrorResponse.error.message) {
       message = httpErrorResponse.error.message;
     }
-
+    let i18n = httpErrorResponse.error.i18n;
+    if (i18n) {
+      this.translateService.get(i18n.key, i18n.params).subscribe((label: string) => {
+        message = label;
+      })
+    }
     this.restError = new SpringRestError(this.httpErrorResponse.error.timestamp,
       message, this.httpErrorResponse.error.path, this.httpErrorResponse.error.errors);
   }

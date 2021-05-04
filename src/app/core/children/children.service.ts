@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {ConfigService} from '../../core/config.service';
 import {MODULE_CONFIGURAZIONE} from '../../app-routing.module';
 import { Attachment } from './attachment.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class ChildrenService extends CommonService<Attachment> {
@@ -14,9 +15,10 @@ export class ChildrenService extends CommonService<Attachment> {
   
   public constructor(protected httpClient: HttpClient,
                      protected apiMessageService: ApiMessageService,
+                     protected translateService: TranslateService,
                      protected router: Router,
                      protected configService: ConfigService) {
-    super(httpClient, apiMessageService, router, configService);
+    super(httpClient, apiMessageService, translateService, router, configService);
   }
 
   public getModule(): string {

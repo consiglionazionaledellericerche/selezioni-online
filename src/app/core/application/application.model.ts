@@ -152,7 +152,7 @@ export class Application extends Folder {
   public cause_risoluzione_servizio_altre_amministrazioni: string = undefined;
 
   @JsonProperty('jconon_application:fl_titolo_riserva_posti')
-  public fl_titolo_riserva_posti: boolean = undefined;
+  public fl_titolo_riserva_posti: boolean = false;
   @JsonProperty('jconon_application:motivazione_riserva_posti')
   public motivazione_riserva_posti: string = undefined;
 

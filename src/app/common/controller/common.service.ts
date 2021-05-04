@@ -15,6 +15,7 @@ import { Base } from '../model/base.model';
 import { CmisObject } from '../model/cmisobject.model';
 import { ObjectType } from '../model/object-type.model';
 import { ErrorObservable } from 'rxjs-compat/observable/ErrorObservable';
+import { TranslateService } from '@ngx-translate/core';
 
 export abstract class CommonService<T extends Base> {
 
@@ -22,6 +23,7 @@ export abstract class CommonService<T extends Base> {
 
   public constructor(protected httpClient: HttpClient,
                      protected apiMessageService: ApiMessageService,
+                     protected translateService: TranslateService,
                      protected router: Router,
                      protected configService: ConfigService) {}
 
@@ -130,7 +132,7 @@ export abstract class CommonService<T extends Base> {
                 }
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR,  springError.getRestErrorMessage());
                 return observableThrowError(springError);
               })
@@ -169,7 +171,7 @@ export abstract class CommonService<T extends Base> {
                 }
               }),
               catchError( (error: HttpErrorResponse) => {
-                const springError = new SpringError(error);
+                const springError = new SpringError(error, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR,  springError.getRestErrorMessage());
                 return observableThrowError(error.error);
               })
@@ -214,7 +216,7 @@ export abstract class CommonService<T extends Base> {
                 }
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError);
               })
@@ -242,7 +244,7 @@ export abstract class CommonService<T extends Base> {
                 return this._buildInstance(result);
               }),
               catchError((httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError);
               })
@@ -276,7 +278,7 @@ export abstract class CommonService<T extends Base> {
                return this._buildInstance(result);
               }),
               catchError((httpErrorResponse: HttpErrorResponse) => {
-               const springError = new SpringError(httpErrorResponse);
+               const springError = new SpringError(httpErrorResponse, this.translateService);
                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                return observableThrowError(springError);
               })
@@ -307,7 +309,7 @@ export abstract class CommonService<T extends Base> {
                 // return this._buildInstance(deletedEntity);
               }),
               catchError((httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError);
               })
@@ -339,7 +341,7 @@ export abstract class CommonService<T extends Base> {
                 if (responseError.status === 204) {  // No Content
                   return observableOf(null);
                 }
-                const springError = new SpringError(responseError);
+                const springError = new SpringError(responseError, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(responseError);
               })
@@ -374,7 +376,7 @@ export abstract class CommonService<T extends Base> {
                 if (responseError.status === 204) {  // No Content
                   return observableOf(null);
                 }
-                const springError = new SpringError(responseError);
+                const springError = new SpringError(responseError, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(responseError);
               })
@@ -448,7 +450,7 @@ export abstract class CommonService<T extends Base> {
                 return this._buildInstance(result);
               }),
               catchError((httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError);
               })

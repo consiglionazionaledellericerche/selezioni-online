@@ -10,6 +10,7 @@ import {throwError as observableThrowError, Observable} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import { SpringError } from '../../common/model/spring-error.model';
 import { Comune } from '../../common/model/comune.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class CallService extends CommonService<Call> {
@@ -20,8 +21,9 @@ export class CallService extends CommonService<Call> {
   public constructor(protected httpClient: HttpClient,
                      protected apiMessageService: ApiMessageService,
                      protected router: Router,
+                     protected translateService: TranslateService,                     
                      protected configService: ConfigService) {
-    super(httpClient, apiMessageService, router, configService);
+    super(httpClient, apiMessageService, translateService, router, configService);
   }
 
   public loadLabels(callId: string): Observable<any> {
@@ -41,7 +43,7 @@ export class CallService extends CommonService<Call> {
                 return item;
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError);
               })
@@ -63,7 +65,7 @@ export class CallService extends CommonService<Call> {
                 return item.comuni[0];
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
-                const springError = new SpringError(httpErrorResponse);
+                const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError);
               })

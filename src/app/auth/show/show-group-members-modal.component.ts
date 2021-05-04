@@ -7,6 +7,7 @@ import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http'
 import { SpringError } from '../../common/model/spring-error.model';
 import {ApiMessageService, MessageType} from '../../core/api-message.service';
 import {throwError as observableThrowError, of as observableOf, Observable} from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-show-group-members-modal',
@@ -47,6 +48,7 @@ export class ShowGroupMembersModalComponent {
   constructor(private modalService: BsModalService,               
               private httpClient: HttpClient,
               protected apiMessageService: ApiMessageService,
+              public translateService: TranslateService,
               private configService: ConfigService) {}
    
   openModal(template: TemplateRef<any>) {
@@ -69,7 +71,7 @@ export class ShowGroupMembersModalComponent {
                 return result.people;
             }),
             catchError( (httpErrorResponse: HttpErrorResponse) => {
-              const springError = new SpringError(httpErrorResponse);
+              const springError = new SpringError(httpErrorResponse, this.translateService);
               this.apiMessageService.sendMessage(MessageType.ERROR,  springError.getRestErrorMessage());
               return observableThrowError(springError);
             })
