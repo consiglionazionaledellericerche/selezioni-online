@@ -14,8 +14,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Call } from '../call/call.model';
 import { Helpers } from '../../common/helpers/helpers';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ButtonConfirmComponent } from '../../shared/tags/buttons/button-confirm.component';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'application-user-list',
@@ -63,6 +62,7 @@ import { ButtonConfirmComponent } from '../../shared/tags/buttons/button-confirm
           <app-control-text 
             formControlName="codicefiscale"
             [inline]="true"
+            inputClass="text-uppercase"
             type="search"
             [showValidation]="false"
             [prepend]="'address-card'"
@@ -112,7 +112,7 @@ import { ButtonConfirmComponent } from '../../shared/tags/buttons/button-confirm
           <div class="col-sm-12">
             <app-show-text [label]="'label.jconon_application.firstname'" [value]="item.nome | uppercase" [strong]="true"></app-show-text>
             <app-show-text [label]="'label.jconon_application.lastname'"  [value]="item.cognome | uppercase" [strong]="true"></app-show-text>
-            <app-show-user-modal [label]="'utente.show'" [username]="item.user" [groups]="'true'"></app-show-user-modal>
+            <app-show-user-modal [label]="'utente.show'" [username]="item.user" [groups]="true"></app-show-user-modal>
           </div>
           <div class="col-sm-12">
             <app-show-text [label]="'label.jconon_application.codice_fiscale'" [value]="item.codice_fiscale" [strong]="false"></app-show-text>
@@ -228,4 +228,9 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
       call: new FormControl(this.callSearch),
     });
   }
+
+  protected isScrollTopOnPageChange(): boolean {
+    return true;
+  }
+
 }

@@ -136,4 +136,8 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
     this.service.getBlob('/rest/content?nodeRef=' + key, filename);
   }
 
+  protected isScrollTopOnPageChange(): boolean {
+    return false;
+  }
+
 }

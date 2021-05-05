@@ -53,12 +53,21 @@ export class Select2Template {
       translateService.get(entity.obj['cmis:objectTypeId']).subscribe((label) => {
         html += '<div class="font-italic">' + label + '</div>';
       });
-      translateService.get('call.sede').subscribe((label) => {
-        html += '<div class="text-truncate"><span>' + label + '</span><span class="pl-1 font-weight-bold">'+entity.obj['jconon_call:sede']+'</span></div>';
-      });
-      translateService.get('call.struttura').subscribe((label) => {
-        html += '<div class="text-truncate"><span>' + label + '</span><span class="pl-1 font-weight-bold">'+entity.obj['jconon_call:struttura_destinataria']+'</span></div>';
-      });
+      if (entity.obj['jconon_call:profilo']) {
+        translateService.get('call.profilo').subscribe((label) => {
+          html += '<div class="text-truncate"><span>' + label + '</span><span class="pl-1 font-weight-bold">'+entity.obj['jconon_call:profilo']+'</span></div>';
+        });  
+      }
+      if (entity.obj['jconon_call:sede']) {
+        translateService.get('call.sede').subscribe((label) => {
+          html += '<div class="text-truncate"><span>' + label + '</span><span class="pl-1 font-weight-bold">'+entity.obj['jconon_call:sede']+'</span></div>';
+        });  
+      }
+      if (entity.obj['jconon_call:struttura_destinataria']) {
+        translateService.get('call.struttura').subscribe((label) => {
+          html += '<div class="text-truncate"><span>' + label + '</span><span class="pl-1 font-weight-bold">'+entity.obj['jconon_call:struttura_destinataria']+'</span></div>';
+        });
+      }
       html += '</div>';
       return html;
     }

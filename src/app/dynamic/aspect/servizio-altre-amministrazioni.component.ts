@@ -86,8 +86,8 @@ export class JcononAspectServizioAltreAmministrazioniComponent extends DynamicCo
     }
 
     public onChangeToggle(reset: boolean) {
-      this.addRequiredValidatorForm('jconon_application:contratto_td_concorso_ente', this.data.call, Validators.required, this.isFlServizioAltreAmministrazioni(), reset);
-      this.addRequiredValidatorForm('jconon_application:contratto_td_concorso_ente', this.data.call, Validators.required, this.isFlServizioAltreAmministrazioni(), reset);
+      this.addRequiredValidatorForm('jconon_application:struttura_altre_amministrazioni', this.data.call, Validators.required, this.isFlServizioAltreAmministrazioni(), reset);
+      this.addRequiredValidatorForm('jconon_application:titolo_servizio_altre_amministrazioni', this.data.call, Validators.required, this.isFlServizioAltreAmministrazioni(), reset);
     }
 
     public isFlServizioAltreAmministrazioni(): boolean {

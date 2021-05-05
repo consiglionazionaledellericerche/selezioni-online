@@ -49,6 +49,30 @@ export class UserService extends CommonService<User> {
       .set('id', id ? id : ''));
   }
 
+  public getUser(username: string, groups?: boolean): Observable<User> {
+    var params = new HttpParams()
+          .set('url', 'service/cnr/person/person/' + username);
+    if (groups){
+      params = params.set('groups', String(groups));
+    }
+    return this.configService.getProxy()
+    .pipe(
+      switchMap((proxy) => {
+        return this.httpClient.get<User>(proxy, {params: params})
+          .pipe(
+            map((user) => {
+                return user;
+            }),
+            catchError( (httpErrorResponse: HttpErrorResponse) => {
+              const springError = new SpringError(httpErrorResponse, this.translateService);
+              this.apiMessageService.sendMessage(MessageType.ERROR,  springError.getRestErrorMessage());
+              return observableThrowError(springError);
+            })
+          );
+      })
+    );
+  }
+
   public changePassword(username: string, json: any): Observable<any> {
     return this.configService.getProxy()
       .pipe(

@@ -144,7 +144,6 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
   `
 })
 export class ApplicationListComponent extends CommonListComponent<Application> implements OnInit {
-
   public items: Application[] = [];
   public user: User = null;
   cache: any = {};
@@ -221,6 +220,10 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
         });
       });  
     });
+  }
+
+  protected isScrollTopOnPageChange(): boolean {
+    return true;
   }
 
 }

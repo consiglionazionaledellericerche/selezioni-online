@@ -19,6 +19,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { LoadingState } from '../../auth/loading-state.enum';
 import { Subscription } from 'rxjs';
 import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.component';
+import { UserService } from '../../auth/edit/user.service';
 
 @Component({
   selector: 'manage-application',
@@ -51,7 +52,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
           <span class="pl-1">{{entity.nome|uppercase}}</span>
         </h5>
         <h5 class="text-center" *ngIf="call.objectTypeId == 'F:jconon_call_employees:folder'">
-          <span>{{'user.matricola_value' | translate:{value: user.matricola} }}</span>
+          <span>{{'user.matricola_value' | translate:{value: user.matricola||''} }}</span>
           <span class="pl-1">{{'user.email_value' | translate:{value: entity.email_comunicazioni} }}</span>
         </h5>
         <h5 class="text-center" *ngIf="call.objectTypeId != 'F:jconon_call_mobility_open:folder'">
@@ -182,6 +183,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
                      private apiMessageService: ApiMessageService,
                      private modalService: BsModalService,
                      private authService: AuthService,
+                     protected userService: UserService,
                      private cacheService: CacheService,
                      protected router: Router,
                      private el: ElementRef,
@@ -212,6 +214,11 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
           application.call = call;
           this.setEntity(application);
           this.affixCompleted = this.entity.last_section_completed || 0;
+          if (call.objectTypeId == 'F:jconon_call_employees:folder' && this.user.userName !== application.user) {
+            this.userService.getUser(application.user).subscribe((user: User) => {
+              this.user = user;
+            }); 
+          }
           this.buildCreateForm();
         }, error => {
           this.entityError = error;

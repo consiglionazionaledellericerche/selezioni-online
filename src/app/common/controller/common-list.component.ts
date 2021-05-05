@@ -164,6 +164,8 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
   // Gestione della pagina
   // -------------------------------
 
+  protected abstract isScrollTopOnPageChange(): boolean;
+
   private initializePage() {
     this.navigationService.setPage(this.service.getRoute(), 0);
   }
@@ -177,6 +179,9 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
     this.executePageable().subscribe((pageResult: Page<T>) => {
       this.pageableResult(pageResult);
     });
+    if (this.isScrollTopOnPageChange()) {
+      window.scrollTo(0, 0);
+    }
   }
 
   // -------------------------------

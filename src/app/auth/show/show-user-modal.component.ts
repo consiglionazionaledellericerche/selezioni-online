@@ -1,14 +1,8 @@
 import {Component, Input, TemplateRef, OnInit} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { User } from '../model/user.model';
-import { ConfigService } from '../../core/config.service';
-import { switchMap, map, catchError} from 'rxjs/operators';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { SpringError } from '../../common/model/spring-error.model';
-import {ApiMessageService, MessageType} from '../../core/api-message.service';
-import {throwError as observableThrowError, of as observableOf, Observable} from 'rxjs';
 import { Helpers } from '../../common/helpers/helpers';
-import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '../edit/user.service';
 
 @Component({
   selector: 'app-show-user-modal',
@@ -61,44 +55,17 @@ export class ShowUserModalComponent {
 
   @Input() label;
   @Input() username;
-  @Input() groups: string = 'false';
+  @Input() groups: boolean;
   user: User;
   modalRef: BsModalRef;
   constructor(private modalService: BsModalService,               
-              private httpClient: HttpClient,
-              protected apiMessageService: ApiMessageService,
-              public translateService: TranslateService,
-              private configService: ConfigService) {}
+              protected userService: UserService) {}
    
   openModal(template: TemplateRef<any>) {
-    this.getUser().subscribe((user) => {
+    this.userService.getUser(this.username, this.groups).subscribe((user) => {
       this.user = Helpers.buildInstance(user, User);
       this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'modal-md' }));      
     })
     return false;
-  }
-
-  getUser(): Observable<User> {
-    var params = new HttpParams()
-          .set('url', 'service/cnr/person/person/' + this.username);
-    if (this.groups == 'true'){
-      params = params.set('groups', this.groups);
-    }
-    return this.configService.getProxy()
-    .pipe(
-      switchMap((proxy) => {
-        return this.httpClient.get<User>(proxy, {params: params})
-          .pipe(
-            map((user) => {
-                return user;
-            }),
-            catchError( (httpErrorResponse: HttpErrorResponse) => {
-              const springError = new SpringError(httpErrorResponse, this.translateService);
-              this.apiMessageService.sendMessage(MessageType.ERROR,  springError.getRestErrorMessage());
-              return observableThrowError(springError);
-            })
-          );
-      })
-    );
   }
 }

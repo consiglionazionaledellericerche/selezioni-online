@@ -58,7 +58,6 @@ export abstract class DynamicComponent<T extends CmisObject> implements AdMetada
       if (condition !== undefined) {
         isRequired = isRequired && condition;
       }
-      console.log(property + ' '+ isRequired + ' ' + condition);
       return isRequired ? validator||Validators.required : Validators.nullValidator;
     }
 

@@ -104,4 +104,8 @@ export class CallListComponent extends CommonListComponent<Call> implements OnIn
     };
   }
 
+  protected isScrollTopOnPageChange(): boolean {
+    return true;
+  }
+
 }
