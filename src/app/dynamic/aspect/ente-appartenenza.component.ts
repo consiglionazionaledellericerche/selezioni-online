@@ -16,7 +16,7 @@ import { CallService } from '../../core/call/call.service';
               <div class="form-group col-md-12">
                 <app-control-text
                   [inline]="true"
-                  [focus]="true"
+                  [focus]="!form.pristine"
                   [showValidation]="true"
                   [label]="'label.jconon_application.ente_appartenenza'| translate"
                   formControlName="jconon_application:ente_appartenenza">

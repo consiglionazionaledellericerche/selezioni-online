@@ -19,7 +19,7 @@ import { Application } from '../../core/application/application.model';
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [inline]="true" 
                 [label]="'label.jconon_application.categorie_riservatarie_codice'| translate" 
                 formControlName="jconon_application:categorie_riservatarie_codice">

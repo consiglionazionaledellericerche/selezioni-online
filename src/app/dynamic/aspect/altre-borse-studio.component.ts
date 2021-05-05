@@ -19,7 +19,7 @@ import { Application } from '../../core/application/application.model';
             <div *ngSwitchCase="false" class="form-group col-md-12">
               <app-control-textarea 
                 [showValidation]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 rows="5" 
                 [inline]="true" 
                 [label]="'label.jconon_application.descrizione_altre_borse_studio'| translate" 

@@ -20,7 +20,7 @@ import { Application } from '../../core/application/application.model';
             <div [hidden]="!isToggle()" class="form-group col-md-12">
               <app-control-select-model
                 [inline]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [label]="'label.jconon_application.area_tecnica'| translate"
                 [labelactive]="'true'"
                 [strings]="choice"

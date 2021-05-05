@@ -12,7 +12,7 @@ import { CacheService } from '../../core/cache.service';
           <div class="form-group col-md-12">
             <app-control-text 
               [showValidation]="true"
-              [focus]="true"
+              [focus]="!form.pristine"
               [inline]="true" 
               [label]="'label.jconon_documento_riconoscimento.tipologia'| translate" 
               formControlName="jconon_documento_riconoscimento:tipologia">

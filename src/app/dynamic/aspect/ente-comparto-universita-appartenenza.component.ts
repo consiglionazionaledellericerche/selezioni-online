@@ -23,7 +23,7 @@ import { Select2Template } from '../../common/template/select2-template';
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [inline]="true" 
                 [label]="'label.jconon_application.ente_comparto_universita_appartenenza'| translate" 
                 formControlName="jconon_application:ente_comparto_universita_appartenenza">

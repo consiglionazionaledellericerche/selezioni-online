@@ -23,7 +23,7 @@ import { Select2Template } from '../../common/template/select2-template';
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [inline]="true" 
                 [label]="'label.jconon_application.ente_comparto_ricerca_appartenenza'| translate" 
                 formControlName="jconon_application:ente_comparto_ricerca_appartenenza">
@@ -59,7 +59,7 @@ import { Select2Template } from '../../common/template/select2-template';
             <div [hidden]="!isToggle()" class="form-group col-md-5">
               <app-control-select-model
                 [inline]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [label]="'label.jconon_application.profilo_ente_comparto_ricerca_appartenenza'| translate"
                 [labelactive]="'true'"
                 [strings]="choice"

@@ -20,7 +20,7 @@ import { Application } from '../../core/application/application.model';
             <div class="form-group col-md-3">
               <app-control-datepicker
                 [inline]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [label]="'label.jconon_application.data_abilitazione_professione_ingegnere'| translate"
                 [showValidation]="true"
                 [showValidation]="true"
@@ -46,7 +46,7 @@ import { Application } from '../../core/application/application.model';
             <div *ngIf="isIscrizioneAlbo()" class="form-group col-md-3">
               <app-control-select-model
                 [inline]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [label]="'label.jconon_application.provincia_iscrizione_albo_professione_ingegnere'| translate"
                 [labelactive]="'true'"
                 [strings]="choiceProvincia"
@@ -62,7 +62,7 @@ import { Application } from '../../core/application/application.model';
             <div *ngIf="isIscrizioneAlbo()" class="form-group col-md-6">
               <app-control-select-model
                 [inline]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [label]="'label.jconon_application.sezione_iscrizione_albo_professione_ingegnere'| translate"
                 [labelactive]="'true'"
                 [strings]="choiceSezione"
@@ -76,7 +76,7 @@ import { Application } from '../../core/application/application.model';
             <div *ngIf="isIscrizioneAlbo()" class="form-group col-md-6">
               <app-control-select-model
                 [inline]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [label]="'label.jconon_application.settore_iscrizione_albo_professione_ingegnere'| translate"
                 [labelactive]="'true'"
                 [strings]="choiceSettore"

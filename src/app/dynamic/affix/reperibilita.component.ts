@@ -17,7 +17,6 @@ import { User } from '../../auth/model/user.model';
           <div class="form-group col-md-3">
             <app-control-select-model
               [inline]="true"
-              [focus]="true"
               [label]="'label.jconon_application.nazione_comunicazioni'| translate"
               [labelactive]="'true'"
               [strings]="paesi"

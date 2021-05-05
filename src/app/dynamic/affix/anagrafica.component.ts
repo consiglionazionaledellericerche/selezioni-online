@@ -14,18 +14,17 @@ import { Select2Template } from '../../common/template/select2-template';
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="form-label active">{{'label.jconon_application.firstname' | translate}}</label>
-            <input class="form-control" id="jconon_application:nome" type="text" formControlName="jconon_application:nome" />
+            <input class="form-control" type="text" disabled [value]="data.nome" />
           </div>
           <div class="form-group col-md-6">
             <label class="form-label active">{{'label.jconon_application.lastname' | translate}}</label>
-            <input class="form-control" id="jconon_application:cognome" type="text" formControlName="jconon_application:cognome" />
+            <input class="form-control" type="text" disabled [value]="data.cognome" />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-3">
             <app-control-select-model
               [inline]="true"
-              [focus]="true"
               [label]="'label.jconon_application.nazione_nascita'| translate"
               [labelactive]="'true'"
               [strings]="paesi"
@@ -146,8 +145,6 @@ export class JcononAffixAnagraficaComponent extends AffixComponent {
         this.paesi = paesi;
       });
 
-      this.form.addControl('jconon_application:nome', new FormControl({value:this.data.nome, disabled: true}));
-      this.form.addControl('jconon_application:cognome', new FormControl({value:this.data.cognome, disabled: true}));
       this.form.addControl('jconon_application:nazione_nascita', 
         new FormControl(this.data.nazione_nascita, this.isRequiredValidator('jconon_application:nazione_nascita', this.data.call)));
       

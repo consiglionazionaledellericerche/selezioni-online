@@ -20,7 +20,7 @@ import { Application } from '../../core/application/application.model';
             <div [hidden]="isToggle()" class="form-group col-md-8">
               <app-control-select-model
                 [inline]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [label]="'label.jconon_application.possesso_cittadinanza'| translate"
                 [labelactive]="'true'"
                 [strings]="choice"
@@ -34,7 +34,7 @@ import { Application } from '../../core/application/application.model';
             <div [hidden]="isToggle()" class="form-group col-md-4">
               <app-control-select-model
                 [inline]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [label]="'label.jconon_application.cittadinanza_stato_estero'| translate"
                 [labelactive]="'true'"
                 [strings]="paesi"

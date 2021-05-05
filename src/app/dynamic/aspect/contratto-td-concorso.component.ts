@@ -19,7 +19,7 @@ import { Application } from '../../core/application/application.model';
           <div class="form-row w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-select-model
-                [focus]="true"
+                [focus]="!form.pristine"
                 [inline]="true"
                 [label]="'label.jconon_application.contratto_td_concorso_ente'| translate"
                 [labelactive]="'true'"

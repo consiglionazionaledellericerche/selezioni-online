@@ -71,7 +71,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
           <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
           <div class="steppers">
             <nav class="steppers-nav px-0">
-              <a [ngClass]="{'disabled': affixCompleted == 0 || !form.pristine}" 
+              <a [ngClass]="{'disabled': (affixCompleted == 0 || !form.pristine) && !isDisableConfirm}" 
                 (click)="affixCompleted = affixCompleted - 1;scroll(cardApplication);" 
                 class="btn btn-link text-primary steppers-btn-prev px-1">
                 <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-left"></use></svg>
@@ -79,15 +79,15 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
               </a>
               <ul class="steppers-dots d-flex">
                 <li *ngFor="let number of affix" 
-                  [ngClass]="{'done': number <= affixCompleted, 'bg-light': !form.pristine}"
+                  [ngClass]="{'done': number <= affixCompleted, 'bg-light': !form.pristine && !isDisableConfirm}"
                   [popover]="'affix.' + call.elenco_sezioni_domanda[number] + '.title' | translate"
                   triggers="mouseenter:mouseleave">
-                  <a [ngClass]="{'disabled': !form.pristine}" 
+                  <a [ngClass]="{'disabled': !form.pristine && !isDisableConfirm}" 
                     class="btn"                   
                     (click)="affixCompleted = number;scroll(cardApplication);"></a>
                 </li>
               </ul>
-              <a [ngClass]="{'disabled': affixCompleted == affix.length - 1 || !form.pristine}" 
+              <a [ngClass]="{'disabled': (affixCompleted == affix.length - 1 || !form.pristine) && !isDisableConfirm}" 
                 (click)="affixCompleted = affixCompleted + 1;scroll(cardApplication);" 
                 class="btn btn-link text-primary steppers-btn-next px-1">
                 <span>Avanti</span>
@@ -96,7 +96,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
             </nav>
           </div>
         </div>
-        <div class="card-footer">
+        <div class="card-footer rounded-bottom">
           <div class="d-flex justify-content-end">
             <div class="form-group text-left mr-auto">
               <button 
@@ -121,7 +121,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
               <button (click)="sendApplication($event)" 
                 #sendApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
-                class="btn btn-primary btn-lg btn-block btn-icon mr-2" 
+                class="btn btn-primary btn-block btn-lg btn-icon mr-2" 
                 tooltip="{{'application.send' | translate}}">
                 <span class="pr-1 w-100 text-right" translate>application.send</span>
                 <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
@@ -247,6 +247,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   
   public buildCreateForm() {
     this.form = new FormGroup({
+      'jconon_application:nome': new FormControl(this.entity.nome),
+      'jconon_application:cognome': new FormControl(this.entity.cognome),
       'jconon_application:user': new FormControl(this.entity.user),
       'cmis:objectTypeId': new FormControl(this.entity.objectTypeId),
       'cmis:objectId': new FormControl(this.entity.objectId),

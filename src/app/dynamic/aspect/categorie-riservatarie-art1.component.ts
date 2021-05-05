@@ -20,7 +20,7 @@ import { Application } from '../../core/application/application.model';
             <div *ngSwitchCase="true" class="form-group col-md-6">
               <app-control-text 
                 [showValidation]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [appendText]="'%'"
                 [inline]="true" 
                 [label]="'label.jconon_application.categorie_riservatarie_percentuale'| translate" 

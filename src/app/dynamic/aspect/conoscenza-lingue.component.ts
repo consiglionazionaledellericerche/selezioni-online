@@ -20,7 +20,7 @@ import { Application } from '../../core/application/application.model';
             <div [hidden]="!isToggle()" class="form-group col-md-12">
               <app-control-select-model
                 [inline]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [multiple]="true"
                 [multiSelectIcon]="'fa-flag-checkered'"
                 [noLabel]="true"

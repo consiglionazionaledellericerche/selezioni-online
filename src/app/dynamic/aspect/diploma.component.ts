@@ -19,7 +19,7 @@ import { DynamicComponent } from '../dynamic.component';
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"
-                [focus]="true"
+                [focus]="!form.pristine"
                 [inline]="true" 
                 [label]="'label.jconon_application.tipo_diploma'| translate" 
                 formControlName="jconon_application:tipo_diploma">
