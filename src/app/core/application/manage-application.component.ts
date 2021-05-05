@@ -18,6 +18,7 @@ import { ModalInfoComponent } from '../../shared/tags/wizard/modal-info.componen
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { LoadingState } from '../../auth/loading-state.enum';
 import { Subscription } from 'rxjs';
+import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.component';
 
 @Component({
   selector: 'manage-application',
@@ -70,22 +71,23 @@ import { Subscription } from 'rxjs';
           <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
           <div class="steppers">
             <nav class="steppers-nav px-0">
-              <a [ngClass]="{'disabled': affixCompleted == 0}" 
+              <a [ngClass]="{'disabled': affixCompleted == 0 || !form.pristine}" 
                 (click)="affixCompleted = affixCompleted - 1;scroll(cardApplication);" 
                 class="btn btn-link text-primary steppers-btn-prev px-1">
                 <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-left"></use></svg>
                 <span>Indietro</span>
               </a>
               <ul class="steppers-dots d-flex">
-                <li [ngClass]="{'done': number <= affixCompleted}" 
-                    class="btn"
-                    *ngFor="let number of affix" 
-                    (click)="affixCompleted = number;scroll(cardApplication);"
-                    [popover]="'affix.' + call.elenco_sezioni_domanda[number] + '.title' | translate"
-                    triggers="mouseenter:mouseleave">
+                <li *ngFor="let number of affix" 
+                  [ngClass]="{'done': number <= affixCompleted, 'bg-light': !form.pristine}"
+                  [popover]="'affix.' + call.elenco_sezioni_domanda[number] + '.title' | translate"
+                  triggers="mouseenter:mouseleave">
+                  <a [ngClass]="{'disabled': !form.pristine}" 
+                    class="btn"                   
+                    (click)="affixCompleted = number;scroll(cardApplication);"></a>
                 </li>
               </ul>
-              <a [ngClass]="{'disabled': affixCompleted == affix.length - 1}" 
+              <a [ngClass]="{'disabled': affixCompleted == affix.length - 1 || !form.pristine}" 
                 (click)="affixCompleted = affixCompleted + 1;scroll(cardApplication);" 
                 class="btn btn-link text-primary steppers-btn-next px-1">
                 <span>Avanti</span>
@@ -96,8 +98,21 @@ import { Subscription } from 'rxjs';
         </div>
         <div class="card-footer">
           <div class="d-flex justify-content-end">
+            <div class="form-group text-left mr-auto">
+              <button 
+                [disabled]="!form.pristine"
+                (click)="deleteApplication($event)" 
+                class="btn btn-outline-danger btn-lg btn-icon mr-2" 
+                tooltip="{{'application.delete'| translate}}">
+                <span class="d-none d-md-block pr-1" translate>application.delete</span>
+                <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-delete"></use></svg>
+              </button>
+            </div>
             <div class="form-group text-right">
-              <button class="btn btn-outline-danger btn-lg btn-icon mr-2" tooltip="{{'application.print.application'| translate}}">
+              <button 
+                [disabled]="!form.pristine"
+                class="btn btn-outline-danger btn-lg btn-icon mr-2" 
+                tooltip="{{'application.print.application'| translate}}">
                 <span class="d-none d-md-block pr-1" translate>application.print.application</span>
                 <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-print"></use></svg>
               </button>
@@ -147,7 +162,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   public affixCompleted: number = 0;
   public affix: number[];
   bsModalRefSend: BsModalRef;
-  
+  bsModalRefDelete: BsModalRef;
+
   subscription: Subscription;
   loadingStateConfirm: LoadingState = LoadingState.DEFAULT;
   loadingStateSend: LoadingState = LoadingState.DEFAULT;
@@ -265,11 +281,11 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
           }
         }
       }
-    } 
+    }  
   }
 
   private doSwipeLeft() {
-    if (this.affixCompleted !== 0) {
+    if (this.affixCompleted !== 0 && this.form.pristine) {
       this.affixCompleted = this.affixCompleted - 1;
       setTimeout(() => {
         this.scroll(this.cardApplication.nativeElement);
@@ -278,7 +294,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   private doSwipeRight() {
-    if (this.affixCompleted !== this.affix.length - 1) {
+    if (this.affixCompleted !== this.affix.length - 1 && this.form.pristine) {
       this.affixCompleted = this.affixCompleted + 1;
       setTimeout(() => {
         this.scroll(this.cardApplication.nativeElement);
@@ -315,6 +331,23 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.scroll(this.cardApplication.nativeElement);
       });  
     }
+  }
+
+  public deleteApplication(event: Event) {
+    this.translateService.get('message.application.delete.question').subscribe((label) => {
+      const initialState = {
+        'body': label
+      };
+      this.bsModalRefDelete = this.modalService.show(ModalConfirmComponent, Object.assign({initialState}, { animated: true, class: 'modal-dialog-centered' }));
+      this.bsModalRefDelete.content.confirm.subscribe(() => {
+        this.service.deleteApplication(this.entity.objectId).subscribe((result) => {
+          this.translateService.get('message.application.delete.success', {'callcode': this.entity.call.codice}).subscribe((label) => {
+            this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
+            this.router.navigate(['/'],{relativeTo: this.route,});
+          });
+        });  
+      });      
+    });
   }
 
   public sendApplication(event: Event) {

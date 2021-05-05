@@ -127,7 +127,11 @@
     },
     "application": {
       "reopen": "Con la riapertura della domanda la stessa si intenderà come mai inviata e quindi, in caso di mancato successivo invio, la stessa non sarà considerata valida ai fini della selezione. Desideri continuare?",
-      "send": "<p>La domanda é stata correttamente inviata.</p><p>Riceverà all'indirizzo {{email}} una email contenente la stampa della stessa.</p><p>La domanda sarà considerata valida ai fini della selezione anche in caso di mancata ricezione della email per motivi tecnici.</p>"
+      "send": "<p>La domanda é stata correttamente inviata.</p><p>Riceverà all'indirizzo {{email}} una email contenente la stampa della stessa.</p><p>La domanda sarà considerata valida ai fini della selezione anche in caso di mancata ricezione della email per motivi tecnici.</p>",
+      "delete": {
+        "question": "L'operazione comporta l'eliminazione della domanda. Vuoi continuare?",
+        "success": "La domanda relativa al bando <b>{{callcode}}</b> è stata correttamente cancellata."
+      }
     }  
   },
   "placeholder": {
@@ -274,6 +278,7 @@
     "edit": "Modifica domanda",
     "confirm": "Salva in bozza e continua",
     "send": "Invia domanda",
+    "delete": "Cancella domanda",
     "print": {
       "application" : "Stampa domanda",
       "dic_sost": {

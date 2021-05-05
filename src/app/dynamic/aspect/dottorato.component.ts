@@ -83,7 +83,7 @@ export class JcononAspectDottoratoComponent extends DynamicComponent<Application
     public onChangeToggle(reset: boolean) {
       this.addRequiredValidatorForm('jconon_application:tipo_dottorato', this.data.call, Validators.required, this.isToggle(), reset);
       this.addRequiredValidatorForm('jconon_application:istituto_dottorato', this.data.call, Validators.required, this.isToggle(), reset);
-      this.addRequiredValidatorForm('jconon_application:istituto_dottorato', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:data_dottorato', this.data.call, Validators.required, this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

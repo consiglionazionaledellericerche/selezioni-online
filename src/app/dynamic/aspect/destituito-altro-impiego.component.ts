@@ -52,7 +52,7 @@ export class JcononAspectDestituitoAltroImpiegoComponent extends DynamicComponen
     }
 
     public onChangeToggle(reset: boolean) {
-      this.addRequiredValidatorForm('jconon_application:motivazione_destituito_altro_impiego', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:motivazione_destituito_altro_impiego', this.data.call, Validators.required, !this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

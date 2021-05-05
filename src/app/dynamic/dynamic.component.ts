@@ -54,11 +54,12 @@ export abstract class DynamicComponent<T extends CmisObject> implements AdMetada
     }
 
     protected isRequiredValidator(property: string, call: Call, validator?: ValidatorFn, condition?: boolean): ValidatorFn {
-      let elenco = call.elenco_field_not_required || []; 
-      if (condition == undefined) {
-        condition = true;
+      var isRequired = (call.elenco_field_not_required || []).indexOf(property) === -1; 
+      if (condition !== undefined) {
+        isRequired = isRequired && condition;
       }
-      return elenco.indexOf(property) === -1 && condition? validator||Validators.required : Validators.nullValidator;
+      console.log(property + ' '+ isRequired + ' ' + condition);
+      return isRequired ? validator||Validators.required : Validators.nullValidator;
     }
 
     hasErrors() {
