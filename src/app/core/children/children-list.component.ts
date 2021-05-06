@@ -1,15 +1,14 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, SimpleChanges} from '@angular/core';
-import {CommonListComponent} from '../../common/controller/common-list.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
-import {NavigationService} from '../../core/navigation.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, SimpleChanges} from '@angular/core';
+import { CommonListComponent} from '../../common/controller/common-list.component';
+import { ActivatedRoute, Router} from '@angular/router';
+import { FormControl, FormGroup} from '@angular/forms';
+import { NavigationService} from '../../core/navigation.service';
 import { Attachment } from './attachment.model';
-import {TranslateService} from '@ngx-translate/core';
-import {ChildrenService} from './children.service';
-import {switchMap} from 'rxjs/operators';
-import {ConfigService} from '../config.service';
-import {HttpClient} from '@angular/common/http';
-import {ApiMessageService, MessageType} from '../api-message.service';
+import { TranslateService} from '@ngx-translate/core';
+import { ChildrenService} from './children.service';
+import { switchMap} from 'rxjs/operators';
+import { ConfigService} from '../config.service';
+import { ApiMessageService, MessageType} from '../api-message.service';
 import { ObjectTypeService } from '../object-type.service';
 import { Observable, of } from 'rxjs';
 import { DocumentService } from '../document/document.service';
@@ -62,7 +61,6 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
                      private modalService: BsModalService,                   
                      protected configService: ConfigService,
                      protected apiMessageService: ApiMessageService,
-                     private httpClient: HttpClient,
                      protected route: ActivatedRoute,
                      protected objectTypeService: ObjectTypeService,
                      protected router: Router,

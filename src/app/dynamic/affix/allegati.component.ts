@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, Input, OnDestroy, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, ViewChildren } from '@angular/core';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';

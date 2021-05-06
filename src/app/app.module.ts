@@ -13,9 +13,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from './app-routing.module';
 import {GlobalErrorHandler} from './core/global-error-handler.service';
 
+import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
+
 // import ngx-translate and the http loader
 import { TranslateCompiler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { CustomTranslationCompiler } from './common/helpers/translation-compiler';
 import { LoadingInterceptor } from './auth/loading.interceptor';
@@ -44,6 +45,7 @@ import { ConfigService } from './core/config.service';
 
     CoreModule,        // Componenti moduli e servizi non Lazy
     DynamicModule,
+    NgbModalModule,
   ],
 
   providers: [

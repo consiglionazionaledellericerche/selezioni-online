@@ -108,7 +108,7 @@ export class ListItemApplicationComponent {
     this.buttonGroup.nativeElement.classList.add('d-none');
     setTimeout(() => {
       this.buttonGroup.nativeElement.classList.remove('d-none');
-    });
+    },1000);
   }
 
   public reopenApplication() {

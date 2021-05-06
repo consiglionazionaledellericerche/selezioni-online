@@ -141,6 +141,22 @@ export class DynamicService {
             upload: false
           }
         },
+        'affix_tabProdotti' : {
+          model: Application,
+          showcomponent: JcononAffixAllegatiComponent,
+          params: {
+            callProperty : "elenco_prodotti",
+            upload: true
+          }
+        },
+        'affix_tabProdottiScelti' : {
+          model: Application,
+          showcomponent: JcononAffixAllegatiComponent,
+          params: {
+            callProperty : "elenco_prodotti",
+            upload: true
+          }
+        },
         'affix_tabDichiarazioniConclusive' : {
           model: Application,
           showcomponent: JcononAffixDichiarazioniConclusiveComponent
