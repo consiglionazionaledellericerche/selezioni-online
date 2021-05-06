@@ -21,7 +21,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
             <accordion-group #accordionGroup panelClass="border border-light no-after">
               <div class="d-flex" accordion-heading>
                 <h4 class="p-1 text-truncate text-primary" translate>{{attachment}}</h4>
-                <span class="badge badge-pill badge-secondary d-table ml-n1" [ngClass]="{'badge-danger': childrenlist.count === 0}">{{childrenlist.count}}</span>
+                <span class="badge badge-pill badge-outline-primary d-table ml-n1" [ngClass]="{'badge-outline-danger': childrenlist.count === 0}">{{childrenlist.count}}</span>
                 <div class="mr-auto p-1 h4">
                   <button class="btn p-0" [popover]="'new'| translate" triggers="mouseenter:mouseleave" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
                     <svg class="icon icon-primary">
