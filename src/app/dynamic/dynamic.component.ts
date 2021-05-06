@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Input, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { CmisObject } from "../common/model/cmisobject.model";
+import { ObjectType } from "../common/model/object-type.model";
 import { ValidationHelper } from "../common/validation/validation-helper";
 import { CacheService } from "../core/cache.service";
 import { Call } from "../core/call/call.model";
@@ -24,7 +25,9 @@ export abstract class DynamicComponent<T extends CmisObject> implements AdMetada
 
     ngOnInit(): void {
       if (this.aspect) {
-        this.form.addControl('aspect', new FormControl(this.aspect));    
+        this.form.addControl('aspect', new FormControl(
+          [...this.aspect, ...ObjectType.getAspect(this.data ? this.data.objectTypeId : '')]
+        ));    
       }
     }
 
@@ -58,6 +61,7 @@ export abstract class DynamicComponent<T extends CmisObject> implements AdMetada
       if (condition !== undefined) {
         isRequired = isRequired && condition;
       }
+      console.log(property + ' '+ isRequired + ' ' + condition);
       return isRequired ? validator||Validators.required : Validators.nullValidator;
     }
 

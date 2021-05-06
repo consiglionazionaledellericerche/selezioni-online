@@ -125,6 +125,22 @@ export class DynamicService {
             callProperty : "elenco_aspects_ulteriori_dati"
           }
         },
+        'affix_tabCurriculum' : {
+          model: Application,
+          showcomponent: JcononAffixAllegatiComponent,
+          params: {
+            callProperty : "elenco_sezioni_curriculum",
+            upload: false
+          }
+        },
+        'affix_tabCurriculum_ulteriore' : {
+          model: Application,
+          showcomponent: JcononAffixAllegatiComponent,
+          params: {
+            callProperty : "elenco_sezioni_curriculum_ulteriore",
+            upload: false
+          }
+        },
         'affix_tabDichiarazioniConclusive' : {
           model: Application,
           showcomponent: JcononAffixDichiarazioniConclusiveComponent

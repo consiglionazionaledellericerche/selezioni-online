@@ -87,7 +87,6 @@ export class ApplicationService extends CommonService<Application> {
                   const instance: Application = this._buildInstance(item);
                   return instance;
                 } catch (ex) {
-                  console.error(ex);
                   this.apiMessageService.sendMessage(MessageType.ERROR, ex);
                   observableThrowError(ex);
                 }
@@ -120,6 +119,7 @@ export class ApplicationService extends CommonService<Application> {
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
                 const springError = new SpringError(httpErrorResponse, this.translateService);
+                this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
                 return observableThrowError(springError.getRestErrorMessage());
               })
             );

@@ -25,6 +25,18 @@
   "D:jconon_convocazione:attachment": "Convocazione",
   "D:jconon_rinuncia:attachment": "Rinuncia",
 
+  "affix_tabAnagrafica": "Dati Anagrafici",
+  "affix_tabResidenza": "Dati Residenza",
+  "affix_tabDichiarazioni":  "Dichiarazioni",
+  "affix_tabDatiCNR": "Dati CNR",
+  "affix_tabUlterioriDati": "Ulteriori Dati",
+  "affix_tabAllegatiVari": "Alegati Vari",
+  "affix_tabReperibilita": "Reperibilità",
+  "affix_tabTitoli": "Allegati vari",
+  "affix_tabDichiarazioniConclusive": "Dichiarazioni Sostitutive",
+  "affix_tabCurriculum": "A) Curriculum",
+  "affix_tabCurriculum_ulteriore": "A1) Curriculum Ulteriore",
+
   "presents": "Sono presenti",
 
   "utenti": "Utenti",
@@ -102,6 +114,7 @@
       "domanda.inviata.accesso" : "La domanda per il bando selezionato risulta inviata. Per visualizzarla accedere alla sezione <a href=\"application\">Le mie domande</a>",
       "contentalredyexist": "Il file <b>{{filename}}</b> è già presente!",
       "maxuploadfilesize":"Il file <b>{{readableFileSize}}</b> supera la dimensione massima consentita <b>{{maxFileSize}}</b>",
+      "bando.tipologia.employees": "La tipologia del Bando selezionato consente la presentazione di domande solo a dipendenti dell'Ente. Operazione non possibile!",
       "codice": {
         "fiscale": {
           "nullo": "Codice fiscale non valido: codice fiscale nullo!",
@@ -368,35 +381,6 @@
   },
   "document": {
     "last_modified": ", ultima modifica: {{value}}"
-  },
-  "affix": {
-    "affix_tabAnagrafica": {
-      "title": "Dati Anagrafici"
-    },
-    "affix_tabResidenza": {
-      "title": "Dati Residenza"
-    },
-    "affix_tabDichiarazioni": {
-      "title": "Dichiarazioni"
-    },
-    "affix_tabDatiCNR": {
-      "title": "Dati CNR"
-    },
-    "affix_tabUlterioriDati": {
-      "title": "Ulteriori Dati"
-    },
-    "affix_tabAllegatiVari": {
-      "title": "Alegati Vari"
-    },
-    "affix_tabReperibilita": {
-      "title": "Reperibilità"
-    },
-    "affix_tabTitoli": {
-      "title": "Allegati vari"
-    },
-    "affix_tabDichiarazioniConclusive": {
-      "title": "Dichiarazioni Sostitutive"
-    }
   },
   "label": {
     "jconon_application": {

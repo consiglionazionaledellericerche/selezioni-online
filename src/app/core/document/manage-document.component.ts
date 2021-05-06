@@ -6,6 +6,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Document } from '../../common/model/document.model';
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
+import { Helpers } from '../../common/helpers/helpers';
+import { ObjectType } from '../../common/model/object-type.model';
 
 @Component({
   selector: 'manage-document',
@@ -18,7 +20,7 @@ import { CommonEditComponent } from '../../common/controller/common-edit.compone
       </div>
       <div class="modal-body">
         <edit-metadata [cmisObject]="entity" [typeId]="typeId" [form]="form"></edit-metadata>
-        <form [formGroup]="form" class="mt-3">
+        <form *ngIf="upload" [formGroup]="form" class="mt-3">
           <app-control-attachment formControlName="file"></app-control-attachment>
         </form>
       </div>
@@ -42,7 +44,8 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
 
   @Input() parentId;  
   @Input() typeId;  
-  @Input() aspect;  
+  @Input() aspect: string[] = [];  
+  @Input() upload: boolean = true;
   public event: EventEmitter<Document> = new EventEmitter();
 
   public setEntity(entity: Document) {
@@ -58,9 +61,13 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
       'cmis:objectId': new FormControl(this.entity ? this.entity.objectId : undefined),
       'cmis:objectTypeId': new FormControl(this.typeId),
       'cmis:baseTypeId': new FormControl('cmis:document'),
-      'aspect': new FormControl(this.aspect),
-      'file': new FormControl("", this.entity ? undefined : Validators.required)
+      'aspect': new FormControl([...this.aspect, ...ObjectType.getAspect(this.typeId)]),
     });
+    if (this.upload) {
+      this.form.addControl('file', new FormControl("", this.entity ? undefined : Validators.required));
+    } else {
+      this.form.addControl('cmis:name', new FormControl(Helpers.getUniqueId(8)));
+    }
   }
 
   public buildInstance(): Document {

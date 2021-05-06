@@ -92,8 +92,16 @@ export class JcononAspectIdoneoPrecedentiGraduatorieComponent extends DynamicCom
     }
 
     public onChangeToggle(reset: boolean) {
-      this.addRequiredValidatorForm('jconon_application:numero_bando_idoneo_precedenti_graduatorie', this.data.call, Validators.required, this.isToggle(), reset);
-      this.addRequiredValidatorForm('jconon_application:anno_bando_idoneo_precedenti_graduatorie', this.data.call, Validators.required, this.isToggle(), reset);
+      if (reset) {
+        this.form.controls['jconon_application:anno_bando_idoneo_precedenti_graduatorie'].patchValue(null);
+      }
+      this.addRequiredValidatorForm('jconon_application:numero_bando_idoneo_precedenti_graduatorie', this.data.call, Validators.required, this.isToggle(), reset);      
+      this.form.controls['jconon_application:anno_bando_idoneo_precedenti_graduatorie'].setValidators(
+        [
+          Helpers.patternValidator(/^\d{4}$/, { hasYear: true }), 
+          this.isRequiredValidator('jconon_application:anno_bando_idoneo_precedenti_graduatorie', this.data.call)
+        ]
+      );
       this.addRequiredValidatorForm('jconon_application:numero_protocollo_idoneo_precedenti_graduatorie', this.data.call, Validators.required, this.isToggle(), reset);
       this.addRequiredValidatorForm('jconon_application:data_graduatoria_idoneo_precedenti_graduatorie', this.data.call, Validators.required, this.isToggle(), reset);
     }

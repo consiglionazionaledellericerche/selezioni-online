@@ -65,7 +65,7 @@ import { UserService } from '../../auth/edit/user.service';
       </div>
       <div class="card card-bg border-bottom-card" >
         <div class="card-header d-flex">
-          <div class="h1 flex-grow-1">{{'affix.' + call.elenco_sezioni_domanda[affixCompleted] + '.title' | translate}}</div>
+          <div class="h1 flex-grow-1">{{call.elenco_sezioni_domanda[affixCompleted] | translate}}</div>
           <div class="h4">{{affixCompleted + 1}}/{{affix.length}}</div>
         </div>
         <div class="card-body mt-2">  
@@ -81,7 +81,7 @@ import { UserService } from '../../auth/edit/user.service';
               <ul class="steppers-dots d-flex">
                 <li *ngFor="let number of affix" 
                   [ngClass]="{'done': number <= affixCompleted, 'bg-light': !form.pristine && !isDisableConfirm}"
-                  [popover]="'affix.' + call.elenco_sezioni_domanda[number] + '.title' | translate"
+                  [popover]="call.elenco_sezioni_domanda[number] | translate"
                   triggers="mouseenter:mouseleave">
                   <a [ngClass]="{'disabled': !form.pristine && !isDisableConfirm}" 
                     class="btn"                   

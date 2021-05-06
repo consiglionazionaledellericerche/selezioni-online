@@ -128,7 +128,9 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
 
   change(value: Date | string) {
     this.labelactive = value !== undefined;
-    this.onChange(value == 'Invalid Date' ? null : value);
+    if (value !== undefined) {
+      this.onChange(value == 'Invalid Date' ? null : value);
+    }
   }
   
   onShow(event: any) {

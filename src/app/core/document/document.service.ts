@@ -47,7 +47,9 @@ export class DocumentService extends CommonService<Document>{
 
   public createDocument(parentId: string, entity: Document, fileToUpload: File): Observable<Document> {
     const formData: FormData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
+    if (fileToUpload) {
+      formData.append('file', fileToUpload, fileToUpload.name);
+    }
     formData.append('properties', new Blob([JSON.stringify(this.serializeInstance(entity))]));
 
     return this.configService.getApiBase()

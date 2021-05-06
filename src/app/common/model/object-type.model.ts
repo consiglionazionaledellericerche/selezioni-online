@@ -8,7 +8,10 @@ import { DocumentoRiconoscimento } from './documento_riconoscimento.model'
 import { User } from '../../auth/model/user.model';
 
 export class ObjectType {
-    
+  public static defaultAspect: string[] = [
+    'P:jconon_attachment:generic_document', 
+    'P:cm:titled'
+  ];  
   public static classes = {
     'cmis:document': {
       model: Document
@@ -65,14 +68,25 @@ export class ObjectType {
       model: Application
     },
     'D:jconon_dic_sost:attachment': {
-      model: Attachment
+      model: Attachment,
+      aspect: ObjectType.defaultAspect
     },
     'D:jconon_documento_riconoscimento:attachment': {
-      model: DocumentoRiconoscimento    
+      model: DocumentoRiconoscimento,
+      aspect: ObjectType.defaultAspect
     },
     'D:jconon_attachment:call_it' : {
       model: Attachment
     },
+    'D:cvelement:contratto_lavoro_cnr' : {
+      model: Attachment,
+      aspect: [
+        'P:cm:titled',
+        'P:cvelement:commonDalAlIncorso', 
+        'P:cvelement:commonSedeCNR',
+        'P:cvelement:commonProfilo'
+      ]
+    }
   };
 
   static createInstance(cmisType: string, cmisBaseType: string): { new (): any; } {
@@ -83,4 +97,11 @@ export class ObjectType {
     return (ObjectType.classes[first] || ObjectType.classes[second]).model;
   }
 
+  static getAspect(cmisType: string): string[] {
+    let objectType = ObjectType.classes[cmisType];
+    if (objectType) {
+      return objectType.aspect || ObjectType.defaultAspect;
+    }    
+    return ObjectType.defaultAspect;
+  }
 }

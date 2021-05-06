@@ -21,6 +21,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
             <accordion-group #accordionGroup panelClass="border border-light no-after">
               <div class="d-flex" accordion-heading>
                 <h4 class="p-1 text-truncate text-primary" translate>{{attachment}}</h4>
+                <span class="badge badge-pill badge-secondary d-table ml-n1" [ngClass]="{'badge-danger': childrenlist.count === 0}">{{childrenlist.count}}</span>
                 <div class="mr-auto p-1 h4">
                   <button class="btn p-0" [popover]="'new'| translate" triggers="mouseenter:mouseleave" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
                     <svg class="icon icon-primary">
@@ -97,6 +98,7 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
     cache: any;
     public callProperty: string;
     bsModalRef: BsModalRef;
+    public upload: boolean = true;
     @ViewChildren('childrenlist') childrenListComponent: ChildrenListComponent[];
     subscription: Subscription;
     loadingStateDicSost: LoadingState = LoadingState.DEFAULT;
@@ -152,7 +154,7 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
       const initialState = {
         parentId: parentId,
         typeId: typeId,
-        aspect: ['P:jconon_attachment:generic_document']
+        upload: this.upload
       };
 
       this.bsModalRef = this.modalService.show(ManageDocumentComponent, Object.assign({initialState}, { animated: true, class: 'modal-lg' }));
