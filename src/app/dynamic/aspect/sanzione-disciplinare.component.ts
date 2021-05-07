@@ -52,7 +52,7 @@ export class JcononAspectSanzioneDisciplinareComponent extends DynamicComponent<
     }
 
     public onChangeToggle(reset: boolean) {
-      this.addRequiredValidatorForm('jconon_application:contratto_td_concorso_ente', this.data.call, Validators.required, !this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:estremi_sanzione_disciplinare', this.data.call, Validators.required, !this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

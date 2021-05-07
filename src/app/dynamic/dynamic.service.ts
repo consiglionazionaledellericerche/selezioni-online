@@ -157,6 +157,14 @@ export class DynamicService {
             upload: true
           }
         },
+        'affix_tabSchedaAnonima' : {
+          model: Application,
+          showcomponent: JcononAffixAllegatiComponent,
+          params: {
+            callProperty : "elenco_schede_anonime",
+            upload: false
+          }
+        },
         'affix_tabDichiarazioniConclusive' : {
           model: Application,
           showcomponent: JcononAffixDichiarazioniConclusiveComponent
@@ -174,6 +182,10 @@ export class DynamicService {
           showcomponent: JcononAspectGodimentoDirittiComponent
         },
         'P:jconon_application:aspect_condanne_penali' : {
+          model: Application,
+          showcomponent: JcononAspectCondannePenaliComponent
+        },
+        'P:jconon_application:aspect_condanne_penali_rapporto_lavoro' : {
           model: Application,
           showcomponent: JcononAspectCondannePenaliComponent
         },

@@ -41,7 +41,9 @@ export class JcononAspectCondannePenaliComponent extends DynamicComponent<Applic
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_condanne_penali';
-      this.control = new FormControl(this.data.fl_condanne_penali, this.isRequiredValidator(this.propertyName, this.data.call));
+      this.control = new FormControl(this.data.fl_condanne_penali, 
+        this.isRequiredValidator(this.propertyName, this.data.call)
+      );
       this.form.addControl(this.propertyName, this.control);
       this.form.addControl(
         'jconon_application:estremi_sentenze_penali', 
@@ -52,7 +54,7 @@ export class JcononAspectCondannePenaliComponent extends DynamicComponent<Applic
     }
 
     public onChangeToggle(reset: boolean) {
-      this.addRequiredValidatorForm('jconon_application:estremi_sentenze_penali', this.data.call, Validators.required, this.isToggle(), reset);
+      this.addRequiredValidatorForm('jconon_application:estremi_sentenze_penali', this.data.call, Validators.required, !this.isToggle(), reset);
     }
 
     public isToggle(): boolean {

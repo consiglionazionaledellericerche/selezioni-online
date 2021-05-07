@@ -24,7 +24,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
                 <span class="badge badge-pill badge-outline-primary d-table ml-n1" [ngClass]="{'badge-outline-danger': childrenlist.count === 0}">{{childrenlist.count}}</span>
                 <div class="mr-auto p-1 h4">
                   <button class="btn p-0" [popover]="'new'| translate" triggers="mouseenter:mouseleave" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
-                    <svg class="icon icon-primary">
+                    <svg class="icon icon-success">
                       <use xlink:href="/assets/vendor/sprite.svg#it-plus-circle"></use>
                     </svg>
                   </button>

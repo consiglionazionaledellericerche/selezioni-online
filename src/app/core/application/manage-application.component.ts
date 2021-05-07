@@ -252,6 +252,21 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     });
   }
   
+  private aspects(): string[] {
+    var result =[
+      ...this.entity.call.elenco_aspects||[], 
+      ...this.entity.call.elenco_aspects_sezione_cnr||[], 
+      ...this.entity.call.elenco_aspects_ulteriori_dati||[]
+    ];
+    result.map((aspect, i) => {
+      if (aspect === 'P:jconon_application:aspect_condanne_penali_rapporto_lavoro' || 
+          aspect === 'P:jconon_application:aspect_condanne_penali_required'){
+        result[i] = 'P:jconon_application:aspect_condanne_penali';
+      }
+    });
+    return result;
+  }
+
   public buildCreateForm() {
     this.form = new FormGroup({
       'jconon_application:nome': new FormControl(this.entity.nome),
@@ -260,11 +275,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       'cmis:objectTypeId': new FormControl(this.entity.objectTypeId),
       'cmis:objectId': new FormControl(this.entity.objectId),
       'jconon_application:last_section_completed': new FormControl(this.affixCompleted),
-      'aspect': new FormControl([
-        ...this.entity.call.elenco_aspects||[], 
-        ...this.entity.call.elenco_aspects_sezione_cnr||[], 
-        ...this.entity.call.elenco_aspects_ulteriori_dati||[]
-      ])
+      'aspect': new FormControl(this.aspects())
     });
   }
 
@@ -329,6 +340,12 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   @HostListener('document:keydown.enter', ['$event'])  
+  handleEnterEvent(event) {
+    if (event.target.type !== 'textarea') {
+      this.confirmApplication(event);
+    }
+  }
+
   public confirmApplication(event: Event) {
     if (!this.isDisableConfirm && this.isFormValid && this.confirmApplicationButton) {
       this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted + 1);
