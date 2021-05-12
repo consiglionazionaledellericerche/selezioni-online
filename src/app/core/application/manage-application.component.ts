@@ -363,7 +363,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
   public printApplication(event: Event) {
     const initialState = {
-      'applicationId': this.entity.objectId
+      'application': this.entity
     };
     this.modalService.show(PrintApplicationComponent, Object.assign({initialState}, { animated: true, class: 'modal-dialog-left' }));
   }

@@ -128,7 +128,7 @@ export class ListItemApplicationComponent {
   public printApplication() {
     this.hideButtonGroup();
     const initialState = {
-      'applicationId': this.item.objectId
+      'application': this.item
     };
     this.modalService.show(PrintApplicationComponent, Object.assign({initialState}, { animated: true, class: 'modal-dialog-left' }));
 

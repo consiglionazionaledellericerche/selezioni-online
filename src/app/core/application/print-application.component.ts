@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, TemplateRef} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Document } from '../../common/model/document.model';
@@ -7,6 +7,7 @@ import { ApiMessageService, MessageType } from '../api-message.service';
 import { DocumentService } from '../document/document.service';
 import { SearchService } from '../search/search.service';
 import { ApplicationService } from './application.service';
+import { Application } from './application.model';
 
 @Component({
   selector: 'print-application',
@@ -55,7 +56,7 @@ import { ApplicationService } from './application.service';
               (click)="onHistory()" translate>application.print.old <i class="fa fa-list-ol" aria-hidden="true"></i> 
             </button>
           </div>
-          <div class="ml-auto">
+          <div *ngIf="application.isProvvisoria()" class="ml-auto">
             <button class="btn btn-outline-secondary btn-block rounded"
                   (click)="onPrint()" translate>application.print.new <i class="fa fa-plus-circle" aria-hidden="true"></i>
             </button>
@@ -68,7 +69,7 @@ import { ApplicationService } from './application.service';
   ]
 })
 export class PrintApplicationComponent implements OnInit{
-  public applicationId: string;
+  public application: Application;
   public lastPrint: Document;
   public history: boolean = false;
   public historyDocument: Document[];
@@ -87,7 +88,7 @@ export class PrintApplicationComponent implements OnInit{
   }
   ngOnInit(): void {
     this.searchService.execute('select cmis:name, cmis:objectTypeId, cmis:baseTypeId, cmis:objectId, cmis:lastModificationDate, cmis:versionLabel ' +
-      'from jconon_attachment:application where IN_FOLDER (\''+ this.applicationId + '\')').subscribe((result) => {
+      'from jconon_attachment:application where IN_FOLDER (\''+ this.application.objectId + '\')').subscribe((result) => {
         if (result.length === 1) {
           this.lastPrint = result[0] as Document;
         } else {
@@ -106,7 +107,7 @@ export class PrintApplicationComponent implements OnInit{
 
   onPrint() {
     this.modalRef.hide();
-    this.applicationService.printApplication(this.applicationId).subscribe(res => {
+    this.applicationService.printApplication(this.application.objectId).subscribe(res => {
       this.translateService.get('message.application.print.new').subscribe((label) => {
         this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
       });
