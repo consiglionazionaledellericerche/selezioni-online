@@ -36,7 +36,7 @@ import { Application } from './application.model';
                 <a>  
                   <div class="d-flex">
                     <small class="text-monospace" translate>document.history.version</small>
-                    <span (click)="onDownload(version.objectId, version.name)" class="badge badge-primary ml-2 h6 d-table c-pointer" [ngClass]="{'badge-danger': version.isMajorVersion}">{{version.versionLabel}}</span>
+                    <span (click)="onDownload(version.objectId, version.name)" class="badge ml-2 h6 d-table c-pointer" [ngClass]="{'badge-primary': version.isMajorVersion, 'badge-secondary': !version.isMajorVersion}">{{version.versionLabel}}</span>
                     <small class="text-monospace ml-2">{{'document.history.detail'| translate:{contentStreamLength: version.getFileSize(), lastModificationDate: version.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</small>
                   </div>
                 </a>  
