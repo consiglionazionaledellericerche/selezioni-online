@@ -22,7 +22,7 @@ export class DownloadDocumentComponent implements OnInit{
     protected translateService: TranslateService,
   ) {}
   private nodeRef: string;
-  private fileName: string;
+  public fileName: string;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams) => {

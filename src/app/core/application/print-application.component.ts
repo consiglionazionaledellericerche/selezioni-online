@@ -70,7 +70,7 @@ import { ApplicationService } from './application.service';
 export class PrintApplicationComponent implements OnInit{
   public applicationId: string;
   public lastPrint: Document;
-  protected history: boolean = false;
+  public history: boolean = false;
   public historyDocument: Document[];
 
   constructor(
