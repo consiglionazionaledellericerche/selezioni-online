@@ -8,6 +8,7 @@ import {SidenavMenuComponent} from './sidenav/sidenav-menu.component';
 
 import {HomeComponent} from './home/home.component';
 import {SearchComponent} from './search/search.component';
+import { SearchService} from './search/search.service';
 
 import {AppRoutingModule} from '../app-routing.module';
 import {SharedModule} from '../shared/shared.module';
@@ -29,10 +30,12 @@ import {CallService} from './call/call.service';
 import {ApplicationListComponent} from './application/application-list.component';
 import {ApplicationUserListComponent} from './application/application-user-list.component';
 import { ManageApplicationComponent } from './application/manage-application.component';
+import { PrintApplicationComponent } from './application/print-application.component';
 import {ApplicationService} from './application/application.service';
 import {ApplicationUserService} from './application/application-user.service';
 
 import { ManageDocumentComponent } from './document/manage-document.component';
+import { DownloadDocumentComponent } from './document/download-document.component';
 import { DocumentService} from './document/document.service';
 
 
@@ -69,7 +72,9 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     ApplicationListComponent,
     ApplicationUserListComponent,
     ManageApplicationComponent,
+    PrintApplicationComponent,
     ManageDocumentComponent,
+    DownloadDocumentComponent,
     BadRequestComponent,
   ],
 
@@ -110,7 +115,9 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     ApplicationListComponent,
     ApplicationUserListComponent,
     ManageApplicationComponent,
-    ManageDocumentComponent
+    PrintApplicationComponent,
+    ManageDocumentComponent,
+    DownloadDocumentComponent
   ],
 
   providers: [
@@ -126,11 +133,13 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     ApplicationService,
     ApplicationUserService,
     DocumentService,
+    SearchService
   ],
 
   entryComponents: [
-    ManageDocumentComponent    
-
+    ManageDocumentComponent,   
+    DownloadDocumentComponent,
+    PrintApplicationComponent
   ]
 })
 export class CoreModule {}

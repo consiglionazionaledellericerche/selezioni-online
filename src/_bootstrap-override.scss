@@ -12,7 +12,9 @@ textarea.form-control {
 .c-pointer {
     cursor: pointer;
 }
-
+.back-to-top {
+    z-index: 1052 !important;
+}
 .chip.chip-primary:hover > .label {
     color: white;
 }

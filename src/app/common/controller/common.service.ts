@@ -165,7 +165,6 @@ export abstract class CommonService<T extends Base> {
                   });
                   return new Page(items, result.count, result.offset, result.page);
                 } catch (ex) {
-                  console.log(ex);
                   this.apiMessageService.sendMessage(MessageType.ERROR, ex.message);
                   observableThrowError(ex);
                 }

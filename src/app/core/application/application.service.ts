@@ -212,6 +212,31 @@ export class ApplicationService extends CommonService<Application> {
         })
       );
   }
+
+  public printApplication(applicationId: string): Observable<boolean> {
+    if (!applicationId) {
+      this.apiMessageService.sendMessage(MessageType.ERROR, 'Id richiesta mancante');
+      observableThrowError(null);
+    }
+    const params = new HttpParams()
+          .set('objectId', applicationId);
+
+    return this.configService.getApiBase()
+      .pipe(
+        switchMap((apiBase) => {
+          return this.httpClient.post<boolean>(apiBase + this.getApiPath() + '/print', params)
+            .pipe(
+              map((result) => {
+                return result;
+              }),
+              catchError( (httpErrorResponse: HttpErrorResponse) => {
+                const springError = new SpringError(httpErrorResponse, this.translateService);
+                return observableThrowError(springError.getRestErrorMessage());
+              })
+            );
+        })
+      );
+  }
   
   public getPageOffset(): number {
     return 100;

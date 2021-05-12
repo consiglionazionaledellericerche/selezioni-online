@@ -3,7 +3,7 @@ import {JsonProperty, JsonObject} from 'json2typescript';
 
 @JsonObject("Document")
 export class Document extends CmisObject{
-  @JsonProperty('cmis:parentId')
+  @JsonProperty('cmis:parentId', String, true)
   protected parentId: string;
   @JsonProperty('cmis:isImmutable')
   protected isImmutable: boolean;

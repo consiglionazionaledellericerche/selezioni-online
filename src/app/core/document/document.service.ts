@@ -1,4 +1,4 @@
-import { throwError as observableThrowError, Observable } from 'rxjs';
+import { throwError as observableThrowError, of as observableOf, Observable } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
@@ -11,6 +11,7 @@ import { SpringError } from '../../common/model/spring-error.model';
 import { Document } from '../../common/model/document.model';
 import { ErrorObservable } from 'rxjs-compat/observable/ErrorObservable';
 import { TranslateService } from '@ngx-translate/core';
+import { Helpers } from '../../common/helpers/helpers';
 
 @Injectable()
 export class DocumentService extends CommonService<Document>{
@@ -115,4 +116,73 @@ export class DocumentService extends CommonService<Document>{
       );
   }
   
+  public getDocument(nodeRef: string, filename: string): Observable<any> {
+    const params = new HttpParams()
+      .set('nodeRef', nodeRef)
+      .set('fileName', filename);
+    return this.configService.getApiBase()
+      .pipe(
+        switchMap((apiBase) => {
+          return this.httpClient.get(apiBase + this.getApiPath(), {responseType: 'blob', params: params})
+            .pipe(
+              map((res: any) => {
+                let blob = new Blob([res]);
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                a.setAttribute('style', 'display: none');
+                a.href = url;
+                a.download = filename;
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove(); // remove the element        
+                return res;
+              }),
+              catchError((httpErrorResponse: HttpErrorResponse) => {
+                if (httpErrorResponse.status === 401) {
+                  return observableOf(httpErrorResponse);
+                } else {
+                  return ErrorObservable.create(httpErrorResponse);  
+                }
+              })
+            );
+        })
+      );
+  }
+
+  public history(documentId: string): Observable<Document[]> {
+    if (!documentId) {
+      this.apiMessageService.sendMessage(MessageType.ERROR, 'Id richiesta mancante');
+      observableThrowError(null);
+    }
+    const params = new HttpParams()
+          .set('nodeRef', documentId);
+
+    return this.configService.getGateway()
+      .pipe(
+        switchMap((gateway) => {
+          return this.httpClient.get<Document[]>(gateway + '/rest/search/document/version', {params: params})
+            .pipe(
+              map((result: any) => {
+                try {
+                  const items: Document[] = result.items.map((item) => {
+                    const instance: Document = Helpers.buildInstance(item, Document);
+                    return instance;
+                  });
+                  return items;
+                } catch (ex) {
+                  console.error(ex);
+                  this.apiMessageService.sendMessage(MessageType.ERROR, ex);
+                  observableThrowError(ex);
+                }
+              }),
+              catchError( (httpErrorResponse: HttpErrorResponse) => {
+                const springError = new SpringError(httpErrorResponse, this.translateService);
+                return observableThrowError(springError.getRestErrorMessage());
+              })
+            );
+        })
+      );
+  }
+
 }

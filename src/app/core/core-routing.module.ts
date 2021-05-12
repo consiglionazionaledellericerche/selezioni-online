@@ -5,10 +5,11 @@ import {ServiceReg} from '../auth/auth.module';
 import { ApplicationListComponent } from './application/application-list.component';
 import { ApplicationUserListComponent } from './application/application-user-list.component';
 import { ManageApplicationComponent } from './application/manage-application.component';
+import { DownloadDocumentComponent } from './document/download-document.component';
 
 const coreRoutes: Routes = [
   { 
-    path: 'application', 
+    path: 'my-applications', 
     component: ApplicationListComponent, 
     canActivate: [AuthGuard],
     data: {service: ServiceReg.APPLICATION},
@@ -25,6 +26,12 @@ const coreRoutes: Routes = [
     component: ManageApplicationComponent, 
     canActivate: [AuthGuard], 
     data: {service: ServiceReg.APPLICATION},
+  },
+  { 
+    path: 'search/content', 
+    component: DownloadDocumentComponent, 
+    data: {service: ServiceReg.APPLICATION},
+    runGuardsAndResolvers: 'always',
   },
 ];
 

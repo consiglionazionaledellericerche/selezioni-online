@@ -20,6 +20,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
 import { Subscription } from 'rxjs';
 import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.component';
 import { UserService } from '../../auth/edit/user.service';
+import { PrintApplicationComponent } from './print-application.component';
 
 @Component({
   selector: 'manage-application',
@@ -112,6 +113,7 @@ import { UserService } from '../../auth/edit/user.service';
             <div class="form-group text-right">
               <button 
                 [disabled]="!form.pristine"
+                (click)="printApplication($event)" 
                 class="btn btn-outline-danger btn-lg btn-icon mr-2" 
                 tooltip="{{'application.print.application'| translate}}">
                 <span class="d-none d-md-block pr-1" translate>application.print.application</span>
@@ -122,7 +124,7 @@ import { UserService } from '../../auth/edit/user.service';
               <button (click)="sendApplication($event)" 
                 #sendApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
-                class="btn btn-primary btn-block btn-lg btn-icon mr-2" 
+                class="btn btn-primary btn-block btn-lg btn-icon mr-2 rounded" 
                 tooltip="{{'application.send' | translate}}">
                 <span class="pr-1 w-100 text-right" translate>application.send</span>
                 <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
@@ -137,7 +139,7 @@ import { UserService } from '../../auth/edit/user.service';
               <button (click)="confirmApplication($event);"
                 #confirmApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
-                class="btn btn-primary btn-block btn-lg btn-icon" 
+                class="btn btn-primary btn-block btn-lg btn-icon rounded" 
                 tooltip="{{'application.confirm' | translate}}">
                 <span class="pr-1 w-100 text-right" translate>application.confirm</span>
                 <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
@@ -341,6 +343,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
 
   @HostListener('document:keydown.enter', ['$event'])  
   handleEnterEvent(event) {
+    console.log(event.target.type);
     if (event.target.type !== 'textarea') {
       this.confirmApplication(event);
     }
@@ -357,6 +360,12 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.scroll(this.cardApplication.nativeElement);
       });  
     }
+  }
+  public printApplication(event: Event) {
+    const initialState = {
+      'applicationId': this.entity.objectId
+    };
+    this.modalService.show(PrintApplicationComponent, Object.assign({initialState}, { animated: true, class: 'modal-dialog-left' }));
   }
 
   public deleteApplication(event: Event) {
@@ -380,11 +389,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     if (this.isFormValid) {
       this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted);
       this.service.saveApplication(this.buildInstance()).subscribe((application) => {
-        application.aspect = [
-          ...this.entity.call.elenco_aspects||[], 
-          ...this.entity.call.elenco_aspects_sezione_cnr||[], 
-          ...this.entity.call.elenco_aspects_ulteriori_dati||[]
-        ];
+        application.aspect = this.aspects();
         this.service.sendApplication(application).subscribe((result) => {
           this.translateService.get('message.application.send', {email: result.email_comunicazione}).subscribe((label) => {
             const initialState = {
@@ -392,7 +397,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
             };        
             this.bsModalRefSend = this.modalService.show(ModalInfoComponent, Object.assign({ initialState}, { animated: true, class: 'modal-dialog-centered' }));
             this.bsModalRefSend.content.close.subscribe(() => {
-              this.router.navigate(['/application'],{relativeTo: this.route,});
+              this.router.navigate(['/my-applications'],{relativeTo: this.route,});
             });
           });  
         });

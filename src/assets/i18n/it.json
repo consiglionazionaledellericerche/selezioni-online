@@ -138,6 +138,9 @@
       "delete": {
         "confirm": "Sei sicuro di voler eliminare il documento {{value}}?",
         "success": "Il documento è stato correttamente cancellato."
+      },
+      "download": {
+        "success": "Il documento {{value}} è stato correttamente scaricato."
       }
     },
     "application": {
@@ -146,6 +149,10 @@
       "delete": {
         "question": "L'operazione comporta l'eliminazione della domanda. Vuoi continuare?",
         "success": "La domanda relativa al bando <b>{{callcode}}</b> è stata correttamente cancellata."
+      },
+      "print": {
+        "last": "E' disponibile la stampa versione <b class=\"badge badge-primary h6\">{{versionLabel}}</b> eseguita il <b>{{lastModificationDate}}</b>",
+        "new": "La stampa richiesta sarà accodata e, al termine della sua esecuzione, il sistema invierà una e-mail con la stampa allegata."
       }
     }  
   },
@@ -296,6 +303,9 @@
     "delete": "Cancella domanda",
     "print": {
       "application" : "Stampa domanda",
+      "download": "Scarica",
+      "new": "Nuova",
+      "old": "Storico",
       "dic_sost": {
         "button": "Stampa",
         "popover": "Stampa modulo dichiarazioni sostitutive da firmare e allegare"
@@ -382,7 +392,12 @@
     } 
   },
   "document": {
-    "last_modified": ", ultima modifica: {{value}}"
+    "last_modified": ", ultima modifica: {{value}}",
+    "history": {
+      "version": "Versione",
+      "title": "Versioni Precedenti",
+      "detail": "aggiornata il {{lastModificationDate}} di dimensione {{contentStreamLength}}"
+    }
   },
   "label": {
     "jconon_application": {

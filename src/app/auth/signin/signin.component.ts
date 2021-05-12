@@ -41,6 +41,7 @@ export class SigninComponent implements OnInit{
         this.authService.signinUser(username, password).subscribe(
             (response) => {
                 const { redirect } = window.history.state;
+                console.log(redirect);
                 this.router.navigateByUrl(redirect || '/');
             }
         );

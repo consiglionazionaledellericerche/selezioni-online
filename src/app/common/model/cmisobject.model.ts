@@ -27,7 +27,7 @@ export abstract class CmisObject implements Base{
   public lastModificationDate: Date;
   @JsonProperty('cmis:secondaryObjectTypeIds')
   public secondaryObjectTypeIds: string[];
-  @JsonProperty('aspect')
+  @JsonProperty('aspect', String, true)
   public aspect: string[];
 
   public allowableActions: AllowableAction[];

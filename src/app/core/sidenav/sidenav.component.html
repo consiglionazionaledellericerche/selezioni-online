@@ -73,7 +73,7 @@
                         <h6 class="font-weight-light font-italic">{{'application.all'| translate}}</h6>
                         <ng-container *ngFor="let state of applicationsState">
                             <li class="list-group-item border-bottom-0 p-1">                         
-                                <a class="h6" [routerLink]="['/application']" [queryParams]="{applicationStatus: state.getFilterStato()}" routerLinkActive="active" (click)="toggle()">
+                                <a class="h6" [routerLink]="['/my-applications']" [queryParams]="{applicationStatus: state.getFilterStato()}" routerLinkActive="active" (click)="toggle()">
                                     <span>{{ state.getLabel() | translate}}</span> 
                                     <span class="badge badge-pill float-right" 
                                         [ngClass]="{

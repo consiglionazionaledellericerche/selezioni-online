@@ -3,6 +3,8 @@ import {Application} from '../../../core/application/application.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import { AllowableAction } from '../../../common/model/allowableaction.enum';
 import { User } from '../../../auth/model/user.model';
+import { PrintApplicationComponent } from '../../../core/application/print-application.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-list-item-application',
@@ -63,7 +65,11 @@ import { User } from '../../../auth/model/user.model';
 })
 export class ListItemApplicationComponent {
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute,
+    private modalService: BsModalService,
+  ) {}
 
   @Input() item: Application = null;
 
@@ -84,8 +90,6 @@ export class ListItemApplicationComponent {
   @Output() onReopen = new EventEmitter();
 
   @Output() onCopy = new EventEmitter();
-
-  @Output() onPrint = new EventEmitter();
 
   @Input() filterForm;
 
@@ -123,7 +127,11 @@ export class ListItemApplicationComponent {
 
   public printApplication() {
     this.hideButtonGroup();
-    this.onPrint.emit();
+    const initialState = {
+      'applicationId': this.item.objectId
+    };
+    this.modalService.show(PrintApplicationComponent, Object.assign({initialState}, { animated: true, class: 'modal-dialog-left' }));
+
   }
 
   public canEditApplication(): boolean {
