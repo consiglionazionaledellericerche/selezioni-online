@@ -13,8 +13,8 @@ import { Application } from './application.model';
   selector: 'print-application',
   template: `
       <div class="modal-header border-bottom">
-        <h3 *ngIf="!history" class="modal-title pull-left text-primary pb-2"><i class="fa fa-info-circle"></i> {{'application.print.application'|translate}}</h3>
-        <h3 *ngIf="history" class="modal-title pull-left text-success pb-2"><i class="fa fa-list-ol"></i> {{'document.history.title'|translate}}</h3>
+        <h3 *ngIf="!history" class="modal-title pull-left text-primary pb-2 text-truncate"><i class="fa fa-info-circle"></i> {{'application.print.application'|translate}}</h3>
+        <h3 *ngIf="history" class="modal-title pull-left text-success pb-2 text-truncate"><i class="fa fa-list-ol"></i> {{'document.history.title'|translate}}</h3>
         <button *ngIf="history" type="button" class="close pull-right" aria-label="Close" (click)="history = false">
           <svg class="icon">
             <use xlink:href="/assets/vendor/sprite.svg#it-restore"></use>
