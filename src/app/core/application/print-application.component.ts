@@ -91,8 +91,6 @@ export class PrintApplicationComponent implements OnInit{
       'from jconon_attachment:application where IN_FOLDER (\''+ this.application.objectId + '\')').subscribe((result) => {
         if (result.length === 1) {
           this.lastPrint = result[0] as Document;
-        } else {
-          this.onPrint();
         }
     });
   }

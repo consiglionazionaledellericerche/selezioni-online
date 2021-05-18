@@ -1,4 +1,4 @@
-import { throwError as observableThrowError, Observable } from 'rxjs';
+import { throwError as observableThrowError, Observable, Subject } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
@@ -17,7 +17,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class ApplicationService extends CommonService<Application> {
 
   public static ROUTE = 'application';
-  
+  // Emesso quando l'utente effettua login
+  public applicationChanged = new Subject<Application>();
+
   public constructor(protected httpClient: HttpClient,
                      protected apiMessageService: ApiMessageService,
                      protected router: Router,
@@ -84,6 +86,7 @@ export class ApplicationService extends CommonService<Application> {
             .pipe(
               map((item) => {
                 try {
+                  this.applicationChanged.next(application);
                   const instance: Application = this._buildInstance(item);
                   return instance;
                 } catch (ex) {
@@ -115,6 +118,7 @@ export class ApplicationService extends CommonService<Application> {
           return this.httpClient.delete<any>(apiBase + this.getApiPath() + '/delete', {params: params})
             .pipe(
               map((result) => {
+                this.applicationChanged.next(undefined);
                 return result;
               }),
               catchError( (httpErrorResponse: HttpErrorResponse) => {
@@ -138,6 +142,7 @@ export class ApplicationService extends CommonService<Application> {
             .pipe(
               map((result) => {
                 try {
+                  this.applicationChanged.next(application);
                   return result;
                 } catch (ex) {
                   this.apiMessageService.sendMessage(MessageType.ERROR, ex);

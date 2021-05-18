@@ -112,6 +112,7 @@ import { PrintApplicationComponent } from './print-application.component';
             </div>
             <div class="form-group text-right">
               <button 
+                *ngIf="entity.isProvvisoria()"
                 [disabled]="!form.pristine"
                 (click)="printApplication($event)" 
                 class="btn btn-outline-danger btn-lg btn-icon mr-2" 
@@ -225,11 +226,12 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         }, error => {
           this.entityError = error;
         });
-        this.translateService.reloadLang('it');
-        this.callService.loadLabels(call.objectId).subscribe((labels) => {
-          if (labels) {
-            this.translateService.setTranslation('it', Helpers.convertProperties(labels), true);
-          }
+        this.translateService.reloadLang('it').subscribe((res) => {
+          this.callService.loadLabels(call.objectId).subscribe((labels) => {
+            if (labels) {
+              this.translateService.setTranslation('it', Helpers.convertProperties(labels), true);
+            }
+          });  
         });
       });  
     }); 

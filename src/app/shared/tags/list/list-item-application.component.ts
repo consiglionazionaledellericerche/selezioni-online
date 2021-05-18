@@ -14,8 +14,8 @@ import { BsModalService } from 'ngx-bootstrap/modal';
          <div class="row pt-2 pb-2">
            <ng-content></ng-content>
 
-           <div class="ddd" #buttonGroup>
-             <div class="btn-group border rounded bg-white" role="group" dropdown [ngStyle]="buttonStyle()">
+          <a class="ddd" aria-haspopup="true" role="button" tabIndex="0">
+            <div class="btn-group border rounded bg-white" role="group" dropdown [ngStyle]="buttonStyle()">
                 <a *ngIf="(isActive && isDomandaProvvisoria) || user.capabilities.isAdmin" class="btn btn-link p-1" href="javascript:"
                   (click)="newApplication()" tooltip="{{'application.edit' | translate}}">
                   <svg class="icon icon-primary">
@@ -31,7 +31,6 @@ import { BsModalService } from 'ngx-bootstrap/modal';
                   <span class="d-none d-md-inline-block">{{'application.reopen' | translate}}</span>
                 </a>
                 <app-show-children-modal 
-                  (click)="hideButtonGroup()"
                   [show_date]="'true'" 
                   [typeId]="'P:jconon_attachment:generic_document'" 
                   [queryName]="'jconon_attachment:generic_document'" 
@@ -52,14 +51,14 @@ import { BsModalService } from 'ngx-bootstrap/modal';
                     <li class="divider dropdown-divider"></li>
                     <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>
-           </div>
-         </div>
+            </div>
+          </a>
     </div>
     `,
   styles:
       [
-        'div.ddd { display: none; }',
-        'div.row:hover div.ddd { display: block; }',
+        '.ddd { display: none; }',
+        'div.row:hover .ddd, div.row:active .ddd, div.row:focus .ddd { display: block; }',
         '.dropdown-menu:before { left: unset; right: 11px;border-left:1px solid #b1b1b3 !important; border-top: 1px solid #b1b1b3 !important; top: -10px}'
       ]
 })
@@ -95,8 +94,6 @@ export class ListItemApplicationComponent {
 
   @Input() page;
 
-  @ViewChild('buttonGroup', {static: false}) buttonGroup: ElementRef;  
-
   public newApplication() {
     this.router.navigate(['/manage-application'],
       {
@@ -108,25 +105,15 @@ export class ListItemApplicationComponent {
       });
   }
 
-  hideButtonGroup() {
-    this.buttonGroup.nativeElement.classList.add('d-none');
-    setTimeout(() => {
-      this.buttonGroup.nativeElement.classList.remove('d-none');
-    },1000);
-  }
-
   public reopenApplication() {
-    this.hideButtonGroup();
     this.onReopen.emit();
   }
 
   public copyApplication() {
-    this.hideButtonGroup();
     this.onCopy.emit();
   }
 
   public printApplication() {
-    this.hideButtonGroup();
     const initialState = {
       'application': this.item
     };
@@ -155,8 +142,7 @@ export class ListItemApplicationComponent {
     return {
       'position': 'absolute',
       'top': '5px',
-      'right': '5px',
-      'z-index': '100000'
+      'right': '5px'
     };
   }
 }

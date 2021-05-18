@@ -11,6 +11,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { Helpers } from '../../common/helpers/helpers';
 import { ApplicationService } from '../application/application.service';
 import { ApplicationState } from '../application/application-state.model';
+import { Application } from '../application/application.model';
 
 @Component({
   selector: 'app-sidenav',
@@ -46,6 +47,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
     public onUserActivated: Subscription = new Subscription();
     public onUserModified: Subscription = new Subscription();
+    public onApplicationChanged: Subscription = new Subscription();
 
     public sidebarToggle: Subscription = new Subscription();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
     public isCollapsed: boolean = true;
@@ -82,6 +84,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
             this.user = Helpers.buildInstance(this.authService.getUser(), User);
             this.applicationState();
         }
+        this.onApplicationChanged = this.applicationService.applicationChanged.subscribe((application: Application) => {
+          this.applicationState();
+        });
     }
 
     public onLogout() {
@@ -93,6 +98,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     public ngOnDestroy() {
         this.onUserActivated.unsubscribe();
         this.onUserModified.unsubscribe();
+        this.onApplicationChanged.unsubscribe();
         this.sidebarToggle.unsubscribe();
         this.onNavbarEvaluated.unsubscribe();
     }
