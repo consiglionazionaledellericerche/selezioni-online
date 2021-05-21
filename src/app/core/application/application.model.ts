@@ -1,12 +1,13 @@
 import { Folder } from '../../common/model/folder.model';
-import {JsonProperty, JsonObject} from 'json2typescript';
+import { JsonProperty, JsonObject } from 'json2typescript';
 import { Call } from '../call/call.model';
 import { StatoDomanda, PropertyStatoDomandaConverter } from './stato-domanda.enum';
 import { EsclusioneRiununcia, PropertyEsclusioneRiununciaConverter } from './esclusione-rinuncia.enum';
 import { User } from '../../auth/model/user.model';
-import { ISODateConverter } from '../../common/helpers/ISODateConverter';
+import { ISODateTimeConverter } from '../../common/helpers/ISODateTimeConverter';
 import { UppercaseConverter } from '../../common/helpers/UppercaseConverter';
 import { ObjectToIdConverter } from '../../common/helpers/ObjectToIdConverter';
+import { ISODateConverter } from '../../common/helpers/ISODateConverter';
 
 @JsonObject("Application")
 export class Application extends Folder {
@@ -60,7 +61,7 @@ export class Application extends Folder {
   public email_pec_comunicazioni: string;
   @JsonProperty('jconon_application:telefono_comunicazioni')
   public telefono_comunicazioni: string;
-  @JsonProperty('jconon_application:data_domanda', ISODateConverter)
+  @JsonProperty('jconon_application:data_domanda', ISODateTimeConverter)
   public data_domanda: Date;
   @JsonProperty('jconon_application:stato_domanda', PropertyStatoDomandaConverter, true)
   public stato_domanda: StatoDomanda;
@@ -489,13 +490,6 @@ export class Application extends Folder {
   public fl_altri_assegni: boolean = undefined;
   @JsonProperty('jconon_application:testo_altri_assegni')
   public testo_altri_assegni: string = undefined;
-
-
-
-
-
-
-
 
   @JsonProperty('jconon_application:fl_dichiarazione_1')
   public fl_dichiarazione_1: boolean;

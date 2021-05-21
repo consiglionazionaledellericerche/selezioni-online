@@ -1,4 +1,4 @@
-import {JsonProperty, JsonObject} from 'json2typescript';
+import { JsonProperty, JsonObject } from 'json2typescript';
 import { Base } from '../../common/model/base.model';
 import { BooleanConverter } from '../../common/helpers/BooleanConverter';
 import { ISODateConverter } from '../../common/helpers/ISODateConverter';

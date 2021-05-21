@@ -81,7 +81,7 @@ import { PrintApplicationComponent } from './print-application.component';
               </a>
               <ul class="steppers-dots d-flex">
                 <li *ngFor="let number of affix" 
-                  [ngClass]="{'done': number <= affixCompleted, 'bg-light': !form.pristine && !isDisableConfirm}"
+                  [ngClass]="{'done': number < entity.last_section_completed, 'bg-light': !form.pristine && !isDisableConfirm}"
                   [popover]="call.elenco_sezioni_domanda[number] | translate"
                   triggers="mouseenter:mouseleave">
                   <a [ngClass]="{'disabled': !form.pristine && !isDisableConfirm}" 

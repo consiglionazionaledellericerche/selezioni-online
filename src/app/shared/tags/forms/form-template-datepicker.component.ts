@@ -1,8 +1,6 @@
-import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, Optional, Renderer2, Self, ViewChild
-} from '@angular/core';
-import {ControlValueAccessor, NgControl} from '@angular/forms';
-import {BsDatepickerConfig, BsLocaleService} from 'ngx-bootstrap/datepicker';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, Optional, Renderer2, Self, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NgControl} from '@angular/forms';
+import { BsDatepickerConfig, BsLocaleService} from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { itLocale } from 'ngx-bootstrap/locale';
 defineLocale('it', itLocale);
