@@ -117,3 +117,8 @@
 label.label-checkbox.is-invalid {
   color: $red;
 }
+
+.hover-shadow:hover {
+  box-shadow: rgba(10, 16, 20, 0.24) 0px 8px 8px, rgba(10, 16, 20, 0.12) 0px 0px 8px !important;
+  text-decoration: none;
+}

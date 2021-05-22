@@ -9,7 +9,7 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template:
   `
-    <div *ngIf="item" class="h-100 shadow">
+    <div *ngIf="item" class="h-100 hover-shadow">
       <div class="card card-bg border-bottom-card h-100">        
         <div class="card-header pl-2 py-2">
           <div class="d-flex">

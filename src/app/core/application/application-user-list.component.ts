@@ -100,7 +100,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
     <!-- List -->
     <app-list-layout [loading]="loading" [items]="items" [page]="getPage()"
                      [count]="count" (onChangePage)="onChangePage($event)">
-      <li *ngFor="let item of items" [ngClass]="listItemClasses()">
+      <li *ngFor="let item of items" [ngClass]="listItemClasses()" class="hover-shadow">
         <app-list-item-application [item]="item" [user]="user">
           <div class="col-sm-12 h5">
             <span class="badge" [ngClass]="{'badge-warning' : item.isProvvisoria(), 'badge-success' : !item.isProvvisoria()}">

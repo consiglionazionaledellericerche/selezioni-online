@@ -39,6 +39,10 @@ export class Helpers {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }
 
+  public static firstLetter(word: string) {
+    return word.charAt(0).toUpperCase();
+  }
+
   public static addDays(date: Date, noOfDays: number): Date {
     if (date === null) {
       return null;

@@ -87,7 +87,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
     <!-- List -->
     <app-list-layout [loading]="loading" [items]="items" [page]="getPage()" [page_offset]="service.getPageOffset()"
                      [count]="count" (onChangePage)="onChangePage($event)">
-      <li *ngFor="let item of items" [ngClass]="listItemClasses()">
+      <li *ngFor="let item of items" [ngClass]="listItemClasses()" class="hover-shadow">
         <app-list-item-application [item]="item" [user]="user" (onReopen)="onReopen(item)">
           <div class="col-sm-12 h5">
             <span class="badge" [ngClass]="{'badge-warning' : item.isProvvisoria(), 'badge-success' : !item.isProvvisoria()}">

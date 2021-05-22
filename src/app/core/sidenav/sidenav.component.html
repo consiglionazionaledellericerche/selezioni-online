@@ -2,20 +2,19 @@
     <nav class="bg-white bg-faded h-100">
         <ul class="list-group-flush p-0">
             <li class="list-group-item">
-                <div class="row">
-                    <div class="col-1">
-                        <span class="rounded-icon">
-                            <svg class="icon icon-primary">
-                              <use xlink:href="/assets/vendor/sprite.svg#it-user"></use>
-                            </svg>
-                        </span>    
+                <div class="d-flex">
+                    <div>
+                        <div class="avatar avatar-primary size-lg">
+                            <p aria-hidden="true" class="text-monospace">{{user.firstName|firstLetter}}{{user.lastName|firstLetter}}</p>
+                            <span class="sr-only">{{user.firstName|capitalizeFirst}} {{user.lastName|capitalizeFirst}}</span>
+                        </div>
                     </div>
-                    <div class="h4 col-9">
+                    <div class="h4">
                         <span class="pl-1">{{user.firstName|capitalizeFirst}}</span>
                         <span class="pl-1">{{user.lastName|capitalizeFirst}}</span>
                     </div>
-                    <div class="col-2">
-                        <a class="btn btn-link py-0" (click)="toggle()">
+                    <div class="ml-auto">
+                        <a class="btn btn-link p-0" (click)="toggle()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
                                     <use xlink:href="/assets/vendor/sprite.svg#it-close-big"></use>
@@ -23,6 +22,8 @@
                             </span>    
                         </a>
                     </div>
+                </div>
+                <div>    
                     <div>
                         <small class="pl-1">{{'user.username' | translate }}:</small>
                         <small class="pl-1 font-weight-bold">{{user.userName}}</small>

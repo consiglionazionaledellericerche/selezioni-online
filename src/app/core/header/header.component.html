@@ -37,10 +37,11 @@
               <div *ngSwitchCase="true" class="nav-item dropdown" dropdown placement="bottom right">
                 <a aria-expanded="false" class="dropdown-toggle pr-2" dropdownToggle
                    data-toggle="dropdown" href="javascript:">
-                  <span>
-                    <i class="fa fa-fw fa-user pr-1" aria-hidden="true"></i>
-                  </span>
-                  <span class="d-none d-md-block">{{user.firstName}} {{user.lastName}}</span>
+                  <div class="avatar size-sm">
+                    <p aria-hidden="true" class="text-monospace">{{user.firstName|firstLetter}}{{user.lastName|firstLetter}}</p>
+                    <span class="sr-only">{{user.firstName|capitalizeFirst}} {{user.lastName|capitalizeFirst}}</span>
+                  </div>
+                  <span class="d-none d-md-block pl-1">{{user.firstName|capitalizeFirst}}{{user.lastName|capitalizeFirst}}</span>
                   <svg class="icon icon-white">
                     <use
                       xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
