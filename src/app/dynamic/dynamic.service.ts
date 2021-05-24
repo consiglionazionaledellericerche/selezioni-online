@@ -141,7 +141,7 @@ export class DynamicService {
             upload: false
           }
         },
-        'affix_tabProdotti' : {
+        'affix_tabElencoProdotti' : {
           model: Application,
           showcomponent: JcononAffixAllegatiComponent,
           params: {
