@@ -137,7 +137,7 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
 
   private pageableResult(pageResult: Page<T>) {
     this.loading = false;
-    this.hasMoreItems = pageResult.hasMoreItems||true;
+    this.hasMoreItems = pageResult.hasMoreItems;
     this.setItems(pageResult.items);
     this.count = pageResult.count;
     if (!this.initialized) {
@@ -272,7 +272,7 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
         this.filterFormValue())
         .subscribe((pageResult: Page<T>) => {
           this.loading = false;
-          this.hasMoreItems = pageResult.hasMoreItems||true;
+          this.hasMoreItems = pageResult.hasMoreItems;
           this.setItems(this.getItems().concat(pageResult.items));
           this.count = pageResult.count;
           if (!this.initialized) {
@@ -295,7 +295,7 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
       this.filterFormValue())
       .subscribe((pageResult: Page<T>) => {
         this.loading = false;
-        this.hasMoreItems = pageResult.hasMoreItems||true;
+        this.hasMoreItems = pageResult.hasMoreItems;
         this.setItems(pageResult.items);
         this.count = pageResult.count;
         if (!this.initialized) {
