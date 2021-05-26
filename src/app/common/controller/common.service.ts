@@ -163,7 +163,7 @@ export abstract class CommonService<T extends Base> {
                     const instance: T = this._buildInstance(item);
                     return instance;
                   });
-                  return new Page(items, result.count, result.offset, result.page);
+                  return new Page(items, result.count, result.offset, result.page, result.hasMoreItems);
                 } catch (ex) {
                   this.apiMessageService.sendMessage(MessageType.ERROR, ex.message);
                   observableThrowError(ex);

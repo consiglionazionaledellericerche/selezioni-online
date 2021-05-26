@@ -9,25 +9,23 @@ import { CommonService } from '../../../common/controller/common.service';
      `
     <div class="px-md-2">
 
-        <div *ngIf="loading ; else results_table" class="text-center">
+        <div *ngIf="loading" class="text-center">
           Caricamento ...
           <i class="fa fa-spinner fa-pulse fa-fw"></i>
         </div>
 
-        <ng-template #results_table>
-          <div *ngIf="count > 0; else nessun_item" >
-            <app-list-pagination *ngIf="!loading && showTotalOnTop && count > page_offset" [showPage]="false" [page]="page" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
+        <div *ngIf="count > 0; else nessun_item" >
+          <app-list-pagination *ngIf="!loading && showTotalOnTop && count > page_offset" [infiniteScroll]="infiniteScroll" [showPage]="false" [page]="page" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
 
-            <div class="row row-eq-height">
-              <ng-content></ng-content>
-            </div>
+          <div class="row row-eq-height">
+            <ng-content></ng-content>
           </div>
-        </ng-template>
+        </div>
 
         <!-- Paging -->
-        <app-list-pagination *ngIf="!loading" [page]="page" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
+        <app-list-pagination *ngIf="!loading" [showPage]="showPage" [page]="page" [infiniteScroll]="infiniteScroll" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
 
-        <ng-template #nessun_item style="text-align: center;"> {{ 'no_item' | translate }}</ng-template>
+        <div *ngIf="!loading && count == 0" class="text-monospace text-center"> {{ 'no_item' | translate }}</div>
 
     </div>
     `,
@@ -44,6 +42,10 @@ export class GridLayoutComponent {
   @Input() page: 0;
 
   @Input() count = 0;
+
+  @Input() showPage = true;
+
+  @Input() infiniteScroll = false;
 
   @Input() page_offset = CommonService.PAGE_OFFSET;
 

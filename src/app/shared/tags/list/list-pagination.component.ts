@@ -46,6 +46,8 @@ export class ListPaginationComponent implements OnInit{
 
   @Input() page_offset = CommonService.PAGE_OFFSET;
 
+  @Input() infiniteScroll = false;
+
   @Output() onChangePage = new EventEmitter();
 
   public currentPage: number;
@@ -61,11 +63,15 @@ export class ListPaginationComponent implements OnInit{
   }
 
   public showFrom() {
-    return this.page * this.page_offset + 1;
+    if (this.infiniteScroll) {
+      return 1;
+    } else {
+      return this.page * this.page_offset + 1;
+    }
   }
 
   public showTo() {
-    const to = this.showFrom() + this.page_offset;
+    const to = this.infiniteScroll ? (this.page + 1) * this.page_offset + 1 : this.showFrom() + this.page_offset;
     return to > this.count ? this.count : to - 1;
   }
 }

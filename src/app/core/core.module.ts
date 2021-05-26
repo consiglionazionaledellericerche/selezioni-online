@@ -43,10 +43,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // import ngx-translate and the http loader
 import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient} from '@angular/common/http';
 import { CustomTranslationCompiler } from '../common/helpers/translation-compiler';
 
@@ -86,6 +86,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     AuthModule,
     FormsModule,
     ReactiveFormsModule,
+    InfiniteScrollModule,
     ButtonsModule.forRoot(),
     TranslateModule.forChild({
       compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},

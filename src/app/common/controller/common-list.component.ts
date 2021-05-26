@@ -31,6 +31,8 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
 
   public searching = false;
 
+  public hasMoreItems = true;
+
   // -------------------------------
   // Costruttore
   // -------------------------------
@@ -121,6 +123,7 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
   private executePageable(): Observable<Page<T>> {
     this.initialized = true;
     this.loading = true;
+    this.hasMoreItems = true;
     setTimeout(() => {
       if (this.changeDetector && !(this.changeDetector as ViewRef).destroyed) {
         this.changeDetector.detectChanges();
@@ -134,6 +137,7 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
 
   private pageableResult(pageResult: Page<T>) {
     this.loading = false;
+    this.hasMoreItems = pageResult.hasMoreItems||true;
     this.setItems(pageResult.items);
     this.count = pageResult.count;
     if (!this.initialized) {
@@ -255,24 +259,28 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
   }
 
   loadMoreItems() {
-    this.initialized = true;
-    this.loading = true;
-    this.navigationService.setPage(
-      this.service.getRoute(), 
-      this.navigationService.getPage(this.service.getRoute()) + 1
-    );
-    this.service.getPageable(
-      this.navigationService.getPage(this.service.getRoute()), 
-      this.filterFormValue())
-      .subscribe((pageResult: Page<T>) => {
-        this.loading = false;
-        this.setItems(this.getItems().concat(pageResult.items));
-        this.count = pageResult.count;
-        if (!this.initialized) {
-          this.initialized = true;
-        }
-        this.changeDetector.detectChanges();
-      });
+    if (this.hasMoreItems) {
+      this.initialized = true;
+      this.loading = true;
+      this.hasMoreItems = true;
+      this.navigationService.setPage(
+        this.service.getRoute(), 
+        this.navigationService.getPage(this.service.getRoute()) + 1
+      );
+      this.service.getPageable(
+        this.navigationService.getPage(this.service.getRoute()), 
+        this.filterFormValue())
+        .subscribe((pageResult: Page<T>) => {
+          this.loading = false;
+          this.hasMoreItems = pageResult.hasMoreItems||true;
+          this.setItems(this.getItems().concat(pageResult.items));
+          this.count = pageResult.count;
+          if (!this.initialized) {
+            this.initialized = true;
+          }
+          this.changeDetector.detectChanges();
+        });  
+    }
   }
 
   onTermChanged(event: any, field: string) {
@@ -287,6 +295,7 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
       this.filterFormValue())
       .subscribe((pageResult: Page<T>) => {
         this.loading = false;
+        this.hasMoreItems = pageResult.hasMoreItems||true;
         this.setItems(pageResult.items);
         this.count = pageResult.count;
         if (!this.initialized) {
