@@ -14,11 +14,15 @@ import { CommonService } from '../../../common/controller/common.service';
           <i class="fa fa-spinner fa-pulse fa-fw"></i>
         </div>
 
-        <div *ngIf="count > 0; else nessun_item" >
+        <div *ngIf="count > 0">
           <app-list-pagination *ngIf="!loading && showTotalOnTop && count > page_offset" [infiniteScroll]="infiniteScroll" [showPage]="false" [page]="page" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
 
           <div class="row row-eq-height">
             <ng-content></ng-content>
+          </div>
+          <div *ngIf="loading && infiniteScroll" class="text-center">
+            Caricamento ...
+            <i class="fa fa-spinner fa-pulse fa-fw"></i>
           </div>
         </div>
 
