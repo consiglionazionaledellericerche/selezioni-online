@@ -10,7 +10,7 @@ services:
     network_mode: bridge
     labels:
       SERVICE_NAME: ##{SERVICE_NAME}##
-      PUBLIC_NAME: democnr.agid.gov.it
+      PUBLIC_NAME: selezioni-online.si.cnr.it
     extra_hosts:
       - "cool-jconon.test.si.cnr.it:150.146.206.186"
     tmpfs:
