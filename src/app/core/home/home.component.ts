@@ -1,10 +1,14 @@
-import {Component, ElementRef, NgZone, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {CacheService} from '../cache.service';
-import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { CacheService } from '../cache.service';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  styles: [
+    'a.list-group-item-action {text-decoration: none}',
+    '.active > .icon {fill: white! important}'
+  ]
 })
 export class HomeComponent implements OnInit {
   

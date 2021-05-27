@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  zuul_uri: 'https://selezionionline.cnr.it/jconon'
+  zuul_uri: 'http://cool-jconon.test.si.cnr.it'
 };

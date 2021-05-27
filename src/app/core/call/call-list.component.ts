@@ -78,8 +78,8 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
   `,
   animations: [
     trigger('scale', [
-      transition('* <=> *', animate('500ms ease-in-out', keyframes([
-        style({ transform: 'scale(0.5)' }),
+      transition('void => *', animate('500ms ease-in-out', keyframes([
+        style({ transform: 'scale(0.3)' }),
         style({ transform: 'scale(1)' })
       ]))) 
     ])
