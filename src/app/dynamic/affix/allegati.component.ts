@@ -19,8 +19,8 @@ import { LoadingState } from '../../auth/loading-state.enum';
         <accordion [isAnimated]="true" [closeOthers]="true" class="shadow">
           <ng-container *ngFor="let attachment of data.call[callProperty]">
             <accordion-group #accordionGroup panelClass="border border-light no-after">
-              <div class="d-flex" accordion-heading>
-                <h4 class="p-1 text-truncate text-primary" translate>{{attachment}}</h4>
+              <div class="d-flex align-items-start" accordion-heading>
+                <h4 #title class="p-1 text-truncate text-primary" [popover]="getTitle(attachment, title)| translate" triggers="mouseenter:mouseleave" translate>{{attachment}}</h4>
                 <span class="badge badge-pill badge-outline-primary d-table ml-n1" [ngClass]="{'badge-outline-danger': childrenlist.count === 0}">{{childrenlist.count}}</span>
                 <div class="mr-auto p-1 h4">
                   <button class="btn p-0" [popover]="'new'| translate" triggers="mouseenter:mouseleave" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
@@ -167,6 +167,13 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
       return false; 
     }
 
+    getTitle(attachment: string, element: any) {
+      if (element.scrollWidth > element.clientWidth) {
+        return attachment;
+      }
+      return undefined;
+    }
+  
     ngOnDestroy() {
       this.subscription.unsubscribe();
     }  
