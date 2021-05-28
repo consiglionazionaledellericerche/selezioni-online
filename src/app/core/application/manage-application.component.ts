@@ -73,11 +73,11 @@ import { PrintApplicationComponent } from './print-application.component';
           <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
           <div class="steppers">
             <nav class="steppers-nav px-0">
-              <a [ngClass]="{'disabled': (affixCompleted == 0 || !form.pristine) || isDisableConfirm}" 
+              <a [ngClass]="{'disabled': (affixCompleted == 0 || !form.pristine) && !isDisableConfirm}" 
                 (click)="affixCompleted = affixCompleted - 1;scroll(cardApplication);" 
                 class="btn btn-link text-primary steppers-btn-prev px-1">
                 <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-left"></use></svg>
-                <span>Indietro</span>
+                <span translate>previous</span>
               </a>
               <ul class="steppers-dots d-flex">
                 <li *ngFor="let number of affix" 
@@ -89,10 +89,10 @@ import { PrintApplicationComponent } from './print-application.component';
                     (click)="affixCompleted = number;scroll(cardApplication);"></a>
                 </li>
               </ul>
-              <a [ngClass]="{'disabled': (affixCompleted == affix.length - 1 || !form.pristine) || isDisableConfirm}" 
+              <a [ngClass]="{'disabled': affixCompleted == affix.length - 1 || !form.pristine}" 
                 (click)="affixCompleted = affixCompleted + 1;scroll(cardApplication);" 
                 class="btn btn-link text-primary steppers-btn-next px-1">
-                <span>Avanti</span>
+                <span translate>next</span>
                 <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-right"></use></svg>
               </a>
             </nav>
