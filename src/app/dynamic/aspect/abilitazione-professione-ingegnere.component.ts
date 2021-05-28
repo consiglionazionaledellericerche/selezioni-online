@@ -162,7 +162,7 @@ export class JcononAspectAbilitazioneProfessioneIngegnereComponent extends Dynam
       this.addRequiredValidatorForm('jconon_application:data_abilitazione_professione_ingegnere',
         this.data.call, Validators.required, this.isToggle() && this.isIscrizioneAlbo(), reset);
       this.addRequiredValidatorForm('jconon_application:fl_iscrizione_albo_professione_ingegnere',
-        this.data.call, Validators.requiredTrue, this.isToggle() && this.isIscrizioneAlbo(), reset);
+        this.data.call, Validators.requiredTrue, this.isToggle(), reset);
       this.onChangeIscrizione(reset);
     }
 
