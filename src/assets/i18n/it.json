@@ -273,7 +273,10 @@
       },
       "requirements": "Requisiti",
       "struttura": "Struttura di riferimento",
-      "sede": "Sede di Lavoro"
+      "sede": "Sede di Lavoro",
+      "message": {
+        "no_item": "Non ci sono bandi che corrispondono ai criteri di ricerca impostati!<br><a href=\"https://www.cnr.it/it/concorsi-opportunita\">Consultare le altre voci della pagina Concorsi e opportunità del sito CNR</a>"
+      }
     },
     "menuitem": {
       "application": "Domande"

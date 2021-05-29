@@ -13,8 +13,17 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
   template:
   `
     <!-- List -->
-    <app-grid-layout [loading]="loading" [items]="items" [showPage]="false" [infiniteScroll]="true" [page]="getPage()" [showTotalOnTop]="showTotalOnTop"
-                     [count]="count" (onChangePage)="onChangePage($event)" [page_offset]="pageOffset">
+    <app-grid-layout 
+      [loading]="loading" 
+      [items]="items"
+      [noItem]="'call.search.message.no_item'" 
+      [showPage]="false" 
+      [infiniteScroll]="true" 
+      [page]="getPage()" 
+      [showTotalOnTop]="showTotalOnTop"
+      [count]="count" 
+      (onChangePage)="onChangePage($event)" 
+      [page_offset]="pageOffset">
       <div class="row row-eq-height w-100" 
           infiniteScroll       
           [infiniteScrollThrottle]="300"

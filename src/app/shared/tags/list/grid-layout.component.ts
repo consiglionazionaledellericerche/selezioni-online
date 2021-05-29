@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {Table} from '../../../common/model/table.model';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Table } from '../../../common/model/table.model';
 import { CommonService } from '../../../common/controller/common.service';
 
 @Component({
@@ -29,7 +29,7 @@ import { CommonService } from '../../../common/controller/common.service';
         <!-- Paging -->
         <app-list-pagination *ngIf="!loading" [showPage]="showPage" [page]="page" [infiniteScroll]="infiniteScroll" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
 
-        <div *ngIf="!loading && count == 0" class="text-monospace text-center"> {{ 'no_item' | translate }}</div>
+        <div *ngIf="!loading && count == 0" class="alert alert-warning text-monospace" innerHtml="{{ noItem | translate }}"></div>
 
     </div>
     `,
@@ -40,6 +40,8 @@ export class GridLayoutComponent {
   @Input() table: Table = null;
 
   @Input() loading : boolean;
+
+  @Input() noItem : string = 'no_item';
 
   @Input() items = [];
 

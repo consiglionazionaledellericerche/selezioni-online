@@ -34,7 +34,7 @@ import { Application } from './application.model';
             <ul class="it-list">
               <li *ngFor="let version of historyDocument" class="pb-2">
                 <a>  
-                  <div class="d-flex">
+                  <div class="d-flex align-items-start">
                     <small class="text-monospace" translate>document.history.version</small>
                     <span (click)="onDownload(version.objectId, version.name)" class="badge ml-2 h6 d-table c-pointer" [ngClass]="{'badge-primary': version.isMajorVersion, 'badge-secondary': !version.isMajorVersion}">{{version.versionLabel}}</span>
                     <small class="text-monospace ml-2">{{'document.history.detail'| translate:{contentStreamLength: version.getFileSize(), lastModificationDate: version.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</small>
@@ -56,7 +56,7 @@ import { Application } from './application.model';
               (click)="onHistory()" translate>application.print.old <i class="fa fa-list-ol" aria-hidden="true"></i> 
             </button>
           </div>
-          <div *ngIf="application.isProvvisoria()" class="ml-auto">
+          <div *ngIf="application.isProvvisoria()" class="ml-auto pl-2">
             <button class="btn btn-outline-secondary btn-block rounded"
                   (click)="onPrint()" translate>application.print.new <i class="fa fa-plus-circle" aria-hidden="true"></i>
             </button>
