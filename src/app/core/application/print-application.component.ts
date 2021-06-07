@@ -14,7 +14,7 @@ import { Application } from './application.model';
   template: `
       <div class="modal-header border-bottom">
         <h3 *ngIf="!history" class="modal-title pull-left text-primary pb-2 text-truncate"><i class="fa fa-info-circle"></i> {{'application.print.application'|translate}}</h3>
-        <h3 *ngIf="history" class="modal-title pull-left text-success pb-2 text-truncate"><i class="fa fa-list-ol"></i> {{'document.history.title'|translate}}</h3>
+        <h3 *ngIf="history" class="modal-title pull-left text-success pb-2 text-truncate"><i class="fa fa-history"></i> {{'document.history.title'|translate}}</h3>
         <button *ngIf="history" type="button" class="close pull-right" aria-label="Close" (click)="history = false">
           <svg class="icon">
             <use xlink:href="/assets/vendor/sprite.svg#it-restore"></use>
@@ -53,7 +53,7 @@ import { Application } from './application.model';
           </div>
           <div *ngIf="lastPrint" class="pl-2">
             <button class="btn btn-success btn-block rounded"
-              (click)="onHistory()" translate>application.print.old <i class="fa fa-list-ol" aria-hidden="true"></i> 
+              (click)="onHistory()" translate>application.print.old <i class="fa fa-history" aria-hidden="true"></i> 
             </button>
           </div>
           <div *ngIf="application.isProvvisoria()" class="ml-auto pl-2">

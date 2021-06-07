@@ -91,6 +91,7 @@ import { User } from '../../auth/model/user.model';
         <div class="form-row">
           <div class="form-group col-md-4">
             <app-control-text 
+              [prepend]="'phone'"
               type="text" 
               [inline]="true" 
               [label]="'label.jconon_application.telefono_comunicazioni'| translate" 
@@ -100,12 +101,14 @@ import { User } from '../../auth/model/user.model';
           <div class="form-group col-md-8">
             <app-control-text
               *ngIf="isForeign()" 
+              [prependText]="'@'"
               type="text" 
               [inline]="true" 
               [label]="'label.jconon_application.email_comunicazioni'| translate" 
               formControlName="jconon_application:email_comunicazioni">
             </app-control-text>
             <app-control-text
+              [prependText]="'@'"
               *ngIf="!isForeign()" 
               type="text" 
               [inline]="true" 

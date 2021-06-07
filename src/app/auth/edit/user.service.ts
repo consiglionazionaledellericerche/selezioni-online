@@ -45,7 +45,7 @@ export class UserService extends CommonService<User> {
 
   public existingEmail(email: string, id: string): Observable<boolean> {
     return this.getBoolean('/existingemail', new HttpParams()
-      .set('email', encodeURIComponent(email.toLowerCase()))
+      .set('email', email.toLowerCase())
       .set('id', id ? id : ''));
   }
 

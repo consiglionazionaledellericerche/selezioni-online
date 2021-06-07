@@ -862,6 +862,10 @@ export class DynamicService {
         }
     }
     
+    isComponentDefined(selector: string): boolean {
+      return this.classes[selector] && this.classes[selector].showcomponent;
+    }
+
     getComponent(selector: string): any {
         var instance = this.classes[selector];
         if (instance && instance.showcomponent)
