@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Input, OnInit, Directive } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { CmisObject } from "../common/model/cmisobject.model";
 import { ObjectType } from "../common/model/object-type.model";
@@ -7,6 +7,7 @@ import { CacheService } from "../core/cache.service";
 import { Call } from "../core/call/call.model";
 import { AdMetadataComponent } from "../shared/tags/show/ad-metadata.component";
 
+@Directive()
 export abstract class DynamicComponent<T extends CmisObject> implements AdMetadataComponent, OnInit{
     @Input() data: T;
     @Input() form: FormGroup;

@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   cache: any = {};
   public filterFormHome: FormGroup;
   public callCode: String;
-  @ViewChild('callList', {static: false}) callList: ElementRef;
+  @ViewChild('callList') callList: ElementRef;
   
   constructor(
     private formBuilder: FormBuilder,

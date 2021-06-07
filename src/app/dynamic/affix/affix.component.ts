@@ -1,8 +1,9 @@
-import { ChangeDetectorRef } from "@angular/core";
+import { ChangeDetectorRef, Directive } from "@angular/core";
 import { CacheService } from "../../core/cache.service";
 import { Application } from "../../core/application/application.model";
 import { DynamicComponent } from "../dynamic.component";
 
+@Directive()
 export abstract class AffixComponent extends DynamicComponent<Application>{
     constructor(
       protected cacheService: CacheService,

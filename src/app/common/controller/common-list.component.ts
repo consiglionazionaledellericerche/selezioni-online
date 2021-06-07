@@ -5,13 +5,14 @@ import {debounceTime, switchMap, map} from 'rxjs/operators';
 import {CommonService} from './common.service';
 import {Page} from '../model/page.model';
 import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
-import {ChangeDetectorRef, OnDestroy, OnInit, Input, ViewRef} from '@angular/core';
+import { ChangeDetectorRef, OnDestroy, OnInit, Input, ViewRef, Directive } from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {Breadcrumbs} from '../model/breadcrumbs.model';
 
 import {NavigationService} from '../../core/navigation.service';
 import { CmisObject } from '../model/cmisobject.model';
 
+@Directive()
 export abstract class CommonListComponent<T extends CmisObject> implements OnInit, OnDestroy {
 
   public count = 0;

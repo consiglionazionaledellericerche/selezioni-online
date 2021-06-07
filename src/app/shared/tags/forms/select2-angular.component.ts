@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 // declare var jquery: any;   // not required
 declare var $: any;   // not required
+@Directive()
 export abstract class Select2AngularComponent extends FormCommonTag {
 
   public static ADD_ANOTHER = 'Aggiungi altri elementi';

@@ -176,10 +176,10 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     y:0,
     time:0
   };
-  @ViewChild('affixComponent', {static: false}) affixComponent: ShowAffixComponent;
-  @ViewChild('cardApplication', {static: false}) cardApplication: ElementRef;
-  @ViewChild('confirmApplicationButton', {static: false}) confirmApplicationButton: ElementRef;
-  @ViewChild('sendApplicationButton', {static: false}) sendApplicationButton: ElementRef;
+  @ViewChild('affixComponent') affixComponent: ShowAffixComponent;
+  @ViewChild('cardApplication') cardApplication: ElementRef;
+  @ViewChild('confirmApplicationButton') confirmApplicationButton: ElementRef;
+  @ViewChild('sendApplicationButton') sendApplicationButton: ElementRef;
 
   public constructor(public service: ApplicationService,
                      public callService: CallService,

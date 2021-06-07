@@ -64,7 +64,7 @@ export class FormLayoutComponent {
 
   @Input() labelactive;
 
-  @ViewChild('label', {static: false}) labelElement: ElementRef;
+  @ViewChild('label') labelElement: ElementRef;
 
   /*
     Utils.
