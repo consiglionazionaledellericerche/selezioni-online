@@ -44,7 +44,7 @@
     "jquery": "^3.5.0",
     "json2typescript": "^1.4.1",
     "nativescript-angular": "~8.21.0",
-    "ngx-bootstrap": "^5.6.1",
+    "ngx-bootstrap": "^6.2.0",
     "ngx-color-picker": "^6.5.0",
     "ngx-infinite-scroll": "^10.0.1",
     "popper.js": "^1.14.3",
@@ -58,7 +58,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.901.15",
+    "@angular-devkit/build-angular": "^12.0.3",
     "@angular/cli": "~12.0.3",
     "@angular/compiler-cli": "~12.0.3",
     "@angular/language-service": "~12.0.3",
@@ -79,7 +79,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "nativescript-dev-webpack": "^0.16.1",
+    "nativescript-dev-webpack": "^1.5.1",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
