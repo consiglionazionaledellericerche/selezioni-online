@@ -5,10 +5,11 @@ import {FormGroup} from '@angular/forms';
 import {CommonService} from './common.service';
 import {SpringError} from '../model/spring-error.model';
 import {ValidationHelper} from '../validation/validation-helper';
-import {OnInit} from '@angular/core';
+import { OnInit, Directive } from '@angular/core';
 import {Breadcrumbs} from '../model/breadcrumbs.model';
 import {Base} from '../model/base.model';
 
+@Directive()
 export abstract class CommonEditComponent<T extends Base> implements OnInit {
 
   public entity: T;
