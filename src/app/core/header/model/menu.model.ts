@@ -7,7 +7,8 @@ export class Menu {
               public items: MenuItem[],
               public path: string = '',
               public type: string = 'navbar',
-              public active: boolean = false) {}
+              public active: boolean = false,
+              public method: string = 'GET') {}
 
   /**
    * Il menu è attivo se almeno un item è attivo.
@@ -21,5 +22,13 @@ export class Menu {
       }
     });
     return active;
+  }
+
+  isNavbar(): boolean {
+    return this.type === 'navbar';
+  }
+
+  isSidebar(): boolean {
+    return this.type === 'sidebar';
   }
 }

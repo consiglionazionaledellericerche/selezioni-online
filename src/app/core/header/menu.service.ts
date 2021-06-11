@@ -1,17 +1,14 @@
 
-import {throwError as observableThrowError, Subject, Observable} from 'rxjs';
-
-import {catchError, map, switchMap} from 'rxjs/operators';
-
-import {Injectable, Injector} from '@angular/core';
-import {Menu} from './model/menu.model';
-import {MenuItem} from './model/menuitem.model';
-import {ServiceReg} from '../../auth/auth.module';
-import {NavbarMenu} from './model/navbar-menu.model';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {ConfigService} from '../config.service';
-import {ApiMessageService, MessageType} from '../api-message.service';
-import { path } from 'tns-core-modules/file-system/file-system';
+import { throwError as observableThrowError, of as observableOf, Subject, Observable } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { Injectable, Injector } from '@angular/core';
+import { Menu } from './model/menu.model';
+import { NavbarMenu } from './model/navbar-menu.model';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ConfigService } from '../config.service';
+import { ApiMessageService, MessageType } from '../api-message.service';
+import { CacheService } from '../cache.service';
+import { MenuItem } from './model/menuitem.model';
 
 @Injectable()
 export class MenuService {
@@ -25,6 +22,7 @@ export class MenuService {
   public constructor(private injector: Injector,
                      private configService: ConfigService,
                      private apiMessageService: ApiMessageService,
+                     private cacheService: CacheService,
                      protected httpClient: HttpClient) {}
 
   public destroyNavbar() {
@@ -35,38 +33,54 @@ export class MenuService {
   /**
    * Costruisce gli oggetti del menu.
    */
-  public buildNavbar() {
+  public buildNavbar() : Observable<NavbarMenu> {
+    return this.cacheService.cache().pipe(switchMap((cache) => {
+      const application = new Menu('application.mine.title', 'folder-open', undefined, '/my-applications');
+      const application_user = new Menu('application.user.title', 'folder-open-o', undefined, '/applications-user', 'sidebar');
 
-    const application = new Menu('application.mine.title', 'folder-open', [], '/my-applications');
-    const application_user = new Menu('application.user.title', 'folder-open-o', [], '/applications-user', 'sidebar');
+      const helpdesk = new Menu('helpdesk.title', 'question-circle-o', undefined, '/configurazione/helpdesk');
+      const faq = new Menu('faq.title', 'question', undefined, '/configurazione/faq');
+      const contacts = new Menu('contacts.title', 'address-book-o', undefined, '/configurazione/contacts');
+      var callMenuItems : MenuItem[] = [];
+      cache.jsonlistCallType.forEach(callType => {
+        if (!callType.childs) {
+          callMenuItems.push(new MenuItem(callType.key, undefined, '/manage-call?call-type=' + callType.key, callType.label, 'PUT', callType.key));
+        }
+      });
+      const callMenu = new Menu('call.manage', undefined, callMenuItems, undefined, 'sidebar');
+      var adminMenuItems : MenuItem[] = [];
+      adminMenuItems.push(new MenuItem('menu.groups', undefined, '/groups', 'menu.groups', 'GET', 'groups'));
+      adminMenuItems.push(new MenuItem('menu.jsConsole', undefined, '/jsConsole', 'menu.jsConsole', 'GET', 'jsConsole'));
+      const adminMenu = new Menu('menu.admin', undefined, adminMenuItems, undefined, 'sidebar');
 
-    const helpdesk = new Menu('helpdesk.title', 'question-circle-o', [], '/configurazione/helpdesk');
-    const faq = new Menu('faq.title', 'question', [], '/configurazione/faq');
-    const contacts = new Menu('contacts.title', 'address-book-o', [], '/configurazione/contacts');
-
-    this.navbarMenu = new NavbarMenu([application, application_user, helpdesk, faq, contacts]);
-
+      return observableOf(new NavbarMenu([application, application_user, helpdesk, faq, contacts, callMenu, adminMenu]));
+    }));
   }
 
   /**
    * Valuta gli oggetti del menu.
    */
   public evaluateNavbar() {
-
-    // build
     if (!this.navbarMenu) {
-      this.buildNavbar();
+      this.buildNavbar().subscribe((navbarMenu) => {
+        this.navbarMenu = navbarMenu;
+        this.executePermittedPaths();  
+      });
+    } else {
+      this.executePermittedPaths();  
     }
+  }
 
+  private executePermittedPaths() {
     this.getPermittedPaths(this.navbarMenu.getPaths(this.injector)).subscribe(permittedPaths => {
       this.navbarMenu.evaluate(permittedPaths);
       this.navbarEvaluated.next(this.navbarMenu);
-    });
+    });  
   }
 
-  private getPermittedPaths(paths: string[]): Observable<string[]> {
+  private getPermittedPaths(paths: any[]): Observable<string[]> {
     return this.configService.getApiBase().pipe(switchMap((apiBase) => {
-      return this.httpClient.post<string[]>(apiBase + '/v1/pcheck', { 'paths': paths}).pipe(
+      return this.httpClient.post<string[]>(apiBase + '/v1/pcheck', paths).pipe(
         map((result) => {
           return result;
         }),catchError((httpErrorResponse: HttpErrorResponse) => {

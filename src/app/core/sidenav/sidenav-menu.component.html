@@ -10,11 +10,13 @@
         </div>
         <div class="link-list-wrapper">
             <ul class="link-list">
-                <li *ngFor="let menu of navbarMenu.menus">
-                    <a class="list-item medium" *ngIf="menu.active" (click)="toggle()" [routerLink]="[menu.path]" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="'active'">
-                    <span>{{ menu.name | translate}}</span>
-                    </a>
-                </li>
+                <ng-container *ngFor="let menu of navbarMenu.menus">
+                    <li *ngIf="menu.isNavbar()">
+                        <a class="list-item medium" *ngIf="menu.active" (click)="toggle()" [routerLink]="[menu.path]" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="'active'">
+                        <span>{{ menu.name | translate}}</span>
+                        </a>
+                    </li>    
+                </ng-container>
             </ul>
         </div>
     </div>

@@ -1,5 +1,5 @@
 <div *ngIf="!isCollapsed" @slideInOut class="sidenav fixed-top h-100 p-0 col-10 col-sm-8 col-lg-4 col-xl-3">
-    <nav class="bg-white bg-faded h-100">
+    <nav class="bg-white bg-faded h-100 overflow-auto">
         <ul class="list-group-flush p-0">
             <li class="list-group-item">
                 <div class="d-flex">
@@ -88,13 +88,37 @@
                     </ul>
                 </li>
             </ng-container>
-            <ng-container *ngFor="let menu of navbarMenu.menus">
-                <li *ngIf="menu.active && menu.path && menu.type == 'sidebar'" class="list-group-item">
-                    <a [routerLink]="[menu.path]" (click)="toggle()">
-                        <i *ngIf="menu.icon" class="fa fa-fw fa-{{menu.icon}}" aria-hidden="true"></i> {{ menu.name | translate}}
-                    </a>
-                </li>    
-            </ng-container>
+            <accordion [isAnimated]="true" [closeOthers]="true" class="shadow">
+                <ng-container *ngFor="let menu of navbarMenu.menus">
+                    <li *ngIf="menu.active && menu.path && menu.isSidebar()" class="list-group-item border-0">
+                        <a [routerLink]="[menu.path]" (click)="toggle()">
+                            <i *ngIf="menu.icon" class="fa fa-fw fa-{{menu.icon}}" aria-hidden="true"></i> {{ menu.name | translate}}
+                        </a>
+                    </li>
+                    <ng-container *ngIf="menu.active && menu.items && menu.isSidebar()">
+                            <accordion-group #accordionGroup panelClass="border border-light no-after mt-n1">
+                                <div class="d-flex align-items-start" accordion-heading>
+                                    <a class="font-weight-bold font-italic">{{menu.name| translate}}</a>
+                                    <div class="p-1 ml-auto">
+                                        <div class="float-right pull-right">
+                                            <svg class="icon icon-primary">
+                                            <use *ngIf="!accordionGroup.isOpen" xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
+                                            <use *ngIf="accordionGroup.isOpen" xlink:href="/assets/vendor/sprite.svg#it-collapse"></use>
+                                            </svg>
+                                        </div>                
+                                    </div>                          
+                                </div>
+                                <ng-container *ngFor="let item of menu.items">
+                                    <li class="list-group-item border-0 p-1" *ngIf="item.active">
+                                        <a [routerLink]="[item.path]" (click)="toggle()">
+                                            <span>{{ item.name | translate}}</span> 
+                                        </a>
+                                    </li>
+                                </ng-container>
+                            </accordion-group>
+                    </ng-container>
+                </ng-container>
+            </accordion>            
         </ul>
     </nav>
 </div>

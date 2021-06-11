@@ -44,6 +44,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 // import ngx-translate and the http loader
 import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -87,6 +88,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     FormsModule,
     ReactiveFormsModule,
     InfiniteScrollModule,
+    AccordionModule,
     ButtonsModule.forRoot(),
     TranslateModule.forChild({
       compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},

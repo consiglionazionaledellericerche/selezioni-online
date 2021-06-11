@@ -129,11 +129,13 @@
                     </a>
                   </div>
                   <ul class="navbar-nav">
-                    <li class="nav-item" *ngFor="let menu of navbarMenu.menus">
-                      <a class="nav-link" *ngIf="menu.active" [routerLink]="[menu.path]" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="'active'">
-                        <span>{{ menu.name | translate}}</span>
-                      </a>
-                    </li>
+                    <ng-container *ngFor="let menu of navbarMenu.menus">
+                      <li class="nav-item" *ngIf="menu.isNavbar()">
+                        <a class="nav-link" *ngIf="menu.active" [routerLink]="[menu.path]" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="'active'">
+                          <span>{{ menu.name | translate}}</span>
+                        </a>
+                      </li>  
+                    </ng-container>
                   </ul>
                   <div class="it-search-wrapper cloned" *ngIf="isSticky">
                     <span class="d-none d-md-block">{{'search'|translate}}</span>

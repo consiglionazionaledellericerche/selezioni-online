@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/model/user.model';
 import { Subscription } from 'rxjs';
@@ -123,6 +123,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public onLogout() {
     this.authService.logout();
+    this.menuService.destroyNavbar();
     this.showNotification(MessageType.SUCCESS, 'Logout effettuato');
   }
 

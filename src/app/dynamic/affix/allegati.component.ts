@@ -63,7 +63,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
                       <use *ngIf="!accordionGroup.isOpen" xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
                       <use *ngIf="accordionGroup.isOpen" xlink:href="/assets/vendor/sprite.svg#it-collapse"></use>
                     </svg>
-                  </div>                
+                  </div>
                 </div>
               </div>
               <children-list #childrenlist [show_date]="true" [parentId]="data.objectId" [typeId]="attachment"></children-list>

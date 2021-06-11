@@ -86,6 +86,11 @@
   "name": "Nome",
   "title": "Titolo",
   "description": "Descrizione",
+  "menu": {
+    "admin": "Amministratore",
+    "groups": "Gruppi",
+    "jsConsole": "Console"
+  },
   "message": {
     "validation": {
       "required": "Campo obbligatorio!",
@@ -258,6 +263,7 @@
     "attach_to": "Allegati al Bando {{value}}",
     "filter_for_code": "Filtra per tipologia",
     "remove_filter_for_code": "Rimuovi filtro per la tipologia",
+    "manage": "Configura nuovo Bando",
     "search" : {
       "title": "Filtra Bandi",
       "code": "Codice bando",
