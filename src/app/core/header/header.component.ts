@@ -2,15 +2,18 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/model/user.model';
 import { Subscription } from 'rxjs';
-import {ApiMessage, ApiMessageService, MessageType} from '../api-message.service';
-import {NotificationsService} from 'angular2-notifications';
-import {ServiceReg} from '../../auth/auth.module';
-import {MenuService} from './menu.service';
-import {NavbarMenu} from './model/navbar-menu.model';
-import {TranslateService, LangChangeEvent} from '@ngx-translate/core';
+import { ApiMessage, ApiMessageService, MessageType} from '../api-message.service';
+import { NotificationsService} from 'angular2-notifications';
+import { ServiceReg} from '../../auth/auth.module';
+import { MenuService} from './menu.service';
+import { NavbarMenu} from './model/navbar-menu.model';
+import { TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SidenavComponent } from '../sidenav/sidenav.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { SidenavMenuComponent } from '../sidenav/sidenav-menu.component';
 
 @Component({
   selector: 'app-header1',
@@ -53,6 +56,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private apiMessageService: ApiMessageService,
               private translateService: TranslateService,
+              private modalService: BsModalService,
               private titleService: Title,
               private formBuilder: FormBuilder,
               private router: Router,
@@ -73,6 +77,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     this.onUserActivated = this.authService.userActivated.subscribe((user: User) => {
       if (user != null) {
+        this.sidebarToggle();
         this.user = user;
         this.showNotification(MessageType.SUCCESS, 'Bentornato ' + this.user.userName);
       } else {
@@ -123,7 +128,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public onLogout() {
     this.authService.logout();
-    this.menuService.destroyNavbar();
     this.showNotification(MessageType.SUCCESS, 'Logout effettuato');
   }
 
@@ -166,10 +170,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   sidebarToggle() {
     this.menuService.sidebarEvaluated.next();
+    this.modalService.show(SidenavComponent, Object.assign({}, { animated: true, class: 'modal-dialog-left' }));
   }
 
   sidebarMenuToggle() {
-    this.menuService.sidebarMenuEvaluated.next();
+    this.modalService.show(SidenavMenuComponent, Object.assign({}, { animated: true, class: 'modal-dialog-right' }));
   }
 
   @HostListener('window:scroll', ['$event', '$event.target'])

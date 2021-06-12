@@ -11,6 +11,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import {ApiMessageService, MessageType} from '../core/api-message.service';
 import {Injectable} from '@angular/core';
 import {ConfigService} from '../core/config.service';
+import { MenuService } from '../core/header/menu.service';
 
 @Injectable()
 export class AuthService {
@@ -28,6 +29,7 @@ export class AuthService {
 
   constructor(private router: Router,
               private httpClient: HttpClient,
+              private menuService: MenuService,
               private apiMessageService: ApiMessageService,
               private configService: ConfigService) {}
 
@@ -130,6 +132,7 @@ export class AuthService {
   public logout() {
     this.logoutUser().subscribe((result) => {
       this.setToken(null);
+      this.menuService.destroyNavbar();
       this.userActivated.next(null);
       this.router.navigate(['']);
     });

@@ -118,7 +118,6 @@ export class ListItemApplicationComponent {
       'application': this.item
     };
     this.modalService.show(PrintApplicationComponent, Object.assign({initialState}, { animated: true, class: 'modal-dialog-left' }));
-
   }
 
   public canEditApplication(): boolean {

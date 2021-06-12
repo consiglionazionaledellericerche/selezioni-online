@@ -1,8 +1,8 @@
-<div *ngIf="!isCollapsed" @slideInOut class="sidenav fixed-top h-100 p-0 col-10 col-sm-8 col-lg-4 col-xl-3">
+<div class="sidenav fixed-top h-100">
     <nav class="bg-white bg-faded h-100 overflow-auto">
         <ul class="list-group-flush p-0">
-            <li class="list-group-item">
-                <div class="d-flex">
+            <li class="list-group-item" *ngIf="user">
+                <div class="d-flex border-bottom border-light">
                     <div>
                         <div class="avatar avatar-primary size-lg">
                             <p aria-hidden="true" class="text-monospace">{{user.firstName|firstLetter}}{{user.lastName|firstLetter}}</p>
@@ -14,7 +14,7 @@
                         <span class="pl-1">{{user.lastName|capitalizeFirst}}</span>
                     </div>
                     <div class="ml-auto">
-                        <a class="btn btn-link p-0" (click)="toggle()">
+                        <a class="btn btn-link p-0" (click)="hide()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
                                     <use xlink:href="/assets/vendor/sprite.svg#it-close-big"></use>
@@ -33,9 +33,9 @@
                         <small class="pl-1 font-weight-bold">{{user.getEmail()}}</small>
                     </div>    
                 </div>
-                <div class="row no-gutters">
-                    <div class="col-6">
-                        <a class="btn btn-link" [routerLink]="['/create-account']" (click)="toggle()">
+                <div class="d-flex no-gutters">
+                    <div>
+                        <a class="btn btn-link" [routerLink]="['/create-account']" (click)="hide()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
                                     <use xlink:href="/assets/vendor/sprite.svg#it-settings"></use>
@@ -44,7 +44,7 @@
                             <span>{{'user.settings'|translate}}</span> 
                         </a>
                     </div>
-                    <div class="col-6">
+                    <div>
                         <a class="btn btn-link" [routerLink]="['/']" (click)="onLogout()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
@@ -74,7 +74,7 @@
                         <h6 class="font-weight-light font-italic">{{'application.all'| translate}}</h6>
                         <ng-container *ngFor="let state of applicationsState">
                             <li class="list-group-item border-bottom-0 p-1">                         
-                                <a class="h6" [routerLink]="['/my-applications']" [queryParams]="{applicationStatus: state.getFilterStato()}" routerLinkActive="active" (click)="toggle()">
+                                <a class="h6" [routerLink]="['/my-applications']" [queryParams]="{applicationStatus: state.getFilterStato()}" routerLinkActive="active" (click)="hide()">
                                     <span>{{ state.getLabel() | translate}}</span> 
                                     <span class="badge badge-pill float-right" 
                                         [ngClass]="{
@@ -88,10 +88,10 @@
                     </ul>
                 </li>
             </ng-container>
-            <accordion [isAnimated]="true" [closeOthers]="true" class="shadow">
+            <accordion [isAnimated]="true" [closeOthers]="true" class="shadow" *ngIf="navbarMenu && navbarMenu.menus">
                 <ng-container *ngFor="let menu of navbarMenu.menus">
                     <li *ngIf="menu.active && menu.path && menu.isSidebar()" class="list-group-item border-0">
-                        <a [routerLink]="[menu.path]" (click)="toggle()">
+                        <a [routerLink]="[menu.path]" (click)="hide()">
                             <i *ngIf="menu.icon" class="fa fa-fw fa-{{menu.icon}}" aria-hidden="true"></i> {{ menu.name | translate}}
                         </a>
                     </li>
@@ -110,7 +110,7 @@
                                 </div>
                                 <ng-container *ngFor="let item of menu.items">
                                     <li class="list-group-item border-0 p-1" *ngIf="item.active">
-                                        <a [routerLink]="[item.path]" (click)="toggle()">
+                                        <a [routerLink]="[item.path]" (click)="hide()">
                                             <span>{{ item.name | translate}}</span> 
                                         </a>
                                     </li>
