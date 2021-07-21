@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, SimpleChanges} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
 import { CommonListComponent} from '../../common/controller/common-list.component';
 import { ActivatedRoute, Router} from '@angular/router';
 import { FormControl, FormGroup} from '@angular/forms';
@@ -29,12 +29,11 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
         <app-list-item-document [item]="item" (onDelete)="onDelete(item)" (onEdit)="onEdit(item)">
           <div class="col-sm-12 font-weight-bolder"> 
-            <a 
-              class="pl-0 pb-0 text-truncate d-block"
-              href="javascript:"
+            <button 
+              class="btn btn-link pl-0 pb-0 text-truncate"
               (click)="getBlob(item.objectId, item.name)">
               <i class="fa fa-fw {{ item.getMimeTypeIcon() }}"></i> {{ item.name }}
-            </a>
+            </button>
           </div>
           <div class="col-sm-12 pt-1">{{item.objectTypeId | translate}}</div> 
           <div class="col-sm-12 pt-1">
@@ -137,5 +136,4 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
   protected isScrollTopOnPageChange(): boolean {
     return false;
   }
-
 }

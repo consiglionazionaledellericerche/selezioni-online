@@ -12,9 +12,9 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
     <div *ngIf="item" class="h-100 hover-shadow">
       <div class="card card-bg border-bottom-card h-100">        
         <div class="card-header pl-2 py-2">
-          <div class="d-flex">
-            <svg class="icon icon-primary bg-white">
-              <use xlink:href="/assets/vendor/sprite.svg#it-card"></use>
+          <div class="d-flex align-items-center">
+            <svg class="icon icon-primary">
+              <use xlink:href="/assets/vendor/sprite.svg#it-pa"></use>
             </svg>
             <a href="javascript:window.scrollTo(0,0);" 
               popover="{{getMessageType(item) | translate }} {{ item.objectTypeId | translate }}" 

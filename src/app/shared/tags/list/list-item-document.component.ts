@@ -10,10 +10,10 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
   template:
      `
      <div *ngIf="item">
-         <div class="row pt-2 pb-2">
-           <ng-content></ng-content>
+        <div class="row pt-2 pb-2">
+          <ng-content></ng-content>
 
-           <a class="ddd" aria-haspopup="true" role="button" tabIndex="0">
+          <a class="ddd" aria-haspopup="true" role="button">
             <div class="btn-group border rounded" role="group" dropdown [ngStyle]="buttonStyle()">
               <button class="btn text-dark p-2" [disabled]="!item.hasId()"
                   (click)="openModalWithComponent(item)" tooltip="{{'show' | translate}}">
@@ -40,12 +40,13 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
               </ul>
             </div>
           </a>
+        </div>
     </div>
     `,
   styles:
       [
         '.ddd { display: none; }',
-        'div.row:hover .ddd, div.row:active .ddd, div.row:focus .ddd { display: block; }',
+        '.row:hover .ddd, .row:active .ddd, .row:focus .ddd { display: block; }',
         '.dropdown-menu:before { left: unset; right: 11px;border-left:1px solid #b1b1b3 !important; border-top: 1px solid #b1b1b3 !important; top: -10px}'
       ]
 })
