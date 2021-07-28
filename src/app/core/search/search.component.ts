@@ -1,7 +1,7 @@
-import {Component, OnInit, ChangeDetectionStrategy, OnDestroy, Output} from '@angular/core';
-import {CacheService} from '../cache.service';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { CacheService} from '../cache.service';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Profile } from '../../common/model/profile.enum.';
 
 @Component({
@@ -16,6 +16,7 @@ export class SearchComponent implements OnInit, OnDestroy{
   public filterFormSearch: FormGroup;
   public callCode: String;
   public profiles: Profile[] = Profile.values();
+  public collapse: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -39,6 +40,7 @@ export class SearchComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams) => {
       this.callCode = queryParams['callCode'];
+      this.collapse = (this.callCode == undefined || this.callCode == '');
       this.filterFormSearch = this.formBuilder.group({
         callCode: new FormControl(this.callCode),
         filterType: new FormControl('all'),

@@ -35,8 +35,8 @@ export class MenuService {
    */
   public buildNavbar() : Observable<NavbarMenu> {
     return this.cacheService.cache().pipe(switchMap((cache) => {
-      const application = new Menu('application.mine.title', 'folder-open', undefined, '/my-applications');
-      const application_user = new Menu('application.user.title', 'folder-open-o', undefined, '/applications-user', 'sidebar');
+      const application = new Menu('application.mine.menu', 'folder-open', undefined, '/my-applications');
+      const application_user = new Menu('application.user.menu', 'folder-open-o', undefined, '/applications-user', 'sidebar');
 
       const helpdesk = new Menu('helpdesk.title', 'question-circle-o', undefined, '/configurazione/helpdesk');
       const faq = new Menu('faq.title', 'question', undefined, '/configurazione/faq');

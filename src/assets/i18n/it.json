@@ -265,7 +265,7 @@
     "remove_filter_for_code": "Rimuovi filtro per la tipologia",
     "manage": "Configura nuovo Bando",
     "search" : {
-      "title": "Filtra Bandi",
+      "title": "Filtra la tua ricerca dei Bandi",
       "code": "Codice bando",
       "type": "Tipologia bando",
       "scadenza": {
@@ -293,10 +293,12 @@
     "all": "Domande presentate",
     "possesso_requisiti": "di essere in possesso dei requisiti di cui all'{{value}}",
     "mine": {
-      "title": "Le mie domande"
+      "menu": "Le mie domande",
+      "title": "Filtra la ricerca delle mie domande"
     },
     "user": {
-      "title": "Domande"
+      "menu": "Domande",
+      "title": "Filtra la tua ricerca delle domande"
     },
     "state": {
       "C": "Inviata",

@@ -18,8 +18,8 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
   selector: 'application-list',
   template:
   `
-    <app-layout-title [title]="'application.mine.title'" [titleClass]="'main-title'"></app-layout-title>
-    <form *ngIf="filterForm" class="clearfix" [formGroup]="filterForm">
+    <app-layout-title [title]="'application.mine.title'" [titleClass]="'main-title'" [isCollapsable]="'true'" (collapseEvent)="collapse = $event"></app-layout-title>
+    <form *ngIf="filterForm" class="clearfix" [formGroup]="filterForm" [ngClass]="{'d-none': collapse, 'd-block': !collapse}">
       <div class="form-row col-md-12">
         <div class="form-group col-md-4">
             <app-control-select-model
@@ -149,6 +149,7 @@ export class ApplicationListComponent extends CommonListComponent<Application> i
   cache: any = {};
   protected applicationStatus: string;
   bsModalRef: BsModalRef;
+  public collapse: boolean = true;
   
   public constructor(public service: ApplicationService,
                      private authService: AuthService,

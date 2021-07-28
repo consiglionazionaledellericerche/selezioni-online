@@ -10,7 +10,7 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
   template:
      `
      <div *ngIf="item">
-        <div class="row pt-2 pb-2">
+        <div class="row pt-2 pb-2" tabindex="0">
           <ng-content></ng-content>
 
           <a class="ddd" aria-haspopup="true" role="button">

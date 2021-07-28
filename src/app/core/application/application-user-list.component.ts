@@ -20,8 +20,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   selector: 'application-user-list',
   template:
   `
-    <app-layout-title [title]="'application.user.title'" [titleClass]="'main-title'"></app-layout-title>
-    <form *ngIf="filterForm" class="clearfix" [formGroup]="filterForm">
+    <app-layout-title [title]="'application.user.title'" [titleClass]="'main-title'" [collapsediv]="collapse" [isCollapsable]="'true'" (collapseEvent)="collapse = $event"></app-layout-title>
+    <form *ngIf="filterForm" class="clearfix" [formGroup]="filterForm" [ngClass]="{'d-none': collapse, 'd-block': !collapse}">
       <div class="form-row col-md-12">
         <div class="form-group col-md-4">        
           <app-control-select-model
@@ -179,6 +179,7 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
   protected callId: string;
   protected callSearch: Call;
   bsModalRef: BsModalRef;
+  public collapse: boolean = true;
 
   public constructor(public service: ApplicationUserService,
                      private authService: AuthService,
@@ -195,6 +196,7 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
   public beforeOnInit(): Observable<any> {
     this.route.queryParams.subscribe((queryParams) => {
       this.callId = queryParams['callId'];
+      this.collapse = (this.callId == undefined || this.callId == '');
     }); 
     if (this.authService.isAuthenticated()) {
       this.user = Helpers.buildInstance(this.authService.getUser(), User);

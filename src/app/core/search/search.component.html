@@ -1,6 +1,6 @@
-<app-layout-title [title]="'call.search.title'" [titleClass]="'main-title'"></app-layout-title>
+<app-layout-title [title]="'call.search.title'" [titleClass]="'main-title'" [collapsediv]="collapse" [isCollapsable]="'true'" (collapseEvent)="collapse = $event"></app-layout-title>
 <app-list-header-layout>
-    <form *ngIf="filterFormSearch" class="clearfix" [formGroup]="filterFormSearch">
+    <form *ngIf="filterFormSearch" class="clearfix" [formGroup]="filterFormSearch" [ngClass]="{'d-none': collapse, 'd-block': !collapse}">
         <div class="form-row col-md-12">
             <div class="form-group col-md-4">
                 <app-control-select-model
