@@ -28,7 +28,7 @@ import { UserService } from '../../auth/edit/user.service';
     </div>
     <div *ngIf="isLoaded() && !isEntityError">
       <div class="pb-3" #cardCall>
-        <h1 class="text-monospace text-primary text-truncate">{{callType | translate}}</h1>
+        <h1 class="text-monospace text-primary">{{callType | translate}}</h1>
       </div>
       <div class="card card-bg border-bottom-card">
         <div class="card-header d-flex">
@@ -46,7 +46,8 @@ import { UserService } from '../../auth/edit/user.service';
                 <span translate>previous</span>
               </a>
               <ul class="steppers-dots d-flex">
-                <li *ngFor="let number of affix" 
+                <li *ngFor="let number of affix"
+                  [ngClass]="{'done': number <= affixCompleted, 'bg-light': !form.pristine && !isDisableConfirm}"
                   [popover]="affixCall[number] | translate"
                   triggers="mouseenter:mouseleave">
                   <a [ngClass]="{'disabled': !form.pristine && !isDisableConfirm}" 
@@ -172,7 +173,7 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
   public ngOnInit() {
     this.route.queryParams.subscribe((queryParams) => {
       this.callType = queryParams['call-type']; 
-      this.affix = Array(this.affixCall.length).map((x,i)=>i);
+      this.affix = Array(this.affixCall.length).fill(0).map((x,i)=>i);
       if (queryParams['cmis:objectId']) {
         this.callService.getById(queryParams['cmis:objectId']).subscribe((call) => {
           this.entity = call;

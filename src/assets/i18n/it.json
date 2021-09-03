@@ -41,6 +41,12 @@
   "affix_tabSchedaAnonima": "Scheda Anonima Sintetica",
 
   "affix_tabCallDettagli": "Sezione I - Dettagli Bando",
+  "affix_tabCallImpostazioni": "Sezione II - Impostazioni",
+  "affix_tabCallDettagliCandidato": "Sezione III - Dettagli Candidato",
+  "affix_tabCallPunteggi": "Sezione IV - Punteggi",
+  "affix_tabCallResponsabili": "Sezione Responsabili",
+  "affix_tabCallHelpDesk": "Sezione HelpDesk",
+  "affix_tabCallAttachments": "Sezione Allegati",
 
   "presents": "Sono presenti",
 
@@ -420,7 +426,9 @@
       "numero_posti": "Numero posti",
       "descrizione": "Titolo Bando",
       "descrizione_ridotta": "Descrizione ridotta Bando",
-      "requisiti": "Testo di dettaglio dei requisiti"
+      "requisiti": "Testo di dettaglio dei requisiti",
+      "aspect_macro_call": "Bando multiplo",
+      "numero_max_domande":"Numero massimo di domande"
     },
     "jconon_application": {
       "firstname": "Nome",

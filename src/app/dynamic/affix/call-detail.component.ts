@@ -15,20 +15,38 @@ import * as Editor from '../../core/libs/ckeditor5/build/ckeditor';
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">
         <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
             <app-control-text 
               type="text" 
+              [focus]="true"
               [inline]="true" 
               [label]="'label.jconon_call.codice'| translate" 
               formControlName="jconon_call:codice">
             </app-control-text>
           </div>
-          <div class="form-group col-md-3">
+          <div class="form-group col-md-2">
             <app-control-text 
               type="text" 
               [inline]="true" 
               [label]="'label.jconon_call.numero_posti'| translate" 
               formControlName="jconon_call:numero_posti">
+            </app-control-text>
+          </div>
+          <div class="form-check col-md-2 mb-3">
+            <app-control-checkbox 
+              [showValidation]="true"
+              [inline]="true" 
+              [label]="'label.jconon_call.aspect_macro_call'| translate" 
+              formControlName="jconon_call:aspect_macro_call">
+            </app-control-checkbox>
+          </div>
+          <div class="form-group col-md-4">
+            <app-control-text 
+              *ngIf="isBandoMultiplo()"
+              [showValidation]="true"
+              [inline]="true" 
+              [label]="'label.jconon_call.numero_max_domande'| translate" 
+              formControlName="jconon_call:numero_max_domande">
             </app-control-text>
           </div>
         </div>
@@ -91,13 +109,22 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
       this.form.addControl('jconon_call:codice', 
         new FormControl(this.data.codice, Validators.required));
       this.form.addControl('jconon_call:numero_posti', 
-        new FormControl(this.data.numero_posti, Validators.required));
+        new FormControl(this.data.numero_posti, [Validators.required, Helpers.patternValidator(/^[0-9]*$/, { onlyNumber: true })]));
+      this.form.addControl('jconon_call:aspect_macro_call', 
+        new FormControl(this.data.secondaryObjectTypeIds ? 
+          this.data.secondaryObjectTypeIds.indexOf('P:jconon_call:aspect_macro_call') != -1 : false, Validators.required));
+      this.form.addControl('jconon_call:numero_max_domande', 
+        new FormControl(this.data.numero_max_domande, [Validators.required, Helpers.patternValidator(/^[0-9]+$/, { onlyNumber: true })]));
       this.form.addControl('jconon_call:descrizione', 
         new FormControl(this.data.descrizione, Validators.required));
       this.form.addControl('jconon_call:descrizione_ridotta', 
         new FormControl(this.data.descrizione_ridotta, Validators.required));
       this.form.addControl('jconon_call:requisiti', 
         new FormControl(this.data.requisiti, Validators.required));
+    }
+
+    public isBandoMultiplo(): boolean {
+      return this.form.controls['jconon_call:aspect_macro_call'].value;      
     }
 
 }
