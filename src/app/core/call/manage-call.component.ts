@@ -28,11 +28,11 @@ import { UserService } from '../../auth/edit/user.service';
     </div>
     <div *ngIf="isLoaded() && !isEntityError">
       <div class="pb-3" #cardCall>
-        <h1 class="text-monospace text-primary">{{callType | translate}}</h1>
+        <h1 class="text-monospace text-primary text-truncate">{{callType | translate}}</h1>
       </div>
       <div class="card card-bg border-bottom-card">
         <div class="card-header d-flex">
-          <div class="h1 flex-grow-1">{{affixCall[affixCompleted] | translate}}</div>
+          <div class="h1 flex-grow-1 text-truncate">{{affixCall[affixCompleted] | translate}}</div>
           <div class="h4">{{affixCompleted + 1}}/{{affix.length}}</div>
         </div>
         <div class="card-body mt-2">  
