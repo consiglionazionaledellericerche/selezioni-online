@@ -3,6 +3,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
 import {TagsModule} from '../shared/tags/tags.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { JcononAttachmentCallShowComponent } from './attachment/jconon-attachment-call-show.component';
 import { JcononAffixAnagraficaComponent } from './affix/anagrafica.component';
@@ -11,6 +12,8 @@ import { JcononAffixDichiarazioniComponent } from './affix/dichiarazioni.compone
 import { JcononAffixAllegatiComponent } from './affix/allegati.component';
 import { JcononAffixDichiarazioniConclusiveComponent } from './affix/dichiarazioni_conclusive.component';
 import { JcononAffixReperibilitaComponent } from './affix/reperibilita.component';
+
+import { JcononAffixCallDetailComponent } from './affix/call-detail.component';
 
 import { JcononAspectPossessoRequisitiComponent } from './aspect/possesso-requisiti.component';
 import { JcononAspectsDichiarazioneComponent } from './aspect/dichiarazione.component';
@@ -84,7 +87,9 @@ import { ConfigService } from '../core/config.service';
         JcononAffixAllegatiComponent,
         JcononAffixDichiarazioniConclusiveComponent,
         JcononAffixReperibilitaComponent,
-        /** Apllication Aspect */
+
+        JcononAffixCallDetailComponent,
+        /** Application Aspect */
         JcononAspectsDichiarazioneComponent,
         JcononAspectPossessoRequisitiComponent,
         JcononAspectIscrizioneListeElettoraliComponent,
@@ -141,6 +146,7 @@ import { ConfigService } from '../core/config.service';
         CommonModule,
         SharedModule,
         TagsModule,
+        CKEditorModule,
         ButtonsModule.forRoot(),
         AccordionModule.forRoot(),
         TranslateModule.forChild({
@@ -160,7 +166,9 @@ import { ConfigService } from '../core/config.service';
         JcononAffixAllegatiComponent,
         JcononAffixDichiarazioniConclusiveComponent,
         JcononAffixReperibilitaComponent,
-        /** Apllication Aspect */
+
+        JcononAffixCallDetailComponent,
+        /** Application Aspect */
         JcononAspectsDichiarazioneComponent,
         JcononAspectPossessoRequisitiComponent,
         JcononAspectIscrizioneListeElettoraliComponent,

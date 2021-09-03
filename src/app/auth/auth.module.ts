@@ -26,12 +26,15 @@ import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translat
 import {HttpClient} from '@angular/common/http';
 import { CustomTranslationCompiler } from '../common/helpers/translation-compiler';
 import { ConfigService } from '../core/config.service';
+import { CallService } from '../core/call/call.service';
 
 export enum ServiceReg {
   CONFIGURAZIONE = 'configurazione',
   APPLICATION = 'application',
   APPLICATION_USER = 'application-user',
-
+  
+  CALL = 'call',
+  
   UTENTE = 'utente',
   CONTACTS = 'contacts'
 }
@@ -71,6 +74,7 @@ export enum ServiceReg {
     UserService,
     AuthGuard,
     ApplicationService, {provide: ServiceReg.APPLICATION, useExisting: ApplicationService},
+    CallService, {provide: ServiceReg.CALL, useExisting: CallService},
     ApplicationUserService, {provide: ServiceReg.APPLICATION_USER, useExisting: ApplicationUserService},
     //UtenteService, {provide: ServiceReg.UTENTE, useExisting: UtenteService},
   ]

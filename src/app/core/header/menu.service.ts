@@ -44,7 +44,7 @@ export class MenuService {
       var callMenuItems : MenuItem[] = [];
       cache.jsonlistCallType.forEach(callType => {
         if (!callType.childs) {
-          callMenuItems.push(new MenuItem(callType.key, undefined, '/manage-call?call-type=' + callType.key, callType.label, 'PUT', callType.key));
+          callMenuItems.push(new MenuItem(callType.key, undefined, '/manage-call', callType.label, 'PUT', callType.key, [], {'call-type': callType.key}));
         }
       });
       const callMenu = new Menu('call.manage', undefined, callMenuItems, undefined, 'sidebar');

@@ -1,6 +1,6 @@
 import { Folder } from '../../common/model/folder.model';
-import {JsonProperty, JsonObject} from 'json2typescript';
-import {DateConverter} from '../../common/helpers/DateConverter'
+import { JsonProperty, JsonObject } from 'json2typescript';
+import { DateConverter } from '../../common/helpers/DateConverter'
 
 @JsonObject("Call")
 export class Call extends Folder {

@@ -61,7 +61,13 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
                       <i class="fa fa-fw fa-folder-open"></i> {{'call.menuitem.application'|translate}}
                     </a>
                   </li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+                  <li role="menuitem" *ngIf="canUpdateCall()">
+                    <a class="dropdown-item" 
+                      [routerLink]="['/manage-call']"
+                      [queryParams]="{ 'cmis:objectId': item.objectId, 'call-type': item.objectTypeId }">
+                      <i class="fa fa-fw fa-edit"></i> {{'call.menuitem.update'|translate}}
+                    </a>
+                  </li>
                   <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
                   <li class="divider dropdown-divider"></li>
                   <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a></li>
@@ -103,6 +109,10 @@ export class ListItemCallComponent {
 
   public canCreateDocument(): boolean {
     return this.item.allowableActions.indexOf(AllowableAction.CAN_CREATE_DOCUMENT) !== -1;
+  }
+
+  public canUpdateCall(): boolean {
+    return this.item.allowableActions.indexOf(AllowableAction.CAN_UPDATE_PROPERTIES) !== -1;
   }
 
   public getMessageType(item: CmisObject): string {

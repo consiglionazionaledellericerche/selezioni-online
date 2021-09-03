@@ -66,6 +66,8 @@ import { JcononAspectIdoneoPrecedentiGraduatorieComponent } from './aspect/idone
 import { JcononAspectAbilitazioneProfessioneIngegnereComponent } from './aspect/abilitazione-professione-ingegnere.component';
 import { JcononAspectUlterioreLaureaComponent } from './aspect/ulteriore-laurea.component';
 import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dottorato.component';
+import { Call } from "../core/call/call.model";
+import { JcononAffixCallDetailComponent } from "./affix/call-detail.component";
 
 @Injectable({
     providedIn: 'root',
@@ -85,6 +87,13 @@ export class DynamicService {
         'D:jconon_attachment:call_it' : {
           showcomponent: JcononAttachmentCallShowComponent
         },
+        
+        'affix_tabCallDettagli' : {
+          model: Call,
+          showcomponent: JcononAffixCallDetailComponent
+        },
+
+
         'affix_tabAnagrafica' : {
           model: Application,
           showcomponent: JcononAffixAnagraficaComponent

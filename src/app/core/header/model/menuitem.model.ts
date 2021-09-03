@@ -9,7 +9,6 @@ export class MenuItem {
               public label: string,
               public method: string = 'GET',
               public pathToCheck: string = undefined,
-              public depending?: MenuItem[]) {}
-
-
+              public depending?: MenuItem[],
+              public queryParams: any = []) {}
 }

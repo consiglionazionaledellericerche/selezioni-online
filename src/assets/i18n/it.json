@@ -39,6 +39,9 @@
   "affix_tabElencoProdotti": "B) Elenco prodotti",
   "affix_tabProdottiScelti": "C) Prodotti Scelti",
   "affix_tabSchedaAnonima": "Scheda Anonima Sintetica",
+
+  "affix_tabCallDettagli": "Sezione I - Dettagli Bando",
+
   "presents": "Sono presenti",
 
   "utenti": "Utenti",
@@ -285,7 +288,8 @@
       }
     },
     "menuitem": {
-      "application": "Domande"
+      "application": "Domande",
+      "update": "Modifica"
     }
   },
   "application": {
@@ -411,6 +415,13 @@
     }
   },
   "label": {
+    "jconon_call": {
+      "codice": "Codice Bando",
+      "numero_posti": "Numero posti",
+      "descrizione": "Titolo Bando",
+      "descrizione_ridotta": "Descrizione ridotta Bando",
+      "requisiti": "Testo di dettaglio dei requisiti"
+    },
     "jconon_application": {
       "firstname": "Nome",
       "lastname": "Cognome",

@@ -110,7 +110,7 @@
                                 </div>
                                 <ng-container *ngFor="let item of menu.items">
                                     <li class="list-group-item border-0 p-1" *ngIf="item.active">
-                                        <a [routerLink]="[item.path]" (click)="hide()">
+                                        <a [routerLink]="item.path" [queryParams]="item.queryParams" (click)="hide()">
                                             <span>{{ item.name | translate}}</span> 
                                         </a>
                                     </li>

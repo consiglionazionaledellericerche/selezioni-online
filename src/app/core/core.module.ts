@@ -34,6 +34,9 @@ import { PrintApplicationComponent } from './application/print-application.compo
 import {ApplicationService} from './application/application.service';
 import {ApplicationUserService} from './application/application-user.service';
 
+import { ManageCallComponent } from './call/manage-call.component';
+
+
 import { ManageDocumentComponent } from './document/manage-document.component';
 import { DownloadDocumentComponent } from './document/download-document.component';
 import { DocumentService} from './document/document.service';
@@ -73,6 +76,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     ApplicationListComponent,
     ApplicationUserListComponent,
     ManageApplicationComponent,
+    ManageCallComponent,
     PrintApplicationComponent,
     ManageDocumentComponent,
     DownloadDocumentComponent,
@@ -118,6 +122,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     ApplicationListComponent,
     ApplicationUserListComponent,
     ManageApplicationComponent,
+    ManageCallComponent,
     PrintApplicationComponent,
     ManageDocumentComponent,
     DownloadDocumentComponent

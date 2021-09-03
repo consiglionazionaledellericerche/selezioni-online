@@ -5,6 +5,7 @@ import {ServiceReg} from '../auth/auth.module';
 import { ApplicationListComponent } from './application/application-list.component';
 import { ApplicationUserListComponent } from './application/application-user-list.component';
 import { ManageApplicationComponent } from './application/manage-application.component';
+import { ManageCallComponent } from './call/manage-call.component';
 import { DownloadDocumentComponent } from './document/download-document.component';
 
 const coreRoutes: Routes = [
@@ -26,6 +27,12 @@ const coreRoutes: Routes = [
     component: ManageApplicationComponent, 
     canActivate: [AuthGuard], 
     data: {service: ServiceReg.APPLICATION},
+  },
+  { 
+    path: 'manage-call', 
+    component: ManageCallComponent, 
+    canActivate: [AuthGuard], 
+    data: {service: ServiceReg.CALL},
   },
   { 
     path: 'search/content', 
