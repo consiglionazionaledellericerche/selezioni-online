@@ -3,7 +3,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
 import {TagsModule} from '../shared/tags/tags.module';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { JcononAttachmentCallShowComponent } from './attachment/jconon-attachment-call-show.component';
 import { JcononAffixAnagraficaComponent } from './affix/anagrafica.component';
@@ -14,6 +13,7 @@ import { JcononAffixDichiarazioniConclusiveComponent } from './affix/dichiarazio
 import { JcononAffixReperibilitaComponent } from './affix/reperibilita.component';
 
 import { JcononAffixCallDetailComponent } from './affix/call-detail.component';
+import { JcononAffixCallSettingsComponent } from './affix/call-settings.component';
 
 import { JcononAspectPossessoRequisitiComponent } from './aspect/possesso-requisiti.component';
 import { JcononAspectsDichiarazioneComponent } from './aspect/dichiarazione.component';
@@ -89,6 +89,7 @@ import { ConfigService } from '../core/config.service';
         JcononAffixReperibilitaComponent,
 
         JcononAffixCallDetailComponent,
+        JcononAffixCallSettingsComponent,
         /** Application Aspect */
         JcononAspectsDichiarazioneComponent,
         JcononAspectPossessoRequisitiComponent,
@@ -146,7 +147,6 @@ import { ConfigService } from '../core/config.service';
         CommonModule,
         SharedModule,
         TagsModule,
-        CKEditorModule,
         ButtonsModule.forRoot(),
         AccordionModule.forRoot(),
         TranslateModule.forChild({
@@ -168,6 +168,8 @@ import { ConfigService } from '../core/config.service';
         JcononAffixReperibilitaComponent,
 
         JcononAffixCallDetailComponent,
+        JcononAffixCallSettingsComponent,
+        
         /** Application Aspect */
         JcononAspectsDichiarazioneComponent,
         JcononAspectPossessoRequisitiComponent,

@@ -68,6 +68,7 @@ import { JcononAspectUlterioreLaureaComponent } from './aspect/ulteriore-laurea.
 import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dottorato.component';
 import { Call } from "../core/call/call.model";
 import { JcononAffixCallDetailComponent } from "./affix/call-detail.component";
+import { JcononAffixCallSettingsComponent } from "./affix/call-settings.component";
 
 @Injectable({
     providedIn: 'root',
@@ -88,9 +89,13 @@ export class DynamicService {
           showcomponent: JcononAttachmentCallShowComponent
         },
         
-        'affix_tabCallDettagli' : {
+        'affix_tabCallDetail' : {
           model: Call,
           showcomponent: JcononAffixCallDetailComponent
+        },
+        'affix_tabCallSettings' : {
+          model: Call,
+          showcomponent: JcononAffixCallSettingsComponent
         },
 
 

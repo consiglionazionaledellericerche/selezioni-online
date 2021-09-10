@@ -54,7 +54,7 @@ export class CacheService {
             return this.httpClient.get<Sede[]>(gateway + ConfigService.URL_SEDI, {params: params}).pipe(
                 map((sedi) => {
                     return sedi.map((sede) => {
-                        return new Sede(sede.sedeId, sede.label);
+                        return new Sede(sede.sedeId, sede.label, sede.citta, sede.descrizione);
                     });
                 }),
                 catchError((error: HttpErrorResponse) => {

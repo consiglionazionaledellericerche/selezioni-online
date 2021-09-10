@@ -5,6 +5,8 @@ import {
 import {ControlValueAccessor, NgControl} from '@angular/forms';
 import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {FormCommonTag} from './form-common-tag';
+import * as Editor from '../../../core/libs/ckeditor5/build/ckeditor';
+import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 
 /**
  * IMPORTANTE
@@ -15,7 +17,7 @@ import {FormCommonTag} from './form-common-tag';
  * https://stackoverflow.com/questions/48176172/angular-click-not-working-after-ngfor-backing-array-updated
  */
 @Component({
-  selector: 'app-control-text',
+  selector: 'app-control-ckeditor',
   template:
      `
       <app-form-layout
@@ -32,16 +34,14 @@ import {FormCommonTag} from './form-common-tag';
               [labelactive]="labelactive"
               [showValidation]="showValidation">
 
-        <input class="form-control {{inputClass}}"
-             type="{{ type }}"
-             #input
-             (input)="change($event.target.value)"
-             (focus)="onFocus($event.target.value)"
-             (focusout)="onFocusOut($event.target.value)"
-
-             [disabled]="disabled"
-             placeholder="{{ placeholder | translate }}"
-             [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}">
+        <ckeditor 
+          [config]="config" 
+          #ckeditor 
+          [editor]="Editor" 
+          (change)="change($event)"
+          class="w-100" 
+          [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}">
+        </ckeditor>
 
         <div *ngIf="controlDir.dirty && controlDir.pending"
              [ngStyle]="{'position': 'absolute', 'top': '5px', 'right': '5px', 'z-index': '100'}">
@@ -51,7 +51,7 @@ import {FormCommonTag} from './form-common-tag';
       </app-form-layout>
     `,
 })
-export class FormTemplateTextComponent extends FormCommonTag implements ControlValueAccessor, OnInit {
+export class FormTemplateCKEditorComponent extends FormCommonTag implements ControlValueAccessor, OnInit {
 
   @Input() type = 'text';
 
@@ -59,7 +59,27 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
 
   @Input() nullIfEmpty = false;
 
-  @ViewChild('input', {static: true}) input: ElementRef;
+  @ViewChild('ckeditor', {static: true}) ckeditor: CKEditorComponent;
+
+  public Editor = Editor;
+
+  config = {  
+    toolbar: [ 
+      'bold', 
+      'italic', 
+      'strikethrough', 
+      'underline', 
+      'indent', 
+      '|', 
+      'alignment', 
+      'numberedList', 
+      'bulletedList', 
+      'link', 
+      '|', 
+      'undo', 
+      'redo' 
+    ] 
+  };
 
   /**
    * Self permette di poter innestare form controls... ci assicuriamo
@@ -80,18 +100,11 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
     const validators = control.validator;
     control.setValidators(validators);
     control.updateValueAndValidity();
-    if (this.focus) {
-      setTimeout(() => {
-        this.input.nativeElement.focus();
-        this.input.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 0);
-    }
-    if (this.input.nativeElement.value || this.disabled) {
-      this.labelactive = true;
-    }
+    this.labelactive = true;
   }
 
-  change(value: string) {
+  change({ editor }: ChangeEvent ) {
+    const value = editor.getData();
     if (this.nullIfEmpty && value === '') {
       this.onChange(null);
       return;
@@ -108,11 +121,10 @@ export class FormTemplateTextComponent extends FormCommonTag implements ControlV
   onTouched = () => {};
 
   writeValue(value: any): void {
-    this.input.nativeElement.value = value;
+    this.ckeditor.writeValue(value);
     if (this.controlDir.control) {
       this.controlDir.control.markAsDirty();
       this.controlDir.control.updateValueAndValidity();
-      //this.ref.detectChanges();
     }
   }
 

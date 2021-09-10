@@ -67,14 +67,7 @@ import { UserService } from '../../auth/edit/user.service';
         <div class="card-footer rounded-bottom">
           <div class="d-flex justify-content-end">
             <div class="form-group text-left mr-auto">
-              <button 
-                [disabled]="!form.pristine"
-                (click)="deleteApplication($event)" 
-                class="btn btn-outline-danger btn-lg btn-icon mr-2" 
-                tooltip="{{'application.delete'| translate}}">
-                <span class="d-none d-md-block pr-1" translate>application.delete</span>
-                <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-delete"></use></svg>
-              </button>
+
             </div>
             <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-right">  
               <button (click)="sendApplication($event)" 
@@ -92,8 +85,8 @@ import { UserService } from '../../auth/edit/user.service';
               <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
             </div>  
             <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-right">
-              <button (click)="confirmApplication($event);"
-                #confirmApplicationButton 
+              <button (click)="confirmCall($event);"
+                #confirmCallButton 
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
                 class="btn btn-primary btn-block btn-lg btn-icon rounded" 
                 tooltip="{{'application.confirm' | translate}}">
@@ -130,18 +123,19 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
     time:0
   };
   affixCall = [
-    'affix_tabCallDettagli',
-    'affix_tabCallImpostazioni',
-    'affix_tabCallDettagliCandidato',
-    'affix_tabCallPunteggi',
-    'affix_tabCallResponsabili',
+    'affix_tabCallDetail',
+    'affix_tabCallSettings',
+    'affix_tabCallAspirantDetail',
+    'affix_tabCallScore',
+    'affix_tabCallAccountable',
     'affix_tabCallHelpDesk',
     'affix_tabCallAttachments'
   ];
   callType: string;
+  objectId: string;
   @ViewChild('affixComponent') affixComponent: ShowAffixComponent;
   @ViewChild('cardCall') cardCall: ElementRef;
-  @ViewChild('confirmApplicationButton') confirmApplicationButton: ElementRef;
+  @ViewChild('confirmCallButton') confirmCallButton: ElementRef;
   @ViewChild('sendApplicationButton') sendApplicationButton: ElementRef;
 
   public constructor(public service: CallService,
@@ -172,7 +166,8 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
   
   public ngOnInit() {
     this.route.queryParams.subscribe((queryParams) => {
-      this.callType = queryParams['call-type']; 
+      this.callType = queryParams['call-type'];
+      this.objectId = queryParams['cmis:objectId']; 
       this.affix = Array(this.affixCall.length).fill(0).map((x,i)=>i);
       if (queryParams['cmis:objectId']) {
         this.callService.getById(queryParams['cmis:objectId']).subscribe((call) => {
@@ -188,7 +183,8 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
           this.buildCreateForm();
         });
       } else {
-        this.entity = new Call();        
+        this.entity = new Call(); 
+        this.entity.objectTypeId = this.callType;       
         this.buildCreateForm();
       }
     }); 
@@ -200,6 +196,8 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
   
   public buildCreateForm() {
     this.form = new FormGroup({
+      'cmis:objectId': new FormControl(this.objectId),
+      'cmis:objectTypeId': new FormControl(this.callType),
     });
   }
 
@@ -270,7 +268,7 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
         }
         if (event.key === 'ArrowLeft') {
           this.doSwipeLeft();  
-        }  
+        }
       }
   }
 
@@ -282,7 +280,18 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
   handleEnterEvent(event) {
     console.log(event.target.type);
     if (event.target.type !== 'textarea') {
-      //this.confirmApplication(event);
+      this.confirmCall(event);
+    }
+  }
+
+  public confirmCall(event: Event) {
+    if (this.isFormValid && this.confirmCallButton) {
+      console.log(this.buildInstance());
+      this.service.save(this.buildInstance()).subscribe((call) => {
+        this.setEntity(call);
+        this.buildCreateForm();
+        this.affixCompleted++;
+      });  
     }
   }
 
@@ -301,9 +310,9 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
         if (invalidControl) {
           invalidControl.focus();
         } else if (invalidFormControl) {
-          var inv = invalidFormControl.querySelector('input, textarea')[0];
+          var inv = invalidFormControl.querySelector('input, textarea');
           if (inv) {
-            inv.focus();
+            inv[0].focus();
           }
         }
       }      

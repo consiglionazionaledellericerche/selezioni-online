@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {SharedModule} from '../shared.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import {ShowTextComponent} from './show/show-text.component';
 import {ShowTextModalComponent} from './show/show-text-modal.component';
@@ -24,6 +25,8 @@ import {FormTemplateTextComponent} from './forms/form-template-text.component';
 import {FormTemplateToggleComponent} from './forms/form-template-toggle.component';
 import {FormTemplateTextAreaComponent} from './forms/form-template-textarea.component';
 import {FormTemplateDatepickerComponent} from './forms/form-template-datepicker.component';
+import {FormTemplateCKEditorComponent} from './forms/form-template-ckeditor.component';
+
 import {ButtonNewComponent} from './buttons/button-new.component';
 import {ButtonCsvComponent} from './buttons/button-csv.component';
 import {ButtonSaveComponent} from './buttons/button-save.component';
@@ -43,6 +46,7 @@ import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import {ButtonsModule} from 'ngx-bootstrap/buttons';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import {ListItemCallComponent} from './list/list-item-call.component';
 import {ListItemApplicationComponent} from './list/list-item-application.component';
 import {ListItemDocumentComponent} from './list/list-item-document.component';
@@ -104,6 +108,7 @@ import { ConfigService } from '../../core/config.service';
     FormTemplateSelectModelComponent,
     FormTemplateButtonEventComponent,
     FormTemplateColorPickerComponent,
+    FormTemplateCKEditorComponent,
 
     // Buttons
     ButtonsLayoutComponent,
@@ -163,7 +168,9 @@ import { ConfigService } from '../../core/config.service';
     ReactiveFormsModule,
     CommonModule,
     RouterModule,
+    CKEditorModule,
     BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     CollapseModule.forRoot(),
     ModalModule.forRoot(),
@@ -184,6 +191,7 @@ import { ConfigService } from '../../core/config.service';
   ],
   exports: [
     BsDatepickerModule,
+    TimepickerModule,
     BsDropdownModule,
     ModalModule,
     CollapseModule,
@@ -209,6 +217,7 @@ import { ConfigService } from '../../core/config.service';
     FormTemplateButtonEventComponent,
     FormValidationErrorLayoutComponent,
     FormTemplateColorPickerComponent,
+    FormTemplateCKEditorComponent,
 
     // Buttons
     ButtonsLayoutComponent,

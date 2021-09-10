@@ -406,7 +406,11 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
 
   isItemSelected(value: any) {
     if (this.isSingleSync() || this.isSingleAsync()) {
-      return this.selected ? this.selected.getId() === value : false;
+      if (this.isString(this.selected)) {
+        return this.selected ? this.selected === value : false;
+      } else {
+        return this.selected ? this.selected.getId() === value : false;
+      }
     }
     if (this.isSingleSyncType()) {
       return this.selected ? this.selected === value : false;
@@ -465,5 +469,9 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
       return this.baseBuilder(data.entity);
     }
     return data.id;
+  }
+
+  isString(value: any): boolean {
+    return typeof value === 'string' || value instanceof String;
   }
 }

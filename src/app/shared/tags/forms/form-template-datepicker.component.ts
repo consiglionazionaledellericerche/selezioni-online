@@ -6,39 +6,41 @@ import { itLocale } from 'ngx-bootstrap/locale';
 defineLocale('it', itLocale);
 import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {FormCommonTag} from './form-common-tag';
-
+import { TimepickerComponent } from 'ngx-bootstrap/timepicker';
 
 @Component({
   selector: 'app-control-datepicker',
   template:
      `
-      <app-form-layout [controlDir]="controlDir"
-                       [inline]="inline"
-                       [noLabel]="noLabel"
-                       [label]="label"
-                       [prepend]="'calendar'"
-                       [showValidation]="showValidation && controlDir.touched"
-                       [appendText]="appendText"
-                       [ttipAppend]="ttipAppend"
-                       [labelactive]="labelactive"
-                       [ttip]="ttip">
-          <input class="form-control"
-               type="{{type}}"
-               #dp="bsDatepicker"
-               #input
-               bsDatepicker
-               (bsValueChange)="change($event)"
-               (focus)="onShow($event.target.value)"
-               (focusout)="onFocusOut($event.target.value)"
-               (onShown)="onShow($event)"
-               (blur)="onTouched()"
-               [bsConfig]="bsConfig"
-               [(bsValue)]="bsValue"
-               [disabled]="disabled"
-               [ngClass]="classes()"
-          >
-      </app-form-layout>
-  `
+     <div class="d-flex justify-content-start">
+        <app-form-layout [controlDir]="controlDir"
+                        [inline]="inline"
+                        [noLabel]="noLabel"
+                        [label]="label"
+                        [prepend]="'calendar'"
+                        [showValidation]="showValidation && controlDir.touched"
+                        [appendText]="appendText"
+                        [ttipAppend]="ttipAppend"
+                        [labelactive]="labelactive"
+                        [ttip]="ttip">
+                <input class="form-control"
+                    type="{{type}}"
+                    #dp="bsDatepicker"
+                    #input
+                    bsDatepicker
+                    (bsValueChange)="change($event)"
+                    (focus)="onShow($event.target.value)"
+                    (focusout)="onFocusOut($event.target.value)"
+                    (onShown)="onShow($event)"
+                    (blur)="onTouched()"
+                    [bsConfig]="bsConfig"
+                    [(bsValue)]="bsValue"
+                    [disabled]="disabled"
+                    [ngClass]="classes()">
+        </app-form-layout>
+        <timepicker class="ml-n5" [disabled]="!bsValue" [ngClass]="{'d-none': !time}" #timepicker [showSpinners]="false" [showMeridian]="false"></timepicker>      
+      </div>
+    `
 })
 export class FormTemplateDatepickerComponent extends FormCommonTag implements ControlValueAccessor, OnInit {
 
@@ -48,10 +50,14 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
 
   @Input() type = 'text';
 
+  @Input() time: boolean = false;
+
   @ViewChild('input', {static: true}) input: ElementRef;
 
+  @ViewChild('timepicker', {static: true}) timepicker: TimepickerComponent;
+
   bsConfig: Partial<BsDatepickerConfig> =
-    Object.assign({}, { containerClass: this.colorTheme });
+    Object.assign({}, { containerClass: this.colorTheme, isAnimated: true });
 
   /**
    * Self permette di poter innestare form controls... ci assicuriamo
@@ -81,22 +87,34 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
     if (this.input.nativeElement.value || this.disabled) {
       this.labelactive = true;
     }
-
+    if (this.timepicker) {
+      this.timepicker.registerOnChange((time: Date) => {
+        if (time && this.bsValue) {
+          this.bsValue.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
+        }
+      });
+    }
   }
 
   /*
   ControlValueAccess Impl.
   */
-
+ 
   onChange(value: Date|string) {}
 
   onTouched = () => {};
 
   writeValue(value: Date): void {
     if (value) {
+      /**Workaround for DatePicker that set hour and minute to now */
+      const firstValue = new Date(value.getTime()); 
+      if (this.time && this.timepicker) {
+        this.timepicker.writeValue(value);
+      }
       this.bsValue = value;
       this.labelactive = true;      
       this.ref.detectChanges();
+      this.bsValue = firstValue;
     }
   }
 
@@ -126,6 +144,9 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
 
   change(value: Date | string) {
     this.labelactive = value !== undefined;
+    if (this.time && this.timepicker) {
+      this.timepicker.writeValue(value);
+    }
     if (value !== undefined) {
       this.onChange(value == 'Invalid Date' ? null : value);
     }

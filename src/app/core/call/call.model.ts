@@ -1,6 +1,7 @@
 import { Folder } from '../../common/model/folder.model';
 import { JsonProperty, JsonObject } from 'json2typescript';
 import { DateConverter } from '../../common/helpers/DateConverter'
+import { ISODateTimeConverter } from '../../common/helpers/ISODateTimeConverter';
 
 @JsonObject("Call")
 export class Call extends Folder {
@@ -32,9 +33,9 @@ export class Call extends Folder {
   public area_scientifica_en: string[];
   @JsonProperty('jconon_call:settore_scientifico_tecnologico')
   public settore_scientifico_tecnologico: string[];
-  @JsonProperty('jconon_call:data_inizio_invio_domande_index')
+  @JsonProperty('jconon_call:data_inizio_invio_domande_index', ISODateTimeConverter)
   public data_inizio_invio_domande: Date;
-  @JsonProperty('jconon_call:data_fine_invio_domande_index')
+  @JsonProperty('jconon_call:data_fine_invio_domande_index', ISODateTimeConverter)
   public data_fine_invio_domande: Date;
   @JsonProperty('jconon_call:requisiti_link')
   public requisiti_link: string;
@@ -116,6 +117,8 @@ export class Call extends Folder {
   public elenco_macroaree: string[];
   @JsonProperty('jconon_call:elenco_settori_tecnologici', [String], true)
   public elenco_settori_tecnologici: string[] = undefined;
+  @JsonProperty('jconon_call:elenco_tipo_selezione', [String], true)
+  public elenco_tipo_selezione: string[] = undefined;
 
   constructor() {
       super();
@@ -179,4 +182,8 @@ export class Call extends Folder {
     return this.codice;
   }
 
+  public isDirector(): boolean {
+    return this.objectTypeId === 'F:jconon_call_director:folder';
+  }
+ 
 }
