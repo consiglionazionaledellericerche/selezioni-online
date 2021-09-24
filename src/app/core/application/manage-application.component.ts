@@ -363,6 +363,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       });  
     }
   }
+
   public printApplication(event: Event) {
     const initialState = {
       'application': this.entity

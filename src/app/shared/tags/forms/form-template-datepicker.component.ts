@@ -57,7 +57,7 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
   @ViewChild('timepicker', {static: true}) timepicker: TimepickerComponent;
 
   bsConfig: Partial<BsDatepickerConfig> =
-    Object.assign({}, { containerClass: this.colorTheme, isAnimated: true });
+    Object.assign({}, { containerClass: this.colorTheme, isAnimated: true, initCurrentTime: false });
 
   /**
    * Self permette di poter innestare form controls... ci assicuriamo
@@ -149,6 +149,8 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
     }
     if (value !== undefined) {
       this.onChange(value == 'Invalid Date' ? null : value);
+    } else {
+      this.onChange(value);
     }
   }
   

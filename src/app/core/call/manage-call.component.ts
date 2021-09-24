@@ -276,14 +276,6 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
     this.changeDetector.detectChanges();
   }
 
-  @HostListener('document:keydown.enter', ['$event'])  
-  handleEnterEvent(event) {
-    console.log(event.target.type);
-    if (event.target.type !== 'textarea') {
-      this.confirmCall(event);
-    }
-  }
-
   public confirmCall(event: Event) {
     if (this.isFormValid && this.confirmCallButton) {
       console.log(this.buildInstance());

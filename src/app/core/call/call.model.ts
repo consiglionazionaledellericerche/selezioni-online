@@ -2,6 +2,7 @@ import { Folder } from '../../common/model/folder.model';
 import { JsonProperty, JsonObject } from 'json2typescript';
 import { DateConverter } from '../../common/helpers/DateConverter'
 import { ISODateTimeConverter } from '../../common/helpers/ISODateTimeConverter';
+import { ObjectToIdConverter } from '../../common/helpers/ObjectToIdConverter';
 
 @JsonObject("Call")
 export class Call extends Folder {
@@ -23,7 +24,7 @@ export class Call extends Folder {
   public struttura_destinataria: string;
   @JsonProperty('jconon_call:struttura_destinataria_en')
   public struttura_destinataria_en: string;
-  @JsonProperty('jconon_call:sede_id')
+  @JsonProperty('jconon_call:sede_id', ObjectToIdConverter)
   public sede_id: string;
   @JsonProperty('jconon_call:numero_posti')
   public numero_posti: BigInteger;
