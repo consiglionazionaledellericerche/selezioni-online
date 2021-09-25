@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, Optional, Renderer2, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl} from '@angular/forms';
-import { BsDatepickerConfig, BsLocaleService} from 'ngx-bootstrap/datepicker';
+import { BsDatepickerConfig, BsDatepickerDirective, BsLocaleService, DatePickerComponent} from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { itLocale } from 'ngx-bootstrap/locale';
 defineLocale('it', itLocale);
@@ -56,8 +56,14 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
 
   @ViewChild('timepicker', {static: true}) timepicker: TimepickerComponent;
 
-  bsConfig: Partial<BsDatepickerConfig> =
-    Object.assign({}, { containerClass: this.colorTheme, isAnimated: true, initCurrentTime: false });
+  @ViewChild('dp', {static: true}) datepicker: BsDatepickerDirective;
+
+  bsConfig: Partial<BsDatepickerConfig> = Object.assign({}, { 
+    containerClass: this.colorTheme, 
+    isAnimated: true, 
+    initCurrentTime: false,
+    adaptivePosition: true
+  });
 
   /**
    * Self permette di poter innestare form controls... ci assicuriamo
@@ -65,9 +71,9 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
    * Optional https://stackoverflow.com/questions/47886424/error-in-no-provider-for-ngcontrol-angular-aot/48156981#48156981
    * @param {NgControl} controlDir
    */
-  constructor(@Optional() @Self() public controlDir: NgControl, private ref: ChangeDetectorRef,
-              private _localeService: BsLocaleService,
-              private renderer: Renderer2) {
+  constructor(@Optional() @Self() public controlDir: NgControl, 
+              private ref: ChangeDetectorRef,
+              private _localeService: BsLocaleService) {
     super();
     this._localeService.use('it');
     controlDir.valueAccessor = this;
@@ -106,15 +112,14 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
 
   writeValue(value: Date): void {
     if (value) {
-      /**Workaround for DatePicker that set hour and minute to now */
-      const firstValue = new Date(value.getTime()); 
       if (this.time && this.timepicker) {
         this.timepicker.writeValue(value);
       }
+      this.datepicker._bsValue = value;
+
       this.bsValue = value;
       this.labelactive = true;      
       this.ref.detectChanges();
-      this.bsValue = firstValue;
     }
   }
 

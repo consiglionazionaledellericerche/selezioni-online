@@ -292,8 +292,8 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
     }
 
     public onChangeSede(sede: Sede) {
-      this.form.controls['jconon_call:struttura_destinataria'].patchValue(sede.citta);
-      this.form.controls['jconon_call:sede'].patchValue(sede.descrizione);
+      this.form.controls['jconon_call:struttura_destinataria'].patchValue(sede ? sede.citta : '');
+      this.form.controls['jconon_call:sede'].patchValue(sede ? sede.descrizione : '');
     }
 
 }  
