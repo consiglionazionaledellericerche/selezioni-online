@@ -22,7 +22,8 @@ import { TimepickerComponent } from 'ngx-bootstrap/timepicker';
                         [appendText]="appendText"
                         [ttipAppend]="ttipAppend"
                         [labelactive]="labelactive"
-                        [ttip]="ttip">
+                        [ttip]="ttip"
+                        class="w-100">
                 <input class="form-control"
                     type="{{type}}"
                     #dp="bsDatepicker"
@@ -155,7 +156,9 @@ export class FormTemplateDatepickerComponent extends FormCommonTag implements Co
     if (value !== undefined) {
       this.onChange(value == 'Invalid Date' ? null : value);
     } else {
-      this.onChange(value);
+      if (this.type == 'search') {
+        this.onChange(value);
+      }
     }
   }
   
