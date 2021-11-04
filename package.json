@@ -63,7 +63,7 @@
     "@angular/compiler-cli": "~12.0.3",
     "@angular/language-service": "~12.0.3",
     "@nativescript/schematics": "~1.0.0",
-    "@ngtools/webpack": "^10.2.3",
+    "@ngtools/webpack": "^13.0.1",
     "@types/file-saver": "^2.0.1",
     "@types/html2canvas": "0.0.35",
     "@types/jasmine": "~3.6.0",
