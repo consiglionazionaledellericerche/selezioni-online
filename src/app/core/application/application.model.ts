@@ -93,6 +93,8 @@ export class Application extends Folder {
   public protocollo_numero_assunzione_idoneo: string;
   @JsonProperty('jconon_application:last_section_completed')
   public last_section_completed: number;
+  @JsonProperty('aspect')
+  public aspect: string[];
 
   @JsonProperty('call', Call, true)
   public call: Call = undefined;
