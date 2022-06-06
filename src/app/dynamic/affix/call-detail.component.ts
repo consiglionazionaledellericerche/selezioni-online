@@ -187,7 +187,7 @@ import { Sede } from '../../common/model/sede.model';
           </div>
         </div>
         <div class="form-row pb-2">
-          <div class="form-group col-md-3">
+          <div class="form-group col-md-12 col-lg-6 col-xl-4">
             <app-control-datepicker
                 type="text"
                 [time]="true"
@@ -196,7 +196,7 @@ import { Sede } from '../../common/model/sede.model';
                 formControlName="jconon_call:data_inizio_invio_domande_index">
             </app-control-datepicker>
           </div>        
-          <div class="form-group col-md-3">
+          <div class="form-group col-md-12 col-lg-6 col-xl-4">
             <app-control-datepicker
                 type="text"
                 [time]="true"
@@ -252,7 +252,7 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
       this.form.addControl('jconon_call:descrizione_en', 
         new FormControl(this.data.descrizione_en));
       this.form.addControl('jconon_call:descrizione_ridotta', 
-        new FormControl(this.data.descrizione_ridotta, Validators.required));
+        new FormControl(this.data.descrizione_ridotta));
       this.form.addControl('jconon_call:descrizione_ridotta_en', 
         new FormControl(this.data.descrizione_ridotta_en));
       this.form.addControl('jconon_call:sede_id', 

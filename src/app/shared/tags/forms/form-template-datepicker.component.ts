@@ -39,7 +39,7 @@ import { TimepickerComponent } from 'ngx-bootstrap/timepicker';
                     [disabled]="disabled"
                     [ngClass]="classes()">
         </app-form-layout>
-        <timepicker class="ml-n5" [disabled]="!bsValue" [ngClass]="{'d-none': !time}" #timepicker [showSpinners]="false" [showMeridian]="false"></timepicker>      
+        <timepicker class="ml-n5" [disabled]="!bsValue" [ngClass]="{'d-none': !time}" #timepicker [showSeconds]="true" [showSpinners]="false" [showMeridian]="false"></timepicker>
       </div>
     `
 })
