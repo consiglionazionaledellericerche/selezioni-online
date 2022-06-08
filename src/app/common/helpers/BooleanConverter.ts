@@ -1,5 +1,4 @@
 import {JsonConverter, JsonCustomConvert} from 'json2typescript';
-import { isBoolean } from 'util';
 
 @JsonConverter
 export class BooleanConverter implements JsonCustomConvert<boolean> {
@@ -8,7 +7,7 @@ export class BooleanConverter implements JsonCustomConvert<boolean> {
     }
 
     deserialize(param: any): boolean {
-        if (isBoolean(param))
+        if (typeof param === 'boolean')
             return param;
         return param === 'true' ? true : false;
     }
