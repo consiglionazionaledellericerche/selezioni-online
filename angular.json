@@ -119,7 +119,6 @@
       }
     }
   },
-  "defaultProject": "selezioni-online",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
@@ -130,6 +129,8 @@
     }
   },
   "cli": {
-    "defaultCollection": "@nativescript/schematics"
+    "schematicCollections": [
+      "@nativescript/schematics"
+    ]
   }
 }
