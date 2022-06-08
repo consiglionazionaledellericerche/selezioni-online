@@ -63,92 +63,82 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
  * Esempio: notificationService, apiMessageService.
  */
 @NgModule({
-
-  declarations: [
-    HeaderComponent,
-    FooterComponent,
-    SidenavComponent,
-    SidenavMenuComponent,
-    DropdownNavbarComponent,
-    HomeComponent,
-    SearchComponent,
-    CallListComponent,
-    ApplicationListComponent,
-    ApplicationUserListComponent,
-    ManageApplicationComponent,
-    ManageCallComponent,
-    PrintApplicationComponent,
-    ManageDocumentComponent,
-    DownloadDocumentComponent,
-    BadRequestComponent,
-  ],
-
-  imports: [
-    AppRoutingModule,
-    CoreRoutingModule,
-    SharedModule,                       // Componenti condivisi da tutta l'applicazione (ex. Tags).
-    TagsModule,
-    AuthModule,
-    FormsModule,
-    ReactiveFormsModule,
-    InfiniteScrollModule,
-    AccordionModule,
-    ButtonsModule.forRoot(),
-    TranslateModule.forChild({
-      compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
-      loader: {        
-          provide: TranslateLoader,
-          useFactory: CustomHttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
-    CollapseModule.forRoot(),
-    ProgressbarModule.forRoot(),
-    SimpleNotificationsModule.forRoot() // Le notifiche (per ora) vengono tutte generate nell'header component.
-  ],
-
-  exports: [
-    AuthModule,
-    SharedModule,
-    TagsModule,
-    HomeComponent,
-    SearchComponent,
-    HeaderComponent,
-    FooterComponent,
-    SidenavComponent,
-    SidenavMenuComponent,
-    BadRequestComponent,    
-    CallListComponent,
-    ApplicationListComponent,
-    ApplicationUserListComponent,
-    ManageApplicationComponent,
-    ManageCallComponent,
-    PrintApplicationComponent,
-    ManageDocumentComponent,
-    DownloadDocumentComponent
-  ],
-
-  providers: [
-    // Capire il discorso del root-injector e child-injector.
-    ApiMessageService,
-    NotificationsService,
-    ConfigService,
-    NavigationService,
-    MenuService,
-    CacheService,
-    ObjectTypeService,
-    CallService,
-    ApplicationService,
-    ApplicationUserService,
-    DocumentService,
-    SearchService
-  ],
-
-  entryComponents: [
-    ManageDocumentComponent,   
-    DownloadDocumentComponent,
-    PrintApplicationComponent
-  ]
+    declarations: [
+        HeaderComponent,
+        FooterComponent,
+        SidenavComponent,
+        SidenavMenuComponent,
+        DropdownNavbarComponent,
+        HomeComponent,
+        SearchComponent,
+        CallListComponent,
+        ApplicationListComponent,
+        ApplicationUserListComponent,
+        ManageApplicationComponent,
+        ManageCallComponent,
+        PrintApplicationComponent,
+        ManageDocumentComponent,
+        DownloadDocumentComponent,
+        BadRequestComponent,
+    ],
+    imports: [
+        AppRoutingModule,
+        CoreRoutingModule,
+        SharedModule,
+        TagsModule,
+        AuthModule,
+        FormsModule,
+        ReactiveFormsModule,
+        InfiniteScrollModule,
+        AccordionModule,
+        ButtonsModule.forRoot(),
+        TranslateModule.forChild({
+            compiler: { provide: TranslateCompiler, useClass: CustomTranslationCompiler },
+            loader: {
+                provide: TranslateLoader,
+                useFactory: CustomHttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        CollapseModule.forRoot(),
+        ProgressbarModule.forRoot(),
+        SimpleNotificationsModule.forRoot() // Le notifiche (per ora) vengono tutte generate nell'header component.
+    ],
+    exports: [
+        AuthModule,
+        SharedModule,
+        TagsModule,
+        HomeComponent,
+        SearchComponent,
+        HeaderComponent,
+        FooterComponent,
+        SidenavComponent,
+        SidenavMenuComponent,
+        BadRequestComponent,
+        CallListComponent,
+        ApplicationListComponent,
+        ApplicationUserListComponent,
+        ManageApplicationComponent,
+        ManageCallComponent,
+        PrintApplicationComponent,
+        ManageDocumentComponent,
+        DownloadDocumentComponent
+    ],
+    providers: [
+        // Capire il discorso del root-injector e child-injector.
+        ApiMessageService,
+        NotificationsService,
+        ConfigService,
+        NavigationService,
+        MenuService,
+        CacheService,
+        ObjectTypeService,
+        CallService,
+        ApplicationService,
+        ApplicationUserService,
+        DocumentService,
+        SearchService
+    ]
 })
 export class CoreModule {}
 

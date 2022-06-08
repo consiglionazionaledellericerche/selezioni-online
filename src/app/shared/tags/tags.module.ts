@@ -89,202 +89,175 @@ import { CustomTranslationCompiler } from '../../common/helpers/translation-comp
 import { ConfigService } from '../../core/config.service';
 
 @NgModule({
-  declarations: [
-    // Layout
-    LayoutTitleComponent,
-    LayoutBreadcrumbsComponent,
-    LayoutLegendComponent,
-    LayoutWaitComponent,
-    
-    // Form
-    FormLayoutComponent,
-    FormValidationErrorLayoutComponent,
-
-    FormTemplateTextComponent,
-    FormTemplateToggleComponent,
-    FormTemplateTextAreaComponent,
-    FormTemplateCheckboxComponent,
-    FormTemplateDatepickerComponent,
-    FormTemplateSelectModelComponent,
-    FormTemplateButtonEventComponent,
-    FormTemplateColorPickerComponent,
-    FormTemplateCKEditorComponent,
-
-    // Buttons
-    ButtonsLayoutComponent,
-
-    ButtonNewComponent,
-    ButtonCsvComponent,
-    ButtonSaveComponent,
-    ButtonCancelComponent,
-    ButtonBackComponent,
-    ButtonCrudComponent,
-    ButtonDeleteComponent,
-    ButtonConfirmComponent,
-
-    // Show
-    AdMetadata,
-    ShowLayoutComponent,
-    ShowMetadataComponent,
-    ShowAffixComponent,
-    ShowEnumComponent,
-    ShowTextComponent,
-    ShowTextModalComponent,
-    ShowChildrenModalComponent,
-    ShowMultiComponent,
-    ShowColorComponent,
-    ShowBooleanComponent,
-
-    // List
-    ListLayoutComponent,
-    GridLayoutComponent,
-    ListHeaderLayoutComponent,
-    ListItemCallComponent,
-    ListItemApplicationComponent,
-    ListItemDocumentComponent,
-    ListPaginationComponent,
-    TableItemComponent,
-    ChildrenListComponent,
-
-    // Edit
-    EditHeaderLayoutComponent,
-    EditMetdataComponent,
-
-    // Wizard
-    WizardComponent,
-    WizardItemComponent,
-    WizardItemContentComponent,
-    ModalConfirmComponent,
-    ModalInfoComponent,
-
-    // Attachement
-    AttachmentComponent,
-    AttachmentListComponent,
-
-  ],
-  imports: [
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    RouterModule,
-    CKEditorModule,
-    BsDatepickerModule.forRoot(),
-    TimepickerModule.forRoot(),
-    BsDropdownModule.forRoot(),
-    CollapseModule.forRoot(),
-    ModalModule.forRoot(),
-    AlertModule.forRoot(),
-    PaginationModule.forRoot(),
-    TooltipModule.forRoot(),
-    ButtonsModule.forRoot(),
-    PopoverModule.forRoot(),
-    ColorPickerModule,
-    TranslateModule.forChild({
-      compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
-      loader: {
-          provide: TranslateLoader,
-          useFactory: CustomHttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
-  ],
-  exports: [
-    BsDatepickerModule,
-    TimepickerModule,
-    BsDropdownModule,
-    ModalModule,
-    CollapseModule,
-    AlertModule,
-    PaginationModule,
-    TooltipModule,
-    PopoverModule,
-    ColorPickerModule,
-
-    // Layout
-    LayoutTitleComponent,
-    LayoutBreadcrumbsComponent,
-    LayoutLegendComponent,
-    LayoutWaitComponent,
-
-    // Form
-    FormTemplateTextComponent,
-    FormTemplateToggleComponent,
-    FormTemplateTextAreaComponent,
-    FormTemplateCheckboxComponent,
-    FormTemplateDatepickerComponent,
-    FormTemplateSelectModelComponent,
-    FormTemplateButtonEventComponent,
-    FormValidationErrorLayoutComponent,
-    FormTemplateColorPickerComponent,
-    FormTemplateCKEditorComponent,
-
-    // Buttons
-    ButtonsLayoutComponent,
-
-    ButtonNewComponent,
-    ButtonCsvComponent,
-    ButtonSaveComponent,
-    ButtonCancelComponent,
-    ButtonBackComponent,
-    ButtonCrudComponent,
-    ButtonDeleteComponent,
-    ButtonConfirmComponent,
-
-    // Show
-    ShowEnumComponent,
-    ShowTextComponent,
-    ShowTextModalComponent,
-    ShowChildrenModalComponent,
-    ShowMetadataComponent,
-    ShowAffixComponent,
-    ShowMultiComponent,
-    ShowColorComponent,
-    ShowBooleanComponent,
-    AdMetadata,
-
-    // List
-    ListLayoutComponent,
-    GridLayoutComponent,
-    ListHeaderLayoutComponent,
-    ListItemCallComponent,
-    ListItemApplicationComponent,
-    ListItemDocumentComponent,
-    ListPaginationComponent,
-    TableItemComponent,
-    ChildrenListComponent,
-
-    // Edit
-    EditHeaderLayoutComponent,
-    EditMetdataComponent,
-
-    // Wizard
-    WizardComponent,
-    WizardItemComponent,
-    WizardItemContentComponent,
-    ModalConfirmComponent,
-    ModalInfoComponent,
-
-    // Attachment
-    AttachmentComponent,
-    AttachmentListComponent,
-
-
-  ],
-  providers: [
-    BsModalService,
-    PopoverDirective,
-    ChildrenService
-  //   I18n
-  //   // {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n},
-  //   // {provide: NgbDateParserFormatter, useClass: NgbDateItParserFormatter}
-   ],
-  entryComponents: [
-    ShowMetadataComponent,
-    ShowAffixComponent,
-    ModalConfirmComponent,
-    ModalInfoComponent,
-  ]
+    declarations: [
+        // Layout
+        LayoutTitleComponent,
+        LayoutBreadcrumbsComponent,
+        LayoutLegendComponent,
+        LayoutWaitComponent,
+        // Form
+        FormLayoutComponent,
+        FormValidationErrorLayoutComponent,
+        FormTemplateTextComponent,
+        FormTemplateToggleComponent,
+        FormTemplateTextAreaComponent,
+        FormTemplateCheckboxComponent,
+        FormTemplateDatepickerComponent,
+        FormTemplateSelectModelComponent,
+        FormTemplateButtonEventComponent,
+        FormTemplateColorPickerComponent,
+        FormTemplateCKEditorComponent,
+        // Buttons
+        ButtonsLayoutComponent,
+        ButtonNewComponent,
+        ButtonCsvComponent,
+        ButtonSaveComponent,
+        ButtonCancelComponent,
+        ButtonBackComponent,
+        ButtonCrudComponent,
+        ButtonDeleteComponent,
+        ButtonConfirmComponent,
+        // Show
+        AdMetadata,
+        ShowLayoutComponent,
+        ShowMetadataComponent,
+        ShowAffixComponent,
+        ShowEnumComponent,
+        ShowTextComponent,
+        ShowTextModalComponent,
+        ShowChildrenModalComponent,
+        ShowMultiComponent,
+        ShowColorComponent,
+        ShowBooleanComponent,
+        // List
+        ListLayoutComponent,
+        GridLayoutComponent,
+        ListHeaderLayoutComponent,
+        ListItemCallComponent,
+        ListItemApplicationComponent,
+        ListItemDocumentComponent,
+        ListPaginationComponent,
+        TableItemComponent,
+        ChildrenListComponent,
+        // Edit
+        EditHeaderLayoutComponent,
+        EditMetdataComponent,
+        // Wizard
+        WizardComponent,
+        WizardItemComponent,
+        WizardItemContentComponent,
+        ModalConfirmComponent,
+        ModalInfoComponent,
+        // Attachement
+        AttachmentComponent,
+        AttachmentListComponent,
+    ],
+    imports: [
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        RouterModule,
+        CKEditorModule,
+        BsDatepickerModule.forRoot(),
+        TimepickerModule.forRoot(),
+        BsDropdownModule.forRoot(),
+        CollapseModule.forRoot(),
+        ModalModule.forRoot(),
+        AlertModule.forRoot(),
+        PaginationModule.forRoot(),
+        TooltipModule.forRoot(),
+        ButtonsModule.forRoot(),
+        PopoverModule.forRoot(),
+        ColorPickerModule,
+        TranslateModule.forChild({
+            compiler: { provide: TranslateCompiler, useClass: CustomTranslationCompiler },
+            loader: {
+                provide: TranslateLoader,
+                useFactory: CustomHttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+    ],
+    exports: [
+        BsDatepickerModule,
+        TimepickerModule,
+        BsDropdownModule,
+        ModalModule,
+        CollapseModule,
+        AlertModule,
+        PaginationModule,
+        TooltipModule,
+        PopoverModule,
+        ColorPickerModule,
+        // Layout
+        LayoutTitleComponent,
+        LayoutBreadcrumbsComponent,
+        LayoutLegendComponent,
+        LayoutWaitComponent,
+        // Form
+        FormTemplateTextComponent,
+        FormTemplateToggleComponent,
+        FormTemplateTextAreaComponent,
+        FormTemplateCheckboxComponent,
+        FormTemplateDatepickerComponent,
+        FormTemplateSelectModelComponent,
+        FormTemplateButtonEventComponent,
+        FormValidationErrorLayoutComponent,
+        FormTemplateColorPickerComponent,
+        FormTemplateCKEditorComponent,
+        // Buttons
+        ButtonsLayoutComponent,
+        ButtonNewComponent,
+        ButtonCsvComponent,
+        ButtonSaveComponent,
+        ButtonCancelComponent,
+        ButtonBackComponent,
+        ButtonCrudComponent,
+        ButtonDeleteComponent,
+        ButtonConfirmComponent,
+        // Show
+        ShowEnumComponent,
+        ShowTextComponent,
+        ShowTextModalComponent,
+        ShowChildrenModalComponent,
+        ShowMetadataComponent,
+        ShowAffixComponent,
+        ShowMultiComponent,
+        ShowColorComponent,
+        ShowBooleanComponent,
+        AdMetadata,
+        // List
+        ListLayoutComponent,
+        GridLayoutComponent,
+        ListHeaderLayoutComponent,
+        ListItemCallComponent,
+        ListItemApplicationComponent,
+        ListItemDocumentComponent,
+        ListPaginationComponent,
+        TableItemComponent,
+        ChildrenListComponent,
+        // Edit
+        EditHeaderLayoutComponent,
+        EditMetdataComponent,
+        // Wizard
+        WizardComponent,
+        WizardItemComponent,
+        WizardItemContentComponent,
+        ModalConfirmComponent,
+        ModalInfoComponent,
+        // Attachment
+        AttachmentComponent,
+        AttachmentListComponent,
+    ],
+    providers: [
+        BsModalService,
+        PopoverDirective,
+        ChildrenService
+        //   I18n
+        //   // {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n},
+        //   // {provide: NgbDateParserFormatter, useClass: NgbDateItParserFormatter}
+    ]
 })
 export class TagsModule {}
 

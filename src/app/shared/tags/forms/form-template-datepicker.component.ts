@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, Optional, Renderer2, Self, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NgControl} from '@angular/forms';
-import { BsDatepickerConfig, BsDatepickerDirective, BsLocaleService, DatePickerComponent} from 'ngx-bootstrap/datepicker';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { BsDatepickerConfig, BsDatepickerDirective, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { itLocale } from 'ngx-bootstrap/locale';
 defineLocale('it', itLocale);
-import {ValidationHelper} from '../../../common/validation/validation-helper';
-import {FormCommonTag} from './form-common-tag';
+import { ValidationHelper } from '../../../common/validation/validation-helper';
+import { FormCommonTag } from './form-common-tag';
 import { TimepickerComponent } from 'ngx-bootstrap/timepicker';
 
 @Component({

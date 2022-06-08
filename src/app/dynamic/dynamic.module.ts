@@ -87,7 +87,6 @@ import { ConfigService } from '../core/config.service';
         JcononAffixAllegatiComponent,
         JcononAffixDichiarazioniConclusiveComponent,
         JcononAffixReperibilitaComponent,
-
         JcononAffixCallDetailComponent,
         JcononAffixCallSettingsComponent,
         /** Application Aspect */
@@ -134,10 +133,8 @@ import { ConfigService } from '../core/config.service';
         JcononAspectAbilitazioneProfessioneIngegnereComponent,
         JcononAspectUlterioreLaureaComponent,
         JcononAspectUlterioreDottoratoComponent,
-
         JcononAttachmentShowComponent,
         JcononAttachmentDocumentoRiconoscimentoShowComponent,
-
         JcononAttachmentEditComponent,
         JcononAttachmentDocumentoRiconoscimentoEditComponent
     ],
@@ -150,77 +147,14 @@ import { ConfigService } from '../core/config.service';
         ButtonsModule.forRoot(),
         AccordionModule.forRoot(),
         TranslateModule.forChild({
-            compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
+            compiler: { provide: TranslateCompiler, useClass: CustomTranslationCompiler },
             loader: {
                 provide: TranslateLoader,
                 useFactory: CustomHttpLoaderFactory,
                 deps: [HttpClient]
             }
         }),
-    ],
-    entryComponents: [
-        JcononAttachmentCallShowComponent,
-        JcononAffixAnagraficaComponent,
-        JcononAffixResidenzaComponent,
-        JcononAffixDichiarazioniComponent,
-        JcononAffixAllegatiComponent,
-        JcononAffixDichiarazioniConclusiveComponent,
-        JcononAffixReperibilitaComponent,
-
-        JcononAffixCallDetailComponent,
-        JcononAffixCallSettingsComponent,
-        
-        /** Application Aspect */
-        JcononAspectsDichiarazioneComponent,
-        JcononAspectPossessoRequisitiComponent,
-        JcononAspectIscrizioneListeElettoraliComponent,
-        JcononAspectGodimentoDirittiComponent,
-        JcononAspectCondannePenaliComponent,
-        JcononAspectDecadutoAltroImpiegoComponent,
-        JcononAspectDestituitoAltroImpiegoComponent,
-        JcononAspectServizioCNRComponent,
-        JcononAspectServizioAltreAmministrazioniComponent,
-        JcononAspectTitoloRiservaPostiComponent,
-        JcononAspectDiplomaComponent,
-        JcononAspectLaureaComponent,
-        JcononAspectDottoratoComponent,
-        JcononAspectDiversmenteAbileComponent,
-        JcononAspectTempiAggiuntiviComponent,
-        JcononAspectAltreBorseStudioComponent,
-        JcononAspectAreaScientificaComponent,
-        JcononAspectSettoreScientificoTecnologicoComponent,
-        JcononAspectInquadramentoComponent,
-        JcononAspectStrutturaAppartenenzaComponent,
-        JcononAspectHIndexComponent,
-        JcononAspectServizioAltraAttivitaComponent,
-        JcononAspectPossessoCittadinanzaComponent,
-        JcononAspectCategorieRiservatarieArt1Component,
-        JcononAspectCategorieRiservatarieArt18Component,
-        JcononAspectPatenteGuidaComponent,
-        JcononAspectAttoInterruttivoAnzianitaComponent,
-        JcononAspectTitoloPreferenzaPostiComponent,
-        JcononAspectConoscenzaLingueComponent,
-        JcononAspectSedeComponent,
-        JcononAspectSanzioneDisciplinareComponent,
-        JcononAspectSpecializzazioneComponent,
-        JcononAspectEnteCompartoRicercaAppartenenzaComponent,
-        JcononAspectEnteCompartoUniversitaAppartenenzaComponent,
-        JcononAspectEnteAppartenenzaComponent,
-        JcononAspectSingleFieldComponent,
-        JcononAspectAreaTecnicaComponent,
-        JcononAspectToggleWithSingleFieldComponent,
-        JcononAspectContrattoTDConcorsoComponent,
-        JcononAspectIdoneoPrecedentiGraduatorieComponent,
-        JcononAspectAbilitazioneProfessioneIngegnereComponent,
-        JcononAspectUlterioreLaureaComponent,
-        JcononAspectUlterioreDottoratoComponent,
-
-        JcononAttachmentShowComponent,
-        JcononAttachmentDocumentoRiconoscimentoShowComponent,
-
-        JcononAttachmentEditComponent,
-        JcononAttachmentDocumentoRiconoscimentoEditComponent
-    ],
+    ]
 })
 export class DynamicModule {}
 
