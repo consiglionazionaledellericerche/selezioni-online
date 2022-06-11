@@ -5,8 +5,8 @@ services:
   selezioni:
     image: docker.si.cnr.it/##{CONTAINER_ID}##
     environment:
-      GATEWAY_HOST: "cool-jconon.si.cnr.it"
-      GATEWAY_PORT: "80"
+      API_URL: "http://cool-jconon.si.cnr.it"
+      OIDC_ENABLE: "false"
     network_mode: bridge
     labels:
       SERVICE_NAME: ##{SERVICE_NAME}##
