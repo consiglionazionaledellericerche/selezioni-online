@@ -53,6 +53,6 @@ export class ModalInfoComponent {
   }
   
   ngOnDestroy(){
-    this.close.next(); 
+    this.close.next(true); 
   }
 }

@@ -63,6 +63,33 @@ export class AuthService {
     return null;
   }
   
+
+  /**
+   * Login.
+   * In caso positivo ritorna il token, altrimenti l'errore.
+   * @param username
+   * @param password
+   */
+   public signinUserSSO(access_token: string): Observable<any> {
+    const post = 'access_token=' + access_token;
+    return this.configService.getGateway().pipe(switchMap((gateway) => {
+      return this.httpClient.post<Token>(gateway + ConfigService.URL_SSO_LOGIN, post,
+        {headers: AuthService.tokenHeaders}).pipe(
+        map(
+          (token) => {
+            token.valid_until = new Date().getTime() + (token.expires_in * 1000);
+            this.setToken(token);
+            this.userActivated.next(this.token.user); // ex. per notifica all'headerComponent.
+            return this.getToken();
+          }),
+        catchError(
+          (error: HttpErrorResponse) => {
+            this.apiMessageService.sendMessage(MessageType.ERROR, 'signin.unauthorized');
+            return observableThrowError(error);
+          }));
+    }));
+  }
+
   /**
    * Login.
    * In caso positivo ritorna il token, altrimenti l'errore.

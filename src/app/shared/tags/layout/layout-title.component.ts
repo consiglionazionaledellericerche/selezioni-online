@@ -42,7 +42,6 @@ export class LayoutTitleComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.collapsediv);
     this.toggle(this.collapsediv);
   }
 }

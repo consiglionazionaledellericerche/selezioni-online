@@ -19,6 +19,9 @@ import { HttpClient } from '@angular/common/http';
 import { CustomTranslationCompiler } from './common/helpers/translation-compiler';
 import { LoadingInterceptor } from './auth/loading.interceptor';
 import { ConfigService } from './core/config.service';
+import { environment } from '../environments/environment';
+
+import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
 
 @NgModule({
 
@@ -31,6 +34,18 @@ import { ConfigService } from './core/config.service';
     BrowserAnimationsModule,
     // ngx-translate and the loader module
     HttpClientModule,
+    AuthModule.forRoot({
+      config: {
+        authority: environment.oidc.authority,
+        redirectUrl: environment.oidc.redirectUrl,
+        postLogoutRedirectUri: window.location.origin,
+        clientId: environment.oidc.clientId,
+        scope: 'openid profile email offline_access',
+        responseType: 'code',
+        useRefreshToken: true,
+        logLevel: LogLevel.Debug,
+      },
+    }),
     TranslateModule.forRoot({
         compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
         loader: {

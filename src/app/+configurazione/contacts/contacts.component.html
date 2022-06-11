@@ -2,10 +2,10 @@
     <div class="row no-gutters">
         <h3 class="w-100">{{'contacts.subtitle' | translate}}</h3>
         <ul class="w-100">
-            <li innerHtml="{{'contacts.telefono' | translate}}"></li>
-            <li innerHtml="{{'contacts.fax' | translate}}"></li>
-            <li innerHtml="{{'contacts.email' | translate}}"></li>
-            <li innerHtml="{{'contacts.pec' | translate}}"></li>
+            <li *ngIf="telefono" [innerHtml]="telefono"></li>
+            <li *ngIf="fax" [innerHtml]="fax"></li>
+            <li *ngIf="email" [innerHtml]="email"></li>
+            <li *ngIf="pec" [innerHtml]="pec"></li>
         </ul>
         <h4 class="w-100">{{'contacts.helpdesk.info' | translate}} <a href="/configurazione/helpdesk">{{'contacts.helpdesk.name' | translate}}</a></h4>
         <div class="alert alert-danger">

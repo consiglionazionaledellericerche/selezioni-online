@@ -169,7 +169,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   sidebarToggle() {
-    this.menuService.sidebarEvaluated.next();
+    this.menuService.sidebarEvaluated.next(true);
     this.modalService.show(SidenavComponent, Object.assign({}, { animated: true, class: 'modal-dialog-left' }));
   }
 

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { ConfigService } from '../../core/config.service';
+import { Oidc } from '../../core/config.model';
 
 @Component({
     selector: 'app-signin',
@@ -18,12 +21,30 @@ export class SigninComponent implements OnInit{
 
     constructor(private formBuilder: FormBuilder,
                 private authService: AuthService, 
-                private router: Router) { }
+                private router: Router,
+                protected configService: ConfigService,
+                private oidcSecurityService: OidcSecurityService) { }
 
     ngOnInit() {
         this.ngForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
+        });
+        this.configService.getOidc().subscribe((oidc : Oidc) => {
+            if (oidc.enable === 'true') {
+                this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
+                    if (!isAuthenticated) {
+                        this.oidcSecurityService.authorize();
+                    } else {
+                        this.authService.signinUserSSO(accessToken).subscribe(
+                            (response) => {
+                                const { redirect } = window.history.state;
+                                this.router.navigateByUrl(redirect || '/');
+                            }
+                        );
+                    }
+                });        
+            }
         });
     }
     // convenience getter for easy access to form fields
@@ -41,12 +62,9 @@ export class SigninComponent implements OnInit{
         this.authService.signinUser(username, password).subscribe(
             (response) => {
                 const { redirect } = window.history.state;
-                console.log(redirect);
                 this.router.navigateByUrl(redirect || '/');
             }
         );
-
-
     }
 
 }

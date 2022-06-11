@@ -4,9 +4,9 @@ import {of as observableOf, Observable, forkJoin } from 'rxjs';
 import {map, catchError, switchMap } from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Config} from './config.model';
-import {environment} from '../../environments/environment';
-import { TranslateLoader } from '@ngx-translate/core';
+import {Config, Oidc} from './config.model';
+import {TranslateLoader } from '@ngx-translate/core';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ConfigService implements TranslateLoader{
@@ -20,6 +20,8 @@ export class ConfigService implements TranslateLoader{
   public static URL_OAUTH_LOGIN = '/security/login';
   public static URL_OAUTH_LOGOUT = '/security/logout';
 
+  public static URL_SSO_LOGIN = '/sso/login';
+
   public static URL_VALIDATE_TICKET = '/security/validate';
 
   public static USER_ROLES_URL = '/v1/ruolo/ruoliattivi/'
@@ -31,35 +33,17 @@ export class ConfigService implements TranslateLoader{
 
   constructor(private httpClient: HttpClient) {}
 
-  public initializeConfiguration(): Observable<Config> {
-    return this.httpClient.get<Config>(ConfigService.CONFIG_URL, {responseType: 'json'}).pipe(
-      map(
-        (config) => {
-          this.config = config;
-          if (this.config.gateway.indexOf('{') >= 0) {
-            console.log('Run non dockerizzato, il gateway è prelevato dall\'environment');
-            this.config.gateway = environment.zuul_uri;
-          }
-          console.log('Configurazione inizializzata correttamente');
-          console.log('Il gateway è ' + this.config.gateway);
-          return config;
-        }
-      ));
+  getGateway(): Observable<string> {
+    return observableOf(environment.apiUrl);
   }
 
-  getGateway(): Observable<string> {
-    if (this.config) {
-      return observableOf(this.config.gateway);
-    }
-    return this.initializeConfiguration().pipe(map(
-      (config) => {
-        return config.gateway;
-      }
-    ),catchError((error) => {
-      console.error('La configurazione non è stata inizializzata');
-      return observableOf(null);
-    }),);
-
+  getOidc(): Observable<Oidc> {
+      return observableOf(new Oidc(
+        environment.oidc.enable,
+        environment.oidc.authority,
+        environment.oidc.redirectUrl,
+        environment.oidc.clientId
+      ));
   }
 
   getApiBase(): Observable<string> {
