@@ -42,7 +42,7 @@ import { UserService } from '../../auth/edit/user.service';
               <a [ngClass]="{'disabled': (affixCompleted == 0 || !form.pristine) && !isDisableConfirm}" 
                 (click)="affixCompleted = affixCompleted - 1;scroll(cardCall);" 
                 class="btn btn-link text-primary steppers-btn-prev px-1">
-                <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-left"></use></svg>
+                <svg class="icon icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-left"></use></svg>
                 <span translate>previous</span>
               </a>
               <ul class="steppers-dots d-flex">
@@ -59,7 +59,7 @@ import { UserService } from '../../auth/edit/user.service';
                 (click)="affixCompleted = affixCompleted + 1;scroll(cardCall);" 
                 class="btn btn-link text-primary steppers-btn-next px-1">
                 <span translate>next</span>
-                <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-right"></use></svg>
+                <svg class="icon icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-right"></use></svg>
               </a>
             </nav>
           </div>
@@ -76,7 +76,7 @@ import { UserService } from '../../auth/edit/user.service';
                 class="btn btn-primary btn-block btn-lg btn-icon mr-2 rounded" 
                 tooltip="{{'application.send' | translate}}">
                 <span class="pr-1 w-100 text-right" translate>application.send</span>
-                <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
+                <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-upload"></use></svg>              
                 <div *ngIf="loadingStateSend.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>
                   <div class="progress-spinner-inner"></div>
@@ -91,7 +91,7 @@ import { UserService } from '../../auth/edit/user.service';
                 class="btn btn-primary btn-block btn-lg btn-icon rounded" 
                 tooltip="{{'application.confirm' | translate}}">
                 <span class="pr-1 w-100 text-right" translate>application.confirm</span>
-                <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
+                <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-arrow-right-circle"></use></svg>
                 <div *ngIf="loadingStateConfirm.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>
                   <div class="progress-spinner-inner"></div>

@@ -11,7 +11,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
     <ng-template #template>
       <div class="modal-header">
         <svg class="icon icon-primary align-top">
-          <use xlink:href="/assets/vendor/sprite.svg#it-info-circle"></use>
+          <use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use>
         </svg>
         <h4 class="modal-title text-primary pl-1">{{modal_title}}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">

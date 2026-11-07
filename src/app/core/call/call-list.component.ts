@@ -46,7 +46,7 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
             <div class="col-sm-12">
                 <ng-template #popTemplate>
                   <h5 class="font-weight-semibold">
-                    <svg class="icon icon-secondary"><use xlink:href="/assets/vendor/sprite.svg#it-info-circle"></use></svg> Info
+                    <svg class="icon icon-secondary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg> Info
                   </h5>
                   <hr>
                   <div [innerHtml]="translateService.currentLang == 'it'? item.descrizione: item.descrizione_en"></div>
@@ -56,7 +56,7 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
                   [value]="item.codice">
                 </app-show-text>
                 <a class="btn btn-sm btn-link p-0 mb-3 ml-n1" [popover]="popTemplate" [outsideClick]="true">
-                  <svg class="icon icon-xs icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-info-circle"></use></svg>
+                  <svg class="icon icon-xs icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg>
                 </a>
             </div>  
             <div class="col-sm-12">    

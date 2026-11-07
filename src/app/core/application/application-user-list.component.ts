@@ -127,7 +127,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
           <div class="col-sm-12">
             <ng-template #popTemplate>
               <h5 class="font-weight-semibold">
-                <svg class="icon icon-secondary"><use xlink:href="/assets/vendor/sprite.svg#it-info-circle"></use></svg> Info
+                <svg class="icon icon-secondary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg> Info
               </h5>
               <hr>
               <div [innerHtml]="translateService.currentLang == 'it'? item.call.descrizione: item.call.descrizione_en"></div>
@@ -137,7 +137,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
               [value]="item.call.codice">
             </app-show-text>
             <a class="btn btn-sm btn-link p-0 mb-3 ml-n1" [popover]="popTemplate" [outsideClick]="true">
-              <svg class="icon icon-xs icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-info-circle"></use></svg>
+              <svg class="icon icon-xs icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg>
             </a>
             <app-show-text [label]="'call.numero_gu'" [value]="item.call.numero_gu" [strong]="false"></app-show-text>
             <app-show-text [label]="'call.data_gu'" [value]="item.call.data_gu | date:'dd/MM/yyyy'" [strong]="false"></app-show-text>

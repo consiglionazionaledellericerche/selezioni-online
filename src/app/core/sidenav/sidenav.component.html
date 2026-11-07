@@ -17,7 +17,7 @@
                         <a class="btn btn-link p-0" (click)="hide()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
-                                    <use xlink:href="/assets/vendor/sprite.svg#it-close-big"></use>
+                                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-close-big"></use>
                                 </svg>
                             </span>    
                         </a>
@@ -38,7 +38,7 @@
                         <a class="btn btn-link" [routerLink]="['/create-account']" (click)="hide()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
-                                    <use xlink:href="/assets/vendor/sprite.svg#it-settings"></use>
+                                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-settings"></use>
                                 </svg>
                             </span>    
                             <span>{{'user.settings'|translate}}</span> 
@@ -48,7 +48,7 @@
                         <a class="btn btn-link" [routerLink]="['/']" (click)="onLogout()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
-                                    <use xlink:href="/assets/vendor/sprite.svg#it-close-circle"></use>
+                                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-close-circle"></use>
                                 </svg>
                             </span>    
                             <span>{{'user.logout'|translate}}</span>
@@ -102,8 +102,8 @@
                                     <div class="p-1 ml-auto">
                                         <div class="float-right pull-right">
                                             <svg class="icon icon-primary">
-                                            <use *ngIf="!accordionGroup.isOpen" xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
-                                            <use *ngIf="accordionGroup.isOpen" xlink:href="/assets/vendor/sprite.svg#it-collapse"></use>
+                                            <use *ngIf="!accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
+                                            <use *ngIf="accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-collapse"></use>
                                             </svg>
                                         </div>                
                                     </div>                          

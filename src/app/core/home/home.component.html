@@ -26,7 +26,7 @@
                         btnRadio="jconon_call:folder">
                         <span class="text-truncate">{{'F:jconon_call:folder' | translate}}</span> 
                         <svg class="icon icon-primary ml-auto">
-                            <use xlink:href="/assets/vendor/sprite.svg#it-chevron-right"></use>
+                            <use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-right"></use>
                         </svg>
                     </a>
                     <ng-container *ngFor="let item of cache.jsonlistCallType">
@@ -36,7 +36,7 @@
                                 btnRadio="{{item.queryName}}">
                                 <span class="text-truncate">{{item.key | translate}}</span> 
                                 <svg class="icon icon-primary ml-auto">
-                                    <use xlink:href="/assets/vendor/sprite.svg#it-chevron-right"></use>
+                                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-right"></use>
                                 </svg>
                         </a>
                         </ng-container>
@@ -44,7 +44,7 @@
                             <a class="list-group-item list-group-item-action text-primary d-flex">
                                 <span class="font-weight-bolder text-truncate">{{item.key | translate}}</span> 
                                 <svg class="icon icon-primary ml-auto">
-                                    <use xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
+                                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
                                 </svg>
                             </a>
                             <ng-container *ngFor="let child of item.childs">
@@ -52,7 +52,7 @@
                                     btnRadio="{{child.queryName}}">
                                     <span class="ml-3 text-truncate">{{child.key | translate}}</span> 
                                     <svg class="icon icon-primary ml-auto">
-                                        <use xlink:href="/assets/vendor/sprite.svg#it-chevron-right"></use>
+                                        <use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-right"></use>
                                     </svg>
                                 </a>            
                             </ng-container>

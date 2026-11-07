@@ -13,8 +13,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
       </div>
       <div *ngIf="isCollapsable" class="ml-auto">
         <svg class="icon icon-primary icon-xl">
-          <use *ngIf="collapsediv" xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
-          <use *ngIf="!collapsediv" xlink:href="/assets/vendor/sprite.svg#it-collapse"></use>
+          <use *ngIf="collapsediv" href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
+          <use *ngIf="!collapsediv" href="/assets/bootstrap-italia/svg/sprites.svg#it-collapse"></use>
         </svg>
       </div>
     </div>

@@ -7,7 +7,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
     
     <button class="btn {{buttonClass}}" (click)="openModal(template)" tooltip="{{'attach' | translate}}">
       <svg class="icon">
-        <use xlink:href="/assets/vendor/sprite.svg#it-download"></use>
+        <use href="/assets/bootstrap-italia/svg/sprites.svg#it-download"></use>
       </svg>
     </button>
 

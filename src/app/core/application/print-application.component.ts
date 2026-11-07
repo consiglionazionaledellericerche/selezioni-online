@@ -17,12 +17,12 @@ import { Application } from './application.model';
         <h3 *ngIf="history" class="modal-title pull-left text-success pb-2 text-truncate"><i class="fa fa-history"></i> {{'document.history.title'|translate}}</h3>
         <button *ngIf="history" type="button" class="close pull-right" aria-label="Close" (click)="history = false">
           <svg class="icon">
-            <use xlink:href="/assets/vendor/sprite.svg#it-restore"></use>
+            <use href="/assets/bootstrap-italia/svg/sprites.svg#it-restore"></use>
           </svg>
         </button>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <svg class="icon">
-            <use xlink:href="/assets/vendor/sprite.svg#it-close-circle"></use>
+            <use href="/assets/bootstrap-italia/svg/sprites.svg#it-close-circle"></use>
           </svg>
         </button>
       </div>

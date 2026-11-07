@@ -18,7 +18,7 @@
                   <span>{{country | uppercase}}</span>
                   <svg class="icon icon-white">
                     <use
-                      xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
+                      href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
                   </svg>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right border" *dropdownMenu>
@@ -29,7 +29,7 @@
               <a *ngSwitchCase="false" class="btn btn-primary btn-icon rounded-0 btn-full" (click)="loginPage()">
                 <span class="rounded-icon">
                   <svg class="icon icon-primary">
-                    <use xlink:href="/assets/vendor/sprite.svg#it-user"></use>
+                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-user"></use>
                   </svg>
                 </span>
                 <span class="d-none d-lg-inline-block">{{'signin.title' | translate}}</span>
@@ -44,7 +44,7 @@
                   <span class="d-none d-md-block pl-1">{{user.firstName|capitalizeFirst}}{{user.lastName|capitalizeFirst}}</span>
                   <svg class="icon icon-white">
                     <use
-                      xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
+                      href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
                   </svg>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right border" *dropdownMenu>
@@ -96,14 +96,14 @@
                     </div>
                     <a class="search-link rounded-icon d-md-block d-lg-none" tooltip="{{'search'|translate}}" [routerLink]="['/search']">
                       <svg class="icon">
-                        <use xlink:href="/assets/vendor/sprite.svg#it-search"></use>
+                        <use href="/assets/bootstrap-italia/svg/sprites.svg#it-search"></use>
                       </svg>
                     </a>
                   </form>
                 </div>
                 <a class="btn btn-link d-lg-none toggle-menu-sidebar px-3" (click)="sidebarMenuToggle()">
                   <svg class="icon icon-white toggle-menu-sidebar">
-                    <use xlink:href="/assets/vendor/sprite.svg#it-burger"></use>
+                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-burger"></use>
                   </svg>
                 </a>
               </div>
@@ -122,7 +122,7 @@
                   <div class="it-brand-wrapper cloned" *ngIf="isSticky">
                     <a class="btn btn-link px-1" *ngSwitchCase="true" (click)="sidebarToggle()">
                       <svg class="icon icon-white mx-0">
-                        <use xlink:href="/assets/vendor/sprite.svg#it-burger"></use>
+                        <use href="/assets/bootstrap-italia/svg/sprites.svg#it-burger"></use>
                       </svg>
                     </a>
                     <a [routerLink]="['/']" class="navbar-brand logo mr-0">
@@ -146,13 +146,13 @@
                     <span class="d-none d-md-block">{{'search'|translate}}</span>
                     <a aria-label="Cerca" class="search-link rounded-icon" [routerLink]="['/search']">
                       <svg class="icon">
-                        <use xlink:href="/assets/vendor/sprite.svg#it-search"></use>
+                        <use href="/assets/bootstrap-italia/svg/sprites.svg#it-search"></use>
                       </svg>
                     </a>
                   </div>
                   <a class="btn btn-link d-lg-none toggle-menu-sidebar px-3" (click)="sidebarMenuToggle()">
                     <svg class="icon icon-white toggle-menu-sidebar">
-                      <use xlink:href="/assets/vendor/sprite.svg#it-burger"></use>
+                      <use href="/assets/bootstrap-italia/svg/sprites.svg#it-burger"></use>
                     </svg>
                   </a>  
                 </div>  
