@@ -4,16 +4,16 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-show-text-modal',
   template: `
-    <span *ngIf="value" class="mr-1">
+    <span *ngIf="value" class="me-1">
       <span>{{ label | translate }}</span>
-      <a class="ml-1" [ngClass]="{'font-weight-bold': strong}" href="javascript:" (click)="openModal(template)">{{ value }}</a>
+      <a class="ms-1" [ngClass]="{'font-weight-bold': strong}" href="javascript:" (click)="openModal(template)">{{ value }}</a>
     </span>
     <ng-template #template>
       <div class="modal-header">
         <svg class="icon icon-primary align-top">
           <use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use>
         </svg>
-        <h4 class="modal-title text-primary pl-1">{{modal_title}}</h4>
+        <h4 class="modal-title text-primary ps-1">{{modal_title}}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
         </button>

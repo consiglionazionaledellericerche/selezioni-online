@@ -36,8 +36,8 @@ import { Application } from './application.model';
                 <a>  
                   <div class="d-flex align-items-start">
                     <small class="text-monospace" translate>document.history.version</small>
-                    <span (click)="onDownload(version.objectId, version.name)" class="badge ml-2 h6 d-table c-pointer" [ngClass]="{'badge-primary': version.isMajorVersion, 'badge-secondary': !version.isMajorVersion}">{{version.versionLabel}}</span>
-                    <small class="text-monospace ml-2">{{'document.history.detail'| translate:{contentStreamLength: version.getFileSize(), lastModificationDate: version.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</small>
+                    <span (click)="onDownload(version.objectId, version.name)" class="badge ms-2 h6 d-table c-pointer" [ngClass]="{'badge-primary': version.isMajorVersion, 'badge-secondary': !version.isMajorVersion}">{{version.versionLabel}}</span>
+                    <small class="text-monospace ms-2">{{'document.history.detail'| translate:{contentStreamLength: version.getFileSize(), lastModificationDate: version.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</small>
                   </div>
                 </a>  
               </li>
@@ -51,12 +51,12 @@ import { Application } from './application.model';
               (click)="onDownload(lastPrint.objectId, lastPrint.name)" translate>application.print.download <i class="fa fa-file-pdf-o" aria-hidden="true"></i> 
             </button>
           </div>
-          <div *ngIf="lastPrint" class="pl-2">
+          <div *ngIf="lastPrint" class="ps-2">
             <button class="btn btn-success btn-block rounded"
               (click)="onHistory()" translate>application.print.old <i class="fa fa-history" aria-hidden="true"></i> 
             </button>
           </div>
-          <div *ngIf="application.isProvvisoria()" class="ml-auto pl-2">
+          <div *ngIf="application.isProvvisoria()" class="ms-auto ps-2">
             <button class="btn btn-outline-secondary btn-block rounded"
                   (click)="onPrint()" translate>application.print.new <i class="fa fa-plus-circle" aria-hidden="true"></i>
             </button>

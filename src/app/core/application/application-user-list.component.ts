@@ -136,7 +136,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
               [label]="'call.codice'" 
               [value]="item.call.codice">
             </app-show-text>
-            <a class="btn btn-sm btn-link p-0 mb-3 ml-n1" [popover]="popTemplate" [outsideClick]="true">
+            <a class="btn btn-sm btn-link p-0 mb-3 ms-n1" [popover]="popTemplate" [outsideClick]="true">
               <svg class="icon icon-xs icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg>
             </a>
             <app-show-text [label]="'call.numero_gu'" [value]="item.call.numero_gu" [strong]="false"></app-show-text>

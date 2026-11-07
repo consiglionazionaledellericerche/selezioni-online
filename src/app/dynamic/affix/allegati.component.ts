@@ -21,8 +21,8 @@ import { LoadingState } from '../../auth/loading-state.enum';
             <accordion-group #accordionGroup panelClass="border border-light no-after">
               <div class="d-flex align-items-start" accordion-heading>
                 <h4 #title class="p-1 text-truncate text-primary" [popover]="getTitle(attachment, title)| translate" triggers="mouseenter:mouseleave" translate>{{attachment}}</h4>
-                <span class="badge badge-pill badge-outline-primary d-table ml-n1" [ngClass]="{'badge-outline-danger': childrenlist.count === 0}">{{childrenlist.count}}</span>
-                <div class="mr-auto p-1 h4">
+                <span class="badge badge-pill badge-outline-primary d-table ms-n1" [ngClass]="{'badge-outline-danger': childrenlist.count === 0}">{{childrenlist.count}}</span>
+                <div class="me-auto p-1 h4">
                   <button class="btn p-0" [popover]="'new'| translate" triggers="mouseenter:mouseleave" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
                     <svg class="icon icon-success">
                       <use href="/assets/bootstrap-italia/svg/sprites.svg#it-plus-circle"></use>
@@ -36,7 +36,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
                     *ngIf="isPrintDicSost(attachment)"
                     class="btn btn-link btn-icon p-0" 
                     [popover]="'application.print.dic_sost.popover'| translate" triggers="mouseenter:mouseleave">
-                    <span class="pr-1 w-100 text-right d-none d-md-block h6" translate>application.print.dic_sost.button</span>
+                    <span class="pe-1 w-100 text-right d-none d-md-block h6" translate>application.print.dic_sost.button</span>
                     <svg *ngIf="!loadingStateDicSost.isStarting()" class="icon icon-danger h4 "><use href="/assets/bootstrap-italia/svg/sprites.svg#it-print"></use></svg>              
                     <div *ngIf="loadingStateDicSost.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                       <div class="progress-spinner-inner"></div>
@@ -49,7 +49,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
                     [disabled]="loadingStateDatiPersonali.isStarting()" 
                     class="btn btn-link btn-icon p-0" 
                     [popover]="'application.print.trattamento_dati_personali.popover'| translate" triggers="mouseenter:mouseleave">
-                    <span class="pr-1 w-100 text-right d-none d-md-block h6" translate>application.print.trattamento_dati_personali.button</span>
+                    <span class="pe-1 w-100 text-right d-none d-md-block h6" translate>application.print.trattamento_dati_personali.button</span>
                     <svg *ngIf="!loadingStateDatiPersonali.isStarting()" class="icon icon-danger h4 "><use href="/assets/bootstrap-italia/svg/sprites.svg#it-print"></use></svg>              
                     <div *ngIf="loadingStateDatiPersonali.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                       <div class="progress-spinner-inner"></div>

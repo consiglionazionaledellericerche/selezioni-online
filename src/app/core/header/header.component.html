@@ -13,7 +13,7 @@
             <div class="it-header-slim-right-zone">
               <div class="dropdown" dropdown placement="bottom right">
                 <a aria-expanded="false" dropdownToggle
-                  class="dropdown-toggle pr-2"
+                  class="dropdown-toggle pe-2"
                    data-toggle="dropdown" href= "javascript:">
                   <span>{{country | uppercase}}</span>
                   <svg class="icon icon-white">
@@ -35,13 +35,13 @@
                 <span class="d-none d-lg-inline-block">{{'signin.title' | translate}}</span>
               </a>
               <div *ngSwitchCase="true" class="nav-item dropdown" dropdown placement="bottom right">
-                <a aria-expanded="false" class="dropdown-toggle pr-2" dropdownToggle
+                <a aria-expanded="false" class="dropdown-toggle pe-2" dropdownToggle
                    data-toggle="dropdown" href="javascript:">
                   <div class="avatar size-sm">
                     <p aria-hidden="true" class="text-monospace">{{user.firstName|firstLetter}}{{user.lastName|firstLetter}}</p>
                     <span class="sr-only">{{user.firstName|capitalizeFirst}} {{user.lastName|capitalizeFirst}}</span>
                   </div>
-                  <span class="d-none d-md-block pl-1">{{user.firstName|capitalizeFirst}}{{user.lastName|capitalizeFirst}}</span>
+                  <span class="d-none d-md-block ps-1">{{user.firstName|capitalizeFirst}}{{user.lastName|capitalizeFirst}}</span>
                   <svg class="icon icon-white">
                     <use
                       href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
@@ -50,13 +50,13 @@
                 <ul class="dropdown-menu dropdown-menu-right border" *dropdownMenu>
                   <li role="menuitem">
                     <a class="dropdown-item text-primary" [routerLink]="['/create-account']" [routerLinkActive]="'disabled'">
-                      <i class="fa fa-fw fa-address-card-o pr-1" aria-hidden="true"></i>
+                      <i class="fa fa-fw fa-address-card-o pe-1" aria-hidden="true"></i>
                       <span>{{'user.settings'|translate}}</span>
                     </a>
                   </li>
                   <li>
                     <a class="dropdown-item text-primary" [routerLink]="['/']" (click)="onLogout()">
-                      <i class="fa fa-fw fa-sign-out pr-1" aria-hidden="true"></i>
+                      <i class="fa fa-fw fa-sign-out pe-1" aria-hidden="true"></i>
                       <span>{{'user.logout'|translate}}</span>
                     </a>
                   </li>
@@ -74,10 +74,10 @@
         <div class="row">
           <div class="col-12">
             <div class="it-header-center-content-wrapper">
-              <div class="it-brand-wrapper pl-0">
-                <a [routerLink]="['/']" class="navbar-brand logo mr-0">
+              <div class="it-brand-wrapper ps-0">
+                <a [routerLink]="['/']" class="navbar-brand logo me-0">
                   <img src="/assets/images/logo.png">
-                  <div class="it-brand-text pl-2">
+                  <div class="it-brand-text ps-2">
                     <h2 class="no_toc d-none d-md-block">{{'header.title' | translate}}</h2>
                     <h3 class="no_toc d-none d-lg-block">{{'header.subtitle' | translate}}</h3>
                   </div>
@@ -85,7 +85,7 @@
               </div>
               <div class="it-right-zone">
                 <div class="it-search-wrapper">
-                  <form class="form-inline pl-1 d-lg-flex d-xl-flex" [ngClass]="{'d-none': isAuthenticated()}" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
+                  <form class="form-inline ps-1 d-lg-flex d-xl-flex" [ngClass]="{'d-none': isAuthenticated()}" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
                     <div class="input-group d-none d-lg-flex">
                       <input class="form-control bg-white col-md-6 col-sm-12 col-xl-12 rounded-left" formControlName="callCode" type="search" placeholder="{{'search'|translate}}">
                       <div class="input-group-append">
@@ -125,9 +125,9 @@
                         <use href="/assets/bootstrap-italia/svg/sprites.svg#it-burger"></use>
                       </svg>
                     </a>
-                    <a [routerLink]="['/']" class="navbar-brand logo mr-0">
+                    <a [routerLink]="['/']" class="navbar-brand logo me-0">
                       <img src="/assets/images/logo.png">
-                      <div class="it-brand-text pl-2">
+                      <div class="it-brand-text ps-2">
                         <h2 class="no_toc d-none d-md-block">{{'header.title' | translate}}</h2>
                         <h3 class="no_toc d-none d-lg-block">{{'header.subtitle' | translate}}</h3>
                       </div>

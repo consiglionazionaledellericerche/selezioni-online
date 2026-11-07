@@ -30,7 +30,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
         <app-list-item-document [item]="item" (onDelete)="onDelete(item)" (onEdit)="onEdit(item)">
           <div class="col-sm-12 font-weight-bolder"> 
             <button 
-              class="btn btn-link pl-0 pb-0 text-truncate"
+              class="btn btn-link ps-0 pb-0 text-truncate"
               (click)="getBlob(item.objectId, item.name)">
               <i class="fa fa-fw {{ item.getMimeTypeIcon() }}"></i> {{ item.name }}
             </button>

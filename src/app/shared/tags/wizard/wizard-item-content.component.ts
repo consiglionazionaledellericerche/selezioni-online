@@ -9,7 +9,7 @@ import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angula
       <div class="row">
         <div class="container">
 
-          <button class="btn btn-secondary float-left mr-1" (click)="onWizardExit.emit()">
+          <button class="btn btn-secondary float-left me-1" (click)="onWizardExit.emit()">
             Annulla </button>
 
           <button *ngIf="wizard.hasPrevious()"

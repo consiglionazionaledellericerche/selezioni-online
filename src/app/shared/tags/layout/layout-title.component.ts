@@ -4,14 +4,14 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
   selector: 'app-layout-title',
   template: `
     <div 
-      class="d-flex justify-content-center shadow-none p-3 mb-4 bg-light pr-1 pl-1 pb-3 pt-3 mb-3 mt-n3 ml-n3 mr-n3" 
+      class="d-flex justify-content-center shadow-none p-3 mb-4 bg-light pe-1 ps-1 pb-3 pt-3 mb-3 mt-n3 ms-n3 me-n3" 
       (click)="toggle(!collapsediv)"
       [ngClass]="{'btn btn-link': isCollapsable}">
-      <div [ngClass]="{'ml-auto': isCollapsable}">
+      <div [ngClass]="{'ms-auto': isCollapsable}">
         <h1 *ngIf="title" class="text-center" [ngClass]="titleClass">{{ title | translate}}</h1>
         <h2 *ngIf="subTitle" class="mt-3 text-justify" [ngClass]="subTitleClass">{{ subTitle | translate}}</h2>
       </div>
-      <div *ngIf="isCollapsable" class="ml-auto">
+      <div *ngIf="isCollapsable" class="ms-auto">
         <svg class="icon icon-primary icon-xl">
           <use *ngIf="collapsediv" href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
           <use *ngIf="!collapsediv" href="/assets/bootstrap-italia/svg/sprites.svg#it-collapse"></use>

@@ -49,12 +49,12 @@ import { PrintApplicationComponent } from './print-application.component';
         </h3>
         <h5 class="text-center">
           <span>{{'application.sottoscritto.' + (entity.sesso || 'M') | translate}}</span>
-          <span class="pl-1">{{entity.cognome|uppercase}}</span>
-          <span class="pl-1">{{entity.nome|uppercase}}</span>
+          <span class="ps-1">{{entity.cognome|uppercase}}</span>
+          <span class="ps-1">{{entity.nome|uppercase}}</span>
         </h5>
         <h5 class="text-center" *ngIf="call.objectTypeId == 'F:jconon_call_employees:folder'">
           <span>{{'user.matricola_value' | translate:{value: user.matricola||''} }}</span>
-          <span class="pl-1">{{'user.email_value' | translate:{value: entity.email_comunicazioni} }}</span>
+          <span class="ps-1">{{'user.email_value' | translate:{value: entity.email_comunicazioni} }}</span>
         </h5>
         <h5 class="text-center" *ngIf="call.objectTypeId != 'F:jconon_call_mobility_open:folder'">
           {{'application.richiesta.partecipazione'| translate}}
@@ -100,13 +100,13 @@ import { PrintApplicationComponent } from './print-application.component';
         </div>
         <div class="card-footer rounded-bottom">
           <div class="d-flex justify-content-end">
-            <div class="form-group text-left mr-auto">
+            <div class="form-group text-left me-auto">
               <button 
                 [disabled]="!form.pristine"
                 (click)="deleteApplication($event)" 
-                class="btn btn-outline-danger btn-lg btn-icon mr-2" 
+                class="btn btn-outline-danger btn-lg btn-icon me-2" 
                 tooltip="{{'application.delete'| translate}}">
-                <span class="d-none d-md-block pr-1" translate>application.delete</span>
+                <span class="d-none d-md-block pe-1" translate>application.delete</span>
                 <svg class="icon icon-danger"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-delete"></use></svg>
               </button>
             </div>
@@ -115,9 +115,9 @@ import { PrintApplicationComponent } from './print-application.component';
                 *ngIf="entity.isProvvisoria()"
                 [disabled]="!form.pristine"
                 (click)="printApplication($event)" 
-                class="btn btn-outline-danger btn-lg btn-icon mr-2" 
+                class="btn btn-outline-danger btn-lg btn-icon me-2" 
                 tooltip="{{'application.print.application'| translate}}">
-                <span class="d-none d-md-block pr-1" translate>application.print.application</span>
+                <span class="d-none d-md-block pe-1" translate>application.print.application</span>
                 <svg class="icon icon-danger"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-print"></use></svg>
               </button>
             </div>
@@ -125,9 +125,9 @@ import { PrintApplicationComponent } from './print-application.component';
               <button (click)="sendApplication($event)" 
                 #sendApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
-                class="btn btn-primary btn-block btn-lg btn-icon mr-2 rounded" 
+                class="btn btn-primary btn-block btn-lg btn-icon me-2 rounded" 
                 tooltip="{{'application.send' | translate}}">
-                <span class="pr-1 w-100 text-right" translate>application.send</span>
+                <span class="pe-1 w-100 text-right" translate>application.send</span>
                 <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-upload"></use></svg>              
                 <div *ngIf="loadingStateSend.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>
@@ -142,7 +142,7 @@ import { PrintApplicationComponent } from './print-application.component';
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
                 class="btn btn-primary btn-block btn-lg btn-icon rounded" 
                 tooltip="{{'application.confirm' | translate}}">
-                <span class="pr-1 w-100 text-right" translate>application.confirm</span>
+                <span class="pe-1 w-100 text-right" translate>application.confirm</span>
                 <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-arrow-right-circle"></use></svg>
                 <div *ngIf="loadingStateConfirm.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>

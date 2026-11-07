@@ -6,11 +6,11 @@
     </div>
     <div *ngSwitchCase="false"> 
       <h1>{{'user.profile.title'|translate}}</h1>
-      <span class="pr-1">{{'user.information.detail'|translate}}</span>
+      <span class="pe-1">{{'user.information.detail'|translate}}</span>
       <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
       <div>
         <span class="font-weight-semibold">{{'user.information.change.password.title'|translate}}</span>
-        <a class="btn btn-link pl-1 text-primary" href="javascript:" (click)="openModal(templatechangepassword)">{{'user.information.change.password.link'|translate}}</a>
+        <a class="btn btn-link ps-1 text-primary" href="javascript:" (click)="openModal(templatechangepassword)">{{'user.information.change.password.link'|translate}}</a>
       </div>
     </div>
   </div>

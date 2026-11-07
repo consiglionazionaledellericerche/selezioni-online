@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
      `
     <div class="container">
       <div class="row">
-        <div class="pl-0 pr-0 mb-2 col-12">
+        <div class="ps-0 pe-0 mb-2 col-12">
           <ng-content></ng-content>
         </div>
       </div>

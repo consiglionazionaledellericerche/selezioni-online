@@ -25,12 +25,12 @@ import {FormCommonTag} from './form-common-tag';
              (input)="change($event.target.checked)"
              [disabled]="disabled">
 
-        <label for="checkbox" class="label-checkbox pl-5" [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}">
+        <label for="checkbox" class="label-checkbox ps-5" [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}">
           {{label| translate}}
         </label>
         <div *ngIf="showValidation">
           <div *ngIf=isInvalid() class="text-truncate text-danger">
-              <span *ngFor="let error of hasErrors()" class="pr-1">
+              <span *ngFor="let error of hasErrors()" class="pe-1">
                 <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
               </span>
           </div>

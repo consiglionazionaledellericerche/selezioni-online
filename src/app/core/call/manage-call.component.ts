@@ -66,16 +66,16 @@ import { UserService } from '../../auth/edit/user.service';
         </div>
         <div class="card-footer rounded-bottom">
           <div class="d-flex justify-content-end">
-            <div class="form-group text-left mr-auto">
+            <div class="form-group text-left me-auto">
 
             </div>
             <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-right">  
               <button (click)="sendApplication($event)" 
                 #sendApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
-                class="btn btn-primary btn-block btn-lg btn-icon mr-2 rounded" 
+                class="btn btn-primary btn-block btn-lg btn-icon me-2 rounded" 
                 tooltip="{{'application.send' | translate}}">
-                <span class="pr-1 w-100 text-right" translate>application.send</span>
+                <span class="pe-1 w-100 text-right" translate>application.send</span>
                 <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-upload"></use></svg>              
                 <div *ngIf="loadingStateSend.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>
@@ -90,7 +90,7 @@ import { UserService } from '../../auth/edit/user.service';
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
                 class="btn btn-primary btn-block btn-lg btn-icon rounded" 
                 tooltip="{{'application.confirm' | translate}}">
-                <span class="pr-1 w-100 text-right" translate>application.confirm</span>
+                <span class="pe-1 w-100 text-right" translate>application.confirm</span>
                 <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-arrow-right-circle"></use></svg>
                 <div *ngIf="loadingStateConfirm.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>

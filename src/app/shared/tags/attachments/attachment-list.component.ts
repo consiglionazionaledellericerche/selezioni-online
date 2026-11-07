@@ -19,7 +19,7 @@ import {ApiMessageService} from '../../../core/api-message.service';
         <span>
           <em> {{ attachmentText() }}</em>
         </span>
-        <button class="btn btn-sm btn-light d-inline-block ml-3"
+        <button class="btn btn-sm btn-light d-inline-block ms-3"
                 data-toggle="tooltip" data-placement="top" title="Gestisci allegati"
                 (click)="openModal(template)">
           <i class="fa fa-folder-open-o" aria-hidden="true"></i>

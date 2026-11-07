@@ -20,12 +20,12 @@
                 </select>
             </div>
             <div>
-                <div id="list-call-types" btnRadioGroup formControlName="type" class="list-group ml-1 pb-2 d-none d-md-block">
+                <div id="list-call-types" btnRadioGroup formControlName="type" class="list-group ms-1 pb-2 d-none d-md-block">
                     <a class="list-group-item list-group-item-action d-flex"
                         href="#" 
                         btnRadio="jconon_call:folder">
                         <span class="text-truncate">{{'F:jconon_call:folder' | translate}}</span> 
-                        <svg class="icon icon-primary ml-auto">
+                        <svg class="icon icon-primary ms-auto">
                             <use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-right"></use>
                         </svg>
                     </a>
@@ -35,7 +35,7 @@
                                 href="#"
                                 btnRadio="{{item.queryName}}">
                                 <span class="text-truncate">{{item.key | translate}}</span> 
-                                <svg class="icon icon-primary ml-auto">
+                                <svg class="icon icon-primary ms-auto">
                                     <use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-right"></use>
                                 </svg>
                         </a>
@@ -43,15 +43,15 @@
                         <ng-container *ngIf="item.display && item.childs">
                             <a class="list-group-item list-group-item-action text-primary d-flex">
                                 <span class="font-weight-bolder text-truncate">{{item.key | translate}}</span> 
-                                <svg class="icon icon-primary ml-auto">
+                                <svg class="icon icon-primary ms-auto">
                                     <use href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
                                 </svg>
                             </a>
                             <ng-container *ngFor="let child of item.childs">
                                 <a href="#" class="list-group-item list-group-item-action d-flex" 
                                     btnRadio="{{child.queryName}}">
-                                    <span class="ml-3 text-truncate">{{child.key | translate}}</span> 
-                                    <svg class="icon icon-primary ml-auto">
+                                    <span class="ms-3 text-truncate">{{child.key | translate}}</span> 
+                                    <svg class="icon icon-primary ms-auto">
                                         <use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-right"></use>
                                     </svg>
                                 </a>            
@@ -59,7 +59,7 @@
                         </ng-container>
                     </ng-container>
                 </div>
-                <div class="ml-1 pb-1">
+                <div class="ms-1 pb-1">
                     <!--Rounded checkbox buttons-->
                     <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="filterType">
                         <a class="btn btn-primary btn-toggle text-truncate" tooltip="{{'call.attivi' | translate}}" btnRadio="active">{{'call.attivi' | translate}}</a>

@@ -8,7 +8,7 @@ import { AffixComponent } from './affix.component';
     template: `
       <form [formGroup]="form" *ngIf="isLoaded() && cache !== undefined" class="pb-2">
         <div class="it-list-wrapper">
-          <ul class="it-list pl-2">
+          <ul class="it-list ps-2">
             <ng-container *ngFor="let aspect of data.call[callProperty]">
               <li class="shadow-sm p-0 mb-1 bg-white" *ngIf="isShow(aspect)">
                   <show-affix #dichiarazioniComponent [form]="form" [cmisObject]="data" [type]="aspect"></show-affix>

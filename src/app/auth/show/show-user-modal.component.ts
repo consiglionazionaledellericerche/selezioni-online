@@ -8,9 +8,9 @@ import { UserService } from '../edit/user.service';
   selector: 'app-show-user-modal',
   template: `
     
-    <span  class="mr-1">
+    <span  class="me-1">
       <span *ngIf="label">{{ label | translate }}</span>
-      <button class="btn btn-link pt-0 pb-1 pl-1" (click)="openModal(template)"><span class="font-weight-bold">{{username}}</span></button>
+      <button class="btn btn-link pt-0 pb-1 ps-1" (click)="openModal(template)"><span class="font-weight-bold">{{username}}</span></button>
     </span>
 
     <ng-template #template>

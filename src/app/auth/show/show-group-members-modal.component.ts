@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-show-group-members-modal',
   template: `
 
-    <button class="btn btn-link pt-0 pb-1 pl-1 col-sm-12" (click)="openModal(template)">
+    <button class="btn btn-link pt-0 pb-1 ps-1 col-sm-12" (click)="openModal(template)">
       <div class="font-weight-bold text-truncate text-left">{{displayName}}</div>
     </button>
 

@@ -10,10 +10,10 @@
                         </div>
                     </div>
                     <div class="h4">
-                        <span class="pl-1">{{user.firstName|capitalizeFirst}}</span>
-                        <span class="pl-1">{{user.lastName|capitalizeFirst}}</span>
+                        <span class="ps-1">{{user.firstName|capitalizeFirst}}</span>
+                        <span class="ps-1">{{user.lastName|capitalizeFirst}}</span>
                     </div>
-                    <div class="ml-auto">
+                    <div class="ms-auto">
                         <a class="btn btn-link p-0" (click)="hide()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
@@ -25,12 +25,12 @@
                 </div>
                 <div>    
                     <div>
-                        <small class="pl-1">{{'user.username' | translate }}:</small>
-                        <small class="pl-1 font-weight-bold">{{user.userName}}</small>
+                        <small class="ps-1">{{'user.username' | translate }}:</small>
+                        <small class="ps-1 font-weight-bold">{{user.userName}}</small>
                     </div>
                     <div>
-                        <small class="pl-1">{{'user.email' | translate }}:</small>
-                        <small class="pl-1 font-weight-bold">{{user.getEmail()}}</small>
+                        <small class="ps-1">{{'user.email' | translate }}:</small>
+                        <small class="ps-1 font-weight-bold">{{user.getEmail()}}</small>
                     </div>    
                 </div>
                 <div class="d-flex no-gutters">
@@ -99,7 +99,7 @@
                             <accordion-group #accordionGroup panelClass="border border-light no-after mt-n1">
                                 <div class="d-flex align-items-start" accordion-heading>
                                     <a class="font-weight-bold font-italic">{{menu.name| translate}}</a>
-                                    <div class="p-1 ml-auto">
+                                    <div class="p-1 ms-auto">
                                         <div class="float-right pull-right">
                                             <svg class="icon icon-primary">
                                             <use *ngIf="!accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
