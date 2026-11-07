@@ -13,14 +13,14 @@ import { Application } from './application.model';
   selector: 'print-application',
   template: `
       <div class="modal-header border-bottom">
-        <h3 *ngIf="!history" class="modal-title pull-left text-primary pb-2 text-truncate"><i class="fa fa-info-circle"></i> {{'application.print.application'|translate}}</h3>
-        <h3 *ngIf="history" class="modal-title pull-left text-success pb-2 text-truncate"><i class="fa fa-history"></i> {{'document.history.title'|translate}}</h3>
-        <button *ngIf="history" type="button" class="btn p-0 ms-2 pull-right" aria-label="Close" (click)="history = false">
+        <h3 *ngIf="!history" class="modal-title float-start text-primary pb-2 text-truncate"><i class="fa fa-info-circle"></i> {{'application.print.application'|translate}}</h3>
+        <h3 *ngIf="history" class="modal-title float-start text-success pb-2 text-truncate"><i class="fa fa-history"></i> {{'document.history.title'|translate}}</h3>
+        <button *ngIf="history" type="button" class="btn p-0 ms-2 float-end" aria-label="Close" (click)="history = false">
           <svg class="icon">
             <use href="/assets/bootstrap-italia/svg/sprites.svg#it-restore"></use>
           </svg>
         </button>
-        <button type="button" class="btn p-0 ms-2 pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <button type="button" class="btn p-0 ms-2 float-end" aria-label="Close" (click)="modalRef.hide()">
           <svg class="icon">
             <use href="/assets/bootstrap-italia/svg/sprites.svg#it-close-circle"></use>
           </svg>
@@ -35,9 +35,9 @@ import { Application } from './application.model';
               <li *ngFor="let version of historyDocument" class="pb-2">
                 <a>  
                   <div class="d-flex align-items-start">
-                    <small class="text-monospace" translate>document.history.version</small>
+                    <small class="font-monospace" translate>document.history.version</small>
                     <span (click)="onDownload(version.objectId, version.name)" class="badge ms-2 h6 d-table c-pointer" [ngClass]="{'bg-primary': version.isMajorVersion, 'bg-secondary': !version.isMajorVersion}">{{version.versionLabel}}</span>
-                    <small class="text-monospace ms-2">{{'document.history.detail'| translate:{contentStreamLength: version.getFileSize(), lastModificationDate: version.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</small>
+                    <small class="font-monospace ms-2">{{'document.history.detail'| translate:{contentStreamLength: version.getFileSize(), lastModificationDate: version.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</small>
                   </div>
                 </a>  
               </li>

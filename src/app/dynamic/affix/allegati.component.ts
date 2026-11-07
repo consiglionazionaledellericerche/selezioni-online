@@ -36,7 +36,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
                     *ngIf="isPrintDicSost(attachment)"
                     class="btn btn-link btn-icon p-0" 
                     [popover]="'application.print.dic_sost.popover'| translate" triggers="mouseenter:mouseleave">
-                    <span class="pe-1 w-100 text-right d-none d-md-block h6" translate>application.print.dic_sost.button</span>
+                    <span class="pe-1 w-100 text-end d-none d-md-block h6" translate>application.print.dic_sost.button</span>
                     <svg *ngIf="!loadingStateDicSost.isStarting()" class="icon icon-danger h4 "><use href="/assets/bootstrap-italia/svg/sprites.svg#it-print"></use></svg>              
                     <div *ngIf="loadingStateDicSost.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                       <div class="progress-spinner-inner"></div>
@@ -49,7 +49,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
                     [disabled]="loadingStateDatiPersonali.isStarting()" 
                     class="btn btn-link btn-icon p-0" 
                     [popover]="'application.print.trattamento_dati_personali.popover'| translate" triggers="mouseenter:mouseleave">
-                    <span class="pe-1 w-100 text-right d-none d-md-block h6" translate>application.print.trattamento_dati_personali.button</span>
+                    <span class="pe-1 w-100 text-end d-none d-md-block h6" translate>application.print.trattamento_dati_personali.button</span>
                     <svg *ngIf="!loadingStateDatiPersonali.isStarting()" class="icon icon-danger h4 "><use href="/assets/bootstrap-italia/svg/sprites.svg#it-print"></use></svg>              
                     <div *ngIf="loadingStateDatiPersonali.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                       <div class="progress-spinner-inner"></div>
@@ -58,7 +58,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
                   </button>
                 </div>
                 <div class="p-1">
-                  <div class="float-right pull-right">
+                  <div class="float-end float-end">
                     <svg class="icon icon-primary">
                       <use *ngIf="!accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
                       <use *ngIf="accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-collapse"></use>

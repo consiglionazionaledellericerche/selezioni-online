@@ -13,7 +13,7 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 
     <ng-template #template>
       <div class="modal-header border-bottom">
-        <h4 class="modal-title pull-left text-warning pb-2"><i class="fa fa-info-circle"></i>  {{'modal.title.confirm'|translate}}</h4>
+        <h4 class="modal-title float-start text-warning pb-2"><i class="fa fa-info-circle"></i>  {{'modal.title.confirm'|translate}}</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body" innerHtml="{{body}}"></div>

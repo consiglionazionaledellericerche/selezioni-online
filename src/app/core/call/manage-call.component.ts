@@ -28,7 +28,7 @@ import { UserService } from '../../auth/edit/user.service';
     </div>
     <div *ngIf="isLoaded() && !isEntityError">
       <div class="pb-3" #cardCall>
-        <h1 class="text-monospace text-primary">{{callType | translate}}</h1>
+        <h1 class="font-monospace text-primary">{{callType | translate}}</h1>
       </div>
       <div class="card card-bg border-bottom-card">
         <div class="card-header d-flex">
@@ -66,16 +66,16 @@ import { UserService } from '../../auth/edit/user.service';
         </div>
         <div class="card-footer rounded-bottom">
           <div class="d-flex justify-content-end">
-            <div class="form-group text-left me-auto">
+            <div class="form-group text-start me-auto">
 
             </div>
-            <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-right">  
+            <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-end">  
               <button (click)="sendApplication($event)" 
                 #sendApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
                 class="btn btn-primary w-100 btn-lg btn-icon me-2 rounded" 
                 tooltip="{{'application.send' | translate}}">
-                <span class="pe-1 w-100 text-right" translate>application.send</span>
+                <span class="pe-1 w-100 text-end" translate>application.send</span>
                 <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-upload"></use></svg>              
                 <div *ngIf="loadingStateSend.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>
@@ -84,13 +84,13 @@ import { UserService } from '../../auth/edit/user.service';
               </button>
               <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
             </div>  
-            <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-right">
+            <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-end">
               <button (click)="confirmCall($event);"
                 #confirmCallButton 
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
                 class="btn btn-primary w-100 btn-lg btn-icon rounded" 
                 tooltip="{{'application.confirm' | translate}}">
-                <span class="pe-1 w-100 text-right" translate>application.confirm</span>
+                <span class="pe-1 w-100 text-end" translate>application.confirm</span>
                 <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-arrow-right-circle"></use></svg>
                 <div *ngIf="loadingStateConfirm.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>
@@ -295,7 +295,7 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
         this.form.controls[control].markAsTouched({onlySelf: true});
         this.form.controls[control].patchValue(this.form.controls[control].value || null);
         this.translateService.get('label.'+ control.replace(':', '.')).subscribe((label) => {
-          invalidControls.push('<li class="font-weight-bold pt-2">' + label + '</li>');
+          invalidControls.push('<li class="fw-bold pt-2">' + label + '</li>');
         });
         const invalidControl = this.el.nativeElement.querySelector('input.is-invalid,textarea.invalid,select.is-invalid');
         const invalidFormControl = document.querySelector('[formcontrolname="' + control + '"], .is-invalid');
@@ -312,7 +312,7 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
     if (this.form.invalid) {
         if (invalidControls.length > 3) {
           invalidControls = invalidControls.slice(0, 3);
-          invalidControls.push('<li class="font-weight-bold pt-2">ecc...</li>');
+          invalidControls.push('<li class="fw-bold pt-2">ecc...</li>');
         }
         this.translateService.get('message.form.invalid').subscribe((label) => {
             this.apiMessageService.sendMessage(MessageType.WARNING, label + '<ul class="list-unstyled">' + invalidControls.join('') + '</ul>');

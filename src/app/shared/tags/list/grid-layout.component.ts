@@ -29,7 +29,7 @@ import { CommonService } from '../../../common/controller/common.service';
         <!-- Paging -->
         <app-list-pagination *ngIf="!loading" [showPage]="showPage" [page]="page" [infiniteScroll]="infiniteScroll" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
 
-        <div *ngIf="!loading && count == 0" class="alert alert-warning text-monospace" innerHtml="{{ noItem | translate }}"></div>
+        <div *ngIf="!loading && count == 0" class="alert alert-warning font-monospace" innerHtml="{{ noItem | translate }}"></div>
 
     </div>
     `,

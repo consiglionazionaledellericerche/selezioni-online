@@ -13,7 +13,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
     <ng-template #template let-modal>
       <div class="modal-header">
-        <h4 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{modal_title}}</h4>
+        <h4 class="modal-title float-start text-primary"><i class="fa fa-info-circle"></i> {{modal_title}}</h4>
         <button #close type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body">

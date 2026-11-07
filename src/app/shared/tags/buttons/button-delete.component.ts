@@ -16,7 +16,7 @@ import { Base } from '../../../common/model/base.model';
 
     <ng-template #template>
       <div class="modal-header">
-        <h4 class="modal-title pull-left">Attenzione</h4>
+        <h4 class="modal-title float-start">Attenzione</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body">

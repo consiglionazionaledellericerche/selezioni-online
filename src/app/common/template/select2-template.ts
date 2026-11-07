@@ -51,21 +51,21 @@ export class Select2Template {
       html += '<div class="ps-1 text-primary h6">' + entity.obj['jconon_call:codice'] + '</div>';
       html += '</div>';
       translateService.get(entity.obj['cmis:objectTypeId']).subscribe((label) => {
-        html += '<div class="font-italic">' + label + '</div>';
+        html += '<div class="fst-italic">' + label + '</div>';
       });
       if (entity.obj['jconon_call:profilo']) {
         translateService.get('call.profilo').subscribe((label) => {
-          html += '<div class="text-truncate"><span>' + label + '</span><span class="ps-1 font-weight-bold">'+entity.obj['jconon_call:profilo']+'</span></div>';
+          html += '<div class="text-truncate"><span>' + label + '</span><span class="ps-1 fw-bold">'+entity.obj['jconon_call:profilo']+'</span></div>';
         });  
       }
       if (entity.obj['jconon_call:sede']) {
         translateService.get('call.sede').subscribe((label) => {
-          html += '<div class="text-truncate"><span>' + label + '</span><span class="ps-1 font-weight-bold">'+entity.obj['jconon_call:sede']+'</span></div>';
+          html += '<div class="text-truncate"><span>' + label + '</span><span class="ps-1 fw-bold">'+entity.obj['jconon_call:sede']+'</span></div>';
         });  
       }
       if (entity.obj['jconon_call:struttura_destinataria']) {
         translateService.get('call.struttura').subscribe((label) => {
-          html += '<div class="text-truncate"><span>' + label + '</span><span class="ps-1 font-weight-bold">'+entity.obj['jconon_call:struttura_destinataria']+'</span></div>';
+          html += '<div class="text-truncate"><span>' + label + '</span><span class="ps-1 fw-bold">'+entity.obj['jconon_call:struttura_destinataria']+'</span></div>';
         });
       }
       html += '</div>';
@@ -81,7 +81,7 @@ export class Select2Template {
       return entity.id;
     } else {
       let html = '<div class="align-items-start">';
-      html += '<span class="font-weight-bold">' + entity.obj.nomeComune + '</span>';
+      html += '<span class="fw-bold">' + entity.obj.nomeComune + '</span>';
       html += '<span> [' + entity.obj.provincia + ']</span>';
       html += '</div>';
       return html;

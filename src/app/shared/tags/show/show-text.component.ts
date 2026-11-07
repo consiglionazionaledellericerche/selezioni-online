@@ -5,7 +5,7 @@ import {Component, Input} from '@angular/core';
   template: `
     <span *ngIf="value" class="me-1">
       <span>{{ label | translate }}</span>
-      <span class="ms-1" [ngClass]="{'font-weight-semibold': strong}">{{ value }}</span>
+      <span class="ms-1" [ngClass]="{'fw-semibold': strong}">{{ value }}</span>
     </span>
   `
 })

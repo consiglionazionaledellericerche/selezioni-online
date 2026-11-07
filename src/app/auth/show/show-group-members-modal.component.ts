@@ -14,12 +14,12 @@ import { TranslateService } from '@ngx-translate/core';
   template: `
 
     <button class="btn btn-link pt-0 pb-1 ps-1 col-sm-12" (click)="openModal(template)">
-      <div class="font-weight-bold text-truncate text-left">{{displayName}}</div>
+      <div class="fw-bold text-truncate text-start">{{displayName}}</div>
     </button>
 
     <ng-template #template>
       <div class="modal-header">
-        <h4 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{displayName | translate}}</h4>
+        <h4 class="modal-title float-start text-primary"><i class="fa fa-info-circle"></i> {{displayName | translate}}</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body vh80">

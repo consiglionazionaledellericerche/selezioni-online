@@ -10,25 +10,25 @@ import { UserService } from '../edit/user.service';
     
     <span  class="me-1">
       <span *ngIf="label">{{ label | translate }}</span>
-      <button class="btn btn-link pt-0 pb-1 ps-1" (click)="openModal(template)"><span class="font-weight-bold">{{username}}</span></button>
+      <button class="btn btn-link pt-0 pb-1 ps-1" (click)="openModal(template)"><span class="fw-bold">{{username}}</span></button>
     </span>
 
     <ng-template #template>
       <div class="modal-header">
-        <h4 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{'property' | translate}}</h4>
+        <h4 class="modal-title float-start text-primary"><i class="fa fa-info-circle"></i> {{'property' | translate}}</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body vh80">
         <table class="table table-striped table-hover table-borderless">  
           <tbody>
-            <tr><td class="font-weight-bolder">{{'user.username' | translate}}</td><td>{{user.userName}}</td></tr>
-            <tr><td class="font-weight-bolder">{{'user.firstname' | translate}}</td><td>{{user.firstName}}</td></tr>
-            <tr><td class="font-weight-bolder">{{'user.lastname' | translate}}</td><td>{{user.lastName}}</td></tr>
-            <tr *ngIf="user.matricola"><td class="font-weight-bolder">{{'user.matricola' | translate}}</td><td>{{user.matricola}}</td></tr>
-            <tr *ngIf="user.mobile"><td class="font-weight-bolder">{{'user.mobile' | translate}}</td><td><a href="tel:{{user.mobile}}">{{user.mobile}}</a></td></tr>
-            <tr><td class="font-weight-bolder">{{'user.email' | translate}}</td><td><a href="mailto:{{user.getEmail()}}">{{user.getEmail()}}</a></td></tr>
-            <tr *ngIf="user.emailesterno"><td class="font-weight-bolder">{{'user.emailesterno' | translate}}</td><td><a href="mailto:{{user.emailesterno}}">{{user.emailesterno}}</a></td></tr>
-            <tr><td class="font-weight-bolder">{{'user.codicefiscale' | translate}}</td><td>{{user.codicefiscale}}</td></tr>
+            <tr><td class="fw-bolder">{{'user.username' | translate}}</td><td>{{user.userName}}</td></tr>
+            <tr><td class="fw-bolder">{{'user.firstname' | translate}}</td><td>{{user.firstName}}</td></tr>
+            <tr><td class="fw-bolder">{{'user.lastname' | translate}}</td><td>{{user.lastName}}</td></tr>
+            <tr *ngIf="user.matricola"><td class="fw-bolder">{{'user.matricola' | translate}}</td><td>{{user.matricola}}</td></tr>
+            <tr *ngIf="user.mobile"><td class="fw-bolder">{{'user.mobile' | translate}}</td><td><a href="tel:{{user.mobile}}">{{user.mobile}}</a></td></tr>
+            <tr><td class="fw-bolder">{{'user.email' | translate}}</td><td><a href="mailto:{{user.getEmail()}}">{{user.getEmail()}}</a></td></tr>
+            <tr *ngIf="user.emailesterno"><td class="fw-bolder">{{'user.emailesterno' | translate}}</td><td><a href="mailto:{{user.emailesterno}}">{{user.emailesterno}}</a></td></tr>
+            <tr><td class="fw-bolder">{{'user.codicefiscale' | translate}}</td><td>{{user.codicefiscale}}</td></tr>
           </tbody>
         </table>
         <div *ngIf="groups && user.groups && user.groups.length > 0">

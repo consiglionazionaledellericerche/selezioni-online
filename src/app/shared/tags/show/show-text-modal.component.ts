@@ -6,7 +6,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   template: `
     <span *ngIf="value" class="me-1">
       <span>{{ label | translate }}</span>
-      <a class="ms-1" [ngClass]="{'font-weight-bold': strong}" href="javascript:" (click)="openModal(template)">{{ value }}</a>
+      <a class="ms-1" [ngClass]="{'fw-bold': strong}" href="javascript:" (click)="openModal(template)">{{ value }}</a>
     </span>
     <ng-template #template>
       <div class="modal-header">

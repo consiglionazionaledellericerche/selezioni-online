@@ -60,7 +60,7 @@ declare var $: any;   // not required
         <div *ngIf="showList()" class="col-12 p-0 mt-0">
           <div class="chip chip-primary chip-lg col-auto" *ngFor="let s of showListItems()">
             <i *ngIf="multiSelectIcon" class="fa {{multiSelectIcon}} pe-1 label" aria-hidden="true"></i>
-            <div [popover]="popoverMulti ? s : ''" triggers="mouseenter:mouseleave" class="label font-weight-semibold text-truncate">{{ s }}</div>
+            <div [popover]="popoverMulti ? s : ''" triggers="mouseenter:mouseleave" class="label fw-semibold text-truncate">{{ s }}</div>
             <button (click)="unselect(s)">
               <svg class="icon"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-close"></use></svg>
               <span class="visually-hidden" translate>delete</span>

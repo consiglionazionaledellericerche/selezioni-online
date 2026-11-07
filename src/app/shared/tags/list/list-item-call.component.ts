@@ -19,7 +19,7 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
             <a href="javascript:window.scrollTo(0,0);" 
               popover="{{getMessageType(item) | translate }} {{ item.objectTypeId | translate }}" 
               triggers="mouseenter:mouseleave"
-              class="font-weight-bold text-truncate text-primary ps-md-1" 
+              class="fw-bold text-truncate text-primary ps-md-1" 
               (click)="changeType(item)">
               {{ item.objectTypeId | translate }}
             </a>

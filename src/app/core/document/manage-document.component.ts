@@ -13,7 +13,7 @@ import { ObjectType } from '../../common/model/object-type.model';
   selector: 'manage-document',
   template: `
       <div class="modal-header border-bottom border-light pb-2">
-        <h3 class="modal-title pull-left text-primary" translate>{{typeId}}</h3>
+        <h3 class="modal-title float-start text-primary" translate>{{typeId}}</h3>
         <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body">

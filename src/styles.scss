@@ -121,3 +121,7 @@ label.label-checkbox.is-invalid {
   box-shadow: rgba(10, 16, 20, 0.24) 0px 8px 8px, rgba(10, 16, 20, 0.12) 0px 0px 8px !important;
   text-decoration: none;
 }
+// Bootstrap 5 dropped .text-justify; still used by footer and layout-title templates.
+.text-justify {
+  text-align: justify !important;
+}

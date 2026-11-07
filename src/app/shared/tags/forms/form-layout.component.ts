@@ -97,7 +97,7 @@ export class FormLayoutComponent {
     return {
       'col-sm-2': !this.inline,
       'col-form-label': !this.inline,
-      'text-sm-right': true,
+      'text-sm-end': true,
       'text-xs-left': true,
       'pt-0' : this.checkbox,
       'active' : this.labelactive,

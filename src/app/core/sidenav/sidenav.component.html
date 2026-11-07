@@ -5,7 +5,7 @@
                 <div class="d-flex border-bottom border-light">
                     <div>
                         <div class="avatar avatar-primary size-lg">
-                            <p aria-hidden="true" class="text-monospace">{{user.firstName|firstLetter}}{{user.lastName|firstLetter}}</p>
+                            <p aria-hidden="true" class="font-monospace">{{user.firstName|firstLetter}}{{user.lastName|firstLetter}}</p>
                             <span class="visually-hidden">{{user.firstName|capitalizeFirst}} {{user.lastName|capitalizeFirst}}</span>
                         </div>
                     </div>
@@ -26,11 +26,11 @@
                 <div>    
                     <div>
                         <small class="ps-1">{{'user.username' | translate }}:</small>
-                        <small class="ps-1 font-weight-bold">{{user.userName}}</small>
+                        <small class="ps-1 fw-bold">{{user.userName}}</small>
                     </div>
                     <div>
                         <small class="ps-1">{{'user.email' | translate }}:</small>
-                        <small class="ps-1 font-weight-bold">{{user.getEmail()}}</small>
+                        <small class="ps-1 fw-bold">{{user.getEmail()}}</small>
                     </div>    
                 </div>
                 <div class="d-flex g-0">
@@ -71,12 +71,12 @@
             <ng-container *ngIf="applicationsState && applicationsState.length > 0">
                 <li class="list-group-item">
                     <ul class="list-group list-group-flush">
-                        <h6 class="font-weight-light font-italic">{{'application.all'| translate}}</h6>
+                        <h6 class="fw-light fst-italic">{{'application.all'| translate}}</h6>
                         <ng-container *ngFor="let state of applicationsState">
                             <li class="list-group-item border-bottom-0 p-1">                         
                                 <a class="h6" [routerLink]="['/my-applications']" [queryParams]="{applicationStatus: state.getFilterStato()}" routerLinkActive="active" (click)="hide()">
                                     <span>{{ state.getLabel() | translate}}</span> 
-                                    <span class="badge rounded-pill float-right" 
+                                    <span class="badge rounded-pill float-end" 
                                         [ngClass]="{
                                             'bg-danger': state.isEsclusa(), 
                                             'bg-warning': state.isProvvisoria(),
@@ -98,9 +98,9 @@
                     <ng-container *ngIf="menu.active && menu.items && menu.isSidebar()">
                             <accordion-group #accordionGroup panelClass="border border-light no-after mt-n1">
                                 <div class="d-flex align-items-start" accordion-heading>
-                                    <a class="font-weight-bold font-italic">{{menu.name| translate}}</a>
+                                    <a class="fw-bold fst-italic">{{menu.name| translate}}</a>
                                     <div class="p-1 ms-auto">
-                                        <div class="float-right pull-right">
+                                        <div class="float-end float-end">
                                             <svg class="icon icon-primary">
                                             <use *ngIf="!accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
                                             <use *ngIf="accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-collapse"></use>

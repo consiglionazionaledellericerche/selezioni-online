@@ -28,7 +28,7 @@ import {ApiMessageService} from '../../../core/api-message.service';
 
       <ng-template #template>
           <div class="modal-header">
-            <h4 class="modal-title pull-left">Gestione allegati per {{ entity.getLabel() }}</h4>
+            <h4 class="modal-title float-start">Gestione allegati per {{ entity.getLabel() }}</h4>
             <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
           </div>
           <div class="modal-body">

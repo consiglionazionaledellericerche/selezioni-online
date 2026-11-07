@@ -101,7 +101,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
           </div>
           <div class="col-sm-12">
             <ng-template #popTemplate>
-              <h5 class="font-weight-semibold">
+              <h5 class="fw-semibold">
                 <svg class="icon icon-secondary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg> Info
               </h5>
               <hr>

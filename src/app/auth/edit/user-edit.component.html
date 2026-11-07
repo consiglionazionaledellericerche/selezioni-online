@@ -9,7 +9,7 @@
       <span class="pe-1">{{'user.information.detail'|translate}}</span>
       <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
       <div>
-        <span class="font-weight-semibold">{{'user.information.change.password.title'|translate}}</span>
+        <span class="fw-semibold">{{'user.information.change.password.title'|translate}}</span>
         <a class="btn btn-link ps-1 text-primary" href="javascript:" (click)="openModal(templatechangepassword)">{{'user.information.change.password.link'|translate}}</a>
       </div>
     </div>
@@ -117,7 +117,7 @@
               </app-control-datepicker>
             </div>
             <div *ngIf="isStraniero()" class="form-group" [ngClass]="{'col-md-3': !entity.userName, 'col-md-6': entity.userName}">
-              <label for="statoestero" class="font-weight-bold active">{{'user.statoestero'| translate}}</label>
+              <label for="statoestero" class="fw-bold active">{{'user.statoestero'| translate}}</label>
               <app-control-select-model
                 [inline]="true"
                 [noLabel]="true"
@@ -153,7 +153,7 @@
 
 <ng-template #templatechangepassword>
   <div class="modal-header">
-    <h4 class="modal-title pull-left text-primary"><i class="fa fa-key"></i> {{'user.change.password.title' | translate}}</h4>
+    <h4 class="modal-title float-start text-primary"><i class="fa fa-key"></i> {{'user.change.password.title' | translate}}</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
   </div>
   <div class="modal-body">

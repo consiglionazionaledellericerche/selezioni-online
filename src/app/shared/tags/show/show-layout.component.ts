@@ -5,7 +5,7 @@ import {Component, Input} from '@angular/core';
   template:
      `
     <div class="row mt-3 mb-3">
-      <div class="col-sm-2 text-right">
+      <div class="col-sm-2 text-end">
         <strong *ngIf="strong"> {{ label | translate }} </strong>
         <span *ngIf="!strong"> {{ label | translate }} </span>
       </div>
