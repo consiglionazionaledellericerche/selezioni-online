@@ -125,3 +125,13 @@ label.label-checkbox.is-invalid {
 .text-justify {
   text-align: justify !important;
 }
+
+// Bootstrap 5 underlines .btn-link at rest like a plain link; Bootstrap 4 only did on hover.
+// The app uses .btn-link for collapsible titles, stepper and sidebar actions: keep the old look.
+.btn-link {
+  text-decoration: none;
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
