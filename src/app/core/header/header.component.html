@@ -13,15 +13,14 @@
             <div class="it-header-slim-right-zone">
               <div class="dropdown" dropdown placement="bottom right">
                 <a aria-expanded="false" dropdownToggle
-                  class="dropdown-toggle pe-2"
-                   data-toggle="dropdown" href= "javascript:">
+                  class="dropdown-toggle pe-2" href= "javascript:">
                   <span>{{country | uppercase}}</span>
                   <svg class="icon icon-white">
                     <use
                       href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
                   </svg>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-right border" *dropdownMenu>
+                <ul class="dropdown-menu dropdown-menu-end border" *dropdownMenu>
                   <li role="menuitem"><a class="dropdown-item text-primary" href="javascript:" (click)="language('it', true)">ITA</a></li>
                   <li role="menuitem"><a class="dropdown-item text-primary" href="javascript:" (click)="language('en', true)">ENG</a></li>
                 </ul>
@@ -35,11 +34,10 @@
                 <span class="d-none d-lg-inline-block">{{'signin.title' | translate}}</span>
               </a>
               <div *ngSwitchCase="true" class="nav-item dropdown" dropdown placement="bottom right">
-                <a aria-expanded="false" class="dropdown-toggle pe-2" dropdownToggle
-                   data-toggle="dropdown" href="javascript:">
+                <a aria-expanded="false" class="dropdown-toggle pe-2" dropdownToggle href="javascript:">
                   <div class="avatar size-sm">
                     <p aria-hidden="true" class="text-monospace">{{user.firstName|firstLetter}}{{user.lastName|firstLetter}}</p>
-                    <span class="sr-only">{{user.firstName|capitalizeFirst}} {{user.lastName|capitalizeFirst}}</span>
+                    <span class="visually-hidden">{{user.firstName|capitalizeFirst}} {{user.lastName|capitalizeFirst}}</span>
                   </div>
                   <span class="d-none d-md-block ps-1">{{user.firstName|capitalizeFirst}}{{user.lastName|capitalizeFirst}}</span>
                   <svg class="icon icon-white">
@@ -47,7 +45,7 @@
                       href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
                   </svg>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-right border" *dropdownMenu>
+                <ul class="dropdown-menu dropdown-menu-end border" *dropdownMenu>
                   <li role="menuitem">
                     <a class="dropdown-item text-primary" [routerLink]="['/create-account']" [routerLinkActive]="'disabled'">
                       <i class="fa fa-fw fa-address-card-o pe-1" aria-hidden="true"></i>
@@ -85,11 +83,11 @@
               </div>
               <div class="it-right-zone">
                 <div class="it-search-wrapper">
-                  <form class="form-inline ps-1 d-lg-flex d-xl-flex" [ngClass]="{'d-none': isAuthenticated()}" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
+                  <form class="ps-1 d-lg-flex d-xl-flex" [ngClass]="{'d-none': isAuthenticated()}" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
                     <div class="input-group d-none d-lg-flex">
-                      <input class="form-control bg-white col-md-6 col-sm-12 col-xl-12 rounded-left" formControlName="callCode" type="search" placeholder="{{'search'|translate}}">
+                      <input class="form-control bg-white col-md-6 col-sm-12 col-xl-12 rounded-start" formControlName="callCode" type="search" placeholder="{{'search'|translate}}">
                       <div class="input-group-append">
-                          <button class="btn bg-white rounded-right" type="submit">
+                          <button class="btn bg-white rounded-end" type="submit">
                             <i class="fa fa-search text-primary" aria-hidden="true"></i>
                           </button>
                       </div>    
@@ -119,7 +117,7 @@
             <nav class="navbar navbar-expand-lg has-megamenu">
               <div class="navbar-collapsable">
                 <div class="menu-wrapper">
-                  <div class="it-brand-wrapper cloned" *ngIf="isSticky">
+                  <div class="it-brand-wrapper cloned-element" *ngIf="isSticky">
                     <a class="btn btn-link px-1" *ngSwitchCase="true" (click)="sidebarToggle()">
                       <svg class="icon icon-white mx-0">
                         <use href="/assets/bootstrap-italia/svg/sprites.svg#it-burger"></use>
@@ -142,7 +140,7 @@
                       </li>  
                     </ng-container>
                   </ul>
-                  <div class="it-search-wrapper cloned" *ngIf="isSticky">
+                  <div class="it-search-wrapper cloned-element" *ngIf="isSticky">
                     <span class="d-none d-md-block">{{'search'|translate}}</span>
                     <a aria-label="Cerca" class="search-link rounded-icon" [routerLink]="['/search']">
                       <svg class="icon">

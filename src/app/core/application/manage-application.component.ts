@@ -43,7 +43,7 @@ import { PrintApplicationComponent } from './print-application.component';
         <h4 class="text-center">{{ 'application.title' | translate}}</h4>
         <h5 class="text-center" innerHtml="{{translateService.currentLang == 'it'? call.descrizione : call.descrizione_en}}"></h5>
         <h3 *ngIf="entity.stato_domanda != 'I'"> 
-          <span class="badge d-block" [ngClass]="{'badge-warning': entity.isProvvisoria(),'badge-success': entity.isConfermata()}">
+          <span class="badge d-block" [ngClass]="{'bg-warning': entity.isProvvisoria(),'bg-success': entity.isConfermata()}">
           {{'application.state.' + entity.stato_domanda|translate|uppercase}}
           </span>
         </h3>
@@ -125,7 +125,7 @@ import { PrintApplicationComponent } from './print-application.component';
               <button (click)="sendApplication($event)" 
                 #sendApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
-                class="btn btn-primary btn-block btn-lg btn-icon me-2 rounded" 
+                class="btn btn-primary w-100 btn-lg btn-icon me-2 rounded" 
                 tooltip="{{'application.send' | translate}}">
                 <span class="pe-1 w-100 text-right" translate>application.send</span>
                 <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-upload"></use></svg>              
@@ -140,7 +140,7 @@ import { PrintApplicationComponent } from './print-application.component';
               <button (click)="confirmApplication($event);"
                 #confirmApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
-                class="btn btn-primary btn-block btn-lg btn-icon rounded" 
+                class="btn btn-primary w-100 btn-lg btn-icon rounded" 
                 tooltip="{{'application.confirm' | translate}}">
                 <span class="pe-1 w-100 text-right" translate>application.confirm</span>
                 <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-arrow-right-circle"></use></svg>

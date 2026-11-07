@@ -135,7 +135,7 @@
       <div class="card-footer">
         <app-button-confirm
           *ngSwitchCase="true"
-          classes="btn-primary btn-block"
+          classes="btn-primary w-100"
           buttonLabel="user.new_registration.button"
           [body]="'message.confirm.registration'| translate:{value: f.email.value||''} "
           showLabel="true"
@@ -144,7 +144,7 @@
         <button 
           *ngSwitchCase="false" 
           type="submit" 
-          class="btn btn-primary btn-block" 
+          class="btn btn-primary w-100" 
           (click)="onSubmit()">{{'user.modify_registration.button' | translate}}</button>
       </div>      
     </div>
@@ -154,9 +154,7 @@
 <ng-template #templatechangepassword>
   <div class="modal-header">
     <h4 class="modal-title pull-left text-primary"><i class="fa fa-key"></i> {{'user.change.password.title' | translate}}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
   </div>
   <div class="modal-body">
     <form [formGroup]="ngPasswordForm">
@@ -208,6 +206,6 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-primary btn-block" (click)="changePassword()">{{'save' | translate}}</button>
+    <button type="button" class="btn btn-outline-primary w-100" (click)="changePassword()">{{'save' | translate}}</button>
   </div>
 </ng-template>

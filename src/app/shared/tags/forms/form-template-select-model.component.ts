@@ -33,7 +33,7 @@ declare var $: any;   // not required
                        [ttipAppend]="ttipAppend"
                        [showValidation]="showValidation">
 
-          <select class="custom-select select2-single" [ngClass]="selectClasses()">
+          <select class="form-select select2-single" [ngClass]="selectClasses()">
             <option *ngIf="allowClear"></option>
             
             <option *ngFor="let type of types" [value]="type.id" [selected]="isItemSelected(type.queryName)">
@@ -63,7 +63,7 @@ declare var $: any;   // not required
             <div [popover]="popoverMulti ? s : ''" triggers="mouseenter:mouseleave" class="label font-weight-semibold text-truncate">{{ s }}</div>
             <button (click)="unselect(s)">
               <svg class="icon"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-close"></use></svg>
-              <span class="sr-only" translate>delete</span>
+              <span class="visually-hidden" translate>delete</span>
             </button>
           </div>
         </div>

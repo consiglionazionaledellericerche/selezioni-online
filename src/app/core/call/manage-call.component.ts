@@ -73,7 +73,7 @@ import { UserService } from '../../auth/edit/user.service';
               <button (click)="sendApplication($event)" 
                 #sendApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
-                class="btn btn-primary btn-block btn-lg btn-icon me-2 rounded" 
+                class="btn btn-primary w-100 btn-lg btn-icon me-2 rounded" 
                 tooltip="{{'application.send' | translate}}">
                 <span class="pe-1 w-100 text-right" translate>application.send</span>
                 <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-upload"></use></svg>              
@@ -88,7 +88,7 @@ import { UserService } from '../../auth/edit/user.service';
               <button (click)="confirmCall($event);"
                 #confirmCallButton 
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
-                class="btn btn-primary btn-block btn-lg btn-icon rounded" 
+                class="btn btn-primary w-100 btn-lg btn-icon rounded" 
                 tooltip="{{'application.confirm' | translate}}">
                 <span class="pe-1 w-100 text-right" translate>application.confirm</span>
                 <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-arrow-right-circle"></use></svg>

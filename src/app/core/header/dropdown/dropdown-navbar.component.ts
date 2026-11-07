@@ -18,7 +18,7 @@ import {RouterLinkActive} from '@angular/router';
         <span>{{ getTitle() | translate }} </span>
       </a>
       <ul class="dropdown-menu dropdown-menu-navbar-cnr mt-1"
-           [ngClass]="{'invisible': !opened, 'dropdown-menu-right': rightAlignment}"
+           [ngClass]="{'invisible': !opened, 'dropdown-menu-end': rightAlignment}"
            [ngStyle]="{'min-width': width}">
         <ng-content></ng-content>
       </ul>

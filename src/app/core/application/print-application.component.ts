@@ -15,12 +15,12 @@ import { Application } from './application.model';
       <div class="modal-header border-bottom">
         <h3 *ngIf="!history" class="modal-title pull-left text-primary pb-2 text-truncate"><i class="fa fa-info-circle"></i> {{'application.print.application'|translate}}</h3>
         <h3 *ngIf="history" class="modal-title pull-left text-success pb-2 text-truncate"><i class="fa fa-history"></i> {{'document.history.title'|translate}}</h3>
-        <button *ngIf="history" type="button" class="close pull-right" aria-label="Close" (click)="history = false">
+        <button *ngIf="history" type="button" class="btn p-0 ms-2 pull-right" aria-label="Close" (click)="history = false">
           <svg class="icon">
             <use href="/assets/bootstrap-italia/svg/sprites.svg#it-restore"></use>
           </svg>
         </button>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <button type="button" class="btn p-0 ms-2 pull-right" aria-label="Close" (click)="modalRef.hide()">
           <svg class="icon">
             <use href="/assets/bootstrap-italia/svg/sprites.svg#it-close-circle"></use>
           </svg>
@@ -36,7 +36,7 @@ import { Application } from './application.model';
                 <a>  
                   <div class="d-flex align-items-start">
                     <small class="text-monospace" translate>document.history.version</small>
-                    <span (click)="onDownload(version.objectId, version.name)" class="badge ms-2 h6 d-table c-pointer" [ngClass]="{'badge-primary': version.isMajorVersion, 'badge-secondary': !version.isMajorVersion}">{{version.versionLabel}}</span>
+                    <span (click)="onDownload(version.objectId, version.name)" class="badge ms-2 h6 d-table c-pointer" [ngClass]="{'bg-primary': version.isMajorVersion, 'bg-secondary': !version.isMajorVersion}">{{version.versionLabel}}</span>
                     <small class="text-monospace ms-2">{{'document.history.detail'| translate:{contentStreamLength: version.getFileSize(), lastModificationDate: version.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</small>
                   </div>
                 </a>  
@@ -47,17 +47,17 @@ import { Application } from './application.model';
       <div *ngIf="!history" class="modal-footer shadow-lg">
         <div class="d-flex justify-content-between w-100">
           <div *ngIf="lastPrint">
-            <button class="btn btn-danger btn-block rounded"
+            <button class="btn btn-danger w-100 rounded"
               (click)="onDownload(lastPrint.objectId, lastPrint.name)" translate>application.print.download <i class="fa fa-file-pdf-o" aria-hidden="true"></i> 
             </button>
           </div>
           <div *ngIf="lastPrint" class="ps-2">
-            <button class="btn btn-success btn-block rounded"
+            <button class="btn btn-success w-100 rounded"
               (click)="onHistory()" translate>application.print.old <i class="fa fa-history" aria-hidden="true"></i> 
             </button>
           </div>
           <div *ngIf="application.isProvvisoria()" class="ms-auto ps-2">
-            <button class="btn btn-outline-secondary btn-block rounded"
+            <button class="btn btn-outline-secondary w-100 rounded"
                   (click)="onPrint()" translate>application.print.new <i class="fa fa-plus-circle" aria-hidden="true"></i>
             </button>
           </div>  

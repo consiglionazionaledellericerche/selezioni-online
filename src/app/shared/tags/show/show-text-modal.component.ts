@@ -14,9 +14,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
           <use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use>
         </svg>
         <h4 class="modal-title text-primary ps-1">{{modal_title}}</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body" [innerHtml]="modal_text | safeHtml"></div>
       <div class="modal-footer">

@@ -45,7 +45,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
                     <use href="/assets/bootstrap-italia/svg/sprites.svg#it-more-items"></use>
                   </svg>
                 </button>
-                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right border" role="menu" aria-labelledby="button-animated">
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-end border" role="menu" aria-labelledby="button-animated">
                     <li role="menuitem"><a class="dropdown-item" href="javascript:" (click)="printApplication()" translate>application.print.application</a></li>
                     <li role="menuitem"><a class="dropdown-item" href="javascript:" (click)="copyApplication()" translate>application.copy</a></li>
                     <li class="divider dropdown-divider"></li>

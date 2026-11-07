@@ -34,7 +34,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
             </app-control-select-model>
         </div>
         <div class="form-group col-md-4">
-          <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="filterType">
+          <div class="btn-group w-100 btn-group-toggle" btnRadioGroup formControlName="filterType">
               <span class="btn btn-primary btn-toggle text-truncate" btnRadio="active" tooltip="{{'call.attivi' | translate}}">{{'call.attivi' | translate}}</span>
               <span class="btn btn-primary btn-toggle text-truncate" btnRadio="expire" tooltip="{{'call.scaduti' | translate}}">{{'call.scaduti' | translate}}</span>
               <span class="btn btn-primary btn-toggle text-truncate" btnRadio="all" tooltip="{{'call.tutti' | translate}}">{{'call.tutti' | translate}}</span>
@@ -74,7 +74,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
         </div>
         <div class="form-group col-md-8">
           <!--Rounded checkbox buttons-->
-          <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="applicationStatus">
+          <div class="btn-group w-100 btn-group-toggle" btnRadioGroup formControlName="applicationStatus">
               <span class="btn btn-primary btn-toggle text-truncate" btnRadio="P" tooltip="{{'application.status.temporary' | translate}}">{{'application.status.temporary' | translate}}</span>
               <span class="btn btn-primary btn-toggle text-truncate" btnRadio="C" tooltip="{{'application.status.confirmed' | translate}}">{{'application.status.confirmed' | translate}}</span>
               <span class="btn btn-primary btn-toggle text-truncate" btnRadio="all" tooltip="{{'application.status.all' | translate}}">{{'application.status.all' | translate}}</span>
@@ -90,7 +90,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
       <li *ngFor="let item of items" [ngClass]="listItemClasses()" class="hover-shadow">
         <app-list-item-application [item]="item" [user]="user" (onReopen)="onReopen(item)">
           <div class="col-sm-12 h5">
-            <span class="badge" [ngClass]="{'badge-warning' : item.isProvvisoria(), 'badge-success' : !item.isProvvisoria()}">
+            <span class="badge" [ngClass]="{'bg-warning' : item.isProvvisoria(), 'bg-success' : !item.isProvvisoria()}">
               <span>{{'application.state.' + item.stato_domanda | translate}}</span>
               <span *ngIf="item.isProvvisoria()">{{'application.date.modified' | translate:{value: item.lastModificationDate| date:'dd/MM/yyyy HH:mm:ss' } }}</span>
               <span *ngIf="!item.isProvvisoria()">{{'application.date.send' | translate:{value: item.data_domanda| date:'dd/MM/yyyy HH:mm:ss' } }}</span>              
@@ -134,7 +134,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
             </app-show-text-modal>
           </div>
           <div class="col-sm-12 h5" *ngIf="item.isShowEsclusioneRiununcia(user)">
-            <span class="badge" [ngClass]="{'badge-warning' : item.isSospesa(), 'badge-danger' : !item.isSospesa()}">
+            <span class="badge" [ngClass]="{'bg-warning' : item.isSospesa(), 'bg-danger' : !item.isSospesa()}">
               <span>{{'application.esclusione.' + item.esclusione_rinuncia | translate}}</span>
             </span>
           </div>

@@ -6,7 +6,7 @@ import {Component, Input} from '@angular/core';
   template: `
     <div *ngIf="!loaded" class="text-center text-primary mt-5">
       <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-      <span class="sr-only">Loading...</span>
+      <span class="visually-hidden">Loading...</span>
     </div>
       `
 })

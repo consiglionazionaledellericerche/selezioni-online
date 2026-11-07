@@ -14,9 +14,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
     <ng-template #template let-modal>
       <div class="modal-header">
         <h4 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{modal_title}}</h4>
-        <button #close type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button #close type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body">
          <children-list [show_date]="show_date" [parentId]="parentId" [typeId]="typeId" [queryName]="queryName"></children-list>

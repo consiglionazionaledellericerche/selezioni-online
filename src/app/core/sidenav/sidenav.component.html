@@ -6,7 +6,7 @@
                     <div>
                         <div class="avatar avatar-primary size-lg">
                             <p aria-hidden="true" class="text-monospace">{{user.firstName|firstLetter}}{{user.lastName|firstLetter}}</p>
-                            <span class="sr-only">{{user.firstName|capitalizeFirst}} {{user.lastName|capitalizeFirst}}</span>
+                            <span class="visually-hidden">{{user.firstName|capitalizeFirst}} {{user.lastName|capitalizeFirst}}</span>
                         </div>
                     </div>
                     <div class="h4">
@@ -57,7 +57,7 @@
                 </div>
             </li>
             <li class="list-group-item d-block d-lg-none d-xl-none">
-                <form class="form-inline d-block" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
+                <form class="d-block" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
                     <div class="input-group">
                         <input class="form-control col-12" formControlName="callCode" type="search" placeholder="{{'search'|translate}}">
                         <div class="input-group-append">
@@ -76,11 +76,11 @@
                             <li class="list-group-item border-bottom-0 p-1">                         
                                 <a class="h6" [routerLink]="['/my-applications']" [queryParams]="{applicationStatus: state.getFilterStato()}" routerLinkActive="active" (click)="hide()">
                                     <span>{{ state.getLabel() | translate}}</span> 
-                                    <span class="badge badge-pill float-right" 
+                                    <span class="badge rounded-pill float-right" 
                                         [ngClass]="{
-                                            'badge-danger': state.isEsclusa(), 
-                                            'badge-warning': state.isProvvisoria(),
-                                            'badge-success': state.isConfermata()
+                                            'bg-danger': state.isEsclusa(), 
+                                            'bg-warning': state.isProvvisoria(),
+                                            'bg-success': state.isConfermata()
                                         }">{{state.count}}</span>
                                 </a>
                             </li>

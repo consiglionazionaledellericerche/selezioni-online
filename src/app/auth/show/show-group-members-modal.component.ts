@@ -20,9 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
     <ng-template #template>
       <div class="modal-header">
         <h4 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{displayName | translate}}</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body vh80">
           <ol>

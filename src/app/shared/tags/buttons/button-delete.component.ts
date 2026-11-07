@@ -17,9 +17,7 @@ import { Base } from '../../../common/model/base.model';
     <ng-template #template>
       <div class="modal-header">
         <h4 class="modal-title pull-left">Attenzione</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body">
         Vuoi confermare l'eliminazione di <strong>{{ entity.getLabel() }}</strong>?
