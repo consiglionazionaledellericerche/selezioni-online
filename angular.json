@@ -21,7 +21,17 @@
             ],
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "node_modules/bootstrap-italia/dist/fonts",
+                "output": "assets/bootstrap-italia/fonts"
+              },
+              {
+                "glob": "sprites.svg",
+                "input": "node_modules/bootstrap-italia/dist/svg",
+                "output": "assets/bootstrap-italia/svg"
+              }
             ],
             "styles": [
               "./node_modules/font-awesome/css/font-awesome.min.css",
@@ -108,7 +118,17 @@
             },
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "node_modules/bootstrap-italia/dist/fonts",
+                "output": "assets/bootstrap-italia/fonts"
+              },
+              {
+                "glob": "sprites.svg",
+                "input": "node_modules/bootstrap-italia/dist/svg",
+                "output": "assets/bootstrap-italia/svg"
+              }
             ]
           }
         }
