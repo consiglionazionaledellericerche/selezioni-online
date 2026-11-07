@@ -16,7 +16,7 @@ import { Application } from '../../core/application/application.model';
             [label]="'label.jconon_application.fl_contratto_td_concorso_presso' | translate" 
             formControlName="jconon_application:fl_contratto_td_concorso_presso">
           </app-control-toggle>            
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-select-model
                 [focus]="!form.pristine"
@@ -33,7 +33,7 @@ import { Application } from '../../core/application/application.model';
               </app-control-select-model>
             </div>
           </div>  
-          <div *ngSwitchCase="true" class="form-row w-100 pt-1">
+          <div *ngSwitchCase="true" class="row gx-2 w-100 pt-1">
             <div *ngIf="!isCNR()" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"
@@ -43,7 +43,7 @@ import { Application } from '../../core/application/application.model';
               </app-control-text>
             </div>
           </div>
-          <div class="form-row w-100 pt-1">  
+          <div class="row gx-2 w-100 pt-1">  
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-textarea 
                 [showValidation]="true"

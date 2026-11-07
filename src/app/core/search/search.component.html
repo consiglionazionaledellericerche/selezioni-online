@@ -1,7 +1,7 @@
 <app-layout-title [title]="'call.search.title'" [titleClass]="'main-title'" [collapsediv]="collapse" [isCollapsable]="'true'" (collapseEvent)="collapse = $event"></app-layout-title>
 <app-list-header-layout>
     <form *ngIf="filterFormSearch" class="clearfix" [formGroup]="filterFormSearch" [ngClass]="{'d-none': collapse, 'd-block': !collapse}">
-        <div class="form-row col-md-12">
+        <div class="row gx-2 col-md-12">
             <div class="form-group col-md-4">
                 <app-control-select-model
                     class="pe-1"
@@ -35,7 +35,7 @@
                 </app-control-text>
             </div>    
         </div>
-        <div class="form-row col-md-12">
+        <div class="row gx-2 col-md-12">
             <div class="form-group col-md-2">
                 <app-control-datepicker
                     class="pe-1"
@@ -70,7 +70,7 @@
                 </app-control-select-model>
             </div>
         </div>
-        <div class="form-row col-md-12">
+        <div class="row gx-2 col-md-12">
             <div class="form-group col-md-2">
                 <app-control-text 
                     formControlName="gazzetteNumber"
@@ -101,7 +101,7 @@
                 </app-control-text>
             </div>    
         </div>
-        <div class="form-row col-md-12">        
+        <div class="row gx-2 col-md-12">        
             <div class="form-group col-md-6">        
                 <app-control-text 
                     formControlName="struttura"

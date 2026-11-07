@@ -12,7 +12,7 @@ import { CallService } from '../../core/call/call.service';
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">
           <div class="pt-3" [ngClass]="hoverClass" (mouseover)="hoverClass='shadow-lg'" (mouseout)="hoverClass=''">
-            <div class="form-row w-100 pt-3 ps-2">
+            <div class="row gx-2 w-100 pt-3 ps-2">
               <div class="form-group col-md-12">
                 <app-control-text
                   [inline]="true"
@@ -23,7 +23,7 @@ import { CallService } from '../../core/call/call.service';
                 </app-control-text>
               </div>
             </div>
-            <div class="form-row w-100 pt-1 ps-2">
+            <div class="row gx-2 w-100 pt-1 ps-2">
               <div class="form-group col-md-9">
                 <app-control-select-model
                   [term]="''"

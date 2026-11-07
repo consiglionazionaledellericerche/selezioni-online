@@ -16,7 +16,7 @@ import { Application } from '../../core/application/application.model';
             [label]="'label.jconon_application.afl_cittadinanza_italiana_lista' | translate" 
             formControlName="jconon_application:afl_cittadinanza_italiana_lista">
           </app-control-toggle>            
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div [hidden]="isToggle()" class="form-group col-md-8">
               <app-control-select-model
                 [inline]="true"

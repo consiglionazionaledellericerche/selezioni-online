@@ -16,7 +16,7 @@ import { Application } from '../../core/application/application.model';
             [label]="toggleLabel | translate" 
             formControlName="{{propertyName}}">
           </app-control-toggle>            
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div *ngSwitchCase="toggle" class="form-group {{textClass}}">
               <app-control-text 
                 *ngIf="textType == 'text'"

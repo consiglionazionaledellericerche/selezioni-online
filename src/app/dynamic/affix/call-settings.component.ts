@@ -11,7 +11,7 @@ import { DynamicComponent } from '../dynamic.component';
     selector: 'affix_tabCallSettings',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">
-        <div class="form-row">
+        <div class="row gx-2">
           <div class="form-check col-md-2 mb-3">
             <app-control-checkbox 
               [showValidation]="true"

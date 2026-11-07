@@ -1,4 +1,4 @@
-<div class="p-md-2 row no-gutters" [ngSwitch]="entity.userName === undefined">    
+<div class="p-md-2 row g-0" [ngSwitch]="entity.userName === undefined">    
   <div class="col-md-6" [ngClass]="{'col-md-12': !entity.userName}">
     <div *ngSwitchCase="true"> 
       <h1>{{'user.new_registration.title'|translate}}</h1>

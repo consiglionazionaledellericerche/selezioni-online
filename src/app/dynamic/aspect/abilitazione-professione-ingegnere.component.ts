@@ -16,7 +16,7 @@ import { Application } from '../../core/application/application.model';
             [label]="'label.jconon_application.fl_abilitazione_professione_ingegnere' | translate" 
             formControlName="jconon_application:fl_abilitazione_professione_ingegnere">
           </app-control-toggle>            
-          <div *ngSwitchCase="true" class="form-row w-100 pt-1">
+          <div *ngSwitchCase="true" class="row gx-2 w-100 pt-1">
             <div class="form-group col-md-3">
               <app-control-datepicker
                 [inline]="true"
@@ -58,7 +58,7 @@ import { Application } from '../../core/application/application.model';
               </app-control-select-model>
             </div>
           </div>  
-          <div *ngSwitchCase="true" class="form-row w-100 pt-1">  
+          <div *ngSwitchCase="true" class="row gx-2 w-100 pt-1">  
             <div *ngIf="isIscrizioneAlbo()" class="form-group col-md-6">
               <app-control-select-model
                 [inline]="true"

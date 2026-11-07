@@ -20,7 +20,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
   `
     <app-layout-title [title]="'application.mine.title'" [titleClass]="'main-title'" [isCollapsable]="'true'" (collapseEvent)="collapse = $event"></app-layout-title>
     <form *ngIf="filterForm" class="clearfix" [formGroup]="filterForm" [ngClass]="{'d-none': collapse, 'd-block': !collapse}">
-      <div class="form-row col-md-12">
+      <div class="row gx-2 col-md-12">
         <div class="form-group col-md-4">
             <app-control-select-model
                 [inline]="true"
@@ -51,7 +51,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
             </app-control-text>
         </div>
       </div>
-      <div class="form-row col-md-12">
+      <div class="row gx-2 col-md-12">
         <div class="form-group col-md-2">
             <app-control-datepicker
                 type="search"

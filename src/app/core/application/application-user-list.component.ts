@@ -22,7 +22,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   `
     <app-layout-title [title]="'application.user.title'" [titleClass]="'main-title'" [collapsediv]="collapse" [isCollapsable]="'true'" (collapseEvent)="collapse = $event"></app-layout-title>
     <form *ngIf="filterForm" class="clearfix" [formGroup]="filterForm" [ngClass]="{'d-none': collapse, 'd-block': !collapse}">
-      <div class="form-row col-md-12">
+      <div class="row gx-2 col-md-12">
         <div class="form-group col-md-4">        
           <app-control-select-model
             [path]="service.getSelect2Mapping()"
@@ -71,7 +71,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
           </app-control-text>
         </div>
       </div>
-      <div class="form-row col-md-12">
+      <div class="row gx-2 col-md-12">
         <div class="form-group col-md-6">        
           <app-control-select-model
             [path]="callService.getSelect2Mapping()"

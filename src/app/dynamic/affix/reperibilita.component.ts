@@ -13,7 +13,7 @@ import { User } from '../../auth/model/user.model';
     selector: 'affix_tabReperibilita',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">
-        <div class="form-row">
+        <div class="row gx-2">
           <div class="form-group col-md-3">
             <app-control-select-model
               [inline]="true"
@@ -70,7 +70,7 @@ import { User } from '../../auth/model/user.model';
             </app-control-text>
           </div>
         </div>
-        <div class="form-row">
+        <div class="row gx-2">
           <div class="form-group col-md-9">
             <app-control-text 
               type="text" 
@@ -88,7 +88,7 @@ import { User } from '../../auth/model/user.model';
             </app-control-text>
           </div>
         </div>
-        <div class="form-row">
+        <div class="row gx-2">
           <div class="form-group col-md-4">
             <app-control-text 
               [prepend]="'phone'"

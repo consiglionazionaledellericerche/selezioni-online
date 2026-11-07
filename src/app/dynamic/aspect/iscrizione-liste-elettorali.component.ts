@@ -18,7 +18,7 @@ import { Select2Template } from '../../common/template/select2-template';
             [label]="'label.jconon_application.fl_iscritto_liste_elettorali' | translate" 
             formControlName="jconon_application:fl_iscritto_liste_elettorali">
           </app-control-toggle>
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div [hidden]="!isToggle()" class="form-group col-md-9">
               <app-control-select-model
                 [term]="''"

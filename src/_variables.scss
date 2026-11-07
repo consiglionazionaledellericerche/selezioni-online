@@ -24,3 +24,9 @@ $orange: transparent;
 //                                    Form Input
 // ####################################################################################
 $form-group-margin-bottom: 2rem;
+
+// ####################################################################################
+//                                    Spacing
+// ####################################################################################
+// Bootstrap 5 disables negative margin utilities by default; templates use mt-n*, ms-n*, mx-n*.
+$enable-negative-margins: true;

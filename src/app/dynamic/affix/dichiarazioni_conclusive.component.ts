@@ -7,7 +7,7 @@ import { AffixComponent } from './affix.component';
     selector: 'affix_tabDichiarazioniConclusive',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()" class="pb-2">
-        <div class="form-row">
+        <div class="row gx-2">
           <app-control-toggle
             divToggleClass="d-flex border-bottom-0"
             labelClass="text-dark c-pointer text-justify" 
@@ -15,7 +15,7 @@ import { AffixComponent } from './affix.component';
             formControlName="jconon_application:fl_dichiarazione_sanzioni_penali">
           </app-control-toggle>
         </div>  
-        <div class="form-row">
+        <div class="row gx-2">
           <app-control-toggle
             divToggleClass="d-flex border-bottom-0" 
             labelClass="text-dark c-pointer text-justify"
