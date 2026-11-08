@@ -15,10 +15,10 @@ import { Application } from '../../core/application/application.model';
             [label]="'label.jconon_application.fl_diversamente_abile' | translate" 
             formControlName="jconon_application:fl_diversamente_abile">
           </app-control-toggle>             
-          <div class="form-row w-100 py-1">
+          <div class="row gx-2 w-100 py-1">
             <label *ngSwitchCase="true" class="px-2">{{'label.jconon_application.fl_diversamente_abile_subtitle'| translate}}</label>
           </div>
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"
@@ -29,7 +29,7 @@ import { Application } from '../../core/application/application.model';
               </app-control-text>
             </div>
           </div>  
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"

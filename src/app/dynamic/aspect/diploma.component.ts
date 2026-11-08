@@ -15,7 +15,7 @@ import { DynamicComponent } from '../dynamic.component';
             [label]="'label.jconon_application.fl_diploma' | translate" 
             formControlName="jconon_application:fl_diploma">
           </app-control-toggle>            
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"
@@ -26,7 +26,7 @@ import { DynamicComponent } from '../dynamic.component';
               </app-control-text>
             </div>
           </div>  
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-6">
               <app-control-text 
                 [showValidation]="true"

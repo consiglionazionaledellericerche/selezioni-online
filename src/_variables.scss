@@ -9,7 +9,6 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 // ####################################################################################
 //                                    Colors
 // ####################################################################################
-$orange: transparent;
 
 // $primary-h: 0;
 // $primary-s: 80;
@@ -24,3 +23,9 @@ $orange: transparent;
 //                                    Form Input
 // ####################################################################################
 $form-group-margin-bottom: 2rem;
+
+// ####################################################################################
+//                                    Spacing
+// ####################################################################################
+// Bootstrap 5 disables negative margin utilities by default; templates use mt-n*, ms-n*, mx-n*.
+$enable-negative-margins: true;

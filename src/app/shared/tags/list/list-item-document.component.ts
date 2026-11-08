@@ -31,7 +31,7 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
               <button id="button-basic" dropdownToggle class="btn text-dark p-2" aria-controls="button-animated" tooltip="{{'more.actions' | translate}}">
                 <i class="fa fa-fw fa-ellipsis-v"></i>
               </button>
-              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right border" role="menu" aria-labelledby="button-animated">
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-end border" role="menu" aria-labelledby="button-animated">
                   <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
                   <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
                   <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>

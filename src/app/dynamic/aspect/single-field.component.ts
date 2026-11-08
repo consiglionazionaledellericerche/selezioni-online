@@ -10,7 +10,7 @@ import { Application } from '../../core/application/application.model';
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">
           <div class="pt-3" [ngClass]="hoverClass" (mouseover)="hoverClass='shadow-lg'" (mouseout)="hoverClass=''">
-            <div class="form-row w-100 pt-3 pl-2">
+            <div class="row gx-2 w-100 pt-3 ps-2">
               <div class="form-group {{class}}">                
                 <app-control-text
                   *ngIf="type == 'text'"

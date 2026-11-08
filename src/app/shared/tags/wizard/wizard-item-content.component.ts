@@ -9,19 +9,19 @@ import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angula
       <div class="row">
         <div class="container">
 
-          <button class="btn btn-secondary float-left mr-1" (click)="onWizardExit.emit()">
+          <button class="btn btn-secondary float-start me-1" (click)="onWizardExit.emit()">
             Annulla </button>
 
           <button *ngIf="wizard.hasPrevious()"
                   (click)="back()"
-                  class="btn btn-info float-left"> <i class="fa fa-arrow-circle-left"></i> Precedente</button>
+                  class="btn btn-info float-start"> <i class="fa fa-arrow-circle-left"></i> Precedente</button>
 
           <button *ngIf="wizard.hasNext()"
                   (click)="next()"
                   [disabled]="!isValid()"
-                  class="btn btn-info float-right mt-2 mb-2"> <i class="fa fa-arrow-circle-right"></i> Successivo</button>
+                  class="btn btn-info float-end mt-2 mb-2"> <i class="fa fa-arrow-circle-right"></i> Successivo</button>
 
-          <button *ngIf="!wizard.hasNext()" class="btn btn-primary float-right mt-2 mb-2" [disabled]="!wizardValid"
+          <button *ngIf="!wizard.hasNext()" class="btn btn-primary float-end mt-2 mb-2" [disabled]="!wizardValid"
                   (click)="onWizardSubmit.emit()">
             Salva In Gerarchia</button>
         </div>

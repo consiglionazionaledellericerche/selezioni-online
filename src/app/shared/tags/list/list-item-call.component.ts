@@ -11,15 +11,15 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
   `
     <div *ngIf="item" class="h-100 hover-shadow">
       <div class="card card-bg border-bottom-card h-100">        
-        <div class="card-header pl-2 py-2">
+        <div class="card-header ps-2 py-2">
           <div class="d-flex align-items-center">
             <svg class="icon icon-primary">
-              <use xlink:href="/assets/vendor/sprite.svg#it-pa"></use>
+              <use href="/assets/bootstrap-italia/svg/sprites.svg#it-pa"></use>
             </svg>
             <a href="javascript:window.scrollTo(0,0);" 
               popover="{{getMessageType(item) | translate }} {{ item.objectTypeId | translate }}" 
               triggers="mouseenter:mouseleave"
-              class="font-weight-bold text-truncate text-primary pl-md-1" 
+              class="fw-bold text-truncate text-primary ps-md-1" 
               (click)="changeType(item)">
               {{ item.objectTypeId | translate }}
             </a>
@@ -30,11 +30,11 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
         </div>
         <div class="card-footer px-1 py-0">
           <div class="d-flex">
-            <div class="mr-auto">
+            <div class="me-auto">
               <a *ngIf="isActive()" class="btn btn-link p-1" href="javascript:"
                     (click)="newApplication()" tooltip="{{'call.submit_application' | translate}}">
                 <svg class="icon icon-primary">
-                  <use xlink:href="/assets/vendor/sprite.svg#it-pencil"></use>
+                  <use href="/assets/bootstrap-italia/svg/sprites.svg#it-pencil"></use>
                 </svg>
                 <small>{{'call.submit_application' | translate}}</small>
               </a>
@@ -50,10 +50,10 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
                   aria-controls="button-animated" 
                   tooltip="{{'more.actions' | translate}}">
                 <svg class="icon">
-                  <use xlink:href="/assets/vendor/sprite.svg#it-more-items"></use>
+                  <use href="/assets/bootstrap-italia/svg/sprites.svg#it-more-items"></use>
                 </svg>
               </button>
-              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right border" role="menu" aria-labelledby="button-animated">
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-end border" role="menu" aria-labelledby="button-animated">
                   <li role="menuitem" *ngIf="canCreateDocument()">
                     <a class="dropdown-item" 
                       [routerLink]="['/applications-user']"

@@ -1,4 +1,4 @@
-<div class="p-md-2 row no-gutters" [ngSwitch]="entity.userName === undefined">    
+<div class="p-md-2 row g-0" [ngSwitch]="entity.userName === undefined">    
   <div class="col-md-6" [ngClass]="{'col-md-12': !entity.userName}">
     <div *ngSwitchCase="true"> 
       <h1>{{'user.new_registration.title'|translate}}</h1>
@@ -6,11 +6,11 @@
     </div>
     <div *ngSwitchCase="false"> 
       <h1>{{'user.profile.title'|translate}}</h1>
-      <span class="pr-1">{{'user.information.detail'|translate}}</span>
+      <span class="pe-1">{{'user.information.detail'|translate}}</span>
       <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
       <div>
-        <span class="font-weight-semibold">{{'user.information.change.password.title'|translate}}</span>
-        <a class="btn btn-link pl-1 text-primary" href="javascript:" (click)="openModal(templatechangepassword)">{{'user.information.change.password.link'|translate}}</a>
+        <span class="fw-semibold">{{'user.information.change.password.title'|translate}}</span>
+        <a class="btn btn-link ps-1 text-primary" href="javascript:" (click)="openModal(templatechangepassword)">{{'user.information.change.password.link'|translate}}</a>
       </div>
     </div>
   </div>
@@ -117,7 +117,7 @@
               </app-control-datepicker>
             </div>
             <div *ngIf="isStraniero()" class="form-group" [ngClass]="{'col-md-3': !entity.userName, 'col-md-6': entity.userName}">
-              <label for="statoestero" class="font-weight-bold active">{{'user.statoestero'| translate}}</label>
+              <label for="statoestero" class="fw-bold active">{{'user.statoestero'| translate}}</label>
               <app-control-select-model
                 [inline]="true"
                 [noLabel]="true"
@@ -135,7 +135,7 @@
       <div class="card-footer">
         <app-button-confirm
           *ngSwitchCase="true"
-          classes="btn-primary btn-block"
+          classes="btn-primary w-100"
           buttonLabel="user.new_registration.button"
           [body]="'message.confirm.registration'| translate:{value: f.email.value||''} "
           showLabel="true"
@@ -144,7 +144,7 @@
         <button 
           *ngSwitchCase="false" 
           type="submit" 
-          class="btn btn-primary btn-block" 
+          class="btn btn-primary w-100" 
           (click)="onSubmit()">{{'user.modify_registration.button' | translate}}</button>
       </div>      
     </div>
@@ -153,10 +153,8 @@
 
 <ng-template #templatechangepassword>
   <div class="modal-header">
-    <h4 class="modal-title pull-left text-primary"><i class="fa fa-key"></i> {{'user.change.password.title' | translate}}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <h4 class="modal-title float-start text-primary"><i class="fa fa-key"></i> {{'user.change.password.title' | translate}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
   </div>
   <div class="modal-body">
     <form [formGroup]="ngPasswordForm">
@@ -171,8 +169,8 @@
             #oldpasswordfield
             formControlName="oldpw"></app-control-text>
         <span class="password-icon" aria-hidden="true">
-          <svg *ngIf="oldpasswordfield.type=='password'" (click)="oldpasswordfield.type='text'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-invisible"></use></svg>
-          <svg *ngIf="oldpasswordfield.type=='text'"     (click)="oldpasswordfield.type='password'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-visible"></use></svg>
+          <svg *ngIf="oldpasswordfield.type=='password'" (click)="oldpasswordfield.type='text'" class="icon icon-sm"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-password-invisible"></use></svg>
+          <svg *ngIf="oldpasswordfield.type=='text'"     (click)="oldpasswordfield.type='password'" class="icon icon-sm"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-password-visible"></use></svg>
         </span>
       </div>
       <div class="form-group">
@@ -186,8 +184,8 @@
             #newpasswordfield
             formControlName="newpw"></app-control-text>
             <span class="password-icon" aria-hidden="true">
-              <svg *ngIf="newpasswordfield.type=='password'" (click)="newpasswordfield.type='text'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-invisible"></use></svg>
-              <svg *ngIf="newpasswordfield.type=='text'"     (click)="newpasswordfield.type='password'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-visible"></use></svg>
+              <svg *ngIf="newpasswordfield.type=='password'" (click)="newpasswordfield.type='text'" class="icon icon-sm"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-password-invisible"></use></svg>
+              <svg *ngIf="newpasswordfield.type=='text'"     (click)="newpasswordfield.type='password'" class="icon icon-sm"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-password-visible"></use></svg>
             </span>    
       </div>
       <div class="form-group">
@@ -201,13 +199,13 @@
             #confirmpasswordfield
             formControlName="confirmpassword"></app-control-text>
             <span class="password-icon" aria-hidden="true">
-              <svg *ngIf="confirmpasswordfield.type=='password'" (click)="confirmpasswordfield.type='text'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-invisible"></use></svg>
-              <svg *ngIf="confirmpasswordfield.type=='text'"     (click)="confirmpasswordfield.type='password'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-visible"></use></svg>
+              <svg *ngIf="confirmpasswordfield.type=='password'" (click)="confirmpasswordfield.type='text'" class="icon icon-sm"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-password-invisible"></use></svg>
+              <svg *ngIf="confirmpasswordfield.type=='text'"     (click)="confirmpasswordfield.type='password'" class="icon icon-sm"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-password-visible"></use></svg>
             </span>    
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-primary btn-block" (click)="changePassword()">{{'save' | translate}}</button>
+    <button type="button" class="btn btn-outline-primary w-100" (click)="changePassword()">{{'save' | translate}}</button>
   </div>
 </ng-template>

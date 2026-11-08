@@ -1,17 +1,17 @@
-<div class="row no-gutters pt-3">
+<div class="row g-0 pt-3">
   <div class="col-md-6 col-xl-8">
-      <div class="ml-3">
+      <div class="ms-3">
         <p>{{'signin.concorsi' | translate}}</p>
         <p>{{'signin.registration' | translate}}</p>
         <div class="h6">
-          <span class="pr-1">{{'signin.altri' | translate}}</span>
+          <span class="pe-1">{{'signin.altri' | translate}}</span>
           <a [routerLink]="['/create-account']">{{'signin.new_registration' | translate}}</a>.
         </div>
         <div class="h6">
-          <span class="pr-1">{{'signin.manuale' | translate}}</span>
+          <span class="pe-1">{{'signin.manuale' | translate}}</span>
         </div>
         <div class="h6">
-          <span class="pr-1">{{'signin.helpdesk' | translate}}</span>
+          <span class="pe-1">{{'signin.helpdesk' | translate}}</span>
           <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
         </div>
         <p innerHtml="{{'signin.candidaticnr' | translate}}"></p>
@@ -31,8 +31,8 @@
             <div class="form-group">
               <app-control-text #passwordfield type="password" [prepend]="'key'" [label]="'signin.password'| translate" [inline]="true" formControlName="password"></app-control-text>
               <span class="password-icon" aria-hidden="true">
-                <svg *ngIf="passwordfield.type=='password'" (click)="passwordfield.type='text'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-invisible"></use></svg>
-                <svg *ngIf="passwordfield.type=='text'"     (click)="passwordfield.type='password'" class="icon icon-sm"><use xlink:href="/assets/vendor/sprite.svg#it-password-visible"></use></svg>
+                <svg *ngIf="passwordfield.type=='password'" (click)="passwordfield.type='text'" class="icon icon-sm"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-password-invisible"></use></svg>
+                <svg *ngIf="passwordfield.type=='text'"     (click)="passwordfield.type='password'" class="icon icon-sm"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-password-visible"></use></svg>
               </span>
               <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                 <div *ngIf="f.password.errors.required">{{ 'signin.message.required.password' | translate }}</div>
@@ -41,7 +41,7 @@
         </form>
       </div>
       <div class="card-footer">
-        <button (click)="onSignin()" class="btn btn-primary btn-block" type="submit">{{'signin.title' | translate}}</button>
+        <button (click)="onSignin()" class="btn btn-primary w-100" type="submit">{{'signin.title' | translate}}</button>
       </div>
     </div>
   </div>

@@ -11,7 +11,7 @@ import { Select2Template } from '../../common/template/select2-template';
     selector: 'affix_tabAnagrafica',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">
-        <div class="form-row">
+        <div class="row gx-2">
           <div class="form-group col-md-6">
             <label class="form-label active">{{'label.jconon_application.firstname' | translate}}</label>
             <input class="form-control" type="text" disabled [value]="data.nome" />
@@ -21,7 +21,7 @@ import { Select2Template } from '../../common/template/select2-template';
             <input class="form-control" type="text" disabled [value]="data.cognome" />
           </div>
         </div>
-        <div class="form-row">
+        <div class="row gx-2">
           <div class="form-group col-md-3">
             <app-control-select-model
               [inline]="true"
@@ -79,7 +79,7 @@ import { Select2Template } from '../../common/template/select2-template';
             </app-control-datepicker>
           </div>
         </div>
-        <div class="form-row">
+        <div class="row gx-2">
           <div class="form-group col-md-3">
             <div class="form-check form-check-inline">
               <input formControlName="jconon_application:sesso" type="radio" id="radiomale" value="M">

@@ -32,7 +32,7 @@ import { PrintApplicationComponent } from './print-application.component';
     </div>
     <div *ngIf="isLoaded() && !isEntityError">
       <div class="shadow-none p-3 px-1 py-3 mx-n3" #cardApplication>
-        <div class="text-right">
+        <div class="text-end">
           <span>{{'application.call.title' | translate:{value: call.codice} }}</span>
           <app-show-children-modal 
             [parentId] = "call.objectId" 
@@ -43,18 +43,18 @@ import { PrintApplicationComponent } from './print-application.component';
         <h4 class="text-center">{{ 'application.title' | translate}}</h4>
         <h5 class="text-center" innerHtml="{{translateService.currentLang == 'it'? call.descrizione : call.descrizione_en}}"></h5>
         <h3 *ngIf="entity.stato_domanda != 'I'"> 
-          <span class="badge d-block" [ngClass]="{'badge-warning': entity.isProvvisoria(),'badge-success': entity.isConfermata()}">
+          <span class="badge d-block" [ngClass]="{'bg-warning': entity.isProvvisoria(),'bg-success': entity.isConfermata()}">
           {{'application.state.' + entity.stato_domanda|translate|uppercase}}
           </span>
         </h3>
         <h5 class="text-center">
           <span>{{'application.sottoscritto.' + (entity.sesso || 'M') | translate}}</span>
-          <span class="pl-1">{{entity.cognome|uppercase}}</span>
-          <span class="pl-1">{{entity.nome|uppercase}}</span>
+          <span class="ps-1">{{entity.cognome|uppercase}}</span>
+          <span class="ps-1">{{entity.nome|uppercase}}</span>
         </h5>
         <h5 class="text-center" *ngIf="call.objectTypeId == 'F:jconon_call_employees:folder'">
           <span>{{'user.matricola_value' | translate:{value: user.matricola||''} }}</span>
-          <span class="pl-1">{{'user.email_value' | translate:{value: entity.email_comunicazioni} }}</span>
+          <span class="ps-1">{{'user.email_value' | translate:{value: entity.email_comunicazioni} }}</span>
         </h5>
         <h5 class="text-center" *ngIf="call.objectTypeId != 'F:jconon_call_mobility_open:folder'">
           {{'application.richiesta.partecipazione'| translate}}
@@ -76,7 +76,7 @@ import { PrintApplicationComponent } from './print-application.component';
               <a [ngClass]="{'disabled': (affixCompleted == 0 || !form.pristine) && !isDisableConfirm}" 
                 (click)="affixCompleted = affixCompleted - 1;scroll(cardApplication);" 
                 class="btn btn-link text-primary steppers-btn-prev px-1">
-                <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-left"></use></svg>
+                <svg class="icon icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-left"></use></svg>
                 <span translate>previous</span>
               </a>
               <ul class="steppers-dots d-flex">
@@ -93,42 +93,42 @@ import { PrintApplicationComponent } from './print-application.component';
                 (click)="affixCompleted = affixCompleted + 1;scroll(cardApplication);" 
                 class="btn btn-link text-primary steppers-btn-next px-1">
                 <span translate>next</span>
-                <svg class="icon icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-chevron-right"></use></svg>
+                <svg class="icon icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-right"></use></svg>
               </a>
             </nav>
           </div>
         </div>
         <div class="card-footer rounded-bottom">
           <div class="d-flex justify-content-end">
-            <div class="form-group text-left mr-auto">
+            <div class="form-group text-start me-auto">
               <button 
                 [disabled]="!form.pristine"
                 (click)="deleteApplication($event)" 
-                class="btn btn-outline-danger btn-lg btn-icon mr-2" 
+                class="btn btn-outline-danger btn-lg btn-icon me-2" 
                 tooltip="{{'application.delete'| translate}}">
-                <span class="d-none d-md-block pr-1" translate>application.delete</span>
-                <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-delete"></use></svg>
+                <span class="d-none d-md-block pe-1" translate>application.delete</span>
+                <svg class="icon icon-danger"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-delete"></use></svg>
               </button>
             </div>
-            <div class="form-group text-right">
+            <div class="form-group text-end">
               <button 
                 *ngIf="entity.isProvvisoria()"
                 [disabled]="!form.pristine"
                 (click)="printApplication($event)" 
-                class="btn btn-outline-danger btn-lg btn-icon mr-2" 
+                class="btn btn-outline-danger btn-lg btn-icon me-2" 
                 tooltip="{{'application.print.application'| translate}}">
-                <span class="d-none d-md-block pr-1" translate>application.print.application</span>
-                <svg class="icon icon-danger"><use xlink:href="/assets/vendor/sprite.svg#it-print"></use></svg>
+                <span class="d-none d-md-block pe-1" translate>application.print.application</span>
+                <svg class="icon icon-danger"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-print"></use></svg>
               </button>
             </div>
-            <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-right">  
+            <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-end">  
               <button (click)="sendApplication($event)" 
                 #sendApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
-                class="btn btn-primary btn-block btn-lg btn-icon mr-2 rounded" 
+                class="btn btn-primary w-100 btn-lg btn-icon me-2 rounded" 
                 tooltip="{{'application.send' | translate}}">
-                <span class="pr-1 w-100 text-right" translate>application.send</span>
-                <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-upload"></use></svg>              
+                <span class="pe-1 w-100 text-end" translate>application.send</span>
+                <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-upload"></use></svg>              
                 <div *ngIf="loadingStateSend.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>
                   <div class="progress-spinner-inner"></div>
@@ -136,14 +136,14 @@ import { PrintApplicationComponent } from './print-application.component';
               </button>
               <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
             </div>  
-            <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-right">
+            <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-end">
               <button (click)="confirmApplication($event);"
                 #confirmApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
-                class="btn btn-primary btn-block btn-lg btn-icon rounded" 
+                class="btn btn-primary w-100 btn-lg btn-icon rounded" 
                 tooltip="{{'application.confirm' | translate}}">
-                <span class="pr-1 w-100 text-right" translate>application.confirm</span>
-                <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use xlink:href="/assets/vendor/sprite.svg#it-arrow-right-circle"></use></svg>
+                <span class="pe-1 w-100 text-end" translate>application.confirm</span>
+                <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-arrow-right-circle"></use></svg>
                 <div *ngIf="loadingStateConfirm.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                   <div class="progress-spinner-inner"></div>
                   <div class="progress-spinner-inner"></div>
@@ -416,7 +416,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
         this.form.controls[control].markAsTouched({onlySelf: true});
         this.form.controls[control].patchValue(this.form.controls[control].value || null);
         this.translateService.get('label.'+ control.replace(':', '.')).subscribe((label) => {
-          invalidControls.push('<li class="font-weight-bold pt-2">' + label + '</li>');
+          invalidControls.push('<li class="fw-bold pt-2">' + label + '</li>');
         });
         const invalidControl = this.el.nativeElement.querySelector('input.is-invalid,textarea.invalid,select.is-invalid');
         const invalidFormControl = document.querySelector('[formcontrolname="' + control + '"], .is-invalid');
@@ -433,7 +433,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     if (this.form.invalid) {
         if (invalidControls.length > 3) {
           invalidControls = invalidControls.slice(0, 3);
-          invalidControls.push('<li class="font-weight-bold pt-2">ecc...</li>');
+          invalidControls.push('<li class="fw-bold pt-2">ecc...</li>');
         }
         this.translateService.get('message.form.invalid').subscribe((label) => {
             this.apiMessageService.sendMessage(MessageType.WARNING, label + '<ul class="list-unstyled">' + invalidControls.join('') + '</ul>');

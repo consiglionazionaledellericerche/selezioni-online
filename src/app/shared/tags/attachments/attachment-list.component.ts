@@ -19,8 +19,8 @@ import {ApiMessageService} from '../../../core/api-message.service';
         <span>
           <em> {{ attachmentText() }}</em>
         </span>
-        <button class="btn btn-sm btn-light d-inline-block ml-3"
-                data-toggle="tooltip" data-placement="top" title="Gestisci allegati"
+        <button class="btn btn-sm btn-light d-inline-block ms-3"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="Gestisci allegati"
                 (click)="openModal(template)">
           <i class="fa fa-folder-open-o" aria-hidden="true"></i>
         </button>
@@ -28,15 +28,13 @@ import {ApiMessageService} from '../../../core/api-message.service';
 
       <ng-template #template>
           <div class="modal-header">
-            <h4 class="modal-title pull-left">Gestione allegati per {{ entity.getLabel() }}</h4>
-            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <h4 class="modal-title float-start">Gestione allegati per {{ entity.getLabel() }}</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
           </div>
           <div class="modal-body">
 
             <table class="table table-bordered">
-              <thead class="thead-light">
+              <thead class="table-light">
               <tr class="">
                 <th scope="col">Nome</th>
                 <th scope="col">Descrizione</th>

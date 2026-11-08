@@ -9,11 +9,9 @@ import {Helpers} from '../../../common/helpers/helpers';
      `
     <div class="mb-1 my-form-layout-row" [ngClass]="{ 'row': !inline}" >
       <div class="input-group" [ngClass]="contentClasses()">
-        <div *ngIf="prepend || prependText" class="input-group-prepend" tooltip="{{ ttip | translate }}">
-          <div class="input-group-text" [ngClass]="{ 'text-danger border-danger': isInvalid()}">
-            <i *ngIf="prepend" class="fa fa-{{ prepend }}" aria-hidden="true"></i>
-            {{ prependText }}
-          </div>
+        <div *ngIf="prepend || prependText" class="input-group-text" [ngClass]="{ 'text-danger border-danger': isInvalid()}" tooltip="{{ ttip | translate }}">
+          <i *ngIf="prepend" class="fa fa-{{ prepend }}" aria-hidden="true"></i>
+          {{ prependText }}
         </div>
         <label *ngIf="!noLabel" #label [ngClass]="labelClasses()" placement="right" tooltip="{{getLabelTruncated() | translate}}">{{getLabel() | translate}}</label>
         <ng-content></ng-content>
@@ -27,7 +25,7 @@ import {Helpers} from '../../../common/helpers/helpers';
     </div>
     <div *ngIf="showValidation">
       <div *ngIf=isInvalid() class="text-truncate text-danger">
-          <span *ngFor="let error of hasErrors()" class="pr-1">
+          <span *ngFor="let error of hasErrors()" class="pe-1">
             <small class="align-top">{{ 'message.validation.' + error | translate }}</small>
           </span>
       </div>
@@ -97,7 +95,7 @@ export class FormLayoutComponent {
     return {
       'col-sm-2': !this.inline,
       'col-form-label': !this.inline,
-      'text-sm-right': true,
+      'text-sm-end': true,
       'text-xs-left': true,
       'pt-0' : this.checkbox,
       'active' : this.labelactive,

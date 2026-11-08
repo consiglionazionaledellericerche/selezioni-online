@@ -6,17 +6,15 @@ import {BsModalRef} from 'ngx-bootstrap/modal';
   template: `
 
       <div class="modal-header border-bottom">
-        <h4 class="modal-title pull-left text-primary pb-2" translate><i class="fa fa-info-circle"></i> modal.title.info</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="onClose()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h4 class="modal-title float-start text-primary pb-2" translate><i class="fa fa-info-circle"></i> modal.title.info</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
       </div>
       <div class="modal-body" innerHtml="{{body | translate}}"></div>
       <div class="modal-footer">
         <div class="container">
           <div class="row mt-2">
             <div class="col">
-              <button class="btn btn-outline-primary btn-block"
+              <button class="btn btn-outline-primary w-100"
                       [disabled]="disable"
                       (click)="onClose()">
                 {{'button.ok'|translate}}

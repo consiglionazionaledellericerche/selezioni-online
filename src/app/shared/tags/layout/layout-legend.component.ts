@@ -8,7 +8,7 @@ import {Legend} from '../../../common/model/legend.model';
      `
         <div *ngIf="legend" class="btn-group">
           <div class="magic-menu-container">
-            <i class="fa fa-2x fa-list-ul text-secondary pr-2 pb-1"></i>
+            <i class="fa fa-2x fa-list-ul text-secondary pe-2 pb-1"></i>
 
             <div class="card magic-menu ">
               <div class="container mt-1 mb-1">
@@ -18,7 +18,7 @@ import {Legend} from '../../../common/model/legend.model';
                 </p>
 
               <span *ngFor="let leg of legend" class="d-inline-block mb-2">
-                <span class="mr-2">
+                <span class="me-2">
                   <i class="fa fa-{{ leg.icon }}" aria-hidden="true" [ngStyle]="{'color': leg.entity.colore}"></i>
                   <em>{{ leg.entity.getLabel() }}</em>
                 </span>

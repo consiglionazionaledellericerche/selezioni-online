@@ -21,15 +21,29 @@
             ],
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "node_modules/bootstrap-italia/dist/fonts",
+                "output": "assets/bootstrap-italia/fonts"
+              },
+              {
+                "glob": "sprites.svg",
+                "input": "node_modules/bootstrap-italia/dist/svg",
+                "output": "assets/bootstrap-italia/svg"
+              }
             ],
             "styles": [
               "./node_modules/font-awesome/css/font-awesome.min.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules"
+              ]
+            },
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/select2/dist/js/select2.full.js",
               "node_modules/html2canvas/dist/html2canvas.js"
             ],
@@ -91,17 +105,30 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/select2/dist/js/select2.full.js"
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/font-awesome/css/font-awesome.min.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules"
+              ]
+            },
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "node_modules/bootstrap-italia/dist/fonts",
+                "output": "assets/bootstrap-italia/fonts"
+              },
+              {
+                "glob": "sprites.svg",
+                "input": "node_modules/bootstrap-italia/dist/svg",
+                "output": "assets/bootstrap-italia/svg"
+              }
             ]
           }
         }

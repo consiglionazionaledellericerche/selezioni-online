@@ -22,7 +22,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   `
     <app-layout-title [title]="'application.user.title'" [titleClass]="'main-title'" [collapsediv]="collapse" [isCollapsable]="'true'" (collapseEvent)="collapse = $event"></app-layout-title>
     <form *ngIf="filterForm" class="clearfix" [formGroup]="filterForm" [ngClass]="{'d-none': collapse, 'd-block': !collapse}">
-      <div class="form-row col-md-12">
+      <div class="row gx-2 col-md-12">
         <div class="form-group col-md-4">        
           <app-control-select-model
             [path]="service.getSelect2Mapping()"
@@ -71,7 +71,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
           </app-control-text>
         </div>
       </div>
-      <div class="form-row col-md-12">
+      <div class="row gx-2 col-md-12">
         <div class="form-group col-md-6">        
           <app-control-select-model
             [path]="callService.getSelect2Mapping()"
@@ -87,7 +87,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
         </div>
         <div class="form-group col-md-6">
           <!--Rounded checkbox buttons-->
-          <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="applicationStatus">
+          <div class="btn-group w-100 btn-group-toggle" btnRadioGroup formControlName="applicationStatus">
             <span class="btn btn-primary btn-toggle text-truncate" btnRadio="P" tooltip="{{'application.status.temporary' | translate}}">{{'application.status.temporary' | translate}}</span>
             <span class="btn btn-primary btn-toggle text-truncate" btnRadio="C" tooltip="{{'application.status.confirmed' | translate}}">{{'application.status.confirmed' | translate}}</span>
             <span class="btn btn-primary btn-toggle text-truncate" btnRadio="all" tooltip="{{'application.status.all' | translate}}">{{'application.status.all' | translate}}</span>
@@ -103,7 +103,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
       <li *ngFor="let item of items" [ngClass]="listItemClasses()" class="hover-shadow">
         <app-list-item-application [item]="item" [user]="user">
           <div class="col-sm-12 h5">
-            <span class="badge" [ngClass]="{'badge-warning' : item.isProvvisoria(), 'badge-success' : !item.isProvvisoria()}">
+            <span class="badge" [ngClass]="{'bg-warning' : item.isProvvisoria(), 'bg-success' : !item.isProvvisoria()}">
               <span>{{'application.state.' + item.stato_domanda | translate}}</span>
               <span *ngIf="item.isProvvisoria()">{{'application.date.modified' | translate:{value: item.lastModificationDate| date:'dd/MM/yyyy HH:mm:ss' } }}</span>
               <span *ngIf="!item.isProvvisoria()">{{'application.date.send' | translate:{value: item.data_domanda| date:'dd/MM/yyyy HH:mm:ss' } }}</span>              
@@ -126,8 +126,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
           </div>
           <div class="col-sm-12">
             <ng-template #popTemplate>
-              <h5 class="font-weight-semibold">
-                <svg class="icon icon-secondary"><use xlink:href="/assets/vendor/sprite.svg#it-info-circle"></use></svg> Info
+              <h5 class="fw-semibold">
+                <svg class="icon icon-secondary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg> Info
               </h5>
               <hr>
               <div [innerHtml]="translateService.currentLang == 'it'? item.call.descrizione: item.call.descrizione_en"></div>
@@ -136,8 +136,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
               [label]="'call.codice'" 
               [value]="item.call.codice">
             </app-show-text>
-            <a class="btn btn-sm btn-link p-0 mb-3 ml-n1" [popover]="popTemplate" [outsideClick]="true">
-              <svg class="icon icon-xs icon-primary"><use xlink:href="/assets/vendor/sprite.svg#it-info-circle"></use></svg>
+            <a class="btn btn-sm btn-link p-0 mb-3 ms-n1" [popover]="popTemplate" [outsideClick]="true">
+              <svg class="icon icon-xs icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg>
             </a>
             <app-show-text [label]="'call.numero_gu'" [value]="item.call.numero_gu" [strong]="false"></app-show-text>
             <app-show-text [label]="'call.data_gu'" [value]="item.call.data_gu | date:'dd/MM/yyyy'" [strong]="false"></app-show-text>
@@ -159,7 +159,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
             </app-show-text-modal>
           </div>
           <div class="col-sm-12 h5" *ngIf="item.isShowEsclusioneRiununcia(user)">
-            <span class="badge" [ngClass]="{'badge-warning' : item.isSospesa(), 'badge-danger' : !item.isSospesa()}">
+            <span class="badge" [ngClass]="{'bg-warning' : item.isSospesa(), 'bg-danger' : !item.isSospesa()}">
               <span>{{'application.esclusione.' + item.esclusione_rinuncia | translate}}</span>
             </span>
           </div>

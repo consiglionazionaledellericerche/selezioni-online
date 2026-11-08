@@ -8,10 +8,8 @@ import { DynamicService } from '../../../dynamic/dynamic.service';
     selector: 'show-metadata',
     template: `
       <div class="modal-header">
-          <h4 class="modal-title pull-left text-primary"><i class="fa fa-info-circle"></i> {{'properties' | translate}}</h4>
-          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+          <h4 class="modal-title float-start text-primary"><i class="fa fa-info-circle"></i> {{'properties' | translate}}</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body">
         <ng-template ad-metadata></ng-template>

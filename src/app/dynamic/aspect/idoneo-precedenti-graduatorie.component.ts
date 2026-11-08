@@ -16,7 +16,7 @@ import { Application } from '../../core/application/application.model';
             [label]="'label.jconon_application.fl_idoneo_precedenti_graduatorie' | translate" 
             formControlName="jconon_application:fl_idoneo_precedenti_graduatorie">
           </app-control-toggle>            
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [focus]="!form.pristine"
@@ -27,7 +27,7 @@ import { Application } from '../../core/application/application.model';
               </app-control-text>
             </div>
           </div>  
-          <div *ngSwitchCase="true" class="form-row w-100 pt-1">
+          <div *ngSwitchCase="true" class="row gx-2 w-100 pt-1">
             <div class="form-group col-md-4">
               <app-control-text 
                 [showValidation]="true"

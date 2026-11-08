@@ -16,7 +16,7 @@ import {DomSanitizer} from '@angular/platform-browser';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template:
      `
-     <td class="pl-2" *ngFor="let key of keys">
+     <td class="ps-2" *ngFor="let key of keys">
 
        <!-- print value -->
 

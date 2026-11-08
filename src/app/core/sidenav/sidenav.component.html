@@ -5,19 +5,19 @@
                 <div class="d-flex border-bottom border-light">
                     <div>
                         <div class="avatar avatar-primary size-lg">
-                            <p aria-hidden="true" class="text-monospace">{{user.firstName|firstLetter}}{{user.lastName|firstLetter}}</p>
-                            <span class="sr-only">{{user.firstName|capitalizeFirst}} {{user.lastName|capitalizeFirst}}</span>
+                            <p aria-hidden="true" class="font-monospace">{{user.firstName|firstLetter}}{{user.lastName|firstLetter}}</p>
+                            <span class="visually-hidden">{{user.firstName|capitalizeFirst}} {{user.lastName|capitalizeFirst}}</span>
                         </div>
                     </div>
                     <div class="h4">
-                        <span class="pl-1">{{user.firstName|capitalizeFirst}}</span>
-                        <span class="pl-1">{{user.lastName|capitalizeFirst}}</span>
+                        <span class="ps-1">{{user.firstName|capitalizeFirst}}</span>
+                        <span class="ps-1">{{user.lastName|capitalizeFirst}}</span>
                     </div>
-                    <div class="ml-auto">
+                    <div class="ms-auto">
                         <a class="btn btn-link p-0" (click)="hide()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
-                                    <use xlink:href="/assets/vendor/sprite.svg#it-close-big"></use>
+                                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-close-big"></use>
                                 </svg>
                             </span>    
                         </a>
@@ -25,20 +25,20 @@
                 </div>
                 <div>    
                     <div>
-                        <small class="pl-1">{{'user.username' | translate }}:</small>
-                        <small class="pl-1 font-weight-bold">{{user.userName}}</small>
+                        <small class="ps-1">{{'user.username' | translate }}:</small>
+                        <small class="ps-1 fw-bold">{{user.userName}}</small>
                     </div>
                     <div>
-                        <small class="pl-1">{{'user.email' | translate }}:</small>
-                        <small class="pl-1 font-weight-bold">{{user.getEmail()}}</small>
+                        <small class="ps-1">{{'user.email' | translate }}:</small>
+                        <small class="ps-1 fw-bold">{{user.getEmail()}}</small>
                     </div>    
                 </div>
-                <div class="d-flex no-gutters">
+                <div class="d-flex g-0">
                     <div>
                         <a class="btn btn-link" [routerLink]="['/create-account']" (click)="hide()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
-                                    <use xlink:href="/assets/vendor/sprite.svg#it-settings"></use>
+                                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-settings"></use>
                                 </svg>
                             </span>    
                             <span>{{'user.settings'|translate}}</span> 
@@ -48,7 +48,7 @@
                         <a class="btn btn-link" [routerLink]="['/']" (click)="onLogout()">
                             <span class="rounded-icon">
                                 <svg class="icon icon-primary">
-                                    <use xlink:href="/assets/vendor/sprite.svg#it-close-circle"></use>
+                                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-close-circle"></use>
                                 </svg>
                             </span>    
                             <span>{{'user.logout'|translate}}</span>
@@ -57,7 +57,7 @@
                 </div>
             </li>
             <li class="list-group-item d-block d-lg-none d-xl-none">
-                <form class="form-inline d-block" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
+                <form class="d-block" [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
                     <div class="input-group">
                         <input class="form-control col-12" formControlName="callCode" type="search" placeholder="{{'search'|translate}}">
                         <div class="input-group-append">
@@ -71,16 +71,16 @@
             <ng-container *ngIf="applicationsState && applicationsState.length > 0">
                 <li class="list-group-item">
                     <ul class="list-group list-group-flush">
-                        <h6 class="font-weight-light font-italic">{{'application.all'| translate}}</h6>
+                        <h6 class="fw-light fst-italic">{{'application.all'| translate}}</h6>
                         <ng-container *ngFor="let state of applicationsState">
                             <li class="list-group-item border-bottom-0 p-1">                         
                                 <a class="h6" [routerLink]="['/my-applications']" [queryParams]="{applicationStatus: state.getFilterStato()}" routerLinkActive="active" (click)="hide()">
                                     <span>{{ state.getLabel() | translate}}</span> 
-                                    <span class="badge badge-pill float-right" 
+                                    <span class="badge rounded-pill float-end" 
                                         [ngClass]="{
-                                            'badge-danger': state.isEsclusa(), 
-                                            'badge-warning': state.isProvvisoria(),
-                                            'badge-success': state.isConfermata()
+                                            'bg-danger': state.isEsclusa(), 
+                                            'bg-warning': state.isProvvisoria(),
+                                            'bg-success': state.isConfermata()
                                         }">{{state.count}}</span>
                                 </a>
                             </li>
@@ -98,12 +98,12 @@
                     <ng-container *ngIf="menu.active && menu.items && menu.isSidebar()">
                             <accordion-group #accordionGroup panelClass="border border-light no-after mt-n1">
                                 <div class="d-flex align-items-start" accordion-heading>
-                                    <a class="font-weight-bold font-italic">{{menu.name| translate}}</a>
-                                    <div class="p-1 ml-auto">
-                                        <div class="float-right pull-right">
+                                    <a class="fw-bold fst-italic">{{menu.name| translate}}</a>
+                                    <div class="p-1 ms-auto">
+                                        <div class="float-end float-end">
                                             <svg class="icon icon-primary">
-                                            <use *ngIf="!accordionGroup.isOpen" xlink:href="/assets/vendor/sprite.svg#it-expand"></use>
-                                            <use *ngIf="accordionGroup.isOpen" xlink:href="/assets/vendor/sprite.svg#it-collapse"></use>
+                                            <use *ngIf="!accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
+                                            <use *ngIf="accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-collapse"></use>
                                             </svg>
                                         </div>                
                                     </div>                          

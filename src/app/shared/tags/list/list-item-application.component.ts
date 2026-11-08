@@ -19,14 +19,14 @@ import { BsModalService } from 'ngx-bootstrap/modal';
                 <a *ngIf="(isActive && isDomandaProvvisoria) || user.capabilities.isAdmin" class="btn btn-link p-1" href="javascript:"
                   (click)="newApplication()" tooltip="{{'application.edit' | translate}}">
                   <svg class="icon icon-primary">
-                    <use xlink:href="/assets/vendor/sprite.svg#it-pencil"></use>
+                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-pencil"></use>
                   </svg>
                   <span class="d-none d-md-inline-block">{{'application.edit' | translate}}</span>
                 </a>
                 <a *ngIf="isActive && isDomandaConfermata" class="btn btn-link p-1" href="javascript:"
                   (click)="reopenApplication()" tooltip="{{'application.reopen' | translate}}">
                   <svg class="icon icon-primary">
-                    <use xlink:href="/assets/vendor/sprite.svg#it-exchange-circle"></use>
+                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-exchange-circle"></use>
                   </svg>
                   <span class="d-none d-md-inline-block">{{'application.reopen' | translate}}</span>
                 </a>
@@ -42,10 +42,10 @@ import { BsModalService } from 'ngx-bootstrap/modal';
                   aria-controls="button-animated" 
                   tooltip="{{'more.actions' | translate}}">
                   <svg class="icon">
-                    <use xlink:href="/assets/vendor/sprite.svg#it-more-items"></use>
+                    <use href="/assets/bootstrap-italia/svg/sprites.svg#it-more-items"></use>
                   </svg>
                 </button>
-                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right border" role="menu" aria-labelledby="button-animated">
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-end border" role="menu" aria-labelledby="button-animated">
                     <li role="menuitem"><a class="dropdown-item" href="javascript:" (click)="printApplication()" translate>application.print.application</a></li>
                     <li role="menuitem"><a class="dropdown-item" href="javascript:" (click)="copyApplication()" translate>application.copy</a></li>
                     <li class="divider dropdown-divider"></li>

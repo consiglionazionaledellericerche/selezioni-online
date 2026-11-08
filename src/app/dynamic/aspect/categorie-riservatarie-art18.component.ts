@@ -15,7 +15,7 @@ import { Application } from '../../core/application/application.model';
             [label]="'label.jconon_application.fl_categorie_riservatarie_art18' | translate" 
             formControlName="jconon_application:fl_categorie_riservatarie_art18">
           </app-control-toggle>
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"

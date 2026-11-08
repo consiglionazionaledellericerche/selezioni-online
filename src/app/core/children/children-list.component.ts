@@ -28,16 +28,16 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
                      [count]="count" [page_offset]="service.getPageOffset()" (onChangePage)="onChangePage($event)">
       <li *ngFor="let item of items" [ngClass]="listItemClasses()">
         <app-list-item-document [item]="item" (onDelete)="onDelete(item)" (onEdit)="onEdit(item)">
-          <div class="col-sm-12 font-weight-bolder"> 
+          <div class="col-sm-12 fw-bolder"> 
             <button 
-              class="btn btn-link pl-0 pb-0 text-truncate"
+              class="btn btn-link ps-0 pb-0 text-truncate"
               (click)="getBlob(item.objectId, item.name)">
               <i class="fa fa-fw {{ item.getMimeTypeIcon() }}"></i> {{ item.name }}
             </button>
           </div>
           <div class="col-sm-12 pt-1">{{item.objectTypeId | translate}}</div> 
           <div class="col-sm-12 pt-1">
-            <span class="font-weight-bold">{{item.getFileSize()}}</span>
+            <span class="fw-bold">{{item.getFileSize()}}</span>
             <span *ngIf="show_date">{{'document.last_modified'| translate:{value: item.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</span>
           </div> 
         </app-list-item-document>

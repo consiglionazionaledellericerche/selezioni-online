@@ -26,9 +26,9 @@ import {PageChangedEvent} from 'ngx-bootstrap/pagination';
           </div>
           <div class="col-md-6">
             <!-- Recap -->
-            <div *ngIf="count > 0" class="d-inline-block float-right" [ngClass]="{'mt-3': showPage && count > page_offset}">
+            <div *ngIf="count > 0" class="d-inline-block float-end" [ngClass]="{'mt-3': showPage && count > page_offset}">
               <small>
-              {{ 'present' | translate }} <span class="font-weight-bold">{{ count }}</span> {{ 'occurrences' | translate }}.
+              {{ 'present' | translate }} <span class="fw-bold">{{ count }}</span> {{ 'occurrences' | translate }}.
                   {{ 'shown_from' | translate }} {{ showFrom() }} {{ 'shown_to' | translate }} {{ showTo() }}.
               </small>
             </div>

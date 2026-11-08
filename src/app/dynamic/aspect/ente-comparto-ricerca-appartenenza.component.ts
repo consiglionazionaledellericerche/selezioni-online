@@ -19,7 +19,7 @@ import { Select2Template } from '../../common/template/select2-template';
             [label]="'label.jconon_application.fl_ente_comparto_ricerca_appartenenza' | translate" 
             formControlName="jconon_application:fl_ente_comparto_ricerca_appartenenza">
           </app-control-toggle>            
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-12">
               <app-control-text 
                 [showValidation]="true"
@@ -30,7 +30,7 @@ import { Select2Template } from '../../common/template/select2-template';
               </app-control-text>
             </div>
           </div>  
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div [hidden]="!isToggle()" class="form-group col-md-5">
               <app-control-select-model
                 [term]="''"
@@ -71,7 +71,7 @@ import { Select2Template } from '../../common/template/select2-template';
               </app-control-select-model>          
             </div>
           </div>
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div *ngSwitchCase="true" class="form-group col-md-4">
               <app-control-datepicker 
                 [showValidation]="true"

@@ -1,10 +1,10 @@
 <app-layout-title [title]="'call.search.title'" [titleClass]="'main-title'" [collapsediv]="collapse" [isCollapsable]="'true'" (collapseEvent)="collapse = $event"></app-layout-title>
 <app-list-header-layout>
     <form *ngIf="filterFormSearch" class="clearfix" [formGroup]="filterFormSearch" [ngClass]="{'d-none': collapse, 'd-block': !collapse}">
-        <div class="form-row col-md-12">
+        <div class="row gx-2 col-md-12">
             <div class="form-group col-md-4">
                 <app-control-select-model
-                    class="pr-1"
+                    class="pe-1"
                     [inline]="true"
                     [types]="cache.jsonlistCallType"
                     [showValidation]="false"
@@ -17,7 +17,7 @@
             </div>
             <div class="form-group col-md-4">
                 <!--Rounded checkbox buttons-->
-                <div class="btn-group btn-block btn-group-toggle" btnRadioGroup formControlName="filterType">
+                <div class="btn-group w-100 btn-group-toggle" btnRadioGroup formControlName="filterType">
                     <span class="btn btn-primary btn-toggle text-truncate" tooltip="{{'call.attivi' | translate}}" btnRadio="active">{{'call.attivi' | translate}}</span>
                     <span class="btn btn-primary btn-toggle text-truncate" tooltip="{{'call.scaduti' | translate}}" btnRadio="expire">{{'call.scaduti' | translate}}</span>
                     <span class="btn btn-primary btn-toggle text-truncate" tooltip="{{'call.tutti' | translate}}" btnRadio="all">{{'call.tutti' | translate}}</span>
@@ -26,7 +26,7 @@
             <div class="form-group col-md-4">
                 <app-control-text 
                     formControlName="callCode"
-                    class="pr-1"
+                    class="pe-1"
                     [inline]="true"
                     type="search"
                     [showValidation]="false"
@@ -35,10 +35,10 @@
                 </app-control-text>
             </div>    
         </div>
-        <div class="form-row col-md-12">
+        <div class="row gx-2 col-md-12">
             <div class="form-group col-md-2">
                 <app-control-datepicker
-                    class="pr-1"
+                    class="pe-1"
                     type="search"
                     [inline]="true" 
                     [showValidation]="false"
@@ -48,7 +48,7 @@
             </div>
             <div class="form-group col-md-2">
                 <app-control-datepicker
-                    class="pr-1"
+                    class="pe-1"
                     type="search"
                     [inline]="true" 
                     [showValidation]="false"
@@ -58,7 +58,7 @@
             </div>
             <div class="form-group col-md-8">
                 <app-control-select-model
-                    class="pr-1"
+                    class="pe-1"
                     [inline]="true"
                     [noLabel]="true"
                     [enums]="profiles"
@@ -70,7 +70,7 @@
                 </app-control-select-model>
             </div>
         </div>
-        <div class="form-row col-md-12">
+        <div class="row gx-2 col-md-12">
             <div class="form-group col-md-2">
                 <app-control-text 
                     formControlName="gazzetteNumber"
@@ -101,7 +101,7 @@
                 </app-control-text>
             </div>    
         </div>
-        <div class="form-row col-md-12">        
+        <div class="row gx-2 col-md-12">        
             <div class="form-group col-md-6">        
                 <app-control-text 
                     formControlName="struttura"

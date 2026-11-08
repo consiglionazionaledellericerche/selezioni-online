@@ -16,7 +16,7 @@ import { Application } from '../../core/application/application.model';
             [label]="'label.jconon_application.fl_patente_guida' | translate" 
             formControlName="jconon_application:fl_patente_guida">
           </app-control-toggle>  
-          <div class="form-row w-100 pt-1">
+          <div class="row gx-2 w-100 pt-1">
             <div [hidden]="!isToggle()" class="form-group col-md-6">
               <app-control-select-model
                 [inline]="true"

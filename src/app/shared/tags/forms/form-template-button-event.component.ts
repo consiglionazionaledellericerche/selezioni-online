@@ -23,7 +23,7 @@ import {FormCommonTag} from './form-common-tag';
               [showValidation]="showValidation"
       >
 
-        <div class="container ml-0 pl-0 mr-0 pr-0 pt-2">
+        <div class="container ms-0 ps-0 me-0 pe-0 pt-2">
 
           <span *ngIf="!multiple" class="btn btn-sm bg-white border-secondary"
                 (click)="buttonClick.emit()"
@@ -44,25 +44,25 @@ import {FormCommonTag} from './form-common-tag';
 
 
 
-          <span class="pl-1 text-secondary" *ngIf="!valueSelected()">
+          <span class="ps-1 text-secondary" *ngIf="!valueSelected()">
             {{ placeholder }}
           </span>
 
-          <div class="pl-1 d-inline-block" *ngIf="!multiple && valueSelected()" [innerHtml]="template(selected)">
+          <div class="ps-1 d-inline-block" *ngIf="!multiple && valueSelected()" [innerHtml]="template(selected)">
 
             <!--{{ selected.getLabel() }}-->
           </div>
 
           <div *ngIf="showList()" class="col-12 p-0 mt-0">
             <ul class="list-group">
-              <li *ngFor="let s of selected" class="list-group-item pt-1 pb-1 pr-1">
+              <li *ngFor="let s of selected" class="list-group-item pt-1 pb-1 pe-1">
                 <div class="d-flex">
                   <div *ngIf="template" [innerHtml]=template(s)></div>
                   <div *ngIf="!template">
                     {{ s.getLabel() }}
                   </div>
-                  <div class="ml-auto">
-                    <button type="button" class="btn btn-outline-secondary btn-sm pt-0 pb-0 pl-1 pr-1"
+                  <div class="ms-auto">
+                    <button type="button" class="btn btn-outline-secondary btn-sm pt-0 pb-0 ps-1 pe-1"
                             (click)="unselect(s)"
                     >
                       <i class="fa fa-times"></i>

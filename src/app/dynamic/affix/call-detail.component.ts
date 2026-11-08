@@ -13,7 +13,7 @@ import { Sede } from '../../common/model/sede.model';
     selector: 'affix_tabCallDetail',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">
-        <div class="form-row pb-2">
+        <div class="row gx-2 pb-2">
           <div class="form-group col-md-4">
             <app-control-text 
               type="text" 
@@ -39,7 +39,7 @@ import { Sede } from '../../common/model/sede.model';
             </app-control-toggle>
           </div>
         </div>
-        <div class="form-row pb-2">
+        <div class="row gx-2 pb-2">
           <div class="form-group col-md-6">
             <app-control-ckeditor 
               type="text" 
@@ -73,7 +73,7 @@ import { Sede } from '../../common/model/sede.model';
             </app-control-ckeditor>
           </div>
         </div>
-        <div class="form-row pb-2">
+        <div class="row gx-2 pb-2">
           <div *ngIf="!data.isDirector()" class="form-group col-md-4">
             <app-control-select-model
               [inline]="true"
@@ -136,7 +136,7 @@ import { Sede } from '../../common/model/sede.model';
             </app-control-select-model>
           </div>          
         </div>
-        <div class="form-row pb-2">
+        <div class="row gx-2 pb-2">
           <div class="form-group col-md-6">
             <app-control-select-model
               [inline]="true"
@@ -168,7 +168,7 @@ import { Sede } from '../../common/model/sede.model';
             </app-control-text>
           </div>
         </div>
-        <div class="form-row pb-2">
+        <div class="row gx-2 pb-2">
           <div class="form-group" [ngClass]="{'col-md-12': !isEnglishCallToggle(), 'col-md-6': isEnglishCallToggle()}">
             <app-control-ckeditor 
               type="text" 
@@ -186,7 +186,7 @@ import { Sede } from '../../common/model/sede.model';
             </app-control-ckeditor>
           </div>
         </div>
-        <div class="form-row pb-2">
+        <div class="row gx-2 pb-2">
           <div class="form-group col-md-12 col-lg-6 col-xl-4">
             <app-control-datepicker
                 type="text"

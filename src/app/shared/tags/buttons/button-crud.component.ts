@@ -11,7 +11,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
         <app-button-delete *ngIf="showDelete()"
           [entity]="entity"
           [showLabel]="true"
-          [classes]="{ 'float-right': true}"
+          [classes]="{ 'float-end': true}"
           (confirm)="onDelete()"
         ></app-button-delete>
 
