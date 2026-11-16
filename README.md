@@ -1,33 +1,92 @@
-# Selezioni on-line
+# Selezioni Online
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.2.
+Public web frontend for the online public-competition (*selezioni*) platform of CNR – Consiglio Nazionale delle Ricerche. It lets candidates browse open calls, sign in, submit and manage applications, and lets administrators and call managers configure and handle calls, applications, communications and exports.
 
-## Development server
+The application is a single-page app that talks to the [cool-jconon](https://github.com/consiglionazionaledellericerche/cool-jconon) backend through its REST/OpenAPI endpoints and authenticates through OpenID Connect (Keycloak SSO).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Tech stack
 
-## Code scaffolding
+- Angular 21 (standalone components, `inject()`, built-in control flow), TypeScript 5.9
+- Angular application builder (`@angular/build:application`)
+- [Bootstrap Italia](https://italia.github.io/bootstrap-italia/) and `design-angular-kit` for the UI
+- `angular-auth-oidc-client` for OpenID Connect authentication
+- `@ngx-translate` for i18n (Italian and English)
+- `ngx-quill` for rich-text editing
+- Docker / docker-compose for deployment
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Requirements
 
-## Build
+- Node.js 20.19+ or 22.12+ (required by Angular 21) and npm
+- A running cool-jconon backend (default: `http://localhost:8080`, or `http://localhost:5555` through the dev proxy)
+- An OpenID Connect provider (Keycloak) reachable by the browser
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Getting started
 
-## Running unit tests
+```bash
+git clone git@github.com:consiglionazionaledellericerche/selezioni-online.git
+cd selezioni-online
+npm install
+npm start
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`npm start` runs `ng serve` on `http://localhost:4200` with live reload.
 
-## Running end-to-end tests
+### Backend proxy
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+`proxy.conf.json` forwards `/openapi`, `/rest`, `/security` and `/sso` to `http://localhost:5555`. To use it, start the dev server with:
 
-## Further help
+```bash
+npx ng serve --proxy-config proxy.conf.json
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Adjust the `target` values to point to your backend.
 
-## Livereload not working on Linux
+## Configuration
 
-https://stackoverflow.com/questions/40366212/angular-cli-ng-serve-livereload-not-working
-sudo sysctl fs.inotify.max_user_watches=524288
-sudo sysctl -p --system
+Runtime settings are read from `window["env"]`, defined in [`src/assets/env.js`](src/assets/env.js), so they can be changed without rebuilding:
+
+| Key | Description | Default (development) |
+|-----|-------------|-----------------------|
+| `apiUrl` | Base URL of the cool-jconon backend | `http://localhost:8080` |
+| `production` | Production mode flag | `false` |
+| `oidc.enable` | Enable OpenID Connect login (`"true"`/`"false"`) | `"true"` |
+| `oidc.authority` | OIDC issuer / realm URL | `https://sso.test.si.cnr.it/auth/realms/cnr` |
+| `oidc.redirectUrl` | Redirect URI after login | `http://localhost:4200/auth/signin` |
+| `oidc.clientId` | OIDC client id | `angular-public` |
+
+When running in Docker, `API_URL` and `OIDC_ENABLE` are provided as environment variables (see `docker-compose.yml.tpl`).
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm start` | Development server on port 4200 |
+| `npm run build` | Production build into `dist/` |
+| `npm test` | Unit tests (Karma/Jasmine) |
+| `npm run e2e` | End-to-end tests |
+
+## Deployment
+
+`docker-compose.yml.tpl` is the deployment template used by the CI/CD pipeline: it injects the image name and service metadata, and sets `API_URL` and `OIDC_ENABLE` for the target environment.
+
+## Project structure
+
+```
+src/app/
+├── +admin/           Administration (users, groups, RBAC, cache, views, JS console)
+├── +configurazione/  Configuration area (FAQ, helpdesk, contacts)
+├── auth/             Sign-in, user profile and guards
+├── common/           Shared controllers, services, helpers
+├── core/             Calls, applications, documents, home, search
+├── dynamic/          Dynamic form components
+├── layout/           Header, footer, notifications
+└── shared/           Reusable UI components and pipes
+```
+
+## Contributing
+
+Issues and pull requests are welcome. Please open an issue to discuss significant changes first.
+
+## License
+
+Released under the [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html).
