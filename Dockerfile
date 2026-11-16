@@ -19,7 +19,7 @@ RUN npx ng build --configuration production --aot --output-hashing=all
 
 ### STAGE 2: Setup ###
 
-FROM nginx:alpine
+FROM nginx:1.27-alpine
 
 ## Copy our default nginx config
 COPY nginx/default.conf /etc/nginx/conf.d/
