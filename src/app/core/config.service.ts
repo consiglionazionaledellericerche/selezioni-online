@@ -20,7 +20,8 @@ export class ConfigService implements TranslateLoader{
   public static URL_OAUTH_LOGIN = '/security/login';
   public static URL_OAUTH_LOGOUT = '/security/logout';
 
-  public static URL_SSO_LOGIN = '/sso/login';
+  // accesso SSO: GET con il token OIDC nell'intestazione Authorization (SSOSecurityController del backend)
+  public static URL_SSO_LOGIN = '/openapi/security/sso/login';
 
   public static URL_VALIDATE_TICKET = '/security/validate';
 

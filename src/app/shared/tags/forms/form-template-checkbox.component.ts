@@ -15,6 +15,7 @@ import {FormCommonTag} from './form-common-tag';
  * https://stackoverflow.com/questions/48176172/angular-click-not-working-after-ngfor-backing-array-updated
  */
 @Component({
+  standalone: false,
   selector: 'app-control-checkbox',
   template:
      `

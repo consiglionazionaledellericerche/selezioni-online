@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Breadcrumbs} from '../../../common/model/breadcrumbs.model';
 
 @Component({
+  standalone: false,
   selector: 'app-layout-breadcrumbs',
   template: `
       <nav *ngIf="breadcrumbs" aria-label="breadcrumb">

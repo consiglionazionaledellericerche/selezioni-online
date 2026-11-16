@@ -1,0 +1,88 @@
+<it-header
+  [loginStyle]="'none'"
+  [showSearch]="false"
+  [sticky]="true"
+  [slimTitle]="'header.company.title' | translate"
+  [slimTitleLink]="'header.company.url' | translate">
+  <ul class="link-list" slimLinkList>
+    @for (menu of support; track menu.path) {
+      <li><a class="list-item" [routerLink]="[menu.path]">{{ menu.name | translate }}</a></li>
+    }
+  </ul>
+  <ng-container slimRightZone>
+    <it-dropdown mode="button" color="primary" class="ms-2">
+      <span button class="text-uppercase">{{ lang }}</span>
+      <ng-container list>
+        <li><button type="button" class="dropdown-item list-item" (click)="language('it')"><span>Italiano</span></button></li>
+        <li><button type="button" class="dropdown-item list-item" (click)="language('en')"><span>English</span></button></li>
+      </ng-container>
+    </it-dropdown>
+    @if (user) {
+      <button type="button" class="btn btn-primary btn-full btn-icon user-button ms-2" (click)="panelOpen = true"
+              [attr.aria-expanded]="panelOpen" aria-haspopup="dialog">
+        <span class="rounded-icon"><it-icon name="user" color="primary"></it-icon></span>
+        <span class="d-none d-lg-block">{{ user.firstName }} {{ user.lastName }}</span>
+        <it-icon name="expand" color="light" size="sm" class="d-none d-lg-block ms-1"></it-icon>
+      </button>
+    } @else {
+      <a class="btn btn-primary btn-full btn-icon" routerLink="/auth/signin">
+        <span class="rounded-icon"><it-icon name="user" color="primary"></it-icon></span>
+        <span class="d-none d-lg-block">{{ 'signin.title' | translate }}</span>
+      </a>
+    }
+  </ng-container>
+  <ng-container brand>
+    <a routerLink="/" (click)="closeMenu()">
+      <div class="it-brand-text d-flex align-items-center">
+        <img class="brand-logo" src="assets/images/logo_cnr.png" alt="">
+        <div class="it-brand-text">
+          <div class="it-brand-title">{{ 'header.title' | translate }}</div>
+          <div class="it-brand-tagline d-none d-md-block">{{ 'header.subtitle' | translate }}</div>
+        </div>
+      </div>
+    </a>
+  </ng-container>
+  <div class="d-flex align-items-center" rightZone>
+    <div class="it-search-wrapper">
+      <span class="d-none d-md-block h6 mb-0">{{ 'layout.search_calls' | translate }}</span>
+      <a class="search-link rounded-icon" [attr.aria-label]="'layout.search_calls' | translate" routerLink="/search">
+        <it-icon name="search" color="primary"></it-icon>
+      </a>
+    </div>
+  </div>
+  <ng-container navItems>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">
+        <span>{{ 'layout.home' | translate }}</span>
+      </a>
+    </li>
+    @for (menu of links; track menu.path) {
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="[menu.path]" routerLinkActive="active" (click)="closeMenu()">
+          <span>{{ menu.name | translate }}</span>
+        </a>
+      </li>
+    }
+    @for (menu of dropdowns; track menu.name) {
+      <li class="nav-item">
+        <it-dropdown mode="nav">
+          <span button>{{ menu.name | translate }}</span>
+          <ng-container list>
+            @for (item of menu.items; track item.name) {
+              @if (item.active) {
+                <li>
+                  <a class="dropdown-item list-item" [routerLink]="[item.path]" [queryParams]="item.queryParams" (click)="closeMenu()">
+                    <span>{{ item.name | translate }}</span>
+                  </a>
+                </li>
+              }
+            }
+          </ng-container>
+        </it-dropdown>
+      </li>
+    }
+  </ng-container>
+</it-header>
+<app-toasts></app-toasts>
+<app-user-panel [open]="panelOpen" [user]="user" [navbarMenu]="navbarMenu"
+  (close)="panelOpen = false" (logout)="panelOpen = false; logout()"></app-user-panel>

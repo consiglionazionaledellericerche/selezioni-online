@@ -1,10 +1,11 @@
 
-import { throwError as observableThrowError, of as observableOf, Subject, Observable } from 'rxjs';
+import { throwError as observableThrowError, of as observableOf, Subject, Observable, forkJoin } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { Injectable, Injector } from '@angular/core';
 import { Menu } from './model/menu.model';
 import { NavbarMenu } from './model/navbar-menu.model';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { AuthService } from '../../auth/auth.service';
 import { ConfigService } from '../config.service';
 import { ApiMessageService, MessageType } from '../api-message.service';
 import { CacheService } from '../cache.service';
@@ -49,8 +50,14 @@ export class MenuService {
       });
       const callMenu = new Menu('call.manage', undefined, callMenuItems, undefined, 'sidebar');
       var adminMenuItems : MenuItem[] = [];
-      adminMenuItems.push(new MenuItem('menu.groups', undefined, '/groups', 'menu.groups', 'GET', 'groups'));
-      adminMenuItems.push(new MenuItem('menu.jsConsole', undefined, '/jsConsole', 'menu.jsConsole', 'GET', 'jsConsole'));
+      // Le voci sono visibili in base agli id RBAC gia' definiti per le pagine legacy.
+      adminMenuItems.push(new MenuItem('menu.groups', undefined, '/admin/groups', 'menu.groups', 'GET', 'groups'));
+      adminMenuItems.push(new MenuItem('menu.gestori', undefined, '/admin/gestori', 'menu.gestori', 'GET', 'gestori'));
+      adminMenuItems.push(new MenuItem('menu.users', undefined, '/admin/users', 'menu.users', 'GET', 'gestione-utenti'));
+      adminMenuItems.push(new MenuItem('menu.rbac', undefined, '/admin/rbac', 'menu.rbac', 'GET', 'rbac-admin'));
+      adminMenuItems.push(new MenuItem('menu.cache', undefined, '/admin/cache', 'menu.cache', 'GET', 'rbac-admin'));
+      adminMenuItems.push(new MenuItem('menu.views', undefined, '/admin/views', 'menu.views', 'GET', 'rbac-admin'));
+      adminMenuItems.push(new MenuItem('menu.jsConsole', undefined, '/admin/js-console', 'menu.jsConsole', 'GET', 'jsConsole'));
       const adminMenu = new Menu('menu.admin', undefined, adminMenuItems, undefined, 'sidebar');
 
       return observableOf(new NavbarMenu([application, application_user, helpdesk, faq, contacts, callMenu, adminMenu]));
@@ -72,23 +79,37 @@ export class MenuService {
   }
 
   private executePermittedPaths() {
+    // AuthService letto dall'injector per evitare dipendenze circolari
+    const authService = this.injector.get(AuthService);
+    const user: any = authService.isAuthenticated() ? authService.getUser() : null;
+    if (user && user.capabilities && user.capabilities.isAdmin) {
+      this.navbarMenu.activateAll();
+      this.navbarEvaluated.next(this.navbarMenu);
+      return;
+    }
     this.getPermittedPaths(this.navbarMenu.getPaths(this.injector)).subscribe(permittedPaths => {
       this.navbarMenu.evaluate(permittedPaths);
       this.navbarEvaluated.next(this.navbarMenu);
-    });  
+    }, () => {
+      // anche senza permessi il menu va mostrato (voci pubbliche)
+      this.navbarMenu.evaluate([]);
+      this.navbarEvaluated.next(this.navbarMenu);
+    });
   }
 
+  /**
+   * Controllo multiplo (POST /v1/pcheck); se non disponibile si ripiega sul controllo singolo (GET).
+   */
   private getPermittedPaths(paths: any[]): Observable<string[]> {
     return this.configService.getApiBase().pipe(switchMap((apiBase) => {
       return this.httpClient.post<string[]>(apiBase + '/v1/pcheck', paths).pipe(
-        map((result) => {
-          return result;
-        }),catchError((httpErrorResponse: HttpErrorResponse) => {
-          this.apiMessageService.sendMessage(MessageType.ERROR, 'Il servizio è momentaneamente non disponibile.' +
-            ' Riprovare fra alcuni secondi.');
-          return observableThrowError(null);
-        }),);
-
+        catchError(() => forkJoin(paths.map(p => this.httpClient.get<boolean>(apiBase + '/v1/pcheck', {
+            params: new HttpParams().set('path', p.path).set('method', p.method || 'GET')
+          }).pipe(
+            map(allowed => allowed ? p.path : null),
+            catchError(() => observableOf(null))
+          ))).pipe(map(result => result.filter(path => !!path))))
+      );
     }));
   }
 

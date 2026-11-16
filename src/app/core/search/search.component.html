@@ -1,128 +1,95 @@
-<app-layout-title [title]="'call.search.title'" [titleClass]="'main-title'" [collapsediv]="collapse" [isCollapsable]="'true'" (collapseEvent)="collapse = $event"></app-layout-title>
-<app-list-header-layout>
-    <form *ngIf="filterFormSearch" class="clearfix" [formGroup]="filterFormSearch" [ngClass]="{'d-none': collapse, 'd-block': !collapse}">
-        <div class="row gx-2 col-md-12">
-            <div class="form-group col-md-4">
-                <app-control-select-model
-                    class="pe-1"
-                    [inline]="true"
-                    [types]="cache.jsonlistCallType"
-                    [showValidation]="false"
-                    [noLabel]="true"
-                    [allowClear]="true"
-                    [placeholder]="'call.search.type'| translate"
-                    [ttip]="'call.search.type'| translate"
-                    formControlName="type">
-                </app-control-select-model>
-            </div>
-            <div class="form-group col-md-4">
-                <!--Rounded checkbox buttons-->
-                <div class="btn-group w-100 btn-group-toggle" btnRadioGroup formControlName="filterType">
-                    <span class="btn btn-primary btn-toggle text-truncate" tooltip="{{'call.attivi' | translate}}" btnRadio="active">{{'call.attivi' | translate}}</span>
-                    <span class="btn btn-primary btn-toggle text-truncate" tooltip="{{'call.scaduti' | translate}}" btnRadio="expire">{{'call.scaduti' | translate}}</span>
-                    <span class="btn btn-primary btn-toggle text-truncate" tooltip="{{'call.tutti' | translate}}" btnRadio="all">{{'call.tutti' | translate}}</span>
-                </div>
-            </div>
-            <div class="form-group col-md-4">
-                <app-control-text 
-                    formControlName="callCode"
-                    class="pe-1"
-                    [inline]="true"
-                    type="search"
-                    [showValidation]="false"
-                    [prepend]="'cube'"
-                    [label]="'call.search.code'| translate">
-                </app-control-text>
-            </div>    
+<div class="row row-title pt-4 pb-2">
+  <div class="d-xl-flex align-items-end border-bottom border-primary pb-3">
+    <div>
+      <h1 class="h2 text-primary mb-1">{{ 'call.search.title' | translate }}</h1>
+      <p class="mb-0 text-secondary">{{ 'layout.search_subtitle' | translate }}</p>
+    </div>
+    <div class="ms-auto mt-3 mt-xl-0" *ngIf="canExport()">
+      <button type="button" class="btn btn-success" (click)="openExport()">
+        <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-xlsx"></use></svg>
+        {{ 'export_calls.button' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4" *ngIf="filterFormSearch">
+  <aside class="col-lg-3 mb-4">
+    <div class="filters-panel">
+      <form class="filters card shadow-sm rounded p-3" [formGroup]="filterFormSearch" role="search">
+        <app-sort-control class="d-block mb-4" [form]="filterFormSearch" [options]="sortOptions"></app-sort-control>
+
+        <h2 class="filters-title">{{ 'layout.call' | translate }}</h2>
+        <div class="form-group mb-3">
+          <label for="s-code" class="active">{{ 'call.search.code' | translate }}</label>
+          <input id="s-code" type="search" class="form-control" formControlName="callCode">
         </div>
-        <div class="row gx-2 col-md-12">
-            <div class="form-group col-md-2">
-                <app-control-datepicker
-                    class="pe-1"
-                    type="search"
-                    [inline]="true" 
-                    [showValidation]="false"
-                    [label]="'call.search.scadenza.inizio'| translate" 
-                    formControlName="inizioScadenza">            
-                </app-control-datepicker>
-            </div>
-            <div class="form-group col-md-2">
-                <app-control-datepicker
-                    class="pe-1"
-                    type="search"
-                    [inline]="true" 
-                    [showValidation]="false"
-                    [label]="'call.search.scadenza.fine'| translate" 
-                    formControlName="fineScadenza">            
-                </app-control-datepicker>    
-            </div>
-            <div class="form-group col-md-8">
-                <app-control-select-model
-                    class="pe-1"
-                    [inline]="true"
-                    [noLabel]="true"
-                    [enums]="profiles"
-                    [showValidation]="false"
-                    [allowClear]="true"
-                    [placeholder]="'call.search.profile'| translate"
-                    [ttip]="'call.search.profile'| translate"
-                    formControlName="profile">
-                </app-control-select-model>
-            </div>
+        <app-segmented class="d-block mb-4" [options]="callStates" formControlName="filterType"></app-segmented>
+        <div class="select-wrapper mb-4">
+          <label for="s-type">{{ 'layout.call_type' | translate }}</label>
+          <select id="s-type" formControlName="type">
+            <option value="jconon_call:folder">{{ 'F:jconon_call:folder' | translate }}</option>
+            <ng-container *ngFor="let item of cache?.jsonlistCallType">
+              <option *ngIf="item.display && !item.childs" [value]="item.queryName">{{ typeLabel(item) }}</option>
+              <optgroup *ngIf="item.display && item.childs" [label]="typeLabel(item)">
+                <option *ngFor="let child of item.childs" [value]="child.queryName">{{ typeLabel(child) }}</option>
+              </optgroup>
+            </ng-container>
+          </select>
         </div>
-        <div class="row gx-2 col-md-12">
-            <div class="form-group col-md-2">
-                <app-control-text 
-                    formControlName="gazzetteNumber"
-                    [inline]="true"
-                    type="search"
-                    [showValidation]="false"
-                    [prepend]="'university'"
-                    [label]="'call.search.gazzette.number'| translate">
-                </app-control-text>
-            </div>
-            <div class="form-group col-md-2">
-                <app-control-datepicker
-                    type="search"
-                    [inline]="true" 
-                    [showValidation]="false"
-                    [label]="'call.search.gazzette.date'| translate" 
-                    formControlName="gazzetteDate">            
-                </app-control-datepicker>
-            </div>
-            <div class="form-group col-md-8">
-                <app-control-text 
-                    formControlName="requirements"
-                    [inline]="true"
-                    type="search"
-                    [showValidation]="false"
-                    [prepend]="'registered'"
-                    [label]="'call.search.requirements'| translate">
-                </app-control-text>
-            </div>    
+
+        <h2 class="filters-title">{{ 'layout.filter_deadline' | translate }}</h2>
+        <div class="row g-2 mb-4">
+          <div class="col-6">
+            <label for="s-from" class="small fw-semibold d-block mb-1">{{ 'layout.date_from' | translate }}</label>
+            <input id="s-from" type="date" class="form-control form-control-sm plain-input" formControlName="inizioScadenza">
+          </div>
+          <div class="col-6">
+            <label for="s-to" class="small fw-semibold d-block mb-1">{{ 'layout.date_to' | translate }}</label>
+            <input id="s-to" type="date" class="form-control form-control-sm plain-input" formControlName="fineScadenza">
+          </div>
         </div>
-        <div class="row gx-2 col-md-12">        
-            <div class="form-group col-md-6">        
-                <app-control-text 
-                    formControlName="struttura"
-                    [inline]="true"
-                    type="search"
-                    [showValidation]="false"
-                    [prepend]="'industry'"
-                    [label]="'call.search.struttura'| translate">
-                </app-control-text>
-            </div>
-            <div class="form-group col-md-6">
-                <app-control-text 
-                    formControlName="sede"
-                    [inline]="true"
-                    type="search"
-                    [showValidation]="false"
-                    [prepend]="'address-book'"
-                    [label]="'call.search.sede'| translate">
-                </app-control-text>
-            </div>    
+
+        <h2 class="filters-title">{{ 'layout.gazette' | translate }}</h2>
+        <div class="row g-2 mb-4">
+          <div class="col-5">
+            <label for="s-gun" class="small fw-semibold d-block mb-1">{{ 'layout.number' | translate }}</label>
+            <input id="s-gun" type="search" class="form-control form-control-sm plain-input" formControlName="gazzetteNumber">
+          </div>
+          <div class="col-7">
+            <label for="s-gud" class="small fw-semibold d-block mb-1">{{ 'layout.date' | translate }}</label>
+            <input id="s-gud" type="date" class="form-control form-control-sm plain-input" formControlName="gazzetteDate">
+          </div>
         </div>
-    </form>    
-    <call-list *ngIf="filterFormSearch" [filterForm] = "filterFormSearch"></call-list>
-<app-list-header-layout>
+
+        <h2 class="filters-title">{{ 'layout.content' | translate }}</h2>
+        <div class="select-wrapper mb-3" *ngIf="profiles?.length">
+          <label for="s-profile">{{ 'call.search.profile' | translate }}</label>
+          <select id="s-profile" formControlName="profile">
+            <option value=""></option>
+            <option *ngFor="let p of profiles" [value]="p.getEnumValue()">{{ p.getEnumValue() }}</option>
+          </select>
+        </div>
+        <div class="form-group mb-3">
+          <label for="s-req" class="active">{{ 'call.search.requirements' | translate }}</label>
+          <input id="s-req" type="search" class="form-control" formControlName="requirements">
+        </div>
+        <div class="form-group mb-3">
+          <label for="s-str" class="active">{{ 'call.search.struttura' | translate }}</label>
+          <input id="s-str" type="search" class="form-control" formControlName="struttura">
+        </div>
+        <div class="form-group mb-3">
+          <label for="s-sede" class="active">{{ 'call.search.sede' | translate }}</label>
+          <input id="s-sede" type="search" class="form-control" formControlName="sede">
+        </div>
+        <button type="button" class="btn btn-link btn-sm px-0" (click)="resetFilters()">
+          <svg class="icon icon-primary icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-close-circle"></use></svg>
+          {{ 'layout.reset_filters' | translate }}
+        </button>
+      </form>
+    </div>
+  </aside>
+  <section class="col-lg-9" [attr.aria-label]="'layout.calls' | translate">
+    <call-list [filterForm]="filterFormSearch" [showTotalOnTop]="true"></call-list>
+  </section>
+</div>

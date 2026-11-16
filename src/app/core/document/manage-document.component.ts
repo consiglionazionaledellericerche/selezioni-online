@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalRef } from '../../shared/modal/modal.service';
 import { DocumentService } from './document.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,6 +10,7 @@ import { Helpers } from '../../common/helpers/helpers';
 import { ObjectType } from '../../common/model/object-type.model';
 
 @Component({
+  standalone: false,
   selector: 'manage-document',
   template: `
       <div class="modal-header border-bottom border-light pb-2">
@@ -31,7 +32,7 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
 
   constructor(
     public service: DocumentService,
-    public modalRef: BsModalRef,
+    public modalRef: ModalRef,
     protected router: Router,
     protected route: ActivatedRoute,
     protected translateService: TranslateService,

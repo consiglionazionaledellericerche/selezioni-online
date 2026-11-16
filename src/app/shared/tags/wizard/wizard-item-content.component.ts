@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-wizard-item-content',
   template:
      `

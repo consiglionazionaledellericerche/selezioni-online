@@ -1,3 +1,4 @@
+import { invalidFieldsMessage } from '../../common/helpers/form-errors';
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,13 +13,17 @@ import { CacheService } from '../cache.service';
 import { ApiMessageService, MessageType } from '../api-message.service';
 import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component';
 import { Helpers } from '../../common/helpers/helpers';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../shared/modal/modal.service';
 import { LoadingState } from '../../auth/loading-state.enum';
 import { of as observableOf, Observable, Subscription } from 'rxjs';
 import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.component';
 import { UserService } from '../../auth/edit/user.service';
+import { ManageCallService } from './manage-call.service';
+import { CreateChildCallComponent } from './manage/create-child-call.component';
+import { ExportApplicationsComponent } from './shared/export-applications.component';
 
 @Component({
+  standalone: false,
   selector: 'manage-call',
   template:
   `
@@ -28,12 +33,75 @@ import { UserService } from '../../auth/edit/user.service';
     </div>
     <div *ngIf="isLoaded() && !isEntityError">
       <div class="pb-3" #cardCall>
-        <h1 class="font-monospace text-primary">{{callType | translate}}</h1>
+        <app-call-header *ngIf="entity?.objectId" [call]="entity" page="call_manage.edit_title"></app-call-header>
+        <div *ngIf="copyFrom" class="alert alert-info py-2 mt-3" translate>call_manage.copy.info</div>
+        <div class="d-flex flex-wrap align-items-center gap-2 mt-3 pb-2 border-bottom manage-head">
+          <h1 class="h3 mb-0 text-primary me-2">{{ callType | translate }}</h1>
+          <span *ngIf="entity?.objectId" class="badge rounded-pill" [ngClass]="entity.pubblicato ? 'bg-success' : 'bg-secondary'">
+            {{ (entity.pubblicato ? 'call_manage.published' : 'call_manage.not_published') | translate }}
+          </span>
+          <div *ngIf="entity?.objectId" class="ms-auto d-flex flex-wrap align-items-center gap-2">
+            <a class="btn btn-outline-primary btn-sm" [routerLink]="['/call-detail']" [queryParams]="{callCode: entity.codice}">
+              <svg class="icon icon-primary icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file"></use></svg>
+              {{ 'call_manage.view_detail' | translate }}
+            </a>
+            <a class="btn btn-outline-primary btn-sm" [routerLink]="['/manage-application']" [queryParams]="{callId: entity.objectId, preview: true}">
+              <svg class="icon icon-primary icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-password-visible"></use></svg>
+              {{ 'call_manage.preview' | translate }}
+            </a>
+            <it-dropdown mode="button" color="primary" class="manage-actions">
+              <span button class="d-inline-flex align-items-center">{{ 'call_manage.actions' | translate }}</span>
+              <ng-container list>
+                <li><a class="dropdown-item list-item" href="javascript:" [class.disabled]="publishing" (click)="onPublish()">
+                  <svg class="icon icon-sm icon-primary me-2"><use [attr.href]="'/bootstrap-italia/dist/svg/sprites.svg#' + (entity.pubblicato ? 'it-password-invisible' : 'it-password-visible')"></use></svg>{{ (entity.pubblicato ? 'call_manage.unpublish' : 'call_manage.publish') | translate }}</a></li>
+                <li><a class="dropdown-item list-item" [routerLink]="['/call-commission']" [queryParams]="{callId: entity.objectId}">
+                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-user"></use></svg>{{ 'call_manage.commission.title' | translate }}</a></li>
+                <li><a class="dropdown-item list-item" [routerLink]="['/call-labels']" [queryParams]="{callId: entity.objectId}">
+                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-bookmark"></use></svg>{{ 'call_manage.labels.title' | translate }}</a></li>
+                <li><a class="dropdown-item list-item" [routerLink]="['/call-communications']" [queryParams]="{callId: entity.objectId, kind: 'convocazioni'}">
+                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-calendar"></use></svg>{{ 'communications.kind.convocazioni' | translate }}</a></li>
+                <li><a class="dropdown-item list-item" [routerLink]="['/call-communications']" [queryParams]="{callId: entity.objectId, kind: 'esclusioni'}">
+                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-ban"></use></svg>{{ 'communications.kind.esclusioni' | translate }}</a></li>
+                <li><a class="dropdown-item list-item" [routerLink]="['/call-communications']" [queryParams]="{callId: entity.objectId, kind: 'comunicazioni'}">
+                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-mail"></use></svg>{{ 'communications.kind.comunicazioni' | translate }}</a></li>
+                <li><a class="dropdown-item list-item" href="javascript:" (click)="onExport()">
+                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-download"></use></svg>{{ 'export.menu' | translate }}</a></li>
+                <li *ngIf="isConcorsi()"><a class="dropdown-item list-item" [routerLink]="['/call-permissions']" [queryParams]="{callId: entity.objectId}">
+                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-locked"></use></svg>{{ 'call_manage.permissions.title' | translate }}</a></li>
+                <ng-container *ngIf="isMacroCall()">
+                  <li><a class="dropdown-item list-item" href="javascript:" (click)="onCreateChild()">
+                    <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus-circle"></use></svg>{{ 'call_manage.child.title' | translate }}</a></li>
+                  <li><a class="dropdown-item list-item" [routerLink]="['/call-children']" [queryParams]="{callId: entity.objectId}">
+                    <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-folder"></use></svg>{{ 'call_manage.children.title' | translate }}</a></li>
+                </ng-container>
+                <li><a class="dropdown-item list-item" href="javascript:" (click)="onCopy()">
+                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-copy"></use></svg>{{ 'call_manage.copy.button' | translate }}</a></li>
+                <li><span class="divider"></span></li>
+                <li><a class="dropdown-item list-item text-danger" href="javascript:" (click)="onDelete()">
+                  <svg class="icon icon-sm icon-danger me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-delete"></use></svg>{{ 'delete' | translate }}</a></li>
+              </ng-container>
+            </it-dropdown>
+          </div>
+        </div>
       </div>
       <div class="card card-bg border-bottom-card">
-        <div class="card-header d-flex">
-          <div class="h1 flex-grow-1 text-truncate">{{affixCall[affixCompleted] | translate}}</div>
-          <div class="h4">{{affixCompleted + 1}}/{{affix.length}}</div>
+        <div class="card-header p-0 section-tabs-wrapper">
+          <ul class="nav nav-tabs section-tabs" role="tablist">
+            <li class="nav-item" *ngFor="let number of affix" role="presentation">
+              <a class="nav-link" href="javascript:void(0)" role="tab"
+                 [class.active]="number === affixCompleted"
+                 [class.disabled]="number !== affixCompleted && !form.pristine && !isDisableConfirm"
+                 [attr.aria-selected]="number === affixCompleted"
+                 [itTooltip]="(number !== affixCompleted && !form.pristine && !isDisableConfirm) ? ('layout.save_before_switch' | translate) : ''"
+                 (click)="(number === affixCompleted || form.pristine || isDisableConfirm) && (affixCompleted = number) !== undefined && scroll(cardCall);">
+                <span class="section-number" [class.done]="number < affixCompleted">
+                  <svg *ngIf="number < affixCompleted" class="icon icon-xs icon-white"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-check"></use></svg>
+                  <span *ngIf="!(number < affixCompleted)">{{ number + 1 }}</span>
+                </span>
+                <span class="section-name">{{ tabLabel(affixCall[number]) }}</span>
+              </a>
+            </li>
+          </ul>
         </div>
         <div class="card-body mt-2">  
           <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="affixCall[affixCompleted]"></show-affix>
@@ -42,24 +110,15 @@ import { UserService } from '../../auth/edit/user.service';
               <a [ngClass]="{'disabled': (affixCompleted == 0 || !form.pristine) && !isDisableConfirm}" 
                 (click)="affixCompleted = affixCompleted - 1;scroll(cardCall);" 
                 class="btn btn-link text-primary steppers-btn-prev px-1">
-                <svg class="icon icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-left"></use></svg>
+                <svg class="icon icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-chevron-left"></use></svg>
                 <span translate>previous</span>
               </a>
-              <ul class="steppers-dots d-flex">
-                <li *ngFor="let number of affix"
-                  [ngClass]="{'done': number <= affixCompleted, 'bg-light': !form.pristine && !isDisableConfirm}"
-                  [popover]="affixCall[number] | translate"
-                  triggers="mouseenter:mouseleave">
-                  <a [ngClass]="{'disabled': !form.pristine && !isDisableConfirm}" 
-                    class="btn"                   
-                    (click)="affixCompleted = number;scroll(cardCall);"></a>
-                </li>
-              </ul>
+              <span class="small text-secondary">{{ 'layout.section_of' | translate:{current: affixCompleted + 1, total: affix.length} }}</span>
               <a [ngClass]="{'disabled': affixCompleted == affix.length - 1 || !form.pristine}" 
                 (click)="affixCompleted = affixCompleted + 1;scroll(cardCall);" 
                 class="btn btn-link text-primary steppers-btn-next px-1">
                 <span translate>next</span>
-                <svg class="icon icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-right"></use></svg>
+                <svg class="icon icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-chevron-right"></use></svg>
               </a>
             </nav>
           </div>
@@ -69,27 +128,20 @@ import { UserService } from '../../auth/edit/user.service';
             <div class="form-group text-start me-auto">
 
             </div>
-            <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-end">  
-              <button (click)="sendApplication($event)" 
-                #sendApplicationButton 
-                [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
-                class="btn btn-primary w-100 btn-lg btn-icon me-2 rounded" 
-                tooltip="{{'application.send' | translate}}">
-                <span class="pe-1 w-100 text-end" translate>application.send</span>
-                <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-upload"></use></svg>              
-                <div *ngIf="loadingStateSend.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
-                  <div class="progress-spinner-inner"></div>
-                  <div class="progress-spinner-inner"></div>
-                </div>
+            <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-end">
+              <button (click)="confirmCall($event, false)"
+                [disabled]="loadingStateConfirm.isStarting()"
+                class="btn btn-primary w-100 btn-lg btn-icon me-2 rounded">
+                <span class="pe-1 w-100 text-end" translate>save</span>
+                <svg class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-check-circle"></use></svg>
               </button>
-              <div *ngIf="isDisableConfirm" class="text-danger"><small translate>message.validation.application.section_not_confirmed</small></div>
-            </div>  
+            </div>
             <div *ngIf="affixCompleted < affix.length - 1" class="form-group text-end">
               <button (click)="confirmCall($event);"
                 #confirmCallButton 
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
                 class="btn btn-primary w-100 btn-lg btn-icon rounded" 
-                tooltip="{{'application.confirm' | translate}}">
+                [itTooltip]="'application.confirm' | translate">
                 <span class="pe-1 w-100 text-end" translate>application.confirm</span>
                 <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-arrow-right-circle"></use></svg>
                 <div *ngIf="loadingStateConfirm.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
@@ -111,8 +163,8 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
   cache: any = {};
   public affixCompleted: number = 0;
   public affix: number[];
-  bsModalRefSend: BsModalRef;
-  bsModalRefDelete: BsModalRef;
+  bsModalRefSend: ModalRef;
+  bsModalRefDelete: ModalRef;
 
   subscription: Subscription;
   loadingStateConfirm: LoadingState = LoadingState.DEFAULT;
@@ -133,15 +185,16 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
   ];
   callType: string;
   objectId: string;
+  copyFrom: string;
+  publishing = false;
   @ViewChild('affixComponent') affixComponent: ShowAffixComponent;
   @ViewChild('cardCall') cardCall: ElementRef;
   @ViewChild('confirmCallButton') confirmCallButton: ElementRef;
-  @ViewChild('sendApplicationButton') sendApplicationButton: ElementRef;
 
   public constructor(public service: CallService,
                      public callService: CallService,
                      private apiMessageService: ApiMessageService,
-                     private modalService: BsModalService,
+                     private modalService: ModalService,
                      private authService: AuthService,
                      protected userService: UserService,
                      private cacheService: CacheService,
@@ -150,11 +203,12 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
                      protected route: ActivatedRoute,
                      protected changeDetector: ChangeDetectorRef,
                      protected navigationService: NavigationService,
-                     protected translateService: TranslateService) {
+                     protected translateService: TranslateService,
+                     protected manageCallService: ManageCallService) {
     super(service, router, route);
     this.subscription = this.apiMessageService.loadingEvent$.subscribe((loadingState: LoadingState) => {
       if (loadingState.url) {
-        if (loadingState.url.indexOf('/save') !== -1) {
+        if (loadingState.url.indexOf('/save') !== -1 || loadingState.url.indexOf('/update') !== -1) {
           this.loadingStateConfirm = loadingState;
         }
         if (loadingState.url.indexOf('/send') !== -1 || loadingState.url.indexOf('/save') !== -1) {
@@ -167,7 +221,8 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
   public ngOnInit() {
     this.route.queryParams.subscribe((queryParams) => {
       this.callType = queryParams['call-type'];
-      this.objectId = queryParams['cmis:objectId']; 
+      this.objectId = queryParams['cmis:objectId'];
+      this.copyFrom = queryParams['copyFrom'];
       this.affix = Array(this.affixCall.length).fill(0).map((x,i)=>i);
       if (queryParams['cmis:objectId']) {
         this.callService.getById(queryParams['cmis:objectId']).subscribe((call) => {
@@ -180,6 +235,19 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
               }
             });  
           });
+          this.buildCreateForm();
+        });
+      } else if (this.copyFrom) {
+        // Copia: il nuovo bando parte dai dati dell'originale, senza identificativo, codice e pubblicazione
+        this.callService.getById(this.copyFrom).subscribe((call) => {
+          call.objectId = undefined;
+          call.codice = undefined;
+          call.pubblicato = false;
+          (call as any).rdp = undefined;
+          call.commissione = undefined;
+          this.entity = call;
+          this.callType = call.objectTypeId;
+          this.user = this.authService.getUser();
           this.buildCreateForm();
         });
       } else {
@@ -276,27 +344,97 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
     this.changeDetector.detectChanges();
   }
 
-  public confirmCall(event: Event) {
-    if (this.isFormValid && this.confirmCallButton) {
-      console.log(this.buildInstance());
-      this.service.save(this.buildInstance()).subscribe((call) => {
-        this.setEntity(call);
-        this.buildCreateForm();
-        this.affixCompleted++;
-      });  
+  public confirmCall(event: Event, next = true) {
+    if (!this.isFormValid) {
+      return;
     }
+    const isNew = !this.entity || !this.entity.objectId;
+    this.manageCallService.saveCall(this.form.value, this.entity).subscribe((call) => {
+      this.setEntity(call);
+      this.objectId = call.objectId;
+      this.buildCreateForm();
+      if (next && this.affixCompleted < this.affix.length - 1) {
+        this.affixCompleted++;
+      }
+      if (isNew) {
+        if (this.copyFrom) {
+          this.manageCallService.copyLabels(call.objectId, this.copyFrom).subscribe();
+        }
+        this.copyFrom = undefined;
+        this.router.navigate([], {
+          relativeTo: this.route,
+          replaceUrl: true,
+          queryParams: { 'call-type': call.objectTypeId, 'cmis:objectId': call.objectId }
+        });
+      }
+    });
+  }
+
+  public isConcorsi(): boolean {
+    return ManageCallService.isConcorsi(this.authService.getUser());
+  }
+
+  public isMacroCall(): boolean {
+    return ManageCallService.isMacroCall(this.entity);
+  }
+
+  public onPublish() {
+    const publish = !this.entity.pubblicato;
+    this.confirm(publish ? 'call_manage.confirm_publish' : 'call_manage.confirm_unpublish', () => {
+      this.publishing = true;
+      this.manageCallService.publish(this.entity.objectId, publish).subscribe(() => {
+        this.publishing = false;
+        this.apiMessageService.sendMessage(MessageType.SUCCESS,
+          publish ? 'call_manage.published_done' : 'call_manage.unpublished_done');
+        this.callService.getById(this.entity.objectId).subscribe(call => {
+          this.entity = call;
+          this.buildCreateForm();
+        });
+      }, () => this.publishing = false);
+    });
+  }
+
+  public onDelete() {
+    this.confirm('call_manage.confirm_delete', () => {
+      this.manageCallService.deleteCall(this.entity.objectId).subscribe(() => {
+        this.apiMessageService.sendMessage(MessageType.SUCCESS, 'call_manage.deleted');
+        this.router.navigate(['/']);
+      });
+    });
+  }
+
+  public onExport() {
+    this.modalService.show(ExportApplicationsComponent, { initialState: { call: this.entity }, class: 'modal-lg' });
+  }
+
+  public onCopy() {
+    this.router.navigate(['/manage-call'], {
+      queryParams: { 'call-type': this.entity.objectTypeId, 'copyFrom': this.entity.objectId }
+    });
+  }
+
+  public onCreateChild() {
+    const modalRef = this.modalService.show(CreateChildCallComponent,
+      Object.assign({ initialState: { parent: this.entity } }, { animated: true, class: 'modal-lg' }));
+    modalRef.content.created.subscribe((childId: string) => {
+      this.router.navigate(['/manage-call'], {
+        queryParams: { 'call-type': this.entity.objectTypeId, 'cmis:objectId': childId }
+      });
+    });
+  }
+
+  private confirm(body: string, action: () => void) {
+    const modalRef = this.modalService.show(ModalConfirmComponent,
+      Object.assign({ initialState: { body } }, { animated: true, class: 'modal-dialog-centered' }));
+    modalRef.content.confirm.subscribe(() => action());
   }
 
   get isFormValid() : boolean {
-    var invalidControls = [];
     Object.keys(this.form.controls).forEach(control => {
       if (this.form.controls[control].status === 'INVALID') {
         this.form.controls[control].markAsDirty({onlySelf: true});
         this.form.controls[control].markAsTouched({onlySelf: true});
         this.form.controls[control].patchValue(this.form.controls[control].value || null);
-        this.translateService.get('label.'+ control.replace(':', '.')).subscribe((label) => {
-          invalidControls.push('<li class="fw-bold pt-2">' + label + '</li>');
-        });
         const invalidControl = this.el.nativeElement.querySelector('input.is-invalid,textarea.invalid,select.is-invalid');
         const invalidFormControl = document.querySelector('[formcontrolname="' + control + '"], .is-invalid');
         if (invalidControl) {
@@ -310,13 +448,8 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
       }      
     });
     if (this.form.invalid) {
-        if (invalidControls.length > 3) {
-          invalidControls = invalidControls.slice(0, 3);
-          invalidControls.push('<li class="fw-bold pt-2">ecc...</li>');
-        }
-        this.translateService.get('message.form.invalid').subscribe((label) => {
-            this.apiMessageService.sendMessage(MessageType.WARNING, label + '<ul class="list-unstyled">' + invalidControls.join('') + '</ul>');
-        });
+        this.apiMessageService.sendMessage(MessageType.ERROR,
+          invalidFieldsMessage(this.form, this.translateService, this.el.nativeElement));
     }
     return !this.form.invalid;
   }
@@ -327,5 +460,17 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  /** Nome della sezione nella scheda, senza il prefisso "Sezione I - " (il numero è già nel cerchio). */
+  public tabLabel(key: string): string {
+    const label = this.translateService.instant(key || '') || key;
+    const text = String(label)
+      .replace(/^\s*(sezione|section)\s+[ivxlcdm\d]+\s*[-–:.]\s*/i, '')
+      .replace(/^\s*(sezione|section)\s+/i, '');
+    // nomi tutti in maiuscolo: in forma normale, più leggibili e meno larghi nelle schede
+    return text.length > 3 && text === text.toUpperCase() && /[A-Z]/.test(text)
+      ? text.charAt(0) + text.slice(1).toLowerCase()
+      : text;
   }
 }

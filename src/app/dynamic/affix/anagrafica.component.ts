@@ -8,6 +8,7 @@ import { CallService } from '../../core/call/call.service';
 import { Select2Template } from '../../common/template/select2-template';
 
 @Component({
+  standalone: false,
     selector: 'affix_tabAnagrafica',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">

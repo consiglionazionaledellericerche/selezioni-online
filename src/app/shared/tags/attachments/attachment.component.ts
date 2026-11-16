@@ -2,11 +2,13 @@ import {
   ChangeDetectorRef,
   Component, ElementRef, Input, OnInit, Optional, Self, ViewChild
 } from '@angular/core';
+import { ItUploadDragDropComponent } from 'design-angular-kit';
 import { ControlValueAccessor, NgControl
 } from '@angular/forms';
 import {ValidationHelper} from '../../../common/validation/validation-helper';
 
 @Component({
+  standalone: false,
   selector: 'app-control-attachment',
   template:
      `
@@ -14,26 +16,19 @@ import {ValidationHelper} from '../../../common/validation/validation-helper';
               [controlDir]="controlDir"
               [inline]="inline"
               [label]="label"
-              [prepend]="prepend"
-              [prependText]="prependText"
               [ttip]="ttip"
-              [append]="append"
-              [appendText]="appendText"
-              [ttipAppend]="ttipAppend"
               [noLabel]="noLabel"
               [showValidation]="showValidation">
-          <label
-            #label 
-            for="upload"
-            class="border-bottom w-100 mb-0" 
-            [ngClass]="{'is-valid border-dark text-dark': !isInvalid(), 'is-invalid border-danger text-danger': isInvalid()}">{{ 'upload' | translate }}</label>
-          <input class="form-control d-none"
-             type="file"
-             id="upload"
-             #input
-             (change)="handleFileInput($event.target.files)"
-             [disabled]="disabled"
-             placeholder="{{ placeholder | translate }}">
+          <!-- upload con trascinamento (senza icona né testo a lato: l'area di trascinamento basta) -->
+          <!-- upload con trascinamento (design-angular-kit): il file viene caricato al salvataggio del form -->
+          <it-upload-drag-drop #dragdrop [accept]="accept" (fileStartUpload)="handleFile($event)"
+            [class.is-invalid]="isInvalid()"></it-upload-drag-drop>
+          <div *ngIf="fileToUpload && !disabled" class="text-center mt-1">
+            <button type="button" class="btn btn-link btn-sm" (click)="clear()">
+              <svg class="icon icon-primary icon-xs me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-restore"></use></svg>
+              {{ 'upload_change' | translate }}
+            </button>
+          </div>
 
           <div *ngIf="controlDir.dirty && controlDir.pending"
              [ngStyle]="{'position': 'absolute', 'top': '5px', 'right': '17px', 'z-index': '100'}">
@@ -71,9 +66,10 @@ export class AttachmentComponent implements ControlValueAccessor, OnInit {
 
   @Input() focus = false;
 
-  @ViewChild('input', {static: true}) input: ElementRef;
+  /** Tipi di file accettati (MIME separati da virgola), come l'attributo accept. */
+  @Input() accept = '*';
 
-  @ViewChild('label', {static: true}) labelFile: ElementRef;
+  @ViewChild('dragdrop', {static: true}) dragdrop: ItUploadDragDropComponent;
 
   fileToUpload: File = null;
 
@@ -98,20 +94,30 @@ export class AttachmentComponent implements ControlValueAccessor, OnInit {
     control.setValidators(validators);
     control.updateValueAndValidity();
 
-    if (this.focus) {
-      this.input.nativeElement.focus();
-    }
 
   }
 
-  onInputClick() {
-    this.input.nativeElement.click();
-  }
-
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
-    this.labelFile.nativeElement.innerText = this.fileToUpload ? this.fileToUpload.name : 'Carica file...';
+  /** File scelto (trascinato o selezionato): va nel form e il componente mostra nome e dimensione. */
+  handleFile(file: File) {
+    this.fileToUpload = file || null;
     this.onChange(this.fileToUpload);
+    this.onTouched();
+    if (this.controlDir && this.controlDir.control) {
+      this.controlDir.control.markAsDirty();
+    }
+    if (this.fileToUpload) {
+      this.dragdrop.progress(100);
+      this.dragdrop.success();
+    }
+    this.ref.markForCheck();
+  }
+
+  /** Torna allo stato iniziale per scegliere un altro file. */
+  clear() {
+    this.fileToUpload = null;
+    this.dragdrop.reset();
+    this.onChange(null);
+    this.ref.markForCheck();
   }
 
   /*
@@ -123,7 +129,10 @@ export class AttachmentComponent implements ControlValueAccessor, OnInit {
   onTouched = () => {};
 
   writeValue(value: any): void {
-    this.input.nativeElement.value = value;
+    if (!value && this.fileToUpload) {
+      this.fileToUpload = null;
+      this.dragdrop.reset();
+    }
     if (this.controlDir.control) {
       this.controlDir.control.markAsDirty();
       this.controlDir.control.updateValueAndValidity();

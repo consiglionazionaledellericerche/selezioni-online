@@ -1,3 +1,5 @@
+import { ModalService } from '../../shared/modal/modal.service';
+import { ExportCallsComponent } from '../call/shared/export-calls.component';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonListComponent } from '../../common/controller/common-list.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,163 +16,133 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Call } from '../call/call.model';
 import { Helpers } from '../../common/helpers/helpers';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalRef } from '../../shared/modal/modal.service';
 
 @Component({
+  standalone: false,
   selector: 'application-user-list',
   template:
   `
-    <app-layout-title [title]="'application.user.title'" [titleClass]="'main-title'" [collapsediv]="collapse" [isCollapsable]="'true'" (collapseEvent)="collapse = $event"></app-layout-title>
-    <form *ngIf="filterForm" class="clearfix" [formGroup]="filterForm" [ngClass]="{'d-none': collapse, 'd-block': !collapse}">
-      <div class="row gx-2 col-md-12">
-        <div class="form-group col-md-4">        
-          <app-control-select-model
-            [path]="service.getSelect2Mapping()"
-            [template]="userSelect2"
-            [noLabel]="true"
-            [inline]="'false'"
-            [placeholder]="'Seleziona utente'"
-            [resultName]="'people'"
-            [resultId]="'userName'"
-            [allowClear]="'true'"
-            formControlName="user">
-          </app-control-select-model>
+    <app-layout-title [title]="'layout.applications_user_title'" [subTitle]="'layout.applications_user_subtitle'">
+      <button type="button" class="btn btn-success" (click)="openExport()">
+        <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-xlsx"></use></svg>
+        {{ 'export_calls.button' | translate }}
+      </button>
+    </app-layout-title>
+    <app-application-summary *ngIf="filterForm" class="d-block mt-4" scope="all" layout="tiles"
+      [active]="filterForm.value.applicationStatus" [filters]="filterForm.value" [service]="service"
+      (selected)="filterForm.controls['applicationStatus'].setValue($event)"></app-application-summary>
+    <div class="row mt-4" *ngIf="filterForm">
+      <aside class="col-lg-3 mb-4">
+        <div class="filters-sticky">
+          <form class="filters card shadow-sm rounded p-3" [formGroup]="filterForm" role="search">
+            <h2 class="filters-title">{{ 'layout.filter_candidate' | translate }}</h2>
+            <div class="form-group mb-3">
+              <app-autocomplete [path]="service.getSelect2Mapping()" resultName="people" resultId="userName"
+                [display]="userDisplay" [placeholder]="'layout.search_user'" formControlName="user"></app-autocomplete>
+            </div>
+            <div class="form-group mb-3">
+              <app-control-text formControlName="firstname" [inline]="true" type="search" [showValidation]="false"
+                [label]="'user.firstname'| translate"></app-control-text>
+            </div>
+            <div class="form-group mb-3">
+              <app-control-text formControlName="lastname" [inline]="true" type="search" [showValidation]="false"
+                [label]="'user.lastname'| translate"></app-control-text>
+            </div>
+            <div class="form-group mb-4">
+              <app-control-text formControlName="codicefiscale" [inline]="true" inputClass="text-uppercase" type="search"
+                [showValidation]="false" [label]="'user.codicefiscale'| translate"></app-control-text>
+            </div>
+            <h2 class="filters-title">{{ 'layout.filter_call' | translate }}</h2>
+            <div class="form-group mb-4">
+              <app-autocomplete [path]="callService.getSelect2Mapping()" resultName="items" resultId="cmis:objectId"
+                [display]="callDisplay" [placeholder]="'layout.search_call'" [displayText]="callSearch?.codice" formControlName="callId"></app-autocomplete>
+            </div>
+            <app-sort-control class="d-block mb-4" [form]="filterForm" [options]="sortOptions"></app-sort-control>
+            <h2 class="filters-title">{{ 'layout.filter_application_state' | translate }}</h2>
+            <app-segmented [vertical]="true" [options]="applicationStates" formControlName="applicationStatus"></app-segmented>
+          </form>
         </div>
-        <div class="form-group col-md-2">
-          <app-control-text 
-            formControlName="firstname"
-            [inline]="true"
-            type="search"
-            [showValidation]="false"
-            [prepend]="'user-circle-o'"
-            [ttip]="'user.firstname'| translate"
-            [label]="'user.firstname'| translate">
-          </app-control-text>
-        </div>
-        <div class="form-group col-md-3">
-          <app-control-text 
-            formControlName="lastname"
-            [inline]="true"
-            type="search"
-            [showValidation]="false"
-            [prepend]="'user-circle'"
-            [ttip]="'user.lastname'| translate"
-            [label]="'user.lastname'| translate">
-          </app-control-text>
-        </div>
-        <div class="form-group col-md-3">
-          <app-control-text 
-            formControlName="codicefiscale"
-            [inline]="true"
-            inputClass="text-uppercase"
-            type="search"
-            [showValidation]="false"
-            [prepend]="'address-card'"
-            [ttip]="'user.codicefiscale'| translate"
-            [label]="'user.codicefiscale'| translate">
-          </app-control-text>
-        </div>
-      </div>
-      <div class="row gx-2 col-md-12">
-        <div class="form-group col-md-6">        
-          <app-control-select-model
-            [path]="callService.getSelect2Mapping()"
-            [template]="callSelect2"
-            [noLabel]="true"
-            [inline]="'false'"
-            [resultName]="'items'"
-            [resultId]="'cmis:objectId'"
-            [placeholder]="'Seleziona bando'"
-            [allowClear]="'true'"
-            formControlName="call">
-          </app-control-select-model>
-        </div>
-        <div class="form-group col-md-6">
-          <!--Rounded checkbox buttons-->
-          <div class="btn-group w-100 btn-group-toggle" btnRadioGroup formControlName="applicationStatus">
-            <span class="btn btn-primary btn-toggle text-truncate" btnRadio="P" tooltip="{{'application.status.temporary' | translate}}">{{'application.status.temporary' | translate}}</span>
-            <span class="btn btn-primary btn-toggle text-truncate" btnRadio="C" tooltip="{{'application.status.confirmed' | translate}}">{{'application.status.confirmed' | translate}}</span>
-            <span class="btn btn-primary btn-toggle text-truncate" btnRadio="all" tooltip="{{'application.status.all' | translate}}">{{'application.status.all' | translate}}</span>
-            <span class="btn btn-primary btn-toggle text-truncate" btnRadio="active" tooltip="{{'application.status.active' | translate}}">{{'application.status.active' | translate}}</span>
-            <span class="btn btn-primary btn-toggle text-truncate" btnRadio="excluded" tooltip="{{'application.status.excluded' | translate}}">{{'application.status.excluded' | translate}}</span>
+      </aside>
+      <section class="col-lg-9">
+        <app-grid-layout [loading]="loading" [items]="items" [showPage]="false" [infiniteScroll]="true"
+                         [page]="getPage()" [showTotalOnTop]="true" [count]="count"
+                         (onChangePage)="onChangePage($event)" (loadMore)="onScroll()" [page_offset]="service.getPageOffset()">
+          <div class="row" infiniteScroll [infiniteScrollThrottle]="300" [infiniteScrollDistance]="1" (scrolled)="onScroll()">
+            <div *ngFor="let item of items" class="col-12">
+            <app-list-item-application [item]="item" [user]="user">
+              <h3 class="h5 mb-1">
+                <span class="text-primary">{{ item.cognome | uppercase }} {{ item.nome | uppercase }}</span>
+              </h3>
+              <div class="small text-secondary d-flex flex-wrap gap-3 mb-2">
+                <span *ngIf="item.codice_fiscale">{{ 'label.jconon_application.codice_fiscale' | translate }} <strong>{{ item.codice_fiscale }}</strong></span>
+                <span *ngIf="item.data_nascita">{{ 'label.jconon_application.data_nascita' | translate }} <strong>{{ item.data_nascita | date:'dd/MM/yyyy' }}</strong></span>
+                <app-show-user-modal [label]="'utente.show'" [username]="item.user" [groups]="true"></app-show-user-modal>
+              </div>
+              <p class="mb-1">
+              <a class="fw-bold text-primary text-decoration-none" [routerLink]="['/call-detail']" [queryParams]="{ callCode: item.call.codice }">{{ item.call.codice }}</a>
+              <button *ngIf="item.call.descrizione" type="button" class="btn btn-link p-0 ms-1 align-baseline"
+                [itPopover]="translateService.currentLang == 'it' ? item.call.descrizione : item.call.descrizione_en"
+                popoverTitle="Info" [popoverHtml]="true" popoverTrigger="focus" popoverPlacement="bottom" aria-label="Info">
+                <svg class="icon icon-xs icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-info-circle"></use></svg>
+              </button>
+              <span *ngIf="item.call.profilo"> — {{ item.call.profilo }}</span>
+            </p>
+            <div class="small text-secondary d-flex flex-wrap gap-3">
+              <span *ngIf="item.call.sede">{{ item.call.sede }}</span>
+              <span *ngIf="item.call.numero_gu">G.U. n. {{ item.call.numero_gu }}<span *ngIf="item.call.data_gu"> del {{ item.call.data_gu | date:'dd/MM/yyyy' }}</span></span>
+              <app-show-text-modal *ngIf="item.call.requisiti_link || item.call.requisiti_link_en"
+                [label]="'call.elenco_titoli_studio'"
+                [value]="translateService.currentLang == 'it' ? item.call.requisiti_link : item.call.requisiti_link_en"
+                [modal_title]="'Info'"
+                [modal_text]="translateService.currentLang == 'it' ? item.call.requisiti : item.call.requisiti_en"
+                [strong]="false">
+              </app-show-text-modal>
+            </div>
+            </app-list-item-application>
+            </div>
           </div>
-        </div>
-      </div>
-    </form>
-    <!-- List -->
-    <app-list-layout [loading]="loading" [items]="items" [page]="getPage()"
-                     [count]="count" (onChangePage)="onChangePage($event)">
-      <li *ngFor="let item of items" [ngClass]="listItemClasses()" class="hover-shadow">
-        <app-list-item-application [item]="item" [user]="user">
-          <div class="col-sm-12 h5">
-            <span class="badge" [ngClass]="{'bg-warning' : item.isProvvisoria(), 'bg-success' : !item.isProvvisoria()}">
-              <span>{{'application.state.' + item.stato_domanda | translate}}</span>
-              <span *ngIf="item.isProvvisoria()">{{'application.date.modified' | translate:{value: item.lastModificationDate| date:'dd/MM/yyyy HH:mm:ss' } }}</span>
-              <span *ngIf="!item.isProvvisoria()">{{'application.date.send' | translate:{value: item.data_domanda| date:'dd/MM/yyyy HH:mm:ss' } }}</span>              
-            </span>
-          </div>
-          <div class="col-sm-12">
-            <app-show-text [label]="'label.jconon_application.firstname'" [value]="item.nome | uppercase" [strong]="true"></app-show-text>
-            <app-show-text [label]="'label.jconon_application.lastname'"  [value]="item.cognome | uppercase" [strong]="true"></app-show-text>
-            <app-show-user-modal [label]="'utente.show'" [username]="item.user" [groups]="true"></app-show-user-modal>
-          </div>
-          <div class="col-sm-12">
-            <app-show-text [label]="'label.jconon_application.codice_fiscale'" [value]="item.codice_fiscale" [strong]="false"></app-show-text>
-            <app-show-text 
-                [label]="'label.jconon_application.data_nascita'" 
-                [value]="item.data_nascita | date:'dd/MM/yyyy'">
-            </app-show-text>
-          </div>
-          <div class="col-sm-12">
-            <app-show-text [label]="'call.profilo'" [value]="item.call.profilo" [strong]="false"></app-show-text>
-          </div>
-          <div class="col-sm-12">
-            <ng-template #popTemplate>
-              <h5 class="fw-semibold">
-                <svg class="icon icon-secondary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg> Info
-              </h5>
-              <hr>
-              <div [innerHtml]="translateService.currentLang == 'it'? item.call.descrizione: item.call.descrizione_en"></div>
-            </ng-template>      
-            <app-show-text 
-              [label]="'call.codice'" 
-              [value]="item.call.codice">
-            </app-show-text>
-            <a class="btn btn-sm btn-link p-0 mb-3 ms-n1" [popover]="popTemplate" [outsideClick]="true">
-              <svg class="icon icon-xs icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg>
-            </a>
-            <app-show-text [label]="'call.numero_gu'" [value]="item.call.numero_gu" [strong]="false"></app-show-text>
-            <app-show-text [label]="'call.data_gu'" [value]="item.call.data_gu | date:'dd/MM/yyyy'" [strong]="false"></app-show-text>
-            <app-show-text 
-              [label]="'call.data_fine_invio_domande'" 
-              [value]="item.call.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm'">
-            </app-show-text>
-          </div>
-          <div class="col-sm-12">
-            <app-show-text [label]="'call.elenco_settori_tecnologici'" [value]="item.call.elenco_settori_tecnologici" ></app-show-text>
-          </div>  
-          <div class="col-sm-12">
-            <app-show-text-modal 
-              [label]="'call.elenco_titoli_studio'" 
-              [value]="translateService.currentLang == 'it'? item.call.requisiti_link: item.call.requisiti_link_en" 
-              [modal_title]="'Info'" 
-              [modal_text]="translateService.currentLang == 'it'? item.call.requisiti: item.call.requisiti_en"
-              [strong]="false">
-            </app-show-text-modal>
-          </div>
-          <div class="col-sm-12 h5" *ngIf="item.isShowEsclusioneRiununcia(user)">
-            <span class="badge" [ngClass]="{'bg-warning' : item.isSospesa(), 'bg-danger' : !item.isSospesa()}">
-              <span>{{'application.esclusione.' + item.esclusione_rinuncia | translate}}</span>
-            </span>
-          </div>
-        </app-list-item-application>
-      </li>
-    </app-list-layout>
-  `
+        </app-grid-layout>
+      </section>
+    </div>
+  `,
+  styles: [`
+    @media (min-width: 992px) { .filters-sticky { position: sticky; top: 4.5rem; z-index: 1; max-height: calc(100vh - 5.5rem); overflow-y: auto; } }
+    .filters { margin-top: 1.6rem; }
+    .filters-title { font-size: .875rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: #5d7083; margin-bottom: .5rem; }
+    li.app-item { list-style: none; }
+    .filters ::ng-deep app-control-text, .filters ::ng-deep app-control-datepicker, .filters ::ng-deep app-form-layout { display: block; width: 100%; }
+    .filters ::ng-deep .form-control { width: 100% !important; }
+  `]
 })
 export class ApplicationUserListComponent extends CommonListComponent<Application> implements OnInit {
+  public sortOptions = [
+    { value: 'modifica', label: 'layout.sort.modified' },
+    { value: 'cognome', label: 'layout.sort.surname' },
+    { value: 'invio', label: 'layout.sort.sent' },
+    { value: 'creazione', label: 'layout.sort.created' }
+  ];
+
+  public applicationStates = [
+    { value: 'P', label: 'application.status.temporary' },
+    { value: 'C', label: 'application.status.confirmed' },
+    { value: 'active', label: 'application.status.active' },
+    { value: 'excluded', label: 'application.status.excluded' },
+    { value: 'all', label: 'application.status.all' }
+  ];
+
 
   public userSelect2 = Select2Template.user;
+
+  public userDisplay = (person: any) => ({
+    title: [person.lastName, person.firstName].filter(v => !!v).join(' ') || person.userName,
+    subtitle: [person.userName, person.email].filter(v => !!v).join(' · ')
+  });
+
+  public callDisplay = (call: any) => ({
+    title: call['jconon_call:codice'],
+    subtitle: [call['jconon_call:profilo'], call['jconon_call:sede']].filter(v => !!v).join(' — ')
+  });
   
   public callSelect2 = Select2Template.call;
 
@@ -178,10 +150,11 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
   public user: User;
   protected callId: string;
   protected callSearch: Call;
-  bsModalRef: BsModalRef;
+  bsModalRef: ModalRef;
   public collapse: boolean = true;
 
   public constructor(public service: ApplicationUserService,
+                     private modalService: ModalService,
                      private authService: AuthService,
                      public callService: CallService,                     
                      private formBuilder: FormBuilder,
@@ -223,11 +196,13 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
     return this.formBuilder.group({
       user: new FormControl(''),
       fetchCall: new FormControl(true),
-      applicationStatus: new FormControl('all'),
+      orderBy: new FormControl('modifica'),
+      orderDirection: new FormControl('desc'),
+      applicationStatus: new FormControl(this.route.snapshot.queryParams['applicationStatus'] || 'all'),
       firstname: new FormControl(''),
       lastname: new FormControl(''),
       codicefiscale: new FormControl(''),
-      call: new FormControl(this.callSearch),
+      callId: new FormControl(this.callId || ''),
     });
   }
 
@@ -235,4 +210,27 @@ export class ApplicationUserListComponent extends CommonListComponent<Applicatio
     return true;
   }
 
+
+  /** Scroll infinito: pagina successiva accodata all'elenco. */
+  public onScroll(): void {
+    this.loadMoreItems();
+  }
+
+  /** Estrazione Excel delle domande filtrate (stessi filtri dell'elenco). */
+  public openExport(): void {
+    this.modalService.show(ExportCallsComponent, {
+      initialState: {
+        filters: this.filterForm.value,
+        endpoint: '/v1/application/export/filtered',
+        title: 'export_applications.title',
+        info: 'export_applications.info',
+        options: [
+          { type: 'application', icon: 'it-folder' },
+          { type: 'score', icon: 'it-star-outline' },
+          { type: 'istruttoria', icon: 'it-list' }
+        ]
+      },
+      class: 'modal-lg'
+    });
+  }
 }

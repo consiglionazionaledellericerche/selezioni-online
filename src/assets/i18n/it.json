@@ -1,4 +1,17 @@
 {
+  "upload_change": "Cambia file",
+  "F:jconon_call_tdet_pnrr:folder": "Tempo Determinato PNRR",
+  "F:jconon_call_incarichi_ricerca:folder": "Incarichi di Ricerca",
+  "F:jconon_call_comandi_distacchi:folder": "Comandi e Distacchi",
+  "F:jconon_call_cascade:folder": "Bandi a cascata",
+  "D:prodotti:prodotto": "Prodotto",
+  "D:jconon_attachment:integration": "Integrazioni alla Domanda",
+  "D:jconon_attachment_pta:document": "Piano Triennale di Attività",
+  "D:jconon_curriculum_vitae:attachment_not_required": "Curriculum Vitae",
+  "D:jconon_riammissione:attachment": "Provvedimento di riammissione",
+  "D:jconon_scheda_anonima:generated_document": "Scheda Anonima Sintetica",
+  "D:jconon_comunicazione:attachment": "Comunicazioni al candidato",
+  "D:jconon_commissione:metadata": "Inserimento Commissario",
   "F:jconon_call:folder": "Tutti i Bandi",
   "F:jconon_call_tind:folder": "Tempo Indeterminato",
   "F:jconon_call_tind:folder_concorsi_pubblici":"Concorsi Pubblici",
@@ -98,9 +111,32 @@
   "menu": {
     "admin": "Amministratore",
     "groups": "Gruppi",
-    "jsConsole": "Console"
+    "jsConsole": "Console JS",
+    "gestori": "Gestori sedi",
+    "users": "Utenti",
+    "rbac": "Permessi (RBAC)",
+    "cache": "Cache",
+    "views": "Ispettore viste"
   },
   "message": {
+    "document.upload.success": "Il file «{{value}}» è stato caricato correttamente.",
+    "document.uploaded": "Caricato",
+    "form.invalid_intro": "Per proseguire correggi {{value}} campi evidenziati in rosso:",
+    "form.invalid_more": "e altri {{value}}",
+    "form.invalid_hint": "Dopo la correzione salva di nuovo la sezione.",
+    "helpdesk": {
+      "send": {
+        "success": "La segnalazione è stata inviata correttamente. Riceverà una risposta all'indirizzo email indicato.",
+        "forconfirmed": "La segnalazione è stata registrata. Per completarla, confermi la richiesta tramite il link inviato all'indirizzo email indicato.",
+        "failed": "Impossibile inviare la segnalazione, riprovare più tardi.",
+        "category": {
+          "expert": "Non è possibile aprire una segnalazione su una categoria di cui si è esperti."
+        },
+        "missing": {
+          "call": "Selezionare il bando di riferimento e il tipo di problema."
+        }
+      }
+    },
     "validation": {
       "required": "Campo obbligatorio!",
       "requiredTrue": "Il valore deve essere positivo!",
@@ -117,6 +153,7 @@
       "minlength5": "Deve contenere almeno 5 caratteri",
       "maxlength5": "Deve contenere non più di 5 caratteri",
       "maxlength1800": "Deve contenere non più di 1800 caratteri",
+      "maxlength5000": "Deve contenere non più di 5000 caratteri",
       "maxlengtharray2": "Deve contenere non più di 2 elementi",
       "codicefiscalealredyexist": "Codice fiscale già presente!",
       "codicefiscale": "Codice fiscale non valido!",
@@ -127,6 +164,7 @@
     "form.invalid" : "Corregere gli errori, per proseguire.",
     "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>",
     "error": {
+      "caller": "Il testo contiene caratteri o istruzioni non consentiti",
       "domanda.inviata.accesso" : "La domanda per il bando selezionato risulta inviata. Per visualizzarla accedere alla sezione <a href=\"my-applications\">Le mie domande</a>",
       "contentalredyexist": "Il file <b>{{filename}}</b> è già presente!",
       "maxuploadfilesize":"Il file <b>{{readableFileSize}}</b> supera la dimensione massima consentita <b>{{maxFileSize}}</b>",
@@ -165,7 +203,7 @@
         "success": "La domanda relativa al bando <b>{{callcode}}</b> è stata correttamente cancellata."
       },
       "print": {
-        "last": "E' disponibile la stampa versione <b class=\"badge badge-primary h6\">{{versionLabel}}</b> eseguita il <b>{{lastModificationDate}}</b>",
+        "last": "E' disponibile la stampa versione <b class=\"badge bg-primary h6\">{{versionLabel}}</b> eseguita il <b>{{lastModificationDate}}</b>",
         "new": "La stampa richiesta sarà accodata e, al termine della sua esecuzione, il sistema invierà una e-mail con la stampa allegata."
       }
     }  
@@ -207,10 +245,495 @@
     }
   },
   "faq": {
+    "subtitle": "Domande frequenti sulla presentazione delle candidature.",
     "title": "F.A.Q."
   },
   "helpdesk": {
-    "title": "HelpDesk"
+    "title": "HelpDesk",
+    "form": {
+      "info": "Compilare il modulo per inviare una segnalazione. Per i problemi relativi a un bando, selezionarne la tipologia e il bando di riferimento.",
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "email": "Email",
+      "confirmEmail": "Conferma email",
+      "emailMismatch": "Le email non coincidono",
+      "phoneNumber": "Telefono",
+      "callType": "Tipologia di bando",
+      "call": "Bando di riferimento",
+      "loadingCalls": "Caricamento bandi...",
+      "problemType": "Tipo di problema",
+      "tecnico": "Problema tecnico",
+      "normativo": "Problema normativo",
+      "subject": "Oggetto",
+      "message": "Messaggio",
+      "allegato": "Allegato (facoltativo)",
+      "send": "Invia segnalazione"
+    }
+  },
+  "communications": {
+    "new": {
+      "convocazioni": "Nuova convocazione",
+      "esclusioni": "Nuova esclusione",
+      "comunicazioni": "Nuova comunicazione"
+    },
+    "back_to_documents": "Torna ai documenti",
+    "state_one": {
+      "GENERATO": "Generato",
+      "FIRMATO": "Firmato",
+      "SPEDITO": "Spedito",
+      "CONSEGNATO": "Consegnato",
+      "RICEVUTO": "Ricevuto"
+    },
+    "title": "Comunicazioni ai candidati",
+    "kind": {
+      "convocazioni": "Convocazioni",
+      "esclusioni": "Esclusioni",
+      "comunicazioni": "Comunicazioni"
+    },
+    "section_generate": "Nuovo invio",
+    "section_documents": "Documenti",
+    "recipients": "Destinatari",
+    "filter_candidates": "Filtra per cognome, nome o codice fiscale",
+    "select_all": "Seleziona tutti",
+    "content": "Contenuto",
+    "numero": "Numero convocazione",
+    "data": "Data e ora",
+    "luogo": "Luogo",
+    "testo_libero": "Testo libero",
+    "qrcode": "Genera QR code",
+    "tipo": "Tipo",
+    "esclusione": "Esclusione",
+    "rinuncia": "Rinuncia",
+    "protocollo_numero": "Numero protocollo",
+    "protocollo_data": "Data protocollo",
+    "stampa_punteggi": "Stampa punteggi",
+    "appellativo": "Appellativo",
+    "note": "Note",
+    "firma": "Firma (in calce al documento)",
+    "allegato": "Allegato (facoltativo)",
+    "selected_count": "{{value}} candidati selezionati",
+    "generate": "Genera documenti",
+    "generated": "Documenti generati",
+    "document": "Documento",
+    "state": "Stato",
+    "modified": "Ultima modifica",
+    "download": "Scarica",
+    "states": {
+      "GENERATO": "Generati",
+      "FIRMATO": "Firmati",
+      "SPEDITO": "Spediti",
+      "CONSEGNATO": "Consegnati",
+      "all": "Tutti",
+      "RICEVUTO": "Ricevuti"
+    },
+    "actions_hint": "Le azioni valgono per i documenti selezionati (o, senza selezione, per quelli mostrati) e solo per quelli nello stato adatto: si firmano i generati, si inviano i firmati, si eliminano generati e firmati.",
+    "sign": "Firma",
+    "sign_info": "Verranno firmati digitalmente {{value}} documenti.",
+    "all": "tutti i",
+    "sign_auto": "Firma automatica",
+    "sign_user": "Utente di firma",
+    "sign_password": "Password",
+    "signed": "Documenti firmati",
+    "send": "Invia",
+    "send_info": "Verranno inviati ai candidati {{value}} documenti firmati.",
+    "address": "Indirizzo del destinatario",
+    "address_email": "Email del candidato",
+    "address_pec": "PEC del candidato",
+    "address_doc": "Indirizzo indicato nella domanda",
+    "send_pec": "Invia tramite casella PEC",
+    "pec_user": "Utente PEC",
+    "pec_password": "Password PEC",
+    "sent": "Documenti inviati",
+    "confirm_delete": "Eliminare i documenti? Quelli già spediti non vengono eliminati.",
+    "deleted": "Documenti eliminati",
+    "selected_docs": "{{value}} documenti selezionati",
+    "shown_docs": "{{value}} documenti mostrati"
+  },
+  "yes": "Sì",
+  "no": "No",
+  "export": {
+    "menu": "Esporta domande",
+    "title": "Esportazione domande del bando",
+    "excel": "Elenco in Excel",
+    "excel_info": "Un foglio Excel con i dati delle domande del bando.",
+    "download_excel": "Scarica Excel",
+    "status": {
+      "sent": "Inviate",
+      "active": "Attive (inviate e non escluse)",
+      "temporary": "Provvisorie",
+      "all": "Tutte"
+    },
+    "zip": "Estrazione domande in archivio zip",
+    "zip_info": "Un archivio con le stampe delle domande ed eventualmente gli allegati. Lasciare vuoti i filtri per includere tutto.",
+    "types": "Tipi di allegato da includere",
+    "applications": "Domande da includere",
+    "all_types": "Tutti i tipi",
+    "all_applications": "Tutte le domande",
+    "only_applications": "Solo domande",
+    "confirmed_with_attachments": "Confermate con allegati",
+    "active_with_attachments": "Attive con allegati",
+    "working": "Preparazione del file in corso, può richiedere qualche minuto...",
+    "done": "File scaricato",
+    "type": {
+      "application": "Domanda",
+      "integration": "Integrazioni alla domanda"
+    }
+  },
+  "overview": {
+    "title": "Convocazioni, esclusioni e comunicazioni",
+    "subtitle": "Documenti inviati ai candidati, di tutti i bandi.",
+    "candidate": "Candidato",
+    "panel_title": "Comunicazioni ai candidati"
+  },
+  "export_calls": {
+    "started": "Estrazione avviata",
+    "button": "Esporta in Excel",
+    "title": "Estrazione Excel dei bandi filtrati",
+    "info": "Le estrazioni usano i filtri impostati nella ricerca. Al termine dell'elaborazione riceverai per email il link per scaricare il file.",
+    "queued": "Estrazione «{{value}}» avviata: il link al file verrà inviato a {{email}}.",
+    "queued_short": "Estrazione avviata, riceverai una email",
+    "call": {
+      "title": "Bandi",
+      "description": "Informazioni dei bandi."
+    },
+    "commission": {
+      "title": "Commissioni",
+      "description": "Composizione delle commissioni dei bandi."
+    },
+    "application": {
+      "title": "Dati relativi alle domande",
+      "description": "Dati delle domande confermate."
+    },
+    "score": {
+      "title": "Punteggi e graduatoria",
+      "description": "Punteggi assegnati e posizione in graduatoria."
+    },
+    "istruttoria": {
+      "title": "Domande per istruttoria",
+      "description": "Tutti i dati delle domande, per l'istruttoria."
+    }
+  },
+  "download": {
+    "loading": "Download in corso...",
+    "done": "File scaricato",
+    "error": "File non disponibile",
+    "error_info": "Il file potrebbe essere già stato scaricato (è disponibile una sola volta) oppure il link non è valido per l'utente con cui hai effettuato l'accesso."
+  },
+  "export_applications": {"title": "Estrazione Excel delle domande filtrate", "info": "Le estrazioni usano i filtri impostati nell'elenco delle domande. Al termine dell'elaborazione riceverai per email il link per scaricare il file."},
+  "layout": {
+    "search_subtitle": "Ricerca avanzata dei bandi per codice, stato, tipologia, scadenza, Gazzetta Ufficiale e contenuto.",
+    "date_from": "Dal",
+    "date_to": "Al",
+    "gazette": "Gazzetta Ufficiale",
+    "number": "Numero",
+    "date": "Data",
+    "content": "Contenuto",
+    "reset_filters": "Azzera filtri",
+    "sort_by": "Ordina per",
+    "sort_asc": "Crescente",
+    "sort_desc": "Decrescente",
+    "sort": {"deadline": "Scadenza", "start": "Data di apertura", "gazette": "Gazzetta Ufficiale", "code": "Codice bando", "created": "Data di creazione", "modified": "Ultima modifica", "surname": "Cognome", "sent": "Data di invio"},
+    "prorogation": "Proroga/Riapertura",
+    "prorogation_judgment": "Riapertura giudiziale",
+    "prorogation_deadline": "nuova scadenza",
+    "save_before_switch": "Salva la sezione prima di cambiarla",
+    "section_of": "Sezione {{current}} di {{total}}",
+    "remove": "Rimuovi",
+    "none_selected": "Nessuna voce selezionata",
+    "add": "Aggiungi",
+    "filter": "Filtra",
+    "select_all": "Seleziona tutti",
+    "select_none": "Nessuno",
+    "breadcrumb": "Percorso di navigazione",
+    "call": "Bando",
+    "search_user": "Cerca per cognome o nome utente",
+    "search_call": "Cerca per codice bando",
+    "search_error": "Impossibile recuperare i risultati, riprovare.",
+    "no_results": "Nessun risultato",
+    "clear": "Cancella",
+    "close": "Chiudi",
+    "user_panel": "Area personale",
+    "username": "Nome utente",
+    "email": "E-mail",
+    "settings": "Impostazioni",
+    "my_applications": "Le mie candidature",
+    "all_applications": "Tutte le candidature",
+    "summary_mine": "Le mie candidature",
+    "summary_all": "Tutte le candidature",
+    "call_not_found": "Bando {{value}} non trovato.",
+    "call_info": "Informazioni sul bando",
+    "gazzetta": "Gazzetta Ufficiale",
+    "call_start": "Apertura",
+    "call_documents": "Bando e documenti allegati",
+    "applications_user_title": "Domande dei candidati",
+    "applications_mine_title": "Le mie domande",
+    "applications_user_subtitle": "Domande presentate dai candidati sui bandi di cui sei responsabile.",
+    "applications_mine_subtitle": "Le domande che hai presentato o che stai compilando.",
+    "filter_candidate": "Candidato",
+    "filter_call": "Bando",
+    "filter_application_state": "Stato della domanda",
+    "filter_deadline": "Scadenza del bando",
+    "application_modified": "Ultima modifica",
+    "application_sent": "Inviata il",
+    "calls_subtitle": "Bandi per il reclutamento di personale e per gli altri rapporti di lavoro e formazione del CNR.",
+    "state_open": "Aperti",
+    "state_closed": "Scaduti",
+    "state_all": "Tutti",
+    "status_open": "Aperto",
+    "status_expiring": "In scadenza",
+    "status_closed": "Chiuso",
+    "status_today": "Scade oggi",
+    "status_days_left": "Mancano {{value}} giorni",
+    "home": "Home",
+    "calls": "Bandi di concorso",
+    "call_type": "Tipologia",
+    "call_state": "Stato",
+    "search_placeholder": "Codice del bando",
+    "search_calls": "Cerca bandi",
+    "profile": "Il mio profilo",
+    "logout": "Esci",
+    "welcome": "Bentornato {{value}}",
+    "logout_done": "Logout effettuato",
+    "loading": "Caricamento...",
+    "list_of": "di",
+    "list_items": "elementi",
+    "load_more": "Carica altri",
+    "list_end": "Fine dell'elenco"
+  },
+  "call_manage": {
+    "edit_title": "Modifica bando",
+    "view_detail": "Dettaglio",
+    "actions": "Azioni",
+    "block": { "application_structure": "Struttura della domanda", "options": "Opzioni", "reminder_payment": "Sollecito, pagamento e blocco dell'invio","identification": "Identificazione", "texts": "Testi del bando", "place": "Sede e struttura", "requirements": "Requisiti", "period": "Periodo di presentazione delle domande"},
+    "panel_title": "Gestione del bando",
+    "saved": "Operazione eseguita",
+    "publish": "Pubblica",
+    "unpublish": "Ritira pubblicazione",
+    "published": "Pubblicato",
+    "not_published": "Non pubblicato",
+    "published_done": "Bando pubblicato",
+    "unpublished_done": "Pubblicazione ritirata",
+    "confirm_publish": "Pubblicare il bando? Verranno create le categorie HelpDesk e il bando sarà visibile ai candidati.",
+    "confirm_unpublish": "Ritirare la pubblicazione del bando?",
+    "confirm_delete": "Eliminare definitivamente il bando? L'operazione è consentita solo se non ci sono domande.",
+    "deleted": "Bando eliminato",
+    "preview": "Anteprima domanda",
+    "save_first": "Salvare il bando per gestire questa sezione.",
+    "copy": {
+      "button": "Copia bando",
+      "info": "Stai creando un nuovo bando a partire da una copia: indica il codice e salva. Le etichette personalizzate verranno copiate al primo salvataggio."
+    },
+    "child": {
+      "title": "Crea bando figlio",
+      "create": "Crea",
+      "created": "Bando figlio creato",
+      "info": "Il nuovo bando eredita tutte le impostazioni del bando {{value}}, tranne commissione e responsabili."
+    },
+    "children": {
+      "title": "Bandi figli"
+    },
+    "attachments": {
+      "link_children": "Collega ai bandi figli",
+      "copy_children": "Copia nei bandi figli",
+      "done": "Operazione eseguita su {{value}} bandi figli"
+    },
+    "score": {
+      "info": "Indicare l'etichetta di ogni voce di punteggio e, se previsti, il punteggio minimo e il limite massimo.",
+      "label": "Etichetta punteggio {{value}}",
+      "min": "Minimo",
+      "limit": "Limite"
+    },
+    "rdp": {
+      "title": "Responsabili del procedimento (RdP)",
+      "gestore": "Gestore del bando",
+      "add_hint": "Username dell'utente o nome del gruppo (GROUP_...)"
+    },
+    "helpdesk": {
+      "not_published": "Le categorie HelpDesk vengono create alla pubblicazione del bando.",
+      "tecnico": "Problemi tecnici",
+      "normativo": "Problemi normativi",
+      "add_hint": "Username dell'esperto"
+    },
+    "labels": {
+      "title": "Etichette",
+      "info": "Le etichette personalizzate sostituiscono, solo per questo bando, i testi mostrati nella domanda.",
+      "key": "Elemento",
+      "old_label": "Etichetta originale",
+      "new_label": "Nuova etichetta",
+      "current": "Etichetta attuale",
+      "confirm_delete": "Ripristinare l'etichetta originale?"
+    },
+    "permissions": {
+      "title": "Permessi",
+      "inherited": "Eredita i permessi dalla cartella superiore",
+      "authority": "Utente o gruppo",
+      "role": "Ruolo",
+      "direct": "Permessi assegnati",
+      "inherited_list": "Permessi ereditati",
+      "confirm_delete": "Rimuovere il permesso?"
+    },
+    "commission": {
+      "title": "Commissione",
+      "add": "Inserisci componente",
+      "empty": "Nessun componente inserito",
+      "appellativo": "Appellativo",
+      "nome": "Nome",
+      "cognome": "Cognome",
+      "sesso": "Sesso",
+      "ruolo": "Ruolo",
+      "qualifica": "Qualifica",
+      "email": "Email",
+      "username": "Username",
+      "username_hint": "Necessario per abilitare il componente all'accesso alle domande",
+      "nominativo": "Nominativo",
+      "stato": "Stato",
+      "enabled": "Abilitato",
+      "disabled": "Non abilitato",
+      "enable": "Abilita",
+      "disable": "Disabilita",
+      "confirm_delete": "Eliminare il componente della commissione?",
+      "video_missing": "Il componente non ha ancora visto il video sulla parità di genere. Abilitarlo comunque?",
+      "gender_summary": "Presidente e componenti: {{m}} uomini, {{f}} donne.",
+      "gender_unbalanced": "Ciascun genere dovrebbe essere rappresentato da almeno un terzo dei componenti.",
+      "ruoli": {
+        "A_PRE": "Presidente",
+        "B_COM": "Componente",
+        "C_SEG": "Segretario",
+        "D_SUP": "Supplente",
+        "E_DIM": "Dimissionario"
+      }
+    },
+    "gender": {
+      "title": "Parità di genere",
+      "text1": "Il Consiglio Nazionale delle Ricerche, nel sostenere le politiche per la parità di genere orientate alla diversità e all’inclusione, richiede a tutti i componenti e le componenti delle commissioni esaminatrici di guardare con attenzione il video “Il rumore di fondo”, realizzato nell’ambito dell’attuazione del Piano per la Parità di Genere 2022-2024 e del Piano di Riorganizzazione e Rilancio.",
+      "text2": "Il filmato è stato ideato con l’intento di stimolare una riflessione ad ampio spettro sui principali bias cognitivi riscontrati ed osservati dagli esperti in fase di valutazione dei candidati e delle candidate; per procedere è necessario completarne la proiezione.",
+      "more": "Per maggiori informazioni è disponibile la pagina dedicata sul portale istituzionale del CNR: <a href=\"https://www.cnr.it/it/cnr-per-la-parita-di-genere\">https://www.cnr.it/it/cnr-per-la-parita-di-genere</a>",
+      "done": "L'autorizzazione relativa alla parità di genere è stata correttamente registrata.",
+      "disabled": "La visione del video non è richiesta.",
+      "player_error": "Non è stato possibile collegarsi al player: verificare che il browser consenta gli script di PeerTube e ricaricare la pagina."
+    }
+  },
+  "admin": {
+    "title": "Amministrazione",
+    "menu": {
+      "groups": "Gruppi",
+      "gestori": "Gestori sedi",
+      "users": "Utenti",
+      "rbac": "Permessi (RBAC)",
+      "cache": "Cache",
+      "views": "Ispettore viste",
+      "jsConsole": "Console JS"
+    },
+    "error": {
+      "forbidden": "Permessi non sufficienti per questa operazione",
+      "generic": "Si è verificato un errore, riprovare"
+    },
+    "groups": {
+      "root": "Gruppi",
+      "create": "Nuovo gruppo",
+      "edit": "Modifica gruppo",
+      "name": "Nome (identificativo)",
+      "displayName": "Nome visualizzato",
+      "addMember": "Aggiungi membro",
+      "addMemberHint": "Indicare lo username di un utente oppure il nome completo di un gruppo (GROUP_...). Digitando almeno 3 caratteri vengono suggeriti i gruppi.",
+      "member": "Utente o gruppo",
+      "allMembers": "Tutti gli utenti",
+      "allMembersOf": "Utenti del gruppo {{value}}",
+      "removeMember": "Rimuovi dal gruppo",
+      "saved": "Gruppo salvato",
+      "deleted": "Gruppo eliminato",
+      "memberAdded": "Membro aggiunto",
+      "confirmRemoveMember": "Rimuovere il membro dal gruppo?",
+      "confirmDelete": "Eliminare definitivamente il gruppo?"
+    },
+    "gestori": {
+      "callType": "Tipologia di bando",
+      "sede": "Sedi"
+    },
+    "users": {
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "userName": "Username",
+      "matricola": "Matricola",
+      "codicefiscale": "Codice fiscale",
+      "email": "Email",
+      "emailesterno": "Email esterna",
+      "telephone": "Telefono",
+      "mobile": "Cellulare",
+      "smart": "Ricerca estesa (anche parti del testo)",
+      "enabled": "Stato",
+      "active": "Attivo",
+      "disabled": "Disabilitato",
+      "groups": "Gruppi",
+      "groupsOf": "Gruppi di {{value}}",
+      "edit": "Modifica utente",
+      "saved": "Utente aggiornato",
+      "deleted": "Utente eliminato",
+      "confirmDelete": "Eliminare definitivamente l'utente?",
+      "filterRequired": "Indicare almeno un criterio di ricerca"
+    },
+    "rbac": {
+      "add": "Nuovo permesso",
+      "id": "Risorsa",
+      "method": "Metodo",
+      "list": "Lista",
+      "type": "Tipo",
+      "authority": "Utente/Gruppo",
+      "filter": "Filtra per risorsa o autorità",
+      "saved": "Permesso aggiunto",
+      "confirmDelete": "Eliminare il permesso?"
+    },
+    "cache": {
+      "info": "Lo svuotamento forza il ricaricamento dei dati dal repository alla richiesta successiva.",
+      "reset": "Svuota",
+      "done": "Cache svuotata",
+      "bulkinfo": {
+        "title": "BulkInfo",
+        "description": "Definizioni delle maschere e dei campi."
+      },
+      "application": {
+        "title": "Domande",
+        "description": "Sezioni, aspect e allegati delle domande."
+      },
+      "call": {
+        "title": "Bandi",
+        "description": "Tipologie di bando e allegati."
+      },
+      "jasper": {
+        "title": "Report",
+        "description": "Modelli di stampa Jasper compilati."
+      },
+      "sedi": {
+        "title": "Sedi",
+        "description": "Elenco delle sedi provenienti da SIPER."
+      },
+      "labels": {
+        "title": "Etichette",
+        "description": "Etichette personalizzate dei bandi."
+      },
+      "types": {
+        "title": "Tipi",
+        "description": "Tipi documentali del repository."
+      },
+      "all": {
+        "title": "Tutte",
+        "description": "Svuota tutte le cache applicative."
+      }
+    },
+    "views": {
+      "filter": "Filtra tipi",
+      "select": "Selezionare un tipo dall'albero",
+      "form": "Form",
+      "find": "Ricerca",
+      "column": "Colonne"
+    },
+    "jsConsole": {
+      "warning": "Il codice viene eseguito direttamente sul repository Alfresco con i privilegi di amministratore: usare con cautela.",
+      "command": "Script",
+      "shortcut": "Ctrl+Invio per eseguire. help(oggetto) elenca proprietà e metodi.",
+      "execute": "Esegui",
+      "clear": "Pulisci output"
+    }
   },
   "home" : {
     "title": "Selezioni online CNR",
@@ -233,6 +756,11 @@
     }
   },
   "signin": {
+    "sso": "Entra SSO/SPID/CIE",
+    "spid": {"info": "SPID, il Sistema Pubblico di Identità Digitale, è il sistema di accesso che consente di utilizzare, con un'identità digitale unica, i servizi online della Pubblica Amministrazione e dei privati accreditati. Se sei già in possesso di un'identità digitale, accedi con le credenziali del tuo gestore. Se non hai ancora un'identità digitale, richiedila ad uno dei gestori.", "more": "Maggiori informazioni", "request": "Non hai SPID?", "help": "Serve aiuto?"},
+    "recover": {"button": "Recupera password", "help": "Per nome utente o password dimenticati utilizzare il bottone di recupero password che richiede l'indirizzo e-mail indicato nella registrazione al sito. Sarà inviata un'email che consentirà di reimpostare la password.", "email": "Indirizzo e-mail indicato nella registrazione", "send": "Invia", "sent": "Ti abbiamo inviato un'email per reimpostare la password.", "not_found": "Nessun utente registrato con questo indirizzo e-mail.", "error": "Non è stato possibile avviare il recupero della password."},
+    "oidc_error": "Accesso con le credenziali istituzionali non riuscito. Riprova o contatta l'assistenza.",
+    "oidc_loading": "Accesso in corso...",
     "title": "Accedi",
     "unauthorized": "Nome utente e/o password errate, utilizzare il nome utente assegnato in fase di registrazione e non l'indirizzo email.",
     "concorsi": "Per partecipare alle selezioni online del Consiglio Nazionale delle Ricerche occorre accedere all'area utenti inserendo Nome utente e password scelti in fase di registrazione al sito.",
@@ -299,6 +827,8 @@
     }
   },
   "application": {
+    "preview": {"title": "Anteprima della domanda", "info": "così la vedranno i candidati; i dati inseriti non vengono salvati."},
+    "download_zip": "Scarica la domanda (zip)",
     "title": "DOMANDA DI PARTECIPAZIONE",
     "all": "Domande presentate",
     "possesso_requisiti": "di essere in possesso dei requisiti di cui all'{{value}}",
@@ -338,6 +868,14 @@
     },
     "reopen": "Riapri domanda",
     "copy": "Copia domanda",
+    "copy_dialog": {
+      "title": "Copia domanda",
+      "info": "La domanda del bando <strong>{{codice}}</strong> verrà copiata, con i relativi allegati, nel bando selezionato.",
+      "filter": "Filtra per codice o sede",
+      "empty": "Nessun bando attivo dello stesso tipo disponibile.",
+      "confirm": "Copia nel bando selezionato",
+      "success": "Domanda copiata"
+    },
     "status": {
       "temporary": "Provvisorie",
       "confirmed": "Inviate",
@@ -421,7 +959,33 @@
     }
   },
   "label": {
+    "option": {"yes": "Si", "no": "No"},
     "jconon_call": {
+      "group_multiple_application": "Gruppo bandi con domanda multipla",
+      "elenco_sezioni_domanda": "Sezioni della domanda",
+      "elenco_field_not_required": "Campi non obbligatori",
+      "elenco_lingue_da_conoscere": "Lingue da conoscere",
+      "print_dic_sost": "Stampa dichiarazione sostitutiva",
+      "print_trattamento_dati_personali": "Stampa consenso al trattamento dei dati personali",
+      "num_giorni_mail_sollecito": "Giorni prima della scadenza per il sollecito via email",
+      "only_user_spid_can_submit_application": "Domanda consentita solo con accesso SPID",
+      "blocco_invio_domande": "Blocca l'invio delle domande",
+      "blocco_invio_domande_message": "Messaggio mostrato ai candidati durante il blocco",
+      "scheda_valutazione": "Schede di valutazione",
+      "pagamento_pagopa": "Pagamento pagoPA",
+      "importo_pagamento_pagopa": "Importo pagoPA (€)",
+      "elenco_aspects": "Dati del candidato (sezione Dichiarazioni)",
+      "elenco_aspects_sezione_cnr": "Dati CNR",
+      "elenco_aspects_ulteriori_dati": "Dati di preselezione",
+      "elenco_aspects_sezione_4": "Dati sezione 4",
+      "elenco_aspects_sezione_5": "Dati sezione 5",
+      "elenco_association": "Allegati della domanda",
+      "elenco_sezioni_curriculum": "Sezioni del curriculum",
+      "elenco_sezioni_curriculum_ulteriore": "Sezioni del curriculum ulteriore",
+      "elenco_prodotti": "Tipologie di prodotti",
+      "numero_max_prodotti": "Numero massimo di prodotti",
+      "scheda_anonima_sintetica": "Scheda anonima sintetica",
+      "elenco_schede_anonime": "Schede anonime",
       "codice": "Codice Bando",
       "numero_posti": "Numero posti",
       "descrizione": "Titolo Bando",
@@ -449,6 +1013,20 @@
       "data_fine_invio_domande": "Scadenza"
     },
     "jconon_application": {
+      "fl_condanne_penali_nuova_normativa": "di non aver riportato condanne penali con sentenza passata in giudicato per reati che comportano l’interdizione dai pubblici uffici",
+      "fl_procedimenti_penali_nuova_normativa": "di non avere in corso procedimenti penali di cui si è a conoscenza ovvero procedimenti amministrativi per l'applicazione di misure di sicurezza o di prevenzione o precedenti penali a proprio carico iscrivibili nel casellario giudiziale",
+      "fl_terzo_anno_dottorato": "di essere iscritto al terzo anno di dottorato e di conseguire il titolo entro i sei mesi successivi alla data di pubblicazione del presente bando",
+      "fl_ultimo_anno_corso_specializzazione": "di essere iscritto all'ultimo anno del corso di specializzazione di area medica e di conseguire il titolo entro i sei mesi successivi alla data di pubblicazione del bando",
+      "fl_curriculum_scientifico_professionale_idoneo": "di essere in possesso di curriculum scientifico-professionale idoneo allo svolgimento di attività di ricerca",
+      "fl_conoscere_lingua_inglese_rilevante_ricerca": "di conoscere la lingua inglese e/o di eventuali altre lingue richieste dal bando rilevanti per la ricerca",
+      "fl_dipendente_ruolo_tempo_indeterminato": "di non essere dipendente di ruolo, assunto a tempo indeterminato, delle istituzioni di cui al comma 1 dell’art. 22, della Legge 30 dicembre 2010, n.240, nonché di non aver fruito di contratti di cui all’art. 24 della medesima Legge",
+      "fl_titolare_posizioni_artt_22": "di non essere stato titolare di posizioni di cui agli artt. 22, 22bis, 22ter di durata tale da impedire, ai sensi dell’art. 22ter comma 9 della Legge 240/2010 e del 2 e 3 comma dell’art, 2 del bando, l’attivazione del contratto oggetto del bando stesso",
+      "fl_rapporto_parentela_direttore": "di non avere un rapporto di parentela o di affinità fino al IV grado compreso, di coniugio o di unione civile tra persone dello stesso sesso, così come disciplinato dall’articolo 1 della legge 20 maggio 2016, n. 76, oppure di non essere in stato di convivenza di fatto, così come regolamentato dall’articolo 1, commi 37 e ss. della medesima legge, con il Direttore della struttura destinataria della posizione",
+      "fl_conferma_trattamento_dati_personali_europeo": "Confermo di aver letto e ben compreso l’informativa sul trattamento dati personali nel rispetto della vigente normativa sulla protezione dei dati personali ed, in particolare, il Regolamento Europeo per la protezione dei dati personali 2016/679, il d.lgs. 30/06/2003 n. 196 e successive modifiche e integrazioni, come modificato da ultimo dal d.lgs. 10/08/2018 n. 101.",
+      "fl_autorizzazione_trattamento_dati_personali_europeo": "Autorizzo il trattamento dei dati personali nel rispetto della vigente normativa sulla protezione dei dati personali ed, in particolare, il Regolamento Europeo per la protezione dei dati personali 2016/679, il d.lgs. 30/06/2003 n. 196 e successive modifiche e integrazioni, come modificato da ultimo dal d.lgs. 10/08/2018 n. 101.",
+      "fl_dichiarazioni_art_46_46_dpr_445": "Dichiaro ai sensi degli artt. 46 e 47 del D.P.R. n° 445 del 28/12/2000 e s.m.i. - Testo Unico delle disposizioni amministrative e regolamentari in materia di documentazione amministrativa - che i contenuti della domanda di partecipazione e del curriculum professionale comprese le informazioni sulla produzione scientifico/tecnologica corrisponde a verità.",
+      "fl_dichiarazioni_art_75_75_dpr_445": "Dichiaro di essere consapevole che, in caso di dichiarazioni non veritiere, verranno applicate le sanzioni penali previste e la decadenza dal beneficio ottenuto sotto la mia personale responsabilità (artt. 75 e 76 D.P.R n° 445 del 28/12/2000 e s.m.i.)",
+      "fl_altre_borse_studio_false": "di aver usufruito di altre borse di studio: {0}",
       "firstname": "Nome",
       "lastname": "Cognome",
       "codice_fiscale": "Codice Fiscale",
@@ -630,6 +1208,9 @@
       "data_graduatoria_idoneo_precedenti_graduatorie": "Data graduatoria",
       "fl_dichiarazione_servizi_collocamento": "di essere iscritto nell'elenco tenuto, ai sensi del DPR 10 ottobre 2000 n. 333, dai servizi per il collocamento mirato di cui all'art. 18 comma 2 della legge 12 marzo 1999 n. 68",
       "motivazioni_candidatura": "Motivazioni della candidatura",
+      "fl_diversamente_abile_104": "di essere diversamente abile ai sensi dell’art. 20 della legge 104/1992",
+      "fl_dsa": "di essere affetto da disturbi specifici dell'apprendimento (DSA)",
+      "programma_di_mandato": "Programma di mandato (max 5000 caratteri)",
       "fl_abilitazione_professione_ingegnere": "di essere abilitato all'esercizio della professione di ingegnere",
       "data_abilitazione_professione_ingegnere": "Data abilitazione",
       "fl_iscrizione_albo_professione_ingegnere": "Iscrizione all'Albo",

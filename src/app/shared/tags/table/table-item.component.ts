@@ -12,6 +12,7 @@ import {AllowableAction} from '../../../common/model/allowableaction.enum';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
+  standalone: false,
   selector: '[app-table-item]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template:

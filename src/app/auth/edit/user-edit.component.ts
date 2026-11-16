@@ -9,15 +9,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { UniqueFieldValidator } from '../../common/validation/uniquefield-validator.model';
 import { User } from '../model/user.model';
 import { UserService } from './user.service';
-import {RxwebValidators} from '@rxweb/reactive-form-validators';
+import { compareValidator } from '../../common/helpers/compare.validator';
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { CacheService } from '../../core/cache.service';
 import { Subject } from 'rxjs';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../shared/modal/modal.service';
 import { CheckboxModel } from '../../common/model/checkbox.model';
 
 @Component({
+  standalone: false,
     selector: 'app-user-edit',
     templateUrl: './user-edit.component.html'
 })
@@ -28,12 +29,12 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
     submitted = false;
     paesi: string[];
     public userActivated = new Subject<User>();
-    modalRef: BsModalRef;
+    modalRef: ModalRef;
     sexModel = CheckboxModel.SEXModel();
     foreignModel = CheckboxModel.ForeignModel();
     
     constructor(private formBuilder: FormBuilder,
-                private modalService: BsModalService,
+                private modalService: ModalService,
                 private apiMessageService: ApiMessageService,
                 protected userService: UserService,
                 protected cacheService: CacheService,
@@ -104,7 +105,7 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
                 ], 
                 [emailUnique.validator.bind(emailUnique)] 
             ],
-            confirmemail: ['', [Validators.required, Validators.email, RxwebValidators.compare({fieldName: 'email'})]],
+            confirmemail: ['', [Validators.required, Validators.email, compareValidator('email')]],
             password: ['', [
                     Validators.required, 
                     Helpers.patternValidator(/\d/, { hasNumber: true }),
@@ -113,7 +114,7 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
                     Helpers.minlengthValidator(8, {minlength8: true}),
                 ]
             ],
-            confirmpassword: ['', [Validators.required, RxwebValidators.compare({fieldName: 'password'})]],
+            confirmpassword: ['', [Validators.required, compareValidator('password')]],
             straniero: [ this.entity.straniero ? String(this.entity.straniero) : 'false', Validators.required],
             codicefiscale: [this.entity.codicefiscale, [
                 Validators.required, 
@@ -134,7 +135,7 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
                 Helpers.minlengthValidator(8, {minlength8: true})
                 ]
             ],
-            confirmpassword: ['', [Validators.required, RxwebValidators.compare({fieldName:'newpw' })]],
+            confirmpassword: ['', [Validators.required, compareValidator('newpw')]],
         });
         if (this.entity.userName) {
             this.ngForm.controls.confirmemail.disable();

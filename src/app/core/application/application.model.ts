@@ -194,6 +194,12 @@ export class Application extends Folder {
   public tempi_aggiuntivi_diversamente_abile: string = undefined;
   @JsonProperty('jconon_application:ausili_diversamente_abile')
   public ausili_diversamente_abile: string = undefined;
+  @JsonProperty('jconon_application:fl_diversamente_abile_104')
+  public fl_diversamente_abile_104: boolean = undefined;
+  @JsonProperty('jconon_application:fl_dsa')
+  public fl_dsa: boolean = undefined;
+  @JsonProperty('jconon_application:programma_di_mandato')
+  public programma_di_mandato: string = undefined;
 
   @JsonProperty('jconon_application:fl_tempi_aggiuntivi')
   public fl_tempi_aggiuntivi: boolean = undefined;

@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Legend} from '../../../common/model/legend.model';
 
 @Component({
+  standalone: false,
   selector: 'app-layout-legend',
   template:
 

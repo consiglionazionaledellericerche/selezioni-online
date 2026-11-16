@@ -1,10 +1,11 @@
 import {Component, Input, TemplateRef, OnInit} from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../shared/modal/modal.service';
 import { User } from '../model/user.model';
 import { Helpers } from '../../common/helpers/helpers';
 import { UserService } from '../edit/user.service';
 
 @Component({
+  standalone: false,
   selector: 'app-show-user-modal',
   template: `
     
@@ -55,8 +56,8 @@ export class ShowUserModalComponent {
   @Input() username;
   @Input() groups: boolean;
   user: User;
-  modalRef: BsModalRef;
-  constructor(private modalService: BsModalService,               
+  modalRef: ModalRef;
+  constructor(private modalService: ModalService,               
               protected userService: UserService) {}
    
   openModal(template: TemplateRef<any>) {

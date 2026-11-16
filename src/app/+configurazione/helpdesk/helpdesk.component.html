@@ -1,1 +1,84 @@
-<h1>HELPDESK</h1>
+<div class="container-fluid pt-2">
+  <h3 class="w-100" translate>helpdesk.title</h3>
+
+  <div *ngIf="sent" class="alert alert-success fw-semibold" [innerHtml]="(isGuest ? 'message.helpdesk.send.forconfirmed' : 'message.helpdesk.send.success') | translate"></div>
+
+  <div *ngIf="!sent">
+    <div class="alert alert-warning small" translate>helpdesk.form.info</div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="hd-firstName" class="active" translate>helpdesk.form.firstName</label>
+          <input id="hd-firstName" type="text" class="form-control" formControlName="firstName" [readonly]="!isGuest">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="hd-lastName" class="active" translate>helpdesk.form.lastName</label>
+          <input id="hd-lastName" type="text" class="form-control" formControlName="lastName" [readonly]="!isGuest">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="hd-email" class="active" translate>helpdesk.form.email</label>
+          <input id="hd-email" type="email" class="form-control" formControlName="email" [readonly]="!isGuest">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="hd-confirmEmail" class="active" translate>helpdesk.form.confirmEmail</label>
+          <input id="hd-confirmEmail" type="email" class="form-control" formControlName="confirmEmail" [readonly]="!isGuest">
+          <small *ngIf="form.errors?.emailMismatch && form.controls.confirmEmail.touched" class="text-danger" translate>helpdesk.form.emailMismatch</small>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="hd-phone" class="active" translate>helpdesk.form.phoneNumber</label>
+          <input id="hd-phone" type="tel" class="form-control" formControlName="phoneNumber">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="hd-callType" class="active" translate>helpdesk.form.callType</label>
+          <select id="hd-callType" class="form-select" formControlName="callType" (change)="onChangeCallType()">
+            <option value=""></option>
+            <option *ngFor="let type of callTypes" [value]="type.key">{{type.key | translate}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="hd-call" class="active" translate>helpdesk.form.call</label>
+          <select id="hd-call" class="form-select" formControlName="callId">
+            <option value=""></option>
+            <option *ngFor="let call of calls" [value]="call.getObjectId()">{{call.codice}}{{call.sede ? ' - ' + call.sede : ''}}</option>
+          </select>
+          <small *ngIf="loadingCalls" class="text-muted" translate>helpdesk.form.loadingCalls</small>
+        </div>
+      </div>
+
+      <fieldset class="mb-4">
+        <legend class="h6" translate>helpdesk.form.problemType</legend>
+        <div class="form-check form-check-inline">
+          <input id="hd-tecnico" type="radio" value="tecnico" formControlName="problemType">
+          <label for="hd-tecnico" translate>helpdesk.form.tecnico</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input id="hd-normativo" type="radio" value="normativo" formControlName="problemType">
+          <label for="hd-normativo" translate>helpdesk.form.normativo</label>
+        </div>
+      </fieldset>
+
+      <div class="form-group">
+        <label for="hd-subject" class="active" translate>helpdesk.form.subject</label>
+        <input id="hd-subject" type="text" class="form-control" formControlName="subject" maxlength="200">
+      </div>
+      <div class="form-group">
+        <label for="hd-message" class="active" translate>helpdesk.form.message</label>
+        <textarea id="hd-message" class="form-control" rows="8" formControlName="message"></textarea>
+      </div>
+      <div class="form-group">
+        <span class="small fw-semibold d-block mb-2" translate>helpdesk.form.allegato</span>
+        <it-upload-drag-drop #hdUpload (fileStartUpload)="onFileChange({ target: { files: [$event] } }); hdUpload.progress(100); hdUpload.success()"></it-upload-drag-drop>
+      </div>
+
+      <div class="text-end">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid || sending">
+          <span translate>helpdesk.form.send</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

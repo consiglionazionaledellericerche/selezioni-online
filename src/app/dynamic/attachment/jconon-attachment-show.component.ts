@@ -4,6 +4,7 @@ import { CmisObject } from '../../common/model/cmisobject.model';
 import { FormGroup } from '@angular/forms';
 
 @Component({
+  standalone: false,
     selector: 'D:jconon_attachment:document',
     template: `
       <table class="table table-striped table-hover table-borderless">  

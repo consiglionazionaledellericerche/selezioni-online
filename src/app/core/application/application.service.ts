@@ -1,3 +1,4 @@
+import { of as observableOf } from 'rxjs';
 import { throwError as observableThrowError, Observable, Subject } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -38,6 +39,15 @@ export class ApplicationService extends CommonService<Application> {
 
   public getRoute(): string {
     return ApplicationService.ROUTE;
+  }
+
+  /** Conteggi delle domande visibili all'utente (tutte le candidature), raggruppati per stato. */
+  public allApplicationState(): Observable<ApplicationState[]> {
+    return this.configService.getApiBase().pipe(
+      switchMap((apiBase) => this.httpClient.get<any[]>(apiBase + this.getApiPath() + '/all-state')),
+      map((result: any[]) => (result || []).map(item => Helpers.buildInstance(item, ApplicationState))),
+      catchError(() => observableOf([] as ApplicationState[]))
+    );
   }
 
   public applicationState(userId: string): Observable<ApplicationState[]> {
@@ -212,6 +222,33 @@ export class ApplicationService extends CommonService<Application> {
               catchError( (httpErrorResponse: HttpErrorResponse) => {
                 const springError = new SpringError(httpErrorResponse, this.translateService);
                 return observableThrowError(springError.getRestErrorMessage());
+              })
+            );
+        })
+      );
+  }
+
+  /**
+   * Duplica la domanda nel bando di destinazione.
+   * Restituisce l'identificativo della nuova domanda.
+   */
+  public pasteApplication(applicationSourceId: string, callTargetId: string): Observable<string> {
+    const params = new HttpParams()
+          .set('applicationSourceId', applicationSourceId)
+          .set('callTargetId', callTargetId);
+
+    return this.configService.getApiBase()
+      .pipe(
+        switchMap((apiBase) => {
+          return this.httpClient.post<any>(apiBase + this.getApiPath() + '/paste', params)
+            .pipe(
+              map((result) => result['cmis:objectId']),
+              catchError( (httpErrorResponse: HttpErrorResponse) => {
+                const message = httpErrorResponse.error && httpErrorResponse.error.error ?
+                  httpErrorResponse.error.error :
+                  new SpringError(httpErrorResponse, this.translateService).getRestErrorMessage();
+                this.apiMessageService.sendMessage(MessageType.ERROR, message);
+                return observableThrowError(message);
               })
             );
         })

@@ -1,3 +1,4 @@
+import { invalidFieldsMessage } from '../../common/helpers/form-errors';
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +16,7 @@ import { ApiMessageService, MessageType } from '../api-message.service';
 import { ShowAffixComponent } from '../../shared/tags/show/show-affix.component';
 import { Helpers } from '../../common/helpers/helpers';
 import { ModalInfoComponent } from '../../shared/tags/wizard/modal-info.component';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../shared/modal/modal.service';
 import { LoadingState } from '../../auth/loading-state.enum';
 import { Subscription } from 'rxjs';
 import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.component';
@@ -23,6 +24,7 @@ import { UserService } from '../../auth/edit/user.service';
 import { PrintApplicationComponent } from './print-application.component';
 
 @Component({
+  standalone: false,
   selector: 'manage-application',
   template:
   `
@@ -65,60 +67,67 @@ import { PrintApplicationComponent } from './print-application.component';
         <h5 class="text-center" *ngIf="call.elenco_macroaree">{{call.elenco_macroaree}}</h5>
       </div>
       <div class="card card-bg border-bottom-card" >
-        <div class="card-header d-flex">
-          <div class="h1 flex-grow-1">{{call.elenco_sezioni_domanda[affixCompleted] | translate}}</div>
-          <div class="h4">{{affixCompleted + 1}}/{{affix.length}}</div>
+        <div class="card-header p-0 section-tabs-wrapper">
+          <ul class="nav nav-tabs section-tabs" role="tablist">
+            <li class="nav-item" *ngFor="let number of affix" role="presentation">
+              <a class="nav-link" href="javascript:void(0)" role="tab"
+                 [class.active]="number === affixCompleted"
+                 [attr.aria-selected]="number === affixCompleted"
+                 [title]="tabLabel(call.elenco_sezioni_domanda[number])"
+                 (click)="goToSection(number)">
+                <span class="section-number" [class.done]="number < entity.last_section_completed">
+                  <svg *ngIf="number < entity.last_section_completed" class="icon icon-xs icon-white"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-check"></use></svg>
+                  <span *ngIf="!(number < entity.last_section_completed)">{{ number + 1 }}</span>
+                </span>
+                <span class="section-name">{{ tabLabel(call.elenco_sezioni_domanda[number]) }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="preview" class="preview-callout mx-3 mt-3 mb-0" role="status">
+          <svg class="icon icon-primary flex-shrink-0" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-info-circle"></use></svg>
+          <div><strong>{{ 'application.preview.title' | translate }}</strong> — {{ 'application.preview.info' | translate }}</div>
         </div>
         <div class="card-body mt-2">  
           <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
           <div class="steppers">
             <nav class="steppers-nav px-0">
-              <a [ngClass]="{'disabled': (affixCompleted == 0 || !form.pristine) && !isDisableConfirm}" 
-                (click)="affixCompleted = affixCompleted - 1;scroll(cardApplication);" 
+              <a [ngClass]="{'disabled': affixCompleted == 0}" 
+                (click)="goToSection(affixCompleted - 1)" 
                 class="btn btn-link text-primary steppers-btn-prev px-1">
-                <svg class="icon icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-left"></use></svg>
+                <svg class="icon icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-chevron-left"></use></svg>
                 <span translate>previous</span>
               </a>
-              <ul class="steppers-dots d-flex">
-                <li *ngFor="let number of affix" 
-                  [ngClass]="{'done': number < entity.last_section_completed, 'bg-light': !form.pristine && !isDisableConfirm}"
-                  [popover]="call.elenco_sezioni_domanda[number] | translate"
-                  triggers="mouseenter:mouseleave">
-                  <a [ngClass]="{'disabled': !form.pristine && !isDisableConfirm}" 
-                    class="btn"                   
-                    (click)="affixCompleted = number;scroll(cardApplication);"></a>
-                </li>
-              </ul>
-              <a [ngClass]="{'disabled': affixCompleted == affix.length - 1 || !form.pristine}" 
-                (click)="affixCompleted = affixCompleted + 1;scroll(cardApplication);" 
+              <span class="small text-secondary">{{ 'layout.section_of' | translate:{current: affixCompleted + 1, total: affix.length} }}</span>
+              <a [ngClass]="{'disabled': affixCompleted == affix.length - 1}" 
+                (click)="goToSection(affixCompleted + 1)" 
                 class="btn btn-link text-primary steppers-btn-next px-1">
                 <span translate>next</span>
-                <svg class="icon icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-chevron-right"></use></svg>
+                <svg class="icon icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-chevron-right"></use></svg>
               </a>
             </nav>
           </div>
         </div>
-        <div class="card-footer rounded-bottom">
+        <div class="card-footer rounded-bottom" *ngIf="!preview">
           <div class="d-flex justify-content-end">
             <div class="form-group text-start me-auto">
               <button 
                 [disabled]="!form.pristine"
                 (click)="deleteApplication($event)" 
                 class="btn btn-outline-danger btn-lg btn-icon me-2" 
-                tooltip="{{'application.delete'| translate}}">
+                [itTooltip]="'application.delete'| translate">
                 <span class="d-none d-md-block pe-1" translate>application.delete</span>
                 <svg class="icon icon-danger"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-delete"></use></svg>
               </button>
             </div>
             <div class="form-group text-end">
               <button 
-                *ngIf="entity.isProvvisoria()"
                 [disabled]="!form.pristine"
                 (click)="printApplication($event)" 
-                class="btn btn-outline-danger btn-lg btn-icon me-2" 
-                tooltip="{{'application.print.application'| translate}}">
+                class="btn btn-outline-primary btn-lg btn-icon me-2" 
+                [itTooltip]="'application.print.application'| translate">
                 <span class="d-none d-md-block pe-1" translate>application.print.application</span>
-                <svg class="icon icon-danger"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-print"></use></svg>
+                <svg class="icon icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-print"></use></svg>
               </button>
             </div>
             <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-end">  
@@ -126,7 +135,7 @@ import { PrintApplicationComponent } from './print-application.component';
                 #sendApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateSend.isStarting()"
                 class="btn btn-primary w-100 btn-lg btn-icon me-2 rounded" 
-                tooltip="{{'application.send' | translate}}">
+                [itTooltip]="'application.send' | translate">
                 <span class="pe-1 w-100 text-end" translate>application.send</span>
                 <svg *ngIf="!loadingStateSend.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-upload"></use></svg>              
                 <div *ngIf="loadingStateSend.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
@@ -141,7 +150,7 @@ import { PrintApplicationComponent } from './print-application.component';
                 #confirmApplicationButton 
                 [disabled]="isDisableConfirm || loadingStateConfirm.isStarting()"
                 class="btn btn-primary w-100 btn-lg btn-icon rounded" 
-                tooltip="{{'application.confirm' | translate}}">
+                [itTooltip]="'application.confirm' | translate">
                 <span class="pe-1 w-100 text-end" translate>application.confirm</span>
                 <svg *ngIf="!loadingStateConfirm.isStarting()" class="icon icon-white"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-arrow-right-circle"></use></svg>
                 <div *ngIf="loadingStateConfirm.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
@@ -165,8 +174,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   cache: any = {};
   public affixCompleted: number = 0;
   public affix: number[];
-  bsModalRefSend: BsModalRef;
-  bsModalRefDelete: BsModalRef;
+  bsModalRefSend: ModalRef;
+  bsModalRefDelete: ModalRef;
 
   subscription: Subscription;
   loadingStateConfirm: LoadingState = LoadingState.DEFAULT;
@@ -184,7 +193,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   public constructor(public service: ApplicationService,
                      public callService: CallService,
                      private apiMessageService: ApiMessageService,
-                     private modalService: BsModalService,
+                     private modalService: ModalService,
                      private authService: AuthService,
                      protected userService: UserService,
                      private cacheService: CacheService,
@@ -207,12 +216,29 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     });
   }
   
+  /** Anteprima della domanda (dalla gestione del bando): nessun salvataggio, navigazione libera. */
+  public preview = false;
+
   public ngOnInit() {
     this.route.queryParams.subscribe((queryParams) => {
       this.callService.getById(queryParams['callId']).subscribe((call) => {
         this.call = call;
         this.user = this.authService.getUser();
         this.affix = Array(call.elenco_sezioni_domanda.length).fill(0).map((x,i)=>i);
+        this.preview = queryParams['preview'] === 'true' || queryParams['preview'] === true;
+        if (this.preview) {
+          // anteprima: domanda vuota non salvata, senza i controlli sul candidato del backend
+          const application = this.service.buildInstance({
+            'cmis:objectTypeId': 'F:jconon_application:folder',
+            'cmis:baseTypeId': 'cmis:folder',
+            'jconon_application:stato_domanda': 'P',
+            'jconon_application:user': this.user ? this.user.userName : ''
+          });
+          application.call = call;
+          this.setEntity(application);
+          this.affixCompleted = 0;
+          this.buildCreateForm();
+        } else
         this.service.loadApplication(call.objectId, queryParams['applicationId']||'', this.user.userName).subscribe((application) => {
           application.call = call;
           this.setEntity(application);
@@ -351,6 +377,32 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     }
   }
 
+  /**
+   * Cambio di sezione (schede, Avanti, Indietro): con modifiche non salvate la sezione viene prima salvata
+   * in bozza; se ha errori si resta e vengono elencati i campi da correggere. Le sezioni restano sempre
+   * raggiungibili (es. dopo un errore di invio per tornare a correggere).
+   */
+  public goToSection(section: number) {
+    if (section === this.affixCompleted || section < 0 || section >= this.affix.length) {
+      return;
+    }
+    if (this.preview || this.form.pristine) {
+      this.affixCompleted = section;
+      this.scroll(this.cardApplication.nativeElement);
+      return;
+    }
+    if (!this.isFormValid) {
+      return;
+    }
+    this.service.saveApplication(this.buildInstance()).subscribe((application) => {
+      application.call = this.call;
+      this.setEntity(application);
+      this.buildCreateForm();
+      this.affixCompleted = section;
+      this.scroll(this.cardApplication.nativeElement);
+    });
+  }
+
   public confirmApplication(event: Event) {
     if (!this.isDisableConfirm && this.isFormValid && this.confirmApplicationButton) {
       this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted + 1);
@@ -409,15 +461,11 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   get isFormValid() : boolean {
-    var invalidControls = [];
     Object.keys(this.form.controls).forEach(control => {
       if (this.form.controls[control].status === 'INVALID') {
         this.form.controls[control].markAsDirty({onlySelf: true});
         this.form.controls[control].markAsTouched({onlySelf: true});
         this.form.controls[control].patchValue(this.form.controls[control].value || null);
-        this.translateService.get('label.'+ control.replace(':', '.')).subscribe((label) => {
-          invalidControls.push('<li class="fw-bold pt-2">' + label + '</li>');
-        });
         const invalidControl = this.el.nativeElement.querySelector('input.is-invalid,textarea.invalid,select.is-invalid');
         const invalidFormControl = document.querySelector('[formcontrolname="' + control + '"], .is-invalid');
         if (invalidControl) {
@@ -431,13 +479,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       }      
     });
     if (this.form.invalid) {
-        if (invalidControls.length > 3) {
-          invalidControls = invalidControls.slice(0, 3);
-          invalidControls.push('<li class="fw-bold pt-2">ecc...</li>');
-        }
-        this.translateService.get('message.form.invalid').subscribe((label) => {
-            this.apiMessageService.sendMessage(MessageType.WARNING, label + '<ul class="list-unstyled">' + invalidControls.join('') + '</ul>');
-        });
+        this.apiMessageService.sendMessage(MessageType.ERROR,
+          invalidFieldsMessage(this.form, this.translateService, this.el.nativeElement));
     }
     return !this.form.invalid;
   }
@@ -452,5 +495,17 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  /** Nome della sezione nella scheda, senza il prefisso "Sezione I - " (il numero è già nel cerchio). */
+  public tabLabel(key: string): string {
+    const label = this.translateService.instant(key || '') || key;
+    const text = String(label)
+      .replace(/^\s*(sezione|section)\s+[ivxlcdm\d]+\s*[-–:.]\s*/i, '')
+      .replace(/^\s*(sezione|section)\s+/i, '');
+    // nomi tutti in maiuscolo: in forma normale, più leggibili e meno larghi nelle schede
+    return text.length > 3 && text === text.toUpperCase() && /[A-Z]/.test(text)
+      ? text.charAt(0) + text.slice(1).toLowerCase()
+      : text;
   }
 }

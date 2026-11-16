@@ -70,14 +70,17 @@ export class AuthService {
    * @param username
    * @param password
    */
+   /**
+    * Accesso SSO: il backend (SSOSecurityController, adapter Keycloak) valida il token OIDC inviato come
+    * "Authorization: Bearer" e restituisce ticket, utente e scadenza.
+    */
    public signinUserSSO(access_token: string): Observable<any> {
-    const post = 'access_token=' + access_token;
     return this.configService.getGateway().pipe(switchMap((gateway) => {
-      return this.httpClient.post<Token>(gateway + ConfigService.URL_SSO_LOGIN, post,
-        {headers: AuthService.tokenHeaders}).pipe(
+      return this.httpClient.get<Token>(gateway + ConfigService.URL_SSO_LOGIN,
+        {headers: new HttpHeaders({ 'Authorization': 'Bearer ' + access_token, 'Accept': 'application/json' })}).pipe(
         map(
           (token) => {
-            token.valid_until = new Date().getTime() + (token.expires_in * 1000);
+            token.valid_until = token.valid_until || (new Date().getTime() + ((token.expires_in || 3600) * 1000));
             this.setToken(token);
             this.userActivated.next(this.token.user); // ex. per notifica all'headerComponent.
             return this.getToken();

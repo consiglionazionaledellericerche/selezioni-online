@@ -14,7 +14,6 @@ import {JsonConvert, ValueCheckingMode} from 'json2typescript';
 import { Base } from '../model/base.model';
 import { CmisObject } from '../model/cmisobject.model';
 import { ObjectType } from '../model/object-type.model';
-import { ErrorObservable } from 'rxjs-compat/observable/ErrorObservable';
 import { TranslateService } from '@ngx-translate/core';
 
 export abstract class CommonService<T extends Base> {
@@ -567,7 +566,7 @@ export abstract class CommonService<T extends Base> {
 
         this.apiMessageService.onApiMessage.error('Immpossibile scaricare il file allegato');
 
-        return ErrorObservable.create(responseError);
+        return observableThrowError(() => responseError);
       }),);
     })).subscribe( () => {});
   }

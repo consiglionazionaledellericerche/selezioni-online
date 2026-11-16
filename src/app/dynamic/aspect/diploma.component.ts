@@ -5,6 +5,7 @@ import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
 
 @Component({
+  standalone: false,
     selector: 'P:jconon_application:aspect_diploma',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">

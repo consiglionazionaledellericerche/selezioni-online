@@ -1,8 +1,16 @@
+import { ItUploadDragDropComponent } from 'design-angular-kit';
+import { SortControlComponent } from '../ui/sort-control.component';
+import { CallProrogationsComponent } from '../../core/call/shared/call-prorogations.component';
+import { MultiSelectComponent } from '../ui/multi-select.component';
+import { AutocompleteComponent } from '../ui/autocomplete.component';
+import { SegmentedComponent } from '../ui/segmented.component';
+import { ItDropdownModule, ItPopoverDirective, ItTooltipDirective } from 'design-angular-kit';
+import { AccordionComponent, AccordionGroupComponent } from '../../shared/ui/accordion.component';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {SharedModule} from '../shared.module';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { QuillEditorComponent } from 'ngx-quill';
 
 import {ShowTextComponent} from './show/show-text.component';
 import {ShowTextModalComponent} from './show/show-text-modal.component';
@@ -35,18 +43,9 @@ import {ButtonBackComponent} from './buttons/button-back.component';
 import {ButtonsLayoutComponent} from './buttons/buttons-layout.component';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AlertModule} from 'ngx-bootstrap/alert';
-import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
-import {CollapseModule} from 'ngx-bootstrap/collapse';
-import {BsModalService, ModalModule} from 'ngx-bootstrap/modal';
+import { ModalService } from '../modal/modal.service';
 
-import {PaginationModule} from 'ngx-bootstrap/pagination';
-import {PopoverModule, PopoverDirective} from 'ngx-bootstrap/popover';
-import {TooltipModule} from 'ngx-bootstrap/tooltip';
-import {ButtonsModule} from 'ngx-bootstrap/buttons';
 
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import {ListItemCallComponent} from './list/list-item-call.component';
 import {ListItemApplicationComponent} from './list/list-item-application.component';
 import {ListItemDocumentComponent} from './list/list-item-document.component';
@@ -74,12 +73,11 @@ import {LayoutLegendComponent} from './layout/layout-legend.component';
 import {LayoutWaitComponent} from './layout/layout-wait.component';
 import {AttachmentComponent} from './attachments/attachment.component';
 import {AttachmentListComponent} from './attachments/attachment-list.component';
-import {ColorPickerModule} from 'ngx-color-picker';
-import {FormTemplateColorPickerComponent} from './forms/form-template-colorpicker.component';
 import {ShowColorComponent} from './show/show-color.component';
 import {ShowBooleanComponent} from './show/show-boolean.component';
 
 import {ChildrenListComponent} from '../../core/children/children-list.component';
+import {CallActionsComponent} from './list/call-actions.component';
 import {ChildrenService} from '../../core/children//children.service';
 
 // import ngx-translate and the http loader
@@ -105,7 +103,6 @@ import { ConfigService } from '../../core/config.service';
         FormTemplateDatepickerComponent,
         FormTemplateSelectModelComponent,
         FormTemplateButtonEventComponent,
-        FormTemplateColorPickerComponent,
         FormTemplateCKEditorComponent,
         // Buttons
         ButtonsLayoutComponent,
@@ -139,6 +136,7 @@ import { ConfigService } from '../../core/config.service';
         ListPaginationComponent,
         TableItemComponent,
         ChildrenListComponent,
+        CallActionsComponent,
         // Edit
         EditHeaderLayoutComponent,
         EditMetdataComponent,
@@ -153,43 +151,36 @@ import { ConfigService } from '../../core/config.service';
         AttachmentListComponent,
     ],
     imports: [
+        ItDropdownModule,
+        ItPopoverDirective,
+        ItTooltipDirective,
+        AccordionComponent,
+        AccordionGroupComponent,
+        SegmentedComponent,
+        AutocompleteComponent,
+        MultiSelectComponent,
+        ItUploadDragDropComponent,
+        SortControlComponent,
+        CallProrogationsComponent,
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
         RouterModule,
-        CKEditorModule,
-        BsDatepickerModule.forRoot(),
-        TimepickerModule.forRoot(),
-        BsDropdownModule.forRoot(),
-        CollapseModule.forRoot(),
-        ModalModule.forRoot(),
-        AlertModule.forRoot(),
-        PaginationModule.forRoot(),
-        TooltipModule.forRoot(),
-        ButtonsModule.forRoot(),
-        PopoverModule.forRoot(),
-        ColorPickerModule,
-        TranslateModule.forChild({
-            compiler: { provide: TranslateCompiler, useClass: CustomTranslationCompiler },
-            loader: {
-                provide: TranslateLoader,
-                useFactory: CustomHttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
+        QuillEditorComponent,
+        TranslateModule,
     ],
     exports: [
-        BsDatepickerModule,
-        TimepickerModule,
-        BsDropdownModule,
-        ModalModule,
-        CollapseModule,
-        AlertModule,
-        PaginationModule,
-        TooltipModule,
-        PopoverModule,
-        ColorPickerModule,
+        ItDropdownModule,
+        ItPopoverDirective,
+        ItTooltipDirective,
+        AccordionComponent,
+        AccordionGroupComponent,
+        SegmentedComponent,
+        AutocompleteComponent,
+        MultiSelectComponent,
+        SortControlComponent,
+        CallProrogationsComponent,
         // Layout
         LayoutTitleComponent,
         LayoutBreadcrumbsComponent,
@@ -204,7 +195,6 @@ import { ConfigService } from '../../core/config.service';
         FormTemplateSelectModelComponent,
         FormTemplateButtonEventComponent,
         FormValidationErrorLayoutComponent,
-        FormTemplateColorPickerComponent,
         FormTemplateCKEditorComponent,
         // Buttons
         ButtonsLayoutComponent,
@@ -237,6 +227,7 @@ import { ConfigService } from '../../core/config.service';
         ListPaginationComponent,
         TableItemComponent,
         ChildrenListComponent,
+        CallActionsComponent,
         // Edit
         EditHeaderLayoutComponent,
         EditMetdataComponent,
@@ -251,8 +242,7 @@ import { ConfigService } from '../../core/config.service';
         AttachmentListComponent,
     ],
     providers: [
-        BsModalService,
-        PopoverDirective,
+        ModalService,
         ChildrenService
         //   I18n
         //   // {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n},

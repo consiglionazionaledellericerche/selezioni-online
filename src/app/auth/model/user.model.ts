@@ -116,17 +116,17 @@ export class User implements Base{
   }
 
   public isMemberOf(groupName: string): boolean {
-    return this.groups.filter((group) => {
+    return (this.groups || []).filter((group) =>
       group.itemName === groupName || group.itemName === 'GROUP_' + groupName
-    }).length !== 0;
+    ).length !== 0;
   }
 
   public isRdP(groupName: string): boolean {
-    return this.isMemberOf(groupName) || this.isMemberOf(Group.CONCORSI_RDP) || this.capabilities.isAdmin;
+    return this.isMemberOf(groupName) || this.isMemberOf(Group.CONCORSI_RDP) || !!(this.capabilities && this.capabilities.isAdmin);
   }
 
   public isCommissione(groupName: string): boolean {
-    return this.isMemberOf(groupName) || this.isMemberOf(Group.CONCORSI_COMMISSIONE) || this.capabilities.isAdmin;
+    return this.isMemberOf(groupName) || this.isMemberOf(Group.CONCORSI_COMMISSIONE) || !!(this.capabilities && this.capabilities.isAdmin);
   }
 
   public isConcorsi(): boolean {

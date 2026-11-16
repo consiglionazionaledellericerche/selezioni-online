@@ -138,9 +138,9 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
 
   private pageableResult(pageResult: Page<T>) {
     this.loading = false;
-    this.hasMoreItems = pageResult.hasMoreItems;
     this.setItems(pageResult.items);
     this.count = pageResult.count;
+    this.hasMoreItems = this.moreItems(pageResult);
     if (!this.initialized) {
       this.initialized = true;
     }
@@ -259,8 +259,19 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
     };
   }
 
+  /**
+   * Se ci sono altri elementi da caricare: alcune API (es. le domande) non restituiscono hasMoreItems,
+   * in quel caso lo si ricava dal totale.
+   */
+  protected moreItems(pageResult: Page<T>): boolean {
+    if (pageResult.hasMoreItems !== undefined && pageResult.hasMoreItems !== null) {
+      return pageResult.hasMoreItems;
+    }
+    return (this.getItems() || []).length < (pageResult.count || 0);
+  }
+
   loadMoreItems() {
-    if (this.hasMoreItems) {
+    if (this.hasMoreItems && !this.loading) {
       this.initialized = true;
       this.loading = true;
       this.hasMoreItems = true;
@@ -273,9 +284,9 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
         this.filterFormValue())
         .subscribe((pageResult: Page<T>) => {
           this.loading = false;
-          this.hasMoreItems = pageResult.hasMoreItems;
           this.setItems(this.getItems().concat(pageResult.items));
           this.count = pageResult.count;
+          this.hasMoreItems = this.moreItems(pageResult);
           if (!this.initialized) {
             this.initialized = true;
           }
@@ -296,9 +307,9 @@ export abstract class CommonListComponent<T extends CmisObject> implements OnIni
       this.filterFormValue())
       .subscribe((pageResult: Page<T>) => {
         this.loading = false;
-        this.hasMoreItems = pageResult.hasMoreItems;
         this.setItems(pageResult.items);
         this.count = pageResult.count;
+        this.hasMoreItems = this.moreItems(pageResult);
         if (!this.initialized) {
           this.initialized = true;
         }

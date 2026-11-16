@@ -7,6 +7,7 @@ import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {FormCommonTag} from './form-common-tag';
 
 @Component({
+  standalone: false,
   selector: 'app-control-button-event',
   template:
      `
@@ -27,18 +28,18 @@ import {FormCommonTag} from './form-common-tag';
 
           <span *ngIf="!multiple" class="btn btn-sm bg-white border-secondary"
                 (click)="buttonClick.emit()"
-                tooltip="{{ 'edit' | translate }}">
+                [itTooltip]="'edit' | translate">
             <i class="fa fa-edit"></i>
           </span>
 
           <span *ngIf="!multiple && valueSelected()" class="btn btn-sm bg-white border-secondary"
-                (click)="unselect()" tooltip="{{ 'remove' | translate }}">
+                (click)="unselect()" [itTooltip]="'remove' | translate">
             <i class="fa fa-times"></i>
           </span>
 
           <span *ngIf="multiple" class="btn btn-sm bg-white border-secondary"
                 (click)="buttonClick.emit()"
-                tooltip="{{ 'add' | translate }}">
+                [itTooltip]="'add' | translate">
             <i class="fa fa-plus"></i>
           </span>
 

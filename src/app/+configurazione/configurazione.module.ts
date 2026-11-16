@@ -1,3 +1,6 @@
+import { ItUploadDragDropComponent } from 'design-angular-kit';
+import { ItDropdownModule, ItPopoverDirective, ItTooltipDirective } from 'design-angular-kit';
+import { AccordionComponent, AccordionGroupComponent } from '../shared/ui/accordion.component';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
@@ -9,9 +12,8 @@ import {ContactsComponent} from './contacts/contacts.component'
 import {HelpDeskComponent} from './helpdesk/helpdesk.component';
 import {FAQComponent} from './faq/faq.component';
 import {FAQService} from './faq/faq.service';
+import {HelpdeskService} from './helpdesk/helpdesk.service';
 
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 // import ngx-translate and the http loader
 import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -29,6 +31,12 @@ import { ConfigService } from '../core/config.service';
     FAQComponent
   ],
   imports: [
+        ItUploadDragDropComponent,
+        ItDropdownModule,
+        ItPopoverDirective,
+        ItTooltipDirective,
+        AccordionComponent,
+        AccordionGroupComponent,
     FormsModule,
     ReactiveFormsModule,
 
@@ -36,20 +44,12 @@ import { ConfigService } from '../core/config.service';
     TagsModule,
 
     ConfigurazioneRoutingModule,
-    TranslateModule.forChild({
-      compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
-      loader: {
-          provide: TranslateLoader,
-          useFactory: CustomHttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
-    TabsModule.forRoot(),
-    CarouselModule.forRoot()
+    TranslateModule,
   ],
   providers: [
     // Servizi necessari solo al ConfigurazioneModule.
-    FAQService
+    FAQService,
+    HelpdeskService
   ]
 
 })

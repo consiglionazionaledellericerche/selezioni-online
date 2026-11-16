@@ -1,3 +1,7 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
+import { switchMap } from 'rxjs/operators';
+import { ApiMessageService, MessageType } from '../../core/api-message.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
@@ -8,13 +12,29 @@ import { ConfigService } from '../../core/config.service';
 import { Oidc } from '../../core/config.model';
 
 @Component({
+  standalone: false,
     selector: 'app-signin',
     templateUrl: './signin.component.html',
     styles: [
-        '.field-icon {float: right; right: 6px;margin-top: 10px;position: absolute;z-index: 100;}'    
+        '.field-icon {float: right; right: 6px;margin-top: 10px;position: absolute;z-index: 100;}',
+        `.btn-sso { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; background: #0066cc;
+            border: 2px solid #004d99; color: #fff; font-weight: 700; }
+         .btn-sso:hover { background: #004d99; color: #fff; }
+         .sso-icon { display: inline-flex; align-items: center; justify-content: center; width: 1.6rem; height: 1.6rem;
+            border-radius: 50%; background: #fff; }
+         .sso-icon .icon { fill: #0066cc; }
+         .spid-links li { margin-bottom: .35rem; }
+         .recover-panel { padding: .75rem; border: 1px solid #d9dadb; border-radius: 4px; background: #f7f9fb; }
+         .recover-input { border: 1px solid #d9dadb !important; border-radius: 4px; height: 2.25rem; padding: .25rem .5rem; }`
     ]
 })
-export class SigninComponent implements OnInit{
+export class SigninComponent implements OnInit {
+    private static readonly REDIRECT_KEY = 'selezioni.oidc.redirect';
+    public oidcLoading = false;
+    public oidcEnabled = false;
+    public recoverOpen = false;
+    public recoverEmail = '';
+    public recovering = false;
 
     ngForm: FormGroup;
     submitted = false;
@@ -23,7 +43,10 @@ export class SigninComponent implements OnInit{
                 private authService: AuthService, 
                 private router: Router,
                 protected configService: ConfigService,
-                private oidcSecurityService: OidcSecurityService) { }
+                private oidcSecurityService: OidcSecurityService,
+                private apiMessageService: ApiMessageService,
+                private httpClient: HttpClient,
+                private translateService: TranslateService) { }
 
     ngOnInit() {
         this.ngForm = this.formBuilder.group({
@@ -31,21 +54,92 @@ export class SigninComponent implements OnInit{
             password: ['', Validators.required]
         });
         this.configService.getOidc().subscribe((oidc : Oidc) => {
-            if (oidc.enable === 'true') {
-                this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
-                    if (!isAuthenticated) {
-                        this.oidcSecurityService.authorize();
-                    } else {
-                        this.authService.signinUserSSO(accessToken).subscribe(
-                            (response) => {
-                                const { redirect } = window.history.state;
-                                this.router.navigateByUrl(redirect || '/');
-                            }
-                        );
-                    }
-                });        
+            this.oidcEnabled = String(oidc.enable) === 'true';
+            // come nel legacy l'accesso SSO parte solo dal pulsante; al ritorno dall'Identity Provider
+            // (codice o errore nell'indirizzo) si completa l'accesso
+            const params = new URLSearchParams(window.location.search);
+            if (this.oidcEnabled && (params.has('code') || params.has('error'))) {
+                this.oidcLogin();
             }
         });
+    }
+
+    /** Pulsante "Entra SSO/SPID/CIE": salva la pagina di destinazione e va all'Identity Provider. */
+    public startOidc(): void {
+        const { redirect } = window.history.state || {};
+        if (redirect) {
+            sessionStorage.setItem(SigninComponent.REDIRECT_KEY, redirect);
+        }
+        this.oidcLoading = true;
+        this.oidcSecurityService.authorize();
+    }
+
+    /** Recupero password come nel legacy: dall'email al nome utente, poi invio dell'email di reimpostazione. */
+    public recoverPassword(): void {
+        const email = (this.recoverEmail || '').trim();
+        if (!email) {
+            return;
+        }
+        this.recovering = true;
+        const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        this.configService.getGateway().pipe(
+            switchMap(gateway => this.httpClient.post<{ userName: string }>(gateway + '/rest/security/recover-password',
+                new HttpParams().set('email', email).toString(), { headers }).pipe(
+                switchMap(result => {
+                    if (!result || !result.userName) {
+                        throw { notFound: true };
+                    }
+                    return this.httpClient.post(gateway + '/rest/security/forgotPassword',
+                        new HttpParams().set('userName', result.userName).set('guest', 'true').toString(), { headers });
+                })
+            ))
+        ).subscribe({
+            next: () => {
+                this.recovering = false;
+                this.recoverOpen = false;
+                this.apiMessageService.sendMessage(MessageType.SUCCESS, 'signin.recover.sent');
+            },
+            error: (error) => {
+                this.recovering = false;
+                const key = error && error.notFound ? 'signin.recover.not_found'
+                    : (error && error.error && error.error.error) || 'signin.recover.error';
+                const translated = this.translateService.instant(key);
+                this.apiMessageService.sendMessage(MessageType.ERROR, translated !== key ? key : 'signin.recover.error');
+            }
+        });
+    }
+
+    /**
+     * Accesso OIDC: al primo passaggio si va all'Identity Provider (salvando la pagina di destinazione,
+     * perché history.state non sopravvive al redirect esterno); al ritorno su /auth/signin il codice
+     * viene scambiato e il token di accesso passato al backend (/sso).
+     */
+    private oidcLogin(): void {
+        this.oidcLoading = true;
+        this.oidcSecurityService.checkAuth().subscribe({
+            next: ({ isAuthenticated, accessToken, errorMessage }) => {
+                if (!isAuthenticated) {
+                    this.oidcError(errorMessage || 'not authenticated');
+                    return;
+                }
+                this.authService.signinUserSSO(accessToken).subscribe({
+                    next: () => {
+                        const redirect = sessionStorage.getItem(SigninComponent.REDIRECT_KEY) || (window.history.state || {}).redirect;
+                        sessionStorage.removeItem(SigninComponent.REDIRECT_KEY);
+                        this.oidcLoading = false;
+                        this.router.navigateByUrl(redirect || '/');
+                    },
+                    error: (error) => this.oidcError(error)
+                });
+            },
+            error: (error) => this.oidcError(error)
+        });
+    }
+
+    private oidcError(error: any): void {
+        this.oidcLoading = false;
+        console.error('OIDC login failed', error);
+        this.apiMessageService.sendMessage(MessageType.ERROR, 'signin.oidc_error');
     }
     // convenience getter for easy access to form fields
     get f() { return this.ngForm.controls; }

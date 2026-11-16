@@ -4,6 +4,7 @@ import { CacheService } from '../../core/cache.service';
 import { AffixComponent } from './affix.component';
 
 @Component({
+  standalone: false,
     selector: 'affix_tabDichiarazioni',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded() && cache !== undefined" class="pb-2">

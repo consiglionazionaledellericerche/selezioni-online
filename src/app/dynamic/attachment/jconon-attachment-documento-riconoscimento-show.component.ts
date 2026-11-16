@@ -4,6 +4,7 @@ import { DocumentoRiconoscimento } from '../../common/model/documento_riconoscim
 import { FormGroup } from '@angular/forms';
 
 @Component({
+  standalone: false,
     selector: 'D:jconon_documento_riconoscimento:attachment',
     template: `
       <table class="table table-striped table-hover table-borderless">  

@@ -1,3 +1,4 @@
+import { ManageCallService } from '../call/manage-call.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
 import { CommonListComponent} from '../../common/controller/common-list.component';
 import { ActivatedRoute, Router} from '@angular/router';
@@ -15,10 +16,11 @@ import { DocumentService } from '../document/document.service';
 import { CmisObject } from '../../common/model/cmisobject.model';
 import { ManageDocumentComponent } from '../document/manage-document.component';
 import { Document } from '../../common/model/document.model';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../shared/modal/modal.service';
 import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.component';
 
 @Component({
+  standalone: false,
   selector: 'children-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template:
@@ -40,6 +42,14 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
             <span class="fw-bold">{{item.getFileSize()}}</span>
             <span *ngIf="show_date">{{'document.last_modified'| translate:{value: item.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</span>
           </div> 
+          <div *ngIf="macroCallId" class="col-sm-12 pt-1">
+            <button class="btn btn-link btn-sm ps-0" (click)="linkToChildren(item)">
+              <i class="fa fa-fw fa-link"></i> {{'call_manage.attachments.link_children' | translate}}
+            </button>
+            <button class="btn btn-link btn-sm" (click)="copyToChildren(item)">
+              <i class="fa fa-fw fa-copy"></i> {{'call_manage.attachments.copy_children' | translate}}
+            </button>
+          </div>
         </app-list-item-document>
       </li>
     </app-list-layout>
@@ -53,11 +63,13 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
   @Input() typeId: string;
   @Input() queryName: string;
   @Input() show_date: string;
-  bsModalRef: BsModalRef;
+  /** Se valorizzato (id del macro-bando) mostra le azioni per collegare o copiare l'allegato nei bandi figli. */
+  @Input() macroCallId: string;
+  bsModalRef: ModalRef;
 
   public constructor(public service: ChildrenService,
                      protected documentService: DocumentService,  
-                     private modalService: BsModalService,                   
+                     private modalService: ModalService,                   
                      protected configService: ConfigService,
                      protected apiMessageService: ApiMessageService,
                      protected route: ActivatedRoute,
@@ -65,7 +77,8 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
                      protected router: Router,
                      protected changeDetector: ChangeDetectorRef,
                      protected navigationService: NavigationService,
-                     protected translateService: TranslateService) {
+                     protected translateService: TranslateService,
+                     protected manageCallService: ManageCallService) {
     super(service, route, router, changeDetector, navigationService);
   }
 
@@ -102,6 +115,22 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
           this.loadList();
         });  
       });      
+    });
+  }
+
+  public linkToChildren(item: Attachment) {
+    this.manageCallService.linkAttachmentToChildren(this.macroCallId, item.getObjectId()).subscribe((result) => {
+      this.translateService.get('call_manage.attachments.done', {value: result.count}).subscribe((label) => {
+        this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
+      });
+    });
+  }
+
+  public copyToChildren(item: Attachment) {
+    this.manageCallService.copyAttachmentToChildren(this.macroCallId, item.getObjectId()).subscribe((result) => {
+      this.translateService.get('call_manage.attachments.done', {value: result.count}).subscribe((label) => {
+        this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
+      });
     });
   }
 

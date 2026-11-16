@@ -7,6 +7,7 @@ import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {FormCommonTag} from './form-common-tag';
 
 @Component({
+  standalone: false,
   selector: 'app-control-toggle',
   template:
      `

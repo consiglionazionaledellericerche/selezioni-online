@@ -2,6 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FAQService} from './faq.service';
 
 @Component({
+  standalone: false,
     encapsulation: ViewEncapsulation.None,
     selector: 'faq',
     templateUrl: './faq.component.html',

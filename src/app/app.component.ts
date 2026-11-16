@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit {
     translate.addLangs(['it', 'en']);
     translate.getLangs().forEach((lang: string) => {
       translate.reloadLang(lang).subscribe((res) => {
-        httpClient.get('assets/i18n/custom_' + lang + '.json').subscribe((data) => {
+        httpClient.get<any>('assets/i18n/custom_' + lang + '.json').subscribe((data) => {
           if (data) {
             translate.setTranslation(lang, data, true);
           }

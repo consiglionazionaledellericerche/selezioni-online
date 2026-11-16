@@ -5,6 +5,7 @@ import { CacheService } from '../../core/cache.service';
 import { Document } from '../../common/model/document.model';
 
 @Component({
+  standalone: false,
     selector: 'D:jconon_attachment:document',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">

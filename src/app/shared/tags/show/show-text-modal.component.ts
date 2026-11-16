@@ -1,7 +1,8 @@
 import {Component, Input, TemplateRef} from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../modal/modal.service';
 
 @Component({
+  standalone: false,
   selector: 'app-show-text-modal',
   template: `
     <span *ngIf="value" class="me-1">
@@ -30,8 +31,8 @@ export class ShowTextModalComponent {
   @Input() modal_title;
   @Input() modal_text;
   @Input() strong = true;
-  modalRef: BsModalRef;
-  constructor(private modalService: BsModalService) {}
+  modalRef: ModalRef;
+  constructor(private modalService: ModalService) {}
  
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'modal-lg' }));

@@ -1,4 +1,20 @@
 {
+  "upload_change": "Change file",
+  "F:jconon_call_tdet_pnrr:folder": "Temporary PNRR",
+  "F:jconon_call_incarichi_ricerca:folder": "Incarichi di Ricerca",
+  "F:jconon_call_comandi_distacchi:folder": "Commands and Detachments",
+  "F:jconon_call_cascade:folder": "Cascade calls",
+  "D:prodotti:prodotto": "Products",
+  "D:jconon_attachment:integration": "Additions to the Application",
+  "D:jconon_attachment_pta:document": "Piano Triennale di Attività",
+  "D:jconon_curriculum_vitae:attachment_not_required": "Curriculum Vitae",
+  "D:jconon_esclusione:attachment": "Provision of exclusion",
+  "D:jconon_riammissione:attachment": "Provision of readmission",
+  "D:jconon_scheda_anonima:generated_document": "Synthetic Anonymous Card",
+  "D:jconon_rinuncia:attachment": "Renunciation",
+  "D:jconon_comunicazione:attachment": "Communication to the candidate",
+  "D:jconon_convocazione:attachment": "Convocation",
+  "D:jconon_commissione:metadata": "Commissioner insertion",
   "F:jconon_call:folder": "All Calls",
   "F:jconon_call_tind:folder": "Permanent",
   "F:jconon_call_tind:folder_concorsi_pubblici":"Public Permanent",
@@ -81,10 +97,604 @@
     }
   },
   "faq": {
+    "subtitle": "Frequently asked questions about submitting applications.",
     "title": "F.A.Q."
   },
   "helpdesk": {
-    "title": "HelpDesk"
+    "title": "HelpDesk",
+    "form": {
+      "info": "Fill in the form to send a request. For issues about a call, select its type and the call.",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "confirmEmail": "Confirm email",
+      "emailMismatch": "Emails do not match",
+      "phoneNumber": "Phone",
+      "callType": "Call type",
+      "call": "Call",
+      "loadingCalls": "Loading calls...",
+      "problemType": "Problem type",
+      "tecnico": "Technical problem",
+      "normativo": "Regulatory problem",
+      "subject": "Subject",
+      "message": "Message",
+      "allegato": "Attachment (optional)",
+      "send": "Send request"
+    }
+  },
+  "communications": {
+    "new": {
+      "convocazioni": "New convocation",
+      "esclusioni": "New exclusion",
+      "comunicazioni": "New communication"
+    },
+    "back_to_documents": "Back to documents",
+    "state_one": {
+      "GENERATO": "Generated",
+      "FIRMATO": "Signed",
+      "SPEDITO": "Sent",
+      "CONSEGNATO": "Delivered",
+      "RICEVUTO": "Received"
+    },
+    "title": "Communications to candidates",
+    "kind": {
+      "convocazioni": "Convocations",
+      "esclusioni": "Exclusions",
+      "comunicazioni": "Communications"
+    },
+    "section_generate": "New",
+    "section_documents": "Documents",
+    "recipients": "Recipients",
+    "filter_candidates": "Filter by surname, name or tax code",
+    "select_all": "Select all",
+    "content": "Content",
+    "numero": "Convocation number",
+    "data": "Date and time",
+    "luogo": "Place",
+    "testo_libero": "Free text",
+    "qrcode": "Generate QR code",
+    "tipo": "Type",
+    "esclusione": "Exclusion",
+    "rinuncia": "Withdrawal",
+    "protocollo_numero": "Protocol number",
+    "protocollo_data": "Protocol date",
+    "stampa_punteggi": "Print scores",
+    "appellativo": "Title",
+    "note": "Notes",
+    "firma": "Signature (at the end of the document)",
+    "allegato": "Attachment (optional)",
+    "selected_count": "{{value}} candidates selected",
+    "generate": "Generate documents",
+    "generated": "Documents generated",
+    "document": "Document",
+    "state": "Status",
+    "modified": "Last modified",
+    "download": "Download",
+    "states": {
+      "GENERATO": "Generated",
+      "FIRMATO": "Signed",
+      "SPEDITO": "Sent",
+      "CONSEGNATO": "Delivered",
+      "all": "All",
+      "RICEVUTO": "Received"
+    },
+    "actions_hint": "Actions apply to the selected documents (or, without a selection, to those shown) and only to those in the right status: generated ones are signed, signed ones are sent, generated and signed ones can be deleted.",
+    "sign": "Sign",
+    "sign_info": "{{value}} documents will be digitally signed.",
+    "all": "all",
+    "sign_auto": "Automatic signature",
+    "sign_user": "Signature user",
+    "sign_password": "Password",
+    "signed": "Documents signed",
+    "send": "Send",
+    "send_info": "{{value}} signed documents will be sent to candidates.",
+    "address": "Recipient address",
+    "address_email": "Candidate email",
+    "address_pec": "Candidate PEC",
+    "address_doc": "Address given in the application",
+    "send_pec": "Send through PEC mailbox",
+    "pec_user": "PEC user",
+    "pec_password": "PEC password",
+    "sent": "Documents sent",
+    "confirm_delete": "Delete the documents? Documents already sent are not deleted.",
+    "deleted": "Documents deleted",
+    "selected_docs": "{{value}} documents selected",
+    "shown_docs": "{{value}} documents shown"
+  },
+  "yes": "Yes",
+  "no": "No",
+  "export": {
+    "menu": "Export applications",
+    "title": "Export applications of call",
+    "excel": "Excel list",
+    "excel_info": "An Excel sheet with the data of the call applications.",
+    "download_excel": "Download Excel",
+    "status": {
+      "sent": "Sent",
+      "active": "Active (sent, not excluded)",
+      "temporary": "Drafts",
+      "all": "All"
+    },
+    "zip": "Applications zip archive",
+    "zip_info": "An archive with the application prints and optionally the attachments. Leave filters empty to include everything.",
+    "types": "Attachment types to include",
+    "applications": "Applications to include",
+    "all_types": "All types",
+    "all_applications": "All applications",
+    "only_applications": "Applications only",
+    "confirmed_with_attachments": "Confirmed with attachments",
+    "active_with_attachments": "Active with attachments",
+    "working": "Preparing the file, this may take a few minutes...",
+    "done": "File downloaded",
+    "type": {
+      "application": "Application",
+      "integration": "Application integrations"
+    }
+  },
+  "overview": {
+    "title": "Convocations, exclusions and communications",
+    "subtitle": "Documents sent to candidates, for all calls.",
+    "candidate": "Candidate",
+    "panel_title": "Communications to candidates"
+  },
+  "export_calls": {
+    "started": "Export started",
+    "button": "Export to Excel",
+    "title": "Excel export of filtered calls",
+    "info": "Exports use the filters set in the search. When processing ends you will receive an email with the download link.",
+    "queued": "Export “{{value}}” started: the link will be sent to {{email}}.",
+    "queued_short": "Export started, you will receive an email",
+    "call": {
+      "title": "Calls",
+      "description": "Call information."
+    },
+    "commission": {
+      "title": "Commissions",
+      "description": "Composition of the call commissions."
+    },
+    "application": {
+      "title": "Application data",
+      "description": "Data of confirmed applications."
+    },
+    "score": {
+      "title": "Scores and ranking",
+      "description": "Assigned scores and ranking position."
+    },
+    "istruttoria": {
+      "title": "Applications for review",
+      "description": "All application data, for the review."
+    }
+  },
+  "download": {
+    "loading": "Downloading...",
+    "done": "File downloaded",
+    "error": "File not available",
+    "error_info": "The file may have been downloaded already (it is available only once) or the link is not valid for the logged-in user."
+  },
+  "export_applications": {"title": "Excel export of filtered applications", "info": "Exports use the filters set in the applications list. When processing ends you will receive an email with the download link."},
+  "layout": {
+    "search_subtitle": "Advanced call search by code, status, type, deadline, Official Gazette and content.",
+    "date_from": "From",
+    "date_to": "To",
+    "gazette": "Official Gazette",
+    "number": "Number",
+    "date": "Date",
+    "content": "Content",
+    "reset_filters": "Reset filters",
+    "sort_by": "Sort by",
+    "sort_asc": "Ascending",
+    "sort_desc": "Descending",
+    "sort": {"deadline": "Deadline", "start": "Opening date", "gazette": "Official Gazette", "code": "Call code", "created": "Creation date", "modified": "Last modified", "surname": "Surname", "sent": "Submission date"},
+    "prorogation": "Extension/Reopening",
+    "prorogation_judgment": "Judicial reopening",
+    "prorogation_deadline": "new deadline",
+    "save_before_switch": "Save this section before switching",
+    "section_of": "Section {{current}} of {{total}}",
+    "remove": "Remove",
+    "none_selected": "Nothing selected",
+    "add": "Add",
+    "filter": "Filter",
+    "select_all": "Select all",
+    "select_none": "None",
+    "breadcrumb": "Breadcrumb",
+    "call": "Call",
+    "search_user": "Search by surname or username",
+    "search_call": "Search by call code",
+    "search_error": "Unable to retrieve results, please retry.",
+    "no_results": "No results",
+    "clear": "Clear",
+    "close": "Close",
+    "user_panel": "Personal area",
+    "username": "Username",
+    "email": "E-mail",
+    "settings": "Settings",
+    "my_applications": "My applications",
+    "all_applications": "All applications",
+    "summary_mine": "My applications",
+    "summary_all": "All applications",
+    "call_not_found": "Call {{value}} not found.",
+    "call_info": "Call information",
+    "gazzetta": "Official Journal",
+    "call_start": "Opening",
+    "call_documents": "Call and attached documents",
+    "applications_user_title": "Candidates' applications",
+    "applications_mine_title": "My applications",
+    "applications_user_subtitle": "Applications submitted by candidates for the calls you manage.",
+    "applications_mine_subtitle": "Applications you have submitted or are filling in.",
+    "filter_candidate": "Candidate",
+    "filter_call": "Call",
+    "filter_application_state": "Application status",
+    "filter_deadline": "Call deadline",
+    "application_modified": "Last modified",
+    "application_sent": "Sent on",
+    "calls_subtitle": "Calls for recruitment of staff and other types of employment and training at CNR.",
+    "state_open": "Open",
+    "state_closed": "Closed",
+    "state_all": "All",
+    "status_open": "Open",
+    "status_expiring": "Closing soon",
+    "status_closed": "Closed",
+    "status_today": "Closes today",
+    "status_days_left": "{{value}} days left",
+    "home": "Home",
+    "calls": "Calls",
+    "call_type": "Type",
+    "call_state": "Status",
+    "search_placeholder": "Call code",
+    "search_calls": "Search calls",
+    "profile": "My profile",
+    "logout": "Logout",
+    "welcome": "Welcome back {{value}}",
+    "logout_done": "Logged out",
+    "loading": "Loading...",
+    "list_of": "of",
+    "list_items": "items",
+    "load_more": "Load more",
+    "list_end": "End of list"
+  },
+  "call_manage": {
+    "edit_title": "Edit call",
+    "view_detail": "Detail",
+    "actions": "Actions",
+    "block": { "application_structure": "Application structure", "options": "Options", "reminder_payment": "Reminder, payment and submission block","identification": "Identification", "texts": "Call texts", "place": "Location and structure", "requirements": "Requirements", "period": "Application period"},
+    "panel_title": "Call management",
+    "saved": "Operation completed",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "published": "Published",
+    "not_published": "Not published",
+    "published_done": "Call published",
+    "unpublished_done": "Call unpublished",
+    "confirm_publish": "Publish the call? HelpDesk categories will be created and the call will be visible to applicants.",
+    "confirm_unpublish": "Unpublish the call?",
+    "confirm_delete": "Permanently delete the call? This is only allowed if there are no applications.",
+    "deleted": "Call deleted",
+    "preview": "Application preview",
+    "save_first": "Save the call to manage this section.",
+    "copy": {
+      "button": "Copy call",
+      "info": "You are creating a new call from a copy: enter the code and save. Custom labels will be copied on the first save."
+    },
+    "child": {
+      "title": "Create child call",
+      "create": "Create",
+      "created": "Child call created",
+      "info": "The new call inherits all settings of call {{value}}, except commission and managers."
+    },
+    "children": {
+      "title": "Child calls"
+    },
+    "attachments": {
+      "link_children": "Link to child calls",
+      "copy_children": "Copy to child calls",
+      "done": "Done on {{value}} child calls"
+    },
+    "score": {
+      "info": "Enter the label of each score item and, if needed, the minimum and maximum score.",
+      "label": "Score label {{value}}",
+      "min": "Minimum",
+      "limit": "Limit"
+    },
+    "rdp": {
+      "title": "Call managers (RdP)",
+      "gestore": "Call owner",
+      "add_hint": "Username or group name (GROUP_...)"
+    },
+    "helpdesk": {
+      "not_published": "HelpDesk categories are created when the call is published.",
+      "tecnico": "Technical problems",
+      "normativo": "Regulatory problems",
+      "add_hint": "Expert username"
+    },
+    "labels": {
+      "title": "Labels",
+      "info": "Custom labels replace the application texts for this call only.",
+      "key": "Element",
+      "old_label": "Original label",
+      "new_label": "New label",
+      "current": "Current label",
+      "confirm_delete": "Restore the original label?"
+    },
+    "permissions": {
+      "title": "Permissions",
+      "inherited": "Inherit permissions from the parent folder",
+      "authority": "User or group",
+      "role": "Role",
+      "direct": "Assigned permissions",
+      "inherited_list": "Inherited permissions",
+      "confirm_delete": "Remove the permission?"
+    },
+    "commission": {
+      "title": "Commission",
+      "add": "Add member",
+      "empty": "No members",
+      "appellativo": "Title",
+      "nome": "First name",
+      "cognome": "Last name",
+      "sesso": "Sex",
+      "ruolo": "Role",
+      "qualifica": "Position",
+      "email": "Email",
+      "username": "Username",
+      "username_hint": "Required to grant the member access to applications",
+      "nominativo": "Name",
+      "stato": "Status",
+      "enabled": "Enabled",
+      "disabled": "Not enabled",
+      "enable": "Enable",
+      "disable": "Disable",
+      "confirm_delete": "Delete the commission member?",
+      "video_missing": "The member has not yet watched the gender equality video. Enable anyway?",
+      "gender_summary": "Chair and members: {{m}} men, {{f}} women.",
+      "gender_unbalanced": "Each gender should make up at least one third of the members.",
+      "ruoli": {
+        "A_PRE": "Chair",
+        "B_COM": "Member",
+        "C_SEG": "Secretary",
+        "D_SUP": "Substitute",
+        "E_DIM": "Resigned"
+      }
+    },
+    "gender": {
+      "title": "Gender equality",
+      "text1": "The National Research Council asks all members of selection boards to carefully watch the video “Il rumore di fondo”, produced under the Gender Equality Plan 2022-2024.",
+      "text2": "The video aims to encourage reflection on the main cognitive biases observed when evaluating candidates; you need to watch it to the end to proceed.",
+      "more": "More information: <a href=\"https://www.cnr.it/it/cnr-per-la-parita-di-genere\">https://www.cnr.it/it/cnr-per-la-parita-di-genere</a>",
+      "done": "Your gender equality acknowledgement has been recorded.",
+      "disabled": "Watching the video is not required.",
+      "player_error": "Unable to connect to the video player: make sure your browser allows PeerTube scripts and reload the page."
+    }
+  },
+  "admin": {
+    "title": "Administration",
+    "menu": {
+      "groups": "Groups",
+      "gestori": "Office managers",
+      "users": "Users",
+      "rbac": "Permissions (RBAC)",
+      "cache": "Cache",
+      "views": "View inspector",
+      "jsConsole": "JS console"
+    },
+    "error": {
+      "forbidden": "You are not allowed to perform this operation",
+      "generic": "An error occurred, please try again"
+    },
+    "groups": {
+      "root": "Groups",
+      "create": "New group",
+      "edit": "Edit group",
+      "name": "Name (identifier)",
+      "displayName": "Display name",
+      "addMember": "Add member",
+      "addMemberHint": "Enter a user's username or a group's full name (GROUP_...). Groups are suggested after 3 characters.",
+      "member": "User or group",
+      "allMembers": "All users",
+      "allMembersOf": "Users of group {{value}}",
+      "removeMember": "Remove from group",
+      "saved": "Group saved",
+      "deleted": "Group deleted",
+      "memberAdded": "Member added",
+      "confirmRemoveMember": "Remove the member from the group?",
+      "confirmDelete": "Permanently delete the group?"
+    },
+    "gestori": {
+      "callType": "Call type",
+      "sede": "Offices"
+    },
+    "users": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "userName": "Username",
+      "matricola": "Employee number",
+      "codicefiscale": "Tax code",
+      "email": "Email",
+      "emailesterno": "External email",
+      "telephone": "Phone",
+      "mobile": "Mobile",
+      "smart": "Extended search (partial text)",
+      "enabled": "Status",
+      "active": "Active",
+      "disabled": "Disabled",
+      "groups": "Groups",
+      "groupsOf": "Groups of {{value}}",
+      "edit": "Edit user",
+      "saved": "User updated",
+      "deleted": "User deleted",
+      "confirmDelete": "Permanently delete the user?",
+      "filterRequired": "Enter at least one search criterion"
+    },
+    "rbac": {
+      "add": "New permission",
+      "id": "Resource",
+      "method": "Method",
+      "list": "List",
+      "type": "Type",
+      "authority": "User/Group",
+      "filter": "Filter by resource or authority",
+      "saved": "Permission added",
+      "confirmDelete": "Delete the permission?"
+    },
+    "cache": {
+      "info": "Clearing a cache forces data to be reloaded from the repository on the next request.",
+      "reset": "Clear",
+      "done": "Cache cleared",
+      "bulkinfo": {
+        "title": "BulkInfo",
+        "description": "Form and field definitions."
+      },
+      "application": {
+        "title": "Applications",
+        "description": "Application sections, aspects and attachments."
+      },
+      "call": {
+        "title": "Calls",
+        "description": "Call types and attachments."
+      },
+      "jasper": {
+        "title": "Reports",
+        "description": "Compiled Jasper print templates."
+      },
+      "sedi": {
+        "title": "Offices",
+        "description": "Offices list from SIPER."
+      },
+      "labels": {
+        "title": "Labels",
+        "description": "Custom call labels."
+      },
+      "types": {
+        "title": "Types",
+        "description": "Repository document types."
+      },
+      "all": {
+        "title": "All",
+        "description": "Clear every application cache."
+      }
+    },
+    "views": {
+      "filter": "Filter types",
+      "select": "Select a type from the tree",
+      "form": "Form",
+      "find": "Search",
+      "column": "Columns"
+    },
+    "jsConsole": {
+      "warning": "Code runs directly on the Alfresco repository with administrator privileges: use with care.",
+      "command": "Script",
+      "shortcut": "Ctrl+Enter to run. help(object) lists properties and methods.",
+      "execute": "Run",
+      "clear": "Clear output"
+    }
+  },
+  "menu": {
+    "admin": "Administration",
+    "groups": "Groups",
+    "gestori": "Office managers",
+    "users": "Users",
+    "rbac": "Permissions (RBAC)",
+    "cache": "Cache",
+    "views": "View inspector",
+    "jsConsole": "JS console"
+  },
+  "message": {
+    "document.upload.success": "The file “{{value}}” has been uploaded.",
+    "document.uploaded": "Uploaded",
+    "form.invalid_intro": "To continue, fix the {{value}} fields highlighted in red:",
+    "form.invalid_more": "and {{value}} more",
+    "form.invalid_hint": "After fixing them, save the section again.",
+    "helpdesk": {
+      "send": {
+        "success": "Your request has been sent. You will receive an answer at the email address provided.",
+        "forconfirmed": "Your request has been registered. Please confirm it using the link sent to the email address provided.",
+        "failed": "Unable to send the request, please try again later.",
+        "category": {
+          "expert": "You cannot open a request on a category you are an expert of."
+        },
+        "missing": {
+          "call": "Select the call and the problem type."
+        }
+      }
+    },
+    "error": {
+      "caller": "The text contains characters or instructions that are not allowed"
+    },
+    "validation": {
+      "maxlength5000": "Must not exceed 5000 characters"
+    }
+  },
+  "label": {
+    "option": {"yes": "Yes", "no": "No"},
+    "jconon_call": {
+      "group_multiple_application": "Multiple application group",
+      "elenco_sezioni_domanda": "Application sections",
+      "elenco_field_not_required": "Optional fields",
+      "elenco_lingue_da_conoscere": "Required languages",
+      "print_dic_sost": "Print self-declaration",
+      "print_trattamento_dati_personali": "Print personal data consent",
+      "num_giorni_mail_sollecito": "Days before deadline for email reminder",
+      "only_user_spid_can_submit_application": "Applications only with SPID login",
+      "blocco_invio_domande": "Block application submission",
+      "blocco_invio_domande_message": "Message shown while submission is blocked",
+      "scheda_valutazione": "Evaluation forms",
+      "pagamento_pagopa": "pagoPA payment",
+      "importo_pagamento_pagopa": "pagoPA amount (€)",
+      "elenco_aspects": "Applicant data (declarations)",
+      "elenco_aspects_sezione_cnr": "CNR data",
+      "elenco_aspects_ulteriori_dati": "Preselection data",
+      "elenco_aspects_sezione_4": "Section 4 data",
+      "elenco_aspects_sezione_5": "Section 5 data",
+      "elenco_association": "Application attachments",
+      "elenco_sezioni_curriculum": "Curriculum sections",
+      "elenco_sezioni_curriculum_ulteriore": "Additional curriculum sections",
+      "elenco_prodotti": "Product types",
+      "numero_max_prodotti": "Maximum number of products",
+      "scheda_anonima_sintetica": "Anonymous summary form",
+      "elenco_schede_anonime": "Anonymous forms"
+    },
+    "jconon_application": {
+      "afl_cittadinanza_italiana_lista": "to be in possession of Italian citizenship",
+      "fl_obblighi_militari": "to be in good standing with regard to military obligations, if subject",
+      "fl_condanne_penali_nuova_normativa": "not to have received criminal convictions with a final judgment for crimes that entail disqualification from holding public office",
+      "fl_procedimenti_penali_nuova_normativa": "not to have any pending criminal proceedings of which one is aware or administrative proceedings for the application of security or prevention measures or previous criminal records against oneself that can be registered in the criminal record",
+      "fl_licenziamento_disciplinare": "not to have been dismissed for disciplinary reasons in accordance with the national collective bargaining agreements stipulated for the sectors of the Public Administration",
+      "fl_terzo_anno_dottorato": "to be enrolled in the third year of the PhD and to obtain the qualification within six months following the date of publication of this announcement",
+      "fl_ultimo_anno_corso_specializzazione": "to be enrolled in the final year of the medical specialization course and to obtain the qualification within six months following the date of publication of the announcement",
+      "fl_curriculum_scientifico_professionale_idoneo": "to be in possession of a scientific-professional curriculum suitable for carrying out research activities",
+      "fl_conoscere_lingua_inglese_rilevante_ricerca": "to know the English language and/or any other languages required by the call that are relevant to the research",
+      "fl_dipendente_ruolo_tempo_indeterminato": "not to be a permanent employee of the institutions referred to in paragraph 1 of Article 22 of Law No. 240 of 30 December 2010, nor to have benefited from contracts referred to in Article 24 of the same Law",
+      "fl_titolare_posizioni_artt_22": "not to have held positions referred to in Articles 22, 22bis, 22ter of such duration as to prevent, pursuant to Article 22ter, paragraph 9 of Law 240/2010 and paragraphs 2 and 3 of Article 2 of the notice, the activation of the contract which is the subject of the notice itself",
+      "fl_rapporto_parentela_direttore": "not to have a relationship of kinship or affinity up to and including the fourth degree, of marriage or civil union between persons of the same sex, as regulated by Article 1 of Law 20 May 2016, n. 76, or not to be in a state of de facto cohabitation, as regulated by Article 1, paragraphs 37 and following of the same law, with the Director of the facility receiving the position",
+      "fl_tempi_aggiuntivi": "Need for additional time or aids during the exam",
+      "tempi_aggiuntivi": "Additional time",
+      "ausili": "Exam Aids",
+      "fl_conferma_trattamento_dati_personali_europeo": "I confirm that I have read and understood the information on the processing of personal data in compliance with current legislation on the protection of personal data and, in particular, the European Regulation for the protection of personal data 2016/679, Legislative Decree 30/06/2003 no. 196 and subsequent amendments and additions, as last amended by Legislative Decree 101 of 10/08/2018.",
+      "fl_autorizzazione_trattamento_dati_personali_europeo": "I authorize the processing of my personal data in compliance with current legislation on the protection of personal data and, in particular, the European Regulation for the protection of personal data 2016/679, Legislative Decree 30/06/2003 no. 196 and subsequent amendments and additions, as last amended by Legislative Decree 10/08/2018 no.",
+      "fl_dichiarazioni_art_46_46_dpr_445": "I declare, pursuant to Articles 46 and 47 of Presidential Decree No. 445 of December 28, 2000, as amended (Consolidated Law on Administrative and Regulatory Provisions on Administrative Documentation), that the contents of the application and the professional curriculum vitae, including information on scientific/technological production, are truthful.",
+      "fl_dichiarazioni_art_75_75_dpr_445": "I declare that I am aware that, in the event of false declarations, the criminal sanctions provided for will be applied and the benefit obtained under my personal responsibility will be forfeited (articles 75 and 76 of Presidential Decree no. 445 of 28/12/2000 and subsequent amendments).",
+      "fl_altre_borse_studio": "to not have taken advantage of other scholarships",
+      "fl_altre_borse_studio_false": "di aver usufruito di altre borse di studio: {0}",
+      "fl_diversamente_abile_104": "to be disabled under art. 20 of Law 104/1992",
+      "fl_dsa": "to have specific learning disorders (SLD)",
+      "programma_di_mandato": "Mandate programme (max 5000 characters)"
+    }
+  },
+  "application": {
+    "preview": {"title": "Application preview", "info": "this is how candidates will see it; entered data is not saved."},
+    "download_zip": "Download application (zip)",
+    "copy": "Copy application",
+    "copy_dialog": {
+      "title": "Copy application",
+      "info": "The application for call <strong>{{codice}}</strong> will be copied, with its attachments, into the selected call.",
+      "filter": "Filter by code or office",
+      "empty": "No active call of the same type available.",
+      "confirm": "Copy into the selected call",
+      "success": "Application copied"
+    }
+  },
+  "button": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "home" : {
     "title": "CNR E-Recruitment",
@@ -107,10 +717,17 @@
     }
   },
   "signin": {
+    "manuale": "For more information see the chapter \"Access / registration\" of the User Manual.",
+    "helpdesk": "For assistance use the service",
+    "sso": "Sign in with SSO/SPID/CIE",
+    "spid": {"info": "SPID, the Public Digital Identity System, lets you access the online services of the Public Administration and accredited private parties with a single digital identity. If you already have a digital identity, sign in with your provider's credentials. If you don't have one yet, request it from one of the providers.", "more": "More information", "request": "Don't have SPID?", "help": "Need help?"},
+    "recover": {"button": "Recover password", "help": "If you forgot your username or password use the recovery button, which asks for the e-mail address given at registration. You will receive an e-mail to reset the password.", "email": "E-mail address given at registration", "send": "Send", "sent": "We sent you an e-mail to reset your password.", "not_found": "No user registered with this e-mail address.", "error": "Password recovery could not be started."},
+    "oidc_error": "Sign-in with institutional credentials failed. Please retry or contact support.",
+    "oidc_loading": "Signing in...",
     "title": "Sign In",
     "concorsi": "You can only apply online for a position by using CNR E-Recruitment system which permits you to submit all the required information and documents.",
     "registration": "Remember that if you have already participated in a previous selection always on this site, it is not necessary to repeat the registration.",
-    "altri": "To register use the link <a href=\"create-account?guest=true\"> New registration </a>. <br> For more information, see the chapter \"Access / registration in procedure\" of the User Manual. <br> For assistance use the <a href=\"configurazione/helpdesk\"> Helpdesk </a> service",
+    "altri": "To register use the link",
     "candidaticnr": "CNR employees and all candidates already in possession of official CNR credentials must use them to access the procedure without the need for further registration. <br> For the management of CNR official credentials, use the site <a href=\"https://utenti.cnr.it\">https://utenti.cnr.it</a>",
     "username": "Username",
     "password": "Password",

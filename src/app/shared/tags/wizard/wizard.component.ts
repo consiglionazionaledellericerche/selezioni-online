@@ -2,6 +2,7 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {Wizard} from '../../../common/model/wizard.model';
 
 @Component({
+  standalone: false,
   selector: 'app-wizard',
   template:
      `

@@ -5,6 +5,7 @@ import { DynamicComponent } from '../dynamic.component';
 import { Application } from '../../core/application/application.model';
 
 @Component({
+  standalone: false,
     selector: 'app-application-aspects',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">

@@ -10,6 +10,7 @@ import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/model/user.model';
 
 @Component({
+  standalone: false,
     selector: 'affix_tabReperibilita',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">

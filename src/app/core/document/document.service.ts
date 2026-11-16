@@ -9,7 +9,6 @@ import { ConfigService } from '../config.service';
 import { MODULE_CONFIGURAZIONE } from '../../app-routing.module';
 import { SpringError } from '../../common/model/spring-error.model';
 import { Document } from '../../common/model/document.model';
-import { ErrorObservable } from 'rxjs-compat/observable/ErrorObservable';
 import { TranslateService } from '@ngx-translate/core';
 import { Helpers } from '../../common/helpers/helpers';
 
@@ -64,7 +63,7 @@ export class DocumentService extends CommonService<Document>{
               catchError((httpErrorResponse: HttpErrorResponse) => {
                 const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
-                return ErrorObservable.create(springError);
+                return observableThrowError(() => springError);
               })
             );
         })
@@ -89,7 +88,7 @@ export class DocumentService extends CommonService<Document>{
               catchError((httpErrorResponse: HttpErrorResponse) => {
                 const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
-                return ErrorObservable.create(springError);
+                return observableThrowError(() => springError);
               })
             );
         })
@@ -109,7 +108,7 @@ export class DocumentService extends CommonService<Document>{
               catchError((httpErrorResponse: HttpErrorResponse) => {
                 const springError = new SpringError(httpErrorResponse, this.translateService);
                 this.apiMessageService.sendMessage(MessageType.ERROR, springError.getRestErrorMessage());
-                return ErrorObservable.create(springError);
+                return observableThrowError(() => springError);
               })
             );
         })
@@ -142,7 +141,7 @@ export class DocumentService extends CommonService<Document>{
                 if (httpErrorResponse.status === 401) {
                   return observableOf(httpErrorResponse);
                 } else {
-                  return ErrorObservable.create(httpErrorResponse);  
+                  return observableThrowError(() => httpErrorResponse);  
                 }
               })
             );

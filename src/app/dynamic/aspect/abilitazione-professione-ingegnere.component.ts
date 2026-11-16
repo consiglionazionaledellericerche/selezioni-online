@@ -6,6 +6,7 @@ import { DynamicComponent } from '../dynamic.component';
 import { Application } from '../../core/application/application.model';
 
 @Component({
+  standalone: false,
     selector: 'P:jconon_application:aspect_abilitazione_professione_ingegnere',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">

@@ -4,18 +4,19 @@ import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {Helpers} from '../../../common/helpers/helpers';
 
 @Component({
+  standalone: false,
   selector: 'app-form-layout',
   template:
      `
     <div class="mb-1 my-form-layout-row" [ngClass]="{ 'row': !inline}" >
       <div class="input-group" [ngClass]="contentClasses()">
-        <div *ngIf="prepend || prependText" class="input-group-text" [ngClass]="{ 'text-danger border-danger': isInvalid()}" tooltip="{{ ttip | translate }}">
+        <div *ngIf="prepend || prependText" class="input-group-text" [ngClass]="{ 'text-danger border-danger': isInvalid()}" [itTooltip]="ttip | translate">
           <i *ngIf="prepend" class="fa fa-{{ prepend }}" aria-hidden="true"></i>
           {{ prependText }}
         </div>
-        <label *ngIf="!noLabel" #label [ngClass]="labelClasses()" placement="right" tooltip="{{getLabelTruncated() | translate}}">{{getLabel() | translate}}</label>
+        <label *ngIf="!noLabel" #label [ngClass]="labelClasses()" tooltipPlacement="right" [itTooltip]="getLabelTruncated() | translate">{{getLabel() | translate}}</label>
         <ng-content></ng-content>
-        <div *ngIf="append || appendText" class="input-group-append" tooltip="{{ ttipAppend | translate }}" placement="left">
+        <div *ngIf="append || appendText" class="input-group-append" [itTooltip]="ttipAppend | translate" tooltipPlacement="left">
           <div class="input-group-text">
             <i *ngIf="append" class="fa fa-{{ append }}" aria-hidden="true"></i>
             {{ appendText }}

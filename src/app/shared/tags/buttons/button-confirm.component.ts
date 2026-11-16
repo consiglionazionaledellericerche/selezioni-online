@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../modal/modal.service';
 
 @Component({
+  standalone: false,
   selector: 'app-button-confirm',
   template: `
     <button type="button"
@@ -57,9 +58,9 @@ export class ButtonConfirmComponent {
 
   @Output() confirm = new EventEmitter();
 
-  modalRef: BsModalRef;
+  modalRef: ModalRef;
 
-  constructor(private modalService: BsModalService) {}
+  constructor(private modalService: ModalService) {}
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {'class': 'modal-dialog-centered'});

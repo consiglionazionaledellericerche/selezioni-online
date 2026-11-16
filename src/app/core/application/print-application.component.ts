@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Document } from '../../common/model/document.model';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalRef } from '../../shared/modal/modal.service';
 import { ApiMessageService, MessageType } from '../api-message.service';
 import { DocumentService } from '../document/document.service';
 import { SearchService } from '../search/search.service';
@@ -10,6 +10,7 @@ import { ApplicationService } from './application.service';
 import { Application } from './application.model';
 
 @Component({
+  standalone: false,
   selector: 'print-application',
   template: `
       <div class="modal-header border-bottom">
@@ -75,7 +76,7 @@ export class PrintApplicationComponent implements OnInit{
   public historyDocument: Document[];
 
   constructor(
-    public modalRef: BsModalRef,
+    public modalRef: ModalRef,
     protected router: Router,
     protected route: ActivatedRoute,
     public searchService: SearchService,

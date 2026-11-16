@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
+  standalone: false,
     selector: 'app-bad-request',
     template: `
         <div class="alert alert-warning text-center" role="alert">

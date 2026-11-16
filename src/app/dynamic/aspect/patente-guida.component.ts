@@ -6,6 +6,7 @@ import { ObjectTypeService } from '../../core/object-type.service';
 import { Application } from '../../core/application/application.model';
 
 @Component({
+  standalone: false,
     selector: 'P:jconon_application:aspect_patente_guida',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">

@@ -8,6 +8,7 @@ import { CallService } from '../../core/call/call.service';
 import { Select2Template } from '../../common/template/select2-template';
 
 @Component({
+  standalone: false,
     selector: 'P:jconon_application:aspect_iscrizione_liste_elettorali',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">

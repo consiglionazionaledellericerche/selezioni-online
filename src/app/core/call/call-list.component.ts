@@ -9,6 +9,7 @@ import {TranslateService} from '@ngx-translate/core';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
+  standalone: false,
   selector: 'call-list',
   template:
   `
@@ -23,64 +24,15 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
       [showTotalOnTop]="showTotalOnTop"
       [count]="count" 
       (onChangePage)="onChangePage($event)" 
+      (loadMore)="onScroll()"
       [page_offset]="pageOffset">
-      <div class="row row-eq-height w-100" 
+      <div class="row" 
           infiniteScroll       
           [infiniteScrollThrottle]="300"
           [infiniteScrollDistance]="1"
           (scrolled)="onScroll()">
-        <div *ngFor="let item of items" class="col-sm-12 px-md-2 pb-2" @scale [ngClass]="classForDisplayCard()">
-          <app-list-item-call [item]="item" [filterForm]="filterForm" (onDelete)="onDelete(item.getId())">
-            <div class="col-sm-12">
-              <app-show-text [label]="'call.profilo'" [value]="item.profilo" [strong]="false"></app-show-text>
-            </div>  
-            <div class="col-sm-12">
-              <app-show-text [label]="'call.elenco_macroaree'" [value]="item.elenco_macroaree" ></app-show-text>
-            </div>  
-            <div class="col-sm-12">
-              <app-show-text [label]="'call.elenco_settori_tecnologici'" [value]="item.elenco_settori_tecnologici" ></app-show-text>
-            </div>  
-            <div class="col-sm-12">
-              <app-show-text [label]="'call.sede'" [value]="item.sede" ></app-show-text>
-            </div>  
-            <div class="col-sm-12">
-                <ng-template #popTemplate>
-                  <h5 class="fw-semibold">
-                    <svg class="icon icon-secondary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg> Info
-                  </h5>
-                  <hr>
-                  <div [innerHtml]="translateService.currentLang == 'it'? item.descrizione: item.descrizione_en"></div>
-                </ng-template>
-                <app-show-text 
-                  [label]="'call.codice'" 
-                  [value]="item.codice">
-                </app-show-text>
-                <a class="btn btn-sm btn-link p-0 mb-3 ms-n1" [popover]="popTemplate" [outsideClick]="true">
-                  <svg class="icon icon-xs icon-primary"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-info-circle"></use></svg>
-                </a>
-            </div>  
-            <div class="col-sm-12">    
-                <app-show-text [label]="'call.numero_gu'" [value]="item.numero_gu" [strong]="false"></app-show-text>
-                <app-show-text [label]="'call.data_gu'" [value]="item.data_gu | date:'dd/MM/yyyy'" [strong]="false"></app-show-text>
-            </div>
-            <div class="col-sm-12">
-                <app-show-text 
-                  [label]="'call.data_fine_invio_domande'" 
-                  [value]="item.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm'">
-                </app-show-text>
-            </div>
-            <div class="col-sm-12">
-                <app-show-text [label]="'call.numero_posti'" [value]="item.numero_posti" [strong]="false"></app-show-text>
-                <app-show-text [label]="'call.numero_max_domande'" [value]="item.numero_max_domande" [strong]="false"></app-show-text>
-                <app-show-text-modal 
-                [label]="'call.elenco_titoli_studio'" 
-                [value]="translateService.currentLang == 'it'? item.requisiti_link: item.requisiti_link_en" 
-                [modal_title]="'Info'" 
-                [modal_text]="translateService.currentLang == 'it'? item.requisiti: item.requisiti_en"
-                [strong]="false">
-                </app-show-text-modal>
-            </div>
-          </app-list-item-call>
+        <div *ngFor="let item of items" class="col-12" @scale>
+          <app-list-item-call [item]="item" [filterForm]="filterForm" (onDelete)="onDelete(item.getId())" (onChange)="loadList()"></app-list-item-call>
         </div>
       </div>
     </app-grid-layout>
@@ -123,7 +75,7 @@ export class CallListComponent extends CommonListComponent<Call> implements OnIn
   public classForDisplayCard() {    
     return {
       'col-md-12': this.count <= 1,
-      'col-lg-4': this.count > 1
+      'col-md-6 col-lg-4': this.count > 1
     };
   }
 

@@ -3,15 +3,17 @@ import {Table} from '../../../common/model/table.model';
 import { CommonService } from '../../../common/controller/common.service';
 
 @Component({
+  standalone: false,
   selector: 'app-list-layout',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template:
      `
-    <div class="px-1">
+    <div>
 
-        <div *ngIf="loading ; else results_table" class="text-center">
-          Caricamento ...
-          <i class="fa fa-spinner fa-pulse fa-fw"></i>
+        <div *ngIf="loading ; else results_table" class="d-flex justify-content-center my-4">
+          <div class="progress-spinner progress-spinner-active progress-spinner-sm">
+            <span class="visually-hidden">{{ 'layout.loading' | translate }}</span>
+          </div>
         </div>
 
         <ng-template #results_table>
@@ -22,8 +24,8 @@ import { CommonService } from '../../../common/controller/common.service';
               <ng-content></ng-content>
             </ul>
 
-            <table *ngIf="table" class="table table-hover table-bordered table-light" [ngClass]="classForDisplayTable()">
-              <thead class="table-secondary">
+            <table *ngIf="table" class="table table-hover" [ngClass]="classForDisplayTable()">
+              <thead>
               <th *ngFor="let key of table.keys"> {{ key | translate }}</th>
               </thead>
               <tbody>
@@ -41,7 +43,7 @@ import { CommonService } from '../../../common/controller/common.service';
         <!-- Paging -->
         <app-list-pagination *ngIf="!loading" [page]="page" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
 
-        <ng-template #nessun_item style="text-align: center;"> {{ 'no_item' | translate }}</ng-template>
+        <ng-template #nessun_item><div class="alert alert-info mt-3" role="alert">{{ 'no_item' | translate }}</div></ng-template>
 
     </div>
     `,

@@ -63,12 +63,15 @@ import { JcononAspectAreaTecnicaComponent } from './aspect/area-tecnica.componen
 import { JcononAspectToggleWithSingleFieldComponent } from './aspect/toggle-with-single-field.component';
 import { JcononAspectContrattoTDConcorsoComponent } from './aspect/contratto-td-concorso.component';
 import { JcononAspectIdoneoPrecedentiGraduatorieComponent } from './aspect/idoneo-precedenti-graduatorie.component';
+import { JcononAspectGenericComponent } from './aspect/generic-aspect.component';
 import { JcononAspectAbilitazioneProfessioneIngegnereComponent } from './aspect/abilitazione-professione-ingegnere.component';
 import { JcononAspectUlterioreLaureaComponent } from './aspect/ulteriore-laurea.component';
 import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dottorato.component';
 import { Call } from "../core/call/call.model";
 import { JcononAffixCallDetailComponent } from "./affix/call-detail.component";
 import { JcononAffixCallSettingsComponent } from "./affix/call-settings.component";
+import { JcononAffixCallAspirantDetailComponent, JcononAffixCallScoreComponent, JcononAffixCallAccountableComponent, JcononAffixCallHelpDeskComponent, JcononAffixCallAttachmentsComponent } from "./affix/call-sections.component";
+
 
 @Injectable({
     providedIn: 'root',
@@ -96,6 +99,26 @@ export class DynamicService {
         'affix_tabCallSettings' : {
           model: Call,
           showcomponent: JcononAffixCallSettingsComponent
+        },
+        'affix_tabCallAspirantDetail' : {
+          model: Call,
+          showcomponent: JcononAffixCallAspirantDetailComponent
+        },
+        'affix_tabCallScore' : {
+          model: Call,
+          showcomponent: JcononAffixCallScoreComponent
+        },
+        'affix_tabCallAccountable' : {
+          model: Call,
+          showcomponent: JcononAffixCallAccountableComponent
+        },
+        'affix_tabCallHelpDesk' : {
+          model: Call,
+          showcomponent: JcononAffixCallHelpDeskComponent
+        },
+        'affix_tabCallAttachments' : {
+          model: Call,
+          showcomponent: JcononAffixCallAttachmentsComponent
         },
 
 
@@ -293,6 +316,39 @@ export class DynamicService {
         'P:jconon_application:aspect_diversamente_abile' : {
           model: Application,
           showcomponent: JcononAspectDiversmenteAbileComponent
+        },
+        'P:jconon_application:aspect_diversamente_abile_104' : {
+          model: Application,
+          params: {
+            propertyName: 'jconon_application:fl_diversamente_abile_104',
+            name: 'fl_diversamente_abile_104',
+            required: false,
+            label: 'label.jconon_application.fl_diversamente_abile_104'
+          },
+          showcomponent: JcononAspectsDichiarazioneComponent
+        },
+        'P:jconon_application:aspect_dsa' : {
+          model: Application,
+          params: {
+            propertyName: 'jconon_application:fl_dsa',
+            name: 'fl_dsa',
+            required: false,
+            label: 'label.jconon_application.fl_dsa'
+          },
+          showcomponent: JcononAspectsDichiarazioneComponent
+        },
+        'P:jconon_application:aspect_programma_di_mandato' : {
+          model: Application,
+          params: {
+            propertyName: 'jconon_application:programma_di_mandato',
+            name: 'programma_di_mandato',
+            required: true,
+            label: 'label.jconon_application.programma_di_mandato',
+            type: 'textarea',
+            rows: '10',
+            validators: [Helpers.maxlengthValidator(5000, {maxlength5000: true})]
+          },
+          showcomponent: JcononAspectSingleFieldComponent
         },
         'P:jconon_application:aspect_tempi_aggiuntivi' : {
           model: Application,
@@ -847,6 +903,9 @@ export class DynamicService {
         if (form) {
             (<AdMetadataComponent>componentRef.instance).form = form;
         }
+        if (this.isGenericAspect(selector)) {
+            (<any>componentRef.instance).aspectType = selector;
+        }
         let params = this.getParams(selector);
         if (params) {
             Object.keys(params).forEach(key => {
@@ -884,7 +943,15 @@ export class DynamicService {
         var instance = this.classes[selector];
         if (instance && instance.showcomponent)
             return instance.showcomponent;
+        // aspect senza componente dedicato: campi letti dal bulkinfo del tipo
+        if (this.isGenericAspect(selector))
+            return JcononAspectGenericComponent;
         return JcononAttachmentShowComponent;
+    }
+
+    /** Aspect (P:...) non registrato: viene reso dal componente generico basato sul bulkinfo. */
+    isGenericAspect(selector: string): boolean {
+        return !!selector && selector.startsWith('P:') && !(this.classes[selector] && this.classes[selector].showcomponent);
     }
 
     getEditComponent(selector: string): any {

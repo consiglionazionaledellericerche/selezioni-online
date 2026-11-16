@@ -5,6 +5,7 @@ import { DynamicComponent } from '../dynamic.component';
 import { Application } from '../../core/application/application.model';
 
 @Component({
+  standalone: false,
     selector: 'P:jconon_application:aspect_altre_borse_studio',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()" [ngSwitch]="isToggle()">

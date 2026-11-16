@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 declare var $: any;   // not required
 
 @Component({
+  standalone: false,
   selector: 'app-control-select-model',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template:
@@ -33,7 +34,9 @@ declare var $: any;   // not required
                        [ttipAppend]="ttipAppend"
                        [showValidation]="showValidation">
 
-          <select class="form-select select2-single" [ngClass]="selectClasses()">
+          <app-multi-select *ngIf="useMulti()" class="w-100" [options]="multiOptions" [values]="multiValues()"
+            [placeholder]="placeholder" [invalid]="isInvalid()" (valuesChange)="onMultiChange($event)"></app-multi-select>
+          <select *ngIf="!useMulti()" class="form-select select2-single" [ngClass]="selectClasses()">
             <option *ngIf="allowClear"></option>
             
             <option *ngFor="let type of types" [value]="type.id" [selected]="isItemSelected(type.queryName)">
@@ -57,10 +60,10 @@ declare var $: any;   // not required
             <!--<option *ngIf="isSingleAsync() && selected" [value]="selected"> {{ selected.getLabel() }}</option>-->
           </select>
 
-        <div *ngIf="showList()" class="col-12 p-0 mt-0">
+        <div *ngIf="showList() && !useMulti()" class="col-12 p-0 mt-0">
           <div class="chip chip-primary chip-lg col-auto" *ngFor="let s of showListItems()">
             <i *ngIf="multiSelectIcon" class="fa {{multiSelectIcon}} pe-1 label" aria-hidden="true"></i>
-            <div [popover]="popoverMulti ? s : ''" triggers="mouseenter:mouseleave" class="label fw-semibold text-truncate">{{ s }}</div>
+            <div [itPopover]="popoverMulti ? s : ''" popoverTrigger="hover" class="label fw-semibold text-truncate">{{ s }}</div>
             <button (click)="unselect(s)">
               <svg class="icon"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-close"></use></svg>
               <span class="visually-hidden" translate>delete</span>
@@ -125,9 +128,51 @@ export class FormTemplateSelectModelComponent extends Select2AngularComponent im
   }
 
   ngOnChanges() {
+    this.buildMultiOptions();
     if (!this.asyncInitialized) {
       this.initializeSelect2();
     }
+  }
+
+  /* ---- selezione multipla senza select2 (app-multi-select) ---- */
+
+  public multiOptions: { value: string, label: string }[] = [];
+
+  /** Multipla su un elenco fisso (stringhe o oggetti): si usa app-multi-select invece di select2. */
+  public useMulti(): boolean {
+    // non dipende dall'arrivo delle opzioni: altrimenti select2 verrebbe inizializzato prima e lascerebbe il suo riquadro
+    return (this.multiple === true || (this.multiple as any) === 'true') && !this.path && !this.types;
+  }
+
+  protected initializeSelect2() {
+    if (this.useMulti()) {
+      return;
+    }
+    super.initializeSelect2();
+  }
+
+  private buildMultiOptions(): void {
+    if (!this.useMulti()) {
+      return;
+    }
+    this.multiOptions = this.strings !== undefined && this.strings !== null
+      ? Array.from(new Set([...(Array.isArray(this.strings) ? this.strings : []), ...(Array.isArray(this.selected) ? this.selected as string[] : [])])).map(s => ({ value: s, label: s }))
+      : (this.items || []).map((item: any) => ({ value: item.getObjectId(), label: item.getLabel ? item.getLabel(this.detailedLabel) : item.getObjectId() }));
+  }
+
+  public multiValues(): string[] {
+    const selected = this.selected || [];
+    return this.strings ? selected : selected.map(item => item && item.getObjectId ? item.getObjectId() : item);
+  }
+
+  public onMultiChange(values: string[]): void {
+    this.selected = this.strings ? values : (this.items || []).filter(item => values.includes(item.getObjectId()));
+    this.onChange(this.selected);
+    this.onTouched();
+    if (this.controlDir && this.controlDir.control) {
+      this.controlDir.control.markAsDirty();
+    }
+    this.onChangeEvent.emit(this.selected);
   }
 
   /**

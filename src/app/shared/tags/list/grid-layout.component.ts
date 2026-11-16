@@ -3,37 +3,33 @@ import { Table } from '../../../common/model/table.model';
 import { CommonService } from '../../../common/controller/common.service';
 
 @Component({
+  standalone: false,
   selector: 'app-grid-layout',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template:
-     `
-    <div class="px-md-2">
-
-        <div *ngIf="loading" class="text-center">
-          Caricamento ...
-          <i class="fa fa-spinner fa-pulse fa-fw"></i>
+  template: `
+    <div>
+      <p *ngIf="!loading && count > 0 && showTotalOnTop" class="small text-secondary mb-2">
+        {{ items?.length || 0 }} {{ 'layout.list_of' | translate }} {{ count }} {{ 'layout.list_items' | translate }}
+      </p>
+      <div *ngIf="count > 0">
+        <ng-content></ng-content>
+      </div>
+      <div *ngIf="loading" class="d-flex justify-content-center my-4">
+        <div class="progress-spinner progress-spinner-active progress-spinner-sm">
+          <span class="visually-hidden">{{ 'layout.loading' | translate }}</span>
         </div>
-
-        <div *ngIf="count > 0">
-          <app-list-pagination *ngIf="!loading && showTotalOnTop && count > page_offset" [infiniteScroll]="infiniteScroll" [showPage]="false" [page]="page" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
-
-          <div class="row row-eq-height">
-            <ng-content></ng-content>
-          </div>
-          <div *ngIf="loading && infiniteScroll" class="text-center">
-            Caricamento ...
-            <i class="fa fa-spinner fa-pulse fa-fw"></i>
-          </div>
+      </div>
+      <ng-container *ngIf="!loading">
+        <div *ngIf="count == 0" class="alert alert-info mt-3" role="alert" [innerHtml]="noItem | translate"></div>
+        <div *ngIf="infiniteScroll && loadMore.observed && count > (items?.length || 0)" class="text-center my-4">
+          <button type="button" class="btn btn-outline-primary btn-sm" (click)="loadMore.emit()">{{ 'layout.load_more' | translate }}</button>
         </div>
-
-        <!-- Paging -->
-        <app-list-pagination *ngIf="!loading" [showPage]="showPage" [page]="page" [infiniteScroll]="infiniteScroll" [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
-
-        <div *ngIf="!loading && count == 0" class="alert alert-warning font-monospace" innerHtml="{{ noItem | translate }}"></div>
-
+        <p *ngIf="infiniteScroll && count > page_offset && count <= (items?.length || 0)" class="text-center small text-secondary my-4">{{ 'layout.list_end' | translate }}</p>
+        <app-list-pagination *ngIf="!infiniteScroll" [showPage]="showPage" [page]="page" [infiniteScroll]="infiniteScroll"
+          [count]="count" [page_offset]="page_offset" (onChangePage)="select($event)"></app-list-pagination>
+      </ng-container>
     </div>
-    `,
-styles: [`.loadingmask tr { color: lightgray ; }`]
+  `
 })
 export class GridLayoutComponent {
 
@@ -64,6 +60,9 @@ export class GridLayoutComponent {
   @Input() showTotalOnTop = true;
 
   @Output() onChangePage = new EventEmitter();
+
+  /** Scroll infinito: richiesta della pagina successiva da accodare (pulsante "Carica altri"). */
+  @Output() loadMore = new EventEmitter<void>();
 
   @Output() delete = new EventEmitter();
 

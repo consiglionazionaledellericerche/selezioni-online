@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-show-enum',
   template: `
       <app-show-layout [label]="label">

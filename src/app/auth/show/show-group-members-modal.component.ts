@@ -1,5 +1,5 @@
 import {Component, Input, TemplateRef, OnInit} from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../shared/modal/modal.service';
 import { User } from '../model/user.model';
 import { ConfigService } from '../../core/config.service';
 import { switchMap, map, catchError} from 'rxjs/operators';
@@ -10,6 +10,7 @@ import {throwError as observableThrowError, of as observableOf, Observable} from
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+  standalone: false,
   selector: 'app-show-group-members-modal',
   template: `
 
@@ -42,8 +43,8 @@ export class ShowGroupMembersModalComponent {
   
   protected users: string[] = undefined;
 
-  modalRef: BsModalRef;
-  constructor(private modalService: BsModalService,               
+  modalRef: ModalRef;
+  constructor(private modalService: ModalService,               
               private httpClient: HttpClient,
               protected apiMessageService: ApiMessageService,
               public translateService: TranslateService,

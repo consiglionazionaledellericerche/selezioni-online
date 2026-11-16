@@ -1,16 +1,17 @@
+import { throwError } from 'rxjs';
 
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {Component, EventEmitter, Input, OnInit, Output, TemplateRef} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {Attachment} from '../../../common/model/attachment.model';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../modal/modal.service';
 import {CmisObject} from '../../../common/model/cmisobject.model';
 import {ConfigService} from '../../../core/config.service';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {ErrorObservable} from 'rxjs-compat/observable/ErrorObservable';
 import {ApiMessageService} from '../../../core/api-message.service';
 
 @Component({
+  standalone: false,
   selector: 'app-attachment-list',
   template:
      `
@@ -20,7 +21,7 @@ import {ApiMessageService} from '../../../core/api-message.service';
           <em> {{ attachmentText() }}</em>
         </span>
         <button class="btn btn-sm btn-light d-inline-block ms-3"
-                data-bs-toggle="tooltip" data-bs-placement="top" title="Gestisci allegati"
+                data-bs-toggle="tooltip" data-bs-tooltipPlacement="top" title="Gestisci allegati"
                 (click)="openModal(template)">
           <i class="fa fa-folder-open-o" aria-hidden="true"></i>
         </button>
@@ -96,9 +97,9 @@ export class AttachmentListComponent implements OnInit {
 
   downloadPath;
 
-  modalRef: BsModalRef;
+  modalRef: ModalRef;
 
-  constructor(private modalService: BsModalService,
+  constructor(private modalService: ModalService,
               private configService: ConfigService,
               protected apiMessageService: ApiMessageService,
               private httpClient: HttpClient) {}
@@ -163,7 +164,7 @@ export class AttachmentListComponent implements OnInit {
 
         this.apiMessageService.onApiMessage.error('Immpossibile scaricare il file allegato');
 
-        return ErrorObservable.create(responseError);
+        return throwError(() => responseError);
       }),);
     })).subscribe( () => {});
   }

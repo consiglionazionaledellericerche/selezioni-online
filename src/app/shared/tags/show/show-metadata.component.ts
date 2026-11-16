@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AdMetadata } from './ad-metadata.directive';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalRef } from '../../modal/modal.service';
 import { CmisObject } from '../../../common/model/cmisobject.model';
 import { DynamicService } from '../../../dynamic/dynamic.service';
 
 @Component({
+  standalone: false,
     selector: 'show-metadata',
     template: `
       <div class="modal-header">
@@ -21,7 +22,7 @@ import { DynamicService } from '../../../dynamic/dynamic.service';
   })
 export class ShowMetadataComponent implements OnInit {
     constructor(
-          public modalRef: BsModalRef,
+          public modalRef: ModalRef,
           private dynamicService: DynamicService
     ) {}
     @ViewChild(AdMetadata, {static: true}) adMetadata: AdMetadata;

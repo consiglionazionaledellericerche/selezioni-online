@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {CmisObject} from '../../../common/model/cmisobject.model';
 
 @Component({
+  standalone: false,
   selector: 'app-show-multi',
   template: `
       <app-show-layout [label]="label">

@@ -1,11 +1,12 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Document } from '../../../common/model/document.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../modal/modal.service';
 import { ShowMetadataComponent } from '../show/show-metadata.component';
 import { CmisObject } from '../../../common/model/cmisobject.model';
 
 @Component({
+  standalone: false,
   selector: 'app-list-item-document',
   template:
      `
@@ -14,30 +15,19 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
           <ng-content></ng-content>
 
           <a class="ddd" aria-haspopup="true" role="button">
-            <div class="btn-group border rounded" role="group" dropdown [ngStyle]="buttonStyle()">
+            <div class="btn-group border rounded" role="group" [ngStyle]="buttonStyle()">
               <button class="btn text-dark p-2" [disabled]="!item.hasId()"
-                  (click)="openModalWithComponent(item)" tooltip="{{'show' | translate}}">
+                  (click)="openModalWithComponent(item)" [itTooltip]="'show' | translate">
                   <i class="fa fa-fw fa-eye text-primary"></i>
               </button>
               <button class="btn text-primary p-2" *ngIf="item.canEdit()" [disabled]="!item.hasId()"
-                  (click)="edit(item)" tooltip="{{'edit' | translate}}">
+                  (click)="edit(item)" [itTooltip]="'edit' | translate">
                   <i class="fa fa-fw fa-edit text-primary"></i>
               </button>
               <button class="btn text-danger p-2" *ngIf="item.canDelete()" [disabled]="!item.hasId()"
-                  (click)="delete(item)" tooltip="{{'delete' | translate}}">
+                  (click)="delete(item)" [itTooltip]="'delete' | translate">
                   <i class="fa fa-fw fa-trash text-danger"></i>
               </button>
-        
-              <button id="button-basic" dropdownToggle class="btn text-dark p-2" aria-controls="button-animated" tooltip="{{'more.actions' | translate}}">
-                <i class="fa fa-fw fa-ellipsis-v"></i>
-              </button>
-              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-end border" role="menu" aria-labelledby="button-animated">
-                  <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
-                  <li class="divider dropdown-divider"></li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a></li>
-              </ul>
             </div>
           </a>
         </div>
@@ -47,7 +37,6 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
       [
         '.ddd { display: none; }',
         '.row:hover .ddd, .row:active .ddd, .row:focus .ddd { display: block; }',
-        '.dropdown-menu:before { left: unset; right: 11px;border-left:1px solid #b1b1b3 !important; border-top: 1px solid #b1b1b3 !important; top: -10px}'
       ]
 })
 export class ListItemDocumentComponent {
@@ -55,7 +44,7 @@ export class ListItemDocumentComponent {
   constructor(
     private router: Router, 
     private route: ActivatedRoute, 
-    private modalService: BsModalService
+    private modalService: ModalService
   ) {}
 
   @Input() item: Document = null;
@@ -80,7 +69,7 @@ export class ListItemDocumentComponent {
 
   @Input() page;
   
-  bsModalRef: BsModalRef;
+  bsModalRef: ModalRef;
 
   public navigateShow() {
     this.router.navigate([this.showRoute + this.item.getObjectId()],

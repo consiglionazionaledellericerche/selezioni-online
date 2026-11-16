@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, ViewChildren } from '@angular/core';
 import { CacheService } from '../../core/cache.service';
 import { DynamicComponent } from '../dynamic.component';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../shared/modal/modal.service';
 import { ManageDocumentComponent } from '../../core/document/manage-document.component';
 import { Document } from '../../common/model/document.model';
 import { ChildrenListComponent } from '../../core/children/children-list.component';
@@ -13,19 +13,23 @@ import { Subscription } from 'rxjs';
 import { LoadingState } from '../../auth/loading-state.enum';
 
 @Component({
+  standalone: false,
     selector: 'affix_tabAllegati',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded() && cache !== undefined" class="pb-2">
-        <accordion [isAnimated]="true" [closeOthers]="true" class="shadow">
+        <app-accordion [isAnimated]="true" [closeOthers]="true" class="shadow">
           <ng-container *ngFor="let attachment of data.call[callProperty]">
-            <accordion-group #accordionGroup panelClass="border border-light no-after">
+            <app-accordion-group #accordionGroup panelClass="border border-light no-after">
               <div class="d-flex align-items-start" accordion-heading>
-                <h4 #title class="p-1 text-truncate text-primary" [popover]="getTitle(attachment, title)| translate" triggers="mouseenter:mouseleave" translate>{{attachment}}</h4>
+                <h4 #title class="p-1 text-truncate text-primary" [itPopover]="getTitle(attachment, title)| translate" popoverTrigger="hover" translate>{{attachment}}</h4>
                 <span class="badge rounded-pill badge-outline-primary d-table ms-n1" [ngClass]="{'badge-outline-danger': childrenlist.count === 0}">{{childrenlist.count}}</span>
+                <span *ngIf="uploaded[attachment]" class="badge rounded-pill bg-success upload-ok ms-2 align-self-center" role="status">
+                  <svg class="icon icon-xs icon-white me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-check"></use></svg>{{ 'message.document.uploaded' | translate }}
+                </span>
                 <div class="me-auto p-1 h4">
-                  <button class="btn p-0" [popover]="'new'| translate" triggers="mouseenter:mouseleave" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
+                  <button *ngIf="data.objectId" class="btn p-0" [itPopover]="'new'| translate" popoverTrigger="hover" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
                     <svg class="icon icon-success">
-                      <use href="/assets/bootstrap-italia/svg/sprites.svg#it-plus-circle"></use>
+                      <use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus-circle"></use>
                     </svg>
                   </button>
                 </div>
@@ -33,11 +37,11 @@ import { LoadingState } from '../../auth/loading-state.enum';
                   <button 
                     (click)="printDicSost($event, accordionGroup)"
                     [disabled]="loadingStateDicSost.isStarting()" 
-                    *ngIf="isPrintDicSost(attachment)"
+                    *ngIf="data.objectId && isPrintDicSost(attachment)"
                     class="btn btn-link btn-icon p-0" 
-                    [popover]="'application.print.dic_sost.popover'| translate" triggers="mouseenter:mouseleave">
+                    [itPopover]="'application.print.dic_sost.popover'| translate" popoverTrigger="hover">
                     <span class="pe-1 w-100 text-end d-none d-md-block h6" translate>application.print.dic_sost.button</span>
-                    <svg *ngIf="!loadingStateDicSost.isStarting()" class="icon icon-danger h4 "><use href="/assets/bootstrap-italia/svg/sprites.svg#it-print"></use></svg>              
+                    <svg *ngIf="!loadingStateDicSost.isStarting()" class="icon icon-danger h4 "><use href="/bootstrap-italia/dist/svg/sprites.svg#it-print"></use></svg>              
                     <div *ngIf="loadingStateDicSost.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                       <div class="progress-spinner-inner"></div>
                       <div class="progress-spinner-inner"></div>
@@ -45,31 +49,23 @@ import { LoadingState } from '../../auth/loading-state.enum';
                   </button>
                   <button 
                     (click)="printTrattamentoDatiPersonali($event, accordionGroup)" 
-                    *ngIf="isPrintTrattamentoDatiPersonali(attachment)"
+                    *ngIf="data.objectId && isPrintTrattamentoDatiPersonali(attachment)"
                     [disabled]="loadingStateDatiPersonali.isStarting()" 
                     class="btn btn-link btn-icon p-0" 
-                    [popover]="'application.print.trattamento_dati_personali.popover'| translate" triggers="mouseenter:mouseleave">
+                    [itPopover]="'application.print.trattamento_dati_personali.popover'| translate" popoverTrigger="hover">
                     <span class="pe-1 w-100 text-end d-none d-md-block h6" translate>application.print.trattamento_dati_personali.button</span>
-                    <svg *ngIf="!loadingStateDatiPersonali.isStarting()" class="icon icon-danger h4 "><use href="/assets/bootstrap-italia/svg/sprites.svg#it-print"></use></svg>              
+                    <svg *ngIf="!loadingStateDatiPersonali.isStarting()" class="icon icon-danger h4 "><use href="/bootstrap-italia/dist/svg/sprites.svg#it-print"></use></svg>              
                     <div *ngIf="loadingStateDatiPersonali.isStarting()" class="progress-spinner progress-spinner-double size-sm progress-spinner-active">
                       <div class="progress-spinner-inner"></div>
                       <div class="progress-spinner-inner"></div>
                     </div>
                   </button>
                 </div>
-                <div class="p-1">
-                  <div class="float-end float-end">
-                    <svg class="icon icon-primary">
-                      <use *ngIf="!accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-expand"></use>
-                      <use *ngIf="accordionGroup.isOpen" href="/assets/bootstrap-italia/svg/sprites.svg#it-collapse"></use>
-                    </svg>
-                  </div>
-                </div>
               </div>
               <children-list #childrenlist [show_date]="true" [parentId]="data.objectId" [typeId]="attachment"></children-list>
-            </accordion-group>
+            </app-accordion-group>
           </ng-container>  
-        </accordion>
+        </app-accordion>
       </form>
     `
   })
@@ -79,17 +75,17 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
       protected applicationService: ApplicationService,
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,
-      private modalService: BsModalService,
+      private modalService: ModalService,
       protected apiMessageService: ApiMessageService,
       protected translateService: TranslateService
     ) {
       super(cacheService, changeDetectorRef);
       this.subscription = this.apiMessageService.loadingEvent$.subscribe((loadingState: LoadingState) => {
         if (loadingState.url) {
-          if (loadingState.url.indexOf('dichiarazione_sostitutiva') !== -1) {
+          if (loadingState.url.indexOf('dichiarazione-sostitutiva') !== -1) {
             this.loadingStateDicSost = loadingState;
           }
-          if (loadingState.url.indexOf('print_trattamento_dati_personali') !== -1) {
+          if (loadingState.url.indexOf('trattamento-dati-personali') !== -1) {
             this.loadingStateDatiPersonali = loadingState;
           }
         }
@@ -97,7 +93,7 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
     }
     cache: any;
     public callProperty: string;
-    bsModalRef: BsModalRef;
+    bsModalRef: ModalRef;
     public upload: boolean = true;
     @ViewChildren('childrenlist') childrenListComponent: ChildrenListComponent[];
     subscription: Subscription;
@@ -126,7 +122,7 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
         accordion.toggleOpen();
       }
       this.applicationService.getBlob(
-        '/rest/application/dichiarazione_sostitutiva?applicationId=' + this.data.objectId, 
+        '/openapi/v1/application/print/dichiarazione-sostitutiva?applicationId=' + encodeURIComponent(this.data.objectId), 
         'Dichiarazione sostitutiva.pdf'
       );
       return false;
@@ -139,11 +135,14 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
         accordion.toggleOpen();
       }
       this.applicationService.getBlob(
-        '/rest/application/print_trattamento_dati_personali?applicationId=' + this.data.objectId, 
+        '/openapi/v1/application/print/trattamento-dati-personali?applicationId=' + encodeURIComponent(this.data.objectId), 
         'Trattamento Dati Personali.pdf'
       );
       return false;
     }
+
+    /** Tipi di allegato appena caricati (badge "Caricato" temporaneo). */
+    public uploaded: { [type: string]: any } = {};
 
     openModalWithComponent(event: any, accordion: any, parentId: string, typeId: string): boolean { 
       event.stopPropagation(); 
@@ -162,6 +161,9 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
         this.translateService.get('message.document.upload.success', {value: document.name}).subscribe((label) => {
           this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
         });
+        // conferma visibile anche accanto al tipo di allegato, per qualche secondo
+        this.uploaded[typeId] = document.name || true;
+        setTimeout(() => delete this.uploaded[typeId], 8000);
         this.childrenListComponent.forEach(comp => comp.loadList());
       });
       return false; 

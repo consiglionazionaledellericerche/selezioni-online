@@ -8,6 +8,7 @@ import { Select2Template } from '../../common/template/select2-template';
 import { CallService } from '../../core/call/call.service';
 
 @Component({
+  standalone: false,
     selector: 'P:jconon_application:aspect_ente_appartenenza',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">

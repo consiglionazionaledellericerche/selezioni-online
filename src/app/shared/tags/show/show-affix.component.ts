@@ -5,6 +5,7 @@ import { DynamicService} from '../../../dynamic/dynamic.service';
 import { FormGroup } from '@angular/forms';
 
 @Component({
+  standalone: false,
     selector: 'show-affix',
     template: `
                 <ng-template ad-metadata></ng-template>

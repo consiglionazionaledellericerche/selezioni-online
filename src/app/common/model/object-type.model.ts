@@ -94,14 +94,39 @@ export class ObjectType {
   }
 
   static getModel(first: string, second: string): any {
-    return (ObjectType.classes[first] || ObjectType.classes[second]).model;
+    return ObjectType.entry(first, second).model;
+  }
+
+  /**
+   * Configurazione del tipo CMIS. I tipi di bando non elencati (es. F:jconon_call_incarichi_ricerca:folder)
+   * derivano comunque da jconon_call:folder: si usa il modello Call invece della cartella generica.
+   */
+  private static entry(first: string, second: string): any {
+    if (ObjectType.classes[first]) {
+      return ObjectType.classes[first];
+    }
+    if (first && first.startsWith('F:jconon_call')) {
+      return ObjectType.classes['F:jconon_call:folder'];
+    }
+    return ObjectType.classes[second];
   }
 
   static getAspect(cmisType: string): string[] {
-    let objectType = ObjectType.classes[cmisType];
+    let objectType = ObjectType.classes[cmisType] ||
+      (cmisType && cmisType.startsWith('F:jconon_call') ? ObjectType.classes['F:jconon_call:folder'] : undefined);
     if (objectType) {
       return objectType.aspect || ObjectType.defaultAspect;
     }    
     return ObjectType.defaultAspect;
+  }
+
+  /** Testo leggibile da una chiave di tipo CMIS (es. "F:jconon_call_incarichi_ricerca:folder" -> "Incarichi ricerca"). */
+  static readable(key: string): string {
+    if (!key) {
+      return '';
+    }
+    const parts = key.replace(/^[FDP]:/, '').split(':');
+    const name = (parts[0] || key).replace(/^jconon_(call|application|attachment)_?/, '').replace(/_/g, ' ').trim() || key;
+    return name.charAt(0).toUpperCase() + name.slice(1);
   }
 }

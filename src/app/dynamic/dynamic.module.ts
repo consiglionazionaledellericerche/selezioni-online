@@ -1,3 +1,5 @@
+import { ItDropdownModule, ItPopoverDirective, ItTooltipDirective } from 'design-angular-kit';
+import { AccordionComponent, AccordionGroupComponent } from '../shared/ui/accordion.component';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -14,6 +16,8 @@ import { JcononAffixReperibilitaComponent } from './affix/reperibilita.component
 
 import { JcononAffixCallDetailComponent } from './affix/call-detail.component';
 import { JcononAffixCallSettingsComponent } from './affix/call-settings.component';
+import { JcononAffixCallAspirantDetailComponent, JcononAffixCallScoreComponent, JcononAffixCallAccountableComponent, JcononAffixCallHelpDeskComponent, JcononAffixCallAttachmentsComponent } from './affix/call-sections.component';
+
 
 import { JcononAspectPossessoRequisitiComponent } from './aspect/possesso-requisiti.component';
 import { JcononAspectsDichiarazioneComponent } from './aspect/dichiarazione.component';
@@ -23,8 +27,6 @@ import { JcononAttachmentDocumentoRiconoscimentoShowComponent } from './attachme
 import { JcononAttachmentEditComponent } from './attachment/jconon-attachment-edit.component';
 import { JcononAttachmentDocumentoRiconoscimentoEditComponent } from './attachment/jconon-attachment-documento-riconoscimento-edit.component';
 
-import {ButtonsModule} from 'ngx-bootstrap/buttons'
-import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 // import ngx-translate and the http loader
 import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -70,6 +72,7 @@ import { JcononAspectAreaTecnicaComponent } from './aspect/area-tecnica.componen
 import { JcononAspectToggleWithSingleFieldComponent } from './aspect/toggle-with-single-field.component';
 import { JcononAspectContrattoTDConcorsoComponent } from './aspect/contratto-td-concorso.component';
 import { JcononAspectIdoneoPrecedentiGraduatorieComponent } from './aspect/idoneo-precedenti-graduatorie.component';
+import { JcononAspectGenericComponent } from './aspect/generic-aspect.component';
 import { JcononAspectAbilitazioneProfessioneIngegnereComponent } from './aspect/abilitazione-professione-ingegnere.component';
 import { JcononAspectUlterioreLaureaComponent } from './aspect/ulteriore-laurea.component';
 import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dottorato.component';
@@ -89,6 +92,12 @@ import { ConfigService } from '../core/config.service';
         JcononAffixReperibilitaComponent,
         JcononAffixCallDetailComponent,
         JcononAffixCallSettingsComponent,
+        JcononAffixCallAspirantDetailComponent,
+        JcononAffixCallScoreComponent,
+        JcononAffixCallAccountableComponent,
+        JcononAffixCallHelpDeskComponent,
+        JcononAffixCallAttachmentsComponent,
+
         /** Application Aspect */
         JcononAspectsDichiarazioneComponent,
         JcononAspectPossessoRequisitiComponent,
@@ -130,6 +139,7 @@ import { ConfigService } from '../core/config.service';
         JcononAspectToggleWithSingleFieldComponent,
         JcononAspectContrattoTDConcorsoComponent,
         JcononAspectIdoneoPrecedentiGraduatorieComponent,
+        JcononAspectGenericComponent,
         JcononAspectAbilitazioneProfessioneIngegnereComponent,
         JcononAspectUlterioreLaureaComponent,
         JcononAspectUlterioreDottoratoComponent,
@@ -139,21 +149,17 @@ import { ConfigService } from '../core/config.service';
         JcononAttachmentDocumentoRiconoscimentoEditComponent
     ],
     imports: [
+        ItDropdownModule,
+        ItPopoverDirective,
+        ItTooltipDirective,
+        AccordionComponent,
+        AccordionGroupComponent,
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
         SharedModule,
         TagsModule,
-        ButtonsModule.forRoot(),
-        AccordionModule.forRoot(),
-        TranslateModule.forChild({
-            compiler: { provide: TranslateCompiler, useClass: CustomTranslationCompiler },
-            loader: {
-                provide: TranslateLoader,
-                useFactory: CustomHttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
+        TranslateModule,
     ]
 })
 export class DynamicModule {}

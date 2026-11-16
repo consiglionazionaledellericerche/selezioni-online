@@ -4,6 +4,7 @@ import { Attachment } from '../../common/model/attachment.model';
 import { FormGroup } from '@angular/forms';
 
 @Component({
+  standalone: false,
     selector: 'D:jconon_attachment:call_it',
     template: `
       <table class="table table-striped table-hover table-borderless">  

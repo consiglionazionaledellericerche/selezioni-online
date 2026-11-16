@@ -5,6 +5,7 @@ import { DynamicComponent } from '../dynamic.component';
 import { CacheService } from '../../core/cache.service';
 
 @Component({
+  standalone: false,
     selector: 'D:jconon_documento_riconoscimento:attachment',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">

@@ -1,20 +1,13 @@
-<div class="mx-n3 mt-n3">
-    <carousel [interval]="-1" >
-        <ng-container *ngFor="let faqType of faqs | keyvalue">
-            <slide>
-                <div>
-                    <div class="bg-primary text-white pe-1 ps-1 pb-3 pt-3">
-                        <h1 class="text-center main-title pt-3">{{faqType.key | translate}}</h1>
-                    </div>
-                    <div *ngFor="let faq of faqType.value" class="lead pb-3 pt-3 text-dark">
-                        <div>
-                            <h4 class="text-center">{{faq.question}}</h4>
-                            <div class="p-3" innerHtml={{faq.answer}}></div>
-                        </div>
-                    </div>
-                </div>
-            </slide>
-        </ng-container>        
-    </carousel>
-</div>
+<app-layout-title [title]="'faq.title'" [subTitle]="'faq.subtitle'"></app-layout-title>
 
+<app-layout-wait [loaded]="faqs"></app-layout-wait>
+
+<section *ngFor="let faqType of faqs | keyvalue" class="mt-4 mb-5">
+  <h2 class="h4 text-primary mb-3">{{ faqType.key | translate }}</h2>
+  <app-accordion [closeOthers]="true" class="d-block shadow-sm rounded">
+    <app-accordion-group *ngFor="let faq of faqType.value">
+      <span accordion-heading class="fw-semibold">{{ faq.question }}</span>
+      <div [innerHtml]="faq.answer"></div>
+    </app-accordion-group>
+  </app-accordion>
+</section>

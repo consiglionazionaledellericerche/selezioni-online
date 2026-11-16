@@ -1,10 +1,11 @@
 import {Component, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-button-csv',
   template: `
   <button *ngIf="active" class="{{class}}">
-    <i class="fa fa-2x fa-file-excel-o text-success" placement="right" tooltip="{{title | translate}}"></i>
+    <i class="fa fa-2x fa-file-excel-o text-success" tooltipPlacement="right" [itTooltip]="title | translate"></i>
   </button>
   `
 })

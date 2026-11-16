@@ -6,6 +6,7 @@ import { Helpers } from '../../common/helpers/helpers';
 import { Application } from '../../core/application/application.model';
 
 @Component({
+  standalone: false,
     selector: 'P:jconon_application:aspect_h_index',
     template: `
       <form [formGroup]="form" *ngIf="isLoaded()">

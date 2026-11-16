@@ -1,6 +1,7 @@
 import {Component, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-button-new',
   template: `
     <button *ngIf="active" type="button" [queryParams]="queryParams" [routerLink]="[route]" class="btn btn-info btn-{{ size }}">

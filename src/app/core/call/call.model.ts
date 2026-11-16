@@ -1,5 +1,5 @@
 import { Folder } from '../../common/model/folder.model';
-import { JsonProperty, JsonObject } from 'json2typescript';
+import { JsonProperty, JsonObject, Any } from 'json2typescript';
 import { DateConverter } from '../../common/helpers/DateConverter'
 import { ISODateTimeConverter } from '../../common/helpers/ISODateTimeConverter';
 import { ObjectToIdConverter } from '../../common/helpers/ObjectToIdConverter';
@@ -120,6 +120,64 @@ export class Call extends Folder {
   public elenco_settori_tecnologici: string[] = undefined;
   @JsonProperty('jconon_call:elenco_tipo_selezione', [String], true)
   public elenco_tipo_selezione: string[] = undefined;
+
+  // Campi gestiti dalle sezioni Impostazioni, Requisiti candidati e Punteggi
+  @JsonProperty('jconon_call:elenco_aspects_sezione_4', [String], true)
+  public elenco_aspects_sezione_4: string[] = undefined;
+  @JsonProperty('jconon_call:elenco_aspects_sezione_5', [String], true)
+  public elenco_aspects_sezione_5: string[] = undefined;
+  @JsonProperty('jconon_call:elenco_lingue_da_conoscere', [String], true)
+  public elenco_lingue_da_conoscere: string[] = undefined;
+  @JsonProperty('jconon_call:only_user_spid_can_submit_application', Any, true)
+  public only_user_spid_can_submit_application: any = undefined;
+  @JsonProperty('jconon_call:pagamento_pagopa', Any, true)
+  public pagamento_pagopa: any = undefined;
+  @JsonProperty('jconon_call:importo_pagamento_pagopa', Any, true)
+  public importo_pagamento_pagopa: any = undefined;
+  @JsonProperty('jconon_call:group_multiple_application', Any, true)
+  public group_multiple_application: any = undefined;
+  @JsonProperty('jconon_call:punteggio_1', Any, true)
+  public punteggio_1: any = undefined;
+  @JsonProperty('jconon_call:punteggio_1_min', Any, true)
+  public punteggio_1_min: any = undefined;
+  @JsonProperty('jconon_call:punteggio_1_limite', Any, true)
+  public punteggio_1_limite: any = undefined;
+  @JsonProperty('jconon_call:punteggio_2', Any, true)
+  public punteggio_2: any = undefined;
+  @JsonProperty('jconon_call:punteggio_2_min', Any, true)
+  public punteggio_2_min: any = undefined;
+  @JsonProperty('jconon_call:punteggio_2_limite', Any, true)
+  public punteggio_2_limite: any = undefined;
+  @JsonProperty('jconon_call:punteggio_3', Any, true)
+  public punteggio_3: any = undefined;
+  @JsonProperty('jconon_call:punteggio_3_min', Any, true)
+  public punteggio_3_min: any = undefined;
+  @JsonProperty('jconon_call:punteggio_3_limite', Any, true)
+  public punteggio_3_limite: any = undefined;
+  @JsonProperty('jconon_call:punteggio_4', Any, true)
+  public punteggio_4: any = undefined;
+  @JsonProperty('jconon_call:punteggio_4_min', Any, true)
+  public punteggio_4_min: any = undefined;
+  @JsonProperty('jconon_call:punteggio_4_limite', Any, true)
+  public punteggio_4_limite: any = undefined;
+  @JsonProperty('jconon_call:punteggio_5', Any, true)
+  public punteggio_5: any = undefined;
+  @JsonProperty('jconon_call:punteggio_5_min', Any, true)
+  public punteggio_5_min: any = undefined;
+  @JsonProperty('jconon_call:punteggio_5_limite', Any, true)
+  public punteggio_5_limite: any = undefined;
+  @JsonProperty('jconon_call:punteggio_6', Any, true)
+  public punteggio_6: any = undefined;
+  @JsonProperty('jconon_call:punteggio_6_min', Any, true)
+  public punteggio_6_min: any = undefined;
+  @JsonProperty('jconon_call:punteggio_6_limite', Any, true)
+  public punteggio_6_limite: any = undefined;
+  @JsonProperty('jconon_call:punteggio_7', Any, true)
+  public punteggio_7: any = undefined;
+  @JsonProperty('jconon_call:punteggio_7_min', Any, true)
+  public punteggio_7_min: any = undefined;
+  @JsonProperty('jconon_call:punteggio_7_limite', Any, true)
+  public punteggio_7_limite: any = undefined;
 
   constructor() {
       super();

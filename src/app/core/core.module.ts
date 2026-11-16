@@ -1,10 +1,9 @@
+import { ItUploadDragDropComponent } from 'design-angular-kit';
+import { ItDropdownModule, ItPopoverDirective, ItTooltipDirective } from 'design-angular-kit';
+import { AccordionComponent, AccordionGroupComponent } from '../shared/ui/accordion.component';
 import {NgModule} from '@angular/core';
 import {CoreRoutingModule} from './core-routing.module';
-import {HeaderComponent} from './header/header.component';
-import {FooterComponent} from './footer/footer.component';
 
-import {SidenavComponent} from './sidenav/sidenav.component';
-import {SidenavMenuComponent} from './sidenav/sidenav-menu.component';
 
 import {HomeComponent} from './home/home.component';
 import {SearchComponent} from './search/search.component';
@@ -14,7 +13,6 @@ import {AppRoutingModule} from '../app-routing.module';
 import {SharedModule} from '../shared/shared.module';
 import {TagsModule} from '../shared/tags/tags.module';
 
-import {NotificationsService, SimpleNotificationsModule} from 'angular2-notifications';
 import {ApiMessageService} from './api-message.service';
 import {DropdownNavbarComponent} from './header/dropdown/dropdown-navbar.component';
 import {BadRequestComponent} from './badrequest/badrequest.component';
@@ -31,6 +29,13 @@ import {ApplicationListComponent} from './application/application-list.component
 import {ApplicationUserListComponent} from './application/application-user-list.component';
 import { ManageApplicationComponent } from './application/manage-application.component';
 import { PrintApplicationComponent } from './application/print-application.component';
+import { CopyApplicationComponent } from './application/copy-application.component';
+import { CreateChildCallComponent } from './call/manage/create-child-call.component';
+import { CallHeaderComponent } from './call/manage/call-header.component';
+import { CallCommunicationsComponent } from './call/manage/call-communications.component';
+import { CallDetailPageComponent } from './call/call-detail-page.component';
+import { ApplicationSummaryComponent } from './application/application-summary.component';
+import { CallChildrenComponent, CallLabelsComponent, CallPermissionsComponent, CallCommissionComponent, CommissionGenderComponent } from './call/manage/call-pages.component';
 import {ApplicationService} from './application/application.service';
 import {ApplicationUserService} from './application/application-user.service';
 
@@ -43,11 +48,7 @@ import { DocumentService} from './document/document.service';
 
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 // import ngx-translate and the http loader
 import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -64,10 +65,6 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
  */
 @NgModule({
     declarations: [
-        HeaderComponent,
-        FooterComponent,
-        SidenavComponent,
-        SidenavMenuComponent,
         DropdownNavbarComponent,
         HomeComponent,
         SearchComponent,
@@ -77,43 +74,49 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
         ManageApplicationComponent,
         ManageCallComponent,
         PrintApplicationComponent,
+        CopyApplicationComponent,
+        CreateChildCallComponent,
+        CallCommunicationsComponent,
+        CallDetailPageComponent,
+        CallChildrenComponent,
+        CallLabelsComponent,
+        CallPermissionsComponent,
+        CallCommissionComponent,
+        CommissionGenderComponent,
         ManageDocumentComponent,
         DownloadDocumentComponent,
         BadRequestComponent,
     ],
     imports: [
+        ItUploadDragDropComponent,
+        CallHeaderComponent,
+        ItDropdownModule,
+        ItPopoverDirective,
+        ItTooltipDirective,
+        AccordionComponent,
+        AccordionGroupComponent,
         AppRoutingModule,
         CoreRoutingModule,
         SharedModule,
         TagsModule,
         AuthModule,
         FormsModule,
+        ApplicationSummaryComponent,
         ReactiveFormsModule,
         InfiniteScrollModule,
-        AccordionModule,
-        ButtonsModule.forRoot(),
-        TranslateModule.forChild({
-            compiler: { provide: TranslateCompiler, useClass: CustomTranslationCompiler },
-            loader: {
-                provide: TranslateLoader,
-                useFactory: CustomHttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-        CollapseModule.forRoot(),
-        ProgressbarModule.forRoot(),
-        SimpleNotificationsModule.forRoot() // Le notifiche (per ora) vengono tutte generate nell'header component.
+        TranslateModule,
     ],
     exports: [
+        ItDropdownModule,
+        ItPopoverDirective,
+        ItTooltipDirective,
+        AccordionComponent,
+        AccordionGroupComponent,
         AuthModule,
         SharedModule,
         TagsModule,
         HomeComponent,
         SearchComponent,
-        HeaderComponent,
-        FooterComponent,
-        SidenavComponent,
-        SidenavMenuComponent,
         BadRequestComponent,
         CallListComponent,
         ApplicationListComponent,
@@ -127,7 +130,6 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     providers: [
         // Capire il discorso del root-injector e child-injector.
         ApiMessageService,
-        NotificationsService,
         ConfigService,
         NavigationService,
         MenuService,

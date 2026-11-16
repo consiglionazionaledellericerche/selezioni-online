@@ -1,34 +1,23 @@
 import {Component, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../modal/modal.service';
 
 @Component({
+  standalone: false,
   selector: 'modal-confirm',
   template: `
-
-      <div class="modal-header border-bottom">
-        <h4 class="modal-title float-start text-warning pb-2"><i class="fa fa-info-circle"></i>  {{'modal.title.confirm'|translate}}</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
+      <div class="modal-header">
+        <h2 class="modal-title h5 no_toc">{{'modal.title.confirm'|translate}}</h2>
+        <button class="btn-close" type="button" aria-label="Chiudi finestra modale" (click)="modalRef.hide()">
+          <svg class="icon"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-close"></use></svg>
+        </button>
       </div>
-      <div class="modal-body" innerHtml="{{body | translate}}"></div>
+      <div class="modal-body pt-3"><p class="mb-4" style="white-space: pre-line" [innerHtml]="body | translate"></p></div>
       <div class="modal-footer">
-        <div class="container">
-          <div class="row mt-2">
-            <div class="col-md-6">
-              <button class="btn btn-outline-danger w-100"
-                (click)="modalRef.hide()">
-                {{'button.cancel'|translate}}
-              </button>
-            </div>
-            <div class="col-md-6">
-              <button class="btn btn-outline-primary w-100"
-                      [disabled]="disable"
-                      (click)="onConfirm()">
-                {{'button.confirm'|translate}}
-              </button>
-            </div>  
-          </div>
-        </div>  
-     </div>
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 w-100">
+          <button type="button" class="btn btn-outline-secondary" (click)="modalRef.hide()">{{'button.cancel'|translate}}</button>
+          <button type="button" class="btn btn-primary" [disabled]="disable" (click)="onConfirm()">{{'button.confirm'|translate}}</button>
+        </div>
+      </div>
   `
 })
 export class ModalConfirmComponent {
@@ -50,8 +39,8 @@ export class ModalConfirmComponent {
   @Output() confirm = new EventEmitter();
 
   constructor(
-      private modalService: BsModalService,
-      public modalRef: BsModalRef
+      private modalService: ModalService,
+      public modalRef: ModalRef
   ) {}
 
   onConfirm() {

@@ -1,3 +1,4 @@
+import { ItDropdownModule, ItPopoverDirective, ItTooltipDirective } from 'design-angular-kit';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -14,9 +15,6 @@ import {ShowGroupMembersModalComponent} from './show/show-group-members-modal.co
 import {AuthRoutingModule} from './auth-routing.module';
 import {AuthService} from './auth.service';
 import {AuthGuard} from './auth-guard.service';
-import {TooltipModule} from 'ngx-bootstrap/tooltip'
-import {PopoverModule} from 'ngx-bootstrap/popover'
-import {ButtonsModule} from 'ngx-bootstrap/buttons'
 
 import { ApplicationService } from '../core/application/application.service';
 import { ApplicationUserService } from '../core/application/application-user.service';
@@ -51,23 +49,16 @@ export enum ServiceReg {
     ShowGroupMembersModalComponent,
   ],
   imports: [
+        ItDropdownModule,
+        ItPopoverDirective,
+        ItTooltipDirective,
     SharedModule,
     TagsModule,
     FormsModule,
     ReactiveFormsModule,
     AuthRoutingModule,
     CommonModule,
-    TooltipModule,
-    PopoverModule,
-    ButtonsModule.forRoot(),
-    TranslateModule.forChild({
-      compiler: {provide: TranslateCompiler, useClass: CustomTranslationCompiler},
-      loader: {
-          provide: TranslateLoader,
-          useFactory: CustomHttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    }),
+    TranslateModule,
   ],
   providers: [
     AuthService,

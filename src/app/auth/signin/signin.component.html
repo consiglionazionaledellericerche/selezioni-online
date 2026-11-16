@@ -15,13 +15,24 @@
           <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
         </div>
         <p innerHtml="{{'signin.candidaticnr' | translate}}"></p>
+        <ng-container *ngIf="oidcEnabled">
+          <p class="mt-4">{{ 'signin.spid.info' | translate }}</p>
+          <ul class="list-unstyled spid-links">
+            <li><a href="https://www.spid.gov.it" target="_blank" rel="noopener">{{ 'signin.spid.more' | translate }}</a></li>
+            <li><a href="https://www.spid.gov.it/richiedi-spid" target="_blank" rel="noopener">{{ 'signin.spid.request' | translate }}</a></li>
+            <li><a href="https://www.spid.gov.it/serve-aiuto" target="_blank" rel="noopener">{{ 'signin.spid.help' | translate }}</a></li>
+          </ul>
+        </ng-container>
       </div>
   </div>
   <div class="col-md-6 col-xl-4">
     <div class="card shadow-lg">
       <div class="card-header h1">{{'signin.title' | translate}}</div>
       <div class="card-body">
-        <form (keyup.enter)="onSignin()" [formGroup]="ngForm">
+        <div *ngIf="oidcLoading" class="d-flex align-items-center gap-2 my-4 text-secondary" role="status">
+          <div class="progress-spinner progress-spinner-active progress-spinner-sm"></div>{{ 'signin.oidc_loading' | translate }}
+        </div>
+        <form *ngIf="!oidcLoading" (keyup.enter)="onSignin()" [formGroup]="ngForm">
             <div class="form-group pt-2">
               <app-control-text type="text" [focus]="true" [prepend]="'user'" [label]="'signin.username'| translate" [inline]="true" formControlName="username"></app-control-text>
               <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
@@ -40,8 +51,32 @@
             </div>
         </form>
       </div>
-      <div class="card-footer">
-        <button (click)="onSignin()" class="btn btn-primary w-100" type="submit">{{'signin.title' | translate}}</button>
+      <div class="card-footer" *ngIf="!oidcLoading">
+        <div class="d-flex flex-wrap gap-2">
+          <button (click)="onSignin()" class="btn btn-primary flex-fill" type="submit">
+            <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-user"></use></svg>
+            {{'signin.title' | translate}}
+          </button>
+          <button *ngIf="oidcEnabled" (click)="startOidc()" class="btn btn-sso flex-fill" type="button">
+            <span class="sso-icon" aria-hidden="true"><svg class="icon icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-user"></use></svg></span>
+            {{ 'signin.sso' | translate }}
+          </button>
+        </div>
+        <button type="button" class="btn btn-outline-primary w-100 mt-2" (click)="recoverOpen = !recoverOpen">
+          <svg class="icon icon-primary icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-mail"></use></svg>
+          {{ 'signin.recover.button' | translate }}
+        </button>
+        <p class="small text-secondary mt-2 mb-0">{{ 'signin.recover.help' | translate }}</p>
+        <div *ngIf="recoverOpen" class="recover-panel mt-3">
+          <label for="recover-email" class="small fw-semibold d-block mb-1">{{ 'signin.recover.email' | translate }}</label>
+          <div class="d-flex gap-2">
+            <input id="recover-email" type="email" class="form-control recover-input" [(ngModel)]="recoverEmail"
+                   [ngModelOptions]="{standalone: true}" (keyup.enter)="recoverPassword()" autocomplete="email">
+            <button type="button" class="btn btn-primary btn-sm" [disabled]="recovering || !recoverEmail" (click)="recoverPassword()">
+              {{ 'signin.recover.send' | translate }}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

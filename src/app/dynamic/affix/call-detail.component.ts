@@ -10,202 +10,120 @@ import { ObjectTypeService } from '../../core/object-type.service';
 import { Sede } from '../../common/model/sede.model';
 
 @Component({
+  standalone: false,
     selector: 'affix_tabCallDetail',
     template: `
-      <form [formGroup]="form" *ngIf="isLoaded()">
-        <div class="row gx-2 pb-2">
-          <div class="form-group col-md-4">
-            <app-control-text 
-              type="text" 
-              [focus]="true"
-              [inline]="true" 
-              [label]="'label.jconon_call.codice'| translate" 
-              formControlName="jconon_call:codice">
-            </app-control-text>
-          </div>
-          <div class="form-group col-md-2">
-            <app-control-text 
-              type="text" 
-              [inline]="true" 
-              [label]="'label.jconon_call.numero_posti'| translate" 
-              formControlName="jconon_call:numero_posti">
-            </app-control-text>
-          </div>
-          <div class="form-group col-md-6 pb-5 mt-n3">
-            <app-control-toggle
-              class="it-right-zone w-100 border-bottom-3" 
-              [label]="'label.jconon_call.english_call_toggle' | translate" 
-              formControlName="english_call_toggle">
-            </app-control-toggle>
-          </div>
+      <form [formGroup]="form" *ngIf="isLoaded()" class="call-detail-form">
+        <div class="d-flex justify-content-end english-toggle">
+          <app-control-toggle [inline]="true" [label]="'label.jconon_call.english_call_toggle' | translate"
+            formControlName="english_call_toggle"></app-control-toggle>
         </div>
-        <div class="row gx-2 pb-2">
-          <div class="form-group col-md-6">
-            <app-control-ckeditor 
-              type="text" 
-              [inline]="true" 
-              [label]="'label.jconon_call.descrizione'| translate" 
-              formControlName="jconon_call:descrizione">
-            </app-control-ckeditor>
+
+        <fieldset class="form-block">
+          <legend class="form-block-title">{{ 'call_manage.block.identification' | translate }}</legend>
+          <div class="row g-3">
+            <div class="form-group col-md-8 col-lg-4">
+              <app-control-text type="text" [inline]="true" [showValidation]="true" [label]="'label.jconon_call.codice' | translate"
+                formControlName="jconon_call:codice"></app-control-text>
+            </div>
+            <div class="form-group col-md-4 col-lg-2">
+              <app-control-text type="number" [inline]="true" [showValidation]="true" [label]="'label.jconon_call.numero_posti' | translate"
+                formControlName="jconon_call:numero_posti"></app-control-text>
+            </div>
+            <div *ngIf="!data.isDirector()" class="form-group col-lg-6">
+              <app-control-select-model [inline]="true" [label]="'label.jconon_call.profilo' | translate" [labelactive]="'true'"
+                [strings]="profiles" [showValidation]="true" [allowClear]="true"
+                [placeholder]="'label.jconon_call.profilo_placeholder' | translate" formControlName="jconon_call:profilo">
+              </app-control-select-model>
+            </div>
+            <div class="form-group" [ngClass]="data.isDirector() ? 'col-lg-6' : 'col-12'">
+              <app-control-select-model [inline]="true" [label]="'label.jconon_call.elenco_tipo_selezione' | translate" [labelactive]="'true'"
+                [multiple]="true" [strings]="selectionTypes" [showValidation]="true"
+                [placeholder]="'label.jconon_call.elenco_tipo_selezione_placeholder' | translate" formControlName="jconon_call:elenco_tipo_selezione">
+              </app-control-select-model>
+            </div>
           </div>
-          <div *ngIf="isEnglishCallToggle()" class="form-group col-md-6">
-            <app-control-ckeditor 
-              type="text" 
-              [inline]="true" 
-              [label]="'label.jconon_call.descrizione_en'| translate" 
-              formControlName="jconon_call:descrizione_en">
-            </app-control-ckeditor>
+        </fieldset>
+
+        <fieldset class="form-block">
+          <legend class="form-block-title">{{ 'call_manage.block.texts' | translate }}</legend>
+          <div class="row g-3">
+          <div class="form-group" [ngClass]="isEnglishCallToggle() ? 'col-lg-6' : 'col-12'">
+            <app-control-ckeditor [inline]="true" [label]="'label.jconon_call.descrizione' | translate" formControlName="jconon_call:descrizione"></app-control-ckeditor>
           </div>
-          <div class="form-group col-md-6">
-            <app-control-ckeditor 
-              type="text" 
-              [inline]="true" 
-              [label]="'label.jconon_call.descrizione_ridotta'| translate" 
-              formControlName="jconon_call:descrizione_ridotta">
-            </app-control-ckeditor>
+          <div *ngIf="isEnglishCallToggle()" class="form-group col-lg-6">
+            <app-control-ckeditor [inline]="true" [label]="'label.jconon_call.descrizione_en' | translate" formControlName="jconon_call:descrizione_en"></app-control-ckeditor>
           </div>
-          <div *ngIf="isEnglishCallToggle()" class="form-group col-md-6">
-            <app-control-ckeditor 
-              type="text" 
-              [inline]="true" 
-              [label]="'label.jconon_call.descrizione_ridotta_en'| translate" 
-              formControlName="jconon_call:descrizione_ridotta_en">
-            </app-control-ckeditor>
+          <div class="form-group" [ngClass]="isEnglishCallToggle() ? 'col-lg-6' : 'col-12'">
+            <app-control-ckeditor [inline]="true" [label]="'label.jconon_call.descrizione_ridotta' | translate" formControlName="jconon_call:descrizione_ridotta"></app-control-ckeditor>
           </div>
-        </div>
-        <div class="row gx-2 pb-2">
-          <div *ngIf="!data.isDirector()" class="form-group col-md-4">
-            <app-control-select-model
-              [inline]="true"
-              [label]="'label.jconon_call.profilo'| translate"
-              [labelactive]="'true'"
-              [strings]="profiles"
-              [showValidation]="true"
-              [allowClear]="true"
-              [placeholder]="'label.jconon_call.profilo_placeholder'| translate"
-              formControlName="jconon_call:profilo">
-            </app-control-select-model>
+          <div *ngIf="isEnglishCallToggle()" class="form-group col-lg-6">
+            <app-control-ckeditor [inline]="true" [label]="'label.jconon_call.descrizione_ridotta_en' | translate" formControlName="jconon_call:descrizione_ridotta_en"></app-control-ckeditor>
           </div>
-          <div class="form-group col-md-2">
-            <app-control-text 
-              type="text" 
-              [inline]="true"
-              [labelactive]="sedi.length > 0"
-              [disabled]="sedi.length > 0"
-              [label]="'label.jconon_call.struttura_destinataria'| translate" 
-              formControlName="jconon_call:struttura_destinataria">
-            </app-control-text>
           </div>
-          <div *ngIf="isEnglishCallToggle()" class="form-group col-md-2">
-            <app-control-text 
-              type="text" 
-              [inline]="true"
-              [label]="'label.jconon_call.struttura_destinataria_en'| translate" 
-              formControlName="jconon_call:struttura_destinataria_en">
-            </app-control-text>
+        </fieldset>
+
+        <fieldset class="form-block">
+          <legend class="form-block-title">{{ 'call_manage.block.place' | translate }}</legend>
+          <div class="row g-3">
+            <div class="form-group col-12" *ngIf="sedi.length > 0">
+              <app-control-select-model [inline]="true" [label]="'label.jconon_call.sede_id' | translate" [labelactive]="'true'"
+                (onChangeEvent)="onChangeSede($event)" [items]="sedi" [showValidation]="true" [allowClear]="true"
+                [placeholder]="'label.jconon_call.sede_id_placeholder' | translate" formControlName="jconon_call:sede_id">
+              </app-control-select-model>
+            </div>
+            <div class="form-group col-lg-6">
+              <app-control-text type="text" [inline]="true" [labelactive]="sedi.length > 0" [disabled]="sedi.length > 0"
+                [label]="'label.jconon_call.struttura_destinataria' | translate" formControlName="jconon_call:struttura_destinataria"></app-control-text>
+            </div>
+            <div class="form-group col-lg-6">
+              <app-control-text type="text" [inline]="true" [labelactive]="sedi.length > 0" [disabled]="sedi.length > 0"
+                [label]="'label.jconon_call.sede' | translate" formControlName="jconon_call:sede"></app-control-text>
+            </div>
+            <ng-container *ngIf="isEnglishCallToggle()">
+              <div class="form-group col-lg-6">
+                <app-control-text type="text" [inline]="true" [label]="'label.jconon_call.struttura_destinataria_en' | translate"
+                  formControlName="jconon_call:struttura_destinataria_en"></app-control-text>
+              </div>
+              <div class="form-group col-lg-6">
+                <app-control-text type="text" [inline]="true" [label]="'label.jconon_call.sede_en' | translate"
+                  formControlName="jconon_call:sede_en"></app-control-text>
+              </div>
+            </ng-container>
           </div>
-          <div class="form-group" [ngClass]="{'col-md-6': !data.isDirector(), 'col-md-4': data.isDirector()}">
-            <app-control-text 
-              type="text" 
-              [inline]="true" 
-              [labelactive]="sedi.length > 0"
-              [disabled]="sedi.length > 0"
-              [label]="'label.jconon_call.sede'| translate" 
-              formControlName="jconon_call:sede">
-            </app-control-text>
+        </fieldset>
+
+        <fieldset class="form-block">
+          <legend class="form-block-title">{{ 'call_manage.block.requirements' | translate }}</legend>
+          <div class="row g-3">
+          <div class="form-group" [ngClass]="isEnglishCallToggle() ? 'col-lg-6' : 'col-12'">
+            <app-control-text type="text" [inline]="true" [label]="'label.jconon_call.requisiti_link' | translate"  formControlName="jconon_call:requisiti_link"></app-control-text>
           </div>
-          <div *ngIf="isEnglishCallToggle()" class="form-group" [ngClass]="{'col-md-6': !data.isDirector(), 'col-md-4': data.isDirector()}">
-            <app-control-text 
-              type="text" 
-              [inline]="true" 
-              [label]="'label.jconon_call.sede_en'| translate" 
-              formControlName="jconon_call:sede_en">
-            </app-control-text>
+          <div *ngIf="isEnglishCallToggle()" class="form-group col-lg-6">
+            <app-control-text type="text" [inline]="true" [label]="'label.jconon_call.requisiti_link_en' | translate"  formControlName="jconon_call:requisiti_link_en"></app-control-text>
           </div>
-          <div class="form-group" *ngIf="sedi.length > 0" [ngClass]="{'col-md-6': !isEnglishCallToggle(), 'col-md-12': isEnglishCallToggle()||!data.isDirector()}">
-            <app-control-select-model              
-              [inline]="true"
-              [label]="'label.jconon_call.sede_id'| translate"
-              [labelactive]="'true'"
-              (onChangeEvent)="onChangeSede($event)"
-              [items]="sedi"
-              [showValidation]="true"
-              [allowClear]="true"
-              [placeholder]="'label.jconon_call.sede_id_placeholder'| translate"
-              formControlName="jconon_call:sede_id">
-            </app-control-select-model>
-          </div>          
-        </div>
-        <div class="row gx-2 pb-2">
-          <div class="form-group col-md-6">
-            <app-control-select-model
-              [inline]="true"
-              [label]="'label.jconon_call.elenco_tipo_selezione'| translate"
-              [labelactive]="'true'"
-              [multiple]="true"
-              [popoverMulti]="true"
-              [strings]="selectionTypes"
-              [showValidation]="true"
-              [allowClear]="true"
-              [placeholder]="'label.jconon_call.elenco_tipo_selezione_placeholder'| translate"
-              formControlName="jconon_call:elenco_tipo_selezione">
-            </app-control-select-model>
+          <div class="form-group" [ngClass]="isEnglishCallToggle() ? 'col-lg-6' : 'col-12'">
+            <app-control-ckeditor [inline]="true" [label]="'label.jconon_call.requisiti' | translate" formControlName="jconon_call:requisiti"></app-control-ckeditor>
           </div>
-          <div class="form-group" [ngClass]="{'col-md-6': !isEnglishCallToggle(), 'col-md-3': isEnglishCallToggle()}">
-            <app-control-text 
-              type="text" 
-              [inline]="true" 
-              [label]="'label.jconon_call.requisiti_link'| translate" 
-              formControlName="jconon_call:requisiti_link">
-            </app-control-text>
+          <div *ngIf="isEnglishCallToggle()" class="form-group col-lg-6">
+            <app-control-ckeditor [inline]="true" [label]="'label.jconon_call.requisiti_en' | translate" formControlName="jconon_call:requisiti_en"></app-control-ckeditor>
           </div>
-          <div *ngIf="isEnglishCallToggle()" class="form-group col-md-3">
-            <app-control-text 
-              type="text" 
-              [inline]="true" 
-              [label]="'label.jconon_call.requisiti_link_en'| translate" 
-              formControlName="jconon_call:requisiti_link_en">
-            </app-control-text>
           </div>
-        </div>
-        <div class="row gx-2 pb-2">
-          <div class="form-group" [ngClass]="{'col-md-12': !isEnglishCallToggle(), 'col-md-6': isEnglishCallToggle()}">
-            <app-control-ckeditor 
-              type="text" 
-              [inline]="true" 
-              [label]="'label.jconon_call.requisiti'| translate" 
-              formControlName="jconon_call:requisiti">
-            </app-control-ckeditor>
+        </fieldset>
+
+        <fieldset class="form-block">
+          <legend class="form-block-title">{{ 'call_manage.block.period' | translate }}</legend>
+          <div class="row g-3">
+            <div class="form-group col-md-6">
+              <app-control-datepicker [time]="true" [inline]="true" [label]="'label.jconon_call.data_inizio_invio_domande' | translate"
+                formControlName="jconon_call:data_inizio_invio_domande_index"></app-control-datepicker>
+            </div>
+            <div class="form-group col-md-6">
+              <app-control-datepicker [time]="true" [inline]="true" [label]="'label.jconon_call.data_fine_invio_domande' | translate"
+                formControlName="jconon_call:data_fine_invio_domande_index"></app-control-datepicker>
+            </div>
           </div>
-          <div *ngIf="isEnglishCallToggle()" class="form-group col-md-6">
-            <app-control-ckeditor 
-              type="text" 
-              [inline]="true" 
-              [label]="'label.jconon_call.requisiti_en'| translate" 
-              formControlName="jconon_call:requisiti_en">
-            </app-control-ckeditor>
-          </div>
-        </div>
-        <div class="row gx-2 pb-2">
-          <div class="form-group col-md-12 col-lg-6 col-xl-4">
-            <app-control-datepicker
-                type="text"
-                [time]="true"
-                [inline]="false" 
-                [label]="'label.jconon_call.data_inizio_invio_domande' | translate"
-                formControlName="jconon_call:data_inizio_invio_domande_index">
-            </app-control-datepicker>
-          </div>        
-          <div class="form-group col-md-12 col-lg-6 col-xl-4">
-            <app-control-datepicker
-                type="text"
-                [time]="true"
-                [inline]="false" 
-                [label]="'label.jconon_call.data_fine_invio_domande' | translate"
-                formControlName="jconon_call:data_fine_invio_domande_index">
-            </app-control-datepicker>
-          </div>        
-        </div>        
+        </fieldset>
       </form>
     `
   })

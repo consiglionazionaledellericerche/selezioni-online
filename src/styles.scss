@@ -1,11 +1,528 @@
-/* You can add global styles to this file, and also import other style files */
+/* GesFor – stili globali basati su Bootstrap Italia (design-angular-kit), sul modello di GERI */
 
-@import 'bootstrap-override';
-@import 'variables';
+$enable-gradients: true;
+$enable-negative-margins: true;
+$zindex-fixed: 1001;
+$nav-link-padding-x: 0.5rem;
 
-@import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
-@import '../node_modules/bootstrap-italia/src/scss/bootstrap-italia.scss';
+// Importazione libreria SCSS di bootstrap-italia
+@import 'bootstrap-italia/src/scss/bootstrap-italia';
 
+// ---------------------------------------------------------------- layout generale
+@media (min-width: 1400px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: calc(100vw - 200px);
+  }
+  .modal-lg, .modal-xl {
+    max-width: calc(100vw - 400px);
+  }
+}
+
+.it-header-wrapper {
+  z-index: 1005;
+}
+
+@media (max-width: 992px) {
+  .it-header-wrapper .it-brand-wrapper .icon image {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.it-brand-wrapper.cloned-element .icon image {
+  width: 36px;
+  height: 36px;
+}
+
+.it-header-slim-right-zone .user-menu .btn {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+  height: 100%;
+}
+
+.user-menu-label {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  .rounded-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.it-header-center-wrapper .it-search-wrapper a.search-link {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.it-header-center-wrapper .it-search-wrapper > span {
+  margin-right: .75rem;
+}
+
+.it-footer-small-prints-list .list-inline-item {
+  color: #fff;
+}
+
+.application-content {
+  min-height: 60vh;
+}
+
+// ---------------------------------------------------------------- titoli pagina (come GERI)
+.row-title h2 {
+  margin-bottom: 0;
+}
+
+.sub-title::before {
+  content: ' - ';
+  white-space: pre;
+}
+
+// ---------------------------------------------------------------- etichette "campo: valore"
+.label-show-text::after {
+  content: ":";
+  display: inline-block;
+}
+
+.show-text {
+  display: block;
+  margin-bottom: .25rem;
+}
+
+// ---------------------------------------------------------------- card delle liste
+.card.border-bottom-card {
+  border-bottom: 4px solid var(--bs-primary, #0066cc) !important;
+}
+
+.hover-shadow {
+  transition: box-shadow .2s ease-in-out;
+  &:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .15);
+  }
+}
+
+.card-wrapper .card:after {
+  margin-top: 0 !important;
+}
+
+// ---------------------------------------------------------------- sezione con sfondo (home)
+.section-gesfor {
+  background: linear-gradient(135deg, #003366 0%, #0066cc 100%);
+  color: #fff;
+  h2, h3, a.text-white { color: #fff; }
+}
+
+// ---------------------------------------------------------------- form
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label.active {
+  transform: translateY(-75%);
+  font-size: .875rem;
+}
+
+.required::after {
+  content: " *";
+  color: var(--bs-danger, #d9364f);
+}
+
+:focus:not(.focus--mouse) {
+  border-color: unset !important;
+  box-shadow: unset !important;
+}
+
+// ---------------------------------------------------------------- tabelle e ordinamento
+th .sort-link {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+// ---------------------------------------------------------------- questionario
+.question {
+  margin: 1.5rem 0;
+}
+
+// ---------------------------------------------------------------- iscrizioni / elenchi corsi
+.subscriptions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.subscriptions > li {
+  padding: 1.25rem;
+}
+
+.subscriptions > li:not(:first-child) {
+  border-top: 1px solid #e5e5e5;
+}
+
+ul.materials {
+  margin-top: .5rem;
+  list-style: none;
+  padding-left: 0;
+}
+
+// ---------------------------------------------------------------- foglio stile "sheet" (dettagli)
+.sheet .top {
+  background: #fff;
+  padding-top: 65px;
+  position: relative;
+}
+
+.sheet .top:before {
+  border-left: 110px solid #eee;
+  border-top: 110px solid hsl(210, 100%, 35%);
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.sheet .content-sheet {
+  background: #fff;
+  box-shadow: 0 1px 40px rgba(0, 0, 0, .3);
+  width: 100%;
+}
+
+@media (max-width: 767.98px) {
+  .sheet .top:before {
+    border-left: 50px solid #eee;
+    border-top: 50px solid hsl(210, 100%, 35%);
+  }
+  .sheet .top {
+    padding-top: 50px;
+  }
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.spin {
+  display: inline-block;
+  animation: gesfor-spin 1s infinite linear;
+}
+
+@keyframes gesfor-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(359deg); }
+}
+
+// ---------------------------------------------------------------- carousel home
+.it-carousel-wrapper .it-header-block .it-header-block-title h2 {
+  color: var(--bs-primary, #0066cc);
+}
+
+.it-carousel-wrapper .card-wrapper {
+  padding-top: .5rem;
+}
+
+// il carousel non deve allargare la pagina (le frecce sporgono oltre il contenitore)
+.it-carousel-wrapper {
+  overflow-x: clip;
+}
+
+// su smartphone si scorre con il dito e i pallini: niente frecce sopra le schede
+@media (max-width: 767.98px) {
+  .it-carousel-wrapper .splide__arrows,
+  .it-carousel-wrapper .splide__arrow {
+    display: none !important;
+  }
+}
+
+// schede del carousel tutte della stessa altezza (quella della più alta)
+.it-carousel-wrapper .splide__list {
+  align-items: stretch !important;
+}
+
+.it-carousel-wrapper .splide__slide {
+  height: auto !important;
+  display: flex;
+}
+
+.it-carousel-wrapper .splide__slide > .it-single-slide-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  height: auto !important;
+}
+
+.it-carousel-wrapper .splide__slide .card-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  height: auto !important;
+}
+
+.it-carousel-wrapper .splide__slide .card {
+  flex: 1 1 auto;
+  height: auto !important;
+}
+
+// ---------------------------------------------------------------- campi di testo ben visibili
+// Bootstrap Italia applica la linea inferiore solo agli input con "type": la si garantisce comunque,
+// con un colore più deciso e la linea blu sul campo attivo.
+.form-group input.form-control,
+.form-group input.form-control:not([type]) {
+  border: none;
+  border-bottom: 1px solid hsl(210, 17%, 44%);
+  border-radius: 0;
+}
+
+.form-group input.form-control:focus,
+.form-group textarea.form-control:focus {
+  border-bottom: 2px solid var(--bs-primary, #0066cc) !important;
+}
+
+.form-group input.form-control[readonly] {
+  border-bottom-style: dashed;
+  background-color: transparent;
+}
+
+// ---------------------------------------------------------------- operazioni lunghe (es. GoTo Webinar)
+.busy-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, .7);
+  backdrop-filter: blur(2px);
+}
+
+// voci "azione" dei menu a tendina (pulsanti, non link).
+// Nell'header slim Bootstrap Italia dà a tutti i <button> lo sfondo blu scuro della fascia superiore:
+// dentro i menu a tendina va annullato (selettore più specifico + !important).
+.dropdown-menu .btn-menu-item {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: .5rem 1.5rem;
+  color: var(--bs-primary, #0066cc);
+  white-space: nowrap;
+  font-size: 1rem;
+  line-height: 1.5;
+  &:hover, &:focus {
+    background: var(--bs-gray-100, #f2f2f2);
+    text-decoration: underline;
+  }
+}
+
+a.btn-menu-item span, button.btn-menu-item span {
+  font-size: 1rem;
+}
+
+.it-header-slim-wrapper .dropdown-menu .btn-menu-item,
+.it-header-slim-wrapper .dropdown-menu button.dropdown-item {
+  background: transparent !important;
+  color: var(--bs-primary, #0066cc) !important;
+  font-weight: 400;
+  &:hover, &:focus {
+    background: var(--bs-gray-100, #f2f2f2) !important;
+  }
+}
+
+// collegamenti nelle card (es. Corso -> Edizioni, Questionario -> Domande/Esami)
+.card-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #e6e9f2;
+
+  li + li {
+    border-top: 1px solid #e6e9f2;
+  }
+}
+
+.card-link-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem 1.25rem;
+  font-weight: 600;
+  color: var(--bs-primary, #0066cc);
+  text-decoration: none;
+  transition: background-color .15s ease-in-out;
+
+  &:hover, &:focus {
+    background-color: #f0f6fc;
+    text-decoration: none;
+  }
+}
+
+// pulsanti "Azioni" a tutta larghezza nel piè delle card edizioni
+.edition-actions .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+// stato evidenziato nelle card (es. risposta corretta/errata)
+.status-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .35rem .75rem;
+  border-radius: 4px;
+  font-size: .9rem;
+}
+.status-banner-success { background: #d4efe3; color: #00573a; }
+.status-banner-danger { background: #f8d7dd; color: #a01f35; }
+.status-banner-warning { background: #fdecd0; color: #7a4a00; }
+.status-banner-secondary { background: #e9ecef; color: #495057; }
+
+// ---------------------------------------------------------------- home: "Le mie iscrizioni"
+.my-subscriptions {
+  background: #eef5fc;
+  border-radius: 8px;
+  padding: 1.25rem 1rem .5rem;
+
+  @media (min-width: 992px) {
+    padding: 1.5rem 1.5rem .75rem;
+  }
+}
+
+.subscription-card {
+  border: 0;
+  border-top: 4px solid #008758 !important;
+}
+
+// foglietto di calendario con la data di inizio
+.date-leaf {
+  flex: 0 0 auto;
+  width: 64px;
+  text-align: center;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
+  background: #fff;
+  align-self: flex-start;
+
+  span { display: block; line-height: 1.2; }
+  .date-leaf-month {
+    background: var(--bs-primary, #0066cc);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: .2rem 0;
+  }
+  .date-leaf-day { font-size: 1.75rem; font-weight: 700; color: #17324d; padding-top: .2rem; }
+  .date-leaf-year { font-size: .7rem; color: #5d7083; padding-bottom: .3rem; }
+}
+
+.min-w-0 { min-width: 0; }
+
+// pulsante "Aggiungi al calendario": icona, testo e freccia sulla stessa linea
+.add-to-calendar .btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .375rem;
+  padding: .3rem .75rem;
+  font-size: .875rem;
+  line-height: 1.5;
+
+  > span, it-icon {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .icon-expand {
+    margin: 0 !important;
+    position: static !important;
+    transform: none;
+    vertical-align: middle;
+  }
+
+  &[aria-expanded="true"] .icon-expand {
+    transform: rotate(180deg);
+  }
+}
+
+// ---------------------------------------------------------------- modalità di partecipazione (home)
+.participation-modes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .4rem;
+
+  .mode {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .45rem .65rem;
+    border-radius: 6px;
+    border-left: 4px solid;
+    font-size: .9rem;
+
+    .icon { flex-shrink: 0; }
+  }
+
+  .mode-name {
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+    line-height: 1.2;
+    small { font-weight: 400; font-size: .75rem; color: #5d7083; }
+  }
+
+  .mode-places {
+    margin-left: auto;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .mode-aula { background: #eaf6ef; border-color: #008758; .icon, .mode-places { color: #00573a; fill: #00573a; } }
+  .mode-streaming { background: #e8f1fb; border-color: #0066cc; .icon, .mode-places { color: #004080; fill: #004080; } }
+  .mode-webinar { background: #f3eefb; border-color: #7a4cc2; .icon, .mode-places { color: #4f2a8a; fill: #4f2a8a; } }
+
+  .mode-full {
+    background: #f6f6f6;
+    border-color: #d9364f;
+    .mode-places { color: #d9364f; }
+  }
+}
+
+.mode-badge {
+  display: inline-block;
+  padding: .1rem .5rem;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: .8rem;
+  background: #e9ecef;
+  color: #17324d;
+  &.mode-badge-aula { background: #d4efe3; color: #00573a; }
+  &.mode-badge-streaming { background: #d6e6f8; color: #004080; }
+  &.mode-badge-webinar { background: #e7dcf7; color: #4f2a8a; }
+}
+
+// ================================================================ compatibilità (temporanea)
+// Stili dei controlli non ancora sostituiti con design-angular-kit: select2.
+// Da rimuovere quando le select e i calendari saranno passati ai componenti it-*.
 // ---------------------
 // Main Layout
 // ---------------------
@@ -84,54 +601,402 @@
 .was-validated .form-select.select2-single:invalid, .form-select.select2-single.is-invalid, .form-select.select2-single.is-valid  {
   background: none;
 }
-.card .card-body {
-  padding: 18px;
-}
-.card:after {
-  margin-top: 12px;
+
+// ================================================================ selezioni-online
+// sezione a tutta larghezza dentro il contenitore centrale (banner della home)
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: -1px;
 }
 
-.it-header-slim-wrapper .it-header-slim-wrapper-content .dropdown-menu {
-  top: 100%!important;
+.cursor-pointer {
+  cursor: pointer;
 }
 
-.dropdown-menu:before { 
-  left: unset; 
-  right: 7px;
-  border-left:1px solid #b1b1b3 !important; 
-  border-top: 1px solid #b1b1b3 !important; 
-  top: -10px
+// pulsante "altre azioni" (it-dropdown) compatto e bordato, come i pulsanti secondari
+.more-actions .btn.dropdown-toggle {
+  padding: .3rem .5rem;
+  min-height: 0;
+  background: transparent;
+  color: var(--bs-primary, #0066cc);
+  border: 1px solid currentColor;
+  box-shadow: none;
+}
+.more-actions .btn.dropdown-toggle .icon-expand,
+.more-actions .btn.dropdown-toggle > .icon:last-child:not(:first-child) {
+  display: none;
+}
+.more-actions .btn.dropdown-toggle .icon { fill: currentColor; }
+.more-actions .dropdown-menu { min-width: 14rem; }
+
+// azioni secondarie uniformi: pulsante quadrato bordato con sola icona (stessa misura del "⋮")
+.btn.btn-action,
+.more-actions .btn.dropdown-toggle {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+.btn.btn-action .icon { margin: 0; }
+
+// blocchi di campi nelle sezioni dei form (titolo in maiuscoletto e separatore)
+.form-block {
+  border: 0;
+  border-top: 1px solid #e3e8ee;
+  padding: 1.5rem 0 .75rem;
+  margin: 0;
+}
+.form-block:first-of-type {
+  border-top: 0;
+  padding-top: .25rem;
+}
+.form-block-title {
+  float: none;
+  width: auto;
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: #5d7083;
+  margin-bottom: 1.75rem;
+  padding: 0;
+}
+.english-toggle { margin-bottom: .5rem; }
+
+// editor di testo (quill): spazio sufficiente fra l'etichetta, la barra e il campo successivo
+.form-group:has(app-control-ckeditor) {
+  margin-top: 2.25rem;
+  margin-bottom: 1.5rem;
+}
+app-control-ckeditor {
+  display: block;
+}
+app-control-ckeditor .ql-container {
+  min-height: 8rem;
 }
 
-.toggles label input.is-invalid[type=checkbox] + .lever:after {
-  background-color: $red;
+// interruttori (app-control-toggle): testo e levetta sulla stessa riga
+app-control-toggle {
+  display: block;
 }
-.page-item.active .page-link {
-  z-index: 1;
-  color: $pagination-active-color;
-  background-color: $pagination-active-bg;
-  border-color: $pagination-active-border-color;
+app-control-toggle > div {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 2.5rem;
+}
+app-control-toggle > div > label {
+  position: static !important;
+  transform: none !important;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #17324d;
+}
+app-control-toggle .toggles {
+  flex-shrink: 0;
+  margin: 0 !important;
+}
+app-control-toggle .toggles label {
+  margin: 0;
+  height: auto;
 }
 
-label.label-checkbox.is-invalid {
-  color: $red;
+// spazio per l'etichetta (posizionata sopra il campo da Bootstrap Italia) nei blocchi dei form
+.form-block .form-group {
+  margin-top: 1.75rem;
 }
 
-.hover-shadow:hover {
-  box-shadow: rgba(10, 16, 20, 0.24) 0px 8px 8px, rgba(10, 16, 20, 0.12) 0px 0px 8px !important;
+// schede delle sezioni (bando e domanda) al posto dei pallini del passo-passo
+.section-tabs-wrapper {
+  overflow-x: auto;
+  border-bottom: 1px solid #d9dadb;
+}
+.section-tabs {
+  flex-wrap: wrap;
+  border-bottom: 0;
+}
+// nomi lunghi troncati (il nome completo è nel title della scheda)
+.section-tabs .section-name {
+  max-width: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.section-tabs .nav-link {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+  padding: .85rem .75rem;
+}
+.section-tabs .nav-link.disabled {
+  pointer-events: auto;
+  cursor: not-allowed;
+  opacity: .55;
+}
+.section-tabs .section-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  font-size: .8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.section-tabs .section-number.done {
+  background: #008758;
+  border-color: #008758;
+}
+.section-tabs .nav-link.active .section-number:not(.done) {
+  background: #0066cc;
+  border-color: #0066cc;
+  color: #fff;
+}
+.steppers .steppers-nav {
+  align-items: center;
+}
+
+// finestre modali: senza dimensione esplicita si adattano alla larghezza del contenuto (entro lo schermo)
+.modal-dialog.modal-dialog-auto {
+  width: fit-content;
+  min-width: min(500px, 92vw);
+  max-width: 92vw;
+}
+// il corpo scorre solo quando il contenuto supera l'altezza disponibile
+.modal-dialog-scrollable .modal-content {
+  max-height: calc(100vh - 3.5rem);
+}
+.modal-dialog-scrollable .modal-body {
+  overflow-y: auto;
+}
+
+// pannelli dei filtri fissi durante lo scorrimento: scorrono al loro interno se più alti dello schermo,
+// senza mostrare la barra di scorrimento
+.filters-sticky {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.filters-sticky::-webkit-scrollbar {
+  display: none;
+}
+
+// aspect della domanda avvolti in <a class="it-has-checkbox">: fuori da un elenco il link prenderebbe solo la
+// larghezza del contenuto e sottolineerebbe il testo. Blocco a tutta larghezza, interruttore a destra,
+// campi interni a tutta larghezza e ben distanziati.
+form a.it-has-checkbox {
+  display: flex !important;
+  flex-direction: column;
+  width: 100%;
+  padding: .9rem 1rem;
+  text-decoration: none !important;
+  color: inherit;
+  cursor: default;
+}
+form a.it-has-checkbox:hover,
+form a.it-has-checkbox:focus {
+  text-decoration: none;
+  color: inherit;
+}
+form a.it-has-checkbox > app-control-toggle {
+  width: 100%;
+}
+form a.it-has-checkbox app-control-toggle label,
+form a.it-has-checkbox label {
   text-decoration: none;
 }
-// Bootstrap 5 dropped .text-justify; still used by footer and layout-title templates.
-.text-justify {
-  text-align: justify !important;
+form a.it-has-checkbox > .row {
+  width: calc(100% + 1.5rem);
+  margin-left: -.75rem;
+  margin-right: -.75rem;
+}
+form a.it-has-checkbox > .row > label {
+  position: static !important;
+  transform: none !important;
+  display: block;
+  padding: 0 .75rem !important;
+  margin: 1rem 0 0;
+  font-size: .95rem;
+  font-weight: 600;
+  color: #17324d;
+  white-space: normal;
+}
+form a.it-has-checkbox > .row > .form-group {
+  margin-top: 2rem;
+  margin-bottom: .5rem;
+  padding-left: .75rem;
+  padding-right: .75rem;
+}
+form a.it-has-checkbox app-control-text,
+form a.it-has-checkbox app-control-textarea,
+form a.it-has-checkbox app-control-select-model,
+form a.it-has-checkbox app-control-datepicker {
+  display: block;
+  width: 100%;
 }
 
-// Bootstrap 5 underlines .btn-link at rest like a plain link; Bootstrap 4 only did on hover.
-// The app uses .btn-link for collapsible titles, stepper and sidebar actions: keep the old look.
-.btn-link {
-  text-decoration: none;
-  &:hover,
-  &:focus-visible {
-    text-decoration: underline;
-  }
+// select2: la freccia propria (<b>) si sovrapponeva a quella disegnata da Bootstrap Italia, comparendo come un puntino
+.select2-container .select2-selection--single .select2-selection__arrow b,
+.select2-container .select2-selection--multiple .select2-selection__arrow b {
+  display: none !important;
+}
+
+// riquadro informativo dell'anteprima della domanda: icona allineata al testo
+.preview-callout {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem 1rem;
+  border: 1px solid #b8d4f1;
+  border-left: 4px solid #0066cc;
+  border-radius: 4px;
+  background: #f0f6fc;
+  color: #17324d;
+}
+// upload drag & drop nei form: a tutta larghezza, bordo rosso se il campo è obbligatorio e vuoto
+it-upload-drag-drop {
+  display: block;
+}
+it-upload-drag-drop.is-invalid .upload-dragdrop {
+  border-color: #d9364f !important;
+}
+// la label "selezionalo dal dispositivo" del componente non deve seguire il posizionamento delle label dei form
+it-upload-drag-drop .upload-dragdrop-text label {
+  position: static !important;
+  transform: none !important;
+  display: inline !important;
+  width: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: inherit !important;
+  font-weight: 600;
+  background: transparent !important;
+  color: #0066cc;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// notifiche (app-toasts): pila in basso a destra, card con icona del colore del tipo e messaggio anche HTML
+// ---------------------------------------------------------------------------------------------------------
+.app-toasts {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  width: min(420px, calc(100vw - 2rem));
+  pointer-events: none;
+}
+.app-toast {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: .85rem;
+  padding: .9rem 2.75rem .9rem 1rem;
+  border-left: 4px solid #0066cc;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(23, 50, 77, .18), 0 2px 6px rgba(23, 50, 77, .08);
+  pointer-events: auto;
+  animation: app-toast-in .25s ease-out;
+}
+.app-toast-icon {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+.app-toast-body {
+  flex: 1;
+  min-width: 0;
+  padding-top: .15rem;
+}
+.app-toast-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #17324d;
+}
+.app-toast-message {
+  margin-top: .25rem;
+  font-size: .9rem;
+  line-height: 1.45;
+  color: #455b71;
+  word-wrap: break-word;
+}
+.app-toast-message ul {
+  margin: .4rem 0 0;
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+.app-toast-message li {
+  font-size: .9rem !important;
+  line-height: 1.4;
+  padding: .1rem 0 !important;
+  font-weight: 600 !important;
+  color: #17324d;
+}
+.app-toast-close {
+  position: absolute;
+  top: .55rem;
+  right: .55rem;
+  padding: .25rem;
+  line-height: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+}
+.app-toast-close:hover { background: #f0f3f6; }
+.app-toast-close .icon { fill: #5d7083; }
+.app-toast-success { border-left-color: #008758; }
+.app-toast-success .app-toast-icon { fill: #008758; }
+.app-toast-error { border-left-color: #d9364f; }
+.app-toast-error .app-toast-icon { fill: #d9364f; }
+.app-toast-warning { border-left-color: #a66300; }
+.app-toast-warning .app-toast-icon { fill: #a66300; }
+.app-toast-info { border-left-color: #0066cc; }
+.app-toast-info .app-toast-icon { fill: #0066cc; }
+@keyframes app-toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (max-width: 575.98px) {
+  .app-toasts { right: 1rem; left: 1rem; bottom: 1rem; width: auto; }
+}
+
+// badge "Caricato" dopo il caricamento di un allegato
+.upload-ok {
+  display: inline-flex;
+  align-items: center;
+  font-size: .8rem;
+  animation: app-toast-in .25s ease-out;
+}
+
+// prefissi dei campi (icone e testi come "@"): stesso colore; in errore etichetta, icona e linea in rosso
+app-form-layout .input-group-text {
+  color: #5d7083;
+  background: transparent;
+}
+app-form-layout .input-group-text .fa {
+  color: inherit;
+  width: 1.1rem;
+  text-align: center;
+}
+app-form-layout .input-group-text.text-danger {
+  color: #d9364f !important;
+  border-bottom-color: #d9364f !important;
+}
+app-form-layout .input-group:has(.is-invalid) .form-control,
+app-form-layout .form-control.is-invalid,
+app-form-layout .form-control.is-invalid:focus {
+  border-bottom-color: #d9364f !important;
 }

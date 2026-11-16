@@ -1,0 +1,198 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { Call } from './call.model';
+import { CallService } from './call.service';
+
+/**
+ * Dettaglio pubblico di un bando (ex pagina call-detail di cool-jconon), raggiungibile senza autenticazione
+ * con ?callCode=<codice> (stesso indirizzo della vecchia interfaccia) oppure ?callId=<id>.
+ */
+@Component({
+  standalone: false,
+  selector: 'call-detail-page',
+  template: `
+    <nav class="breadcrumb-container pt-3" aria-label="Percorso di navigazione">
+      <ol class="breadcrumb p-0 mb-0">
+        <li class="breadcrumb-item"><a routerLink="/">{{ 'layout.home' | translate }}</a><span class="separator">/</span></li>
+        <li class="breadcrumb-item"><a routerLink="/">{{ 'layout.calls' | translate }}</a><span class="separator">/</span></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ call?.codice || code }}</li>
+      </ol>
+    </nav>
+
+    <app-layout-wait [loaded]="loaded"></app-layout-wait>
+    <div *ngIf="loaded && !call" class="alert alert-warning mt-4" role="alert">{{ 'layout.call_not_found' | translate:{value: code} }}</div>
+
+    <ng-container *ngIf="call">
+      <!-- intestazione -->
+      <div class="row row-title pt-3 pb-2">
+        <div class="border-bottom border-primary pb-3">
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+            <span class="badge rounded-pill call-type">{{ typeLabel() }}</span>
+            <span class="badge rounded-pill" [ngClass]="statusClass()">{{ 'layout.status_' + status() | translate }}</span>
+          </div>
+          <h1 class="h2 text-primary mb-1">{{ call.codice }}</h1>
+          <p *ngIf="call.profilo" class="lead mb-0">{{ call.profilo }}</p>
+        </div>
+      </div>
+
+      <div class="row mt-4 align-items-start">
+        <!-- contenuti -->
+        <div class="col-lg-8">
+          <section class="card shadow-sm rounded mb-4 detail-card">
+            <div class="card-body">
+              <h2 class="h5 text-primary">{{ 'label.jconon_call.descrizione' | translate }}</h2>
+              <div class="detail-html" [innerHtml]="text(call.descrizione, call.descrizione_en)"></div>
+            </div>
+          </section>
+
+          <section class="card shadow-sm rounded mb-4 detail-card">
+            <div class="card-body">
+              <h2 class="h5 text-primary">{{ 'layout.call_info' | translate }}</h2>
+              <dl class="row mb-0 detail-list">
+                <ng-container *ngIf="call.profilo">
+                  <dt class="col-sm-4">{{ 'label.jconon_call.profilo' | translate }}</dt><dd class="col-sm-8">{{ call.profilo }}</dd>
+                </ng-container>
+                <ng-container *ngIf="call.sede">
+                  <dt class="col-sm-4">{{ 'label.jconon_call.sede' | translate }}</dt><dd class="col-sm-8">{{ text(call.sede, call.sede_en) }}</dd>
+                </ng-container>
+                <ng-container *ngIf="call.struttura_destinataria">
+                  <dt class="col-sm-4">{{ 'label.jconon_call.struttura_destinataria' | translate }}</dt>
+                  <dd class="col-sm-8">{{ text(call.struttura_destinataria, call.struttura_destinataria_en) }}</dd>
+                </ng-container>
+                <ng-container *ngIf="call.numero_posti">
+                  <dt class="col-sm-4">{{ 'label.jconon_call.numero_posti' | translate }}</dt><dd class="col-sm-8">{{ call.numero_posti }}</dd>
+                </ng-container>
+                <ng-container *ngIf="call.numero_gu">
+                  <dt class="col-sm-4">{{ 'layout.gazzetta' | translate }}</dt>
+                  <dd class="col-sm-8">n. {{ call.numero_gu }}<span *ngIf="call.data_gu"> del {{ call.data_gu | date:'dd/MM/yyyy' }}</span></dd>
+                </ng-container>
+                <ng-container *ngIf="call.elenco_macroaree">
+                  <dt class="col-sm-4">{{ 'call.elenco_macroaree' | translate }}</dt><dd class="col-sm-8">{{ call.elenco_macroaree }}</dd>
+                </ng-container>
+                <ng-container *ngIf="call.elenco_settori_tecnologici">
+                  <dt class="col-sm-4">{{ 'call.elenco_settori_tecnologici' | translate }}</dt><dd class="col-sm-8">{{ call.elenco_settori_tecnologici }}</dd>
+                </ng-container>
+                <ng-container *ngIf="call.area_scientifica">
+                  <dt class="col-sm-4">{{ 'label.jconon_call.area_scientifica' | translate }}</dt>
+                  <dd class="col-sm-8">{{ text(call.area_scientifica, call.area_scientifica_en) }}</dd>
+                </ng-container>
+              </dl>
+            </div>
+          </section>
+
+          <section *ngIf="call.requisiti || call.requisiti_en" class="card shadow-sm rounded mb-4 detail-card">
+            <div class="card-body">
+              <h2 class="h5 text-primary">{{ 'label.jconon_call.requisiti' | translate }}</h2>
+              <div class="detail-html" [innerHtml]="text(call.requisiti, call.requisiti_en)"></div>
+            </div>
+          </section>
+        </div>
+
+        <!-- scadenza e azioni -->
+        <aside class="col-lg-4">
+          <div class="detail-sticky">
+            <div class="card shadow-sm rounded mb-4 side-card">
+              <div class="card-body">
+                <dl class="mb-3">
+                  <dt class="small text-secondary fw-normal">{{ 'layout.call_start' | translate }}</dt>
+                  <dd class="h6">{{ call.data_inizio_invio_domande | date:'dd/MM/yyyy HH:mm' }}</dd>
+                  <dt class="small text-secondary fw-normal">{{ 'call.data_fine_invio_domande' | translate }}</dt>
+                  <dd class="h5 mb-0">{{ call.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm' }}</dd>
+                  <dd *ngIf="status() !== 'closed' && daysLeft() !== null" class="small mb-0"
+                      [ngClass]="status() === 'expiring' ? 'text-danger fw-semibold' : 'text-secondary'">
+                    {{ (daysLeft() === 0 ? 'layout.status_today' : 'layout.status_days_left') | translate:{value: daysLeft()} }}
+                  </dd>
+                </dl>
+                <app-call-prorogations [callId]="call.objectId" class="mb-3"></app-call-prorogations>
+                <app-call-actions [item]="call" mode="panel" (deleted)="router.navigate(['/'])"></app-call-actions>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </ng-container>
+  `,
+  styles: [`
+    .call-type { background: #e6f0fa; color: #0066cc; font-weight: 600; }
+    .detail-card::after, .side-card::after { display: none; }
+    .detail-html { line-height: 1.6; }
+    .detail-html ::ng-deep ol, .detail-html ::ng-deep ul { padding-left: 1.5rem; }
+    .detail-list dt { font-weight: 600; color: #5d7083; }
+    .detail-list dd { margin-bottom: .75rem; }
+    .side-card { border-top: 4px solid #0066cc; }
+    @media (min-width: 992px) { .detail-sticky { position: sticky; top: 1.5rem; } }
+  `]
+})
+export class CallDetailPageComponent implements OnInit {
+  public static ROUTE = 'call-detail';
+
+  public call: Call;
+  public code: string;
+  public loaded = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    public router: Router,
+    private callService: CallService,
+    public translateService: TranslateService
+  ) {}
+
+  ngOnInit(): void {
+    this.route.queryParams.pipe(
+      switchMap(params => {
+        this.loaded = false;
+        this.call = undefined;
+        this.code = params['callCode'];
+        if (params['callId']) {
+          return this.callService.getById(params['callId']);
+        }
+        if (!this.code) {
+          return of(undefined);
+        }
+        return this.callService.getAll({ page: 0, offset: 20, filterType: 'all', callCode: this.code, type: 'jconon_call:folder' })
+          .pipe(map(calls => (calls || []).find(c => c.codice === this.code) || (calls || [])[0]));
+      })
+    ).subscribe(call => {
+      this.call = call;
+      this.loaded = true;
+    }, () => this.loaded = true);
+  }
+
+  /** Testo nella lingua corrente, con ripiego sull'italiano. */
+  public text(it: string, en: string): string {
+    return this.translateService.currentLang === 'en' && en ? en : it;
+  }
+
+  public typeLabel(): string {
+    return this.translateService.instant(this.call.objectTypeId);
+  }
+
+  public isActive(): boolean {
+    const now = new Date();
+    return now >= new Date(this.call.data_inizio_invio_domande) && now <= new Date(this.call.data_fine_invio_domande);
+  }
+
+  public daysLeft(): number {
+    const end = this.call && this.call.data_fine_invio_domande ? new Date(this.call.data_fine_invio_domande as any).getTime() : NaN;
+    return isNaN(end) ? null : Math.max(Math.floor((end - Date.now()) / 86400000), 0);
+  }
+
+  public status(): 'open' | 'expiring' | 'closed' {
+    if (!this.isActive()) {
+      return 'closed';
+    }
+    const days = this.daysLeft();
+    return days !== null && days <= 7 ? 'expiring' : 'open';
+  }
+
+  public statusClass(): string {
+    return { open: 'bg-success', expiring: 'bg-warning text-dark', closed: 'bg-secondary' }[this.status()];
+  }
+
+  public newApplication(): void {
+    this.router.navigate(['/manage-application'], { queryParams: { callId: this.call.objectId } });
+  }
+}

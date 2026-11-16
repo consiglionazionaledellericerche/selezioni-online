@@ -1,6 +1,22 @@
 {
-  "/": {
+  "/openapi": {
     "target": "http://localhost:5555",
-    "secure": false
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/rest": {
+    "target": "http://localhost:5555",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/security": {
+    "target": "http://localhost:5555",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/sso": {
+    "target": "http://localhost:5555",
+    "secure": false,
+    "changeOrigin": true
   }
 }

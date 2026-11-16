@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'download-document',
   template: `
     <div class="alert alert-success">

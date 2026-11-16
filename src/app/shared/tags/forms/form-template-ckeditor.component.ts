@@ -5,8 +5,6 @@ import {
 import {ControlValueAccessor, NgControl} from '@angular/forms';
 import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {FormCommonTag} from './form-common-tag';
-import * as Editor from '../../../core/libs/ckeditor5/build/ckeditor';
-import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 
 /**
  * IMPORTANTE
@@ -17,6 +15,7 @@ import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular';
  * https://stackoverflow.com/questions/48176172/angular-click-not-working-after-ngfor-backing-array-updated
  */
 @Component({
+  standalone: false,
   selector: 'app-control-ckeditor',
   template:
      `
@@ -34,14 +33,17 @@ import { ChangeEvent, CKEditorComponent } from '@ckeditor/ckeditor5-angular';
               [labelactive]="labelactive"
               [showValidation]="showValidation">
 
-        <ckeditor 
-          [config]="config" 
-          #ckeditor 
-          [editor]="Editor" 
-          (change)="change($event)"
-          class="w-100" 
+        <quill-editor
+          class="w-100 d-block"
+          format="html"
+          theme="snow"
+          [modules]="modules"
+          [ngModel]="value"
+          [ngModelOptions]="{standalone: true}"
+          (ngModelChange)="change($event)"
+          (onBlur)="onTouched()"
           [ngClass]="{'is-valid': isValid(), 'is-invalid': isInvalid()}">
-        </ckeditor>
+        </quill-editor>
 
         <div *ngIf="controlDir.dirty && controlDir.pending"
              [ngStyle]="{'position': 'absolute', 'top': '5px', 'right': '5px', 'z-index': '100'}">
@@ -59,26 +61,16 @@ export class FormTemplateCKEditorComponent extends FormCommonTag implements Cont
 
   @Input() nullIfEmpty = false;
 
-  @ViewChild('ckeditor', {static: true}) ckeditor: CKEditorComponent;
-
-  public Editor = Editor;
-
-  config = {  
-    toolbar: [ 
-      'bold', 
-      'italic', 
-      'strikethrough', 
-      'underline', 
-      'indent', 
-      '|', 
-      'alignment', 
-      'numberedList', 
-      'bulletedList', 
-      'link', 
-      '|', 
-      'undo', 
-      'redo' 
-    ] 
+  /** Valore HTML corrente dell'editor (ngx-quill, come in GesFor). */
+  public value: string = null;
+  public modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ align: [] }, { indent: '-1' }, { indent: '+1' }],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['link'],
+      ['clean']
+    ]
   };
 
   /**
@@ -103,9 +95,9 @@ export class FormTemplateCKEditorComponent extends FormCommonTag implements Cont
     this.labelactive = true;
   }
 
-  change({ editor }: ChangeEvent ) {
-    const value = editor.getData();
-    if (this.nullIfEmpty && value === '') {
+  change(value: string) {
+    this.value = value;
+    if (this.nullIfEmpty && (value === '' || value === null)) {
       this.onChange(null);
       return;
     }
@@ -121,7 +113,8 @@ export class FormTemplateCKEditorComponent extends FormCommonTag implements Cont
   onTouched = () => {};
 
   writeValue(value: any): void {
-    this.ckeditor.writeValue(value);
+    this.value = value;
+    this.ref.markForCheck();
     if (this.controlDir.control) {
       this.controlDir.control.markAsDirty();
       this.controlDir.control.updateValueAndValidity();

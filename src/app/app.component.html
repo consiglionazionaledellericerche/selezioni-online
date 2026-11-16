@@ -1,11 +1,11 @@
-<app-header1></app-header1>  
-<!-- Begin page content -->
-<main>
-  <div class="application-content container">
-    <div id="application-container" class="shadow p-3 mb-5 bg-white">
-      <router-outlet></router-outlet>
+<div id="app">
+  <app-header />
+  <main id="main">
+    <div class="application-content">
+      <div id="application-container" class="container mb-5">
+        <router-outlet />
+      </div>
     </div>
-  </div>
-  <div class="push"></div>
-</main>
-<app-footer></app-footer>
+  </main>
+  <app-footer />
+</div>

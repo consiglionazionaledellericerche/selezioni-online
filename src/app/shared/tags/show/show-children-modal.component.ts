@@ -1,20 +1,25 @@
 import { Component, ElementRef, Input, TemplateRef, ViewChild } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalRef, ModalService } from '../../modal/modal.service';
 
 @Component({
+  standalone: false,
   selector: 'app-show-children-modal',
   template: `
     
-    <button class="btn {{buttonClass}}" (click)="openModal(template)" tooltip="{{'attach' | translate}}">
-      <svg class="icon">
-        <use href="/assets/bootstrap-italia/svg/sprites.svg#it-download"></use>
-      </svg>
+    <button *ngIf="variant === 'icon'" type="button" class="btn btn-outline-primary btn-sm btn-action" (click)="openModal(template)" [itTooltip]="'attach' | translate">
+      <svg class="icon icon-sm icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clip"></use></svg>
+      <span class="visually-hidden">{{ 'attach' | translate }}</span>
     </button>
+    <a *ngIf="variant === 'link'" href="javascript:void(0)" class="action-link" (click)="openModal(template)">
+      <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clip"></use></svg>{{ (linkLabel || 'attach') | translate }}
+    </a>
 
     <ng-template #template let-modal>
       <div class="modal-header">
-        <h4 class="modal-title float-start text-primary"><i class="fa fa-info-circle"></i> {{modal_title}}</h4>
-        <button #close type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
+        <h2 class="modal-title h5 no_toc">{{modal_title}}</h2>
+        <button #close type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()">
+          <svg class="icon"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-close"></use></svg>
+        </button>
       </div>
       <div class="modal-body">
          <children-list [show_date]="show_date" [parentId]="parentId" [typeId]="typeId" [queryName]="queryName"></children-list>
@@ -26,6 +31,10 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   `
 })
 export class ShowChildrenModalComponent {
+  /** 'icon' = pulsante quadrato con sola icona; 'link' = voce di elenco con icona e testo. */
+  @Input() variant: 'icon' | 'link' = 'icon';
+  @Input() linkLabel: string;
+
 
   @Input() parentId;  
   @Input() buttonClass = 'text-dark p-1';
@@ -36,9 +45,9 @@ export class ShowChildrenModalComponent {
   @Input() modal_title;
   @Input() show_date = 'false';
   @ViewChild('close', {static: true}) close: ElementRef;
-  modalRef: BsModalRef;
+  modalRef: ModalRef;
 
-  constructor(private modalService: BsModalService) {}
+  constructor(private modalService: ModalService) {}
  
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'modal-xl' }));      
