@@ -185,8 +185,7 @@ export class JcononAffixCallScoreComponent extends DynamicComponent<Call> {
       </ul>
       <div *ngIf="canEdit" class="row align-items-end">
         <div class="form-group col-md-8">
-          <label for="rdp-authority" class="active" translate>call_manage.rdp.add_hint</label>
-          <input id="rdp-authority" type="text" class="form-control" [(ngModel)]="authority" [ngModelOptions]="{standalone: true}">
+          <app-authority-picker mode="both" [(ngModel)]="authority" [ngModelOptions]="{standalone: true}"></app-authority-picker>
         </div>
         <div class="form-group col-md-4 text-end">
           <button class="btn btn-primary btn-sm" [disabled]="!authority" (click)="add()" translate>add</button>
@@ -260,8 +259,8 @@ export class JcononAffixCallAccountableComponent extends DynamicComponent<Call> 
         </ul>
         <div *ngIf="canEdit" class="row align-items-end">
           <div class="form-group col-md-8">
-            <label [for]="'esperto-' + category.id" class="active" translate>call_manage.helpdesk.add_hint</label>
-            <input [id]="'esperto-' + category.id" type="text" class="form-control" [(ngModel)]="newEsperto[category.id]" [ngModelOptions]="{standalone: true}">
+            <app-authority-picker mode="users" label="call_manage.helpdesk.add_hint" [(ngModel)]="newEsperto[category.id]"
+              [ngModelOptions]="{standalone: true}"></app-authority-picker>
           </div>
           <div class="form-group col-md-4 text-end">
             <button class="btn btn-primary btn-sm" [disabled]="!newEsperto[category.id]" (click)="add(category.id)" translate>add</button>

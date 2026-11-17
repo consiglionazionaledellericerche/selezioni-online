@@ -2190,5 +2190,14 @@
   "D:jconon_attachment_cascade:domanda_finanziamento": "Domanda finanziamento",
   "D:jconon_attachment_cascade:informativa_trattamento_dati": "Informativa trattamento dati",
   "D:jconon_call_tdet_pnrr:folder": "Tempo Determinato PNRR",
-  "D:jconon_competition:folder": "Root Competition"
+  "D:jconon_competition:folder": "Root Competition",
+  "authority": {
+    "kind": "Tipo",
+    "user": "Utente",
+    "group": "Gruppo",
+    "user_label": "Utente",
+    "group_label": "Gruppo",
+    "search_user": "Cerca per nome, cognome o username",
+    "search_group": "Cerca per nome del gruppo"
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnDestroy, forwardRef, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, forwardRef, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -85,6 +85,8 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
   @Input() placeholder = '';
   @Input() label: string;
   @Input() minLength = 2;
+  /** Elemento scelto, completo (es. per compilare altri campi con nome ed email). */
+  @Output() selected = new EventEmitter<any>();
   /** Testo da mostrare per il valore iniziale (es. il codice del bando quando il valore è il suo id). */
   @Input() set displayText(text: string) {
     this._displayText = text;
@@ -127,7 +129,7 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
       }),
       switchMap(term => term.length < this.minLength ? of([]) : this.configService.getGateway().pipe(
         switchMap(gateway => this.http.get<any>(gateway + this.path, { params: new HttpParams().set('filter', term) })),
-        map(result => (result && result[this.resultName] || []).map(item => ({ id: item[this.resultId], ...this.display(item) }))),
+        map(result => (result && result[this.resultName] || []).map(item => ({ id: item[this.resultId], ...this.display(item), raw: item }))),
         catchError(() => {
           this.error = true;
           return of([]);
@@ -155,6 +157,7 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
     this.open = false;
     this.onChange(item.id);
     this.onTouched();
+    this.selected.emit((item as any).raw || item);
   }
 
   clear(): void {

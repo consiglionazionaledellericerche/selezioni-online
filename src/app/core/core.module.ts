@@ -1,3 +1,4 @@
+import { AuthorityPickerComponent } from '../shared/ui/authority-picker.component';
 import { DateTileComponent } from '../shared/ui/date-tile.component';
 import { CallAttachmentsComponent } from './call/shared/call-attachments.component';
 import { ItUploadDragDropComponent } from 'design-angular-kit';
@@ -90,6 +91,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
         BadRequestComponent,
     ],
     imports: [
+        AuthorityPickerComponent,
         DateTileComponent,
         CallAttachmentsComponent,
         ItUploadDragDropComponent,

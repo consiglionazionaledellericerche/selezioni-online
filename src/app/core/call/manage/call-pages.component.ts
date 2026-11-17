@@ -240,8 +240,7 @@ export class CallLabelsComponent extends CallPageBase {
       <form [formGroup]="form" (ngSubmit)="onAdd()" class="card card-bg mb-3">
         <div class="card-body row align-items-end">
           <div class="form-group col-md-6">
-            <label for="acl-authority" class="active" translate>call_manage.permissions.authority</label>
-            <input id="acl-authority" type="text" class="form-control" formControlName="authority">
+            <app-authority-picker mode="both" formControlName="authority"></app-authority-picker>
           </div>
           <div class="form-group col-md-4">
             <label for="acl-role" class="active" translate>call_manage.permissions.role</label>
@@ -300,7 +299,7 @@ export class CallPermissionsComponent extends CallPageBase {
   }
 
   onAdd() {
-    this.manageCallService.addAcl(this.callId, this.form.value.authority.trim(), this.form.value.role).subscribe(() => {
+    this.manageCallService.addAcl(this.callId, String(this.form.value.authority || '').trim(), this.form.value.role).subscribe(() => {
       this.form.patchValue({ authority: '' });
       this.load();
     });
@@ -370,8 +369,8 @@ export class CallPermissionsComponent extends CallPageBase {
             <input id="c-email" type="email" class="form-control" formControlName="jconon_commissione:email">
           </div>
           <div class="form-group col-md-6">
-            <label for="c-username" class="active" translate>call_manage.commission.username</label>
-            <input id="c-username" type="text" class="form-control" formControlName="jconon_commissione:username">
+            <app-authority-picker mode="users" label="call_manage.commission.username" formControlName="jconon_commissione:username"
+              (selected)="fillMember($event)"></app-authority-picker>
             <small class="text-muted" translate>call_manage.commission.username_hint</small>
           </div>
           <div class="col-md-6 text-end align-self-end">
@@ -502,6 +501,23 @@ export class CallCommissionComponent extends CallPageBase {
       }
       this.load();
     });
+  }
+
+  /** Utente scelto dall'autocompletamento: compila nome, cognome ed email se ancora vuoti. */
+  fillMember(user: any): void {
+    if (!user || !this.form) {
+      return;
+    }
+    const patch: any = {};
+    const set = (control: string, value: string) => {
+      if (value && !this.form.get(control)?.value) {
+        patch[control] = value;
+      }
+    };
+    set('jconon_commissione:nome', user.firstName);
+    set('jconon_commissione:cognome', user.lastName);
+    set('jconon_commissione:email', user.email);
+    this.form.patchValue(patch);
   }
 }
 

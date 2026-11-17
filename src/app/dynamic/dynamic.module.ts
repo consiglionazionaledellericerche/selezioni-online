@@ -1,3 +1,4 @@
+import { AuthorityPickerComponent } from '../shared/ui/authority-picker.component';
 import { ItDropdownModule, ItPopoverDirective, ItTooltipDirective } from 'design-angular-kit';
 import { AccordionComponent, AccordionGroupComponent } from '../shared/ui/accordion.component';
 import {NgModule} from '@angular/core';
@@ -152,6 +153,7 @@ import { ConfigService } from '../core/config.service';
         JcononAttachmentDocumentoRiconoscimentoEditComponent
     ],
     imports: [
+        AuthorityPickerComponent,
         ItDropdownModule,
         ItPopoverDirective,
         ItTooltipDirective,
