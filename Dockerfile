@@ -1,21 +1,21 @@
 ### STAGE 1: Build ###
 
-# We label our stage as 'builder'
-FROM node:22-alpine AS builder
+# Debian-based image (glibc): avoids the SIGSEGV seen with node:22-alpine (musl) on the GitLab runner
+FROM node:22-slim AS builder
 
-COPY package.json package-lock.json ./
-
-RUN npm set progress=false && npm config set depth 0 && npm cache clean --force
-
-## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-RUN npm i --legacy-peer-deps && mkdir /ng-app && cp -R ./node_modules ./ng-app
+ENV NG_CLI_ANALYTICS=false \
+    NG_BUILD_MAX_WORKERS=2 \
+    NODE_OPTIONS="--max-old-space-size=3072"
 
 WORKDIR /ng-app
 
-COPY . .
+## Install dependencies in a separate layer so they are cached until package*.json changes
+COPY package.json package-lock.json ./
+RUN npm ci --legacy-peer-deps --no-audit --no-fund
 
-## Build the angular app in production mode and store the artifacts in dist folder
-RUN npx ng build --configuration production --aot --output-hashing=all
+## Build the angular app in production mode and store the artifacts in the dist folder
+COPY . .
+RUN npx ng build --configuration production --output-hashing=all
 
 ### STAGE 2: Setup ###
 
