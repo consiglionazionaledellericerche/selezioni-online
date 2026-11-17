@@ -93,12 +93,12 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
     });
     if (!this.form.invalid) {
       if(this.entity) {
-        this.service.updateDocument(this.buildInstance(), this.form.value.file).subscribe((result) => {
+        this.service.updateDocument(this.buildInstance(), this.form.value.file, this.form.value).subscribe((result) => {
           this.event.emit(result);
           this.modalRef.hide();
         });
       } else {
-        this.service.createDocument(this.parentId, this.buildInstance(), this.form.value.file).subscribe((result) => {
+        this.service.createDocument(this.parentId, this.buildInstance(), this.form.value.file, this.form.value).subscribe((result) => {
           this.event.emit(result);
           this.modalRef.hide();
         });  

@@ -204,6 +204,7 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       switchMap(gateway => this.http.get<any>(gateway + '/rest/bulkInfo/view/' + encodeURIComponent(this.aspectType) + '/form/default', { params }))
     ).subscribe(view => {
       this.buildFields(view);
+      this.applyImplementedAspects(view);
       this.afterFieldsLoaded();
       this.loading = false;
       this.changeDetectorRef.markForCheck();
@@ -329,6 +330,19 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
   protected knownLabel(property: string): string {
     const key = 'label.' + String(property).replace(/:/g, '_');
     return this.translateService.instant(key) !== key ? key : undefined;
+  }
+
+  /**
+   * Aspect dichiarati dal bulkinfo del tipo (cmisImplementsName, nella vista JSON come "aspect"): si applicano
+   * sempre al documento, tranne quelli gestiti da un interruttore add-remove-aspect (es. Gazzetta Ufficiale, inPA).
+   * Es. P:jconon_attachment:prorogation, da cui dipende l'aggiornamento delle date del bando dopo una proroga.
+   */
+  protected applyImplementedAspects(view: any): void {
+    const toggled = new Set(this.fields.filter(f => f.kind === 'aspect').map(f => f.property.replace(/^aspect:/, '')));
+    (Array.isArray(view && view.aspect) ? view.aspect : [])
+      .map((aspect: any) => typeof aspect === 'string' ? aspect : (aspect && (aspect.name || aspect.key || aspect.id)))
+      .filter((aspect: string) => !!aspect && aspect.startsWith('P:') && !toggled.has(aspect))
+      .forEach((aspect: string) => this.setAspect(aspect, true));
   }
 
   /** Dopo il caricamento dei campi (anche se il bulkinfo non è disponibile): punto di estensione. */

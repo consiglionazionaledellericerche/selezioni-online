@@ -45,12 +45,40 @@ export class DocumentService extends CommonService<Document>{
     return DocumentService.ROUTE;
   }
 
-  public createDocument(parentId: string, entity: Document, fileToUpload: File): Observable<Document> {
+  /**
+   * Proprietà da inviare: quelle del modello più le altre del form (metadati del bulkinfo: protocollo, date,
+   * Gazzetta...), che il modello Document non conosce e la serializzazione perderebbe. Le date nel formato
+   * accettato dal backend (yyyy-MM-dd'T'HH:mm:ss.SSSZ); valori vuoti esclusi.
+   */
+  public documentProperties(entity: Document, extra?: { [key: string]: any }): { [key: string]: any } {
+    const properties = { ...this.serializeInstance(entity) };
+    Object.keys(extra || {})
+      .filter(key => key !== 'file')
+      .forEach(key => {
+        const value = extra[key];
+        if (value === null || value === undefined || value === '' || (Array.isArray(value) && value.length === 0 && key !== 'aspect')) {
+          return;
+        }
+        properties[key] = value instanceof Date ? DocumentService.toCmisDate(value) : value;
+      });
+    return properties;
+  }
+
+  /** Data per il backend (NodeMetadataService di cool): yyyy-MM-dd'T'HH:mm:ss.SSSZ, ora locale con fuso tipo +0100. */
+  public static toCmisDate(date: Date): string {
+    const pad = (n: number, size = 2) => String(Math.abs(n)).padStart(size, '0');
+    const offset = -date.getTimezoneOffset();
+    return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()) + 'T' +
+      pad(date.getHours()) + ':' + pad(date.getMinutes()) + ':' + pad(date.getSeconds()) + '.' + pad(date.getMilliseconds(), 3) +
+      (offset >= 0 ? '+' : '-') + pad(Math.floor(Math.abs(offset) / 60)) + pad(Math.abs(offset) % 60);
+  }
+
+  public createDocument(parentId: string, entity: Document, fileToUpload: File, extra?: { [key: string]: any }): Observable<Document> {
     const formData: FormData = new FormData();
     if (fileToUpload) {
       formData.append('file', fileToUpload, fileToUpload.name);
     }
-    formData.append('properties', new Blob([JSON.stringify(this.serializeInstance(entity))]));
+    formData.append('properties', new Blob([JSON.stringify(this.documentProperties(entity, extra))]));
 
     return this.configService.getApiBase()
       .pipe(
@@ -70,12 +98,12 @@ export class DocumentService extends CommonService<Document>{
       );
   }
 
-  public updateDocument(entity: Document, fileToUpload: File): Observable<Document> {
+  public updateDocument(entity: Document, fileToUpload: File, extra?: { [key: string]: any }): Observable<Document> {
     const formData: FormData = new FormData();
     if (fileToUpload) {
       formData.append('file', fileToUpload, fileToUpload.name);
     }
-    formData.append('properties', new Blob([JSON.stringify(this.serializeInstance(entity))]));
+    formData.append('properties', new Blob([JSON.stringify(this.documentProperties(entity, extra))]));
 
     return this.configService.getApiBase()
       .pipe(
