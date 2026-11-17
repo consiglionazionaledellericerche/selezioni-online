@@ -35,18 +35,18 @@ interface ManageAction {
         </a>
         <a *ngIf="mode === 'compact' && canCreateDocument()" class="btn btn-outline-primary btn-sm btn-action" [routerLink]="['/applications-user']"
            [queryParams]="{ callId: item.objectId }" [itTooltip]="'call.menuitem.application' | translate">
-          <svg class="icon icon-primary icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-folder"></use></svg>
+          <svg class="icon icon-primary icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-files"></use></svg>
           <span class="visually-hidden">{{ 'call.menuitem.application' | translate }}</span>
         </a>
         <button *ngIf="mode === 'compact' && canCreateDocument()" type="button" class="btn btn-outline-primary btn-sm btn-action"
                 (click)="openExport()" [itTooltip]="'export.menu' | translate">
-          <svg class="icon icon-primary icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-download"></use></svg>
+          <svg class="icon icon-primary icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-xlsx"></use></svg>
           <span class="visually-hidden">{{ 'export.menu' | translate }}</span>
         </button>
         <a *ngIf="mode === 'compact' && canUpdateCall()" class="btn btn-outline-primary btn-sm btn-action" [routerLink]="['/manage-call']"
            [queryParams]="{ 'cmis:objectId': item.objectId, 'call-type': item.objectTypeId }"
            [itTooltip]="'call.menuitem.update' | translate">
-          <svg class="icon icon-primary icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-pencil"></use></svg>
+          <svg class="icon icon-primary icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-settings"></use></svg>
           <span class="visually-hidden">{{ 'call.menuitem.update' | translate }}</span>
         </a>
         <app-show-children-modal *ngIf="mode === 'compact'" [parentId]="item.objectId" [modal_title]="'call.attach_to' | translate:{value: item.codice}">
@@ -72,17 +72,17 @@ interface ManageAction {
       <ul *ngIf="mode === 'panel'" class="list-unstyled mb-3 manage-list">
         <li *ngIf="canCreateDocument()">
           <a [routerLink]="['/applications-user']" [queryParams]="{ callId: item.objectId }">
-            <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-folder"></use></svg>{{ 'call.menuitem.application' | translate }}
+            <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-files"></use></svg>{{ 'call.menuitem.application' | translate }}
           </a>
         </li>
         <li *ngIf="canCreateDocument()">
           <a href="javascript:void(0)" (click)="openExport()">
-            <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-download"></use></svg>{{ 'export.menu' | translate }}
+            <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-xlsx"></use></svg>{{ 'export.menu' | translate }}
           </a>
         </li>
         <li *ngIf="canUpdateCall()">
           <a [routerLink]="['/manage-call']" [queryParams]="{ 'cmis:objectId': item.objectId, 'call-type': item.objectTypeId }">
-            <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-pencil"></use></svg>{{ 'call.menuitem.update' | translate }}
+            <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-settings"></use></svg>{{ 'call.menuitem.update' | translate }}
           </a>
         </li>
         <li>
@@ -142,7 +142,7 @@ export class CallActionsComponent {
     const id = this.item.objectId;
     const actions: ManageAction[] = [
       { label: this.item.pubblicato ? 'call_manage.unpublish' : 'call_manage.publish',
-        icon: this.item.pubblicato ? 'it-password-invisible' : 'it-password-visible', action: () => this.publish() },
+        icon: this.item.pubblicato ? 'it-password-invisible' : 'it-horn', action: () => this.publish() },
       { label: 'call_manage.commission.title', icon: 'it-user', route: '/call-commission', queryParams: { callId: id } },
       { label: 'call_manage.labels.title', icon: 'it-bookmark', route: '/call-labels', queryParams: { callId: id } },
       { label: 'communications.kind.convocazioni', icon: 'it-calendar', route: '/call-communications', queryParams: { callId: id, kind: 'convocazioni' } },
@@ -150,7 +150,7 @@ export class CallActionsComponent {
       { label: 'communications.kind.comunicazioni', icon: 'it-mail', route: '/call-communications', queryParams: { callId: id, kind: 'comunicazioni' } }
     ];
     if (ManageCallService.isConcorsi(this.authService.getUser())) {
-      actions.push({ label: 'call_manage.permissions.title', icon: 'it-locked', route: '/call-permissions', queryParams: { callId: id } });
+      actions.push({ label: 'call_manage.permissions.title', icon: 'it-key', route: '/call-permissions', queryParams: { callId: id } });
     }
     if (ManageCallService.isMacroCall(this.item)) {
       actions.push({ label: 'call_manage.children.title', icon: 'it-folder', route: '/call-children', queryParams: { callId: id } });

@@ -28,32 +28,54 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
     <!-- List -->
     <app-list-layout [loading]="loading" [items]="items" [page]="getPage()"
                      [count]="count" [page_offset]="service.getPageOffset()" (onChangePage)="onChangePage($event)">
-      <li *ngFor="let item of items" [ngClass]="listItemClasses()">
+      <li *ngFor="let item of items" class="doc-item">
         <app-list-item-document [item]="item" (onDelete)="onDelete(item)" (onEdit)="onEdit(item)">
-          <div class="col-sm-12 fw-bolder"> 
-            <button 
-              class="btn btn-link ps-0 pb-0 text-truncate"
-              (click)="getBlob(item.objectId, item.name)">
-              <i class="fa fa-fw {{ item.getMimeTypeIcon() }}"></i> {{ item.name }}
-            </button>
-          </div>
-          <div class="col-sm-12 pt-1">{{item.objectTypeId | translate}}</div> 
-          <div class="col-sm-12 pt-1">
-            <span class="fw-bold">{{item.getFileSize()}}</span>
-            <span *ngIf="show_date">{{'document.last_modified'| translate:{value: item.lastModificationDate| date:'dd/MM/yyyy HH:mm'} }}</span>
-          </div> 
-          <div *ngIf="macroCallId" class="col-sm-12 pt-1">
-            <button class="btn btn-link btn-sm ps-0" (click)="linkToChildren(item)">
-              <i class="fa fa-fw fa-link"></i> {{'call_manage.attachments.link_children' | translate}}
-            </button>
-            <button class="btn btn-link btn-sm" (click)="copyToChildren(item)">
-              <i class="fa fa-fw fa-copy"></i> {{'call_manage.attachments.copy_children' | translate}}
-            </button>
+          <div class="doc-file">
+            <svg class="icon doc-icon" [class]="'icon doc-icon ' + iconClass(item)" aria-hidden="true">
+              <use [attr.href]="'/bootstrap-italia/dist/svg/sprites.svg#' + icon(item)"></use>
+            </svg>
+            <div class="doc-text">
+              <button type="button" class="btn btn-link p-0 doc-name text-start" (click)="getBlob(item.objectId, item.name)">
+                {{ item.name }}
+              </button>
+              <div class="doc-type">
+                {{ item.objectTypeId | translate }}<ng-container *ngIf="item.title && item.title !== item.name"> · {{ item.title }}</ng-container>
+              </div>
+              <div class="doc-meta">
+                <span>{{ format(item) }} · {{ item.getFileSize() }}</span>
+                <span *ngIf="show_date && validDate(item.lastModificationDate)">
+                  <svg class="icon icon-xs" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-calendar"></use></svg>
+                  {{ item.lastModificationDate | date:'dd/MM/yyyy HH:mm' }}
+                </span>
+                <span *ngIf="version(item)">{{ 'layout.attachments.version' | translate }} {{ version(item) }}</span>
+              </div>
+              <div *ngIf="macroCallId" class="doc-macro">
+                <button type="button" class="btn btn-link btn-sm p-0" (click)="linkToChildren(item)">
+                  <svg class="icon icon-xs icon-primary me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-link"></use></svg>{{'call_manage.attachments.link_children' | translate}}
+                </button>
+                <button type="button" class="btn btn-link btn-sm p-0" (click)="copyToChildren(item)">
+                  <svg class="icon icon-xs icon-primary me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-copy"></use></svg>{{'call_manage.attachments.copy_children' | translate}}
+                </button>
+              </div>
+            </div>
           </div>
         </app-list-item-document>
       </li>
     </app-list-layout>
-  `
+  `,
+  styles: [`
+    .doc-item { list-style: none; border-bottom: 1px solid #e3e8ee; }
+    .doc-item:last-child { border-bottom: 0; }
+    .doc-file { display: flex; gap: .9rem; align-items: flex-start; min-width: 0; }
+    .doc-icon { flex-shrink: 0; width: 2.25rem; height: 2.25rem; margin-top: .1rem; }
+    .doc-text { min-width: 0; }
+    .doc-name { font-weight: 600; font-size: 1rem; word-break: break-word; }
+    .doc-type { font-size: .85rem; color: #455b71; margin-top: .1rem; }
+    .doc-meta { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin-top: .3rem; font-size: .85rem; color: #5d7083; }
+    .doc-meta .icon { width: .9rem; height: .9rem; fill: #5d7083; vertical-align: -2px; }
+    .doc-macro { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin-top: .4rem; }
+    .icon-pdf { fill: #d9364f; } .icon-doc { fill: #0066cc; } .icon-sheet { fill: #008758; } .icon-other { fill: #5d7083; }
+  `]
 })
 export class ChildrenListComponent extends CommonListComponent<Attachment> implements OnInit {
 
@@ -164,5 +186,48 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
 
   protected isScrollTopOnPageChange(): boolean {
     return false;
+  }
+
+  private mime(item: Attachment): string {
+    return String((item as any).contentStreamMimeType || '').toLowerCase();
+  }
+
+  private signed(item: Attachment): boolean {
+    return /\.p7m$/i.test(String(item.name || '')) || this.mime(item).includes('pkcs7');
+  }
+
+  /** Icona del formato del file. */
+  icon(item: Attachment): string {
+    const mime = this.mime(item);
+    if (this.signed(item)) { return 'it-file-signed'; }
+    if (mime.includes('pdf')) { return 'it-file-pdf'; }
+    if (mime.includes('word') || mime.includes('opendocument.text')) { return 'it-file-docx'; }
+    if (mime.includes('sheet') || mime.includes('excel') || mime.includes('csv')) { return 'it-file-xlsx'; }
+    if (mime.includes('zip') || mime.includes('compressed')) { return 'it-file-compressed'; }
+    if (mime.startsWith('image/')) { return 'it-file-image'; }
+    return 'it-file';
+  }
+
+  iconClass(item: Attachment): string {
+    const icon = this.icon(item);
+    return icon === 'it-file-pdf' || icon === 'it-file-signed' ? 'icon-pdf'
+      : icon === 'it-file-docx' ? 'icon-doc' : icon === 'it-file-xlsx' ? 'icon-sheet' : 'icon-other';
+  }
+
+  /** Formato del file (estensione o tipo MIME). */
+  format(item: Attachment): string {
+    const name = String(item.name || '');
+    const ext = name.includes('.') ? name.split('.').pop() : '';
+    return (ext || this.mime(item).split('/').pop() || '').toUpperCase();
+  }
+
+  version(item: Attachment): string {
+    const label = (item as any).versionLabel;
+    return label && label !== '1.0' ? label : '';
+  }
+
+  /** Data presente e valida. */
+  validDate(value: any): boolean {
+    return !!value && !isNaN(new Date(value).getTime());
   }
 }

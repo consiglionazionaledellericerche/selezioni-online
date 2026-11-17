@@ -340,6 +340,32 @@ export class ManageCallService {
     return this.post(ManageCallService.URL + '/commission-gender/watched', null);
   }
 
+  /* Menu "Gestore" e "Commissioni" */
+
+  /** Bandi creati dall'utente, i più recenti per primi. */
+  managerCalls(limit = 12): Observable<any[]> {
+    return this.configService.getApiBase().pipe(
+      switchMap(apiBase => this.httpClient.get<any[]>(apiBase + ManageCallService.URL + '/managers', { params: new HttpParams().set('limit', String(limit)) })),
+      catchError(() => of([]))
+    );
+  }
+
+  /** Tipologie di bando che l'utente può creare (chiavi, es. F:jconon_call_tind:folder_concorsi_pubblici). */
+  enableTypes(): Observable<string[]> {
+    return this.configService.getApiBase().pipe(
+      switchMap(apiBase => this.httpClient.get<string[]>(apiBase + ManageCallService.URL + '/enable-types')),
+      catchError(() => of([]))
+    );
+  }
+
+  /** Bandi in cui l'utente è commissario (più la voce per la parità di genere, quando prevista). */
+  commissionCalls(): Observable<any[]> {
+    return this.configService.getApiBase().pipe(
+      switchMap(apiBase => this.httpClient.get<any[]>(apiBase + ManageCallService.URL + '/commissions')),
+      catchError(() => of([]))
+    );
+  }
+
   /* Proroghe e riaperture */
 
   prorogations(callId: string): Observable<any[]> {

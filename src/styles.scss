@@ -726,6 +726,10 @@ app-control-toggle .toggles label {
   max-width: 16rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  // spazio per le lettere con la gamba (g, p), altrimenti tagliate da overflow: hidden
+  line-height: 1.5;
+  padding-bottom: .15em;
 }
 .section-tabs .nav-link {
   display: flex;
@@ -999,4 +1003,86 @@ app-form-layout .input-group:has(.is-invalid) .form-control,
 app-form-layout .form-control.is-invalid,
 app-form-layout .form-control.is-invalid:focus {
   border-bottom-color: #d9364f !important;
+}
+
+// MegaMenu "Gestore" e "Commissioni"
+.megamenu .dropdown-menu {
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+}
+.megamenu .mega-title {
+  color: #17324d;
+  font-weight: 700;
+}
+.megamenu .mega-more {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+}
+.megamenu .mega-call {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: .45rem !important;
+  padding-bottom: .45rem !important;
+  line-height: 1.3;
+}
+.megamenu .mega-call-code {
+  font-weight: 700;
+  color: #0066cc;
+}
+.megamenu .mega-call-meta {
+  font-size: .8rem;
+  color: #5d7083;
+  margin-top: .15rem;
+}
+.megamenu .mega-section-title {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: #5d7083;
+  margin: .75rem 0 .25rem 1.5rem;
+}
+.megamenu .mega-new-call {
+  border-left: 1px solid #e3e8ee;
+}
+// voci del menu principale su una sola riga
+@media (min-width: 992px) {
+  .it-header-navbar-wrapper .navbar .navbar-nav .nav-item .nav-link {
+    white-space: nowrap;
+    padding-left: .75rem;
+    padding-right: .75rem;
+  }
+}
+.megamenu .mega-call > span {
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left;
+  align-self: flex-start;
+}
+.megamenu .mega-call .badge {
+  color: #fff !important;
+  font-size: .7rem;
+  padding: .2em .55em;
+}
+
+// data effettiva del bando (dopo eventuali proroghe), sotto la data iniziale modificabile
+.effective-date {
+  margin-top: .35rem;
+  padding: .3rem .6rem;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .25rem;
+  font-size: .85rem;
+  color: #0b5c3e;
+  background: #e6f4ee;
+  border-radius: 4px;
+}
+.megamenu .mega-group-title {
+  font-size: .85rem;
+  font-weight: 600;
+  color: #17324d;
+  margin: .6rem 0 0 1.5rem;
 }

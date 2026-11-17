@@ -1,3 +1,5 @@
+import { DateTileComponent } from '../shared/ui/date-tile.component';
+import { CallAttachmentsComponent } from './call/shared/call-attachments.component';
 import { ItUploadDragDropComponent } from 'design-angular-kit';
 import { ItDropdownModule, ItPopoverDirective, ItTooltipDirective } from 'design-angular-kit';
 import { AccordionComponent, AccordionGroupComponent } from '../shared/ui/accordion.component';
@@ -88,6 +90,8 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
         BadRequestComponent,
     ],
     imports: [
+        DateTileComponent,
+        CallAttachmentsComponent,
         ItUploadDragDropComponent,
         CallHeaderComponent,
         ItDropdownModule,

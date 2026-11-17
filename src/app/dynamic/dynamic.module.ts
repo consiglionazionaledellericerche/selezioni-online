@@ -73,6 +73,7 @@ import { JcononAspectToggleWithSingleFieldComponent } from './aspect/toggle-with
 import { JcononAspectContrattoTDConcorsoComponent } from './aspect/contratto-td-concorso.component';
 import { JcononAspectIdoneoPrecedentiGraduatorieComponent } from './aspect/idoneo-precedenti-graduatorie.component';
 import { JcononAspectGenericComponent } from './aspect/generic-aspect.component';
+import { JcononAttachmentGenericEditComponent, JcononAttachmentGenericShowComponent } from './attachment/generic-attachment.component';
 import { JcononAspectAbilitazioneProfessioneIngegnereComponent } from './aspect/abilitazione-professione-ingegnere.component';
 import { JcononAspectUlterioreLaureaComponent } from './aspect/ulteriore-laurea.component';
 import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dottorato.component';
@@ -140,6 +141,8 @@ import { ConfigService } from '../core/config.service';
         JcononAspectContrattoTDConcorsoComponent,
         JcononAspectIdoneoPrecedentiGraduatorieComponent,
         JcononAspectGenericComponent,
+        JcononAttachmentGenericEditComponent,
+        JcononAttachmentGenericShowComponent,
         JcononAspectAbilitazioneProfessioneIngegnereComponent,
         JcononAspectUlterioreLaureaComponent,
         JcononAspectUlterioreDottoratoComponent,

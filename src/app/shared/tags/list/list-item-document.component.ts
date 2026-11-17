@@ -10,34 +10,39 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
   selector: 'app-list-item-document',
   template:
      `
-     <div *ngIf="item">
-        <div class="row pt-2 pb-2" tabindex="0">
+     <div *ngIf="item" class="doc-row">
+        <div class="doc-content">
           <ng-content></ng-content>
-
-          <a class="ddd" aria-haspopup="true" role="button">
-            <div class="btn-group border rounded" role="group" [ngStyle]="buttonStyle()">
-              <button class="btn text-dark p-2" [disabled]="!item.hasId()"
-                  (click)="openModalWithComponent(item)" [itTooltip]="'show' | translate">
-                  <i class="fa fa-fw fa-eye text-primary"></i>
-              </button>
-              <button class="btn text-primary p-2" *ngIf="item.canEdit()" [disabled]="!item.hasId()"
-                  (click)="edit(item)" [itTooltip]="'edit' | translate">
-                  <i class="fa fa-fw fa-edit text-primary"></i>
-              </button>
-              <button class="btn text-danger p-2" *ngIf="item.canDelete()" [disabled]="!item.hasId()"
-                  (click)="delete(item)" [itTooltip]="'delete' | translate">
-                  <i class="fa fa-fw fa-trash text-danger"></i>
-              </button>
-            </div>
-          </a>
+        </div>
+        <div class="doc-actions" role="group" [attr.aria-label]="'actions' | translate">
+          <button type="button" class="doc-action" [disabled]="!item.hasId()"
+              (click)="openModalWithComponent(item)" [itTooltip]="'show' | translate" [attr.aria-label]="'show' | translate">
+            <svg class="icon icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-password-visible"></use></svg>
+          </button>
+          <button type="button" class="doc-action" *ngIf="item.canEdit()" [disabled]="!item.hasId()"
+              (click)="edit(item)" [itTooltip]="'edit' | translate" [attr.aria-label]="'edit' | translate">
+            <svg class="icon icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-pencil"></use></svg>
+          </button>
+          <button type="button" class="doc-action doc-action-danger" *ngIf="item.canDelete()" [disabled]="!item.hasId()"
+              (click)="delete(item)" [itTooltip]="'delete' | translate" [attr.aria-label]="'delete' | translate">
+            <svg class="icon icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-delete"></use></svg>
+          </button>
         </div>
     </div>
     `,
-  styles:
-      [
-        '.ddd { display: none; }',
-        '.row:hover .ddd, .row:active .ddd, .row:focus .ddd { display: block; }',
-      ]
+  styles: [`
+    .doc-row { display: flex; align-items: center; gap: 1rem; padding: .85rem 0; }
+    .doc-content { flex: 1; min-width: 0; }
+    .doc-actions { display: flex; gap: .25rem; flex-shrink: 0; }
+    .doc-action { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem;
+      border: 0; border-radius: 6px; background: transparent; }
+    .doc-action .icon { fill: #5d7083; }
+    .doc-action:hover:not(:disabled), .doc-action:focus-visible { background: #e6f0fa; }
+    .doc-action:hover:not(:disabled) .icon, .doc-action:focus-visible .icon { fill: #0066cc; }
+    .doc-action-danger:hover:not(:disabled), .doc-action-danger:focus-visible { background: #fdecee; }
+    .doc-action-danger:hover:not(:disabled) .icon, .doc-action-danger:focus-visible .icon { fill: #d9364f; }
+    .doc-action:disabled { opacity: .4; }
+  `]
 })
 export class ListItemDocumentComponent {
 

@@ -14,18 +14,18 @@
   "D:jconon_commissione:metadata": "Inserimento Commissario",
   "F:jconon_call:folder": "Tutti i Bandi",
   "F:jconon_call_tind:folder": "Tempo Indeterminato",
-  "F:jconon_call_tind:folder_concorsi_pubblici":"Concorsi Pubblici",
-  "F:jconon_call_tind:folder_reclutamento_speciale":"Reclutamento Speciale",
-  "F:jconon_call_tind:folder_categorie_protette":"Categorie Protette",
-  "F:jconon_call_tdet:folder":"Tempo Determinato",
-  "F:jconon_call_bstd:folder":"Borse di Studio",
-  "F:jconon_call_aric:folder":"Assegni di Ricerca",
-  "F:jconon_call_mobility:folder":"Mobilità",
-  "F:jconon_call_mobility_open:folder":"Mobilità aperta",
-  "F:jconon_call_director:folder":"Direttori",
-  "F:jconon_call_tind:folder_tirocini_categorie_protette":"Tirocini - Categorie Protette",
-  "F:jconon_call_tind:manifestazione_interesse":"Manifestazione di Interesse",
-  "F:jconon_call_employees:folder":"Selezioni per dipendenti CNR/Candidature",
+  "F:jconon_call_tind:folder_concorsi_pubblici": "Concorsi Pubblici",
+  "F:jconon_call_tind:folder_reclutamento_speciale": "Reclutamento Speciale",
+  "F:jconon_call_tind:folder_categorie_protette": "Categorie Protette",
+  "F:jconon_call_tdet:folder": "Tempo Determinato",
+  "F:jconon_call_bstd:folder": "Borse di Studio",
+  "F:jconon_call_aric:folder": "Assegni di Ricerca",
+  "F:jconon_call_mobility:folder": "Mobilità",
+  "F:jconon_call_mobility_open:folder": "Mobilità aperta",
+  "F:jconon_call_director:folder": "Direttori",
+  "F:jconon_call_tind:folder_tirocini_categorie_protette": "Tirocini - Categorie Protette",
+  "F:jconon_call_tind:manifestazione_interesse": "Manifestazione di Interesse",
+  "F:jconon_call_employees:folder": "Selezioni per dipendenti CNR/Candidature",
   "D:jconon_attachment:call_it": "Bando di concorso",
   "D:jconon_attachment:call_en": "Bando di concorso in inglese",
   "D:jconon_attachment:call_commission": "Commissione",
@@ -37,10 +37,9 @@
   "D:jconon_esclusione:attachment": "Provvedimento di Esclusione",
   "D:jconon_convocazione:attachment": "Convocazione",
   "D:jconon_rinuncia:attachment": "Rinuncia",
-
   "affix_tabAnagrafica": "Dati Anagrafici",
   "affix_tabResidenza": "Dati Residenza",
-  "affix_tabDichiarazioni":  "Dichiarazioni",
+  "affix_tabDichiarazioni": "Dichiarazioni",
   "affix_tabDatiCNR": "Dati CNR",
   "affix_tabUlterioriDati": "Ulteriori Dati",
   "affix_tabAllegatiVari": "Alegati Vari",
@@ -52,7 +51,6 @@
   "affix_tabElencoProdotti": "B) Elenco prodotti",
   "affix_tabProdottiScelti": "C) Prodotti Scelti",
   "affix_tabSchedaAnonima": "Scheda Anonima Sintetica",
-
   "affix_tabCallDetail": "Sezione I - Dettagli Bando",
   "affix_tabCallSettings": "Sezione II - Impostazioni",
   "affix_tabCallAspirantDetail": "Sezione III - Dettagli Candidato",
@@ -60,9 +58,7 @@
   "affix_tabCallAccountable": "Sezione Responsabili",
   "affix_tabCallHelpDesk": "Sezione HelpDesk",
   "affix_tabCallAttachments": "Sezione Allegati",
-
   "presents": "Sono presenti",
-
   "utenti": "Utenti",
   "utente": "Utente",
   "utente.create": "Nuovo Utente",
@@ -71,12 +67,10 @@
   "utente.list": "Utenti",
   "utente.create.info": "Creazione di un nuovo ",
   "utente.edit.info": "Modifica utente ",
-
   "M": "Uomo",
   "F": "Donna",
   "true": "Si",
   "false": "No",
-
   "close": "Chiudi",
   "cancel": "Annulla",
   "save": "Salva",
@@ -90,8 +84,8 @@
   "show": "Visualizza",
   "attach": "Allegati",
   "attach_to": "Allegati a {{value}}",
-  "more.actions" : "Altre opzioni..",
-  "properties" : "Proprietà",
+  "more.actions": "Altre opzioni..",
+  "properties": "Proprietà",
   "required": "Obbligatorio",
   "UniqueValidator": "Deve essere unico",
   "minlength": "Lunghezza minima non raggiunta",
@@ -161,13 +155,13 @@
         "section_not_confirmed": "Confermare prima le sezioni precedenti"
       }
     },
-    "form.invalid" : "Corregere gli errori, per proseguire.",
+    "form.invalid": "Corregere gli errori, per proseguire.",
     "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>",
     "error": {
       "caller": "Il testo contiene caratteri o istruzioni non consentiti",
-      "domanda.inviata.accesso" : "La domanda per il bando selezionato risulta inviata. Per visualizzarla accedere alla sezione <a href=\"my-applications\">Le mie domande</a>",
+      "domanda.inviata.accesso": "La domanda per il bando selezionato risulta inviata. Per visualizzarla accedere alla sezione <a href=\"my-applications\">Le mie domande</a>",
       "contentalredyexist": "Il file <b>{{filename}}</b> è già presente!",
-      "maxuploadfilesize":"Il file <b>{{readableFileSize}}</b> supera la dimensione massima consentita <b>{{maxFileSize}}</b>",
+      "maxuploadfilesize": "Il file <b>{{readableFileSize}}</b> supera la dimensione massima consentita <b>{{maxFileSize}}</b>",
       "bando.tipologia.employees": "La tipologia del Bando selezionato consente la presentazione di domande solo a dipendenti dell'Ente. Operazione non possibile!",
       "codice": {
         "fiscale": {
@@ -181,7 +175,7 @@
           "comune": "Codice fiscale non valido: codice comune di nascita non corretto!",
           "carattere": "Codice fiscale non valido: errato carattere di controllo!"
         }
-      }      
+      }
     },
     "document": {
       "upload": {
@@ -206,7 +200,7 @@
         "last": "E' disponibile la stampa versione <b class=\"badge bg-primary h6\">{{versionLabel}}</b> eseguita il <b>{{lastModificationDate}}</b>",
         "new": "La stampa richiesta sarà accodata e, al termine della sua esecuzione, il sistema invierà una e-mail con la stampa allegata."
       }
-    }  
+    }
   },
   "placeholder": {
     "select": {
@@ -228,7 +222,7 @@
   },
   "protocollo": {
     "data": "Data Protocollo",
-    "numero": "Numero Protocollo" 
+    "numero": "Numero Protocollo"
   },
   "contacts": {
     "title": "Contatti",
@@ -238,10 +232,10 @@
     "fax": "fax: <a class=\"d-inline-block\" href=\"tel:0039 06 4993 3852\">0039 06 4993 3852</a>",
     "email": "e-mail: <a class=\"d-inline-block\" href=\"mailto:concorsi@cnr.it\">concorsi@cnr.it</a>",
     "pec": "PEC: <a class=\"d-inline-block\" href=\"mailto:concorsi@pec.cnr.it\">concorsi@pec.cnr.it</a>",
-    "helpdesk" : {
+    "helpdesk": {
       "info": "Per ricevere assistenza a problemi tecnici/informatici o normativi utilizzare il servizio",
       "name": "HelpDesk",
-      "alert":"Si consiglia vivamente di procedere alla compilazione e all'invio della domanda online evitando i giorni immediatamente precedenti la scadenza del termine previsto dal bando, per non incorrere in possibili inconvenienti derivanti da un eventuale sovraccarico del sistema e per usufruire del supporto di Help Desk in tempo utile."
+      "alert": "Si consiglia vivamente di procedere alla compilazione e all'invio della domanda online evitando i giorni immediatamente precedenti la scadenza del termine previsto dal bando, per non incorrere in possibili inconvenienti derivanti da un eventuale sovraccarico del sistema e per usufruire del supporto di Help Desk in tempo utile."
     }
   },
   "faq": {
@@ -419,8 +413,21 @@
     "error": "File non disponibile",
     "error_info": "Il file potrebbe essere già stato scaricato (è disponibile una sola volta) oppure il link non è valido per l'utente con cui hai effettuato l'accesso."
   },
-  "export_applications": {"title": "Estrazione Excel delle domande filtrate", "info": "Le estrazioni usano i filtri impostati nell'elenco delle domande. Al termine dell'elaborazione riceverai per email il link per scaricare il file."},
+  "export_applications": {
+    "title": "Estrazione Excel delle domande filtrate",
+    "info": "Le estrazioni usano i filtri impostati nell'elenco delle domande. Al termine dell'elaborazione riceverai per email il link per scaricare il file."
+  },
   "layout": {
+    "mega": {
+      "new_call": "Nuovo bando",
+      "no_calls": "Non hai ancora creato bandi: scegli a destra la tipologia del nuovo bando.",
+      "manager": "Gestore",
+      "manager_info": "I bandi che hai creato, dal più recente. Apri un bando per modificarlo, pubblicarlo o gestirne commissione, comunicazioni ed esportazioni.",
+      "all_calls": "Cerca tra tutti i bandi",
+      "commission": "Commissioni",
+      "commission_info": "I bandi per i quali fai parte della commissione: apri il bando per consultare le domande dei candidati.",
+      "commission_gender": "Composizione per genere delle commissioni"
+    },
     "search_subtitle": "Ricerca avanzata dei bandi per codice, stato, tipologia, scadenza, Gazzetta Ufficiale e contenuto.",
     "date_from": "Dal",
     "date_to": "Al",
@@ -432,7 +439,16 @@
     "sort_by": "Ordina per",
     "sort_asc": "Crescente",
     "sort_desc": "Decrescente",
-    "sort": {"deadline": "Scadenza", "start": "Data di apertura", "gazette": "Gazzetta Ufficiale", "code": "Codice bando", "created": "Data di creazione", "modified": "Ultima modifica", "surname": "Cognome", "sent": "Data di invio"},
+    "sort": {
+      "deadline": "Scadenza",
+      "start": "Data di apertura",
+      "gazette": "Gazzetta Ufficiale",
+      "code": "Codice bando",
+      "created": "Data di creazione",
+      "modified": "Ultima modifica",
+      "surname": "Cognome",
+      "sent": "Data di invio"
+    },
     "prorogation": "Proroga/Riapertura",
     "prorogation_judgment": "Riapertura giudiziale",
     "prorogation_deadline": "nuova scadenza",
@@ -498,13 +514,33 @@
     "list_of": "di",
     "list_items": "elementi",
     "load_more": "Carica altri",
-    "list_end": "Fine dell'elenco"
+    "list_end": "Fine dell'elenco",
+    "attachments": {
+      "title": "Allegati",
+      "subtitle": "Bando e documenti pubblicati: proroghe, rettifiche, convocazioni, graduatorie e altri atti.",
+      "none": "Nessun documento allegato al bando.",
+      "protocol": "Prot. n. {{value}}",
+      "protocol_date": "del",
+      "signed": "Firmato digitalmente",
+      "version": "Versione"
+    },
+    "at_time": "alle ore",
+    "call_deadline": "Scadenza"
   },
   "call_manage": {
     "edit_title": "Modifica bando",
     "view_detail": "Dettaglio",
     "actions": "Azioni",
-    "block": { "application_structure": "Struttura della domanda", "options": "Opzioni", "reminder_payment": "Sollecito, pagamento e blocco dell'invio","identification": "Identificazione", "texts": "Testi del bando", "place": "Sede e struttura", "requirements": "Requisiti", "period": "Periodo di presentazione delle domande"},
+    "block": {
+      "application_structure": "Struttura della domanda",
+      "options": "Opzioni",
+      "reminder_payment": "Sollecito, pagamento e blocco dell'invio",
+      "identification": "Identificazione",
+      "texts": "Testi del bando",
+      "place": "Sede e struttura",
+      "requirements": "Requisiti",
+      "period": "Periodo di presentazione delle domande"
+    },
     "panel_title": "Gestione del bando",
     "saved": "Operazione eseguita",
     "publish": "Pubblica",
@@ -535,7 +571,14 @@
     "attachments": {
       "link_children": "Collega ai bandi figli",
       "copy_children": "Copia nei bandi figli",
-      "done": "Operazione eseguita su {{value}} bandi figli"
+      "done": "Operazione eseguita su {{value}} bandi figli",
+      "add": "Aggiungi allegato",
+      "search": "Cerca tipologia di allegato",
+      "with_documents": "Con documenti",
+      "all_types": "Tutte le tipologie",
+      "summary": "{{documents}} documenti caricati in {{types}} tipologie.",
+      "none": "Nessun documento caricato: usa «Aggiungi allegato» o mostra tutte le tipologie.",
+      "choose": "Scegli la tipologia di allegato"
     },
     "score": {
       "info": "Indicare l'etichetta di ogni voce di punteggio e, se previsti, il punteggio minimo e il limite massimo.",
@@ -611,6 +654,12 @@
       "done": "L'autorizzazione relativa alla parità di genere è stata correttamente registrata.",
       "disabled": "La visione del video non è richiesta.",
       "player_error": "Non è stato possibile collegarsi al player: verificare che il browser consenta gli script di PeerTube e ricaricare la pagina."
+    },
+    "dates": {
+      "effective": "Data effettiva:",
+      "extended": "prorogata",
+      "published_info": "Il bando è pubblicato: le date iniziali non sono modificabili. Le date effettive si aggiornano con i provvedimenti di proroga o riapertura.",
+      "extended_to": "Prorogata al"
     }
   },
   "admin": {
@@ -735,7 +784,7 @@
       "clear": "Pulisci output"
     }
   },
-  "home" : {
+  "home": {
     "title": "Selezioni online CNR",
     "subtitle": "Sistema di presentazione delle candidature online per il reclutamento del personale dipendente e degli altri rapporti di lavoro e formazione del Consiglio Nazionale delle Ricerche."
   },
@@ -757,8 +806,21 @@
   },
   "signin": {
     "sso": "Entra SSO/SPID/CIE",
-    "spid": {"info": "SPID, il Sistema Pubblico di Identità Digitale, è il sistema di accesso che consente di utilizzare, con un'identità digitale unica, i servizi online della Pubblica Amministrazione e dei privati accreditati. Se sei già in possesso di un'identità digitale, accedi con le credenziali del tuo gestore. Se non hai ancora un'identità digitale, richiedila ad uno dei gestori.", "more": "Maggiori informazioni", "request": "Non hai SPID?", "help": "Serve aiuto?"},
-    "recover": {"button": "Recupera password", "help": "Per nome utente o password dimenticati utilizzare il bottone di recupero password che richiede l'indirizzo e-mail indicato nella registrazione al sito. Sarà inviata un'email che consentirà di reimpostare la password.", "email": "Indirizzo e-mail indicato nella registrazione", "send": "Invia", "sent": "Ti abbiamo inviato un'email per reimpostare la password.", "not_found": "Nessun utente registrato con questo indirizzo e-mail.", "error": "Non è stato possibile avviare il recupero della password."},
+    "spid": {
+      "info": "SPID, il Sistema Pubblico di Identità Digitale, è il sistema di accesso che consente di utilizzare, con un'identità digitale unica, i servizi online della Pubblica Amministrazione e dei privati accreditati. Se sei già in possesso di un'identità digitale, accedi con le credenziali del tuo gestore. Se non hai ancora un'identità digitale, richiedila ad uno dei gestori.",
+      "more": "Maggiori informazioni",
+      "request": "Non hai SPID?",
+      "help": "Serve aiuto?"
+    },
+    "recover": {
+      "button": "Recupera password",
+      "help": "Per nome utente o password dimenticati utilizzare il bottone di recupero password che richiede l'indirizzo e-mail indicato nella registrazione al sito. Sarà inviata un'email che consentirà di reimpostare la password.",
+      "email": "Indirizzo e-mail indicato nella registrazione",
+      "send": "Invia",
+      "sent": "Ti abbiamo inviato un'email per reimpostare la password.",
+      "not_found": "Nessun utente registrato con questo indirizzo e-mail.",
+      "error": "Non è stato possibile avviare il recupero della password."
+    },
     "oidc_error": "Accesso con le credenziali istituzionali non riuscito. Riprova o contatta l'assistenza.",
     "oidc_loading": "Accesso in corso...",
     "title": "Accedi",
@@ -766,15 +828,15 @@
     "concorsi": "Per partecipare alle selezioni online del Consiglio Nazionale delle Ricerche occorre accedere all'area utenti inserendo Nome utente e password scelti in fase di registrazione al sito.",
     "registration": "Si ricorda che, qualora si avesse già partecipato ad una precedente selezione sempre su questo sito, non é necessario ripetere la registrazione.",
     "altri": "Per registrarsi utilizzare il link",
-    "new_registration": "Nuova registrazione", 
-    "manuale":"Per maggiori informazioni consultare il capitolo \"Accesso / registrazione in procedura\" del Manuale Utente.",
-    "helpdesk":"Per ricevere assistenza utilizzare il servizio di",
+    "new_registration": "Nuova registrazione",
+    "manuale": "Per maggiori informazioni consultare il capitolo \"Accesso / registrazione in procedura\" del Manuale Utente.",
+    "helpdesk": "Per ricevere assistenza utilizzare il servizio di",
     "candidaticnr": "I dipendenti CNR e tutti i candidati già in possesso delle credenziali ufficiali CNR dovranno utilizzarle per l'accesso alla procedura senza necessità di ulteriori registrazioni.<br>Per la gestione delle credenziali ufficiali CNR utilizzare il sito <a href=\"https://utenti.cnr.it\">https://utenti.cnr.it</a>",
     "username": "Nome utente",
     "password": "Password",
     "showpassword": "Visualizza password",
-    "message" : {
-      "required" : {
+    "message": {
+      "required": {
         "username": "Nome utente obbligatorio!",
         "password": "Password obbligatoria!"
       }
@@ -801,7 +863,7 @@
     "filter_for_code": "Filtra per tipologia",
     "remove_filter_for_code": "Rimuovi filtro per la tipologia",
     "manage": "Configura nuovo Bando",
-    "search" : {
+    "search": {
       "title": "Filtra la tua ricerca dei Bandi",
       "code": "Codice bando",
       "type": "Tipologia bando",
@@ -827,7 +889,10 @@
     }
   },
   "application": {
-    "preview": {"title": "Anteprima della domanda", "info": "così la vedranno i candidati; i dati inseriti non vengono salvati."},
+    "preview": {
+      "title": "Anteprima della domanda",
+      "info": "così la vedranno i candidati; i dati inseriti non vengono salvati."
+    },
     "download_zip": "Scarica la domanda (zip)",
     "title": "DOMANDA DI PARTECIPAZIONE",
     "all": "Domande presentate",
@@ -853,7 +918,7 @@
     "send": "Invia domanda",
     "delete": "Cancella domanda",
     "print": {
-      "application" : "Stampa domanda",
+      "application": "Stampa domanda",
       "download": "Scarica",
       "new": "Nuova",
       "old": "Storico",
@@ -930,7 +995,7 @@
       "foreign": "Straniera"
     },
     "new_registration": {
-      "title" : "Nuova Registrazione",
+      "title": "Nuova Registrazione",
       "button": "Conferma registrazione",
       "requisiti": "<p>La nuova registrazione richiede, per utenti di nazionalità italiana, nome, cognome, il nome utente e la password, il codice fiscale e un indirizzo e-mail (esclusivamente NON PEC); per utenti di nazionalità estera, invece del codice fiscale, viene richiesto di inserire sesso, data di nascita e stato estero.</p><p>All'indirizzo mail indicato in fase di registrazione verrà inviata una mail automatica con un link da \"cliccare\" <u>entro un'ora dalla ricezione</u> per completare l'attivazione dell'utenza. Trascorsa un'ora dalla ricezione l’utenza viene eliminata, pertanto occorre ripetere ex novo la procedura di registrazione.</p><p>Cliccando sul link Attivazione utenza contenuto nella mail si completa la registrazione e viene presentata la pagina per l'accesso in procedura.<br>Dopo aver effettuato l'accesso alla procedura, viene attivato un nuovo menù con il proprio nominativo attraverso il quale é possibile visualizzare e/o modificare le proprie impostazioni personali ed é possibile disconnettersi dall'applicazione.</p>"
     },
@@ -941,14 +1006,14 @@
     "female": "Femmina",
     "dataDiNascita": "Data di Nascita",
     "statoestero": "Stato Estero",
-    "information":{
+    "information": {
       "title": "Informazioni account",
       "detail": "Le informazioni personali possono essere variate in qualsiasi momento, se l'utenza non proviene da un account SPID o dal sistema centralizzato delle utenze del CNR. La variazione delle informazioni non si riflette sulle domande già inviate o in stato provvisorio, in tal caso una variazione dei dati anagrafici va comunicata tempestivamente aprendo una segnalazione",
       "change.password": {
         "title": "Se si desidera invece cambiare la password basta attivare il seguente link: ",
         "link": "Cambia password"
       }
-    } 
+    }
   },
   "document": {
     "last_modified": ", ultima modifica: {{value}}",
@@ -959,7 +1024,10 @@
     }
   },
   "label": {
-    "option": {"yes": "Si", "no": "No"},
+    "option": {
+      "yes": "Si",
+      "no": "No"
+    },
     "jconon_call": {
       "group_multiple_application": "Gruppo bandi con domanda multipla",
       "elenco_sezioni_domanda": "Sezioni della domanda",
@@ -993,7 +1061,7 @@
       "descrizione_ridotta": "Descrizione ridotta Bando",
       "descrizione_ridotta_en": "Descrizione ridotta Bando (Inglese)",
       "aspect_macro_call": "Bando multiplo",
-      "numero_max_domande":"Numero massimo di domande",
+      "numero_max_domande": "Numero massimo di domande",
       "english_call_toggle": "Predisposizione Bando (Inglese)",
       "profilo": "Profilo",
       "profilo_placeholder": "@:placeholder.select.generic",
@@ -1058,14 +1126,14 @@
       "comune_liste_elettorali": "Comune",
       "provincia_liste_elettorali": "Provincia",
       "fl_dichiarazione_sanzioni_penali": "Il sottoscritto consapevole delle sanzioni penali previste dall'art. 76 del D.P.R. n.445/2000 nel caso di dichiarazioni mendaci e di falsità negli atti ed a conoscenza che i dati forniti con autocertificazione saranno soggetti ad eventuale controllo da parte dell’Amministrazione, ai sensi degli articoli 46 e 47 del D.P.R. n.445/2000, DICHIARA che le notizie fornite con la presente domanda e quanto dichiarato nell’allegato curriculum vitae e professionale, comprensivo delle informazioni sulla produzione scientifica, corrispondono a verità.",
-      "fl_dichiarazione_dati_personali" : "Il sottoscritto prende atto, ai sensi dell'art. 13 della Legge n.196/2003 sul trattamento dei dati personali, che i dati contenuti nella presente autocertificazione verranno trattati prevalentemente con procedure informatizzate e potranno essere forniti ad altri organismi pubblici per il raggiungimento delle rispettive finalità istituzionali.",  
+      "fl_dichiarazione_dati_personali": "Il sottoscritto prende atto, ai sensi dell'art. 13 della Legge n.196/2003 sul trattamento dei dati personali, che i dati contenuti nella presente autocertificazione verranno trattati prevalentemente con procedure informatizzate e potranno essere forniti ad altri organismi pubblici per il raggiungimento delle rispettive finalità istituzionali.",
       "motivazione_no_iscrizione_liste_elettorali": "Motivo di non iscrizione o cancellazione",
       "fl_godimento_diritti": "di godere dei diritti civili e politici nello Stato di appartenenza o di provenienza",
       "motivazione_no_godimento_diritti": "Motivo di non godimento dei diritti civili e politici",
       "fl_condanne_penali": "di non aver riportato condanne penali, né avere procedimenti penali in corso, anche all'estero",
       "estremi_sentenze_penali": "Indicare le eventuali condanne penali riportate, gli estremi delle relative sentenze (anche nei casi in cui sia stata concessa la non menzione nei certificati rilasciati dal casellario giudiziale a richiesta di privati ovvero siano intervenuti amnistia, indulto, grazia, perdono giudiziale o riabilitazione) e i procedimenti penali eventualmente pendenti:",
-      "fl_decaduto_altro_impiego":"di non essere stato dichiarato decaduto da un impiego statale ai sensi dell'art.127 lettera d) del D.P.R. 10.01.1957, n.3",
-      "motivazione_decaduto_altro_impiego":"Motivo di avvenuta risoluzione",
+      "fl_decaduto_altro_impiego": "di non essere stato dichiarato decaduto da un impiego statale ai sensi dell'art.127 lettera d) del D.P.R. 10.01.1957, n.3",
+      "motivazione_decaduto_altro_impiego": "Motivo di avvenuta risoluzione",
       "fl_destituito_altro_impiego": "di non essere stato destituito dall'impiego presso una pubblica amministrazione per persistente insufficiente rendimento",
       "motivazione_destituito_altro_impiego": "Motivo di avvenuta risoluzione",
       "fl_servizioCNR": "di essere in servizio presso il Consiglio Nazionale delle Ricerche",
@@ -1131,7 +1199,7 @@
       "cittadinanza_stato_estero_placeholder": "@:placeholder.select.country",
       "fl_categorie_riservatarie_art1": "di appartenere ad una delle categorie riservatarie di cui all'articolo 1 della Legge 68/99",
       "categorie_riservatarie_percentuale": "Con una percentuale di invalidità pari al",
-      "fl_categorie_riservatarie_art18":"di appartenere ad una delle categorie riservatarie di cui all'articolo 18 della Legge 68/99",
+      "fl_categorie_riservatarie_art18": "di appartenere ad una delle categorie riservatarie di cui all'articolo 18 della Legge 68/99",
       "categorie_riservatarie_codice": "Categoria",
       "fl_lista_disoccupazione_art1": "di essere iscritto nelle liste di disoccupazione riservata agli appartenenti alle categorie di cui all'art. 1 della legge 68/99",
       "fl_lista_disoccupazione_art18": "di essere iscritto nelle liste di disoccupazione riservata agli appartenenti alle categorie di cui all'art. 18 della legge 68/99",
@@ -1244,11 +1312,883 @@
       "fl_dichiarazione_3": "Dichiarazione obbligatoria 3",
       "fl_dichiarazione_4": "Dichiarazione obbligatoria 4"
     },
-    "jconon_documento_riconoscimento" : {
-        "tipologia": "Tipologia",
-        "numero": "Numero",
-        "data_scadenza": "Data Scadenza",
-        "emittente": "Rilasciato da"
-    }
-  }
+    "jconon_documento_riconoscimento": {
+      "tipologia": "Tipologia",
+      "numero": "Numero",
+      "data_scadenza": "Data Scadenza",
+      "emittente": "Rilasciato da"
+    },
+    "yes": "Si",
+    "no": "No",
+    "count": {
+      "no": {
+        "document": "Nessun documento trovato",
+        "prodotti": "Nessun prodotto trovato.",
+        "curriculum": "Nessun riga trovata.",
+        "commission": "Nessun commissario presente!"
+      },
+      "all": {
+        "document": "{0} concorsi disponibili"
+      },
+      "document": "Trovati {0} documenti"
+    },
+    "accordion": {
+      "section": "Sezione"
+    },
+    "freesearch": {
+      "header": "Ricerca",
+      "option": {
+        "and": "Tutte le condizioni sono soddisfatte",
+        "or": "Almeno una condizione é soddisfatta"
+      },
+      "placeholder": "filtra i bandi"
+    },
+    "login": "Accedi",
+    "create": {
+      "account": "Registrazione"
+    },
+    "logout": "Esci",
+    "cnrit": "CNR.it",
+    "username": "Nome utente:",
+    "lang": {
+      "italian": "it",
+      "english": "en"
+    },
+    "menu": {
+      "user": {
+        "settings": "Impostazioni Personali",
+        "panel": "Pannello utente"
+      },
+      "change": {
+        "password": "Cambia Password",
+        "user": "Cambia Utente"
+      },
+      "albo": {
+        "commissari": "Albo Commissari CNR"
+      }
+    },
+    "print": {
+      "dic": {
+        "sost": "Stampa Modulo Dichiarazioni Sostitutive da firmare e allegare"
+      },
+      "trattamento": {
+        "dati": {
+          "personali": "Stampa Modulo Trattamento Dati Personali da firmare e allegare"
+        }
+      },
+      "avviso": {
+        "pagopa": "Stampa avviso pagoPA"
+      },
+      "jconon_bando_elenco_settori_tecnologici": "SETTORI TECNOLOGICI",
+      "jconon_bando_elenco_macroaree": "MACROAREA",
+      "jconon_bando_sede": "Sede"
+    },
+    "paga": {
+      "avviso": {
+        "pagopa": "Paga avviso pagoPA"
+      }
+    },
+    "th": {
+      "jconon_bando_codice": "Codice bando",
+      "jconon_bando_numero_ud": "Gazzetta Ufficiale n. {0} del {1}",
+      "jconon_bando_data_pubblicazione_inpa": "Pubblicato sul portale inPA il {0}",
+      "jconon_bando_data_scadenza": "Scadenza",
+      "jconon_bando_proroga_riapertura": "Proroga/Riapertura",
+      "jconon_bando_proroga_riapertura_giudiziale": "Riapertura nominativa in esecuzione di atto giudiziale",
+      "jconon_bando_data_inizio_invio_domande": "Pubblicato il",
+      "jconon_bando_data_scadenza_expired": "Scaduto il",
+      "jconon_bando_tipo_contratto": "Area scientifica",
+      "jconon_bando_struttura_richiedente": "Sede",
+      "jconon_bando_elenco_titoli_studio": "Requisiti",
+      "jconon_bando_numero_posti": "N. posti",
+      "jconon_bando_num_max_domande": "N. massimo di domande",
+      "jconon_bando_profilo": "Profilo",
+      "jconon_bando_elenco_macroaree": "MACROAREA",
+      "jconon_bando_elenco_settori_tecnologici": "Settore Tecnologico",
+      "jconon_bando_struttura_di_riferimento": "Struttura di riferimento",
+      "jconon_bando_struttura_destinataria": "Sede di Lavoro",
+      "jconon_bando_descrizione_ad_smr": "Ambito Disciplinare/Settore per il Management della Ricerca"
+    },
+    "jconon_documento_riconoscimento_tipologia": "Tipologia",
+    "jconon_documento_riconosciment_numero": "Numero",
+    "jconon_documento_riconoscimento_data_scadenza": "Data Scadenza",
+    "jconon_documento_riconoscimento_emittente": "Rilasciato da",
+    "jconon_application_estremi_sanzione_disciplinare": "Indicare le eventuali sanzioni disciplinari riportate e gli estremi dei relativi provvedimenti:",
+    "jconon_application_fl_specializzazione": "di aver conseguito il seguente titolo di studio (o titolo estero equivalente)",
+    "jconon_application_tipo_specializzazione": "Tipologia",
+    "jconon_application_data_specializzazione": "Data conseguimento",
+    "jconon_application_istituto_specializzazione": "Istituto",
+    "jconon_application_fl_nulla_osta": "di essere in possesso del NULLA OSTA rilasciato dall'ente di appartenenza",
+    "jconon_application_protocollo_nulla_osta": "Protocollo",
+    "jconon_application_data_nulla_osta": "Data",
+    "jconon_application_ente_appartenenza": "Ente di appartenenza",
+    "jconon_application_comune_ente_appartenenza": "Comune",
+    "jconon_application_anzianita_servizio": "Anzianità di servizio dal:",
+    "jconon_application_anzianita_profilo": "Anzianità di profilo dal:",
+    "jconon_application_anzianita_livello": "Anzianità di livello dal:",
+    "jconon_application_fl_area_tecnica": "Area Tecnica:",
+    "jconon_application_tipo_area_tecnica": "Tipologia:",
+    "jconon_application_fl_precedente_servizio_cnr": "di aver avuto precedenti rapporti con il Consiglio Nazionale delle Ricerche:",
+    "jconon_application_profilo_precedente_servizio_cnr": "in qualita' di:",
+    "jconon_application_fl_precedente_servizio_altre_amministrazioni": "di avere avuto precedenti rapporti con altre amministrazioni pubbliche:",
+    "jconon_application_profilo_precedente_servizio_altre_amministrazioni": "in qualita' di:",
+    "jconon_application_comparto_ricerca_appartenenza": "di essere dipendente a tempo indeterminato presso il seguente Ente pubblico del Comparto Ricerca",
+    "jconon_application_ente_comparto_ricerca_appartenenza": "Ente di appartenenza:",
+    "jconon_application_comune_ente_comparto_ricerca_appartenenza": "Sede di servizio:",
+    "jconon_application_comparto_universita_appartenenza": "di essere dipendente a tempo indeterminato presso la seguente Università:",
+    "jconon_application_ente_comparto_universita_appartenenza": "Descrizione",
+    "jconon_application_comune_ente_comparto_universita_appartenenza": "Sede di servizio",
+    "jconon_application_anzianita_nella_categoria": "Anzianità nella categoria/area dal:",
+    "jconon_application_fl_superato_periodo_prova": "di aver superato il periodo di prova presso l'amministrazione di appartenenza",
+    "jconon_application_fl_alta_qualificazione": "di essere in possesso di alta qualificazione tecnico-scientifica nel campo della ricerca",
+    "jconon_application_fl_esperienza_gestionale": "di essere in possesso di esperienza gestionale di enti ed istituzioni pubbliche o private:",
+    "jconon_application_fl_incompatibilita": "che non sussistono cause di inconferibilità e di incompatibilità, ai sensi degli artt. 20 del D.Lgs. n. 39 del 2013 e 15 dello Statuto del CNR, di impegnarsi ad informare tempestivamente l’Amministrazione qualora si verifichino circostanze modificative della presente dichiarazione",
+    "home": {
+      "footer": "Il sistema si colloca nell'ambito del progetto e-goverment, in linea con il Codice dell'Amministrazione Digitale (art. 65 - Istanze e dichiarazioni presentate alle pubbliche amministrazioni per via telematica), il DL 27 ottobre 2009, n. 150, recante \"Attuazione della legge 4 marzo 2009, n. 15, in materia di ottimizzazione della produttivita' del lavoro pubblico e di efficienza e trasparenza delle pubbliche amministrazioni\" e il recente DL 9 febbraio 2012, n. 5 \"Disposizioni urgenti in materia di semplificazione e di sviluppo\" (art. 8 - Semplificazioni per la partecipazione a concorsi e  prove  selettive).<br>La piattaforma Selezioni online ospita procedure sviluppate per consentire la partecipazione ai bandi emessi dalle strutture dell'Ente. Le procedure sono sviluppate a partire dalle specifiche prodotte dalle strutture che emettono i bandi e devono rispondere alle regole imposte dagli stessi.",
+      "title": {
+        "h2": "Selezioni online CNR",
+        "h3": "Sistema di presentazione delle candidature online per il reclutamento del personale dipendente e degli altri rapporti di lavoro e formazione del Consiglio Nazionale delle Ricerche."
+      }
+    },
+    "jconon_bando_selezione": "BANDO DI SELEZIONE N.",
+    "call": "Bando",
+    "attivi": "Attivi",
+    "scaduti": "Scaduti",
+    "tutti": "Tutti",
+    "filter": "Filtra",
+    "h3": {
+      "call": "Bandi disponibili"
+    },
+    "jconon_application_user": "Nominativo",
+    "jconon_application_cognome": "Cognome",
+    "jconon_application_nome": "Nome",
+    "jconon_application_data_nascita": "Data di nascita",
+    "jconon_application_sesso": "Sesso",
+    "jconon_application_nazione_nascita": "Nazione di nascita",
+    "jconon_application_comune_nascita": "Luogo di nascita",
+    "jconon_application_provincia_nascita": "Prov.",
+    "jconon_application_codice_fiscale": "Codice Fiscale",
+    "jconon_application_nazione_residenza": "Nazione",
+    "jconon_application_comune_residenza": "Luogo",
+    "jconon_application_provincia_residenza": "Prov.",
+    "jconon_application_indirizzo_residenza": "Indirizzo",
+    "jconon_application_num_civico_residenza": "Num.",
+    "jconon_application_cap_residenza": "CAP",
+    "jconon_application_fl_cittadino_italiano": "Cittadinanza",
+    "jconon_application_nazionalita_italiana": "Italiana",
+    "jconon_application_nazionalita_straniera": "Straniera",
+    "jconon_application_nazione_cittadinanza": "Nazione",
+    "jconon_application_nazione_comunicazioni": "Nazione",
+    "jconon_application_comune_comunicazioni": "Luogo",
+    "jconon_application_provincia_comunicazioni": "Prov.",
+    "jconon_application_indirizzo_comunicazioni": "Indirizzo",
+    "jconon_application_num_civico_comunicazioni": "Num.",
+    "jconon_application_cap_comunicazioni": "CAP",
+    "jconon_application_email_comunicazioni": "Email",
+    "jconon_application_email_pec_comunicazioni": "Email PEC",
+    "jconon_application_telefono_comunicazioni": "Telefono",
+    "jconon_application_elenco_lingue_conosciute": "&nbsp;",
+    "jconon_application_provvedimenti_atto_interruttivo": "Estremi dei provvedimenti e durata dei periodi stessi",
+    "jconon_application_comune_liste_elettorali": "Comune",
+    "jconon_application_provincia_liste_elettorali": "Prov.",
+    "jconon_application_motivazione_no_iscrizione_liste_elettorali": "Motivo di non iscrizione o cancellazione",
+    "jconon_application_motivazione_no_godimento_diritti": "Motivo di non godimento dei diritti civili e politici",
+    "jconon_application_estremi_sentenze_penali": "Indicare le eventuali condanne penali riportate, gli estremi delle relative sentenze (anche nei casi in cui sia stata concessa la non menzione nei certificati rilasciati dal casellario giudiziale a richiesta di privati ovvero siano intervenuti amnistia, indulto, grazia, perdono giudiziale o riabilitazione) e i procedimenti penali eventualmente pendenti:",
+    "jconon_application_estremi_sentenze_penali_rapporto_lavoro": "Indicare le eventuali condanne penali riportate, gli estremi delle relative sentenze (anche nei casi in cui sia stata concessa la non menzione nei certificati rilasciati dal casellario giudiziale a richiesta di privati ovvero siano intervenuti amnistia, indulto, grazia, perdono giudiziale o riabilitazione) e i procedimenti penali eventualmente pendenti:",
+    "jconon_application_motivazione_decaduto_altro_impiego": "Motivo di avvenuta risoluzione",
+    "jconon_application_motivazione_destituito_altro_impiego": "Motivo di avvenuta risoluzione",
+    "jconon_application_struttura_cnr": "Struttura",
+    "jconon_application_titolo_servizio_cnr": "in qualità di",
+    "jconon_application_fl_direttore": "Direttore in carica/f.f.",
+    "jconon_application_struttura_altre_amministrazioni": "Denominazione P.A.",
+    "jconon_application_titolo_servizio_altre_amministrazioni": "in qualità di",
+    "jconon_application_ruolo_altra_attivita": "Ruolo",
+    "jconon_application_sede_altra_attivita": "Sede",
+    "jconon_application_motivazione_riserva_posti": "Categoria riservataria di appartenenza",
+    "jconon_application_motivazione_preferenza_posti": "Motivazione preferenza posti",
+    "jconon_application_tipo_diploma": "Tipologia",
+    "jconon_application_data_diploma": "Data Conseguimento",
+    "jconon_application_punteggio_diploma": "Punteggio",
+    "jconon_application_istituto_diploma": "Istituto",
+    "jconon_application_tipo_laurea": "Tipologia",
+    "jconon_application_data_laurea": "Data Conseguimento",
+    "jconon_application_punteggio_laurea": "Punteggio",
+    "jconon_application_istituto_laurea": "Università",
+    "jconon_application_fl_laurea_equipollente": "Equipollente e/o Equivalente",
+    "jconon_application_fl_laurea_equipollente_true": "Equipollente e/o Equivalente",
+    "jconon_application_fl_laurea_equipollente_false": "dichiaro che qualora risultassi tra i candidati vincitori presenterò, al Ministero dell’Università e della Ricerca, istanza di riconoscimento (equipollenza e/o equivalenza) del titolo di studio estero entro 15 giorni dalla pubblicazione della graduatoria finale, comunicando gli estremi della relativa richiesta al Responsabile del Procedimento entro 5 giorni successivi alla presentazione dell’istanza",
+    "jconon_application_tipo_dottorato": "Tipologia",
+    "jconon_application_data_dottorato": "Data Conseguimento",
+    "jconon_application_punteggio_dottorato": "Punteggio",
+    "jconon_application_istituto_dottorato": "Università",
+    "jconon_application_tempi_aggiuntivi_diversamente_abile": "Tempi aggiuntivi",
+    "jconon_application_ausili_diversamente_abile": "Ausili necessari",
+    "jconon_application_tempi_aggiuntivi_dsa": "Tempi aggiuntivi",
+    "jconon_application_ausili_dsa": "Ausili necessari",
+    "jconon_application_descrizione_altre_borse_studio": "Descrizione altre borse di studio",
+    "tab": {
+      "curriculum": "Curriculum",
+      "documento": {
+        "riconoscimento": "Documento Riconoscimento"
+      },
+      "conferma": "Invia Domanda",
+      "riapri": "Riapri Domanda"
+    },
+    "jconon_tesi_laurea_titolo": "Titolo",
+    "jconon_tesi_laurea_materia": "Materia",
+    "jconon_tesi_laurea_relatore": "Relatore",
+    "jconon_allegato_generico_descrizione": "Descrizione Breve",
+    "jconon_nulla_osta_altro_ente_numero_protocollo": "Numero Protocollo",
+    "jconon_nulla_osta_altro_ente_data": "Data",
+    "jconon_application_data_domanda": "Data Invio<BR>Domanda",
+    "jconon_application_stato_domanda": "Stato<BR>Domanda",
+    "jconon_application_recovered": "Inserita d'ufficio",
+    "jconon_relazione_attivita_svolta_motivazione_scheda_assente": "Motivazione mancata trasmissione del Modello Verifica Attivita'",
+    "jconon_pagamenti_diritti_segreteria_estremi_pagamento": "Estremi pagamento",
+    "jconon_pubblicazione_descrizione": "Descrizione",
+    "prodotti": {
+      "visualizzati": "n. {0} prodotti"
+    },
+    "righe": {
+      "visualizzate": "n. {0} righe"
+    },
+    "istruzioni": {
+      "convocazione": "Compilare tutti i dati per generare le convocazioni, saranno generate le convocazioni per tutte le domande attive relative al Bando <b>{0}</b>",
+      "esclusione": "Compilare tutti i dati per generare le esclusioni, saranno generate le esclusioni per tutte le domande attive e con almeno una \"non ammissione\" relative al Bando <b>{0}</b>",
+      "comunicazione": "Compilare tutti i dati per generare le comunicazioni, saranno generate le comunicazioni per tutte le domande attive relative al Bando <b>{0}</b>",
+      "aggiungi-allegato": "Compilare tutti i dati per allegare un file alle domande relative al Bando <b>{0}</b>",
+      "helpdesk": "Compilare tutti i dati per inviare una segnalazione helpdesk. Sar&#224; inviata una mail di conferma in cui ci sar&#224; un link da attivare per sottoporre la segnalazione all&#39;esperto di turno. La mancata conferma non consentir&#224; la lettura della Sua segnalazione da parte degli esperti.",
+      "reopen": {
+        "helpdesk": "Compilare la mappa per risottoporre la segnalazione all&#39;attenzione dell&#39;esperto di turno."
+      }
+    },
+    "comunicazioni": {
+      "application": "Domande"
+    },
+    "title": {
+      "confirm": {
+        "message": "CONFERMA RICEZIONE"
+      },
+      "h2": "Ufficio Concorsi - DCSGR - CNR",
+      "h3": {
+        "1": "Per ricevere assistenza a problemi tecnici/informatici o normativi utilizzare il servizio",
+        "2": "HelpDesk"
+      }
+    },
+    "jconon_call_codice": "Codice bando",
+    "jconon_call_da_data": "scadenza",
+    "pec": {
+      "email": "Inserire indirizzo PEC di trasmissione",
+      "password": "Password della PEC di trasmissione"
+    },
+    "jconon_commissione": {
+      "ruolo_A_PRE": "Presidente",
+      "ruolo_B_COM": "Componente",
+      "ruolo_C_SEG": "Segretario",
+      "ruolo_D_SUP": "Supplente",
+      "ruolo_E_DIM": "Dimissionario",
+      "ruolo_notfound": "Ruolo non definito",
+      "sesso_M": "Maschio",
+      "sesso_F": "Femmina"
+    },
+    "registrazione": {
+      "utentecnr": "<b>La registrazione non è necessaria per tutti quelli in possesso delle credenziali ufficiali del CNR</b>"
+    },
+    "jconon_call_selected_products_after_commission": "Pubblicazione criteri di valutazione dei titoli",
+    "jconon_call_selected_products_only_list": "Solo elenco Titoli",
+    "jconon_call_selected_products_start_date": "Data inizio sottomissione dei titoli",
+    "jconon_call_selected_products_end_date": "Data fine sottomissione dei titoli",
+    "jconon_call_selected_products_users": "Utenti abilitati (lasciare vuoto per tutti)",
+    "button": {
+      "presenta": {
+        "domanda": "Presenta domanda"
+      },
+      "applications": "Visualizza domande presentate",
+      "exportApplications": "Esporta domande definitive"
+    },
+    "alert": {
+      "call": {
+        "notfound": "Il bando cercato non esiste!"
+      }
+    },
+    "firmaAutomatica": "Firma Automatica",
+    "manage": {
+      "role": {
+        "url": "Assegnazione ruoli"
+      }
+    },
+    "commission-gender": {
+      "1": "Il Consiglio Nazionale delle Ricerche, nel sostenere le politiche per la parità di genere orientate alla diversità e all’inclusione, richiede a tutti i componenti e le componenti delle commissioni esaminatrici di guardare con attenzione il video “Il rumore di fondo”, realizzato nell’ambito dell’attuazione del Piano per la Parità di Genere 2022-2024 e del Piano di Riorganizzazione e Rilancio.",
+      "2": "Il filmato è stato ideato con l’intento di stimolare una riflessione ad ampio spettro sui principali bias cognitivi riscontrati ed osservati dagli esperti in fase di valutazione dei candidati e delle candidate, per procedere con l’accesso agli strumenti della pagina, è necessario completarne la proiezione.",
+      "3": "Buona visione!",
+      "4": "Per maggiori informazioni e approfondimenti, è disponibile la pagina dedicata sul portale istituzionale del CNR: <a href=\"https://www.cnr.it/it/cnr-per-la-parita-di-genere\">https://www.cnr.it/it/cnr-per-la-parita-di-genere</a>"
+    },
+    "section": {
+      "commission": {
+        "title": {
+          "default": "La presente autorizzazione potrà essere revocata accedendo alla sezione in qualsiasi momento ovvero inviando comunicazione all’indirizzo mail: <a href='mailto:ufficio.reclutamento@cnr.it'>ufficio.reclutamento@cnr.it</a>",
+          "universita": "Sezione 1 - Università",
+          "altriepr": "Sezione 2 - Altri EPR",
+          "cnr": "Sezione 3 - CNR"
+        }
+      }
+    },
+    "password": "Password",
+    "page-header": {
+      "h1": "Scegli la tua nuova password"
+    },
+    "column6-intro": "Prego, Inserisci una nuova password",
+    "account": {
+      "oldpassword": "Vecchia Password:",
+      "password": "Nuova password:",
+      "confirmPassword": "Conferma nuova password:",
+      "userName": "Nome Utente",
+      "email": "E-Mail:",
+      "otp": "OTP",
+      "testo": "Testo"
+    },
+    "li": {
+      "telefono": "telefono 0039 06 4993 2172/2140",
+      "fax": "fax 0039 06 4993 3852",
+      "email": "e-mail <a href=\"mailto:concorsi@cnr.it\">concorsi@cnr.it</a>",
+      "pec": "PEC <a href=\"mailto:concorsi@pec.cnr.it\">concorsi@pec.cnr.it</a>"
+    },
+    "helpdesk": {
+      "lastName": "Cognome:",
+      "firstName": "Nome:",
+      "email": "E-Mail:",
+      "confirmEmail": "Verifica E-Mail:",
+      "phoneNumber": "Numero di Telefono:",
+      "subject": "Oggetto:",
+      "message": "Messaggio:",
+      "cmisCallId": "Bando di riferimento:",
+      "category": "Categoria:",
+      "problem": "Problema",
+      "attachment": "Allega File"
+    },
+    "allega": "Allegato (Max 14,6 Mb):",
+    "h2": {
+      "open": {
+        "competitions": "Bandi disponibili online"
+      },
+      "allegati": "Atti collegati al bando",
+      "nessun": {
+        "allegato": "Nessun allegato"
+      }
+    },
+    "input": {
+      "user": "Utente",
+      "group": "Gruppo",
+      "role": "Ruolo"
+    },
+    "application": {
+      "stato": {
+        "C": "Inviata",
+        "P": "Provvisoria"
+      }
+    },
+    "jconon_call_descrizione": "Titolo Bando",
+    "jconon_call_progetto": "Progetto di ricerca",
+    "jconon_call_progetto_en": "Progetto di ricerca (Inglese)",
+    "jconon_call_data_inizio_invio_domande": "Data inizio",
+    "jconon_call_data_fine_invio_domande": "Scadenza",
+    "jconon_call_sede": "Struttura di Riferimento",
+    "jconon_call_sede_en": "Struttura di Riferimento (Inglese)",
+    "jconon_call_struttura_destinataria": "Sede di Lavoro",
+    "jconon_call_struttura_destinataria_en": "Sede di Lavoro (Inglese)",
+    "jconon_call_numero_posti": "N. posti",
+    "selezione": {
+      "concorsi": "Per partecipare alle selezioni online del Consiglio Nazionale delle Ricerche occorre accedere all'area utenti inserendo Nome utente e password scelti in fase di registrazione al sito.<br>Si ricorda che, qualora si avesse già partecipato ad una precedente selezione sempre su questo sito, non é necessario ripetere la registrazione.",
+      "altri": "Per registrarsi utilizzare il link <a href=\"create-account?guest=true\">Nuova registrazione</a>. <br>Per maggiori informazioni consultare il capitolo \"Accesso / registrazione in procedura\" del Manuale Utente. <br> Per ricevere assistenza utilizzare il servizio di <a href\\=\"helpdesk\">Helpdesk</a>"
+    },
+    "dipendentiCNR": "&nbsp;",
+    "candidatiCNR": "I dipendenti CNR e tutti i candidati già in possesso delle credenziali ufficiali CNR dovranno utilizzarle per l'accesso alla procedura senza necessità di ulteriori registrazioni.<br>Per la gestione delle credenziali ufficiali CNR utilizzare il sito <a href=\"https://utenti.cnr.it\">https://utenti.cnr.it</a>",
+    "reg-header": {
+      "h3": "Accedi",
+      "switch": "&nbsp;oppure&nbsp;"
+    },
+    "forgot": {
+      "password": "Hai dimenticato la tua password?"
+    },
+    "jconon_call_aspect_macro_call": "Bando multiplo",
+    "jconon_call_aspect_gu": "Gazzetta Ufficiale",
+    "jconon_call_aspect_inpa": "Pubblicazione sul Portale inPA",
+    "add_jconon_call_aspect_macro_call": "Si",
+    "remove_jconon_call_aspect_macro_call": "No",
+    "jconon_call_numero_max_domande": "Numero massimo di domande",
+    "jconon_call_aspect_recall": "Ribando",
+    "jconon_re_call": "Bando di riferimento",
+    "jconon_call_aspect_pta": "PTA",
+    "jconon_pta": "PTA di riferimento",
+    "jconon_call_aspect_winner": "Abilita allegati per il vincitore",
+    "jconon_call_aspect_winner_active": "Finestra di caricamento allegati:",
+    "jconon_call_aspect_winner_elenco_file": "Tipologie di allegato richieste al vincitore",
+    "jconon_call_descrizione_ridotta": "Descrizione ridotta Bando",
+    "jconon_call_descrizione_ridotta_en": "Descrizione ridotta Bando (Inglese)",
+    "jconon_call_descrizione_en": "Titolo Bando (Inglese)",
+    "jconon_call_area_scientifica": "Area Scientifica",
+    "jconon_call_area_scientifica_en": "Area Scientifica (Inglese)",
+    "jconon_call_settore_scientifico_tecnologico": "Settore Tecnologico",
+    "jconon_call_requisiti_link": "Nome per link al dettaglio dei requisiti",
+    "jconon_call_requisiti_link_en": "Nome per link al dettaglio dei requisiti (Inglese)",
+    "jconon_call_requisiti": "Testo di dettaglio dei requisiti",
+    "jconon_call_requisiti_en": "Testo di dettaglio dei requisiti (Inglese)",
+    "jconon_call_elenco_association": "Allegati",
+    "jconon_call_elenco_field_not_required": "Campi non obbligatori nella Domanda",
+    "jconon_call_elenco_sezioni_domanda": "Sezioni visibili nella Domanda",
+    "jconon_call_elenco_aspects": "Dichiarazioni",
+    "jconon_call_elenco_aspects_sezione_cnr": "Dati CNR",
+    "jconon_call_elenco_aspects_ulteriori_dati": "Dati Preselezione",
+    "jconon_call_elenco_aspects_sezione_4": "Dati Sezione 4",
+    "jconon_call_elenco_aspects_sezione_5": "Dati Sezione 5",
+    "jconon_call_profilo": "Profilo / Livello",
+    "jconon_call_profilo_en": "Profilo / Livello (Inglese)",
+    "jconon_call_elenco_tipo_selezione": "Tipo Selezione",
+    "jconon_call_numero_gu": "Num. della G.U.",
+    "jconon_call_new_numero_gu": "Nuovo num. della G.U.",
+    "jconon_call_data_gu": "Data della G.U.",
+    "jconon_call_data_pubblicazione_inpa": "Data pubblicazione inPA",
+    "jconon_call_new_data_gu": "Nuova Data della G.U.",
+    "jconon_call_inpa": "inPA",
+    "jconon_call_pubbl_graduatoria": "Pubblicazione graduatoria",
+    "jconon_call_da_data_pubblicazione_inpa": "inPA da data",
+    "jconon_call_a_data_pubblicazione_inpa": "inPA a data",
+    "jconon_path_macro_call": "Bando di riferimento",
+    "jconon_call_elenco_lingue_da_conoscere": "Lingue da conoscere",
+    "jconon_call_elenco_macroaree": "MACROAREA",
+    "jconon_call_elenco_settori_tecnologici": "Settore Tecnologico",
+    "jconon_call_elenco_sezioni_curriculum": "Sezioni Curriculum",
+    "jconon_call_elenco_sezioni_curriculum_ulteriore": "Sezioni Curriculum Ulteriore",
+    "jconon_call_elenco_prodotti": "Prodotti",
+    "jconon_call_numero_max_prodotti": "Num. max Prodotti",
+    "jconon_call_num_giorni_mail_sollecito": "Num. Giorni sollecito scadenza",
+    "jconon_call_blocco_invio_domande": "Blocco invio domande",
+    "jconon_call_blocco_invio_domande_message": "Messaggio di blocco invio domande",
+    "jconon_call_pagamento_pagopa": "Pagamento diritti di segreteria tramite pagoPA",
+    "jconon_call_importo_pagamento_pagopa": "Importo del pagamento",
+    "jconon_call_only_user_spid_can_submit_application": "Possono sottomettere domanda solo utenze SPID",
+    "jconon_call_scheda_valutazione": "Scheda di valutazione on-line",
+    "jconon_call_scheda_anonima_sintetica": "Scheda Anonima Sintetica",
+    "jconon_call_elenco_schede_anonime": "Sezioni Schede Anonime",
+    "jconon_attachment_data_inizio": "Data Inizio",
+    "jconon_attachment_data_fine": "Data Fine",
+    "column": {
+      "jconon_call_type": "Tipologia",
+      "jconon_call_codice": "Codice<BR>bando",
+      "jconon_call_descrizione": "Titolo",
+      "jconon_call_data_inizio_invio_domande": "Data<BR/>Pubblicazione",
+      "jconon_call_data_fine_invio_domande": "Data<BR/>Scadenza",
+      "jconon_call_sede": "Struttura di<BR/>Riferimento",
+      "jconon_call_area_scientifica": "Area Scientifica",
+      "jconon_call_numero_ud": "<div style=\"white-space: nowrap;\">Gazzetta Ufficiale<br><div style=\"font-size: 11px\">IV serie speciale<br>Concorsi ed Esami</div></div>",
+      "jconon_call_settore_scientifico_tecnologico": "Settore Scientifico Tecnologico",
+      "jconon_call_data_scadenza_gu": "Scadenza",
+      "jconon_call_data_pubbl_gu": "Pubblicazione",
+      "jconon_call_tipo_contratto": "Area scientifica",
+      "jconon_call_struttura_destinataria": "Sede di<BR/>Lavoro",
+      "jconon_call_struttura_richiedente": "Struttura di<BR/>Riferimento",
+      "jconon_call_elenco_titoli_studio": "Requisiti",
+      "jconon_call_numero_posti": "N. posti",
+      "jconon_call_profilo": "Profilo",
+      "jconon_call_requisiti": "Requisiti",
+      "jconon_call_show_call": "Visualizza Bando<BR/> e atti collegati",
+      "jconon_call_submit_application": "Presenta<BR>Domanda",
+      "jconon_call_edit": "Azioni"
+    },
+    "find": {
+      "jconon_call_codice": "Codice bando",
+      "jconon_call_descrizione": "Titolo",
+      "jconon_call_sede": "Struttura di Riferimento",
+      "jconon_call_numero_ud": "Gazzetta Ufficiale",
+      "jconon_call_data_pubbl_gu": "Pubblicazione",
+      "jconon_call_data_scadenza_gu": "Scadenza",
+      "jconon_call_area_scientifica": "Area Scientifica",
+      "jconon_call_tipo_contratto": "Area scientifica",
+      "jconon_call_struttura_destinataria": "Sede di Lavoro",
+      "jconon_call_struttura_richiedente": "Sede",
+      "jconon_call_elenco_titoli_studio": "Requisiti",
+      "jconon_call_requisiti": "Requisiti",
+      "jconon_call_data_inizio_invio_domande": "Data Pubblicazione",
+      "jconon_call_data_fine_invio_domande": "Data Scadenza",
+      "jconon_call_numero_posti": "N. posti",
+      "jconon_call_profilo": "Profilo"
+    },
+    "convocazione": {
+      "numero": "Numero",
+      "data": "Data",
+      "luogo": "Luogo",
+      "note": "Note",
+      "firma": "Firma",
+      "field": "Valori della domanda:",
+      "add": {
+        "field": "Inserisci campo nelle note"
+      }
+    },
+    "convocazioni": {
+      "application": "Domande"
+    },
+    "jconon_protocollo_data": "Data protocollo",
+    "jconon_protocollo_numero": "Numero protocollo"
+  },
+  "D:jconon_attachment:document": "Allegati alla domanda di concorso",
+  "D:jconon_attachment:call_abstract": "Allegato astratto al Bando di concorso",
+  "D:jconon_attachment:call_generic": "Allegato generico al Bando di concorso",
+  "D:jconon_attachment:call_decreto_annullamento": "Decreto di annullamento",
+  "D:jconon_attachment:call_correction": "Modifiche e/o rettifiche del bando",
+  "D:jconon_attachment:call_correction_prorogation": "Modifiche e/o rettifiche con proroga termini bando",
+  "D:jconon_attachment:call_correction_classification": "Modifiche e/o rettifiche graduatoria",
+  "D:jconon_attachment:call_recruitment_provision": "Provvedimento assunzione idoneo/i",
+  "D:jconon_attachment:call_withdrawal": "Revoca del bando",
+  "D:jconon_attachment:call_commission_modification": "Modifica Commissione del Bando",
+  "D:jconon_attachment:call_provvedimento_nomina_segretario": "Provvedimento nomina segretario",
+  "D:jconon_attachment:call_prorogation": "Proroga dei termini bando",
+  "D:jconon_attachment:call_re_advertisement": "Riapertura dei termini bando",
+  "D:jconon_attachment:call_re_judgment": "Riapertura nominativa in esecuzione di atto giudiziale",
+  "D:jconon_attachment:call_correction_en": "re-advertisement",
+  "D:jconon_attachment:call_re_advertisement_en": "revised application form -  re-advertisement",
+  "D:jconon_attachment:call_coordinated_text": "Testo coordinato",
+  "D:jconon_attachment:call_classification": "Graduatoria del Bando di concorso",
+  "D:jconon_attachment:call_mobility": "Avviso / Bando di mobilità",
+  "D:jconon_attachment:call_manifestazione_interesse": "Avviso di Manifestazione di Interesse",
+  "D:jconon_attachment:call_regolamento": "Regolamento",
+  "D:jconon_attachment:call_deserto": "Provvedimenti di concorso deserto/esito negativo",
+  "D:jconon_attachment:call_errata_corrige": "ERRATA CORRIGE",
+  "D:jconon_attachment:call_atti_concorsuali": "Atti Concorsuali",
+  "D:jconon_attachment:call_convocazioni_candidati": "Avviso Pubblico di Convocazione Candidati",
+  "D:jconon_attachment:call_roc": "Responsabile Organizzazione Concorsuale (ROC)",
+  "D:jconon_attachment:application": "Domanda di partecipazione al Bando di concorso",
+  "D:jconon_attachment:scheda_valutazione": "Scheda di valutazione della domanda di partecipazione al Bando di concorso",
+  "D:jconon_attachment:document_mono": "Allegati mono alla domanda di concorso",
+  "D:jconon_attachment:document_multi": "Allegati multi alla domanda di concorso",
+  "D:jconon_attachment:cv_element": "Elemento Curriculum",
+  "D:jconon_attachment:prodotto": "Prodotto",
+  "D:jconon_curriculum_vitae:attachment_prodotti_scelti": "Prodotti Scelti",
+  "D:jconon_curriculum_vitae:attachment_elenco_prodotti_scelti": "Elenco Prodotti Scientifici Scelti",
+  "D:jconon_curriculum_vitae:attachment_ulteriore_elenco_prodotti_scelti": "Ulteriore Elenco Prodotti Scientifici Scelti",
+  "D:jconon_curriculum_vitae:attachment_prodotti_scelti_multiplo": "Prodotti Scelti Multiplo",
+  "D:jconon_curriculum_vitae:attachment_formato_europeo": "Curriculum Vitae in formato Europeo",
+  "D:jconon_documento_riconoscimento:attachment": "Documento Riconoscimento",
+  "D:jconon_tesi_laurea:attachment": "Tesi di laurea",
+  "D:jconon_allegato_generico:attachment_mono": "Allegato generico Singolo",
+  "D:jconon_nulla_osta_altro_ente:attachment": "Nulla osta ente di appartenenza",
+  "D:jconon_modello_verifica_attivita:attachment": "Modello Verifica Attivita",
+  "D:jconon_relazione_attivita_svolta:attachment": "Relazione Attivita Svolta",
+  "D:jconon_pagamenti_diritti_segreteria:attachment": "Pagamenti diritti di segreteria",
+  "D:jconon_pubblicazione:attachment": "Pubblicazione/rapporto tecnico",
+  "D:jconon_domanda_facsimile:attachment": "Allegato A - Domanda",
+  "D:jconon_programma_di_mandato:attachment": "Programma di mandato",
+  "D:jconon_programma_di_mandato:attachment_not_required": "Programma di mandato - non obbligatorio",
+  "D:jconon_attachment:motivazione_candidatura": "Motivazione Candidatura",
+  "D:jconon_attachment:attestazione_equivalenza_titolo_studio": "Attestazione di equivalenza titolo di studio conseguito all'estero",
+  "D:jconon_attachment:richiesta_equivalenza_titolo_studio": "Richiesta di riconoscimento equivalenza titolo di studio conseguito all'estero",
+  "D:jconon_attachment:permesso_soggiorno_ce": "Permesso di soggiorno CE per soggiornanti di lungo periodo",
+  "P:jconon_attachment:generic_document": "Documento generico da allegare alla domanda.",
+  "P:jconon_attachment:document_not_required": "Documento non obbligatorio.",
+  "P:jconon_attachment:document_required": "Documento obbligatorio anche in caso sia multiplo.",
+  "P:jconon_attachment:document_from_rdp": "Documento allegato dal Responsabile del Procedimento.",
+  "P:jconon_attachment:attached": "Documento allegato",
+  "P:jconon_attachment:prorogation": "Proroga",
+  "P:jconon_attachment:issuance": "Rilascio",
+  "D:jconon_record:interruzioni_carriera": "Interruzioni di carriera",
+  "D:jconon_record:part_time": "Periodi di attività esercitata part-time",
+  "P:jconon_group_gestori:aspect": "Group gestori",
+  "P:jconon_call_aspect_winner:aspect": "Aspect per il vincitore",
+  "P:jconon_call_aspect_winner:attachment": "Aspect per individuare i file allegati come vincitore",
+  "D:jconon_call_comandi_distacchi:folder": "Comandi e Distacchi",
+  "P:jconon_application_aspect_cascade:aspect_capofila": "DENOMINAZIONE PROPONENTE/CAPOFILA",
+  "P:jconon_application_aspect_cascade:aspect_progetto": "TITOLO PROGETTO TITOLO CON ACRONIMO",
+  "P:jconon_application_aspect_cascade:aspect_linea_nordsud": "LINEA NORD/SUD",
+  "P:jconon_application_aspect_cascade:aspect_partenariato": "PARTENARIATO",
+  "P:jconon_application_aspect_cascade:aspect_costo_totale": "COSTO TOTALE DEL PROGETTO",
+  "P:jconon_application_aspect_cascade:aspect_contributo_totale": "CONTRIBUTO TOTALE RICHIESTO",
+  "P:jconon_protocollo:common": "Common Metadata for Protocollo",
+  "D:jconon_call:folder": "Bando",
+  "D:jconon_call_tind:folder": "Concorsi a tempo indeterminato",
+  "D:jconon_call_tind:folder_concorsi_pubblici": "Concorsi Pubblici",
+  "D:jconon_call_tind:folder_reclutamento_speciale": "Reclutamento Speciale",
+  "D:jconon_call_tind:folder_categorie_protette": "Categorie Protette",
+  "D:jconon_call_tdet:folder": "Concorsi a tempo determinato",
+  "D:jconon_call_aric:folder": "Concorsi per Assegni di Ricerca",
+  "D:jconon_call_bstd:folder": "Concorsi per Borse di Studio",
+  "D:jconon_call_director:folder": "Direttori",
+  "D:jconon_call_employees:folder": "Selezioni per dipendenti CNR",
+  "D:jconon_call_mobility:folder": "Bando di Mobilità",
+  "D:jconon_call_tind:manifestazione_interesse": "Manifestazione di interesse",
+  "D:jconon_call_tind:folder_tirocini_categorie_protette": "Tirocini - Categorie Protette",
+  "D:jconon_call_incarichi_ricerca:folder": "Concorsi per Incarichi di Ricerca",
+  "P:jconon_call:can_submit_application": "Bando su cui è possibile presentare domande.",
+  "P:jconon_call:selected_products_after_commission": "Bando su cui è permesso inserire i prodotti scelti o l'elenco dopo la pubblicazione dei criteri da parte della commissione.",
+  "P:jconon_call:aspect_macro_call": "Macro Bando",
+  "P:jconon_call:aspect_gu": "Dati Gazzetta Ufficiale",
+  "P:jconon_call:aspect_inpa": "Dati Portale inPA",
+  "P:jconon_call:aspect_inquadramento": "Inquadramento",
+  "P:jconon_call:aspect_macroarea_dipartimentale": "Macroarea Dipartimentale",
+  "P:jconon_call:aspect_settore_tecnologico": "Settore Tecnologico",
+  "P:jconon_call:aspect_tipo_selezione": "Tipo di selezione",
+  "P:jconon_call:aspect_lingue_da_conoscere": "Lingue da conoscere",
+  "P:jconon_call:aspect_punteggi": "Punteggi conseguiti nelle prove",
+  "D:jconon_attachment_br:provvedimento_riconoscimento_accademico": "Provvedimento di riconoscimento accademico del titolo estero rilasciato da un ateneo italiano",
+  "D:jconon_attachment_br:autocertificazione_provvedimento_riconoscimento_accademico": "Autocertificazione del provvedimento di riconoscimento accademico del titolo estero",
+  "D:jconon_attachment_br:domanda_riconoscimento_finalizzato": "Domanda di riconoscimento finalizzato del titolo conseguito all’estero",
+  "D:jconon_attachment_br:copia_autenticata_titolo_estero_originale": "Copia autenticata del titolo estero in lingua originale (Single-cycle degree o Master degree)",
+  "D:jconon_attachment_br:copia_autenticata_titolo_estero_tradotto": "Copia autenticata del titolo estero (Single-cycle degree o Master degree) tradotto (se in lingua diversa da inglese, francese o spagnolo)",
+  "D:jconon_attachment_br:copia_autenticata_elenco_esami_lingua_originale": "Copia autenticata dell’elenco degli esami in lingua originale/transcript of records/degree/diploma supplement (con legalizzazione o apostille dell’Aja, se previste)",
+  "D:jconon_attachment_br:copia_autenticata_elenco_esami_lingua_tradotto": "Copia autenticata dell’elenco degli esami/transcript of records/degree tradotto (se in lingua diversa da inglese, francese o spagnolo)",
+  "D:jconon_attachment_br:copia_autenticata_diploma_supplement_tradotto": "Copia autenticata del diploma supplement tradotto (se in lingua diversa da inglese, francese o spagnolo)",
+  "D:jconon_attachment_br:copia_autenticata_dichiarazione_valore_loco": "Copia autenticata della dichiarazione di valore in loco rilasciata dalle rappresentanze diplomatiche italiane (se prevista)",
+  "D:jconon_attachment_br:copia_autenticata_titolo_elenco_esami_bachelor_degree_originale": "Copia autenticata del titolo ed elenco degli esami del bachelor degree (se il titolo è un Master degree) in lingua originale",
+  "D:jconon_attachment_br:copia_autenticata_titolo_elenco_esami_bachelor_degree_tradotto": "Copia autenticata del titolo ed elenco degli esami del bachelor degree (se il titolo è un Master degree) tradotto (se in lingua diversa da inglese, francese o spagnolo)",
+  "P:jconon_attachment_pta:aspect": "Aspect per il PTA",
+  "D:jconon_call_cascade:folder": "Bandi a cascata",
+  "D:jconon_application:folder": "Domanda di concorso",
+  "P:jconon_application:aspects": "Lista Aspect associabili alla domanda",
+  "P:jconon_application:aspect_possesso_requisiti": "Possesso dei requisiti previsti dal bando",
+  "P:jconon_application:aspect_iscrizione_liste_elettorali": "Iscrizione Liste Elettorali",
+  "P:jconon_application:aspect_godimento_diritti": "Godimento diritti civili",
+  "P:jconon_application:aspect_condanne_penali": "Condanne Penali",
+  "P:jconon_application:aspect_decaduto_altro_impiego": "Decaduto altro impiego",
+  "P:jconon_application:aspect_destituito_altro_impiego": "Destituito altro impiego",
+  "P:jconon_application:aspect_servizioCNR": "Servizio CNR per direttori",
+  "P:jconon_application:aspect_servizioCNRWithoutDirettore": "Servizio CNR",
+  "P:jconon_application:aspect_servizio_altre_amministrazioni": "Servizio Altre Amministrazioni per direttori",
+  "P:jconon_application:aspect_servizio_altre_amministrazioniWithoutDirettore": "Servizio Altre Amministrazioni",
+  "P:jconon_application:aspect_idoneita_fisica": "Idoneita fisica",
+  "P:jconon_application:aspect_titolo_riserva_posti": "Titolo Riserva Posti",
+  "P:jconon_application:aspect_diploma": "Diploma",
+  "P:jconon_application:aspect_diploma_not_required": "Diploma non obbligatorio",
+  "P:jconon_application:aspect_laurea": "Laurea",
+  "P:jconon_application:aspect_laurea_not_required": "Laurea non obbligatorio",
+  "P:jconon_application:aspect_dottorato": "Dottorato",
+  "P:jconon_application:aspect_dottorato_not_required": "Dottorato non obbligatorio",
+  "P:jconon_application:aspect_diversamente_abile": "Diversamente Abile 68",
+  "P:jconon_application:aspect_tempi_aggiuntivi": "Tempi aggiuntivi o Ausili",
+  "P:jconon_application:aspect_conoscenza_lingua_italiana": "Conoscenza Lingua Italiana",
+  "P:jconon_application:aspect_conoscenza_inglese_informatica": "Conoscenza Inglese/Informatica",
+  "P:jconon_application:aspect_esperienza": "Esperienza",
+  "P:jconon_application:aspect_altre_borse_studio": "Altre Borse di Studio",
+  "P:jconon_application:aspect_condizione_esclusione": "Condizioni di esclusione",
+  "P:jconon_application:aspect_area_scientifica": "Area Scientifica di competenza",
+  "P:jconon_application:aspect_area_scientifica_not_required": "Area Scientifica di competenza - non obbligatoria",
+  "P:jconon_application:aspect_settore_scientifico_tecnologico": "Settore Tecnologico di competenza",
+  "P:jconon_application:aspect_settore_scientifico_tecnologico_not_required": "Settore Tecnologico di competenza - non obbligatorio",
+  "P:jconon_application:aspect_inquadramento": "Profilo/Livello di appartenenza",
+  "P:jconon_application:aspect_struttura_appartenenza": "Struttura di appartenenza",
+  "P:jconon_application:aspect_h_index": "H-Index",
+  "P:jconon_application:aspect_servizio_altra_attivita": "Servizio altra attivita",
+  "P:jconon_application:aspect_conoscenza_informatica_avanzata": "Conoscenza Informatica Avanzata",
+  "P:jconon_application:aspect_possesso_cittadinanza_italiana": "Possesso Cittadinanza Italiana",
+  "P:jconon_application:aspect_possesso_cittadinanza": "Possesso Cittadinanza Lista",
+  "P:jconon_application:aspect_categorie_riservatarie_art1": "Categorie riservatarie di cui all'articolo 1 della Legge 68/99",
+  "P:jconon_application:aspect_categorie_riservatarie_art18": "Categorie riservatarie di cui all'articolo 18 della Legge 68/99",
+  "P:jconon_application:aspect_residenza_generica": "Residenza generica",
+  "P:jconon_application:aspect_lista_disoccupazione_art1": "Lista di disoccupazione di cui all'art. 1 della legge 68/99",
+  "P:jconon_application:aspect_lista_disoccupazione_art18": "Lista di disoccupazione di cui all'art. 18 della legge 68/99",
+  "P:jconon_application:aspect_patente_guida": "Possesso Patente di guida",
+  "P:jconon_application:aspect_atto_interruttivo_anzianita": "Atto Interruttivo Anzianita",
+  "P:jconon_application:aspect_titolo_preferenza_posti": "Titolo Preferenza Posti",
+  "P:jconon_application:aspect_conoscenza_lingue": "Conoscenza Lingue",
+  "P:jconon_application:aspect_sede": "Sede prescelta",
+  "P:jconon_application:aspect_sanzione_disciplinare": "Sanzione disciplinare",
+  "P:jconon_application:aspect_specializzazione": "Specializzazione",
+  "P:jconon_application:aspect_nulla_osta": "Nulla osta ente di appartenenza",
+  "P:jconon_application:aspect_nulla_osta_obbligatorio": "Nulla osta ente di appartenenza obbligatorio",
+  "P:jconon_application:aspect_superato_periodo_prova": "Superato periodo prova",
+  "P:jconon_application:aspect_ente_comparto_ricerca_appartenenza": "Ente Comparto Ricerca di appartenenza",
+  "P:jconon_application:aspect_ente_comparto_universita_appartenenza": "Ente Comparto Universita di appartenenza",
+  "P:jconon_application:aspect_ente_appartenenza": "Ente di appartenenza",
+  "P:jconon_application:aspect_anzianita_servizio": "Anzianita di servizio",
+  "P:jconon_application:aspect_anzianita_profilo": "Anzianita di servizio nel profilo",
+  "P:jconon_application:aspect_anzianita_livello": "Anzianita di servizio nel livello",
+  "P:jconon_application:aspect_area_amministrativa": "Area amministrativa",
+  "P:jconon_application:aspect_area_tecnica": "Area tecnica",
+  "P:jconon_application:aspect_precedente_servizio_cnr": "Precedente Servizio CNR",
+  "P:jconon_application:aspect_precedente_servizio_altre_amministrazioni": "Precedente Servizio Altre amministrazioni",
+  "P:jconon_application:aspect_alta_qualificazione": "Alta Qualificazione",
+  "P:jconon_application:aspect_esperienza_gestionale": "Esperienza Gestionale",
+  "P:jconon_application:aspect_incompatibilita": "Incompatibilità",
+  "P:jconon_application:aspect_obblighi_militari": "Obblighi Militari",
+  "P:jconon_application:aspect_licenziamento_disciplinare": "Licenziamento Disciplinare",
+  "P:jconon_application:aspect_vincolo_sede": "Vincolo Sede",
+  "P:jconon_application:aspect_contratto_altra_pa": "Titolare contratto altra pubblica amministrazione",
+  "P:jconon_application:aspect_punteggi": "Punteggi conseguiti nelle prove",
+  "P:jconon_application:aspect_contratto_td_concorso": "Reclutato con contratto di lavoro a tempo determinato a seguito di partecipazione a concorso pubblico",
+  "P:jconon_application:aspect_idoneo_precedenti_graduatorie": "Idoneo in precedenti graduatorie vigenti per la mobilità nello stesso profilo di destinazione",
+  "P:jconon_application:aspect_servizi_collocamento": "Servizi per il collocamento mirato di cui all'art. 18 comma 2",
+  "P:jconon_application:aspect_dichiarazione_1": "Dichiarazione 1",
+  "P:jconon_application:aspect_dichiarazione_2": "Dichiarazione 2",
+  "P:jconon_application:aspect_dichiarazione_3": "Dichiarazione 3 obbligatoria",
+  "P:jconon_application:aspect_dichiarazione_4": "Dichiarazione 4 obbligatoria",
+  "P:jconon_application:aspect_dichiarazione_5": "Dichiarazione 5 obbligatoria",
+  "P:jconon_application:aspect_motivazioni_candidatura": "Motivazioni della candidatura",
+  "P:jconon_application:aspect_programma_di_mandato": "Programma di Mandato",
+  "P:jconon_application:aspect_abilitazione_professione_ingegnere_senza_sezione_settore": "Abilitazione all'esercizio della professione di ingegnere senza sezione e settore",
+  "P:jconon_application:aspect_abilitazione_professione_ingegnere": "Abilitazione all'esercizio della professione di ingegnere",
+  "P:jconon_application:aspect_abilitazione_professione_forense": "Abilitazione all'esercizio della professione forense",
+  "P:jconon_application:aspect_area_territoriale": "Area Territoriale",
+  "P:jconon_application:aspect_profili": "Profilo componente",
+  "P:jconon_application:aspect_ulteriore_laurea": "Ulteriore Laurea",
+  "P:jconon_application:aspect_ulteriore_dottorato": "Ulteriore Dottorato",
+  "P:jconon_application:aspect_altri_assegni": "Altri assegni di ricerca dal 01/05/2011",
+  "P:jconon_application:aspect_preselezione_laurea_media_voti": "Preselezione laurea con media dei voti",
+  "P:jconon_application:aspect_abilitazione_funzione_rspp": "Abilitazione allo svolgimento della funzione di RSPP",
+  "P:jconon_application:aspect_abilitazione_professione_architetto": "Abilitazione all'esercizio della professione di architetto",
+  "P:jconon_application:aspect_iscrizione_centro_impiego": "Iscritto centro dell'Impiego Territoriale",
+  "P:jconon_application:aspect_pagopa": "Informazioni pagoPA",
+  "P:jconon_application:aspect_contributo_attivita": "Contributo e risultati della tua attività",
+  "P:jconon_application:aspect_prospettive_scientifiche_potenziale": "Prospettive scientifiche e potenziale [limite a 5.000 caratteri]",
+  "P:jconon_application:aspect_percorso_professionale": "Percorso Professionale",
+  "P:jconon_application:aspect_researcher_unique_identifier": "Researcher unique identifier (ORCID, SCOPUS)",
+  "P:jconon_application:aspect_eta_professionale": "Età professionale (anni dall'inizio dell'attività lavorativa)",
+  "P:jconon_application:aspect_eta_accademica": "Età Accademica",
+  "P:jconon_application:aspect_posizionamento_ricercatore": "Posizionamento ricercatore",
+  "P:jconon_application:aspect_posizionamento_tecnologo": "Posizionamento tecnologo",
+  "P:jconon_application:aspect_tecnologo_settore_ambiti": "Tecnologo contributo e risultati della tua attività",
+  "P:jconon_application:aspect_area_concorsuale": "Area Concorsuale",
+  "P:jconon_application:aspect_settore_concorsuale": "Settore Concorsuale",
+  "P:jconon_application:aspect_titolare_status_rifugiato": "Titolare dello status di rifugiato",
+  "P:jconon_application:aspect_titolare_status_protezione_sussidiaria": "Titolare dello status di protezione sussidiaria",
+  "P:jconon_application:aspect_dsa": "Disturbi specifici dell'apprendimento (DSA)",
+  "P:jconon_application:aspect_diversamente_abile_104": "Diversamente Abile 104",
+  "P:jconon_application:aspect_corso_formazione": "Corso di formazione professionale e/o tirocinio formativo",
+  "P:jconon_application:aspect_conferma_trattamento_dati_personali_europeo": "Conferma lettura trattamento dati personali europeo",
+  "P:jconon_application:aspect_autorizzazione_trattamento_dati_personali_europeo": "Autorizzazione al trattamento dati personali europeo",
+  "P:jconon_application:aspect_dichiarazioni_art_46_46_dpr_445": "Dichiarzione degli artt. 46 e 47 del D.P.R. n° 445 del 28/12/2000",
+  "P:jconon_application:aspect_dichiarazioni_art_75_75_dpr_445": "Dichiarzione degli artt. 75 e 76 del D.P.R. n° 445 del 28/12/2000",
+  "P:jconon_application:aspect_specializzazione_in_medicina_lavoro": "Possesso della specializzazione in medicina del lavoro",
+  "P:jconon_application:aspect_albo_ordine_medici": "Albo dell'Ordine dei Medici",
+  "P:jconon_application:aspect_elenco_medici_ministero_salute": "Elenco dei medici competenti istituito presso il Ministero della Salute",
+  "P:jconon_application:aspect_elenco_medici_ministero_lavoro": "Elenco dei medici autorizzati istituito presso il Ministero del Lavoro",
+  "P:jconon_application:aspect_condanne_penali_nuova_normativa": "Condanne Penali nuova normativa",
+  "P:jconon_application:aspect_procedimenti_penali_nuova_normativa": "Procedimenti Penali nuova normativa",
+  "P:jconon_application:aspect_percorso_formativo_professionale": "Percorso formativo e professionale [limite totale a 25.000 caratteri]",
+  "P:jconon_application:aspect_prospettive_scientifiche_potenziale_10000": "Prospettive scientifiche e potenziale [limite a 10.000 caratteri]",
+  "P:jconon_application:aspect_prima_esperienza_responsabile": "Prima esperienza come responsabile",
+  "P:jconon_application:aspect_prima_esperienza_leadership": "Prima esperienza come leadership",
+  "P:jconon_application:aspect_contratto_fte": "Contratto Full Time Equivalent (FTE)",
+  "P:jconon_application:aspect_no_indeterminato_l240_2010": "No tempo indeterminato art. 22, L. 240/2010",
+  "P:jconon_application:aspect_phd_formazione_estero": "PhD con formazione e ricerca all’estero",
+  "P:jconon_application:aspect_dichiarazioni_art_35_quater_Dlgs_165_DPR_82_2023": "Dichiarzione dell’art.35 quater c.1 del D.lgs. n.165 del 30 marzo 2001 e del DPR n. 82/2023",
+  "P:jconon_application:aspect_terzo_anno_dottorato": "Dichiarzione Terzo anno di dottorato",
+  "P:jconon_application:aspect_ultimo_anno_corso_specializzazione": "Dichiarzione ultimo anno del corso di specializzazione",
+  "P:jconon_application:aspect_curriculum_scientifico_professionale_idoneo": "Dichiarzione curriculum scientifico-professionale idoneo",
+  "P:jconon_application:aspect_dipendente_ruolo_tempo_indeterminato": "Dichiarzione dipendente di ruolo, assunto a tempo indeterminato",
+  "P:jconon_application:aspect_titolare_posizioni_artt_22": "Dichiarzione titolare di posizioni di cui agli artt. 22",
+  "P:jconon_application:aspect_rapporto_parentela_direttore": "Dichiarzione non avere un rapporto parentela con direttore",
+  "P:jconon_application:aspect_conoscere_lingua_inglese_rilevante_ricerca": "Dichiarzione conoscenza lingua inglese rilevante per la ricerca",
+  "P:jconon_application:aspect_assenso_incondizionato_mobilita": "Dichiarzione assenso incondizionato mobilità",
+  "D:cvelement:progetto": "Responsabilità di progetto",
+  "D:cvelement:progettoPartecipazione": "Partecipazione a progetto",
+  "D:cvelement:direzioneResponsabilita": "Direzioni/Responsabilità",
+  "D:cvelement:docenza": "Attività didattica, di diffusione scientifica/tecnologica/gestionale, di formazione dei giovani all'attività di ricerca e tecnologica. Incarichi di docenza.",
+  "D:cvelement:tutoraggio": "Incarichi di tutor",
+  "D:cvelement:commissione": "Partecipazione a Commissioni, Commissioni di valutazione (referaggio), Gruppi di lavoro, altri Organismi di natura tecnico/scientifica e/o amministrativa gestionale",
+  "D:cvelement:cdaCollegiSindacali": "Responsabile gestionale in qualità di presidente o di componente di consigli di amministrazione o collegi sindacali in Consorzi, Fondazioni, o Società partecipate dall’Ente, o da altri Enti pubblici, o dallo Stato, o dalle Regioni, o dagli Enti Locali.",
+  "D:cvelement:comitato": "Partecipazione a Comitati di Redazione (Editorial Board) di riviste e giornali scientifici nazionali e internazionali. Editor di special issues",
+  "D:cvelement:congresso": "Presidenza o altro ruolo decisionale/istituzionale in congressi o eventi scientifici/tecnologici nazionali o internazionali",
+  "D:cvelement:incaricoProfessionale": "Attività svolte per l'Ente in funzione dell'Abilitazione alla professione o iscrizione all'Albo",
+  "D:cvelement:incaricoAdpersonam": "Incarichi Ad Personam",
+  "D:cvelement:premio": "Premi nazionali o internazionali",
+  "D:cvelement:premioErcGrant": "Assegnazione di un \"ERC Grant\"",
+  "D:cvelement:riconoscimento": "Lezioni magistrali ad invito e Keynote in congressi internazionali",
+  "D:cvelement:riconoscimento2": "Program Chair di conferenze nazionali e internazionali",
+  "D:cvelement:progetto_ricercatore_responsabile": "I. Responsabilità di progetto scientifico o di campagna di rilevamento, responsabilità di Unità Operativa all’interno di un progetto",
+  "D:cvelement:progetto_ricercatore_partecipante": "II. Partecipazione a progetto scientifico o a campagna di rilevamento, partecipazione ad Unità Operativa all’interno di un progetto",
+  "D:cvelement:progetto_tecnologo_responsabile": "II. Responsabilità gestionale/tecnica di progetto scientifico/tecnologico o tecnico o di campagna di rilevamento o di Sistemi di certificazione qualità",
+  "D:cvelement:progetto_tecnologo_partecipante": "III. Partecipazione ad attività scientifiche/tecnologiche, di comunicazione, di coordinamento e/o amministrativo gestionali nell’ambito di progetti tecnologici o tecnici o scientifici o di campagna di rilevamento; partecipazione a imprese Spin-off",
+  "D:cvelement:incarico_ricercatore": "III. Direzione d’Istituto o di Struttura di pari livello, Responsabilità di Sezione distaccata, di Servizio, di gestione di Apparato sperimentale, di grande Infrastruttura, di Reparto, di Gruppo di ricerca, di Struttura di valenza scientifica, o responsabilità di Sistemi di certificazione qualità",
+  "D:cvelement:incarico_tecnologo": "I. Direzione/Responsabilità di: Organismo, Struttura, Ufficio, Reparto, Sezione, responsabilità  di gestione di Grande progetto, Grande apparato sperimentale, Grande infrastruttura, Direzione Lavori, di posizioni previste dalla normativa vigente, da cui derivino responsabilità professionali, civili e penali immediate e dirette",
+  "D:cvelement:docenza_ricercatore": "IV. Attività didattica, di diffusione scientifica e di formazione dei giovani alla ricerca, svolta sia a livello nazionale che internazionale. Incarichi di docenza in corsi di alta formazione: corsi universitari, corsi di Master, corsi di Specializzazione, corsi di formazione presso il CNR e Istituzioni pubbliche o private.",
+  "D:cvelement:tutor_ricercatore": "IV. Incarichi di tutor per tesi di: Laurea, Dottorato, corsi di Specializzazione, corsi di Master.",
+  "D:cvelement:docenza_tecnologo": "VIII. Attività didattica, di diffusione scientifica tecnologica/gestionale e di formazione dei giovani all’attività di ricerca e tecnologica, svolta sia a livello nazionale che internazionale. Incarichi di docenza in corsi di alta formazione: corsi universitari, corsi di Master, corsi di Specializzazione, corsi di formazione presso il CNR e Istituzioni pubbliche o private",
+  "D:cvelement:attivita_professionale_tecnologo": "IV. Attività svolte per l’Ente in funzione dell’Abilitazione alla professione o iscrizione all’Albo con  esclusione di quelle valutate al punto 1) I.",
+  "D:cvelement:attivita_incarichi_tecnologo": "V. Incarichi ad personam, premi scientifici/tecnologici",
+  "D:cvelement:commissione_ricercatore": "V. Partecipazione a Commissioni, Commissioni di valutazione (referaggio), Gruppi di Lavoro, od altri Organismi di natura tecnico-scientifica ed organizzativa; partecipazione ad imprese Spin-off",
+  "D:cvelement:commissione_tecnologo_responsabile": "VI. Responsabile gestionale in qualità di presidente o di componente di consigli di amministrazione o collegi sindacali in Consorzi, Fondazioni, o Società partecipate dall’Ente, o da altri Enti pubblici, o dallo Stato, o dalle Regioni, o dagli Enti Locali",
+  "D:cvelement:commissione_tecnologo_partecipante": "VII. Partecipazione a Commissioni, Commissioni di valutazione (referaggio), Gruppi di Lavoro, od altri Organismi, di natura tecnico/scientifica e/o amministrativa gestionale formalmente costituiti, in sede nazionale o internazionale nell’ambito dei quali il candidato partecipi in qualità di \"Membro\" o \"Responsabile\", o “Coordinatore”. Programmazione e gestione/organizzazione di attività didattico-formative, promozionali, divulgative e di eventi a carattere scientifico, tecnologico ed istituzionale",
+  "D:cvelement:comitato_ricercatore": "VI. Partecipazione a Comitati di Redazione (Editorial Board) di riviste e giornali scientifici nazionali o internazionali; Editor di special issues",
+  "D:cvelement:comitato_tecnologo": "IX. Partecipazione a Comitati di Redazione (Editorial Board) di riviste e giornali scientifici nazionali internazionali; Editor di special issues",
+  "D:cvelement:congresso_ricercatore": "VII. Presidenza o altro ruolo decisionale in congressi o eventi scientifici nazionali o internazionali",
+  "D:cvelement:congresso_tecnologo": "X. Presidenza o altro ruolo decisionale/istituzionale in congressi o eventi scientifici/tecnologici nazionali o internazionali",
+  "D:cvelement:premio_ricercatore_ercgrant": "VIII. Assegnazione di un “ERC Grant”",
+  "D:cvelement:premio_ricercatore_istituzioni": "IX. Altri premi nazionali o internazionali assegnati da prestigiose Istituzioni scientifiche, riconoscimenti scientifici",
+  "D:cvelement:premio_ricercatore_lezionimagistrali": "X. Lezioni magistrali ad invito e Keynote in congressi internazionali",
+  "D:cvelement:premio_ricercatore_programchair": "XI. Program Chair di conferenze nazionali e internazionali",
+  "D:cvelement:concorso_pubblico_cnr": "Contratto di lavoro subordinato a tempo determinato a seguito di partecipazione a concorso pubblico presso CNR",
+  "D:cvelement:concorso_pubblico_altro_ente": "Contratto di lavoro subordinato a tempo determinato a seguito di partecipazione a concorso pubblico presso altro Ente",
+  "D:cvelement:contratto_lavoro_cnr": "Contratto di lavoro subordinato a tempo determinato presso CNR",
+  "D:cvelement:contratto_lavoro_flessibile_cnr": "Contratto di lavoro flessibile presso CNR",
+  "D:cvelement:contratto_lavoro_altro_ente": "Contratto di lavoro subordinato a tempo determinato presso Altro Ente o Istituzione di Ricerca",
+  "D:cvelement:contratto_lavoro_flessibile_altro_ente": "Contratto di lavoro flessibile presso Altro Ente o Istituzione di Ricerca",
+  "P:cvelement:commonDalAlIncorso": "Common Metadata for dal al in corso",
+  "P:cvelement:commonProgetto": "Common Metadata for Progetto",
+  "P:cvelement:commonIncarico": "Common Metadata for Incarico",
+  "P:cvelement:commonDocenza": "Common Metadata for Docenza",
+  "P:cvelement:commonAttivita": "Common Metadata for Attivita",
+  "P:cvelement:commonCommissione": "Common Metadata for Commissione",
+  "P:cvelement:commonComitato": "Common Metadata for Comitato",
+  "P:cvelement:commonCongresso": "Common Metadata for Congresso",
+  "P:cvelement:commonPremio": "Common Metadata for Premio",
+  "P:cvelement:commonSottoSezioneId": "Common Metadata for Sottosezione Id",
+  "P:cvelement:commonMetadata1": "Common Metadata 1",
+  "P:cvelement:commonMetadata2": "Common Metadata 2",
+  "P:cvelement:commonMetadata3": "Common Metadata 3",
+  "P:cvelement:commonMetadata4": "Common Metadata 4",
+  "P:cvelement:commonMetadata5": "Common Metadata 5",
+  "P:cvelement:commonAltreInfo": "Common Altre informazioni",
+  "P:jconon_call_aspect_ad_smr:aspect": "Ambito Disciplinare/Settore per il Management della Ricerca",
+  "D:cvpeople:articolo": "Articoli su riviste",
+  "D:cvpeople:libro": "LIBRI (Libri, capitoli di libri e atti di congresso. Monografie, traduzioni e commenti scientifici)",
+  "D:cvpeople:brevetto": "Brevetti",
+  "D:cvpeople:rappotoTecnico": "Relazioni Tecniche",
+  "D:cvpeople:manuale": "Manuali d'uso",
+  "D:cvpeople:altraTipologia": "ALTRE TIPOLOGIE (Composizioni, prodotti di comunicazione/diffusione, disegni, design, performance, mostre ed esposizioni organizzate, manufatti, prototipi e opere d’arte e loro progetti, banche dati e software, carte tematiche, solo se corredati da pubblicazioni atte a consentirne adeguate valutazioni)",
+  "D:cvpeople:articolo_ricercatore": "Articoli pubblicati a stampa su riviste non ISI o su riviste on-line, con l’indice di classificazione SCImago (SJR: Subject category - quartile), per l’anno di pubblicazione dell’articolo, ove esistente, o giornali a carattere scientifico con ISSN, con Comitato di Redazione, nazionali od esteri, ovvero pubblicazioni, anche in italiano, su riviste validate dalle Società Scientifiche di riferimento",
+  "D:cvpeople:articolo_ricercatore_riviste": "Articoli pubblicati a stampa su riviste ISI con l’indice di classificazione SCImago (SJR: Subject category - quartile), per l’anno di pubblicazione dell’articolo, ove esistente",
+  "D:cvpeople:articolo_tecnologo": "Articoli su riviste",
+  "D:cvpeople:libro_ricercatore": "Libri, capitoli di libri e atti di congresso solo se dotati di ISBN o ISSN, ove esistenti in relazione alla Macroarea di riferimento; Monografie con ISBN di edizioni critiche, traduzioni e commenti scientifici",
+  "D:cvpeople:libro_tecnologo": "Libri, capitoli di libri ed atti di congresso solo se dotati di ISBN o ISSN, ove esistenti in relazione al Settore tecnologico di riferimento",
+  "D:cvpeople:libro_manuale_tecnologo": "Manuali d’uso, anche in materia di certificazione e qualità, o di descrizione di procedure tecniche o amministrativo gestionali, anche pubblicati a stampa con o senza ISBN o diffusi come prodotti editoriali",
+  "D:cvpeople:brevetto_ricercatore": "Brevetti",
+  "D:cvpeople:brevetto_tecnologo": "Brevetti",
+  "D:cvpeople:altraTipologia_ricercatore": "Composizioni, prodotti di comunicazione/diffusione, disegni, design, performance, mostre ed esposizioni organizzate, manufatti, prototipi e opere d’arte e loro progetti, banche dati e software, carte tematiche, solo se corredati da pubblicazioni atte a consentirne adeguate valutazioni",
+  "D:cvpeople:altraTipologia_tecnologo": "Composizioni, prodotti di comunicazione/diffusione, disegni, design, performance, mostre ed esposizioni organizzate, manufatti, prototipi e opere d’arte e loro progetti, banche dati e software, carte tematiche, solo se corredati da pubblicazioni atte a consentirne adeguate valutazioni",
+  "D:cvpeople:rappotoTecnico_ricercatore": "Relazioni Tecniche, depositate presso le strutture CNR o altre Istituzioni pubbliche o private aventi carattere nazionale e internazionale",
+  "D:cvpeople:rappotoTecnico_tecnologo": "Relazioni Tecniche, depositate presso le strutture CNR o altre Istituzioni pubbliche o private aventi carattere nazionale e internazionale",
+  "D:cvpeople:attachment_elenco_prodotti_scelti": "Elenco prodotti scientifici scelti",
+  "D:cvpeople:attachment_prodotti_scelti_multiplo": "Prodotti scientifici scelti",
+  "P:cvpeople:commonArticolo": "Common Metadata for Sottosezione Id",
+  "P:cvpeople:commonLibro": "Common Metadata for Sottosezione Id",
+  "P:cvpeople:commonBrevetto": "Common Metadata for Sottosezione Id",
+  "P:cvpeople:commonrappotoTecnico": "Common Metadata for Sottosezione Id",
+  "P:cvpeople:commonSottoSezioneId": "Common Metadata for Sottosezione Id",
+  "P:cvpeople:commonpeopleId": "Id Prodotti People",
+  "P:cvpeople:commonMetadata": "Common Metadata for CvPeople",
+  "P:cvpeople:commonMetadata2": "Common Metadata 2 for CvPeople",
+  "P:cvpeople:commonMetadata3": "Common Metadata 3 for CvPeople",
+  "P:cvpeople:commonMetadata4": "Common Metadata 4 for CvPeople",
+  "P:cvpeople:commonMetadata5": "Common Metadata 5",
+  "P:cvpeople:commonScimago": "Common Scimago for CvPeople",
+  "P:cvpeople:selectedProduct": "Aspect che identifica i Prodotti scelti",
+  "P:cvpeople:noSelectedProduct": "Aspect che identifica i Prodotti non scelti",
+  "P:jconon_call_aspect_recall:aspect": "Aspcet per il ribando",
+  "D:jconon_scheda_anonima:document": "Scheda anonima",
+  "D:jconon_scheda_anonima:contratto": "Contratto subordinato",
+  "D:jconon_scheda_anonima:assegno_ricerca": "Assegno di ricerca",
+  "D:jconon_scheda_anonima:cococo": "Collaborazione coordinata e continuativa",
+  "D:jconon_scheda_anonima:borsa_di_studio": "Borsa di Studio",
+  "D:jconon_scheda_anonima:dottorato_di_ricerca": "Dottorato di Ricerca",
+  "D:jconon_scheda_anonima:phd": "PhD",
+  "D:jconon_scheda_anonima:laurea": "Laurea",
+  "D:jconon_scheda_anonima:esperienza_ricerca": "Esperienza di Ricerca",
+  "D:jconon_scheda_anonima:esperienza_lavorativa": "Esperienza Lavorativa",
+  "P:jconon_scheda_anonima:valutazione": "Valutazione della Scheda anonima sintetica",
+  "P:jconon_scheda_anonima:common_contratto": "Common Metadata for Contratto",
+  "D:jconon_attachment_cascade:requisiti_ammissibilita": "Requisiti ammissibilità",
+  "D:jconon_attachment_cascade:proposta_progettuale": "Proposta progettuale",
+  "D:jconon_attachment_cascade:piano_economico_finanziario": "Piano economico finanziario",
+  "D:jconon_attachment_cascade:cronoprogramma_spesa_progetto": "Cronoprogramma di spesa del progetto",
+  "D:jconon_attachment_cascade:domanda_finanziamento": "Domanda finanziamento",
+  "D:jconon_attachment_cascade:informativa_trattamento_dati": "Informativa trattamento dati",
+  "D:jconon_call_tdet_pnrr:folder": "Tempo Determinato PNRR",
+  "D:jconon_competition:folder": "Root Competition"
 }

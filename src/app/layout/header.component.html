@@ -63,6 +63,124 @@
         </a>
       </li>
     }
+    @if (managerCalls.length || newCallGroups.length) {
+      <li class="nav-item dropdown megamenu" [class.show]="openMega === 'manager'">
+        <button type="button" class="nav-link dropdown-toggle" [class.active]="openMega === 'manager'"
+                [attr.aria-expanded]="openMega === 'manager'" (click)="toggleMega('manager', $event)">
+          <span>{{ 'layout.mega.manager' | translate }}</span>
+          <svg class="icon icon-xs ms-1" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-expand"></use></svg>
+        </button>
+        <div class="dropdown-menu" [class.show]="openMega === 'manager'">
+          <it-megamenu mode="left-section">
+            <div megamenuLeftZone>
+              <h3 class="h5 mega-title">{{ 'layout.mega.manager' | translate }}</h3>
+              <p class="small mb-3">{{ 'layout.mega.manager_info' | translate }}</p>
+              <a class="mega-more" routerLink="/search" (click)="closeMega()">
+                {{ 'layout.mega.all_calls' | translate }}
+                <svg class="icon icon-xs icon-primary ms-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-arrow-right"></use></svg>
+              </a>
+            </div>
+            <ng-container megamenuLinkList>
+              @if (!managerCalls.length) {
+                <div class="col-12 col-lg-8">
+                  <p class="small text-secondary mt-3">{{ 'layout.mega.no_calls' | translate }}</p>
+                </div>
+              }
+              @for (column of columns(managerCalls); track $index) {
+                <div class="col-12" [class.col-lg-4]="newCallGroups.length" [class.col-lg-6]="!newCallGroups.length">
+                  <div class="link-list-wrapper">
+                    <ul class="link-list">
+                      @for (call of column; track call.objectId) {
+                        <li>
+                          <a class="list-item mega-call" [routerLink]="['/manage-call']"
+                             [queryParams]="{ 'call-type': call.objectTypeId, 'cmis:objectId': call.objectId }" (click)="closeMega()">
+                            <span class="mega-call-code">{{ call.codice }}</span>
+                            <span class="mega-call-meta">
+                              {{ call.objectTypeId | translate }}
+                              <span class="badge rounded-pill ms-1" [class.bg-success]="call.pubblicato" [class.bg-secondary]="!call.pubblicato">
+                                {{ (call.pubblicato ? 'call_manage.published' : 'call_manage.not_published') | translate }}
+                              </span>
+                            </span>
+                          </a>
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                </div>
+              }
+              @if (newCallGroups.length) {
+                <div class="col-12 col-lg-4 mega-new-call">
+                  <div class="link-list-wrapper">
+                    <h4 class="mega-section-title">{{ 'layout.mega.new_call' | translate }}</h4>
+                    @for (group of newCallGroups; track $index) {
+                      @if ($any(group).key) {
+                        <div class="mega-group-title">{{ typeLabel($any(group).key, group.label) }}</div>
+                      }
+                      <ul class="link-list">
+                        @for (type of group.items; track type.key) {
+                          <li>
+                            <a class="list-item" [routerLink]="['/manage-call']" [queryParams]="{ 'call-type': type.key }" (click)="closeMega()">
+                              <svg class="icon icon-xs icon-primary me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus-circle"></use></svg>
+                              <span>{{ typeLabel(type.key, type.label) }}</span>
+                            </a>
+                          </li>
+                        }
+                      </ul>
+                    }
+                  </div>
+                </div>
+              }
+            </ng-container>
+          </it-megamenu>
+        </div>
+      </li>
+    }
+    @if (commissionCalls.length) {
+      <li class="nav-item dropdown megamenu" [class.show]="openMega === 'commission'">
+        <button type="button" class="nav-link dropdown-toggle" [class.active]="openMega === 'commission'"
+                [attr.aria-expanded]="openMega === 'commission'" (click)="toggleMega('commission', $event)">
+          <span>{{ 'layout.mega.commission' | translate }}</span>
+          <svg class="icon icon-xs ms-1" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-expand"></use></svg>
+        </button>
+        <div class="dropdown-menu" [class.show]="openMega === 'commission'">
+          <it-megamenu mode="left-section">
+            <div megamenuLeftZone>
+              <h3 class="h5 mega-title">{{ 'layout.mega.commission' | translate }}</h3>
+              <p class="small mb-3">{{ 'layout.mega.commission_info' | translate }}</p>
+              @if (hasCommissionGender) {
+                <a class="mega-more" routerLink="/commission-gender" (click)="closeMega()">
+                  {{ 'layout.mega.commission_gender' | translate }}
+                  <svg class="icon icon-xs icon-primary ms-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-arrow-right"></use></svg>
+                </a>
+              }
+            </div>
+            <ng-container megamenuLinkList>
+              @for (column of columns(commissionOnlyCalls); track $index) {
+                <div class="col-12 col-lg-6">
+                  <div class="link-list-wrapper">
+                    <ul class="link-list">
+                      @for (call of column; track call.id) {
+                        <li>
+                          @if (call.id === 'commission-gender') {
+                            <a class="list-item mega-call" routerLink="/commission-gender" (click)="closeMega()">
+                              <span class="mega-call-code">{{ 'layout.mega.commission_gender' | translate }}</span>
+                            </a>
+                          } @else {
+                            <a class="list-item mega-call" [routerLink]="['/call-detail']" [queryParams]="{ callCode: call.title }" (click)="closeMega()">
+                              <span class="mega-call-code">{{ call.title }}</span>
+                            </a>
+                          }
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                </div>
+              }
+            </ng-container>
+          </it-megamenu>
+        </div>
+      </li>
+    }
     @for (menu of dropdowns; track menu.name) {
       <li class="nav-item">
         <it-dropdown mode="nav">

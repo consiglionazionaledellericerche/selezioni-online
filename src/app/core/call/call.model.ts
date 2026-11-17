@@ -38,6 +38,11 @@ export class Call extends Folder {
   public data_inizio_invio_domande: Date;
   @JsonProperty('jconon_call:data_fine_invio_domande_index', ISODateTimeConverter)
   public data_fine_invio_domande: Date;
+  /** Date iniziali del bando (modificabili finché non è pubblicato); quelle sopra sono le effettive, aggiornate dalle proroghe. */
+  @JsonProperty('jconon_call:data_inizio_invio_domande', ISODateTimeConverter, true)
+  public data_inizio_invio_domande_initial: Date;
+  @JsonProperty('jconon_call:data_fine_invio_domande', ISODateTimeConverter, true)
+  public data_fine_invio_domande_initial: Date;
   @JsonProperty('jconon_call:requisiti_link')
   public requisiti_link: string;
   @JsonProperty('jconon_call:requisiti_link_en')
@@ -197,6 +202,8 @@ export class Call extends Folder {
       this.settore_scientifico_tecnologico = undefined;
       this.data_inizio_invio_domande = undefined;
       this.data_fine_invio_domande = undefined;
+      this.data_inizio_invio_domande_initial = undefined;
+      this.data_fine_invio_domande_initial = undefined;
       this.requisiti_link = undefined;
       this.requisiti_link_en = undefined;
       this.requisiti = undefined;

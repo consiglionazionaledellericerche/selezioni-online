@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalRef, ModalService } from '../../shared/modal/modal.service';
-import { forkJoin, of } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { EMPTY, forkJoin, of } from 'rxjs';
+import { catchError, expand, reduce, switchMap } from 'rxjs/operators';
 import { DynamicComponent } from '../dynamic.component';
 import { Call } from '../../core/call/call.model';
 import { CacheService } from '../../core/cache.service';
@@ -15,6 +15,7 @@ import { Helpers } from '../../common/helpers/helpers';
 import { CallManagementCache, ManageCallService } from '../../core/call/manage-call.service';
 import { ManageDocumentComponent } from '../../core/document/manage-document.component';
 import { ChildrenListComponent } from '../../core/children/children-list.component';
+import { ChildrenService } from '../../core/children/children.service';
 import { Document } from '../../common/model/document.model';
 import { toBoolean } from './call-settings.component';
 
@@ -340,27 +341,101 @@ export class JcononAffixCallHelpDeskComponent extends DynamicComponent<Call> {
   selector: 'affix_tabCallAttachments',
   template: `
     <div *ngIf="!data?.objectId" class="alert alert-info" translate>call_manage.save_first</div>
-    <app-accordion *ngIf="data?.objectId && types" [isAnimated]="true" [closeOthers]="true" class="shadow">
-      <app-accordion-group #accordionGroup *ngFor="let type of types" panelClass="border border-light no-after">
-        <div class="d-flex align-items-start" accordion-heading>
-          <h4 class="p-1 text-truncate text-primary">{{type | translate}}</h4>
-          <span class="badge rounded-pill badge-outline-primary d-table ms-n1">{{childrenlist.count}}</span>
-          <div class="me-auto p-1 h4">
-            <button class="btn p-0" [itPopover]="'new'| translate" popoverTrigger="hover" (click)="openUpload($event, accordionGroup, type)">
-              <svg class="icon icon-success"><use href="/assets/bootstrap-italia/svg/sprites.svg#it-plus-circle"></use></svg>
-            </button>
-          </div>
+    <ng-container *ngIf="data?.objectId && types">
+      <div class="attachments-toolbar">
+        <button type="button" class="btn btn-primary btn-sm" (click)="openChooser()">
+          <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus-circle"></use></svg>
+          {{ 'call_manage.attachments.add' | translate }}
+        </button>
+        <div class="attachments-search">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-search"></use></svg>
+          <input type="search" [placeholder]="'call_manage.attachments.search' | translate" [(ngModel)]="search"
+                 [ngModelOptions]="{standalone: true}" [attr.aria-label]="'call_manage.attachments.search' | translate">
         </div>
-        <children-list #childrenlist [show_date]="'true'" [parentId]="data.objectId" [typeId]="type"
-          [macroCallId]="isMacroCall() ? data.objectId : undefined"></children-list>
-      </app-accordion-group>
-    </app-accordion>
-  `
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn" [ngClass]="onlyWithDocuments ? 'btn-primary' : 'btn-outline-primary'" (click)="onlyWithDocuments = true">
+            {{ 'call_manage.attachments.with_documents' | translate }} ({{ typesWithDocuments() }})
+          </button>
+          <button type="button" class="btn" [ngClass]="!onlyWithDocuments ? 'btn-primary' : 'btn-outline-primary'" (click)="onlyWithDocuments = false">
+            {{ 'call_manage.attachments.all_types' | translate }} ({{ types.length }})
+          </button>
+        </div>
+      </div>
+      <p class="small text-secondary mb-3">
+        {{ 'call_manage.attachments.summary' | translate:{ documents: totalDocuments(), types: typesWithDocuments() } }}
+      </p>
+      <div *ngIf="visibleTypes().length === 0" class="alert alert-info">
+        {{ (onlyWithDocuments && !search ? 'call_manage.attachments.none' : 'no_item') | translate }}
+      </div>
+      <app-accordion *ngIf="visibleTypes().length" [isAnimated]="true" [closeOthers]="false" class="shadow">
+        <app-accordion-group #accordionGroup *ngFor="let type of visibleTypes(); trackBy: trackType" panelClass="border border-light no-after"
+                             [isOpen]="type === lastUploaded">
+          <div class="d-flex align-items-start" accordion-heading>
+            <h4 class="p-1 text-truncate text-primary">{{ typeLabel(type) }}</h4>
+            <span class="badge rounded-pill d-table ms-n1" [ngClass]="count(type) ? 'bg-primary' : 'badge-outline-primary'">{{ count(type) }}</span>
+            <div class="me-auto p-1 h4">
+              <button class="btn p-0" [itPopover]="'new'| translate" popoverTrigger="hover" (click)="openUpload($event, accordionGroup, type)">
+                <svg class="icon icon-success"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus-circle"></use></svg>
+              </button>
+            </div>
+          </div>
+          <children-list #childrenlist [show_date]="'true'" [parentId]="data.objectId" [typeId]="type"
+            [macroCallId]="isMacroCall() ? data.objectId : undefined"></children-list>
+        </app-accordion-group>
+      </app-accordion>
+    </ng-container>
+
+    <!-- scelta della tipologia di allegato da caricare -->
+    <ng-template #chooser>
+      <div class="modal-header">
+        <h2 class="modal-title h5 no_toc">{{ 'call_manage.attachments.choose' | translate }}</h2>
+        <button class="btn-close" type="button" [attr.aria-label]="'layout.close' | translate" (click)="chooserRef?.hide()">
+          <svg class="icon"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-close"></use></svg>
+        </button>
+      </div>
+      <div class="modal-body pt-2 pb-3">
+        <div class="attachments-search mb-2 w-100">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-search"></use></svg>
+          <input type="search" [placeholder]="'call_manage.attachments.search' | translate" [(ngModel)]="chooserSearch"
+                 [ngModelOptions]="{standalone: true}" [attr.aria-label]="'call_manage.attachments.search' | translate">
+        </div>
+        <ul class="list-unstyled chooser-list mb-0">
+          <li *ngFor="let type of chooserTypes()">
+            <button type="button" class="chooser-item" (click)="chooseType(type)">
+              <span>{{ typeLabel(type) }}</span>
+              <span class="badge rounded-pill" [ngClass]="count(type) ? 'bg-primary' : 'bg-light text-secondary'">{{ count(type) }}</span>
+            </button>
+          </li>
+          <li *ngIf="chooserTypes().length === 0" class="small text-secondary px-2 py-2">{{ 'layout.no_results' | translate }}</li>
+        </ul>
+      </div>
+    </ng-template>
+  `,
+  styles: [`
+    .attachments-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-bottom: .75rem; }
+    .attachments-search { display: flex; align-items: center; gap: .4rem; flex: 1; min-width: 14rem; padding: .3rem .6rem;
+      border: 1px solid #d9dadb; border-radius: 4px; background: #fff; }
+    .attachments-search .icon { fill: #5d7083; flex-shrink: 0; }
+    .attachments-search input { border: 0; outline: 0; width: 100%; font-size: .95rem; background: transparent; }
+    .chooser-list { max-height: 60vh; overflow-y: auto; }
+    .chooser-item { display: flex; justify-content: space-between; align-items: center; gap: 1rem; width: 100%;
+      padding: .55rem .75rem; border: 0; border-bottom: 1px solid #eef1f4; background: #fff; text-align: left; color: #17324d; }
+    .chooser-item:hover, .chooser-item:focus { background: #f0f6fc; color: #0066cc; }
+  `]
 })
 export class JcononAffixCallAttachmentsComponent extends DynamicComponent<Call> {
 
   public types: string[];
+  public search = '';
+  public chooserSearch = '';
+  /** Solo le tipologie con documenti (default se ce ne sono), altrimenti tutte. */
+  public onlyWithDocuments = true;
+  /** Tipologia dell'ultimo caricamento: resta visibile e aperta. */
+  public lastUploaded: string;
+  public chooserRef: ModalRef;
+  private counts: { [type: string]: number } = {};
   private bsModalRef: ModalRef;
+  @ViewChild('chooser', { static: true }) chooserTemplate: TemplateRef<any>;
   @ViewChildren('childrenlist') childrenListComponent: ChildrenListComponent[];
 
   constructor(
@@ -369,7 +444,8 @@ export class JcononAffixCallAttachmentsComponent extends DynamicComponent<Call> 
     protected manageCallService: ManageCallService,
     protected modalService: ModalService,
     protected translateService: TranslateService,
-    protected apiMessageService: ApiMessageService
+    protected apiMessageService: ApiMessageService,
+    protected childrenService: ChildrenService
   ) {
     super(cacheService, changeDetectorRef);
   }
@@ -378,10 +454,83 @@ export class JcononAffixCallAttachmentsComponent extends DynamicComponent<Call> 
     super.ngOnInit();
     this.manageCallService.callManagementCache()
       .subscribe(cache => this.types = (cache.jsonlistCallAttachments || []).map(item => item.key));
+    this.loadCounts(true);
+  }
+
+  /** Conteggio dei documenti per tipologia, con una sola ricerca degli allegati del bando. */
+  loadCounts(initial = false): void {
+    if (!this.data || !this.data.objectId) {
+      return;
+    }
+    const filters = { parentId: this.data.objectId, fetchObject: false };
+    let pages = 0;
+    this.childrenService.getPageable(0, filters).pipe(
+      expand((page: any) => page.hasMoreItems && ++pages < 40 ? this.childrenService.getPageable(pages, filters) : EMPTY),
+      reduce((all: any[], page: any) => all.concat(page.items || []), [])
+    ).subscribe(items => {
+      const counts = {};
+      items.forEach((item: any) => counts[item.objectTypeId] = (counts[item.objectTypeId] || 0) + 1);
+      this.counts = counts;
+      if (initial && this.typesWithDocuments() === 0) {
+        this.onlyWithDocuments = false;
+      }
+      this.changeDetectorRef.markForCheck();
+    });
+  }
+
+  count(type: string): number {
+    return this.counts[type] || 0;
+  }
+
+  typesWithDocuments(): number {
+    return (this.types || []).filter(type => this.count(type) > 0).length;
+  }
+
+  totalDocuments(): number {
+    return Object.keys(this.counts).reduce((total, type) => total + this.counts[type], 0);
+  }
+
+  typeLabel(type: string): string {
+    const translated = this.translateService.instant(type);
+    return translated && translated !== type ? translated : type;
+  }
+
+  private matches(type: string, term: string): boolean {
+    const text = (term || '').trim().toLowerCase();
+    return !text || this.typeLabel(type).toLowerCase().includes(text) || type.toLowerCase().includes(text);
+  }
+
+  visibleTypes(): string[] {
+    return (this.types || []).filter(type =>
+      this.matches(type, this.search) &&
+      (!this.onlyWithDocuments || this.search || this.count(type) > 0 || type === this.lastUploaded));
+  }
+
+  /** Nella scelta: prima le tipologie con documenti, poi le altre in ordine alfabetico. */
+  chooserTypes(): string[] {
+    return (this.types || [])
+      .filter(type => this.matches(type, this.chooserSearch))
+      .sort((a, b) => (this.count(b) > 0 ? 1 : 0) - (this.count(a) > 0 ? 1 : 0) || this.typeLabel(a).localeCompare(this.typeLabel(b)));
+  }
+
+  trackType(index: number, type: string): string {
+    return type;
   }
 
   isMacroCall(): boolean {
     return ManageCallService.isMacroCall(this.data);
+  }
+
+  openChooser(): void {
+    this.chooserSearch = '';
+    this.chooserRef = this.modalService.show(this.chooserTemplate, { class: 'modal-lg' });
+  }
+
+  chooseType(type: string): void {
+    if (this.chooserRef) {
+      this.chooserRef.hide();
+    }
+    this.upload(type);
   }
 
   openUpload(event: any, accordion: any, typeId: string): boolean {
@@ -390,14 +539,20 @@ export class JcononAffixCallAttachmentsComponent extends DynamicComponent<Call> 
     if (!accordion.isOpen) {
       accordion.toggleOpen();
     }
+    this.upload(typeId);
+    return false;
+  }
+
+  private upload(typeId: string): void {
     const initialState = { parentId: this.data.objectId, typeId, upload: true };
     this.bsModalRef = this.modalService.show(ManageDocumentComponent, Object.assign({initialState}, { animated: true, class: 'modal-lg' }));
     this.bsModalRef.content.event.subscribe((document: Document) => {
       this.translateService.get('message.document.upload.success', {value: document.name}).subscribe((label) => {
         this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
       });
-      this.childrenListComponent.forEach(comp => comp.loadList());
+      this.lastUploaded = typeId;
+      this.loadCounts();
+      setTimeout(() => this.childrenListComponent.forEach(comp => comp.loadList()));
     });
-    return false;
   }
 }

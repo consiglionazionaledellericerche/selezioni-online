@@ -5,8 +5,8 @@ services:
   selezioni:
     image: docker.si.cnr.it/##{CONTAINER_ID}##
     environment:
-      API_URL: "http://cool-jconon.si.cnr.it"
-      OIDC_ENABLE: "false"
+      API_URL: "https://cool-jconon.test.si.cnr.it"
+      OIDC_ENABLE: "true"
     network_mode: bridge
     labels:
       SERVICE_NAME: ##{SERVICE_NAME}##

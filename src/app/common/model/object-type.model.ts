@@ -126,7 +126,9 @@ export class ObjectType {
       return '';
     }
     const parts = key.replace(/^[FDP]:/, '').split(':');
-    const name = (parts[0] || key).replace(/^jconon_(call|application|attachment)_?/, '').replace(/_/g, ' ').trim() || key;
+    // sottotipi del tipo "folder_<nome>" (es. F:jconon_call_tind:folder_concorsi_pubblici): conta il nome dopo folder_
+    const sub = parts[1] && parts[1].startsWith('folder_') ? parts[1].substring('folder_'.length) : '';
+    const name = (sub || parts[0] || key).replace(/^jconon_(call|application|attachment)_?/, '').replace(/_/g, ' ').trim() || key;
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 }

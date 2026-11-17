@@ -114,13 +114,24 @@ import { Sede } from '../../common/model/sede.model';
         <fieldset class="form-block">
           <legend class="form-block-title">{{ 'call_manage.block.period' | translate }}</legend>
           <div class="row g-3">
+            <div class="col-12" *ngIf="data.pubblicato">
+              <p class="small text-secondary mb-0">{{ 'call_manage.dates.published_info' | translate }}</p>
+            </div>
             <div class="form-group col-md-6">
               <app-control-datepicker [time]="true" [inline]="true" [label]="'label.jconon_call.data_inizio_invio_domande' | translate"
-                formControlName="jconon_call:data_inizio_invio_domande_index"></app-control-datepicker>
+                formControlName="jconon_call:data_inizio_invio_domande"></app-control-datepicker>
+              <div class="effective-date" *ngIf="data.data_inizio_invio_domande">
+                {{ 'call_manage.dates.effective' | translate }} <strong>{{ data.data_inizio_invio_domande | date:'dd/MM/yyyy HH:mm' }}</strong>
+                <span *ngIf="changed(data.data_inizio_invio_domande_initial, data.data_inizio_invio_domande)" class="badge rounded-pill bg-warning text-dark ms-1">{{ 'call_manage.dates.extended' | translate }}</span>
+              </div>
             </div>
             <div class="form-group col-md-6">
               <app-control-datepicker [time]="true" [inline]="true" [label]="'label.jconon_call.data_fine_invio_domande' | translate"
-                formControlName="jconon_call:data_fine_invio_domande_index"></app-control-datepicker>
+                formControlName="jconon_call:data_fine_invio_domande"></app-control-datepicker>
+              <div class="effective-date" *ngIf="data.data_fine_invio_domande">
+                {{ 'call_manage.dates.effective' | translate }} <strong>{{ data.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm' }}</strong>
+                <span *ngIf="changed(data.data_fine_invio_domande_initial, data.data_fine_invio_domande)" class="badge rounded-pill bg-warning text-dark ms-1">{{ 'call_manage.dates.extended' | translate }}</span>
+              </div>
             </div>
           </div>
         </fieldset>
@@ -199,10 +210,12 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
         new FormControl(this.data.requisiti, Validators.required));
       this.form.addControl('jconon_call:requisiti_en', 
         new FormControl(this.data.requisiti_en));
-      this.form.addControl('jconon_call:data_inizio_invio_domande_index', 
-        new FormControl(this.data.data_inizio_invio_domande));
-      this.form.addControl('jconon_call:data_fine_invio_domande_index', 
-        new FormControl(this.data.data_fine_invio_domande));
+      // si modificano le date iniziali (jconon_call:data_*_invio_domande): il backend le copia nelle effettive
+      // (_index) finché il bando non è pubblicato; dopo la pubblicazione le effettive cambiano solo con le proroghe
+      this.form.addControl('jconon_call:data_inizio_invio_domande',
+        new FormControl({ value: this.data.data_inizio_invio_domande_initial || this.data.data_inizio_invio_domande, disabled: !!this.data.pubblicato }));
+      this.form.addControl('jconon_call:data_fine_invio_domande',
+        new FormControl({ value: this.data.data_fine_invio_domande_initial || this.data.data_fine_invio_domande, disabled: !!this.data.pubblicato }));
     }
 
     public isEnglishCallToggle(): boolean {
@@ -214,4 +227,9 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
       this.form.controls['jconon_call:sede'].patchValue(sede ? sede.descrizione : '');
     }
 
+
+  /** La data effettiva è diversa da quella iniziale (proroga o riapertura). */
+  changed(initial: Date, effective: Date): boolean {
+    return !!initial && !!effective && new Date(initial).getTime() !== new Date(effective).getTime();
+  }
 }  

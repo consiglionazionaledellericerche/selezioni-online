@@ -53,7 +53,7 @@ import { ExportApplicationsComponent } from './shared/export-applications.compon
               <span button class="d-inline-flex align-items-center">{{ 'call_manage.actions' | translate }}</span>
               <ng-container list>
                 <li><a class="dropdown-item list-item" href="javascript:" [class.disabled]="publishing" (click)="onPublish()">
-                  <svg class="icon icon-sm icon-primary me-2"><use [attr.href]="'/bootstrap-italia/dist/svg/sprites.svg#' + (entity.pubblicato ? 'it-password-invisible' : 'it-password-visible')"></use></svg>{{ (entity.pubblicato ? 'call_manage.unpublish' : 'call_manage.publish') | translate }}</a></li>
+                  <svg class="icon icon-sm icon-primary me-2"><use [attr.href]="'/bootstrap-italia/dist/svg/sprites.svg#' + (entity.pubblicato ? 'it-password-invisible' : 'it-horn')"></use></svg>{{ (entity.pubblicato ? 'call_manage.unpublish' : 'call_manage.publish') | translate }}</a></li>
                 <li><a class="dropdown-item list-item" [routerLink]="['/call-commission']" [queryParams]="{callId: entity.objectId}">
                   <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-user"></use></svg>{{ 'call_manage.commission.title' | translate }}</a></li>
                 <li><a class="dropdown-item list-item" [routerLink]="['/call-labels']" [queryParams]="{callId: entity.objectId}">
@@ -65,9 +65,9 @@ import { ExportApplicationsComponent } from './shared/export-applications.compon
                 <li><a class="dropdown-item list-item" [routerLink]="['/call-communications']" [queryParams]="{callId: entity.objectId, kind: 'comunicazioni'}">
                   <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-mail"></use></svg>{{ 'communications.kind.comunicazioni' | translate }}</a></li>
                 <li><a class="dropdown-item list-item" href="javascript:" (click)="onExport()">
-                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-download"></use></svg>{{ 'export.menu' | translate }}</a></li>
+                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-xlsx"></use></svg>{{ 'export.menu' | translate }}</a></li>
                 <li *ngIf="isConcorsi()"><a class="dropdown-item list-item" [routerLink]="['/call-permissions']" [queryParams]="{callId: entity.objectId}">
-                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-locked"></use></svg>{{ 'call_manage.permissions.title' | translate }}</a></li>
+                  <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-key"></use></svg>{{ 'call_manage.permissions.title' | translate }}</a></li>
                 <ng-container *ngIf="isMacroCall()">
                   <li><a class="dropdown-item list-item" href="javascript:" (click)="onCreateChild()">
                     <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus-circle"></use></svg>{{ 'call_manage.child.title' | translate }}</a></li>

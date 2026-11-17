@@ -89,6 +89,8 @@ import { CallService } from './call.service';
               <div class="detail-html" [innerHtml]="text(call.requisiti, call.requisiti_en)"></div>
             </div>
           </section>
+
+          <app-call-attachments [callId]="call.objectId"></app-call-attachments>
         </div>
 
         <!-- scadenza e azioni -->
@@ -96,16 +98,41 @@ import { CallService } from './call.service';
           <div class="detail-sticky">
             <div class="card shadow-sm rounded mb-4 side-card">
               <div class="card-body">
-                <dl class="mb-3">
-                  <dt class="small text-secondary fw-normal">{{ 'layout.call_start' | translate }}</dt>
-                  <dd class="h6">{{ call.data_inizio_invio_domande | date:'dd/MM/yyyy HH:mm' }}</dd>
-                  <dt class="small text-secondary fw-normal">{{ 'call.data_fine_invio_domande' | translate }}</dt>
-                  <dd class="h5 mb-0">{{ call.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm' }}</dd>
-                  <dd *ngIf="status() !== 'closed' && daysLeft() !== null" class="small mb-0"
-                      [ngClass]="status() === 'expiring' ? 'text-danger fw-semibold' : 'text-secondary'">
-                    {{ (daysLeft() === 0 ? 'layout.status_today' : 'layout.status_days_left') | translate:{value: daysLeft()} }}
-                  </dd>
-                </dl>
+                <div class="date-row">
+                  <div class="date-block">
+                    <div class="date-label">{{ 'layout.call_start' | translate }}</div>
+                    <div class="date-stack">
+                      <app-date-tile [date]="call.data_inizio_invio_domande" variant="success"></app-date-tile>
+                      <div class="date-time">
+                        <svg class="icon icon-sm" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clock"></use></svg>
+                        {{ call.data_inizio_invio_domande | date:'HH:mm' }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="date-block">
+                    <div class="date-label">{{ 'layout.call_deadline' | translate }}</div>
+                    <div class="date-stack">
+                      <app-date-tile [date]="initialDeadline()" [variant]="status() === 'closed' ? 'secondary' : (status() === 'expiring' ? 'danger' : 'primary')"></app-date-tile>
+                      <div class="date-time">
+                        <svg class="icon icon-sm" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clock"></use></svg>
+                        {{ initialDeadline() | date:'HH:mm' }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="extended()" class="extended-deadline">
+                  <app-date-tile [date]="call.data_fine_invio_domande" variant="warning"></app-date-tile>
+                  <div>
+                    <div class="fw-semibold">{{ 'call_manage.dates.extended_to' | translate }}</div>
+                    <div class="small">{{ call.data_fine_invio_domande | date:'dd/MM/yyyy' }}
+                      {{ 'layout.at_time' | translate }} {{ call.data_fine_invio_domande | date:'HH:mm' }}</div>
+                  </div>
+                </div>
+                <p *ngIf="status() !== 'closed' && daysLeft() !== null" class="small mt-2 mb-3"
+                   [ngClass]="status() === 'expiring' ? 'text-danger fw-semibold' : 'text-secondary'">
+                  <svg class="icon icon-xs" [class.icon-danger]="status() === 'expiring'" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clock"></use></svg>
+                  {{ (daysLeft() === 0 ? 'layout.status_today' : 'layout.status_days_left') | translate:{value: daysLeft()} }}
+                </p>
                 <app-call-prorogations [callId]="call.objectId" class="mb-3"></app-call-prorogations>
                 <app-call-actions [item]="call" mode="panel" (deleted)="router.navigate(['/'])"></app-call-actions>
               </div>
@@ -121,6 +148,13 @@ import { CallService } from './call.service';
     .detail-html { line-height: 1.6; }
     .detail-html ::ng-deep ol, .detail-html ::ng-deep ul { padding-left: 1.5rem; }
     .detail-list dt { font-weight: 600; color: #5d7083; }
+    .date-row { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; margin-bottom: .75rem; }
+    .date-stack { display: inline-flex; flex-direction: column; align-items: center; gap: .4rem; }
+    .date-label { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #5d7083; margin-bottom: .5rem; }
+    .date-time { display: flex; align-items: center; gap: .3rem; font-size: .95rem; font-weight: 600; color: #17324d; white-space: nowrap; }
+    .date-time .icon { fill: #5d7083; }
+    .extended-deadline { display: flex; align-items: center; gap: 1rem; padding: .75rem; margin-top: .25rem;
+      border-radius: 8px; background: #fff6e5; color: #5c3a00; }
     .detail-list dd { margin-bottom: .75rem; }
     .side-card { border-top: 4px solid #0066cc; }
     @media (min-width: 992px) { .detail-sticky { position: sticky; top: 1.5rem; } }
@@ -194,5 +228,17 @@ export class CallDetailPageComponent implements OnInit {
 
   public newApplication(): void {
     this.router.navigate(['/manage-application'], { queryParams: { callId: this.call.objectId } });
+  }
+
+  /** Scadenza originale del bando (data iniziale); se manca, quella effettiva. */
+  initialDeadline(): Date {
+    return this.call && ((this.call as any).data_fine_invio_domande_initial || this.call.data_fine_invio_domande);
+  }
+
+  /** Scadenza effettiva diversa da quella originale: il bando è stato prorogato o riaperto. */
+  extended(): boolean {
+    const initial = this.call && (this.call as any).data_fine_invio_domande_initial;
+    const effective = this.call && this.call.data_fine_invio_domande;
+    return !!initial && !!effective && new Date(initial).getTime() !== new Date(effective).getTime();
   }
 }

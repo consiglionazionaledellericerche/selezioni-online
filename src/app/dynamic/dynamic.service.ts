@@ -64,6 +64,7 @@ import { JcononAspectToggleWithSingleFieldComponent } from './aspect/toggle-with
 import { JcononAspectContrattoTDConcorsoComponent } from './aspect/contratto-td-concorso.component';
 import { JcononAspectIdoneoPrecedentiGraduatorieComponent } from './aspect/idoneo-precedenti-graduatorie.component';
 import { JcononAspectGenericComponent } from './aspect/generic-aspect.component';
+import { JcononAttachmentGenericEditComponent, JcononAttachmentGenericShowComponent } from './attachment/generic-attachment.component';
 import { JcononAspectAbilitazioneProfessioneIngegnereComponent } from './aspect/abilitazione-professione-ingegnere.component';
 import { JcononAspectUlterioreLaureaComponent } from './aspect/ulteriore-laurea.component';
 import { JcononAspectUlterioreDottoratoComponent } from './aspect/ulteriore-dottorato.component';
@@ -903,7 +904,7 @@ export class DynamicService {
         if (form) {
             (<AdMetadataComponent>componentRef.instance).form = form;
         }
-        if (this.isGenericAspect(selector)) {
+        if (this.isGenericAspect(selector) || this.isGenericAttachment(selector)) {
             (<any>componentRef.instance).aspectType = selector;
         }
         let params = this.getParams(selector);
@@ -923,6 +924,9 @@ export class DynamicService {
         viewContainerRef.clear();
     
         const componentRef = viewContainerRef.createComponent(this.editComponents.get(selector));
+        if (this.isGenericAttachmentEdit(selector)) {
+            (<any>componentRef.instance).aspectType = selector;
+        }
         (<AdMetadataComponent>componentRef.instance).data = cmisObject;
         if (form) {
             (<AdMetadataComponent>componentRef.instance).form = form;
@@ -946,7 +950,23 @@ export class DynamicService {
         // aspect senza componente dedicato: campi letti dal bulkinfo del tipo
         if (this.isGenericAspect(selector))
             return JcononAspectGenericComponent;
+        // allegato senza componente dedicato: nome, titolo, descrizione e metadati dal bulkinfo
+        if (this.isGenericAttachment(selector))
+            return JcononAttachmentGenericShowComponent;
         return JcononAttachmentShowComponent;
+    }
+
+    /** Tipo di allegato (D:...) senza visualizzazione dedicata (assente o quella standard). */
+    isGenericAttachment(selector: string): boolean {
+        const instance = this.classes[selector];
+        return !!selector && selector.startsWith('D:') &&
+            (!instance || !instance.showcomponent || instance.showcomponent === JcononAttachmentShowComponent);
+    }
+
+    /** Tipo di allegato (D:...) senza componente di modifica dedicato. */
+    isGenericAttachmentEdit(selector: string): boolean {
+        const instance = this.classes[selector];
+        return !!selector && selector.startsWith('D:') && !(instance && instance.editcomponent);
     }
 
     /** Aspect (P:...) non registrato: viene reso dal componente generico basato sul bulkinfo. */
@@ -958,6 +978,9 @@ export class DynamicService {
         var instance = this.classes[selector];
         if (instance && instance.editcomponent)
             return instance.editcomponent;
+        // allegato senza modifica dedicata: titolo, descrizione e metadati del tipo dal bulkinfo
+        if (this.isGenericAttachmentEdit(selector))
+            return JcononAttachmentGenericEditComponent;
         return JcononAttachmentEditComponent;
     }
 
