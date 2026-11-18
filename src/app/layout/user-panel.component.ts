@@ -31,7 +31,6 @@ import { AccordionComponent, AccordionGroupComponent } from '../shared/ui/accord
             <svg class="icon icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-close-big"></use></svg>
           </button>
           <h2 class="h4 mb-0 flex-grow-1 text-truncate">{{ user.firstName }} {{ user.lastName }}</h2>
-          <span class="avatar size-lg bg-primary text-white fw-semibold ms-2" aria-hidden="true">{{ initials() }}</span>
         </div>
         <div class="offcanvas-body p-0">
           <div class="px-4 py-3 border-bottom small">

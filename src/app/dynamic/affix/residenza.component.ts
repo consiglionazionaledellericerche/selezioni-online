@@ -41,7 +41,7 @@ import { CallService } from '../../core/call/call.service';
               *ngIf="!isForeign()"
               [term]="''"
               [template]="comuniTemplate"
-              [path]="callService.getComuniMapping()"
+              [path]="callService.getComuniAttiviMapping()"
               [label]="'label.jconon_application.comune_residenza'| translate"
               [labelactive]="'true'"
               (onChangeEvent)="onChangeComune($event)"

@@ -73,6 +73,10 @@ export class Select2Template {
     }
   }
 
+  private static escape(value: any): string {
+    return String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
   public static comuni(entity, selection: boolean, placeholder: string): string {
     if (entity instanceof Array) {
       return placeholder;
@@ -80,9 +84,15 @@ export class Select2Template {
     if (selection) {
       return entity.id;
     } else {
+      const comune = entity.obj || {};
       let html = '<div class="align-items-start">';
-      html += '<span class="fw-bold">' + entity.obj.nomeComune + '</span>';
-      html += '<span> [' + entity.obj.provincia + ']</span>';
+      html += '<span class="fw-bold">' + Select2Template.escape(comune.nomeComune) + '</span>';
+      html += '<span> [' + Select2Template.escape(comune.provincia) + ']</span>';
+      // comune soppresso (archivio ANPR): utile per i luoghi di nascita, va riconosciuto a colpo d'occhio
+      if (comune.dataCessazione) {
+        const anno = String(comune.dataCessazione).substring(0, 4);
+        html += ' <span class="badge bg-secondary ms-1">soppresso nel ' + Select2Template.escape(anno) + '</span>';
+      }
       html += '</div>';
       return html;
     }

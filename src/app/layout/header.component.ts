@@ -60,6 +60,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public navbarMenu: NavbarMenu = null;
   public lang = 'it';
   public panelOpen = false;
+
+  /** Iniziali di nome e cognome, mostrate su smartphone nel pulsante dell'utente. */
+  initials(): string {
+    return ((this.user?.firstName || '').charAt(0) + (this.user?.lastName || '').charAt(0)).toUpperCase() || 'U';
+  }
   private readonly subscriptions = new Subscription();
 
   ngOnInit(): void {

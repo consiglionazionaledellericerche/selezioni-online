@@ -672,6 +672,7 @@
       "caller.user": "You are not allowed to edit applications submitted by other users."
     },
     "validation": {
+      "required_fields": "Please fill in the highlighted required fields.",
       "maxlength5000": "Must not exceed 5000 characters"
     }
   },

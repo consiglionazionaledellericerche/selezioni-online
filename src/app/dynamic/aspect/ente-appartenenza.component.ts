@@ -29,7 +29,7 @@ import { CallService } from '../../core/call/call.service';
                 <app-control-select-model
                   [term]="''"
                   [template]="comuniTemplate"
-                  [path]="callService.getComuniMapping()"
+                  [path]="callService.getComuniAttiviMapping()"
                   [label]="'label.jconon_application.comune_ente_appartenenza'| translate"
                   [labelactive]="'true'"
                   (onChangeEvent)="onChangeComune($event)"

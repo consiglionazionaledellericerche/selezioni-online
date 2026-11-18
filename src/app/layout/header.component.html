@@ -20,8 +20,11 @@
     @if (user) {
       <button type="button" class="btn btn-primary btn-full btn-icon user-button ms-2" (click)="panelOpen = true"
               [attr.aria-expanded]="panelOpen" aria-haspopup="dialog">
-        <span class="rounded-icon"><it-icon name="user" color="primary"></it-icon></span>
-        <span class="d-none d-lg-block">{{ user.firstName }} {{ user.lastName }}</span>
+        <!-- su smartphone le iniziali dell'utente al posto dell'icona -->
+        <span class="rounded-icon user-initials d-lg-none" aria-hidden="true">{{ initials() }}</span>
+        <span class="rounded-icon d-none d-lg-inline-flex"><it-icon name="user" color="primary"></it-icon></span>
+        <span class="visually-hidden d-lg-none">{{ user.firstName }} {{ user.lastName }}</span>
+        <span class="d-none d-lg-block ps-2">{{ user.firstName }} {{ user.lastName }}</span>
         <it-icon name="expand" color="light" size="sm" class="d-none d-lg-block ms-1"></it-icon>
       </button>
     } @else {

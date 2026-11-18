@@ -1113,3 +1113,12 @@ app-form-layout .form-control.is-invalid:focus {
     overflow-y: auto;
   }
 }
+
+// pulsante utente su smartphone: iniziali nel cerchio bianco al posto dell'icona
+.user-button .rounded-icon.user-initials {
+  color: #0066cc;
+  font-weight: 700;
+  font-size: .875rem;
+  line-height: 1;
+  letter-spacing: .02em;
+}

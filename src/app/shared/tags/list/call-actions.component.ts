@@ -1,3 +1,4 @@
+import { CallAttachmentsModalComponent } from '../../../dynamic/affix/call-attachments-modal.component';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Call } from '../../../core/call/call.model';
@@ -49,8 +50,14 @@ interface ManageAction {
           <svg class="icon icon-primary icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-settings"></use></svg>
           <span class="visually-hidden">{{ 'call.menuitem.update' | translate }}</span>
         </a>
-        <app-show-children-modal *ngIf="mode === 'compact'" [parentId]="item.objectId" [modal_title]="'call.attach_to' | translate:{value: item.codice}">
+        <app-show-children-modal *ngIf="mode === 'compact' && !canUpdateCall()" [parentId]="item.objectId" [modal_title]="'call.attach_to' | translate:{value: item.codice}">
         </app-show-children-modal>
+        <!-- chi può modificare il bando: stessa gestione degli allegati della modifica del bando -->
+        <button *ngIf="mode === 'compact' && canUpdateCall()" type="button" class="btn btn-outline-primary btn-sm btn-action"
+                (click)="openAttachments()" [itTooltip]="'attach' | translate">
+          <svg class="icon icon-sm icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-pdf"></use></svg>
+          <span class="visually-hidden">{{ 'attach' | translate }}</span>
+        </button>
         <it-dropdown *ngIf="mode === 'compact' && manageActions().length" mode="button" color="secondary" class="more-actions">
           <span button class="d-inline-flex align-items-center" [itTooltip]="'more.actions' | translate">
             <svg class="icon icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-more-items"></use></svg>
@@ -86,8 +93,11 @@ interface ManageAction {
           </a>
         </li>
         <li>
-          <app-show-children-modal variant="link" linkLabel="layout.call_documents" [parentId]="item.objectId"
+          <app-show-children-modal *ngIf="!canUpdateCall()" variant="link" linkLabel="layout.call_documents" [parentId]="item.objectId"
             [modal_title]="'call.attach_to' | translate:{value: item.codice}"></app-show-children-modal>
+          <a *ngIf="canUpdateCall()" href="javascript:void(0)" class="action-link" (click)="openAttachments()">
+            <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-pdf"></use></svg>{{ 'layout.call_documents' | translate }}
+          </a>
         </li>
       </ul>
       <ng-container *ngIf="mode === 'panel' && manageActions().length">
@@ -217,6 +227,11 @@ export class CallActionsComponent {
 
   openExport(): void {
     this.modalService.show(ExportApplicationsComponent, { initialState: { call: this.item }, class: 'modal-lg' });
+  }
+
+  /** Allegati del bando con la gestione completa (tipologie, caricamento, modifica), come nella modifica del bando. */
+  openAttachments(): void {
+    this.modalService.show(CallAttachmentsModalComponent, { initialState: { call: this.item }, class: 'modal-xl' });
   }
 
   private confirm(body: string, action: () => void): void {

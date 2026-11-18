@@ -24,7 +24,7 @@ import { Select2Template } from '../../common/template/select2-template';
               <app-control-select-model
                 [term]="''"
                 [template]="comuniTemplate"
-                [path]="callService.getComuniMapping()"
+                [path]="callService.getComuniAttiviMapping()"
                 [label]="'label.jconon_application.comune_liste_elettorali'| translate"
                 [labelactive]="'true'"
                 (onChangeEvent)="onChangeComune($event)"

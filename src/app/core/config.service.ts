@@ -13,8 +13,9 @@ export class ConfigService implements TranslateLoader{
 
   public static CONFIG_URL = '/assets/config/config.json';
   public static URL_CACHE = '/v1/cache';
-  public static URL_PAESI = '/rest/static/json/paesi.json';
-  public static URL_COMUNI = '/rest/static/json/comuni.json';
+  // dati ufficiali ISTAT/ANPR serviti da cool-jconon (al posto dei file statici paesi.json e comuni.json)
+  public static URL_PAESI = '/openapi/v1/territori/paesi.json';
+  public static URL_COMUNI = '/openapi/v1/territori/comuni';
   public static URL_SEDI = '/rest/sedi';
 
   public static URL_OAUTH_LOGIN = '/security/login';

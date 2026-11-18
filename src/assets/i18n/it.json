@@ -132,6 +132,7 @@
       }
     },
     "validation": {
+      "required_fields": "Compilare i campi obbligatori evidenziati.",
       "required": "Campo obbligatorio!",
       "requiredTrue": "Il valore deve essere positivo!",
       "email": "E-Mail non valida!",

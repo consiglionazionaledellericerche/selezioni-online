@@ -22,6 +22,9 @@ import { ObjectType } from '../../common/model/object-type.model';
         <form *ngIf="upload" [formGroup]="form" class="mt-3">
           <app-control-attachment formControlName="file"></app-control-attachment>
         </form>
+        <div *ngIf="submitted && form.invalid" class="alert alert-danger mt-3 mb-0" role="alert">
+          {{ 'message.validation.required_fields' | translate }}
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary" (click)="save()">{{'save' | translate}}</button>
@@ -46,6 +49,7 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
   @Input() aspect: string[] = [];  
   @Input() upload: boolean = true;
   public event: EventEmitter<Document> = new EventEmitter();
+  public submitted = false;
 
   public setEntity(entity: Document) {
     this.entity = entity;
@@ -79,18 +83,20 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
   }
 
   save(): void {
-    Object.keys(this.form.controls).forEach(control => {
-      if (this.form.controls[control].status === 'INVALID') {
-        this.form.controls[control].markAsDirty({onlySelf: true});
-        this.form.controls[control].markAsTouched({onlySelf: true});
-        const invalidControl = this.el.nativeElement
-          .querySelector('[formcontrolname="' + control + '"]')
-          .querySelector('input');
-        if (invalidControl) {
-          invalidControl.focus();
+    this.submitted = true;
+    // tutti i campi obbligatori (anche quelli dei metadati del tipo) devono risultare compilati
+    this.form.markAllAsTouched();
+    Object.keys(this.form.controls).forEach(control => this.form.controls[control].markAsDirty({onlySelf: true}));
+    if (this.form.invalid) {
+      setTimeout(() => {
+        const invalid: HTMLElement = this.el.nativeElement.querySelector(
+          'input.ng-invalid, select.ng-invalid, textarea.ng-invalid, .ng-invalid:not(form) input, .ng-invalid:not(form) select, .ng-invalid:not(form) textarea');
+        if (invalid) {
+          invalid.focus();
         }
-      }
-    });
+      });
+      return;
+    }
     if (!this.form.invalid) {
       if(this.entity) {
         this.service.updateDocument(this.buildInstance(), this.form.value.file, this.form.value).subscribe((result) => {

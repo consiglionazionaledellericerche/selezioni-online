@@ -51,7 +51,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
           <div *ngIf="group.head" class="generic-group" [class.open]="groupOpen(group)">
             <ng-container *ngFor="let field of [group.head]"><div class="generic-field" [class.wide]="isWide(field)">
             <ng-container [ngSwitch]="field.kind">
-              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="labelOf(field.label)"
+              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)"
                 [formControlName]="field.property"></app-control-toggle>
               <app-control-toggle *ngSwitchCase="'aspect'" [inline]="true" [label]="labelOf(field.label)"
                 [formControl]="field.control"></app-control-toggle>
@@ -71,11 +71,11 @@ export const GENERIC_FIELDS_TEMPLATE = `
                 <textarea [id]="id(field)" class="form-control" rows="3" [formControlName]="field.property"></textarea>
               </div>
               <div *ngSwitchCase="'date'" class="form-group mb-0">
-                <app-control-datepicker [inline]="true" [time]="!!field.time" [label]="labelOf(field.label)"
+                <app-control-datepicker [inline]="true" [time]="!!field.time" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-datepicker>
               </div>
               <div *ngSwitchDefault class="form-group mb-0">
-                <app-control-text type="text" [inline]="true" [labelactive]="true" [label]="labelOf(field.label)"
+                <app-control-text type="text" [inline]="true" [labelactive]="true" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-text>
               </div>
             </ng-container>
@@ -84,7 +84,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
               <ng-container *ngFor="let field of group.fields">
                 <ng-container *ngIf="isVisible(field)"><div class="generic-field" [class.wide]="isWide(field)">
             <ng-container [ngSwitch]="field.kind">
-              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="labelOf(field.label)"
+              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)"
                 [formControlName]="field.property"></app-control-toggle>
               <app-control-toggle *ngSwitchCase="'aspect'" [inline]="true" [label]="labelOf(field.label)"
                 [formControl]="field.control"></app-control-toggle>
@@ -104,11 +104,11 @@ export const GENERIC_FIELDS_TEMPLATE = `
                 <textarea [id]="id(field)" class="form-control" rows="3" [formControlName]="field.property"></textarea>
               </div>
               <div *ngSwitchCase="'date'" class="form-group mb-0">
-                <app-control-datepicker [inline]="true" [time]="!!field.time" [label]="labelOf(field.label)"
+                <app-control-datepicker [inline]="true" [time]="!!field.time" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-datepicker>
               </div>
               <div *ngSwitchDefault class="form-group mb-0">
-                <app-control-text type="text" [inline]="true" [labelactive]="true" [label]="labelOf(field.label)"
+                <app-control-text type="text" [inline]="true" [labelactive]="true" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-text>
               </div>
             </ng-container>
@@ -121,7 +121,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
             <ng-container *ngFor="let field of group.fields">
               <ng-container *ngIf="isVisible(field)"><div class="generic-field" [class.wide]="isWide(field)">
             <ng-container [ngSwitch]="field.kind">
-              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="labelOf(field.label)"
+              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)"
                 [formControlName]="field.property"></app-control-toggle>
               <app-control-toggle *ngSwitchCase="'aspect'" [inline]="true" [label]="labelOf(field.label)"
                 [formControl]="field.control"></app-control-toggle>
@@ -141,11 +141,11 @@ export const GENERIC_FIELDS_TEMPLATE = `
                 <textarea [id]="id(field)" class="form-control" rows="3" [formControlName]="field.property"></textarea>
               </div>
               <div *ngSwitchCase="'date'" class="form-group mb-0">
-                <app-control-datepicker [inline]="true" [time]="!!field.time" [label]="labelOf(field.label)"
+                <app-control-datepicker [inline]="true" [time]="!!field.time" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-datepicker>
               </div>
               <div *ngSwitchDefault class="form-group mb-0">
-                <app-control-text type="text" [inline]="true" [labelactive]="true" [label]="labelOf(field.label)"
+                <app-control-text type="text" [inline]="true" [labelactive]="true" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-text>
               </div>
             </ng-container>
@@ -377,6 +377,11 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
     this.changeDetectorRef.markForCheck();
   }
 
+  /** Etichetta con l'asterisco dei campi obbligatori (per i controlli che ricevono l'etichetta come input). */
+  fieldLabel(field: GenericField): string {
+    return this.labelOf(field.label) + (field.required ? ' *' : '');
+  }
+
   id(field: GenericField): string {
     return 'ga-' + field.property.replace(/[^A-Za-z0-9]/g, '-');
   }
@@ -420,8 +425,10 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       } else if (inputType === 'TEXTAREA' || widget.includes('wysiwyg') || widget.includes('textarea')) {
         kind = 'textarea';
       }
-      const required = !!(def.jsonvalidator && (def.jsonvalidator.required === true || def.jsonvalidator.required === 'true'))
-        || def.required === true || def.required === 'true';
+      // nei bulkinfo legacy l'obbligatorietà è sia jsonvalidator required sia requiredWidget
+      const validator = def.jsonvalidator || {};
+      const required = [validator.required, validator.requiredWidget, def.required, def.requiredWidget]
+        .some(v => v === true || v === 'true');
       let value = def.val !== undefined && def.val !== null ? def.val : null;
       if (kind === 'toggle') {
         value = this.yesValues.includes(String(Array.isArray(value) ? value[0] : value).toLowerCase());

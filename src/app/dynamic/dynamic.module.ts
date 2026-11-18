@@ -1,3 +1,4 @@
+import { CallAttachmentsModalComponent } from './affix/call-attachments-modal.component';
 import { ReperibilitaModalComponent } from './affix/reperibilita-modal.component';
 import { AuthorityPickerComponent } from '../shared/ui/authority-picker.component';
 import { ItDropdownModule, ItPopoverDirective, ItTooltipDirective } from 'design-angular-kit';
@@ -94,6 +95,7 @@ import { ConfigService } from '../core/config.service';
         JcononAffixDichiarazioniConclusiveComponent,
         JcononAffixReperibilitaComponent,
         ReperibilitaModalComponent,
+        CallAttachmentsModalComponent,
         JcononAffixCallDetailComponent,
         JcononAffixCallSettingsComponent,
         JcononAffixCallAspirantDetailComponent,

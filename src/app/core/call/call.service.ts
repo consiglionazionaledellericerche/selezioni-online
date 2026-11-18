@@ -90,8 +90,14 @@ export class CallService extends CommonService<Call> {
     return ConfigService.API_BASE + super.getSelect2Mapping();
   }
 
+  /** Comuni italiani, anche soppressi (archivio ANPR interno a cool-jconon). */
   public getComuniMapping(): string {
-    return ConfigService.API_BASE + this.getRequestMapping() + '/comuni';
+    return ConfigService.API_BASE + '/v1/territori/comuni';
+  }
+
+  /** Solo comuni in vigore: residenza, recapiti, ente di appartenenza, liste elettorali. */
+  public getComuniAttiviMapping(): string {
+    return this.getComuniMapping() + '?attivi=true';
   }
 
   public getPageOffset(): number {
