@@ -20,9 +20,6 @@ export class Group {
   public static CONCORSI : string = 'CONCORSI';
   public static CONCORSI_RDP : string = 'CONCORSI_RDP';
   public static CONCORSI_COMMISSIONE : string = 'CONCORSI_COMMISSIONE';
-  public static GESTORI_BORSE_DI_STUDIO : string = 'GESTORI_BORSE_DI_STUDIO';
-  /** Tipo dei bandi di borse di studio: il gruppo GESTORI_BORSE_DI_STUDIO è RdP di tutti (CallService). */
-  public static CALL_TYPE_BORSE_DI_STUDIO : string = 'F:jconon_call_bstd:folder';
 
   @JsonProperty("itemName")
   public itemName: string = undefined;
@@ -124,15 +121,8 @@ export class User implements Base{
     ).length !== 0;
   }
 
-  /**
-   * RdP del bando: membro del gruppo RDP, di CONCORSI_RDP, amministratore oppure, per i bandi di borse di
-   * studio, membro di GESTORI_BORSE_DI_STUDIO (il backend non mette più in sessione i gruppi GROUP_RDP_*
-   * ereditati dal gruppo dei gestori).
-   */
-  public isRdP(groupName: string, callTypeId?: string): boolean {
-    return this.isMemberOf(groupName) || this.isMemberOf(Group.CONCORSI_RDP) ||
-      (callTypeId === Group.CALL_TYPE_BORSE_DI_STUDIO && this.isMemberOf(Group.GESTORI_BORSE_DI_STUDIO)) ||
-      !!(this.capabilities && this.capabilities.isAdmin);
+  public isRdP(groupName: string): boolean {
+    return this.isMemberOf(groupName) || this.isMemberOf(Group.CONCORSI_RDP) || !!(this.capabilities && this.capabilities.isAdmin);
   }
 
   public isCommissione(groupName: string): boolean {

@@ -538,7 +538,7 @@
       "name": "Name (identifier)",
       "displayName": "Display name",
       "addMember": "Add member",
-      "addMemberHint": "Choose whether to add a user or a group and search by name, surname, username or group name: pick the result from the suggestions.",
+      "addMemberHint": "Enter a user's username or a group's full name (GROUP_...). Groups are suggested after 3 characters.",
       "member": "User or group",
       "allMembers": "All users",
       "allMembersOf": "Users of group {{value}}",
@@ -1732,8 +1732,168 @@
     "search_user": "Search by name, surname or username",
     "search_group": "Search by group name"
   },
-  "document": {
-    "current_file": "Current file",
-    "replace_file": "To replace it, drop or select a new file (optional)."
+  "application_operations": {
+    "menu": "Operations",
+    "candidate": "Candidate",
+    "file": "Document (PDF)",
+    "protocol_date": "Registration date",
+    "protocol_number": "Registration number",
+    "state": "Status",
+    "states": {
+      "GENERATO": "Generated",
+      "FIRMATO": "Signed",
+      "SPEDITO": "Sent",
+      "CONSEGNATO": "Delivered"
+    },
+    "esclusione": {
+      "title": "Exclude",
+      "info": "Attach the exclusion measure: the application will be excluded and the document will be visible to the candidate.",
+      "confirm": "Exclude the application",
+      "done": "The application has been excluded."
+    },
+    "riammissione": {
+      "title": "Readmit",
+      "info": "Attach the readmission measure: the application will be active again.",
+      "confirm": "Readmit the application",
+      "done": "The application has been readmitted."
+    },
+    "ritiro": {
+      "title": "Application withdrawal",
+      "info": "Attach the candidate's withdrawal request: the application will be withdrawn.",
+      "confirm": "Record the withdrawal",
+      "done": "The withdrawal has been recorded."
+    },
+    "rinuncia": {
+      "title": "Ranking renunciation",
+      "info": "Attach the candidate's renunciation: the application will no longer be considered in the ranking.",
+      "confirm": "Record the renunciation",
+      "done": "The ranking renunciation has been recorded."
+    },
+    "comunicazione": {
+      "title": "Communication to the candidate",
+      "info": "The document is attached to the application as a communication and made visible to the candidate.",
+      "confirm": "Attach the communication",
+      "done": "The communication has been attached to the application."
+    },
+    "convocazione": {
+      "title": "Candidate convocations",
+      "info": "The document is attached to the application as a convocation and made visible to the candidate.",
+      "confirm": "Attach the convocation",
+      "done": "The convocation has been attached to the application."
+    },
+    "reperibilita": {
+      "title": "Contact details",
+      "done": "The candidate's contact details have been updated."
+    },
+    "scores": {
+      "title": "Scores",
+      "total": "Total",
+      "no_fields": "No score items are configured in the call (Scores section of the call).",
+      "ranking": "Ranking position",
+      "outcome": "Outcome",
+      "notes": "Notes",
+      "saved": "Scores saved.",
+      "locked": "The call ranking has already been generated: scores can no longer be changed."
+    },
+    "evaluation": {
+      "title": "Evaluation sheet",
+      "missing": "The candidate's evaluation sheet has not been created yet.",
+      "create": "Create the sheet",
+      "versions": "Versions",
+      "download": "Download",
+      "upload": "Upload a new version",
+      "comment": "Comment",
+      "save_version": "Save the new version",
+      "saved": "New version of the sheet saved.",
+      "delete": "Delete the sheet",
+      "confirm_delete": "Delete the evaluation sheet with all its versions?",
+      "deleted": "Evaluation sheet deleted.",
+      "not_enabled": "The call does not provide for an evaluation sheet."
+    },
+    "winner": {
+      "title": "Winner documents",
+      "button": "Winner documents",
+      "info": "Documents required from the winner by the call.",
+      "uploaded": "Uploaded documents",
+      "empty": "No documents uploaded.",
+      "add": "Add a document",
+      "type": "Type",
+      "upload": "Upload",
+      "no_types": "The call does not specify the document types required from the winner.",
+      "done": "Document uploaded.",
+      "confirm_delete": "Delete the document?"
+    },
+    "esito": {
+      "V": "Winner",
+      "I": "Eligible",
+      "S": "Scrolling",
+      "R": "Renunciation"
+    },
+    "error": {
+      "not_sent": "This operation is only possible on submitted applications.",
+      "not_excluded": "The application is not excluded, withdrawn or not admitted.",
+      "already_excluded": "The application is already excluded, withdrawn or not admitted."
+    }
+  },
+  "call_scores": {
+    "title": "Scores",
+    "info": "Submitted and not excluded applications. Changed rows are highlighted; the total is recalculated when saving.",
+    "more": "More actions",
+    "save": "Save changes",
+    "ranking": "Calculate ranking",
+    "export": "Export to Excel",
+    "export_async": "Export to Excel (link by email)",
+    "import": "Import from Excel",
+    "protocol": "Copy the registration to the applications",
+    "unlock": "Unlock ranking",
+    "locked": "The call ranking has been generated: scores and positions cannot be changed. Notes, unassigned outcomes and registrations can still be changed.",
+    "no_fields": "No score items are configured in the call: set them in the Scores section of the call.",
+    "filter": "Search candidate",
+    "count": "{{value}} of {{total}} applications",
+    "empty": "No active applications for this call.",
+    "candidate": "Candidate",
+    "total": "Total",
+    "position": "Rank",
+    "outcome": "Outcome",
+    "notes": "Notes",
+    "prot_graduatoria": "Ranking registration",
+    "prot_scorrimento": "Scrolling registration",
+    "number": "Number",
+    "saved": "{{value}} scores have been updated.",
+    "confirm_ranking": "Calculate the ranking of call {{value}}? Positions are assigned according to the total score.",
+    "ranking_done": "Ranking calculated.",
+    "confirm_unlock": "Unlock the ranking of call {{value}}? Scores and positions will be editable again.",
+    "unlocked": "Ranking unlocked.",
+    "confirm_protocol": "Copy number and date of the ranking and scrolling registration to the applications of call {{value}}?",
+    "protocol_done": "Registration copied to the applications.",
+    "export_async_done": "Export started: the link to the file will be sent to {{email}}.",
+    "imported": "{{value}} scores have been imported."
+  },
+  "call_attachment": {
+    "title": "Add attachment to applications",
+    "info": "The same file is attached to the chosen applications; with no choice, to all applications matching the filters. Applications that already have an attachment with the same name are skipped.",
+    "status": "Application status",
+    "statuses": {
+      "attive": "Active",
+      "C": "Submitted",
+      "P": "Draft",
+      "escluse": "Excluded",
+      "tutte": "All"
+    },
+    "total": "Total score",
+    "from": "from",
+    "to": "to",
+    "applications": "Applications",
+    "counter": "{{total}} applications, {{selected}} chosen",
+    "search": "Search candidate",
+    "select_all": "Select the ones shown",
+    "select_none": "Deselect the ones shown",
+    "empty": "No applications with these filters.",
+    "target_selected": "The file will be attached to the {{value}} chosen applications.",
+    "target_all": "No application chosen: the file will be attached to all {{value}} filtered applications.",
+    "file": "File to attach",
+    "submit": "Add attachment",
+    "confirm": "Attach the file {{file}} to {{value}} applications?",
+    "done": "{{value}} attachments have been added."
   }
 }

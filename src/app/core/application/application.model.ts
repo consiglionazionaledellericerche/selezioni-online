@@ -1,5 +1,5 @@
 import { Folder } from '../../common/model/folder.model';
-import { JsonProperty, JsonObject } from 'json2typescript';
+import { JsonProperty, JsonObject, Any } from 'json2typescript';
 import { Call } from '../call/call.model';
 import { StatoDomanda, PropertyStatoDomandaConverter } from './stato-domanda.enum';
 import { EsclusioneRiununcia, PropertyEsclusioneRiununciaConverter } from './esclusione-rinuncia.enum';
@@ -83,6 +83,23 @@ export class Application extends Folder {
   public totale_punteggio: string;
   @JsonProperty('jconon_application:esito_call')
   public esito_call: string;
+  // Punteggi delle prove (aspect P:jconon_application:aspect_punteggi), etichette e limiti nel bando
+  @JsonProperty('jconon_application:punteggio_titoli', Any, true)
+  public punteggio_titoli: any = undefined;
+  @JsonProperty('jconon_application:punteggio_scritto', Any, true)
+  public punteggio_scritto: any = undefined;
+  @JsonProperty('jconon_application:punteggio_secondo_scritto', Any, true)
+  public punteggio_secondo_scritto: any = undefined;
+  @JsonProperty('jconon_application:punteggio_colloquio', Any, true)
+  public punteggio_colloquio: any = undefined;
+  @JsonProperty('jconon_application:punteggio_prova_pratica', Any, true)
+  public punteggio_prova_pratica: any = undefined;
+  @JsonProperty('jconon_application:punteggio_6', Any, true)
+  public punteggio_6: any = undefined;
+  @JsonProperty('jconon_application:punteggio_7', Any, true)
+  public punteggio_7: any = undefined;
+  @JsonProperty('jconon_application:punteggio_note', Any, true)
+  public punteggio_note: any = undefined;
   @JsonProperty('jconon_application:protocollo_data_graduatoria')
   public protocollo_data_graduatoria: Date;
   @JsonProperty('jconon_application:protocollo_numero_graduatoria')
@@ -577,9 +594,9 @@ export class Application extends Folder {
   public isShowEsclusioneRiununcia(user: User): boolean {
     if (this.esclusione_rinuncia && this.isConfermata()) {
       if (this.esclusione_rinuncia === EsclusioneRiununcia.SOSPESA && 
-            (user.isRdP(this.call.rdp, this.call.objectTypeId) || user.isConcorsi())) {
+            (user.isRdP(this.call.rdp) || user.isConcorsi())) {
         return true;
-      } else if ((this.esclusione_rinuncia === EsclusioneRiununcia.SCHEDA_ANONIMA_RESPINTA && user.isRdP(this.call.rdp, this.call.objectTypeId))||
+      } else if ((this.esclusione_rinuncia === EsclusioneRiununcia.SCHEDA_ANONIMA_RESPINTA && user.isRdP(this.call.rdp))||
                 (this.esclusione_rinuncia !== EsclusioneRiununcia.SCHEDA_ANONIMA_RESPINTA && 
                   this.esclusione_rinuncia !== EsclusioneRiununcia.SOSPESA)) {
         return true;

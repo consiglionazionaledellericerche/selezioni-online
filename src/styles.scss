@@ -643,6 +643,20 @@ a.btn-menu-item span, button.btn-menu-item span {
 }
 .btn.btn-action .icon { margin: 0; }
 
+// variante con etichetta (es. "Operazioni", "Altre azioni"): stessa altezza dei pulsanti piccoli, larghezza libera
+.more-actions.more-actions--label .btn.dropdown-toggle {
+  // stesse misure di .btn-sm di Bootstrap Italia, per allinearsi ai pulsanti vicini
+  width: auto;
+  height: auto;
+  min-height: 0;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  white-space: nowrap;
+}
+.more-actions.more-actions--label .dropdown-menu { min-width: 16rem; }
+
 // blocchi di campi nelle sezioni dei form (titolo in maiuscoletto e separatore)
 .form-block {
   border: 0;

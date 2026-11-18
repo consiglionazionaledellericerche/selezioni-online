@@ -687,7 +687,7 @@
       "name": "Nome (identificativo)",
       "displayName": "Nome visualizzato",
       "addMember": "Aggiungi membro",
-      "addMemberHint": "Scegli se aggiungere un utente o un gruppo e cerca per nome, cognome, username o nome del gruppo: scegli il risultato tra i suggerimenti.",
+      "addMemberHint": "Indicare lo username di un utente oppure il nome completo di un gruppo (GROUP_...). Digitando almeno 3 caratteri vengono suggeriti i gruppi.",
       "member": "Utente o gruppo",
       "allMembers": "Tutti gli utenti",
       "allMembersOf": "Utenti del gruppo {{value}}",
@@ -1026,9 +1026,7 @@
       "version": "Versione",
       "title": "Versioni Precedenti",
       "detail": "aggiornata il {{lastModificationDate}} di dimensione {{contentStreamLength}}"
-    },
-    "current_file": "File attuale",
-    "replace_file": "Per sostituirlo trascina o seleziona un nuovo file (facoltativo)."
+    }
   },
   "label": {
     "option": {
@@ -2206,5 +2204,169 @@
     "group_label": "Gruppo",
     "search_user": "Cerca per nome, cognome o username",
     "search_group": "Cerca per nome del gruppo"
+  },
+  "application_operations": {
+    "menu": "Operazioni",
+    "candidate": "Candidato",
+    "file": "Documento (PDF)",
+    "protocol_date": "Data protocollo",
+    "protocol_number": "Numero protocollo",
+    "state": "Stato",
+    "states": {
+      "GENERATO": "Generato",
+      "FIRMATO": "Firmato",
+      "SPEDITO": "Spedito",
+      "CONSEGNATO": "Consegnato"
+    },
+    "esclusione": {
+      "title": "Escludi",
+      "info": "Allegare il provvedimento di esclusione: la domanda risulterà esclusa e il documento sarà visibile al candidato.",
+      "confirm": "Escludi la domanda",
+      "done": "La domanda è stata esclusa."
+    },
+    "riammissione": {
+      "title": "Riammetti",
+      "info": "Allegare il provvedimento di riammissione: la domanda tornerà attiva.",
+      "confirm": "Riammetti la domanda",
+      "done": "La domanda è stata riammessa."
+    },
+    "ritiro": {
+      "title": "Ritiro domanda di partecipazione",
+      "info": "Allegare la richiesta di ritiro del candidato: la domanda risulterà ritirata.",
+      "confirm": "Registra il ritiro",
+      "done": "Il ritiro della domanda è stato registrato."
+    },
+    "rinuncia": {
+      "title": "Rinuncia alla graduatoria",
+      "info": "Allegare la rinuncia del candidato: la domanda non sarà più considerata nel calcolo della graduatoria.",
+      "confirm": "Registra la rinuncia",
+      "done": "La rinuncia alla graduatoria è stata registrata."
+    },
+    "comunicazione": {
+      "title": "Comunicazione al candidato",
+      "info": "Il documento viene allegato alla domanda come comunicazione e reso visibile al candidato.",
+      "confirm": "Allega la comunicazione",
+      "done": "La comunicazione è stata allegata alla domanda."
+    },
+    "convocazione": {
+      "title": "Convocazioni del candidato",
+      "info": "Il documento viene allegato alla domanda come convocazione e reso visibile al candidato.",
+      "confirm": "Allega la convocazione",
+      "done": "La convocazione è stata allegata alla domanda."
+    },
+    "reperibilita": {
+      "title": "Reperibilità",
+      "done": "La reperibilità del candidato è stata aggiornata."
+    },
+    "scores": {
+      "title": "Punteggi",
+      "total": "Totale",
+      "no_fields": "Nel bando non sono configurate voci di punteggio (sezione Punteggi del bando).",
+      "ranking": "Posizione in graduatoria",
+      "outcome": "Esito",
+      "notes": "Note",
+      "saved": "Punteggi salvati.",
+      "locked": "La graduatoria del bando è già stata generata: i punteggi non sono più modificabili."
+    },
+    "evaluation": {
+      "title": "Scheda di valutazione",
+      "missing": "Non è ancora presente la scheda di valutazione del candidato.",
+      "create": "Predisponi la scheda",
+      "versions": "Versioni",
+      "download": "Scarica",
+      "upload": "Carica una nuova versione",
+      "comment": "Commento",
+      "save_version": "Salva la nuova versione",
+      "saved": "Nuova versione della scheda salvata.",
+      "delete": "Elimina la scheda",
+      "confirm_delete": "Eliminare la scheda di valutazione con tutte le sue versioni?",
+      "deleted": "Scheda di valutazione eliminata.",
+      "not_enabled": "Il bando non prevede la scheda di valutazione."
+    },
+    "winner": {
+      "title": "Documenti del vincitore",
+      "button": "Documenti vincitore",
+      "info": "Documenti richiesti al vincitore dal bando.",
+      "uploaded": "Documenti caricati",
+      "empty": "Nessun documento caricato.",
+      "add": "Aggiungi un documento",
+      "type": "Tipologia",
+      "upload": "Carica",
+      "no_types": "Il bando non indica le tipologie di documento richieste al vincitore.",
+      "done": "Documento caricato.",
+      "confirm_delete": "Eliminare il documento?"
+    },
+    "esito": {
+      "V": "Vincitore",
+      "I": "Idoneo",
+      "S": "Scorrimento",
+      "R": "Rinuncia"
+    },
+    "error": {
+      "not_sent": "L'operazione è possibile solo su domande inviate.",
+      "not_excluded": "La domanda non risulta esclusa, ritirata o non ammessa.",
+      "already_excluded": "La domanda risulta già esclusa, ritirata o non ammessa."
+    }
+  },
+  "call_scores": {
+    "title": "Punteggi",
+    "info": "Domande inviate e non escluse. Le righe modificate sono evidenziate; il totale viene ricalcolato al salvataggio.",
+    "more": "Altre azioni",
+    "save": "Salva modifiche",
+    "ranking": "Calcola graduatoria",
+    "export": "Esporta in Excel",
+    "export_async": "Esporta in Excel (link per email)",
+    "import": "Importa da Excel",
+    "protocol": "Riporta il protocollo sulle domande",
+    "unlock": "Sblocca graduatoria",
+    "locked": "La graduatoria del bando è stata generata: punteggi e posizioni non sono modificabili. Restano modificabili note, esiti non assegnati e protocolli.",
+    "no_fields": "Nel bando non sono configurate voci di punteggio: impostarle nella sezione Punteggi del bando.",
+    "filter": "Cerca candidato",
+    "count": "{{value}} di {{total}} domande",
+    "empty": "Nessuna domanda attiva per questo bando.",
+    "candidate": "Candidato",
+    "total": "Totale",
+    "position": "Grad.",
+    "outcome": "Esito",
+    "notes": "Note",
+    "prot_graduatoria": "Protocollo graduatoria",
+    "prot_scorrimento": "Protocollo scorrimento",
+    "number": "Numero",
+    "saved": "Sono stati aggiornati {{value}} punteggi.",
+    "confirm_ranking": "Calcolare la graduatoria del bando {{value}}? Le posizioni vengono assegnate in base al totale dei punteggi.",
+    "ranking_done": "Graduatoria calcolata.",
+    "confirm_unlock": "Sbloccare la graduatoria del bando {{value}}? Punteggi e posizioni torneranno modificabili.",
+    "unlocked": "Graduatoria sbloccata.",
+    "confirm_protocol": "Riportare sulle domande del bando {{value}} numero e data di protocollo della graduatoria e dello scorrimento?",
+    "protocol_done": "Protocollo riportato sulle domande.",
+    "export_async_done": "Estrazione avviata: il link al file sarà inviato a {{email}}.",
+    "imported": "Sono stati importati {{value}} punteggi."
+  },
+  "call_attachment": {
+    "title": "Aggiungi allegato alle domande",
+    "info": "Lo stesso file viene allegato alle domande scelte; senza scelta, a tutte le domande che rispettano i filtri. Le domande che hanno già un allegato con lo stesso nome vengono saltate.",
+    "status": "Stato della domanda",
+    "statuses": {
+      "attive": "Attive",
+      "C": "Inviate",
+      "P": "Provvisorie",
+      "escluse": "Escluse",
+      "tutte": "Tutte"
+    },
+    "total": "Totale punteggio",
+    "from": "da",
+    "to": "a",
+    "applications": "Domande",
+    "counter": "{{total}} domande, {{selected}} scelte",
+    "search": "Cerca candidato",
+    "select_all": "Seleziona quelle mostrate",
+    "select_none": "Deseleziona quelle mostrate",
+    "empty": "Nessuna domanda con questi filtri.",
+    "target_selected": "Il file sarà allegato alle {{value}} domande scelte.",
+    "target_all": "Nessuna domanda scelta: il file sarà allegato a tutte le {{value}} domande filtrate.",
+    "file": "File da allegare",
+    "submit": "Aggiungi allegato",
+    "confirm": "Allegare il file {{file}} a {{value}} domande?",
+    "done": "Sono stati aggiunti {{value}} allegati."
   }
 }

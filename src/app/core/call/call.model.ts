@@ -141,6 +141,10 @@ export class Call extends Folder {
   public importo_pagamento_pagopa: any = undefined;
   @JsonProperty('jconon_call:group_multiple_application', Any, true)
   public group_multiple_application: any = undefined;
+  @JsonProperty('jconon_call_aspect_winner:active', Any, true)
+  public winner_active: any = undefined;
+  @JsonProperty('jconon_call_aspect_winner:elenco_file', Any, true)
+  public winner_elenco_file: any = undefined;
   @JsonProperty('jconon_call:punteggio_1', Any, true)
   public punteggio_1: any = undefined;
   @JsonProperty('jconon_call:punteggio_1_min', Any, true)

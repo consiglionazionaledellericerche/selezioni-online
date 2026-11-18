@@ -45,11 +45,11 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
               <option value="all">all</option>
             </select>
           </div>
-          <div class="form-group col-md-10" *ngIf="form.value.type !== 'all'">
-            <app-authority-picker [mode]="form.value.type === 'user' ? 'users' : 'groups'" label="admin.rbac.authority"
-              formControlName="authority"></app-authority-picker>
+          <div class="form-group col-md-2">
+            <label for="r-authority" class="active" translate>admin.rbac.authority</label>
+            <input id="r-authority" type="text" class="form-control" formControlName="authority" [readonly]="form.value.type === 'all'">
           </div>
-          <div class="form-group text-end" [class.col-md-2]="form.value.type !== 'all'" [class.col-md-3]="form.value.type === 'all'">
+          <div class="form-group col-md-1 text-end">
             <button type="submit" class="btn btn-primary btn-sm"
               [disabled]="form.invalid || (form.value.type !== 'all' && !form.value.authority)" translate>add</button>
           </div>

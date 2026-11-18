@@ -6,6 +6,20 @@ import { AllowableAction } from '../../../common/model/allowableaction.enum';
 import { User } from '../../../auth/model/user.model';
 import { PrintApplicationComponent } from '../../../core/application/print-application.component';
 import { ModalService } from '../../modal/modal.service';
+import { EsclusioneRiununcia } from '../../../core/application/esclusione-rinuncia.enum';
+import { ApplicationOperation } from '../../../core/application/application-operations.service';
+import { ApplicationOperationModalComponent } from '../../../core/application/operations/application-operation-modal.component';
+import { ApplicationScoresModalComponent } from '../../../core/application/operations/application-scores-modal.component';
+import { ReperibilitaModalComponent } from '../../../dynamic/affix/reperibilita-modal.component';
+import { ApplicationEvaluationModalComponent } from '../../../core/application/operations/application-evaluation-modal.component';
+import { ApplicationWinnerModalComponent } from '../../../core/application/operations/application-winner-modal.component';
+
+interface ApplicationAction {
+  label: string;
+  icon: string;
+  danger?: boolean;
+  action: () => void;
+}
 
 @Component({
   standalone: false,
@@ -60,6 +74,23 @@ import { ModalService } from '../../modal/modal.service';
               <svg class="icon icon-primary icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-copy"></use></svg>
               <span class="visually-hidden">{{ 'application.copy' | translate }}</span>
             </button>
+            <button *ngIf="canWinner()" type="button" class="btn btn-success btn-sm" (click)="openWinner()">
+              <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-inbox"></use></svg>
+              {{ 'application_operations.winner.button' | translate }}
+            </button>
+            <it-dropdown *ngIf="operations().length" mode="button" color="secondary" class="more-actions more-actions--label">
+              <span button class="d-inline-flex align-items-center">
+                <svg class="icon icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-list"></use></svg>
+                <span>{{ 'application_operations.menu' | translate }}</span>
+              </span>
+              <ng-container list>
+                <li *ngFor="let op of operations()">
+                  <a class="dropdown-item list-item" [class.text-danger]="op.danger" href="javascript:" (click)="op.action()">
+                    <svg class="icon icon-sm me-2" [ngClass]="op.danger ? 'icon-danger' : 'icon-primary'"><use [attr.href]="'/bootstrap-italia/dist/svg/sprites.svg#' + op.icon"></use></svg>{{ op.label | translate }}
+                  </a>
+                </li>
+              </ng-container>
+            </it-dropdown>
             <app-show-children-modal
               [show_date]="'true'"
               [typeId]="'P:jconon_attachment:generic_document'"
@@ -111,6 +142,12 @@ export class ListItemApplicationComponent {
 
   @Output() onCopy = new EventEmitter();
 
+  /** Emesso dopo un'operazione sulla domanda (esclusione, riammissione, punteggi...), per ricaricare l'elenco. */
+  @Output() changed = new EventEmitter<void>();
+
+  private operationsFor: Application;
+  private operationsCache: ApplicationAction[] = [];
+
   /** Abilita la voce "Copia domanda": va attivata solo dove l'utente e' il titolare della domanda. */
   @Input() canCopy = false;
 
@@ -127,6 +164,92 @@ export class ListItemApplicationComponent {
           applicationId: this.item.getObjectId()
         }
       });
+  }
+
+  /**
+   * Menu "Operazioni" (come nel frontend legacy): a bando scaduto, sulle domande inviate, per amministratori,
+   * RdP e commissione. Esclusioni, riammissioni, rinunce e reperibilità solo per amministratori e RdP;
+   * punteggi finché la graduatoria non è generata.
+   */
+  public operations(): ApplicationAction[] {
+    if (this.operationsFor === this.item) {
+      return this.operationsCache;
+    }
+    this.operationsFor = this.item;
+    const call = this.item?.call;
+    if (!this.item || !call || !this.user || !this.item.isConfermata() || this.isActive || !this.canEditApplication()) {
+      return this.operationsCache = [];
+    }
+    const user: any = this.user;
+    const isRdP = (typeof user.isRdP === 'function' && user.isRdP(call.rdp)) || (typeof user.isConcorsi === 'function' && user.isConcorsi());
+    const isCommissione = typeof user.isCommissione === 'function' && user.isCommissione(call.commissione);
+    if (!isRdP && !isCommissione) {
+      return this.operationsCache = [];
+    }
+    const actions: ApplicationAction[] = [];
+    const esclusa = [EsclusioneRiununcia.ESCLUSA, EsclusioneRiununcia.NON_AMMESSO, EsclusioneRiununcia.RITIRATA]
+      .indexOf(this.item.esclusione_rinuncia) !== -1;
+    if (isRdP) {
+      if (esclusa) {
+        actions.push({ label: 'application_operations.riammissione.title', icon: 'it-check-circle', action: () => this.openOperation('riammissione') });
+      } else {
+        actions.push(
+          { label: 'application_operations.esclusione.title', icon: 'it-ban', danger: true, action: () => this.openOperation('esclusione') },
+          { label: 'application_operations.ritiro.title', icon: 'it-arrow-down-circle', danger: true, action: () => this.openOperation('ritiro') },
+          { label: 'application_operations.rinuncia.title', icon: 'it-minus-circle', danger: true, action: () => this.openOperation('rinuncia') }
+        );
+      }
+    }
+    actions.push(
+      { label: 'application_operations.comunicazione.title', icon: 'it-mail', action: () => this.openOperation('comunicazione') },
+      { label: 'application_operations.convocazione.title', icon: 'it-calendar', action: () => this.openOperation('convocazione') }
+    );
+    if (call.scheda_valutazione && (isCommissione || (typeof user.isConcorsi === 'function' && user.isConcorsi()))) {
+      actions.push({ label: 'application_operations.evaluation.title', icon: 'it-file-xlsx', action: () => this.openEvaluation() });
+    }
+    if (isRdP) {
+      actions.push({ label: 'application_operations.reperibilita.title', icon: 'it-map-marker-circle', action: () => this.openReperibilita() });
+    }
+    if (!call.graduatoria) {
+      actions.push({ label: 'application_operations.scores.title', icon: 'it-star-outline', action: () => this.openScores() });
+    }
+    return this.operationsCache = actions;
+  }
+
+  private openOperation(operation: ApplicationOperation): void {
+    const ref = this.modalService.show(ApplicationOperationModalComponent,
+      { initialState: { application: this.item, operation }, class: 'modal-lg' });
+    ref.content.done.subscribe(() => this.afterChange());
+  }
+
+  private openScores(): void {
+    const ref = this.modalService.show(ApplicationScoresModalComponent, { initialState: { application: this.item }, class: 'modal-lg' });
+    ref.content.done.subscribe(() => this.afterChange());
+  }
+
+  private openEvaluation(): void {
+    this.modalService.show(ApplicationEvaluationModalComponent, { initialState: { application: this.item }, class: 'modal-lg' });
+  }
+
+  /** Documenti del vincitore: finestra di caricamento aperta nel bando e domanda con esito V. */
+  public canWinner(): boolean {
+    const call: any = this.item?.call;
+    return !!call && !!call.winner_active && this.item.esito_call === 'V' && this.item.isConfermata() &&
+      !this.item.esclusione_rinuncia && this.canEditApplication();
+  }
+
+  public openWinner(): void {
+    this.modalService.show(ApplicationWinnerModalComponent, { initialState: { application: this.item }, class: 'modal-lg' });
+  }
+
+  private openReperibilita(): void {
+    const ref = this.modalService.show(ReperibilitaModalComponent, { initialState: { application: this.item }, class: 'modal-xl' });
+    ref.content.done.subscribe(() => this.afterChange());
+  }
+
+  private afterChange(): void {
+    this.operationsFor = null;
+    this.changed.emit();
   }
 
   public reopenApplication() {

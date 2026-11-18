@@ -1,3 +1,5 @@
+import { CallScoresComponent } from './call/manage/call-scores.component';
+import { CallApplicationAttachmentComponent } from './call/manage/call-application-attachment.component';
 import { AuthorityPickerComponent } from '../shared/ui/authority-picker.component';
 import { DateTileComponent } from '../shared/ui/date-tile.component';
 import { CallAttachmentsComponent } from './call/shared/call-attachments.component';
@@ -86,6 +88,8 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
         CallPermissionsComponent,
         CallCommissionComponent,
         CommissionGenderComponent,
+        CallScoresComponent,
+        CallApplicationAttachmentComponent,
         ManageDocumentComponent,
         DownloadDocumentComponent,
         BadRequestComponent,

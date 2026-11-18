@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AutocompleteComponent } from './autocomplete.component';
@@ -45,7 +45,7 @@ import { AutocompleteComponent } from './autocomplete.component';
     .kind-option.active { background: #fff; color: #0066cc; box-shadow: 0 1px 3px rgba(23, 50, 77, .15); }
   `]
 })
-export class AuthorityPickerComponent implements ControlValueAccessor, OnChanges {
+export class AuthorityPickerComponent implements ControlValueAccessor {
   @Input() mode: 'users' | 'groups' | 'both' = 'users';
   @Input() label: string;
   /** Elemento scelto completo (id, title, subtitle, kind; per gli utenti anche firstName, lastName, email). */
@@ -67,14 +67,6 @@ export class AuthorityPickerComponent implements ControlValueAccessor, OnChanges
 
   ngOnInit(): void {
     this.kind = this.mode === 'groups' ? 'groups' : 'users';
-  }
-
-  /** Cambio di modalità dall'esterno (es. tipo user/group nelle regole RBAC): campo azzerato sul nuovo tipo. */
-  ngOnChanges(changes: SimpleChanges): void {
-    const change = changes['mode'];
-    if (change && !change.firstChange && this.mode !== 'both') {
-      this.setKind(this.mode);
-    }
   }
 
   public display = (item: any) => ({ title: item.title || item.id, subtitle: item.subtitle });

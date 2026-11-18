@@ -87,7 +87,11 @@ interface PathItem {
         <p class="small text-muted" translate>admin.groups.addMemberHint</p>
         <div class="row align-items-end">
           <div class="form-group col-md-8">
-            <app-authority-picker mode="both" label="admin.groups.member" [(ngModel)]="memberName"></app-authority-picker>
+            <label for="g-member" class="active" translate>admin.groups.member</label>
+            <input id="g-member" type="text" class="form-control" [(ngModel)]="memberName" (input)="onSearchGroup()" list="g-member-options">
+            <datalist id="g-member-options">
+              <option *ngFor="let g of groupOptions" [value]="g.authorityName">{{g.authorityDisplayName}}</option>
+            </datalist>
           </div>
           <div class="form-group col-md-4 text-end">
             <button class="btn btn-primary btn-sm" [disabled]="!memberName" (click)="onAddMember()" translate>add</button>
@@ -139,6 +143,7 @@ export class GroupsComponent implements OnInit {
   public showAddMember = false;
   public editing: Authority;
   public memberName: string;
+  public groupOptions: any[] = [];
   public groupForm: FormGroup;
   public callTypes: any[] = [];
   public sedi: Sede[] = [];
@@ -245,8 +250,18 @@ export class GroupsComponent implements OnInit {
     });
   }
 
+  onSearchGroup() {
+    const term = (this.memberName || '').trim().replace(/\*/g, '');
+    if (term.length < 3) {
+      this.groupOptions = [];
+      return;
+    }
+    this.adminService.searchGroups('*' + term + '*')
+      .subscribe(result => this.groupOptions = result.groups || [], () => this.groupOptions = []);
+  }
+
   onAddMember() {
-    this.adminService.addGroupChild(this.current.fullName, String(this.memberName || '').trim()).subscribe(() => {
+    this.adminService.addGroupChild(this.current.fullName, this.memberName.trim()).subscribe(() => {
       this.apiMessageService.sendMessage(MessageType.SUCCESS, 'admin.groups.memberAdded');
       this.memberName = '';
       this.showAddMember = false;

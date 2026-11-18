@@ -136,10 +136,15 @@ export class CallActionsComponent {
     }
     this.cachedFor = this.item;
     this.cachedPublished = this.item?.pubblicato;
-    if (!this.item || !this.canUpdateCall() || !this.isManager()) {
+    if (!this.item) {
       return this.cached = [];
     }
     const id = this.item.objectId;
+    // punteggi: anche per la commissione, che ha CAN_CREATE_DOCUMENT sul bando ma non ne gestisce le impostazioni
+    const scores: ManageAction = { label: 'call_scores.title', icon: 'it-star-outline', route: '/call-scores', queryParams: { callId: id } };
+    if (!this.canUpdateCall() || !this.isManager()) {
+      return this.cached = this.canCreateDocument() && this.isExpired() ? [scores] : [];
+    }
     const actions: ManageAction[] = [
       { label: this.item.pubblicato ? 'call_manage.unpublish' : 'call_manage.publish',
         icon: this.item.pubblicato ? 'it-password-invisible' : 'it-horn', action: () => this.publish() },
@@ -147,7 +152,9 @@ export class CallActionsComponent {
       { label: 'call_manage.labels.title', icon: 'it-bookmark', route: '/call-labels', queryParams: { callId: id } },
       { label: 'communications.kind.convocazioni', icon: 'it-calendar', route: '/call-communications', queryParams: { callId: id, kind: 'convocazioni' } },
       { label: 'communications.kind.esclusioni', icon: 'it-ban', route: '/call-communications', queryParams: { callId: id, kind: 'esclusioni' } },
-      { label: 'communications.kind.comunicazioni', icon: 'it-mail', route: '/call-communications', queryParams: { callId: id, kind: 'comunicazioni' } }
+      { label: 'communications.kind.comunicazioni', icon: 'it-mail', route: '/call-communications', queryParams: { callId: id, kind: 'comunicazioni' } },
+      scores,
+      { label: 'call_attachment.title', icon: 'it-clip', route: '/call-application-attachment', queryParams: { callId: id } }
     ];
     if (ManageCallService.isConcorsi(this.authService.getUser())) {
       actions.push({ label: 'call_manage.permissions.title', icon: 'it-key', route: '/call-permissions', queryParams: { callId: id } });
@@ -166,6 +173,11 @@ export class CallActionsComponent {
   isActive(): boolean {
     const now = new Date();
     return now >= new Date(this.item.data_inizio_invio_domande) && now <= new Date(this.item.data_fine_invio_domande);
+  }
+
+  /** Termine di presentazione delle domande passato: punteggi e graduatoria hanno senso solo dopo. */
+  isExpired(): boolean {
+    return !!this.item.data_fine_invio_domande && new Date() > new Date(this.item.data_fine_invio_domande);
   }
 
   canCreateDocument(): boolean {

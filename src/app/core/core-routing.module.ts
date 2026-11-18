@@ -1,3 +1,5 @@
+import { CallScoresComponent } from './call/manage/call-scores.component';
+import { CallApplicationAttachmentComponent } from './call/manage/call-application-attachment.component';
 import { DownloadComponent } from './call/shared/download.component';
 import { CommunicationsOverviewComponent } from './call/shared/communications-overview.component';
 import { AuthenticatedGuard } from '../auth/authenticated-guard.service';
@@ -51,6 +53,9 @@ const coreRoutes: Routes = [
   { path: 'call-permissions', component: CallPermissionsComponent, canActivate: [AuthenticatedGuard], data: {service: ServiceReg.CALL} },
   { path: 'call-commission', component: CallCommissionComponent, canActivate: [AuthenticatedGuard], data: {service: ServiceReg.CALL} },
   { path: 'commission-gender', component: CommissionGenderComponent, canActivate: [AuthenticatedGuard], data: {service: ServiceReg.CALL} },
+  // permessi verificati dal backend (RdP, CONCORSI, commissione del bando)
+  { path: 'call-scores', component: CallScoresComponent, canActivate: [AuthenticatedGuard], data: {service: ServiceReg.CALL} },
+  { path: 'call-application-attachment', component: CallApplicationAttachmentComponent, canActivate: [AuthenticatedGuard], data: {service: ServiceReg.CALL} },
   { 
     path: 'search/content', 
     component: DownloadDocumentComponent, 
