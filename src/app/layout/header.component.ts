@@ -19,6 +19,7 @@ import { ApiMessage, ApiMessageService, MessageType } from '../core/api-message.
 import { MenuService } from '../core/header/menu.service';
 import { NavbarMenu } from '../core/header/model/navbar-menu.model';
 import { NotifyService } from './notify.service';
+import { PushNotificationsService } from '../core/push/push-notifications.service';
 import { UserPanelComponent } from './user-panel.component';
 import { ApplicationSummaryComponent } from '../core/application/application-summary.component';
 
@@ -53,6 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly manageCallService = inject(ManageCallService);
   private readonly cacheService = inject(CacheService);
+  private readonly pushNotificationsService = inject(PushNotificationsService);
 
   public user: User = null;
   public navbarMenu: NavbarMenu = null;
@@ -84,6 +86,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscriptions.add(this.menuService.navbarEvaluated.subscribe(navbarMenu => this.navbarMenu = navbarMenu));
     this.menuService.evaluateNavbar();
     this.subscriptions.add(this.apiMessageService.onApiMessage.subscribe((message: ApiMessage) => this.show(message)));
+    // PWA: nuova versione scaricata dal service worker, da attivare ricaricando la pagina
+    this.subscriptions.add(this.pushNotificationsService.versionReady().subscribe(ready => {
+      if (ready) {
+        this.notify.info(this.translateService.instant('push.update_ready'), ' ');
+      }
+    }));
     this.subscriptions.add(this.translateService.onLangChange.subscribe((_: LangChangeEvent) =>
       this.titleService.setTitle(this.translateService.instant('home.title'))));
   }

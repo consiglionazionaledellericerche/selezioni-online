@@ -2368,5 +2368,64 @@
     "submit": "Aggiungi allegato",
     "confirm": "Allegare il file {{file}} a {{value}} domande?",
     "done": "Sono stati aggiunti {{value}} allegati."
+  },
+  "push": {
+    "menu": "App e notifiche",
+    "title": "App e notifiche",
+    "subtitle": "Installa Selezioni online CNR sul tuo dispositivo e ricevi notifiche su nuovi bandi, scadenze, convocazioni e comunicazioni.",
+    "update_ready": "È disponibile una nuova versione dell'applicazione: ricarica la pagina per usarla.",
+    "device": {
+      "title": "Notifiche su questo dispositivo",
+      "active": "Le notifiche sono attive su questo dispositivo.",
+      "inactive": "Le notifiche non sono attive su questo dispositivo. Il browser ti chiederà il permesso di mostrarle.",
+      "enable": "Attiva le notifiche",
+      "disable": "Disattiva su questo dispositivo",
+      "test": "Invia una notifica di prova",
+      "enabled": "Notifiche attivate su questo dispositivo.",
+      "disabled": "Notifiche disattivate su questo dispositivo.",
+      "error": "Non è stato possibile attivare le notifiche.",
+      "denied": "Il browser blocca le notifiche di questo sito: consentile dalle impostazioni del sito nel browser e riprova.",
+      "unsupported": "Questo browser non supporta le notifiche push, oppure l'applicazione non è installata come app (le notifiche sono disponibili solo nella versione pubblicata).",
+      "ios": "Su iPhone e iPad le notifiche sono disponibili dopo aver aggiunto l'app alla schermata Home: tocca Condividi e poi \"Aggiungi alla schermata Home\", quindi apri l'app da lì.",
+      "server_disabled": "Le notifiche push non sono attive su questo servizio.",
+      "test_sent": "Notifica di prova inviata.",
+      "test_none": "Nessun dispositivo iscritto: attiva prima le notifiche."
+    },
+    "topics": {
+      "title": "Cosa vuoi ricevere",
+      "info": "Le scelte valgono per tutti i tuoi dispositivi iscritti.",
+      "saved": "Preferenze salvate.",
+      "calls": {
+        "title": "Nuovi bandi",
+        "description": "Quando viene pubblicato un nuovo bando a cui puoi partecipare."
+      },
+      "deadlines": {
+        "title": "Scadenze",
+        "description": "Promemoria per le domande ancora in bozza nei giorni che precedono la scadenza, insieme all'email di sollecito."
+      },
+      "convocations": {
+        "title": "Convocazioni",
+        "description": "Quando ti viene inviata una convocazione relativa a una tua domanda."
+      },
+      "communications": {
+        "title": "Comunicazioni",
+        "description": "Quando ti viene inviata una comunicazione relativa a una tua domanda."
+      }
+    },
+    "install": {
+      "title": "Installa l'app",
+      "info": "Aggiungi Selezioni online CNR al tuo dispositivo per aprirla come un'app e ricevere le notifiche.",
+      "button": "Installa l'app",
+      "installed": "Stai usando l'app installata.",
+      "ios": "Su iPhone e iPad tocca Condividi e poi \"Aggiungi alla schermata Home\".",
+      "browser": "Se il browser lo consente, puoi installare l'app dal menu del browser (\"Installa app\" o \"Aggiungi alla schermata Home\")."
+    },
+    "devices": {
+      "title": "Dispositivi iscritti",
+      "this": "questo",
+      "since": "Iscritto dal",
+      "remove": "Rimuovi il dispositivo",
+      "browser": "Browser"
+    }
   }
 }

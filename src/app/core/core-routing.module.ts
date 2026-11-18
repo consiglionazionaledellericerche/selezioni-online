@@ -1,3 +1,4 @@
+import { NotificationsComponent } from './push/notifications.component';
 import { CallScoresComponent } from './call/manage/call-scores.component';
 import { CallApplicationAttachmentComponent } from './call/manage/call-application-attachment.component';
 import { DownloadComponent } from './call/shared/download.component';
@@ -53,6 +54,8 @@ const coreRoutes: Routes = [
   { path: 'call-permissions', component: CallPermissionsComponent, canActivate: [AuthenticatedGuard], data: {service: ServiceReg.CALL} },
   { path: 'call-commission', component: CallCommissionComponent, canActivate: [AuthenticatedGuard], data: {service: ServiceReg.CALL} },
   { path: 'commission-gender', component: CommissionGenderComponent, canActivate: [AuthenticatedGuard], data: {service: ServiceReg.CALL} },
+  // PWA: installazione e notifiche push dell'utente
+  { path: 'notifications', component: NotificationsComponent, canActivate: [AuthenticatedGuard] },
   // permessi verificati dal backend (RdP, CONCORSI, commissione del bando)
   { path: 'call-scores', component: CallScoresComponent, canActivate: [AuthenticatedGuard], data: {service: ServiceReg.CALL} },
   { path: 'call-application-attachment', component: CallApplicationAttachmentComponent, canActivate: [AuthenticatedGuard], data: {service: ServiceReg.CALL} },

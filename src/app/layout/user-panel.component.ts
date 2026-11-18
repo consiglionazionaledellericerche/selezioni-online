@@ -49,6 +49,14 @@ import { AccordionComponent, AccordionGroupComponent } from '../shared/ui/accord
                 </a>
               </li>
               <li>
+                <a class="state-link" routerLink="/notifications" (click)="close.emit()">
+                  <span class="d-flex align-items-center">
+                    <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-horn"></use></svg>
+                    {{ 'push.menu' | translate }}
+                  </span>
+                </a>
+              </li>
+              <li>
                 <a class="state-link text-danger" href="javascript:void(0)" (click)="logout.emit()">
                   <span class="d-flex align-items-center">
                     <svg class="icon icon-sm icon-danger me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-logout"></use></svg>

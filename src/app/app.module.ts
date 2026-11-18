@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, LOCALE_ID, NgModule, provideZoneChangeDetection} from '@angular/core';
+import {ErrorHandler, LOCALE_ID, NgModule, provideZoneChangeDetection, isDevMode} from '@angular/core';
 import {registerLocaleData} from '@angular/common';
 import localeIt from '@angular/common/locales/it';
 import {provideDesignAngularKit} from 'design-angular-kit';
@@ -27,6 +27,7 @@ import { ConfigService } from './core/config.service';
 import { environment } from '../environments/environment';
 
 import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 registerLocaleData(localeIt);
 
@@ -115,6 +116,11 @@ export function oidcAuthority(value: string): string {
     DynamicModule,
     HeaderComponent,
     FooterComponent,
+    // PWA: cache dell'applicazione e notifiche push (solo nelle build di produzione)
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
 
   providers: [

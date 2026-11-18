@@ -1895,5 +1895,64 @@
     "submit": "Add attachment",
     "confirm": "Attach the file {{file}} to {{value}} applications?",
     "done": "{{value}} attachments have been added."
+  },
+  "push": {
+    "menu": "App and notifications",
+    "title": "App and notifications",
+    "subtitle": "Install Selezioni online CNR on your device and receive notifications about new calls, deadlines, convocations and communications.",
+    "update_ready": "A new version of the application is available: reload the page to use it.",
+    "device": {
+      "title": "Notifications on this device",
+      "active": "Notifications are active on this device.",
+      "inactive": "Notifications are not active on this device. The browser will ask for permission to show them.",
+      "enable": "Enable notifications",
+      "disable": "Disable on this device",
+      "test": "Send a test notification",
+      "enabled": "Notifications enabled on this device.",
+      "disabled": "Notifications disabled on this device.",
+      "error": "Notifications could not be enabled.",
+      "denied": "The browser blocks notifications from this site: allow them in the browser site settings and try again.",
+      "unsupported": "This browser does not support push notifications, or the application is not running as an app (notifications are only available in the published version).",
+      "ios": "On iPhone and iPad notifications are available after adding the app to the Home Screen: tap Share and then \"Add to Home Screen\", then open the app from there.",
+      "server_disabled": "Push notifications are not active on this service.",
+      "test_sent": "Test notification sent.",
+      "test_none": "No device subscribed: enable notifications first."
+    },
+    "topics": {
+      "title": "What you want to receive",
+      "info": "Your choices apply to all your subscribed devices.",
+      "saved": "Preferences saved.",
+      "calls": {
+        "title": "New calls",
+        "description": "When a new call you can apply for is published."
+      },
+      "deadlines": {
+        "title": "Deadlines",
+        "description": "Reminders for applications still in draft in the days before the deadline, together with the reminder email."
+      },
+      "convocations": {
+        "title": "Convocations",
+        "description": "When a convocation about one of your applications is sent to you."
+      },
+      "communications": {
+        "title": "Communications",
+        "description": "When a communication about one of your applications is sent to you."
+      }
+    },
+    "install": {
+      "title": "Install the app",
+      "info": "Add Selezioni online CNR to your device to open it like an app and receive notifications.",
+      "button": "Install the app",
+      "installed": "You are using the installed app.",
+      "ios": "On iPhone and iPad tap Share and then \"Add to Home Screen\".",
+      "browser": "If your browser allows it, you can install the app from the browser menu (\"Install app\" or \"Add to Home Screen\")."
+    },
+    "devices": {
+      "title": "Subscribed devices",
+      "this": "this one",
+      "since": "Subscribed since",
+      "remove": "Remove the device",
+      "browser": "Browser"
+    }
   }
 }
