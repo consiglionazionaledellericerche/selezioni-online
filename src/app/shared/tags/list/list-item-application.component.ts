@@ -31,7 +31,7 @@ import { ModalService } from '../../modal/modal.service';
             <div class="small text-secondary">{{ (item.isProvvisoria() ? 'layout.application_modified' : 'layout.application_sent') | translate }}</div>
             <div class="h6 mb-1">{{ (item.isProvvisoria() ? item.lastModificationDate : item.data_domanda) | date:'dd/MM/yyyy HH:mm' }}</div>
             <div *ngIf="item.call?.data_fine_invio_domande" class="small" [ngClass]="isActive ? 'text-secondary' : 'text-danger'">
-              {{ 'call.data_fine_invio_domande' | translate }} {{ item.call.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm' }}
+              {{ (isExpired ? 'call.data_fine_invio_domande_scaduto' : 'call.data_fine_invio_domande') | translate }} {{ item.call.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm' }}
             </div>
           </div>
           <div class="mt-auto d-flex flex-wrap align-items-center gap-2">
@@ -169,6 +169,10 @@ export class ListItemApplicationComponent {
     this.manageCallService.exportApplicationZip(this.item.objectId).subscribe(
       () => this.zipping = false,
       () => this.zipping = false);
+  }
+
+  get isExpired(): boolean {
+    return !!this.item?.call?.data_fine_invio_domande && new Date() > new Date(this.item.call.data_fine_invio_domande);
   }
 
   get isActive(): boolean {

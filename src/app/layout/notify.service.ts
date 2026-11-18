@@ -56,6 +56,12 @@ export class NotifyService {
 
   private push(type: ToastType, title: string, message: string, duration: number): void {
     const [t, m] = title && title.trim() ? [title, message] : [message, undefined];
+    // stessa notifica già visibile (es. più richieste con sessione scaduta): non si ripete, si riavvia il tempo
+    const existing = this.toasts().find(toast => toast.type === type && toast.title === t && toast.message === m);
+    if (existing) {
+      this.schedule(existing, duration);
+      return;
+    }
     const toast: Toast = { id: ++this.seq, type, title: t, message: m, duration };
     // al massimo 4 notifiche visibili: le più vecchie lasciano il posto
     this.toasts.update(list => [...list.slice(-3), toast]);

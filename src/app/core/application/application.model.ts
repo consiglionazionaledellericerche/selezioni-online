@@ -577,9 +577,9 @@ export class Application extends Folder {
   public isShowEsclusioneRiununcia(user: User): boolean {
     if (this.esclusione_rinuncia && this.isConfermata()) {
       if (this.esclusione_rinuncia === EsclusioneRiununcia.SOSPESA && 
-            (user.isRdP(this.call.rdp) || user.isConcorsi())) {
+            (user.isRdP(this.call.rdp, this.call.objectTypeId) || user.isConcorsi())) {
         return true;
-      } else if ((this.esclusione_rinuncia === EsclusioneRiununcia.SCHEDA_ANONIMA_RESPINTA && user.isRdP(this.call.rdp))||
+      } else if ((this.esclusione_rinuncia === EsclusioneRiununcia.SCHEDA_ANONIMA_RESPINTA && user.isRdP(this.call.rdp, this.call.objectTypeId))||
                 (this.esclusione_rinuncia !== EsclusioneRiununcia.SCHEDA_ANONIMA_RESPINTA && 
                   this.esclusione_rinuncia !== EsclusioneRiununcia.SOSPESA)) {
         return true;

@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { switchMap } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { CacheService } from '../../core/cache.service';
 import { ConfigService } from '../../core/config.service';
@@ -195,14 +196,8 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       this.loading = false;
       return;
     }
-    let params = new HttpParams();
     const objectId = this.data && (this.data as any).objectId;
-    if (objectId) {
-      params = params.set('cmis:objectId', objectId);
-    }
-    this.configService.getGateway().pipe(
-      switchMap(gateway => this.http.get<any>(gateway + '/rest/bulkInfo/view/' + encodeURIComponent(this.aspectType) + '/form/default', { params }))
-    ).subscribe(view => {
+    this.loadView(objectId).subscribe(view => {
       this.buildFields(view);
       this.applyImplementedAspects(view);
       this.afterFieldsLoaded();
@@ -213,6 +208,64 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       this.loading = false;
       this.changeDetectorRef.markForCheck();
     });
+  }
+
+  /** Vista del bulkinfo (/rest/bulkInfo/view/{tipo}/form/default), con o senza i valori dell'oggetto. */
+  private bulkInfoView(objectId?: string): Observable<any> {
+    let params = new HttpParams();
+    if (objectId) {
+      params = params.set('cmis:objectId', objectId);
+    }
+    return this.configService.getGateway().pipe(
+      switchMap(gateway => this.http.get<any>(gateway + '/rest/bulkInfo/view/' + encodeURIComponent(this.aspectType) + '/form/default', { params }))
+    );
+  }
+
+  /**
+   * Vista del bulkinfo con i valori dell'oggetto. Se il backend non riesce a comporla con l'oggetto
+   * (errore nella lettura di una proprietà), si usa la vista senza oggetto, come in creazione, e i valori
+   * si prendono dalle proprietà del documento (/v1/document/properties).
+   */
+  private loadView(objectId?: string): Observable<any> {
+    if (!objectId) {
+      return this.bulkInfoView();
+    }
+    return this.bulkInfoView(objectId).pipe(
+      catchError(() => forkJoin([
+        this.bulkInfoView(),
+        this.configService.getApiBase().pipe(
+          switchMap(apiBase => this.http.get<any>(apiBase + '/v1/document/properties',
+            { params: new HttpParams().set('objectId', objectId) })),
+          catchError(() => of({}))
+        )
+      ]).pipe(map(([view, properties]) => this.withValues(view, properties || {}))))
+    );
+  }
+
+  /** Copia i valori delle proprietà nei campi della vista (val), come fa il backend con l'oggetto. */
+  private withValues(view: any, properties: { [key: string]: any }): any {
+    const aspects: string[] = properties['cmis:secondaryObjectTypeIds'] || [];
+    Object.keys(view || {}).forEach(formName => {
+      const form = view[formName];
+      if (!form || typeof form !== 'object' || Array.isArray(form)) {
+        return;
+      }
+      Object.keys(form).forEach(key => {
+        const def = form[key];
+        if (!def || typeof def !== 'object') {
+          return;
+        }
+        const property = def.property || def.name;
+        if (property === 'add-remove-aspect') {
+          const list: any[] = Array.isArray(def.jsonlist) ? def.jsonlist : [];
+          const aspectName = String(def.default || (list[0] && list[0].key) || '').replace(/^(add|remove)-/, '');
+          def.val = aspects.includes(aspectName) ? 'add-' + aspectName : '';
+        } else if (property && properties[property] !== undefined && properties[property] !== null) {
+          def.val = properties[property];
+        }
+      });
+    });
+    return view;
   }
 
   /** Valori interpretati come "sì" (le proprietà sì/no sono d:boolean: si salva true/false). */
@@ -455,7 +508,10 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
         }
       });
       const time = kind === 'date' && (widget.includes('datetime') || /H/.test(String(def.format || '')));
-      this.fields.push({ name, property, showWhen, label: def.label || def.jsonlabel?.key || this.knownLabel(property) || property,
+      // titolo e descrizione: etichette dell'applicazione (il bulkinfo ha "Title"/"Description" in inglese)
+      const standardLabel = property === 'cm:title' ? 'title' : property === 'cm:description' ? 'description' : undefined;
+      this.fields.push({ name, property, showWhen,
+        label: standardLabel || def.label || def.jsonlabel?.key || this.knownLabel(property) || property,
         kind, options, required, time });
     });
     this.applyVisibility();

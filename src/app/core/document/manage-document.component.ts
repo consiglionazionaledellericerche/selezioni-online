@@ -20,13 +20,27 @@ import { ObjectType } from '../../common/model/object-type.model';
       <div class="modal-body">
         <edit-metadata [cmisObject]="entity" [typeId]="typeId" [form]="form"></edit-metadata>
         <form *ngIf="upload" [formGroup]="form" class="mt-3">
+          <div *ngIf="entity" class="current-file d-flex align-items-center gap-3 p-3 mb-2 rounded border">
+            <svg class="icon icon-primary flex-shrink-0"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file"></use></svg>
+            <div class="flex-grow-1 min-w-0">
+              <div class="small text-secondary">{{ 'document.current_file' | translate }}</div>
+              <div class="fw-semibold text-truncate" [title]="entity.name">{{ entity.name }}</div>
+              <div class="small text-secondary" *ngIf="fileSize">{{ fileSize }}</div>
+            </div>
+          </div>
+          <p *ngIf="entity" class="small text-secondary mb-2">{{ 'document.replace_file' | translate }}</p>
           <app-control-attachment formControlName="file"></app-control-attachment>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary" (click)="save()">{{'save' | translate}}</button>
       </div>
-  `
+  `,
+  styles: [`
+    .current-file { background: var(--bs-light, #f5f7fb); }
+    .current-file .icon { width: 2rem; height: 2rem; }
+    .min-w-0 { min-width: 0; }
+  `]
 })
 export class ManageDocumentComponent extends CommonEditComponent<Document>  implements OnInit{
 
@@ -47,6 +61,12 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
   @Input() upload: boolean = true;
   public event: EventEmitter<Document> = new EventEmitter();
 
+  /** Dimensione leggibile del file attuale (in modifica). */
+  get fileSize(): string {
+    const entity: any = this.entity;
+    return entity && typeof entity.getFileSize === 'function' && entity.contentStreamLength ? entity.getFileSize() : '';
+  }
+
   public setEntity(entity: Document) {
     this.entity = entity;
   }
@@ -60,7 +80,12 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
       'cmis:objectId': new FormControl(this.entity ? this.entity.objectId : undefined),
       'cmis:objectTypeId': new FormControl(this.typeId),
       'cmis:baseTypeId': new FormControl('cmis:document'),
-      'aspect': new FormControl([...this.aspect, ...ObjectType.getAspect(this.typeId)]),
+      // in modifica si parte dagli aspect già presenti sul documento, per non perderli al salvataggio
+      'aspect': new FormControl(Array.from(new Set([
+        ...this.aspect,
+        ...ObjectType.getAspect(this.typeId),
+        ...((this.entity && this.entity.secondaryObjectTypeIds) || [])
+      ]))),
     });
     if (this.upload) {
       this.form.addControl('file', new FormControl("", this.entity ? undefined : Validators.required));

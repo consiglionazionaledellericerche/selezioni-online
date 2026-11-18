@@ -110,7 +110,7 @@ import { CallService } from './call.service';
                     </div>
                   </div>
                   <div class="date-block">
-                    <div class="date-label">{{ 'layout.call_deadline' | translate }}</div>
+                    <div class="date-label">{{ (isExpired() && !extended() ? 'layout.call_deadline_expired' : 'layout.call_deadline') | translate }}</div>
                     <div class="date-stack">
                       <app-date-tile [date]="initialDeadline()" [variant]="status() === 'closed' ? 'secondary' : (status() === 'expiring' ? 'danger' : 'primary')"></app-date-tile>
                       <div class="date-time">
@@ -202,6 +202,11 @@ export class CallDetailPageComponent implements OnInit {
 
   public typeLabel(): string {
     return this.translateService.instant(this.call.objectTypeId);
+  }
+
+  /** Il termine di presentazione delle domande è passato (diverso da "non ancora aperto"). */
+  public isExpired(): boolean {
+    return !!this.call?.data_fine_invio_domande && new Date() > new Date(this.call.data_fine_invio_domande);
   }
 
   public isActive(): boolean {

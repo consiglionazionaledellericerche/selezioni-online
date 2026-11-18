@@ -1,3 +1,4 @@
+import { AuthorityPickerComponent } from '../shared/ui/authority-picker.component';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -32,6 +33,7 @@ import { JsConsoleComponent } from './js-console/js-console.component';
     JsConsoleComponent
   ],
   imports: [
+    AuthorityPickerComponent,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,

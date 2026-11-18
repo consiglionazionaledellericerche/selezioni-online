@@ -55,7 +55,7 @@ import { TranslateService } from '@ngx-translate/core';
         <!-- scadenza e azioni -->
         <div class="col-lg-4 p-3 p-lg-4 call-side d-flex flex-column">
           <div class="mb-3">
-            <div class="small text-secondary">{{ 'call.data_fine_invio_domande' | translate }}</div>
+            <div class="small text-secondary">{{ (isExpired() ? 'call.data_fine_invio_domande_scaduto' : 'call.data_fine_invio_domande') | translate }}</div>
             <div class="h5 mb-0">{{ item.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm' }}</div>
             <div *ngIf="status() !== 'closed' && daysLeft() !== null" class="small" [ngClass]="status() === 'expiring' ? 'text-danger fw-semibold' : 'text-secondary'">
               {{ (daysLeft() === 0 ? 'layout.status_today' : 'layout.status_days_left') | translate:{value: daysLeft()} }}
@@ -168,6 +168,11 @@ export class ListItemCallComponent {
         relativeTo: this.route,
         queryParams: { callId: this.item.getObjectId()}
       });
+  }
+
+  /** Il termine di presentazione delle domande è passato (diverso da "non ancora aperto"). */
+  public isExpired(): boolean {
+    return !!this.item?.data_fine_invio_domande && new Date() > new Date(this.item.data_fine_invio_domande);
   }
 
   public isActive(): boolean {

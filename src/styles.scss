@@ -1086,3 +1086,16 @@ app-form-layout .form-control.is-invalid:focus {
   color: #17324d;
   margin: .6rem 0 0 1.5rem;
 }
+
+// pannello dei filtri (home, ricerca bandi, domande): resta visibile scorrendo l'elenco.
+// Sticky funziona solo se nessun antenato ha overflow hidden/auto e l'aside si estende per
+// tutta l'altezza della riga (default delle colonne flex di Bootstrap).
+@media (min-width: 992px) {
+  .filters-sticky {
+    position: sticky;
+    top: 4.5rem;
+    z-index: 1;
+    max-height: calc(100vh - 5.5rem);
+    overflow-y: auto;
+  }
+}

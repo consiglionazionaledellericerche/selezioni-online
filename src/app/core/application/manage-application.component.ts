@@ -29,8 +29,15 @@ import { PrintApplicationComponent } from './print-application.component';
   template:
   `
     <app-layout-wait *ngIf="!isEntityError" [loaded]="isLoaded()"></app-layout-wait>
-    <div *ngIf="isEntityError" class="alert alert-danger">
-      <strong innerHtml="{{entityError | translate}}"></strong>
+    <div *ngIf="isEntityError" class="application-error my-5" role="alert">
+      <div class="alert alert-danger shadow-sm mb-0">
+        <h2 class="h4 alert-heading mb-2">{{ 'application.error_title' | translate }}</h2>
+        <p class="mb-4 fs-5" [innerHTML]="entityError | translate"></p>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-primary btn-sm" routerLink="/my-applications">{{ 'layout.my_applications' | translate }}</a>
+          <a class="btn btn-outline-primary btn-sm" routerLink="/">{{ 'layout.home' | translate }}</a>
+        </div>
+      </div>
     </div>
     <div *ngIf="isLoaded() && !isEntityError">
       <div class="shadow-none p-3 px-1 py-3 mx-n3" #cardApplication>

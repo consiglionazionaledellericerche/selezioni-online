@@ -90,7 +90,6 @@ import { CopyApplicationComponent } from './copy-application.component';
     </div>
   `,
   styles: [`
-    @media (min-width: 992px) { .filters-sticky { position: sticky; top: 4.5rem; z-index: 1; max-height: calc(100vh - 5.5rem); overflow-y: auto; } }
     .filters { margin-top: 1.6rem; }
     .filters-title { font-size: .875rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: #5d7083; margin-bottom: .5rem; }
     li.app-item { list-style: none; }

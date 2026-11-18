@@ -31,6 +31,7 @@ export interface AutocompleteItem {
       <input type="search" class="form-control autocomplete" [id]="inputId" autocomplete="off"
              [placeholder]="placeholder | translate" [value]="text" [disabled]="disabled"
              role="combobox" [attr.aria-expanded]="open" [attr.aria-controls]="listId" aria-autocomplete="list"
+             [attr.aria-activedescendant]="open && active >= 0 ? listId + '-' + active : null"
              (input)="onInput($any($event.target).value)" (focus)="open = items.length > 0"
              (keydown.arrowDown)="move(1, $event)" (keydown.arrowUp)="move(-1, $event)"
              (keydown.enter)="enter($event)" (keydown.escape)="open = false">
@@ -52,8 +53,9 @@ export interface AutocompleteItem {
             <li class="px-3 py-2 small text-secondary">{{ 'layout.no_results' | translate }}</li>
           }
           @for (item of items; track item.id; let i = $index) {
-            <li role="option" [attr.aria-selected]="i === active">
-              <a href="javascript:void(0)" [class.focus--mouse]="i === active" (mousedown)="$event.preventDefault()" (click)="choose(item)">
+            <li role="option" [id]="listId + '-' + i" [attr.aria-selected]="i === active">
+              <a href="javascript:void(0)" tabindex="-1" class="ac-item" [class.ac-active]="i === active"
+                 (mousedown)="$event.preventDefault()" (mouseenter)="active = i" (click)="choose(item)">
                 <span class="autocomplete-list-text">
                   <span>{{ item.title }}</span>
                   @if (item.subtitle) { <em>{{ item.subtitle }}</em> }
@@ -69,7 +71,11 @@ export interface AutocompleteItem {
     :host { display: block; }
     .clear-btn { position: absolute; right: 2.25rem; bottom: .7rem; }
     .autocomplete-list { position: absolute; left: 0; right: 0; z-index: 20; max-height: 18rem; overflow: auto; }
-    .autocomplete-list em { display: block; font-size: .85rem; font-style: normal; color: #5d7083; }
+    .autocomplete-list em { display: block; font-size: .85rem; font-style: normal; color: #5d7083;
+      text-transform: none !important; letter-spacing: normal !important; }
+    .autocomplete-list .ac-item { display: block; border-left: 3px solid transparent; }
+    .autocomplete-list .ac-item.ac-active { background: #e6f0fa !important; border-left-color: #0066cc; }
+    .autocomplete-list .ac-item.ac-active .autocomplete-list-text span { color: #0066cc; }
   `],
 })
 export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
@@ -176,6 +182,13 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
     event.preventDefault();
     this.open = true;
     this.active = (this.active + delta + this.items.length) % this.items.length;
+    // l'elemento attivo resta visibile negli elenchi lunghi
+    setTimeout(() => {
+      const element = this.host.nativeElement.querySelector('#' + this.listId + '-' + this.active);
+      if (element) {
+        element.scrollIntoView({ block: 'nearest' });
+      }
+    });
   }
 
   enter(event: Event): void {

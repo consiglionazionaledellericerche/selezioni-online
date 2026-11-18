@@ -159,6 +159,7 @@
     "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>",
     "error": {
       "caller": "Il testo contiene caratteri o istruzioni non consentiti",
+      "caller.user": "Non sei abilitato a modificare domande presentate da altri utenti.",
       "domanda.inviata.accesso": "La domanda per il bando selezionato risulta inviata. Per visualizzarla accedere alla sezione <a href=\"my-applications\">Le mie domande</a>",
       "contentalredyexist": "Il file <b>{{filename}}</b> è già presente!",
       "maxuploadfilesize": "Il file <b>{{readableFileSize}}</b> supera la dimensione massima consentita <b>{{maxFileSize}}</b>",
@@ -509,6 +510,7 @@
     "profile": "Il mio profilo",
     "logout": "Esci",
     "welcome": "Bentornato {{value}}",
+    "welcome_F": "Bentornata {{value}}",
     "logout_done": "Logout effettuato",
     "loading": "Caricamento...",
     "list_of": "di",
@@ -525,7 +527,8 @@
       "version": "Versione"
     },
     "at_time": "alle ore",
-    "call_deadline": "Scadenza"
+    "call_deadline": "Scadenza",
+    "call_deadline_expired": "Scaduto il"
   },
   "call_manage": {
     "edit_title": "Modifica bando",
@@ -684,7 +687,7 @@
       "name": "Nome (identificativo)",
       "displayName": "Nome visualizzato",
       "addMember": "Aggiungi membro",
-      "addMemberHint": "Indicare lo username di un utente oppure il nome completo di un gruppo (GROUP_...). Digitando almeno 3 caratteri vengono suggeriti i gruppi.",
+      "addMemberHint": "Scegli se aggiungere un utente o un gruppo e cerca per nome, cognome, username o nome del gruppo: scegli il risultato tra i suggerimenti.",
       "member": "Utente o gruppo",
       "allMembers": "Tutti gli utenti",
       "allMembersOf": "Utenti del gruppo {{value}}",
@@ -855,6 +858,7 @@
     "numero_gu": "G.U. n.",
     "data_gu": "del",
     "data_fine_invio_domande": "Scadenza:",
+    "data_fine_invio_domande_scaduto": "Scaduto il",
     "numero_posti": "N. posti:",
     "numero_max_domande": "N. massimo di domande:",
     "elenco_titoli_studio": "Requisiti:",
@@ -889,6 +893,7 @@
     }
   },
   "application": {
+    "error_title": "Impossibile aprire la domanda",
     "preview": {
       "title": "Anteprima della domanda",
       "info": "così la vedranno i candidati; i dati inseriti non vengono salvati."
@@ -1021,7 +1026,9 @@
       "version": "Versione",
       "title": "Versioni Precedenti",
       "detail": "aggiornata il {{lastModificationDate}} di dimensione {{contentStreamLength}}"
-    }
+    },
+    "current_file": "File attuale",
+    "replace_file": "Per sostituirlo trascina o seleziona un nuovo file (facoltativo)."
   },
   "label": {
     "option": {

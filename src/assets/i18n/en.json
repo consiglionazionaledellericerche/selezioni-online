@@ -361,6 +361,7 @@
     "profile": "My profile",
     "logout": "Logout",
     "welcome": "Welcome back {{value}}",
+    "welcome_F": "Welcome back {{value}}",
     "logout_done": "Logged out",
     "loading": "Loading...",
     "list_of": "of",
@@ -377,7 +378,8 @@
       "version": "Version"
     },
     "at_time": "at",
-    "call_deadline": "Deadline"
+    "call_deadline": "Deadline",
+    "call_deadline_expired": "Closed on"
   },
   "call_manage": {
     "edit_title": "Edit call",
@@ -536,7 +538,7 @@
       "name": "Name (identifier)",
       "displayName": "Display name",
       "addMember": "Add member",
-      "addMemberHint": "Enter a user's username or a group's full name (GROUP_...). Groups are suggested after 3 characters.",
+      "addMemberHint": "Choose whether to add a user or a group and search by name, surname, username or group name: pick the result from the suggestions.",
       "member": "User or group",
       "allMembers": "All users",
       "allMembersOf": "Users of group {{value}}",
@@ -666,7 +668,8 @@
       }
     },
     "error": {
-      "caller": "The text contains characters or instructions that are not allowed"
+      "caller": "The text contains characters or instructions that are not allowed",
+      "caller.user": "You are not allowed to edit applications submitted by other users."
     },
     "validation": {
       "maxlength5000": "Must not exceed 5000 characters"
@@ -1243,6 +1246,7 @@
     "jconon_protocollo_numero": "Protocol number"
   },
   "application": {
+    "error_title": "Unable to open the application",
     "preview": {
       "title": "Application preview",
       "info": "this is how candidates will see it; entered data is not saved."
@@ -1329,6 +1333,7 @@
     "numero_gu": "Official Gazette n.",
     "data_gu": "of",
     "data_fine_invio_domande": "Deadline:",
+    "data_fine_invio_domande_scaduto": "Closed on",
     "numero_posti": "Position available:",
     "numero_max_domande": "Max application numbers:",
     "elenco_titoli_studio": "Requirements:",
@@ -1726,5 +1731,9 @@
     "group_label": "Group",
     "search_user": "Search by name, surname or username",
     "search_group": "Search by group name"
+  },
+  "document": {
+    "current_file": "Current file",
+    "replace_file": "To replace it, drop or select a new file (optional)."
   }
 }

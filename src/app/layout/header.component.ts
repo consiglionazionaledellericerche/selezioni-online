@@ -76,7 +76,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.user = user;
       this.loadMegaMenus();
       if (user) {
-        this.notify.success(this.translateService.instant('layout.welcome', { value: user.firstName || user.userName }), ' ');
+        const welcome = user.sesso === 'F' ? 'layout.welcome_F' : 'layout.welcome';
+        this.notify.success(this.translateService.instant(welcome, { value: user.firstName || user.userName }), ' ');
       }
       this.menuService.evaluateNavbar();
     }));
