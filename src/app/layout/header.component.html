@@ -171,6 +171,20 @@
                           } @else {
                             <a class="list-item mega-call" [routerLink]="['/call-detail']" [queryParams]="{ callCode: call.title }" (click)="closeMega()">
                               <span class="mega-call-code">{{ call.title }}</span>
+                              @if (call.profilo || call.struttura || call.sede) {
+                                <span class="mega-call-desc">{{ call.profilo }}{{ call.profilo && (call.struttura || call.sede) ? ' — ' : '' }}{{ call.struttura || call.sede }}</span>
+                              }
+                              <span class="mega-call-meta">
+                                @if (call.objectTypeId) {
+                                  {{ call.objectTypeId | translate }}
+                                }
+                                @if (call.dataFine) {
+                                  <span class="badge rounded-pill ms-1" [class.bg-secondary]="isPast(call.dataFine)" [class.bg-success]="!isPast(call.dataFine)">
+                                    {{ (isPast(call.dataFine) ? 'call.data_fine_invio_domande_scaduto' : 'call.data_fine_invio_domande') | translate }}
+                                    {{ call.dataFine | date:'dd/MM/yyyy' }}
+                                  </span>
+                                }
+                              </span>
                             </a>
                           }
                         </li>

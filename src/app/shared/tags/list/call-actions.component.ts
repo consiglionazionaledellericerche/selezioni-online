@@ -55,7 +55,7 @@ interface ManageAction {
         <!-- chi può modificare il bando: stessa gestione degli allegati della modifica del bando -->
         <button *ngIf="mode === 'compact' && canUpdateCall()" type="button" class="btn btn-outline-primary btn-sm btn-action"
                 (click)="openAttachments()" [itTooltip]="'attach' | translate">
-          <svg class="icon icon-sm icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-pdf"></use></svg>
+          <svg class="icon icon-sm icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clip"></use></svg>
           <span class="visually-hidden">{{ 'attach' | translate }}</span>
         </button>
         <it-dropdown *ngIf="mode === 'compact' && manageActions().length" mode="button" color="secondary" class="more-actions">
@@ -96,7 +96,7 @@ interface ManageAction {
           <app-show-children-modal *ngIf="!canUpdateCall()" variant="link" linkLabel="layout.call_documents" [parentId]="item.objectId"
             [modal_title]="'call.attach_to' | translate:{value: item.codice}"></app-show-children-modal>
           <a *ngIf="canUpdateCall()" href="javascript:void(0)" class="action-link" (click)="openAttachments()">
-            <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-pdf"></use></svg>{{ 'layout.call_documents' | translate }}
+            <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clip"></use></svg>{{ 'layout.call_documents' | translate }}
           </a>
         </li>
       </ul>

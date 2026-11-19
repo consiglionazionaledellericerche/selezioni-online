@@ -293,8 +293,12 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     var result =[
       ...this.entity.call.elenco_aspects||[], 
       ...this.entity.call.elenco_aspects_sezione_cnr||[], 
-      ...this.entity.call.elenco_aspects_ulteriori_dati||[]
-    ];
+      ...this.entity.call.elenco_aspects_ulteriori_dati||[],
+      // come nel legacy anche le sezioni 4 e 5 (es. dichiarazioni sul trattamento dei dati e sul D.P.R. 445/2000):
+      // senza l'aspect nell'elenco il backend ignora le sue proprietà
+      ...this.entity.call.elenco_aspects_sezione_4||[],
+      ...this.entity.call.elenco_aspects_sezione_5||[]
+    ].filter(aspect => !!aspect);
     result.map((aspect, i) => {
       if (aspect === 'P:jconon_application:aspect_condanne_penali_rapporto_lavoro' || 
           aspect === 'P:jconon_application:aspect_condanne_penali_required'){
@@ -452,6 +456,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
       this.form.controls['jconon_application:last_section_completed'].patchValue(this.affixCompleted);
       this.service.saveApplication(this.buildInstance()).subscribe((application) => {
         application.aspect = this.aspects();
+        // la domanda salvata conserva in extraProperties anche le proprietà non dichiarate nel modello
         this.service.sendApplication(application).subscribe((result) => {
           this.translateService.get('message.application.send', {email: result.email_comunicazione}).subscribe((label) => {
             const initialState = {
@@ -497,7 +502,14 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   }
 
   public buildInstance(): Application {
-    return this.service.buildInstance(this.form.value);
+    const value = this.form.value;
+    const application = this.service.buildInstance(value);
+    // anche le proprietà che il modello non dichiara (aspect generici), altrimenti perse nel salvataggio:
+    // quelle già salvate (anche delle altre sezioni) aggiornate con i valori della sezione corrente
+    application.extraProperties = Object.keys(value)
+      .filter(key => key.includes(':'))
+      .reduce((extra, key) => ({ ...extra, [key]: value[key] }), { ...(this.entity?.extraProperties || {}) });
+    return application;
   }
 
   ngOnDestroy() {

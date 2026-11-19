@@ -180,6 +180,7 @@
       }
     },
     "document": {
+      "uploaded": "Caricato",
       "upload": {
         "success": "Il documento {{value}} è stato correttamente caricato."
       },

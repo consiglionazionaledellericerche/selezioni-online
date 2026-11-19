@@ -1,3 +1,4 @@
+import { DocumentService } from '../document/document.service';
 import { of as observableOf } from 'rxjs';
 import { throwError as observableThrowError, Observable, Subject } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -85,13 +86,64 @@ export class ApplicationService extends CommonService<Application> {
     );
   }
   
+  /**
+   * Come la costruzione standard, ma conserva le proprietà della domanda che il modello non dichiara
+   * (aspect resi dal componente generico): servono per inviarle di nuovo a salvataggio e invio.
+   */
+  protected _buildInstance(json: any): Application {
+    const instance = super._buildInstance(json);
+    if (instance && json) {
+      // solo le proprietà che il modello non dichiara: quelle dichiarate di altre sezioni non vanno reinviate
+      // (es. la data di nascita restituita dal backend in UTC, che il salvataggio non saprebbe leggere)
+      const declared = this.serializeInstance(instance) || {};
+      instance.extraProperties = Object.keys(json)
+        .filter(key => key.includes(':') && !(key in declared) && !/^(cmis|alfcmis|sys|cm|app):/.test(key) && json[key] !== undefined)
+        // le date possono arrivare come millisecondi: tornano Date, inviate poi in formato ISO
+        .reduce((extra, key) => ({ ...extra, [key]: typeof json[key] === 'number' && Math.abs(json[key]) >= 1e11 ?
+          new Date(json[key]) : json[key] }), {});
+    }
+    return instance;
+  }
+
+  /**
+   * Proprietà dichiarate nel modello più quelle presenti solo nel form (aspect senza componente dedicato,
+   * es. le dichiarazioni sul trattamento dei dati e sul D.P.R. 445/2000), che altrimenti non verrebbero salvate.
+   */
+  private serializeWithExtra(application: Application): any {
+    const serialized = this.serializeInstance(application) || {};
+    const extra = application?.extraProperties || {};
+    Object.keys(extra)
+      .filter(key => key.includes(':') && !(key in serialized))
+      .forEach(key => serialized[key] = ApplicationService.toCmisValue(extra[key]));
+    return serialized;
+  }
+
+  /** Valori del form nel formato atteso dal backend: date ISO, comuni e oggetti con id come identificativo. */
+  private static toCmisValue(value: any): any {
+    if (value instanceof Date) {
+      return isNaN(value.getTime()) ? null : DocumentService.toCmisDate(value);
+    }
+    // date già in testo (es. restituite dal backend in UTC con "Z"): riscritte nel formato che il backend accetta
+    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value)) {
+      const date = new Date(value);
+      return isNaN(date.getTime()) ? value : DocumentService.toCmisDate(date);
+    }
+    if (Array.isArray(value)) {
+      return value.map(v => ApplicationService.toCmisValue(v));
+    }
+    if (value && typeof value === 'object') {
+      return value.id !== undefined ? value.id : value;
+    }
+    return value === undefined ? null : value;
+  }
+
   public saveApplication(application: Application): Observable<Application> {
     return this.configService.getApiBase()
       .pipe(
         switchMap((apiBase) => {
           return this.httpClient.post<Application>(
               apiBase + this.getApiPath() + '/save', 
-              this.serializeInstance(application)
+              this.serializeWithExtra(application)
             )
             .pipe(
               map((item) => {
@@ -147,7 +199,7 @@ export class ApplicationService extends CommonService<Application> {
         switchMap((apiBase) => {
           return this.httpClient.post<any>(
               apiBase + this.getApiPath() + '/send', 
-              this.serializeInstance(application)
+              this.serializeWithExtra(application)
             )
             .pipe(
               map((result) => {

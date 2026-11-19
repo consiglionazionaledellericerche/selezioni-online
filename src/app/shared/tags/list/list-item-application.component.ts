@@ -1,3 +1,5 @@
+import { ObjectType } from '../../../common/model/object-type.model';
+import { TranslateService } from '@ngx-translate/core';
 import { ManageCallService } from '../../../core/call/manage-call.service';
 import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {Application} from '../../../core/application/application.model';
@@ -30,6 +32,8 @@ interface ApplicationAction {
         <!-- dati della domanda -->
         <div class="col-lg-8 p-3 p-lg-4">
           <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+            <!-- tipologia del bando, come nell'elenco dei bandi -->
+            <span *ngIf="item.call?.objectTypeId" class="badge rounded-pill call-type">{{ callType() }}</span>
             <span class="badge rounded-pill" [ngClass]="item.isProvvisoria() ? 'bg-warning text-dark' : 'bg-success'">
               {{ 'application.state.' + item.stato_domanda | translate }}
             </span>
@@ -104,6 +108,7 @@ interface ApplicationAction {
     </article>
     `,
   styles: [`
+    .call-type { background: #e6f0fa; color: #0066cc; font-weight: 600; }
     .app-row { border-left: 4px solid #008758; transition: box-shadow .15s ease; }
     .app-row::after { display: none; }
     .app-row:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.12) !important; }
@@ -120,6 +125,7 @@ export class ListItemApplicationComponent {
     private route: ActivatedRoute,
     private modalService: ModalService,
     private manageCallService: ManageCallService,
+    private translateService: TranslateService,
   ) {}
 
   @Input() item: Application = null;
@@ -250,6 +256,13 @@ export class ListItemApplicationComponent {
   private afterChange(): void {
     this.operationsFor = null;
     this.changed.emit();
+  }
+
+  /** Tipologia del bando tradotta (es. "Concorsi Pubblici"), o leggibile dal tipo se manca la traduzione. */
+  public callType(): string {
+    const type = this.item?.call?.objectTypeId;
+    const label = this.translateService.instant(type);
+    return label === type ? ObjectType.readable(type) : label;
   }
 
   public reopenApplication() {

@@ -113,6 +113,12 @@ export class Application extends Folder {
 
   @JsonProperty('call', Call, true)
   public call: Call = undefined;
+
+  /**
+   * Proprietà della domanda non dichiarate in questo modello (es. dichiarazioni degli aspect resi dal componente
+   * generico): json2typescript le scarterebbe, quindi vengono inviate a parte al salvataggio.
+   */
+  public extraProperties: { [property: string]: any };
   
   @JsonProperty('jconon_application:fl_possesso_requisiti')
   public fl_possesso_requisiti: boolean;

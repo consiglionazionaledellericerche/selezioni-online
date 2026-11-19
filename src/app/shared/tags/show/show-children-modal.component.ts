@@ -7,11 +7,11 @@ import { ModalRef, ModalService } from '../../modal/modal.service';
   template: `
     
     <button *ngIf="variant === 'icon'" type="button" class="btn btn-outline-primary btn-sm btn-action" (click)="openModal(template)" [itTooltip]="'attach' | translate">
-      <svg class="icon icon-sm icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-pdf"></use></svg>
+      <svg class="icon icon-sm icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clip"></use></svg>
       <span class="visually-hidden">{{ 'attach' | translate }}</span>
     </button>
     <a *ngIf="variant === 'link'" href="javascript:void(0)" class="action-link" (click)="openModal(template)">
-      <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-file-pdf"></use></svg>{{ (linkLabel || 'attach') | translate }}
+      <svg class="icon icon-sm icon-primary me-2"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clip"></use></svg>{{ (linkLabel || 'attach') | translate }}
     </a>
 
     <ng-template #template let-modal>

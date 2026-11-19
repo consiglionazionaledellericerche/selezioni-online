@@ -649,6 +649,9 @@
     "jsConsole": "JS console"
   },
   "message": {
+    "document": {
+      "uploaded": "Uploaded"
+    },
     "document.upload.success": "The file “{{value}}” has been uploaded.",
     "document.uploaded": "Uploaded",
     "form.invalid_intro": "To continue, fix the {{value}} fields highlighted in red:",

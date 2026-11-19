@@ -187,6 +187,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(([cache, enabled]: [any, string[]]) => this.buildNewCallGroups(cache && cache.jsonlistCallType, enabled)));
   }
 
+  /** Scadenza già passata (millisecondi). */
+  isPast(time: number): boolean {
+    return !!time && time < Date.now();
+  }
+
   /** Bandi della commissione, senza la voce per la parità di genere (mostrata a parte). */
   get commissionOnlyCalls(): any[] {
     return this.commissionCalls.filter(call => call.id !== 'commission-gender');
