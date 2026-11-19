@@ -33,19 +33,13 @@ import { Select2Template } from '../../common/template/select2-template';
           </div>  
           <div class="row gx-2 w-100 pt-1">
             <div [hidden]="!isToggle()" class="form-group col-md-5">
-              <app-control-select-model
-                [term]="''"
-                [template]="comuniTemplate"
-                [path]="callService.getComuniAttiviMapping()"
+              <app-control-comune
                 [label]="'label.jconon_application.comune_ente_comparto_universita_appartenenza'| translate"
-                [labelactive]="'true'"
-                (onChangeEvent)="onChangeComune($event)"
-                [inline]="'false'"
-                [resultName]="'comuni'"
-                [allowClear]="'true'"
                 [placeholder]="'placeholder.select.place'| translate"
+                [attivi]="true"
+                (changed)="onChangeComune($event)"
                 formControlName="jconon_application:comune_ente_comparto_universita_appartenenza">
-              </app-control-select-model>          
+              </app-control-comune>          
             </div>
             <div *ngSwitchCase="true" class="form-group col-md-2">
               <app-control-text 
@@ -134,14 +128,9 @@ export class JcononAspectEnteCompartoUniversitaAppartenenzaComponent extends Dyn
       super.ngOnInit();
     }
 
-    public onChangeComune(comune: string) {
-      if (comune) {
-        this.callService.getComune(comune).subscribe((result) => {
-          this.form.controls['jconon_application:provincia_ente_comparto_universita_appartenenza'].patchValue(result.provincia);
-        });
-      } else {
-        this.form.controls['jconon_application:provincia_ente_comparto_universita_appartenenza'].patchValue(null);
-      }
+    public onChangeComune(comune: any) {
+      // provincia dal comune scelto (archivio ANPR)
+      this.form.controls['jconon_application:provincia_ente_comparto_universita_appartenenza'].patchValue(comune ? comune.provincia : null);
     }
 
     public onChangeToggle(reset: boolean) {

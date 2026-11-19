@@ -118,16 +118,10 @@
             </div>
             <div *ngIf="isStraniero()" class="form-group" [ngClass]="{'col-md-3': !entity.userName, 'col-md-6': entity.userName}">
               <label for="statoestero" class="fw-bold active">{{'user.statoestero'| translate}}</label>
-              <app-control-select-model
-                [inline]="true"
-                [noLabel]="true"
-                [strings]="paesi"
-                [showValidation]="true"
-                [allowClear]="true"
-                [showValidation]="true"
+              <app-control-nazione
                 [placeholder]="'placeholder.select.country'| translate"
                 formControlName="statoestero">
-              </app-control-select-model>
+              </app-control-nazione>
             </div>
           </div>
         </form>

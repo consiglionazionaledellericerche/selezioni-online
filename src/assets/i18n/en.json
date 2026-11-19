@@ -1964,5 +1964,8 @@
     "info": "Secretarial fees are paid with pagoPA: you can pay online or download the notice and pay it at the enabled counters and channels. The receipt will appear in this section.",
     "notice_number": "Notice number",
     "error": "The pagoPA service is not available, please try again later."
+  },
+  "territori": {
+    "soppresso": "abolished in {{anno}}"
   }
 }

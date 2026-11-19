@@ -33,18 +33,11 @@ import { Application } from '../../core/application/application.model';
                 </app-control-select-model>          
             </div>
             <div [hidden]="isToggle()" class="form-group col-md-4">
-              <app-control-select-model
-                [inline]="true"
-                [focus]="!form.pristine"
+              <app-control-nazione
                 [label]="'label.jconon_application.cittadinanza_stato_estero'| translate"
-                [labelactive]="'true'"
-                [strings]="paesi"
-                [showValidation]="true"
-                [allowClear]="true"
-                [showValidation]="true"
                 [placeholder]="'label.jconon_application.cittadinanza_stato_estero_placeholder'| translate"
                 formControlName="jconon_application:cittadinanza_stato_estero">
-              </app-control-select-model>          
+              </app-control-nazione>          
             </div>
           </div>  
         </a>

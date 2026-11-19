@@ -24,18 +24,12 @@ import { Select2Template } from '../../common/template/select2-template';
         </div>
         <div class="row gx-2">
           <div class="form-group col-md-3">
-            <app-control-select-model
-              [inline]="true"
+            <app-control-nazione
               [label]="'label.jconon_application.nazione_nascita'| translate"
-              [labelactive]="'true'"
-              [strings]="paesi"
-              [showValidation]="true"
-              [allowClear]="true"
-              [showValidation]="true"
               [placeholder]="'placeholder.select.country'| translate"
-              (onChangeEvent)="onChangeNazioneNascita()"
+              (changed)="onChangeNazioneNascita()"
               formControlName="jconon_application:nazione_nascita">
-            </app-control-select-model>
+            </app-control-nazione>
           </div>
           <div *ngIf="isForeign()" class="form-group col-md-6">
             <app-control-text 
@@ -47,20 +41,15 @@ import { Select2Template } from '../../common/template/select2-template';
             </app-control-text>
           </div>
           <div [hidden]="isForeign()" class="form-group col-md-5">
-            <app-control-select-model
+            <app-control-comune
               *ngIf="!isForeign()"
-              [term]="''"
-              [template]="comuniTemplate"
-              [path]="callService.getComuniMapping()"
               [label]="'label.jconon_application.comune_nascita'| translate"
-              [labelactive]="'true'"
-              (onChangeEvent)="onChangeComune($event)"
-              [inline]="'false'"
-              [resultName]="'comuni'"
-              [allowClear]="'true'"
               [placeholder]="'placeholder.select.place'| translate"
+              [attivi]="false"
+              [data]="form.controls['jconon_application:data_nascita']?.value"
+              (changed)="onChangeComune($event)"
               formControlName="jconon_application:comune_nascita">
-            </app-control-select-model>
+            </app-control-comune>
           </div>
           <div *ngIf="!isForeign()" class="form-group col-md-1">
             <label class="form-label active">{{'label.jconon_application.provincia_nascita' | translate}}</label>
@@ -113,16 +102,10 @@ import { Select2Template } from '../../common/template/select2-template';
           </div>
           <div [hidden]="!isStraniero()" class="form-group col-md-6">
             <label for="nazione_cittadinanza" class="active" translate>label.jconon_application.nazione_cittadinanza</label>
-            <app-control-select-model
-              [inline]="true"
-              [noLabel]="true"
-              [strings]="paesi"
-              [showValidation]="true"
-              [allowClear]="true"
-              [showValidation]="true"
+            <app-control-nazione
               [placeholder]="'placeholder.select.country'| translate"
               formControlName="jconon_application:nazione_cittadinanza">
-            </app-control-select-model>
+            </app-control-nazione>
           </div>
         </div>
       </form>
@@ -204,13 +187,8 @@ export class JcononAffixAnagraficaComponent extends AffixComponent {
       }
     }
  
-    public onChangeComune(comune: string) {
-      if (comune) {
-        this.callService.getComune(comune).subscribe((result) => {
-          this.form.controls['jconon_application:provincia_nascita'].patchValue(result.provincia);
-        });
-      } else {
-        this.form.controls['jconon_application:provincia_nascita'].patchValue(null);
-      }
+    public onChangeComune(comune: any) {
+      // provincia dal comune scelto (archivio ANPR)
+      this.form.controls['jconon_application:provincia_nascita'].patchValue(comune ? comune.provincia : null);
     }
 }

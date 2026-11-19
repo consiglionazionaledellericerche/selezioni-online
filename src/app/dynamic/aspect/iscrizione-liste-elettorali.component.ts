@@ -21,19 +21,13 @@ import { Select2Template } from '../../common/template/select2-template';
           </app-control-toggle>
           <div class="row gx-2 w-100 pt-1">
             <div [hidden]="!isToggle()" class="form-group col-md-9">
-              <app-control-select-model
-                [term]="''"
-                [template]="comuniTemplate"
-                [path]="callService.getComuniAttiviMapping()"
+              <app-control-comune
                 [label]="'label.jconon_application.comune_liste_elettorali'| translate"
-                [labelactive]="'true'"
-                (onChangeEvent)="onChangeComune($event)"
-                [inline]="'false'"
-                [resultName]="'comuni'"
-                [allowClear]="'true'"
                 [placeholder]="'placeholder.select.place'| translate"
+                [attivi]="true"
+                (changed)="onChangeComune($event)"
                 formControlName="jconon_application:comune_liste_elettorali">
-              </app-control-select-model>          
+              </app-control-comune>          
             </div>
             <div *ngSwitchCase="true" class="form-group col-md-3">
               <app-control-text 
@@ -88,14 +82,9 @@ export class JcononAspectIscrizioneListeElettoraliComponent extends DynamicCompo
       super.ngOnInit();
     }
     
-    public onChangeComune(comune: string) {
-      if (comune) {
-        this.callService.getComune(comune).subscribe((result) => {
-          this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(result.provincia);
-        });
-      } else {
-        this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(null);
-      }
+    public onChangeComune(comune: any) {
+      // provincia dal comune scelto (archivio ANPR)
+      this.form.controls['jconon_application:provincia_liste_elettorali'].patchValue(comune ? comune.provincia : null);
     }
 
     public onChangeToggle(reset: boolean) {

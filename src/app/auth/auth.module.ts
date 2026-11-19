@@ -1,3 +1,5 @@
+import { NazioneSelectComponent } from '../shared/ui/territori/nazione-select.component';
+import { ComuneSelectComponent } from '../shared/ui/territori/comune-select.component';
 import { ItDropdownModule, ItPopoverDirective, ItTooltipDirective } from 'design-angular-kit';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -49,6 +51,8 @@ export enum ServiceReg {
     ShowGroupMembersModalComponent,
   ],
   imports: [
+        NazioneSelectComponent,
+        ComuneSelectComponent,
         ItDropdownModule,
         ItPopoverDirective,
         ItTooltipDirective,

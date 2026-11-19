@@ -16,18 +16,12 @@ import { User } from '../../auth/model/user.model';
       <form [formGroup]="form" *ngIf="isLoaded()">
         <div class="row gx-2">
           <div class="form-group col-md-3">
-            <app-control-select-model
-              [inline]="true"
+            <app-control-nazione
               [label]="'label.jconon_application.nazione_comunicazioni'| translate"
-              [labelactive]="'true'"
-              [strings]="paesi"
-              [showValidation]="true"
-              [allowClear]="true"
-              [showValidation]="true"
               [placeholder]="'placeholder.select.country'| translate"
-              (onChangeEvent)="onChangeNazioneResidenza()"
+              (changed)="onChangeNazioneResidenza()"
               formControlName="jconon_application:nazione_comunicazioni">
-            </app-control-select-model>
+            </app-control-nazione>
           </div>
           <div [hidden]="!isForeignComunicazioni()" class="form-group col-md-6">
             <app-control-text 
@@ -39,20 +33,14 @@ import { User } from '../../auth/model/user.model';
             </app-control-text>
           </div>
           <div [hidden]="isForeignComunicazioni()" class="form-group col-md-5">
-            <app-control-select-model
+            <app-control-comune
               *ngIf="!isForeignComunicazioni()"
-              [term]="''"
-              [template]="comuniTemplate"
-              [path]="callService.getComuniAttiviMapping()"
               [label]="'label.jconon_application.comune_comunicazioni'| translate"
-              [labelactive]="'true'"
-              (onChangeEvent)="onChangeComune($event)"
-              [inline]="'false'"
-              [resultName]="'comuni'"
-              [allowClear]="'true'"
               [placeholder]="'placeholder.select.place'| translate"
+              [attivi]="true"
+              (changed)="onChangeComune($event)"
               formControlName="jconon_application:comune_comunicazioni">
-            </app-control-select-model>          
+            </app-control-comune>          
           </div>
           <div [hidden]="isForeignComunicazioni()" class="form-group col-md-1">
             <label class="form-label active">{{'label.jconon_application.provincia_comunicazioni' | translate}}</label>
@@ -205,14 +193,9 @@ export class JcononAffixReperibilitaComponent extends AffixComponent {
       return this.form.controls['jconon_application:nazione_comunicazioni'].value !== Helpers.ITALIA;
     }
       
-    public onChangeComune(comune: string) {
-      if (comune) {
-        this.callService.getComune(comune).subscribe((result) => {
-          this.form.controls['jconon_application:provincia_comunicazioni'].patchValue(result.provincia);
-        });
-      } else {
-        this.form.controls['jconon_application:provincia_comunicazioni'].patchValue(null);
-      }
+    public onChangeComune(comune: any) {
+      // provincia dal comune scelto (archivio ANPR)
+      this.form.controls['jconon_application:provincia_comunicazioni'].patchValue(comune ? comune.provincia : null);
     }
 
     public onChangeNazioneResidenza() {

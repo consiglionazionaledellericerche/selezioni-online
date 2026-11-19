@@ -1,3 +1,5 @@
+import { NazioneSelectComponent } from '../shared/ui/territori/nazione-select.component';
+import { ComuneSelectComponent } from '../shared/ui/territori/comune-select.component';
 import { CallAttachmentsModalComponent } from './affix/call-attachments-modal.component';
 import { ReperibilitaModalComponent } from './affix/reperibilita-modal.component';
 import { AuthorityPickerComponent } from '../shared/ui/authority-picker.component';
@@ -157,6 +159,8 @@ import { ConfigService } from '../core/config.service';
         JcononAttachmentDocumentoRiconoscimentoEditComponent
     ],
     imports: [
+        NazioneSelectComponent,
+        ComuneSelectComponent,
         AuthorityPickerComponent,
         ItDropdownModule,
         ItPopoverDirective,

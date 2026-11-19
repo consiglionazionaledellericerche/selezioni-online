@@ -26,19 +26,13 @@ import { CallService } from '../../core/call/call.service';
             </div>
             <div class="row gx-2 w-100 pt-1 ps-2">
               <div class="form-group col-md-9">
-                <app-control-select-model
-                  [term]="''"
-                  [template]="comuniTemplate"
-                  [path]="callService.getComuniAttiviMapping()"
+                <app-control-comune
                   [label]="'label.jconon_application.comune_ente_appartenenza'| translate"
-                  [labelactive]="'true'"
-                  (onChangeEvent)="onChangeComune($event)"
-                  [inline]="'false'"
-                  [resultName]="'comuni'"
-                  [allowClear]="'true'"
                   [placeholder]="'placeholder.select.place'| translate"
+                  [attivi]="true"
+                  (changed)="onChangeComune($event)"
                   formControlName="jconon_application:comune_ente_appartenenza">
-                </app-control-select-model>          
+                </app-control-comune>          
               </div>
               <div class="form-group col-md-3">
                 <app-control-text 
@@ -85,14 +79,9 @@ export class JcononAspectEnteAppartenenzaComponent extends DynamicComponent<Appl
       super.ngOnInit();
     }
 
-    public onChangeComune(comune: string) {
-      if (comune) {
-        this.callService.getComune(comune).subscribe((result) => {
-          this.form.controls['jconon_application:provincia_ente_appartenenza'].patchValue(result.provincia);
-        });
-      } else {
-        this.form.controls['jconon_application:provincia_ente_appartenenza'].patchValue(null);
-      }
+    public onChangeComune(comune: any) {
+      // provincia dal comune scelto (archivio ANPR)
+      this.form.controls['jconon_application:provincia_ente_appartenenza'].patchValue(comune ? comune.provincia : null);
     }
 
 }
