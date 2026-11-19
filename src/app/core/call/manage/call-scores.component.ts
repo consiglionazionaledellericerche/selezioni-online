@@ -10,6 +10,7 @@ import { User } from '../../../auth/model/user.model';
 import { Helpers } from '../../../common/helpers/helpers';
 import { ApplicationOperationsService, ESITI, ScoreField, callScoreFields } from '../../application/application-operations.service';
 import { CallPageBase } from './call-pages.component';
+import { padProtocollo } from '../../../common/helpers/protocollo';
 
 const GRADUATORIA = 'jconon_application:graduatoria';
 const ESITO = 'jconon_application:esito_call';
@@ -129,14 +130,14 @@ interface ScoreRow {
                             [attr.aria-label]="'call_scores.notes' | translate"></textarea></td>
               <td>
                 <div class="d-flex gap-1">
-                  <input type="text" class="form-control form-control-sm prot-num" [(ngModel)]="row.values[PROT_NUM_GRAD]"
+                  <input type="text" class="form-control form-control-sm prot-num" [(ngModel)]="row.values[PROT_NUM_GRAD]" (blur)="row.values[PROT_NUM_GRAD] = pad(row.values[PROT_NUM_GRAD])"
                          [placeholder]="'call_scores.number' | translate">
                   <input type="date" class="form-control form-control-sm" [(ngModel)]="row.values[PROT_DATA_GRAD]">
                 </div>
               </td>
               <td>
                 <div class="d-flex gap-1">
-                  <input type="text" class="form-control form-control-sm prot-num" [(ngModel)]="row.values[PROT_NUM_IDONEO]"
+                  <input type="text" class="form-control form-control-sm prot-num" [(ngModel)]="row.values[PROT_NUM_IDONEO]" (blur)="row.values[PROT_NUM_IDONEO] = pad(row.values[PROT_NUM_IDONEO])"
                          [placeholder]="'call_scores.number' | translate">
                   <input type="date" class="form-control form-control-sm" [(ngModel)]="row.values[PROT_DATA_IDONEO]">
                 </div>
@@ -252,6 +253,11 @@ export class CallScoresComponent extends CallPageBase {
     return (this.rows || []).filter(row => this.isDirty(row)).length;
   }
 
+  /** Numero di protocollo a 7 cifre con gli zeri iniziali. */
+  pad(value: any): any {
+    return padProtocollo(value);
+  }
+
   hasValue(value: any): boolean {
     return value !== null && value !== undefined && value !== '';
   }
@@ -272,7 +278,7 @@ export class CallScoresComponent extends CallPageBase {
     const rows = this.rows.filter(row => this.isDirty(row)).map(row => {
       const json: { [key: string]: any } = { 'cmis:objectId': row.id };
       Object.keys(row.values).forEach(key => {
-        const value = row.values[key];
+        const value = key === PROT_NUM_GRAD || key === PROT_NUM_IDONEO ? padProtocollo(row.values[key]) : row.values[key];
         json[key] = value === null || value === undefined ? '' : String(value);
       });
       return json;

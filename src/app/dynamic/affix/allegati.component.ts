@@ -11,6 +11,10 @@ import { Application } from '../../core/application/application.model';
 import { ApplicationService } from '../../core/application/application.service';
 import { Subscription } from 'rxjs';
 import { LoadingState } from '../../auth/loading-state.enum';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { switchMap } from 'rxjs/operators';
+import { saveAs } from 'file-saver';
+import { ConfigService } from '../../core/config.service';
 
 @Component({
   standalone: false,
@@ -21,7 +25,7 @@ import { LoadingState } from '../../auth/loading-state.enum';
           <ng-container *ngFor="let attachment of data.call[callProperty]">
             <app-accordion-group #accordionGroup panelClass="border border-light no-after">
               <div class="d-flex align-items-start" accordion-heading>
-                <h4 #title class="p-1 text-truncate text-primary" [itPopover]="getTitle(attachment, title)| translate" popoverTrigger="hover" translate>{{attachment}}</h4>
+                <h4 #title class="p-1 text-truncate text-primary" [attr.title]="attachment | translate" translate>{{attachment}}</h4>
                 <span class="badge rounded-pill badge-outline-primary d-table ms-n1" [ngClass]="{'badge-outline-danger': childrenlist.count === 0}">{{childrenlist.count}}</span>
                 <span *ngIf="uploaded[attachment]" class="badge rounded-pill bg-success upload-ok ms-2 align-self-center" role="status">
                   <svg class="icon icon-xs icon-white me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-check"></use></svg>{{ 'message.document.uploaded' | translate }}
@@ -32,6 +36,18 @@ import { LoadingState } from '../../auth/loading-state.enum';
                       <use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus-circle"></use>
                     </svg>
                   </button>
+                </div>
+                <div *ngIf="isPagopa(attachment) && pagopa" class="p-1 pagopa d-flex flex-wrap align-items-center justify-content-end gap-2">
+                  <span *ngIf="pagopa.importo" class="small text-secondary">{{ 'pagopa.amount' | translate }} <strong>{{ pagopa.importo | currency:'EUR':'symbol':'1.2-2':'it' }}</strong></span>
+                  <span *ngIf="isPagato()" class="badge bg-success" role="status">{{ 'pagopa.paid' | translate }}</span>
+                  <ng-container *ngIf="!isPagato()">
+                    <button type="button" class="btn btn-outline-primary btn-xs" [disabled]="pagopaBusy" (click)="scaricaAvviso($event, accordionGroup)">
+                      <svg class="icon icon-sm icon-primary me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-download"></use></svg>{{ 'pagopa.notice' | translate }}
+                    </button>
+                    <button type="button" class="btn btn-primary btn-xs" [disabled]="pagopaBusy" (click)="pagaOnline($event)">
+                      <svg class="icon icon-sm icon-white me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-card"></use></svg>{{ 'pagopa.pay' | translate }}
+                    </button>
+                  </ng-container>
                 </div>
                 <div *ngIf="isPrintDicSost(attachment) || isPrintTrattamentoDatiPersonali(attachment)" class="p-1 h4">
                   <button 
@@ -62,6 +78,10 @@ import { LoadingState } from '../../auth/loading-state.enum';
                   </button>
                 </div>
               </div>
+              <div *ngIf="isPagopa(attachment) && pagopa && !isPagato()" class="alert alert-info small mx-3 mt-2" role="note">
+                {{ 'pagopa.info' | translate }}
+                <span *ngIf="pagopa.numeroAvviso"> {{ 'pagopa.notice_number' | translate }} <strong>{{ pagopa.numeroAvviso }}</strong>.</span>
+              </div>
               <children-list #childrenlist [show_date]="true" [parentId]="data.objectId" [typeId]="attachment"></children-list>
             </app-accordion-group>
           </ng-container>  
@@ -77,7 +97,9 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
       protected changeDetectorRef: ChangeDetectorRef,
       private modalService: ModalService,
       protected apiMessageService: ApiMessageService,
-      protected translateService: TranslateService
+      protected translateService: TranslateService,
+      private http: HttpClient,
+      private configService: ConfigService
     ) {
       super(cacheService, changeDetectorRef);
       this.subscription = this.apiMessageService.loadingEvent$.subscribe((loadingState: LoadingState) => {
@@ -105,6 +127,7 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
         this.cache = cache;
       });      
       super.ngOnInit();
+      this.loadPagopa();
     }
     
     public isPrintTrattamentoDatiPersonali(section: string) {
@@ -169,11 +192,86 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
       return false; 
     }
 
-    getTitle(attachment: string, element: any) {
-      if (element.scrollWidth > element.clientWidth) {
-        return attachment;
+    /* ---------------- pagoPA: diritti di segreteria ---------------- */
+
+    public static readonly PAGOPA_TYPE = 'D:jconon_pagamenti_diritti_segreteria:attachment';
+    public pagopa: { abilitato?: boolean, importo?: any, numeroAvviso?: string, stato?: string };
+    public pagopaBusy = false;
+
+    /** Sezione dei pagamenti con pagoPA attivo nel bando e domanda già salvata. */
+    isPagopa(attachment: string): boolean {
+      return attachment === JcononAffixAllegatiComponent.PAGOPA_TYPE && !!this.data?.call?.pagamento_pagopa && !!this.data?.objectId;
+    }
+
+    isPagato(): boolean {
+      return !!this.pagopa?.stato && ['ESEGUITA', 'ESEGUITO', 'PAGATA'].includes(String(this.pagopa.stato).toUpperCase());
+    }
+
+    private loadPagopa(): void {
+      if (!this.data?.call?.pagamento_pagopa || !this.data?.objectId) {
+        return;
       }
-      return undefined;
+      this.configService.getApiBase().pipe(
+        switchMap(apiBase => this.http.get<any>(apiBase + '/v1/application/' + encodeURIComponent(this.data.objectId) + '/pagopa'))
+      ).subscribe(result => this.pagopa = result, () => this.pagopa = { abilitato: true });
+    }
+
+    /** Avviso di pagamento in PDF (la pendenza viene creata al primo download). */
+    scaricaAvviso(event: any, accordion: any): void {
+      event.stopPropagation();
+      event.preventDefault();
+      if (!accordion.isOpen) {
+        accordion.toggleOpen();
+      }
+      this.pagopaBusy = true;
+      this.configService.getApiBase().pipe(
+        switchMap(apiBase => this.http.get(apiBase + '/v1/application/' + encodeURIComponent(this.data.objectId) + '/pagopa/avviso',
+          { responseType: 'blob' }))
+      ).subscribe(blob => {
+        this.pagopaBusy = false;
+        saveAs(blob, 'Avviso pagoPA.pdf');
+        this.loadPagopa();
+      }, error => {
+        this.pagopaBusy = false;
+        this.pagopaError(error);
+      });
+    }
+
+    /** Pagamento online sul portale pagoPA, con ritorno a questa pagina della domanda. */
+    pagaOnline(event: any): void {
+      event.stopPropagation();
+      event.preventDefault();
+      this.pagopaBusy = true;
+      this.configService.getApiBase().pipe(
+        switchMap(apiBase => this.http.get<{ redirect: string }>(apiBase + '/v1/application/' + encodeURIComponent(this.data.objectId) + '/pagopa/paga',
+          { params: new HttpParams().set('returnUrl', window.location.href) }))
+      ).subscribe(result => {
+        if (result?.redirect) {
+          window.location.href = result.redirect;
+        } else {
+          this.pagopaBusy = false;
+        }
+      }, error => {
+        this.pagopaBusy = false;
+        this.pagopaError(error);
+      });
+    }
+
+    /** Messaggio restituito da GovPay o dal backend (anche quando la risposta attesa era un PDF). */
+    private pagopaError(error: HttpErrorResponse): void {
+      const show = (message: string) => this.apiMessageService.sendMessage(MessageType.ERROR,
+        message || this.translateService.instant('pagopa.error'));
+      if (error.error instanceof Blob) {
+        error.error.text().then(text => {
+          try {
+            show(JSON.parse(text).message);
+          } catch (e) {
+            show(null);
+          }
+        });
+      } else {
+        show(error.error?.message);
+      }
     }
   
     ngOnDestroy() {

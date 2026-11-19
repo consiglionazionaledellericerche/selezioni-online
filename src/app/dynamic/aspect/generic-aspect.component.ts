@@ -1,3 +1,4 @@
+import { padProtocollo } from '../../common/helpers/protocollo';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -24,6 +25,8 @@ interface GenericField {
   kind: 'toggle' | 'aspect' | 'segmented' | 'select' | 'textarea' | 'date' | 'text';
   options: { value: string, label: string }[];
   required: boolean;
+  /** Numero di protocollo (widget ui.protocollo): completato a 7 cifre all'uscita dal campo. */
+  protocollo?: boolean;
 }
 
 /**
@@ -74,7 +77,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
                 <app-control-datepicker [inline]="true" [time]="!!field.time" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-datepicker>
               </div>
-              <div *ngSwitchDefault class="form-group mb-0">
+              <div *ngSwitchDefault class="form-group mb-0" (focusout)="padProtocollo(field)">
                 <app-control-text type="text" [inline]="true" [labelactive]="true" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-text>
               </div>
@@ -107,7 +110,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
                 <app-control-datepicker [inline]="true" [time]="!!field.time" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-datepicker>
               </div>
-              <div *ngSwitchDefault class="form-group mb-0">
+              <div *ngSwitchDefault class="form-group mb-0" (focusout)="padProtocollo(field)">
                 <app-control-text type="text" [inline]="true" [labelactive]="true" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-text>
               </div>
@@ -144,7 +147,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
                 <app-control-datepicker [inline]="true" [time]="!!field.time" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-datepicker>
               </div>
-              <div *ngSwitchDefault class="form-group mb-0">
+              <div *ngSwitchDefault class="form-group mb-0" (focusout)="padProtocollo(field)">
                 <app-control-text type="text" [inline]="true" [labelactive]="true" [label]="fieldLabel(field)"
                   [formControlName]="field.property"></app-control-text>
               </div>
@@ -377,6 +380,18 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
     this.changeDetectorRef.markForCheck();
   }
 
+  /** Numero di protocollo completato con gli zeri iniziali (7 cifre). */
+  padProtocollo(field: GenericField): void {
+    if (!field.protocollo) {
+      return;
+    }
+    const control = this.form.get(field.property);
+    const padded = padProtocollo(control?.value);
+    if (control && padded !== control.value) {
+      control.setValue(padded);
+    }
+  }
+
   /** Etichetta con l'asterisco dei campi obbligatori (per i controlli che ricevono l'etichetta come input). */
   fieldLabel(field: GenericField): string {
     return this.labelOf(field.label) + (field.required ? ' *' : '');
@@ -462,8 +477,9 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
         }
       });
       const time = kind === 'date' && (widget.includes('datetime') || /H/.test(String(def.format || '')));
+      const protocollo = kind === 'text' && (widget.includes('protocollo') || property === 'jconon_protocollo:numero');
       this.fields.push({ name, property, showWhen, label: def.label || def.jsonlabel?.key || this.knownLabel(property) || property,
-        kind, options, required, time });
+        kind, options, required, time, protocollo });
     });
     this.applyVisibility();
     // aggiorna la visibilità dei campi dipendenti quando cambia il campo da cui dipendono

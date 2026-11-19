@@ -5,6 +5,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ModalRef } from '../../../shared/modal/modal.service';
 import { ApiMessageService, MessageType } from '../../api-message.service';
 import { DocumentService } from '../../document/document.service';
+import { padProtocollo } from '../../../common/helpers/protocollo';
 import { Application } from '../application.model';
 import { ApplicationOperation, ApplicationOperationsService } from '../application-operations.service';
 
@@ -52,7 +53,7 @@ import { ApplicationOperation, ApplicationOperationsService } from '../applicati
           </div>
           <div class="col-md-6">
             <label for="op-numero" class="form-label d-block fw-semibold">{{ 'application_operations.protocol_number' | translate }} *</label>
-            <input id="op-numero" type="text" class="form-control" formControlName="numero">
+            <input id="op-numero" type="text" inputmode="numeric" class="form-control" formControlName="numero" (blur)="padNumero()">
           </div>
           @if (operation === 'esclusione') {
             <div class="col-md-6">
@@ -114,6 +115,12 @@ export class ApplicationOperationModalComponent implements OnInit {
     }[this.operation] || 'it-file';
   }
 
+  /** Numero di protocollo a 7 cifre con gli zeri iniziali. */
+  padNumero(): void {
+    const control = this.form.get('numero');
+    control.setValue(padProtocollo(control.value), { emitEvent: false });
+  }
+
   onFile(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.file = input.files && input.files.length ? input.files[0] : null;
@@ -126,7 +133,7 @@ export class ApplicationOperationModalComponent implements OnInit {
     const value = this.form.value;
     const properties: { [key: string]: any } = {
       'jconon_protocollo:data': DocumentService.toCmisDate(new Date(value.data + 'T00:00:00')),
-      'jconon_protocollo:numero': value.numero
+      'jconon_protocollo:numero': padProtocollo(value.numero)
     };
     if (this.operation === 'esclusione') {
       properties['stato'] = value.stato;

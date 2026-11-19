@@ -2428,5 +2428,14 @@
       "remove": "Rimuovi il dispositivo",
       "browser": "Browser"
     }
+  },
+  "pagopa": {
+    "amount": "Importo",
+    "paid": "Pagamento eseguito",
+    "notice": "Scarica avviso",
+    "pay": "Paga online",
+    "info": "Il pagamento dei diritti di segreteria avviene con pagoPA: puoi pagare online oppure scaricare l'avviso e pagarlo presso gli sportelli e i canali abilitati. La ricevuta comparirà in questa sezione.",
+    "notice_number": "Numero avviso",
+    "error": "Il servizio pagoPA non è disponibile, riprovare più tardi."
   }
 }
