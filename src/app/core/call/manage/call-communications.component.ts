@@ -1,3 +1,4 @@
+import { padProtocollo } from '../../../common/helpers/protocollo';
 import { ManageCallService } from '../manage-call.service';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
@@ -139,20 +140,42 @@ import {
             </select>
           </div>
           <div class="form-group">
-            <label for="f-note" class="active">{{ 'communications.note' | translate }}</label>
-            <textarea id="f-note" class="form-control" rows="4" formControlName="note"></textarea>
+            <!-- testo formattato con segnaposto [[...]] della domanda e del bando, come nel legacy -->
+            <app-control-ckeditor [inline]="true" [label]="'communications.note' | translate" [placeholders]="placeholders"
+                                  formControlName="note"></app-control-ckeditor>
           </div>
           <div class="form-group">
             <label for="f-firma" class="active">{{ 'communications.firma' | translate }} *</label>
             <textarea id="f-firma" class="form-control" rows="2" formControlName="firma"></textarea>
           </div>
+          <!-- graduatoria privata: il file va negli allegati del bando come "Graduatoria privata" con il protocollo -->
+          <ng-container *ngIf="kind === 'comunicazioni'">
+            <div class="form-check mb-2">
+              <input id="f-gp" type="checkbox" formControlName="graduatoriaPrivata">
+              <label for="f-gp">{{ 'communications.graduatoria_privata.label' | translate }}</label>
+            </div>
+            <div *ngIf="form.value.graduatoriaPrivata" class="gp-box mb-3">
+              <p class="small text-secondary mb-3">{{ 'communications.graduatoria_privata.info' | translate }}</p>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="f-gp-data" class="active">{{ 'communications.protocollo_data' | translate }} *</label>
+                  <input id="f-gp-data" type="date" class="form-control" formControlName="gpData">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="f-gp-num" class="active">{{ 'communications.protocollo_numero' | translate }} *</label>
+                  <input id="f-gp-num" type="text" inputmode="numeric" class="form-control" formControlName="gpNumero"
+                         (blur)="form.controls['gpNumero'].setValue(pad(form.value.gpNumero))">
+                </div>
+              </div>
+            </div>
+          </ng-container>
           <div class="form-group">
-            <span class="small fw-semibold d-block mb-2">{{ 'communications.allegato' | translate }}</span>
+            <span class="small fw-semibold d-block mb-2">{{ 'communications.allegato' | translate }}<span *ngIf="graduatoriaPrivata()"> *</span></span>
             <it-upload-drag-drop #commUpload (fileStartUpload)="file = $event; commUpload.progress(100); commUpload.success()"></it-upload-drag-drop>
           </div>
           <div class="d-flex justify-content-between align-items-center">
             <span class="small text-secondary">{{ 'communications.selected_count' | translate:{value: selected.size} }}</span>
-            <button type="submit" class="btn btn-primary" [disabled]="form.invalid || selected.size === 0 || busy">
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid || selected.size === 0 || busy || !graduatoriaPrivataComplete()">
               {{ 'communications.generate' | translate }}
             </button>
           </div>
@@ -294,6 +317,7 @@ import {
     </ng-template>
   `,
   styles: [`
+    .gp-box { padding: .75rem 1rem; background: #f7f9fc; border-left: 4px solid #0066cc; border-radius: 4px; }
     .candidate-list { max-height: 28rem; overflow: auto; }
     .state-tiles { display: flex; flex-wrap: wrap; gap: .75rem; }
     .state-tile { display: flex; flex-direction: column; align-items: flex-start; min-width: 9rem; padding: .6rem 1rem;
@@ -371,9 +395,30 @@ export class CallCommunicationsComponent implements OnInit {
               private communicationsService: CallCommunicationsService,
               private modalService: ModalService,
               private apiMessageService: ApiMessageService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private manageCallService: ManageCallService) {}
+
+  /** Segnaposto per le note: campi della domanda e del bando (come i jsonlist del legacy). */
+  public placeholders: { key: string, label: string, group?: string }[] = [];
+
+  private loadPlaceholders(): void {
+    this.manageCallService.callManagementCache().subscribe(cache => {
+      const items = [...(cache.jsonlistCallFields || []), ...(cache.jsonlistApplicationFieldsNotRequired || [])];
+      const seen = new Set<string>();
+      this.placeholders = items
+        .filter(item => item && item.key && !seen.has(item.key) && seen.add(item.key))
+        .map(item => ({ key: item.key, label: this.label(item), group: item.group }));
+    }, () => this.placeholders = []);
+  }
+
+  private label(item: any): string {
+    const key = item.label || item.key;
+    const translated = this.translateService.instant(key);
+    return translated && translated !== key ? translated : (item.defaultLabel || item.title || item.key);
+  }
 
   ngOnInit(): void {
+    this.loadPlaceholders();
     this.signForm = this.formBuilder.group({ firmaAutomatica: [false], userName: [''], password: [''], otp: [''], firma: [''] });
     this.sendForm = this.formBuilder.group({ addressFromApplication: ['EMAIL'], pec: [false], userNamePEC: [''], passwordPEC: [''] });
     this.route.queryParams.subscribe(params => {
@@ -402,10 +447,31 @@ export class CallCommunicationsComponent implements OnInit {
       protocolloNumero: [''],
       protocolloData: [''],
       stampaPunteggi: ['false'],
+      graduatoriaPrivata: [false],
+      gpData: [''],
+      gpNumero: [''],
       appellativo: [''],
       note: [''],
       firma: ['', Validators.required]
     });
+  }
+
+  /** Comunicazione con graduatoria privata (solo per le comunicazioni). */
+  graduatoriaPrivata(): boolean {
+    return this.kind === 'comunicazioni' && !!this.form?.value?.graduatoriaPrivata;
+  }
+
+  /** Con la graduatoria privata servono documento, data e numero di protocollo. */
+  graduatoriaPrivataComplete(): boolean {
+    if (!this.graduatoriaPrivata()) {
+      return true;
+    }
+    const v = this.form.value;
+    return !!this.file && !!v.gpData && !!String(v.gpNumero || '').trim();
+  }
+
+  pad(value: any): any {
+    return padProtocollo(value);
   }
 
   openGenerate(): void {
@@ -483,6 +549,11 @@ export class CallCommunicationsComponent implements OnInit {
       add('jconon_protocollo:numero', v.protocolloNumero);
       add('jconon_protocollo:data', v.protocolloData ? ManageCallService.toCmisDate(new Date(v.protocolloData + 'T00:00:00')) : null);
       add('stampaPunteggi', v.stampaPunteggi);
+    }
+    if (this.graduatoriaPrivata()) {
+      add('graduatoria_privata', 'true');
+      add('protocollo_data', v.gpData);
+      add('protocollo_numero', padProtocollo(v.gpNumero));
     }
     add('appellativo', v.appellativo);
     add('note', v.note);

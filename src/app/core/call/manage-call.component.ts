@@ -104,7 +104,7 @@ import { ExportApplicationsComponent } from './shared/export-applications.compon
           </ul>
         </div>
         <div class="card-body mt-2">  
-          <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="affixCall[affixCompleted]"></show-affix>
+          <show-affix *ngIf="!restoring" #affixComponent [form]="form" [cmisObject]="entity" [type]="affixCall[affixCompleted]"></show-affix>
           <div class="steppers">
             <nav class="steppers-nav px-0">
               <a [ngClass]="{'disabled': (affixCompleted == 0 || !form.pristine) && !isDisableConfirm}" 
@@ -126,7 +126,12 @@ import { ExportApplicationsComponent } from './shared/export-applications.compon
         <div class="card-footer rounded-bottom">
           <div class="d-flex justify-content-end">
             <div class="form-group text-start me-auto">
-
+              <!-- annulla le modifiche non salvate della sezione: tornano i valori dell'ultimo salvataggio -->
+              <button *ngIf="!form.pristine" type="button" (click)="restore()"
+                class="btn btn-outline-secondary btn-lg btn-icon rounded" [itTooltip]="'call_manage.restore_hint' | translate">
+                <svg class="icon icon-secondary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-restore"></use></svg>
+                <span class="ps-1" translate>call_manage.restore</span>
+              </button>
             </div>
             <div *ngIf="affixCompleted == affix.length - 1" class="form-group text-end">
               <button (click)="confirmCall($event, false)"
@@ -262,6 +267,19 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
     super.ngOnInit();
   }
   
+  /** Sezione ricreata per ripristinare i valori salvati (il form e i componenti della sezione ripartono da capo). */
+  public restoring = false;
+
+  /** Annulla le modifiche non salvate della sezione corrente: tornano i valori dell'ultimo salvataggio del bando. */
+  public restore(): void {
+    this.buildCreateForm();
+    this.restoring = true;
+    setTimeout(() => {
+      this.restoring = false;
+      this.apiMessageService.sendMessage(MessageType.SUCCESS, this.translateService.instant('call_manage.restored'));
+    });
+  }
+
   public buildCreateForm() {
     this.form = new FormGroup({
       'cmis:objectId': new FormControl(this.objectId),
@@ -345,9 +363,36 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
   }
 
   public confirmCall(event: Event, next = true) {
-    if (!this.isFormValid) {
+    if (this.form.invalid) {
+      // campi obbligatori mancanti: il bando si può salvare comunque (la pubblicazione resta bloccata finché
+      // il bando è incompleto), ma prima si chiede conferma mostrando quali mancano
+      this.highlightInvalid();
+      const body = invalidFieldsMessage(this.form, this.translateService, this.el.nativeElement) +
+        '<p class="mt-3 mb-0 fw-semibold">' + this.translateService.instant('call_manage.save_incomplete') + '</p>';
+      this.confirm(body, () => this.saveSection(next));
       return;
     }
+    this.saveSection(next);
+  }
+
+  /** Evidenzia i campi non validi e porta il cursore sul primo, senza messaggi. */
+  private highlightInvalid(): void {
+    Object.keys(this.form.controls)
+      .filter(control => this.form.controls[control].invalid)
+      .forEach(control => {
+        this.form.controls[control].markAsDirty({ onlySelf: true });
+        this.form.controls[control].markAsTouched({ onlySelf: true });
+      });
+    setTimeout(() => {
+      const invalid: HTMLElement = this.el.nativeElement.querySelector(
+        'input.is-invalid, textarea.is-invalid, select.is-invalid, input.ng-invalid, textarea.ng-invalid, select.ng-invalid');
+      if (invalid) {
+        invalid.focus();
+      }
+    });
+  }
+
+  private saveSection(next: boolean) {
     const isNew = !this.entity || !this.entity.objectId;
     this.manageCallService.saveCall(this.form.value, this.entity).subscribe((call) => {
       this.setEntity(call);

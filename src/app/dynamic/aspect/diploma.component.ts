@@ -14,6 +14,7 @@ import { DynamicComponent } from '../dynamic.component';
             class="it-right-zone w-100 border-bottom-0" 
             (onChangeToggle)="onChangeToggle(true)"
             [label]="'label.jconon_application.fl_diploma' | translate" 
+            [yesNo]="!isFlRequired"
             formControlName="jconon_application:fl_diploma">
           </app-control-toggle>            
           <div class="row gx-2 w-100 pt-1">
@@ -58,6 +59,8 @@ import { DynamicComponent } from '../dynamic.component';
     `
   })
 export class JcononAspectDiplomaComponent extends DynamicComponent<Application> {
+    /** false per gli aspect *_not_required: il titolo non è richiesto dal bando. */
+    public isFlRequired = true;
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,
@@ -67,10 +70,11 @@ export class JcononAspectDiplomaComponent extends DynamicComponent<Application> 
 
     ngOnInit(): void {
       this.propertyName = 'jconon_application:fl_diploma';
-      this.control = new FormControl(this.data.fl_diploma);
+      // aspect obbligatorio (casella legacy): serve "Sì"; variante _not_required (radio legacy): Sì/No facoltativo
+      this.control = new FormControl(!this.isFlRequired && this.data.fl_diploma === undefined ? null : this.data.fl_diploma);
       this.form.addControl(this.propertyName, this.control);
       this.form.controls[this.propertyName]
-        .setValidators(this.isRequiredValidator(this.propertyName, this.data.call, Validators.requiredTrue));
+        .setValidators(this.isRequiredValidator(this.propertyName, this.data.call, Validators.requiredTrue, this.isFlRequired));
 
       this.form.addControl(
         'jconon_application:tipo_diploma', 

@@ -7,8 +7,6 @@ services:
     environment:
       API_URL: "https://cool-jconon.test.si.cnr.it"
       OIDC_ENABLE: "true"
-      OIDC_AUTHORITY: "https://sso.test.si.cnr.it/auth/realms/cnr"
-      OIDC_CLIENTID: "angular-public"
     network_mode: bridge
     labels:
       SERVICE_NAME: ##{SERVICE_NAME}##

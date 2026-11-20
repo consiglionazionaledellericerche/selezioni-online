@@ -74,25 +74,18 @@ export class SigninComponent implements OnInit {
         this.oidcSecurityService.authorize();
     }
 
-    /** Recupero password come nel legacy: dall'email al nome utente, poi invio dell'email di reimpostazione. */
+    /**
+     * Recupero password: il backend cerca l'utenza dall'email e invia il link alla pagina /reset-password
+     * di questo frontend (POST /openapi/v1/user/forgot-password).
+     */
     public recoverPassword(): void {
         const email = (this.recoverEmail || '').trim();
         if (!email) {
             return;
         }
         this.recovering = true;
-        const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        this.configService.getGateway().pipe(
-            switchMap(gateway => this.httpClient.post<{ userName: string }>(gateway + '/rest/security/recover-password',
-                new HttpParams().set('email', email).toString(), { headers }).pipe(
-                switchMap(result => {
-                    if (!result || !result.userName) {
-                        throw { notFound: true };
-                    }
-                    return this.httpClient.post(gateway + '/rest/security/forgotPassword',
-                        new HttpParams().set('userName', result.userName).set('guest', 'true').toString(), { headers });
-                })
-            ))
+        this.configService.getApiBase().pipe(
+            switchMap(apiBase => this.httpClient.post(apiBase + '/v1/user/forgot-password', { email }))
         ).subscribe({
             next: () => {
                 this.recovering = false;
@@ -101,10 +94,8 @@ export class SigninComponent implements OnInit {
             },
             error: (error) => {
                 this.recovering = false;
-                const key = error && error.notFound ? 'signin.recover.not_found'
-                    : (error && error.error && error.error.error) || 'signin.recover.error';
-                const translated = this.translateService.instant(key);
-                this.apiMessageService.sendMessage(MessageType.ERROR, translated !== key ? key : 'signin.recover.error');
+                const message = error && error.error && error.error.message;
+                this.apiMessageService.sendMessage(MessageType.ERROR, message || 'signin.recover.error');
             }
         });
     }

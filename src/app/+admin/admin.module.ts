@@ -1,3 +1,4 @@
+import { NazioneSelectComponent } from '../shared/ui/territori/nazione-select.component';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -32,6 +33,7 @@ import { JsConsoleComponent } from './js-console/js-console.component';
     JsConsoleComponent
   ],
   imports: [
+    NazioneSelectComponent,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,

@@ -1,3 +1,4 @@
+import { sortCallTypes } from '../../common/helpers/call-types';
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
@@ -16,6 +17,8 @@ export interface CallManagementCache {
   jsonlistCallType: any[];
   jsonlistAffixApplication: any[];
   jsonlistApplicationFieldsNotRequired: any[];
+  /** Campi del bando (segnaposto nelle note delle comunicazioni). */
+  jsonlistCallFields?: any[];
   jsonlistApplicationAspects: any[];
   jsonlistApplicationAttachments: any[];
   jsonlistApplicationCurriculums: any[];
@@ -95,6 +98,10 @@ export class ManageCallService {
       this.cache$ = this.configService.getApiBase().pipe(
         switchMap(apiBase => this.httpClient.get<CallManagementCache>(apiBase + '/v1/cache/call-management')),
         map(cache => {
+          // tipologie di bando nell'ordine del legacy
+          if (cache && cache.jsonlistCallType) {
+            cache.jsonlistCallType = sortCallTypes(cache.jsonlistCallType);
+          }
           this.registerLabels(cache);
           return cache;
         }),

@@ -58,12 +58,39 @@ export class UserEditComponent extends CommonEditComponent<User> implements OnIn
             this.setEntity(new User());
         }
         this.buildCreateForm();
+        this.checkReadonly();
         this.cacheService.paesi().subscribe((paesi) => {
             this.paesi = paesi;
         });
         super.ngOnInit();
     }
     
+    /**
+     * Utenze non modificabili qui, come nel legacy (security/create.js): utenze CNR o provenienti da SPID/SSO
+     * (dati anagrafici "immutabili") e utenze di altre applicazioni. Il form resta in sola lettura con l'avviso.
+     */
+    public readonlyMessage: string;
+
+    private checkReadonly(): void {
+        if (!this.authService.isAuthenticated()) {
+            return;
+        }
+        const raw: any = this.authService.getUser() || {};
+        const immutability = raw.immutability || {};
+        const application = raw['cnrexternaluser:application'] || raw.application;
+        if (immutability['{http://www.alfresco.org/model/content/1.0}firstName'] === true) {
+            this.readonlyMessage = this.translateService.instant('message.error.cnr.user');
+            if (raw.email === 'nomail') {
+                this.ngForm.controls['email']?.setValue(raw['cnrperson:emailesterno'] || raw['cnrperson:emailcertificatoperpuk'] || '');
+            }
+        } else if (application) {
+            this.readonlyMessage = this.translateService.instant('message.error.user.application', { value: application });
+        }
+        if (this.readonlyMessage) {
+            this.ngForm.disable({ emitEvent: false });
+        }
+    }
+
     // convenience getter for easy access to form fields
     get f() { return this.ngForm.controls; }
 

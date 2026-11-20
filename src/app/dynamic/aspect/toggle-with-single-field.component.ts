@@ -14,6 +14,7 @@ import { Application } from '../../core/application/application.model';
           <app-control-toggle
             class="it-right-zone w-100 border-bottom-0" 
             (onChangeToggle)="onChangeToggle(true)"
+            [yesNo]="!!required && !requiredTrue"
             [label]="toggleLabel | translate" 
             formControlName="{{propertyName}}">
           </app-control-toggle>            

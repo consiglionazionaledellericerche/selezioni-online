@@ -8,7 +8,7 @@
       <h1>{{'user.profile.title'|translate}}</h1>
       <span class="pe-1">{{'user.information.detail'|translate}}</span>
       <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
-      <div>
+      <div *ngIf="!readonlyMessage">
         <span class="fw-semibold">{{'user.information.change.password.title'|translate}}</span>
         <a class="btn btn-link ps-1 text-primary" href="javascript:" (click)="openModal(templatechangepassword)">{{'user.information.change.password.link'|translate}}</a>
       </div>
@@ -18,6 +18,8 @@
     <div class="card shadow-lg">
       <div *ngSwitchCase="true" class="card-header h1">{{'user.profile.title' | translate}}</div>
       <div class="card-body px-2" [ngClass]="{'px-0': entity.userName}">  
+        <!-- utenza CNR, SPID/SSO o di altra applicazione: impostazioni non modificabili qui (come nel legacy) -->
+        <div *ngIf="readonlyMessage" class="alert alert-warning mx-2" role="alert" [innerHTML]="readonlyMessage"></div>
         <form [formGroup]="ngForm" class="pt-2">
           <div [ngClass]="{'row': !entity.userName}">
             <div class="form-group" [ngClass]="{'col-md-6': !entity.userName}">
@@ -137,6 +139,7 @@
         </app-button-confirm>
         <button 
           *ngSwitchCase="false" 
+          [hidden]="!!readonlyMessage"
           type="submit" 
           class="btn btn-primary w-100" 
           (click)="onSubmit()">{{'user.modify_registration.button' | translate}}</button>

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild, inject} from '@angular/core';
 import {AbstractControlDirective, NgControl} from '@angular/forms';
 import {ValidationHelper} from '../../../common/validation/validation-helper';
 import {Helpers} from '../../../common/helpers/helpers';
@@ -14,7 +14,7 @@ import {Helpers} from '../../../common/helpers/helpers';
           <i *ngIf="prepend" class="fa fa-{{ prepend }}" aria-hidden="true"></i>
           {{ prependText }}
         </div>
-        <label *ngIf="!noLabel" #label [ngClass]="labelClasses()" tooltipPlacement="right" [itTooltip]="getLabelTruncated() | translate">{{getLabel() | translate}}</label>
+        <label *ngIf="!noLabel" #label (click)="focusControl()" [ngClass]="labelClasses()" tooltipPlacement="right" [itTooltip]="getLabelTruncated() | translate">{{getLabel() | translate}}</label>
         <ng-content></ng-content>
         <div *ngIf="append || appendText" class="input-group-append" [itTooltip]="ttipAppend | translate" tooltipPlacement="left">
           <div class="input-group-text">
@@ -64,6 +64,19 @@ export class FormLayoutComponent {
   @Input() labelactive;
 
   @ViewChild('label') labelElement: ElementRef;
+  private readonly hostElement = inject(ElementRef);
+
+  /**
+   * L'etichetta di Bootstrap Italia sta sopra il campo finché è vuoto: senza "for" il clic su di lei non portava
+   * il cursore nel campo (bisognava cliccare oltre il testo). Ora lo porta al primo campo contenuto.
+   */
+  focusControl(): void {
+    const host: HTMLElement = this.hostElement?.nativeElement;
+    const control: HTMLElement = host && host.querySelector('input:not([type=hidden]), textarea, select');
+    if (control && !(control as HTMLInputElement).disabled) {
+      control.focus();
+    }
+  }
 
   /*
     Utils.

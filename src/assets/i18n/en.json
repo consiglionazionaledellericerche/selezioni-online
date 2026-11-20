@@ -193,7 +193,11 @@
     "confirm_delete": "Delete the documents? Documents already sent are not deleted.",
     "deleted": "Documents deleted",
     "selected_docs": "{{value}} documents selected",
-    "shown_docs": "{{value}} documents shown"
+    "shown_docs": "{{value}} documents shown",
+    "graduatoria_privata": {
+      "label": "Private ranking",
+      "info": "The attached document will be sent to the candidates and stored among the call attachments as \"Private ranking\", visible only to authorized users, with registration date and number."
+    }
   },
   "yes": "Yes",
   "no": "No",
@@ -382,6 +386,9 @@
     "call_deadline_expired": "Closed on"
   },
   "call_manage": {
+    "restore": "Restore",
+    "restore_hint": "Discard unsaved changes and go back to the last saved values",
+    "restored": "Last saved values restored.",
     "edit_title": "Edit call",
     "view_detail": "Detail",
     "actions": "Actions",
@@ -514,7 +521,8 @@
       "extended": "extended",
       "published_info": "The call is published: initial dates cannot be changed. Effective dates are updated by extension or reopening measures.",
       "extended_to": "Extended to"
-    }
+    },
+    "save_incomplete": "Do you want to save the section anyway? You can complete the fields later; the call cannot be published while it is incomplete."
   },
   "admin": {
     "title": "Administration",
@@ -649,6 +657,13 @@
     "jsConsole": "JS console"
   },
   "message": {
+    "alert": {
+      "document": {
+        "mono_title": "Warning!",
+        "mono": "Only one document of this type can be added: applications containing more than one will not be accepted.",
+        "mono_existing": "The application already contains a document of this type: to replace it, delete or edit it instead of adding another one."
+      }
+    },
     "document": {
       "uploaded": "Uploaded"
     },
@@ -672,7 +687,52 @@
     },
     "error": {
       "caller": "The text contains characters or instructions that are not allowed",
-      "caller.user": "You are not allowed to edit applications submitted by other users."
+      "caller.user": "You are not allowed to edit applications submitted by other users.",
+      "allegati.alternative.curriculum.all.exists": "You have filled the \"A) Curriculum\" section and you have attached a \"Curriculum Vitae\" document. Please empty the section or delete the document.",
+      "allegati.alternative.curriculum.not.exists": "You should either fill the \"A) Curriculum\" section or attach a \"Curriculum Vitae\" document.",
+      "allegati.empty": "Attention! There are empty files (0 byte), like \" \".",
+      "allegati.mono.multi.inserted": "Many documents of the same type have been attached:.",
+      "allegati.required": "The following mandatory documents have not been attached:.",
+      "attachment.required": "Attenzione bisogna aggiungere un allegato!",
+      "bando.assente": "The selected Call does not exist. This operation is not allowed!",
+      "bando.scaduto": "The selected Call is not available. This operation is not allowed!",
+      "bando.tipologia": "The selected Call does not allow to submit an application. This operation is not allowed!",
+      "bando.tipologia.mobility": "The type of call allows the submission of applications only to the employees of other organizations. This operation is not allowed!",
+      "call.already.exists": "The call you are trying to create already exists, check the call code!",
+      "call.cannnot.modify": "Il Bando non può essere modificato dopo la pubblicazione, bisogna allegare almeno un documento di rettifica o riapertura con proroga dei termini!",
+      "call.cannnot.prorogate": "Il Bando non può essere prorogato senza indicare prima il gruppo delle utenze che possono sottomettere domanda!",
+      "call.cannot.delete": "Call cannot be deleted, since there are presented applications\\!",
+      "call.cannot.publish": "It is not possible to perform the requested operation due to lack of the necessary permissions.",
+      "call.incomplete": "Publication is not possible, as the call is incomplete.",
+      "call.incomplete.attachment": "Publication is not possible, since there is no Competition Notice in Italian in the Attachments section!",
+      "call.incomplete.pagopa": "Publication is not possible, as the payment of administrative fees has been activated via pagoPA, but the \"Payments of administrative fees\" type attachment is not present in the Attachments section!",
+      "call.incomplete.section.affix_tabCurriculum": "Publication is not possible, as the \"Curriculum\" section has been added, but there is no detail inside it.",
+      "call.incomplete.section.affix_tabDatiCNR": "Publication is not possible, as the \"Corporate Data\" section has been added, but there is no detail inside it.",
+      "call.incomplete.section.affix_tabDichiarazioni": "Publication is not possible, as the \"Declarations\" section has been added, but there is no detail inside it.",
+      "call.incomplete.section.affix_tabElencoProdotti": "Publication is not possible, as the \"Pubblications\" section has been added, but there is no detail inside it.",
+      "call.incomplete.section.affix_tabSezione4": "Publication is not possible, as the \"Additional Data\" section has been added, but there is no detail inside it.",
+      "call.incomplete.section.affix_tabSezione5": "Publication is not possible, as the \"Additional Data\" section has been added, but there is no detail inside it.",
+      "call.incomplete.section.affix_tabTitoli": "Publication is not possible, as the \"Attachments\" section has been added, but there is no detail inside it.",
+      "call.incomplete.section.affix_tabUlterioriDati": "Publication is not possible, as the \"Additional Data\" section has been added, but there is no detail inside it.",
+      "call.man.intesse.incomplete.attachment": "La Pubblicazione non é possibile, in quanto nella \"Sezione Allegati\" non risulta l'avviso di Manifestazione di interesse\\!",
+      "call.mobility.incomplete.attachment": "Publication is not possible, since there is no Mobility Competition Notice in Italian in the Attachments section!",
+      "caller.user.not.found": "User indicated in the application is not available in the system!",
+      "cannot.remove.group": "You do not have the necessary permissions to remove the group membership!",
+      "codice.not.valid": "Call number is not valid, as it cannot contain special characters!",
+      "confirm.incomplete": "An error has occurred while confirming the application. If the problem persists, please report it using the helpdesk.",
+      "domanda.assente": "The selected Application does not exist. This operation is not allowed!",
+      "domanda.multipla": "More than one Application has already been submitted for this Call. This operation is not allowed!",
+      "max.raggiunto": "The maximum number of confirmed applications for this call has been reached. This operation is not allowed!",
+      "prodotti.scelti.allegato.empty": "Attention! The 'Chosen Products' section contains empty files (0 byte).",
+      "prodotti.scelti.senza.allegato": "Attention! For at least a part of the Chosen Products section there are no files attached.",
+      "required.codice": "Fill the Call Number field!",
+      "schede.anonime.not.found": "You need to load at least a line in the \"Synthetic anonymous card\"!",
+      "troppi.prodotti.scelti": "You have attached a number of Chosen Products ( ) higher than the maximum allowed of.",
+      "user.not.authorized": "User is not authorized to submit the application!",
+      "cnr.user": "The connected user has an ISS account, to modify personal settings please access the dedicated portal at the following link <a href=\"http://utenti.cnr.it\">http://utenti.cnr.it</a>",
+      "user.application": "It is not possible to change personal settings for users coming from {{value}}",
+      "comunicazioni.graduatoria.privata.protocollo": "Please enter the registration date and number of the private ranking.",
+      "comunicazioni.graduatoria.privata.file": "Please attach the private ranking document."
     },
     "validation": {
       "required_fields": "Please fill in the highlighted required fields.",
@@ -1970,5 +2030,38 @@
   },
   "territori": {
     "soppresso": "abolished in {{anno}}"
+  },
+  "segnaposto": {
+    "choose": "Insert a placeholder…",
+    "insert": "Insert",
+    "info": "The placeholder is replaced with the application or call data."
+  },
+  "document": {
+    "visibility": {
+      "label": "Visibility",
+      "public": "Public",
+      "private": "Private"
+    }
+  },
+  "account": {
+    "login": "Sign in",
+    "confirm": {
+      "loading": "Activating your account…",
+      "done_title": "Account activated",
+      "done": "The account {{value}} is active: you can now sign in to Selezioni online.",
+      "error_title": "Activation failed",
+      "error": "The link is not valid or has expired: please register again."
+    },
+    "reset": {
+      "title": "New password",
+      "info": "Choose the new password for the account {{value}}.",
+      "password": "New password",
+      "confirm": "Confirm the password",
+      "rules": "At least 8 characters.",
+      "mismatch": "The two passwords do not match.",
+      "submit": "Save the new password",
+      "done": "Your password has been changed: you can now sign in with the new password.",
+      "invalid_link": "The link is not valid: request the password recovery again from the sign-in page."
+    }
   }
 }

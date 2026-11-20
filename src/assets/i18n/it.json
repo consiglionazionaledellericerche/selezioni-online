@@ -18,8 +18,8 @@
   "F:jconon_call_tind:folder_reclutamento_speciale": "Reclutamento Speciale",
   "F:jconon_call_tind:folder_categorie_protette": "Categorie Protette",
   "F:jconon_call_tdet:folder": "Tempo Determinato",
-  "F:jconon_call_bstd:folder": "Borse di Studio",
-  "F:jconon_call_aric:folder": "Assegni di Ricerca",
+  "F:jconon_call_bstd:folder": "Borse di Ricerca",
+  "F:jconon_call_aric:folder": "Contratti di Ricerca",
   "F:jconon_call_mobility:folder": "Mobilità",
   "F:jconon_call_mobility_open:folder": "Mobilità aperta",
   "F:jconon_call_director:folder": "Direttori",
@@ -113,6 +113,13 @@
     "views": "Ispettore viste"
   },
   "message": {
+    "alert": {
+      "document": {
+        "mono_title": "Attenzione!",
+        "mono": "È possibile inserire un solo documento di questa tipologia: il sistema non consentirà l'invio di domande che ne contengono più di uno.",
+        "mono_existing": "Nella domanda è già presente un documento di questa tipologia: per sostituirlo, eliminalo o modificalo invece di aggiungerne un altro."
+      }
+    },
     "document.upload.success": "Il file «{{value}}» è stato caricato correttamente.",
     "document.uploaded": "Caricato",
     "form.invalid_intro": "Per proseguire correggi {{value}} campi evidenziati in rosso:",
@@ -176,8 +183,37 @@
           "giorno.sesso": "Codice fiscale non valido: giorno di nascita o sesso non corretti!",
           "comune": "Codice fiscale non valido: codice comune di nascita non corretto!",
           "carattere": "Codice fiscale non valido: errato carattere di controllo!"
-        }
-      }
+        },
+        "not.valid": "Codice Bando non valido, non puo contenere caratteri speciali, nè spazi iniziali o finali, o più di uno spazio consegutivo interno!"
+      },
+      "attachment.required": "Attenzione bisogna aggiungere un allegato!",
+      "call.already.exists": "Il bando che si sta tentando ci creare già esiste, verificare il codice del bando!",
+      "call.cannnot.modify": "Il Bando non può essere modificato dopo la pubblicazione, bisogna allegare almeno un documento di rettifica o riapertura con proroga dei termini!",
+      "call.cannnot.prorogate": "Il Bando non può essere prorogato senza indicare prima il gruppo delle utenze che possono sottomettere domanda!",
+      "call.cannot.delete": "Il bando non può essere cancellato, in quanto ci sono domande presentate!",
+      "call.cannot.publish": "Non è possibile eseguire l'operazione richiesta per mancanza dei permessi necessari.",
+      "call.incomplete": "La Pubblicazione non é possibile, in quanto il Bando risulta incompleto!",
+      "call.incomplete.attachment": "La Pubblicazione non é possibile, in quanto nella \"Sezione Allegati\" non risulta il Bando di Concorso in Italiano!",
+      "call.incomplete.pagopa": "La Pubblicazione non é possibile, in quanto è stato attivato il pagamento dei diritti di segreteria tramite pagoPA, ma non è presente l'allegato di tipo \"Pagamenti diritti di segreteria\" nella sezione Allegati!",
+      "call.incomplete.section.affix_tabCurriculum": "La Pubblicazione non é possibile, in quanto è stata aggiunta la sezione \"Curriculum\", ma al suo inteno non è presente nessun dettaglio.",
+      "call.incomplete.section.affix_tabDatiCNR": "La Pubblicazione non é possibile, in quanto è stata aggiunta la sezione \"Dati Ente\", ma al suo inteno non è presente nessun dettaglio.",
+      "call.incomplete.section.affix_tabDichiarazioni": "La Pubblicazione non é possibile, in quanto è stata aggiunta la sezione \"Dichiarazioni\", ma al suo inteno non è presente nessun dettaglio, oppure sono presenti i dettagli e non è stata aggiunta la sezione \"Dichiarazioni\".",
+      "call.incomplete.section.affix_tabElencoProdotti": "La Pubblicazione non é possibile, in quanto è stata aggiunta la sezione \"Prodotti\", ma al suo inteno non è presente nessun dettaglio.",
+      "call.incomplete.section.affix_tabSezione4": "La Pubblicazione non é possibile, in quanto è stata aggiunta la sezione \"Dati Sezione 4\", ma al suo inteno non è presente nessun dettaglio.",
+      "call.incomplete.section.affix_tabSezione5": "La Pubblicazione non é possibile, in quanto è stata aggiunta la sezione \"Dati Sezione 5\", ma al suo inteno non è presente nessun dettaglio.",
+      "call.incomplete.section.affix_tabTitoli": "La Pubblicazione non é possibile, in quanto è stata aggiunta la sezione \"Allegati\", ma al suo inteno non è presente nessun dettaglio, oppure sono presenti i dettagli e non è stata aggiunta la sezione \"Allegati\".",
+      "call.incomplete.section.affix_tabUlterioriDati": "La Pubblicazione non é possibile, in quanto è stata aggiunta la sezione \"Dati Preselezione\", ma al suo inteno non è presente nessun dettaglio.",
+      "call.man.intesse.incomplete.attachment": "La Pubblicazione non é possibile, in quanto nella \"Sezione Allegati\" non risulta l'avviso di Manifestazione di interesse\\!",
+      "call.mobility.incomplete.attachment": "La Pubblicazione non é possibile, in quanto nella \"Sezione Allegati\" non risulta il Bando di Mobilità\\!",
+      "cannot.remove.group": "Non si hanno i permessi necessari per rimuovere l'associazione al gruppo!",
+      "confirm.incomplete": "Si é verificato un errore in fase di conferma della domanda. Se il problema persiste aprire una segnalazione helpdesk.",
+      "required.codice": "Valorizzare il codice del Bando!",
+      "schede.anonime.not.found": "Bisogna caricare almeno una riga nella sezione \"Scheda Anonima Sintetica\"!",
+      "user.not.authorized": "Utente non autorizzato a sottomettere la candidatura!",
+      "cnr.user": "L'utente collegato corrisponde ad una utenza CNR, per modificare le impostazioni personali occorre seguire il seguente link <a href=\"http://utenti.cnr.it\">http://utenti.cnr.it</a>",
+      "user.application": "Non è possibile modificare le impostazioni personali per utenze provenienti da {{value}}",
+      "comunicazioni.graduatoria.privata.protocollo": "Indicare data e numero di protocollo della graduatoria privata.",
+      "comunicazioni.graduatoria.privata.file": "Allegare il documento della graduatoria privata."
     },
     "document": {
       "uploaded": "Caricato",
@@ -344,7 +380,11 @@
     "confirm_delete": "Eliminare i documenti? Quelli già spediti non vengono eliminati.",
     "deleted": "Documenti eliminati",
     "selected_docs": "{{value}} documenti selezionati",
-    "shown_docs": "{{value}} documenti mostrati"
+    "shown_docs": "{{value}} documenti mostrati",
+    "graduatoria_privata": {
+      "label": "Graduatoria privata",
+      "info": "Il documento allegato sarà inviato ai candidati e registrato negli allegati del bando come \"Graduatoria privata\", visibile ai soli autorizzati, con data e numero di protocollo."
+    }
   },
   "yes": "Sì",
   "no": "No",
@@ -533,6 +573,9 @@
     "call_deadline_expired": "Scaduto il"
   },
   "call_manage": {
+    "restore": "Ripristina",
+    "restore_hint": "Annulla le modifiche non salvate e torna ai valori dell'ultimo salvataggio",
+    "restored": "Ripristinati i valori dell'ultimo salvataggio.",
     "edit_title": "Modifica bando",
     "view_detail": "Dettaglio",
     "actions": "Azioni",
@@ -665,7 +708,8 @@
       "extended": "prorogata",
       "published_info": "Il bando è pubblicato: le date iniziali non sono modificabili. Le date effettive si aggiornano con i provvedimenti di proroga o riapertura.",
       "extended_to": "Prorogata al"
-    }
+    },
+    "save_incomplete": "Vuoi salvare comunque la sezione? Potrai completare i campi in seguito; il bando non potrà essere pubblicato finché resta incompleto."
   },
   "admin": {
     "title": "Amministrazione",
@@ -1023,6 +1067,11 @@
     }
   },
   "document": {
+    "visibility": {
+      "label": "Visibilità",
+      "public": "Pubblico",
+      "private": "Privato"
+    },
     "last_modified": ", ultima modifica: {{value}}",
     "history": {
       "version": "Versione",
@@ -1915,8 +1964,8 @@
   "D:jconon_call_tind:folder_reclutamento_speciale": "Reclutamento Speciale",
   "D:jconon_call_tind:folder_categorie_protette": "Categorie Protette",
   "D:jconon_call_tdet:folder": "Concorsi a tempo determinato",
-  "D:jconon_call_aric:folder": "Concorsi per Assegni di Ricerca",
-  "D:jconon_call_bstd:folder": "Concorsi per Borse di Studio",
+  "D:jconon_call_aric:folder": "Concorsi per Contratti di Ricerca",
+  "D:jconon_call_bstd:folder": "Concorsi per Borse di Ricerca",
   "D:jconon_call_director:folder": "Direttori",
   "D:jconon_call_employees:folder": "Selezioni per dipendenti CNR",
   "D:jconon_call_mobility:folder": "Bando di Mobilità",
@@ -2441,5 +2490,31 @@
   },
   "territori": {
     "soppresso": "soppresso nel {{anno}}"
+  },
+  "segnaposto": {
+    "choose": "Inserisci un segnaposto…",
+    "insert": "Inserisci",
+    "info": "Il segnaposto viene sostituito con il dato della domanda o del bando."
+  },
+  "account": {
+    "login": "Accedi",
+    "confirm": {
+      "loading": "Attivazione dell'utenza in corso…",
+      "done_title": "Utenza attivata",
+      "done": "L'utenza {{value}} è attiva: ora puoi accedere a Selezioni online.",
+      "error_title": "Attivazione non riuscita",
+      "error": "Il link non è valido o è scaduto: ripeti la registrazione."
+    },
+    "reset": {
+      "title": "Nuova password",
+      "info": "Scegli la nuova password per l'utenza {{value}}.",
+      "password": "Nuova password",
+      "confirm": "Conferma la password",
+      "rules": "Almeno 8 caratteri.",
+      "mismatch": "Le due password non coincidono.",
+      "submit": "Salva la nuova password",
+      "done": "La password è stata cambiata: ora puoi accedere con la nuova password.",
+      "invalid_link": "Il link non è valido: richiedi di nuovo il recupero della password dalla pagina di accesso."
+    }
   }
 }

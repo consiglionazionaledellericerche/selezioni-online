@@ -27,6 +27,11 @@ interface GenericField {
   required: boolean;
   /** Numero di protocollo (widget ui.protocollo): completato a 7 cifre all'uscita dal campo. */
   protocollo?: boolean;
+  /**
+   * Sì/No obbligatorio dei bulkinfo legacy (widget ui.radio): basta rispondere, anche "No".
+   * Le caselle (ui.checkbox) e ui.mandatory.radio richiedono invece "Sì".
+   */
+  yesNo?: boolean;
 }
 
 /**
@@ -54,7 +59,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
           <div *ngIf="group.head" class="generic-group" [class.open]="groupOpen(group)">
             <ng-container *ngFor="let field of [group.head]"><div class="generic-field" [class.wide]="isWide(field)">
             <ng-container [ngSwitch]="field.kind">
-              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)"
+              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)" [yesNo]="!!field.yesNo"
                 [formControlName]="field.property"></app-control-toggle>
               <app-control-toggle *ngSwitchCase="'aspect'" [inline]="true" [label]="labelOf(field.label)"
                 [formControl]="field.control"></app-control-toggle>
@@ -87,7 +92,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
               <ng-container *ngFor="let field of group.fields">
                 <ng-container *ngIf="isVisible(field)"><div class="generic-field" [class.wide]="isWide(field)">
             <ng-container [ngSwitch]="field.kind">
-              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)"
+              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)" [yesNo]="!!field.yesNo"
                 [formControlName]="field.property"></app-control-toggle>
               <app-control-toggle *ngSwitchCase="'aspect'" [inline]="true" [label]="labelOf(field.label)"
                 [formControl]="field.control"></app-control-toggle>
@@ -124,7 +129,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
             <ng-container *ngFor="let field of group.fields">
               <ng-container *ngIf="isVisible(field)"><div class="generic-field" [class.wide]="isWide(field)">
             <ng-container [ngSwitch]="field.kind">
-              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)"
+              <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)" [yesNo]="!!field.yesNo"
                 [formControlName]="field.property"></app-control-toggle>
               <app-control-toggle *ngSwitchCase="'aspect'" [inline]="true" [label]="labelOf(field.label)"
                 [formControl]="field.control"></app-control-toggle>
@@ -392,6 +397,35 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
     }
   }
 
+  /**
+   * Visibilità del documento (campo legacy inheritedPermission): Pubblico eredita i permessi del bando,
+   * Privato no. Il valore iniziale è quello indicato dal bulkinfo del tipo (default="false" per atti e
+   * documenti riservati), altrimenti Pubblico.
+   */
+  private visibilityField(def: any): GenericField {
+    const property = 'inheritedPermission';
+    const initial = [def.val, def.default, def.defaultValue]
+      .map(v => Array.isArray(v) ? v[0] : v)
+      .find(v => v !== undefined && v !== null && v !== '');
+    const value = initial === undefined ? 'true' : String(initial).toLowerCase() === 'false' ? 'false' : 'true';
+    if (!this.form.contains(property)) {
+      this.form.addControl(property, new FormControl(value));
+    } else if (!this.form.get(property).value) {
+      this.form.get(property).setValue(value);
+    }
+    return {
+      name: property,
+      property,
+      label: 'document.visibility.label',
+      kind: 'segmented',
+      options: [
+        { value: 'true', label: 'document.visibility.public' },
+        { value: 'false', label: 'document.visibility.private' }
+      ],
+      required: false
+    } as GenericField;
+  }
+
   /** Etichetta con l'asterisco dei campi obbligatori (per i controlli che ricevono l'etichetta come input). */
   fieldLabel(field: GenericField): string {
     return this.labelOf(field.label) + (field.required ? ' *' : '');
@@ -409,6 +443,11 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       const def = form[key] || {};
       const property = def.property || def.name;
       if (!property || this.excluded.includes(property) || def.visible === false || def.visible === 'false') {
+        return;
+      }
+      // visibilità del documento: campo del bulkinfo senza proprietà CMIS, con il suo valore predefinito
+      if (property === 'inheritedPermission') {
+        this.fields.push(this.visibilityField(def));
         return;
       }
       // proprietà tecniche senza etichetta (es. jconon_call:new_numero_gu) non sono campi da compilare
@@ -429,7 +468,7 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       const widget = String(def.widget || '').toLowerCase();
       const inputType = String(def.inputType || '').toUpperCase();
       let kind: GenericField['kind'] = 'text';
-      if (this.isYesNo(options) || inputType === 'CHECKBOX' || widget.includes('checkbox')) {
+      if (this.isYesNo(options) || inputType === 'CHECKBOX' || widget.includes('checkbox') || (widget.includes('radio') && !options.length)) {
         kind = 'toggle';
       } else if (options.length && options.length <= 3) {
         kind = 'segmented';
@@ -444,16 +483,25 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       const validator = def.jsonvalidator || {};
       const required = [validator.required, validator.requiredWidget, def.required, def.requiredWidget]
         .some(v => v === true || v === 'true');
+      // radio sì/no (non "mandatory") obbligatorio: va solo risposto; checkbox e ui.mandatory.radio richiedono "Sì"
+      const radio = widget.includes('radio') || inputType === 'RADIOGROUP' || inputType === 'RADIO' || this.isYesNo(options);
+      // conta il widget del legacy (anche quello ricavato dalla descrizione nel modello, es. "1) ui.radio"); il tipo
+      // di input solo se il widget non dice niente
+      const mustBeTrue = widget.includes('mandatory') || widget.includes('checkbox') ||
+        (!widget.includes('radio') && inputType === 'CHECKBOX');
+      const yesNo = kind === 'toggle' && required && radio && !mustBeTrue;
       let value = def.val !== undefined && def.val !== null ? def.val : null;
       if (kind === 'toggle') {
-        value = this.yesValues.includes(String(Array.isArray(value) ? value[0] : value).toLowerCase());
+        const raw = Array.isArray(value) ? value[0] : value;
+        value = yesNo && (raw === null || raw === undefined || raw === '') ? null :
+          this.yesValues.includes(String(raw).toLowerCase());
       } else if (Array.isArray(value)) {
         value = value[0];
       }
       if (!this.form.contains(property)) {
         const control = new FormControl(kind === 'date' && value ? new Date(value) : value);
         if (required) {
-          control.setValidators(kind === 'toggle' ? Validators.requiredTrue : Validators.required);
+          control.setValidators(kind === 'toggle' && !yesNo ? Validators.requiredTrue : Validators.required);
         }
         this.form.addControl(property, control);
       }
@@ -479,7 +527,7 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       const time = kind === 'date' && (widget.includes('datetime') || /H/.test(String(def.format || '')));
       const protocollo = kind === 'text' && (widget.includes('protocollo') || property === 'jconon_protocollo:numero');
       this.fields.push({ name, property, showWhen, label: def.label || def.jsonlabel?.key || this.knownLabel(property) || property,
-        kind, options, required, time, protocollo });
+        kind, options, required, time, protocollo, yesNo });
     });
     this.applyVisibility();
     // aggiorna la visibilità dei campi dipendenti quando cambia il campo da cui dipendono

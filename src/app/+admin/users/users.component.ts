@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalService } from '../../shared/modal/modal.service';
@@ -39,15 +40,64 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
       <div class="card-body">
         <h5 class="card-title">{{'admin.users.edit' | translate}}: {{editing.userName}}</h5>
         <form [formGroup]="editForm" (ngSubmit)="onSaveUser()">
+          <!-- stessi campi del profilo utente e della modifica legacy (accountBulkInfo, form editUser) -->
+          <div *ngIf="editingReadonly" class="alert alert-warning" role="alert" [innerHTML]="editingReadonly"></div>
           <div class="row">
-            <div class="form-group col-md-6" *ngFor="let field of editFields">
-              <label [for]="'e-' + field.name" class="active">{{field.label | translate}}</label>
-              <input [id]="'e-' + field.name" [type]="field.type || 'text'" class="form-control" [formControlName]="field.name">
+            <div class="form-group col-md-6">
+              <label for="e-firstName" class="active">{{'user.firstname' | translate}} *</label>
+              <input id="e-firstName" type="text" class="form-control" formControlName="firstName">
             </div>
+            <div class="form-group col-md-6">
+              <label for="e-lastName" class="active">{{'user.lastname' | translate}} *</label>
+              <input id="e-lastName" type="text" class="form-control" formControlName="lastName">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="e-email" class="active">{{'user.email' | translate}} *</label>
+              <input id="e-email" type="email" class="form-control" formControlName="email">
+            </div>
+            <div class="form-group col-md-6">
+              <label class="active">{{'user.cittadinanza.label' | translate}}</label>
+              <div class="pt-2">
+                <div class="form-check form-check-inline">
+                  <input id="e-italy" name="straniero" formControlName="straniero" type="radio" value="false">
+                  <label for="e-italy">{{'user.cittadinanza.italy' | translate}}</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input id="e-foreign" name="straniero" formControlName="straniero" type="radio" value="true">
+                  <label for="e-foreign">{{'user.cittadinanza.foreign' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!isForeign()" class="form-group col-md-6">
+              <label for="e-cf" class="active">{{'user.codicefiscale' | translate}}</label>
+              <input id="e-cf" type="text" class="form-control text-uppercase" formControlName="codicefiscale">
+            </div>
+            <ng-container *ngIf="isForeign()">
+              <div class="form-group col-md-6">
+                <label class="active">{{'user.sex' | translate}}</label>
+                <div class="pt-2">
+                  <div class="form-check form-check-inline">
+                    <input id="e-male" name="sesso" formControlName="sesso" type="radio" value="M">
+                    <label for="e-male">{{'user.male' | translate}}</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input id="e-female" name="sesso" formControlName="sesso" type="radio" value="F">
+                    <label for="e-female">{{'user.female' | translate}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="e-birth" class="active">{{'user.dataDiNascita' | translate}}</label>
+                <input id="e-birth" type="date" class="form-control" formControlName="dataDiNascita">
+              </div>
+              <div class="form-group col-md-6">
+                <app-control-nazione [label]="'user.statoestero' | translate" formControlName="statoestero"></app-control-nazione>
+              </div>
+            </ng-container>
           </div>
           <div class="text-end">
             <button type="button" class="btn btn-outline-secondary btn-sm me-2" (click)="editing = null" translate>button.cancel</button>
-            <button type="submit" class="btn btn-primary btn-sm" [disabled]="editForm.invalid" translate>save</button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="editForm.invalid || !!editingReadonly" translate>save</button>
           </div>
         </form>
       </div>
@@ -105,15 +155,8 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
 export class UsersComponent implements OnInit {
 
   public searchFields = ['firstName', 'lastName', 'userName', 'matricola', 'codicefiscale', 'email'];
-  public editFields = [
-    { name: 'firstName', label: 'admin.users.firstName' },
-    { name: 'lastName', label: 'admin.users.lastName' },
-    { name: 'email', label: 'admin.users.email', type: 'email' },
-    { name: 'cnrperson:emailesterno', label: 'admin.users.emailesterno', type: 'email' },
-    { name: 'cnrperson:codicefiscale', label: 'admin.users.codicefiscale' },
-    { name: 'telephone', label: 'admin.users.telephone' },
-    { name: 'mobile', label: 'admin.users.mobile' }
-  ];
+  /** Campi della modifica, come il form legacy editUser: anagrafica e, per nazionalità, codice fiscale o dati esteri. */
+  public editingReadonly: string;
   public searchForm: FormGroup;
   public editForm: FormGroup;
   public people: any[];
@@ -131,7 +174,8 @@ export class UsersComponent implements OnInit {
     private adminService: AdminService,
     private authService: AuthService,
     private modalService: ModalService,
-    private apiMessageService: ApiMessageService
+    private apiMessageService: ApiMessageService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -141,11 +185,16 @@ export class UsersComponent implements OnInit {
     const controls: any = { smart: [true] };
     this.searchFields.forEach(field => controls[field] = ['']);
     this.searchForm = this.formBuilder.group(controls);
-    const editControls: any = {};
-    this.editFields.forEach(field => editControls[field.name] = ['']);
-    editControls['firstName'] = ['', Validators.required];
-    editControls['lastName'] = ['', Validators.required];
-    editControls['email'] = ['', [Validators.required, Validators.email]];
+    const editControls: any = {
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      straniero: ['false'],
+      codicefiscale: [''],
+      sesso: [''],
+      dataDiNascita: [''],
+      statoestero: ['']
+    };
     this.editForm = this.formBuilder.group(editControls);
   }
 
@@ -188,23 +237,78 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  isForeign(): boolean {
+    return String(this.editForm.controls['straniero'].value) === 'true';
+  }
+
   onEdit(person: any) {
     this.adminService.user(person.userName).subscribe(user => {
       this.editing = user;
-      const value: any = {};
-      this.editFields.forEach(field => value[field.name] = user[field.name] || '');
-      this.editForm.reset(value);
+      const birth = user['cnrperson:dataDiNascita'];
+      this.editForm.enable({ emitEvent: false });
+      this.editForm.reset({
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        email: user.email === 'nomail' ? (user['cnrperson:emailesterno'] || '') : (user.email || ''),
+        straniero: String(!!user['cnrperson:straniero']),
+        codicefiscale: user['cnrperson:codicefiscale'] || '',
+        sesso: user['cnrperson:sesso'] || '',
+        dataDiNascita: birth ? this.isoDate(birth) : '',
+        statoestero: user['cnrperson:statoestero'] || ''
+      });
+      // come nel profilo: utenze CNR/SPID (dati immutabili) e di altre applicazioni non si modificano qui
+      const immutability = user.immutability || {};
+      const application = user['cnrexternaluser:application'] || user.application;
+      this.editingReadonly = immutability['{http://www.alfresco.org/model/content/1.0}firstName'] === true
+        ? this.translateService.instant('message.error.cnr.user')
+        : (application ? this.translateService.instant('message.error.user.application', { value: application }) : null);
+      if (this.editingReadonly) {
+        this.editForm.disable({ emitEvent: false });
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
   onSaveUser() {
-    const user = Object.assign({}, this.editing, this.editForm.value);
+    const value = this.editForm.value;
+    const foreign = String(value.straniero) === 'true';
+    // solo i campi del form, con i nomi semplici come il profilo utente: i dati dell'utente letti dal backend
+    // contengono anche i valori precedenti (es. "sesso" accanto a "cnrperson:sesso") che sovrascriverebbero i nuovi
+    const user: any = {
+      userName: this.editing.userName,
+      firstName: value.firstName,
+      lastName: value.lastName,
+      email: value.email,
+      straniero: foreign,
+      codicefiscale: foreign ? '' : (value.codicefiscale || '').toUpperCase(),
+      sesso: foreign ? (value.sesso || '') : '',
+      statoestero: foreign ? (value.statoestero || '') : ''
+    };
+    if (foreign && value.dataDiNascita) {
+      user.dataDiNascita = this.cmisDate(value.dataDiNascita);
+    }
     this.adminService.updateUser(this.editing.userName, user).subscribe(() => {
       this.apiMessageService.sendMessage(MessageType.SUCCESS, 'admin.users.saved');
       this.editing = null;
       this.onSearch();
     });
+  }
+
+  /** Data come la invia il legacy (yyyy-MM-dd'T'HH:mm:ss.SSS+01:00), a mezzogiorno per evitare cambi di giorno. */
+  private cmisDate(isoDay: string): string {
+    const date = new Date(isoDay + 'T12:00:00');
+    const offset = -date.getTimezoneOffset();
+    const pad = (n: number) => String(Math.floor(Math.abs(n))).padStart(2, '0');
+    return isoDay + 'T12:00:00.000' + (offset >= 0 ? '+' : '-') + pad(offset / 60) + ':' + pad(offset % 60);
+  }
+
+  private isoDate(value: any): string {
+    const date = new Date(value);
+    if (isNaN(date.getTime())) {
+      return '';
+    }
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate());
   }
 
   onDelete(person: any) {

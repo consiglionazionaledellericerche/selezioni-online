@@ -230,6 +230,7 @@ export class DynamicService {
         'P:jconon_application:aspect_condanne_penali_required' : {
           model: Application,
           params: {
+            radio: true,
             propertyName: 'jconon_application:fl_condanne_penali',
             name: 'fl_condanne_penali',
             required: true,
@@ -321,9 +322,10 @@ export class DynamicService {
         'P:jconon_application:aspect_diversamente_abile_104' : {
           model: Application,
           params: {
+            radio: true,
             propertyName: 'jconon_application:fl_diversamente_abile_104',
             name: 'fl_diversamente_abile_104',
-            required: false,
+            required: true,
             label: 'label.jconon_application.fl_diversamente_abile_104'
           },
           showcomponent: JcononAspectsDichiarazioneComponent
@@ -331,9 +333,10 @@ export class DynamicService {
         'P:jconon_application:aspect_dsa' : {
           model: Application,
           params: {
+            radio: true,
             propertyName: 'jconon_application:fl_dsa',
             name: 'fl_dsa',
-            required: false,
+            required: true,
             label: 'label.jconon_application.fl_dsa'
           },
           showcomponent: JcononAspectsDichiarazioneComponent
@@ -530,6 +533,7 @@ export class DynamicService {
         'P:jconon_application:aspect_nulla_osta_obbligatorio' : {
           model: Application,
           params: {
+            radio: true,
             propertyName: 'jconon_application:fl_nulla_osta',
             name: 'fl_nulla_osta',
             required: true,
@@ -598,9 +602,10 @@ export class DynamicService {
         'P:jconon_application:aspect_area_amministrativa' : {
           model: Application,
           params: {
+            radio: true,
             propertyName: 'jconon_application:fl_area_amministrativa',
             name: 'fl_area_amministrativa',
-            required: false,
+            required: true,
             label: 'label.jconon_application.fl_area_amministrativa'
           },
           showcomponent: JcononAspectsDichiarazioneComponent
@@ -612,6 +617,7 @@ export class DynamicService {
         'P:jconon_application:aspect_precedente_servizio_cnr' : {
           model: Application,
           params: {
+            required: true,
             propertyName: 'jconon_application:fl_precedente_servizio_cnr',
             toggleName: 'fl_precedente_servizio_cnr',
             toggleLabel: 'label.jconon_application.fl_precedente_servizio_cnr',
@@ -624,6 +630,7 @@ export class DynamicService {
         'P:jconon_application:aspect_precedente_servizio_altre_amministrazioni' : {
           model: Application,
           params: {
+            required: true,
             propertyName: 'jconon_application:fl_precedente_servizio_altre_amministrazioni',
             toggleName: 'fl_precedente_servizio_altre_amministrazioni',
             toggleLabel: 'label.jconon_application.fl_precedente_servizio_altre_amministrazioni',
@@ -836,9 +843,10 @@ export class DynamicService {
         'P:jconon_application:aspect_dichiarazione_1' : {
           model: Application,
           params: {
+            radio: true,
             propertyName: 'jconon_application:fl_dichiarazione_1',
             name: 'fl_dichiarazione_1',
-            required: false,
+            required: true,
             label: 'label.jconon_application.fl_dichiarazione_1'
           },
           showcomponent: JcononAspectsDichiarazioneComponent
@@ -846,9 +854,10 @@ export class DynamicService {
         'P:jconon_application:aspect_dichiarazione_2' : {
           model: Application,
           params: {
+            radio: true,
             propertyName: 'jconon_application:fl_dichiarazione_2',
             name: 'fl_dichiarazione_2',
-            required: false,
+            required: true,
             label: 'label.jconon_application.fl_dichiarazione_2'
           },
           showcomponent: JcononAspectsDichiarazioneComponent

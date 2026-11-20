@@ -33,10 +33,12 @@ npm start
 
 ### Backend proxy
 
-`proxy.conf.json` forwards `/openapi`, `/rest`, `/security` and `/sso` to `http://localhost:5555`. To use it, start the dev server with:
+`proxy.conf.js` forwards `/openapi`, `/rest`, `/security` and `/sso` to `http://localhost:5555` (it is already set as `proxyConfig` of `ng serve`).
+The account activation link of the registration email (`/rest/security/confirm-account`) is served by Angular instead,
+which confirms the account through `/openapi/v1/user/confirm-account`.
 
 ```bash
-npx ng serve --proxy-config proxy.conf.json
+npx ng serve --proxy-config proxy.conf.js
 ```
 
 Adjust the `target` values to point to your backend.

@@ -1,3 +1,4 @@
+import { sortCallTypes } from '../common/helpers/call-types';
 
 import {throwError as observableThrowError, Observable} from 'rxjs';
 
@@ -23,6 +24,10 @@ export class CacheService {
         return this.configService.getApiBase().pipe(switchMap((apiBase) => {
             return this.httpClient.get<any>(apiBase + ConfigService.URL_CACHE).pipe(
                 map((cache) => {
+                    // tipologie di bando nell'ordine del legacy
+                    if (cache && cache.jsonlistCallType) {
+                        cache.jsonlistCallType = sortCallTypes(cache.jsonlistCallType);
+                    }
                     return cache;
                 }),
                 catchError((error: HttpErrorResponse) => {

@@ -33,8 +33,24 @@ import {FormCommonTag} from './form-common-tag';
               [labelactive]="labelactive"
               [showValidation]="showValidation">
 
+        <!-- segnaposto [[proprietà]] sostituiti dal backend con i dati della domanda e del bando -->
+        <div *ngIf="placeholders?.length" class="placeholder-bar d-flex flex-wrap align-items-center gap-2 w-100 mb-2">
+          <select class="form-select form-select-sm placeholder-select" [(ngModel)]="placeholder" [ngModelOptions]="{standalone: true}"
+                  [attr.aria-label]="'segnaposto.choose' | translate">
+            <option [ngValue]="null">{{ 'segnaposto.choose' | translate }}</option>
+            <optgroup *ngFor="let group of placeholderGroups()" [label]="group.label">
+              <option *ngFor="let item of group.items" [ngValue]="item.key">{{ item.label }}</option>
+            </optgroup>
+          </select>
+          <button type="button" class="btn btn-outline-primary btn-xs" [disabled]="!placeholder" (click)="insertPlaceholder()">
+            <svg class="icon icon-sm icon-primary me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus"></use></svg>{{ 'segnaposto.insert' | translate }}
+          </button>
+          <small class="text-secondary">{{ 'segnaposto.info' | translate }}</small>
+        </div>
+
         <quill-editor
           class="w-100 d-block"
+          (onEditorCreated)="editor = $event"
           format="html"
           theme="snow"
           [modules]="modules"
@@ -60,6 +76,47 @@ export class FormTemplateCKEditorComponent extends FormCommonTag implements Cont
   @Input() inputClass = ''; 
 
   @Input() nullIfEmpty = false;
+
+  /**
+   * Segnaposto inseribili nel testo come [[chiave]] (es. campi della domanda e del bando): il backend li
+   * sostituisce con i valori al momento della generazione (comunicazioni, convocazioni, esclusioni).
+   */
+  @Input() placeholders: { key: string, label: string, group?: string }[] = [];
+  public placeholder: string = null;
+  public editor: any;
+  private groupsFor: any[];
+  private groupsCache: { label: string, items: { key: string, label: string }[] }[] = [];
+
+  placeholderGroups(): { label: string, items: { key: string, label: string }[] }[] {
+    if (this.groupsFor !== this.placeholders) {
+      this.groupsFor = this.placeholders;
+      const groups = new Map<string, { key: string, label: string }[]>();
+      (this.placeholders || []).forEach(item => {
+        const group = item.group || '';
+        groups.set(group, (groups.get(group) || []).concat({ key: item.key, label: item.label || item.key }));
+      });
+      this.groupsCache = Array.from(groups.entries())
+        .map(([label, items]) => ({ label, items: items.sort((a, b) => a.label.localeCompare(b.label)) }))
+        .sort((a, b) => a.label.localeCompare(b.label));
+    }
+    return this.groupsCache;
+  }
+
+  /** Inserisce [[chiave]] nella posizione del cursore (o in fondo al testo). */
+  insertPlaceholder(): void {
+    if (!this.placeholder || !this.editor) {
+      return;
+    }
+    const text = '[[' + this.placeholder + ']]';
+    const selection = this.editor.getSelection(true);
+    const index = selection ? selection.index : Math.max(0, this.editor.getLength() - 1);
+    if (selection && selection.length) {
+      this.editor.deleteText(selection.index, selection.length, 'user');
+    }
+    this.editor.insertText(index, text, 'user');
+    this.editor.setSelection(index + text.length, 0, 'user');
+    this.placeholder = null;
+  }
 
   /** Valore HTML corrente dell'editor (ngx-quill, come in GesFor). */
   public value: string = null;

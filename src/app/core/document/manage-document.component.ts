@@ -8,6 +8,10 @@ import { Document } from '../../common/model/document.model';
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
 import { Helpers } from '../../common/helpers/helpers';
 import { ObjectType } from '../../common/model/object-type.model';
+import { ObjectTypeService } from '../object-type.service';
+import { ConfigService } from '../config.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   standalone: false,
@@ -18,6 +22,12 @@ import { ObjectType } from '../../common/model/object-type.model';
         <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()"></button>
       </div>
       <div class="modal-body">
+        <!-- tipo di allegato a elemento unico: come nel legacy, avviso prima del caricamento -->
+        <div *ngIf="mono" class="alert alert-warning mb-3" role="alert">
+          <strong>{{ 'message.alert.document.mono_title' | translate }}</strong>
+          {{ 'message.alert.document.mono' | translate }}
+          <span *ngIf="existing > 0"><br>{{ 'message.alert.document.mono_existing' | translate:{ value: existing } }}</span>
+        </div>
         <edit-metadata [cmisObject]="entity" [typeId]="typeId" [form]="form"></edit-metadata>
         <form *ngIf="upload" [formGroup]="form" class="mt-3">
           <app-control-attachment formControlName="file"></app-control-attachment>
@@ -39,7 +49,10 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
     protected router: Router,
     protected route: ActivatedRoute,
     protected translateService: TranslateService,
-    private el: ElementRef
+    private el: ElementRef,
+    private objectTypeService: ObjectTypeService,
+    private httpClient: HttpClient,
+    private configService: ConfigService
   ) {    
     super(service, router, route);
   }
@@ -50,6 +63,10 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
   @Input() upload: boolean = true;
   public event: EventEmitter<Document> = new EventEmitter();
   public submitted = false;
+  /** Il tipo ammette un solo documento per domanda (D:jconon_attachment:document_mono). */
+  public mono = false;
+  /** Documenti dello stesso tipo già presenti nella cartella. */
+  public existing = 0;
 
   public setEntity(entity: Document) {
     this.entity = entity;
@@ -80,6 +97,24 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
   ngOnInit(): void {
     super.ngOnInit();
     this.buildCreateForm();
+    // solo per i nuovi caricamenti: modificando un documento esistente non si aggiunge un elemento
+    if (this.typeId && !this.entity) {
+      this.objectTypeService.isMono(this.typeId).subscribe(mono => {
+        this.mono = mono;
+        if (mono && this.parentId) {
+          this.childrenCount();
+        }
+      });
+    }
+  }
+
+  private childrenCount(): void {
+    this.configService.getApiBase().pipe(
+      switchMap(apiBase => this.httpClient.get<{ count?: number, items?: any[] }>(apiBase + '/v1/children', {
+        params: new HttpParams().set('parentId', this.parentId).set('type', String(this.typeId).replace(/^D:/, ''))
+          .set('page', '0').set('offset', '1')
+      }))
+    ).subscribe(result => this.existing = result?.count ?? (result?.items || []).length, () => this.existing = 0);
   }
 
   save(): void {

@@ -13,6 +13,7 @@ import { Application } from '../../core/application/application.model';
           <app-control-toggle
             class="it-right-zone w-100 border-bottom-0" 
             [label]="label | translate" 
+            [yesNo]="!!radio && !!required"
             formControlName="{{propertyName}}">
           </app-control-toggle>
         </a>
@@ -29,10 +30,14 @@ export class JcononAspectsDichiarazioneComponent extends DynamicComponent<Applic
     public name: string;
     public required: boolean;
     public label: string;
+    /** Sì/No del legacy (ui.radio): obbligatorio vuol dire rispondere, anche "No"; altrimenti (casella) serve "Sì". */
+    public radio: boolean;
 
     ngOnInit(): void {
-      this.control = new FormControl(this.data[this.name]);
-      this.control.setValidators(this.isRequiredValidator(this.propertyName, this.data.call, Validators.requiredTrue, this.required));
+      const value = this.data[this.name];
+      this.control = new FormControl(this.radio && this.required && (value === undefined || value === null) ? null : value);
+      this.control.setValidators(this.isRequiredValidator(this.propertyName, this.data.call,
+        this.radio ? Validators.required : Validators.requiredTrue, this.required));
       this.form.addControl(this.propertyName, this.control);
       super.ngOnInit();
     }

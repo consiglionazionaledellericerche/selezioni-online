@@ -159,6 +159,8 @@ export class CallActionsComponent {
       { label: this.item.pubblicato ? 'call_manage.unpublish' : 'call_manage.publish',
         icon: this.item.pubblicato ? 'it-password-invisible' : 'it-horn', action: () => this.publish() },
       { label: 'call_manage.commission.title', icon: 'it-user', route: '/call-commission', queryParams: { callId: id } },
+      // come la tab "Responsabili" della modifica del bando
+      { label: 'call_manage.rdp.title', icon: 'it-key', action: () => this.openAccountable() },
       { label: 'call_manage.labels.title', icon: 'it-bookmark', route: '/call-labels', queryParams: { callId: id } },
       { label: 'communications.kind.convocazioni', icon: 'it-calendar', route: '/call-communications', queryParams: { callId: id, kind: 'convocazioni' } },
       { label: 'communications.kind.esclusioni', icon: 'it-ban', route: '/call-communications', queryParams: { callId: id, kind: 'esclusioni' } },
@@ -227,6 +229,11 @@ export class CallActionsComponent {
 
   openExport(): void {
     this.modalService.show(ExportApplicationsComponent, { initialState: { call: this.item }, class: 'modal-lg' });
+  }
+
+  /** Responsabili del procedimento del bando, con la stessa gestione della tab "Responsabili". */
+  openAccountable(): void {
+    this.modalService.show(CallAttachmentsModalComponent, { initialState: { call: this.item, section: 'accountable' }, class: 'modal-lg' });
   }
 
   /** Allegati del bando con la gestione completa (tipologie, caricamento, modifica), come nella modifica del bando. */
