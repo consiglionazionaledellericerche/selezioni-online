@@ -30,6 +30,11 @@ import {
   template: `
     <app-call-header [call]="call" page="communications.title"></app-call-header>
     <app-layout-title [title]="'communications.title'">
+      <!-- sessioni d'esame: si formano con le convocazioni inviate -->
+      <a *ngIf="kind === 'convocazioni'" class="btn btn-outline-primary me-2" [routerLink]="['/exam-sessions']" [queryParams]="{ callId: callId }">
+        <svg class="icon icon-primary icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-files"></use></svg>
+        {{ 'exam_sessions.title' | translate }}
+      </a>
       <button *ngIf="section === 'documents'" type="button" class="btn btn-primary" (click)="openGenerate()">
         <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus-circle"></use></svg>
         {{ 'communications.new.' + kind | translate }}

@@ -163,6 +163,8 @@ export class CallActionsComponent {
       { label: 'call_manage.rdp.title', icon: 'it-key', action: () => this.openAccountable() },
       { label: 'call_manage.labels.title', icon: 'it-bookmark', route: '/call-labels', queryParams: { callId: id } },
       { label: 'communications.kind.convocazioni', icon: 'it-calendar', route: '/call-communications', queryParams: { callId: id, kind: 'convocazioni' } },
+      // come la voce "Sessioni" del menu Convocazioni del legacy
+      { label: 'exam_sessions.title', icon: 'it-files', route: '/exam-sessions', queryParams: { callId: id } },
       { label: 'communications.kind.esclusioni', icon: 'it-ban', route: '/call-communications', queryParams: { callId: id, kind: 'esclusioni' } },
       { label: 'communications.kind.comunicazioni', icon: 'it-mail', route: '/call-communications', queryParams: { callId: id, kind: 'comunicazioni' } },
       scores,

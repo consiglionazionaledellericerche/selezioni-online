@@ -1,3 +1,5 @@
+import { ContentLinksDirective } from './frontoffice/content-links.directive';
+import { ExamSessionsComponent } from './call/manage/exam-sessions.component';
 import { CallScoresComponent } from './call/manage/call-scores.component';
 import { CallApplicationAttachmentComponent } from './call/manage/call-application-attachment.component';
 import { AuthorityPickerComponent } from '../shared/ui/authority-picker.component';
@@ -89,6 +91,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
         CallCommissionComponent,
         CommissionGenderComponent,
         CallScoresComponent,
+        ExamSessionsComponent,
         CallApplicationAttachmentComponent,
         ManageDocumentComponent,
         DownloadDocumentComponent,
@@ -96,6 +99,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
     ],
     imports: [
         AuthorityPickerComponent,
+        ContentLinksDirective,
         DateTileComponent,
         CallAttachmentsComponent,
         ItUploadDragDropComponent,
