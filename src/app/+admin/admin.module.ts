@@ -1,3 +1,6 @@
+import { ContentLinksDirective } from '../core/frontoffice/content-links.directive';
+import { AuthorityPickerComponent } from '../shared/ui/authority-picker.component';
+import { FrontOfficeAdminComponent } from './frontoffice/frontoffice-admin.component';
 import { NazioneSelectComponent } from '../shared/ui/territori/nazione-select.component';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,6 +30,7 @@ import { JsConsoleComponent } from './js-console/js-console.component';
     AdminSectionComponent,
     GroupsComponent,
     UsersComponent,
+    FrontOfficeAdminComponent,
     RbacComponent,
     CacheComponent,
     ViewsComponent,
@@ -34,6 +38,8 @@ import { JsConsoleComponent } from './js-console/js-console.component';
   ],
   imports: [
     NazioneSelectComponent,
+    AuthorityPickerComponent,
+    ContentLinksDirective,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,

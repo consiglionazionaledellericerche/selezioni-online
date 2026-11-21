@@ -1,3 +1,4 @@
+import { FrontOfficeAdminComponent } from './frontoffice/frontoffice-admin.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminSectionComponent } from './admin-section.component';
@@ -22,6 +23,7 @@ const adminRoutes: Routes = [
       { path: 'rbac', component: RbacComponent, canActivate: [AdminGuard], data: { rbac: 'rbac-admin' } },
       { path: 'cache', component: CacheComponent, canActivate: [AdminGuard] },
       { path: 'views', component: ViewsComponent, canActivate: [AdminGuard] },
+      { path: 'frontoffice', component: FrontOfficeAdminComponent, canActivate: [AdminGuard] },
       { path: 'js-console', component: JsConsoleComponent, canActivate: [AdminGuard], data: { rbac: 'jsConsole' } }
     ]
   }

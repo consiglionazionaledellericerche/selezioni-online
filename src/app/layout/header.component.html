@@ -2,7 +2,7 @@
   [loginStyle]="'none'"
   [showSearch]="false"
   [sticky]="true"
-  [slimTitle]="'header.company.title' | translate"
+  [slimTitle]="(compactSlim ? 'header.company.short' : 'header.company.title') | translate"
   [slimTitleLink]="'header.company.url' | translate">
   <ul class="link-list" slimLinkList>
     @for (menu of support; track menu.path) {
@@ -10,6 +10,15 @@
     }
   </ul>
   <ng-container slimRightZone>
+    <!-- avvisi in corso di validità (gestiti in Amministrazione → Avvisi e FAQ) -->
+    @if (notices.length) {
+      <button type="button" class="btn btn-sm notices-button ms-2" (click)="noticesOpen = true"
+              [attr.aria-expanded]="noticesOpen" aria-haspopup="dialog">
+        <it-icon name="horn" color="light" size="sm"></it-icon>
+        <span class="badge rounded-pill bg-danger ms-1">{{ notices.length }}</span>
+        <span class="d-none d-lg-inline ms-1">{{ 'notice.title' | translate }}</span>
+      </button>
+    }
     <it-dropdown mode="button" color="primary" class="ms-2">
       <span button class="text-uppercase">{{ lang }}</span>
       <ng-container list>
@@ -219,5 +228,6 @@
   </ng-container>
 </it-header>
 <app-toasts></app-toasts>
+<app-notices-panel [open]="noticesOpen" [notices]="notices" (close)="noticesOpen = false"></app-notices-panel>
 <app-user-panel [open]="panelOpen" [user]="user" [navbarMenu]="navbarMenu"
   (close)="panelOpen = false" (logout)="panelOpen = false; logout()"></app-user-panel>

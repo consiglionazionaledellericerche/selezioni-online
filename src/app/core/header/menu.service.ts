@@ -55,6 +55,7 @@ export class MenuService {
       adminMenuItems.push(new MenuItem('menu.gestori', undefined, '/admin/gestori', 'menu.gestori', 'GET', 'gestori'));
       adminMenuItems.push(new MenuItem('menu.users', undefined, '/admin/users', 'menu.users', 'GET', 'gestione-utenti'));
       adminMenuItems.push(new MenuItem('menu.rbac', undefined, '/admin/rbac', 'menu.rbac', 'GET', 'rbac-admin'));
+      adminMenuItems.push(new MenuItem('menu.frontoffice', undefined, '/admin/frontoffice', 'menu.frontoffice', 'GET', 'rbac-admin'));
       adminMenuItems.push(new MenuItem('menu.cache', undefined, '/admin/cache', 'menu.cache', 'GET', 'rbac-admin'));
       adminMenuItems.push(new MenuItem('menu.views', undefined, '/admin/views', 'menu.views', 'GET', 'rbac-admin'));
       adminMenuItems.push(new MenuItem('menu.jsConsole', undefined, '/admin/js-console', 'menu.jsConsole', 'GET', 'jsConsole'));

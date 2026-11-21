@@ -1,3 +1,4 @@
+import { ContentLinksDirective } from '../core/frontoffice/content-links.directive';
 import { ItUploadDragDropComponent } from 'design-angular-kit';
 import { ItDropdownModule, ItPopoverDirective, ItTooltipDirective } from 'design-angular-kit';
 import { AccordionComponent, AccordionGroupComponent } from '../shared/ui/accordion.component';
@@ -31,6 +32,7 @@ import { ConfigService } from '../core/config.service';
     FAQComponent
   ],
   imports: [
+    ContentLinksDirective,
         ItUploadDragDropComponent,
         ItDropdownModule,
         ItPopoverDirective,

@@ -1,3 +1,8 @@
+import { DocumentService } from '../../document/document.service';
+import { ApplicationOperationsService } from '../../application/application-operations.service';
+import { AuthService } from '../../../auth/auth.service';
+import { ManageDocumentComponent } from '../../document/manage-document.component';
+import { ShowMetadataComponent } from '../../../shared/tags/show/show-metadata.component';
 import { padProtocollo } from '../../../common/helpers/protocollo';
 import { ManageCallService } from '../manage-call.service';
 import { DatePipe } from '@angular/common';
@@ -205,9 +210,10 @@ import {
           <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-pencil"></use></svg>
           {{ 'communications.sign' | translate }} ({{ targets('GENERATO').length }})
         </button>
-        <button class="btn btn-primary btn-sm" [disabled]="busy || targets('FIRMATO').length === 0" (click)="openSend()">
+        <!-- come nel legacy la firma è facoltativa: si inviano anche i documenti solo generati -->
+        <button class="btn btn-primary btn-sm" [disabled]="busy || sendable().length === 0" (click)="openSend()">
           <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-mail"></use></svg>
-          {{ 'communications.send' | translate }} ({{ targets('FIRMATO').length }})
+          {{ 'communications.send' | translate }} ({{ sendable().length }})
         </button>
         <button class="btn btn-outline-danger btn-sm" [disabled]="busy || deletable().length === 0" (click)="deleteDocuments()">
           <svg class="icon icon-danger icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-delete"></use></svg>
@@ -240,10 +246,28 @@ import {
               <td class="small">{{ d['cmis:name'] }}</td>
               <td><span class="badge rounded-pill" [ngClass]="stateClass(state(d))">{{ stateLabel(state(d), true) }}</span></td>
               <td class="small text-nowrap">{{ d['cmis:lastModificationDate'] | date:'dd/MM/yyyy HH:mm' }}</td>
-              <td class="text-end">
+              <td class="text-end text-nowrap">
+                <button type="button" class="btn btn-link btn-sm p-1" (click)="view(d)" [itTooltip]="'show' | translate">
+                  <svg class="icon icon-sm icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-password-visible"></use></svg>
+                  <span class="visually-hidden">{{ 'show' | translate }}</span>
+                </button>
                 <button type="button" class="btn btn-link btn-sm p-1" (click)="download(d)" [itTooltip]="'communications.download' | translate">
                   <svg class="icon icon-sm icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-download"></use></svg>
                   <span class="visually-hidden">{{ 'communications.download' | translate }}</span>
+                </button>
+                <button type="button" class="btn btn-link btn-sm p-1" (click)="edit(d)" [itTooltip]="'edit' | translate">
+                  <svg class="icon icon-sm icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-pencil"></use></svg>
+                  <span class="visually-hidden">{{ 'edit' | translate }}</span>
+                </button>
+                <button type="button" class="btn btn-link btn-sm p-1" (click)="replaceInput.click()" [itTooltip]="'communications.replace' | translate">
+                  <svg class="icon icon-sm icon-primary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-upload"></use></svg>
+                  <span class="visually-hidden">{{ 'communications.replace' | translate }}</span>
+                </button>
+                <input #replaceInput type="file" class="d-none" accept=".pdf,.p7m,application/pdf" (change)="replace(d, $event)">
+                <button *ngIf="state(d) === 'GENERATO' || state(d) === 'FIRMATO'" type="button" class="btn btn-link btn-sm p-1"
+                        (click)="deleteOne(d)" [itTooltip]="'delete' | translate">
+                  <svg class="icon icon-sm icon-danger"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-delete"></use></svg>
+                  <span class="visually-hidden">{{ 'delete' | translate }}</span>
                 </button>
               </td>
             </tr>
@@ -264,20 +288,17 @@ import {
             <input id="sign-auto" type="checkbox" formControlName="firmaAutomatica">
             <label for="sign-auto">{{ 'communications.sign_auto' | translate }}</label>
           </div>
-          <ng-container *ngIf="!signForm.value.firmaAutomatica">
-            <div class="form-group"><label for="sign-user" class="active">{{ 'communications.sign_user' | translate }}</label>
-              <input id="sign-user" class="form-control" formControlName="userName" autocomplete="username"></div>
-            <div class="form-group"><label for="sign-pwd" class="active">{{ 'communications.sign_password' | translate }}</label>
-              <input id="sign-pwd" type="password" class="form-control" formControlName="password" autocomplete="current-password"></div>
-            <div class="form-group"><label for="sign-otp" class="active">OTP</label>
-              <input id="sign-otp" class="form-control" formControlName="otp" autocomplete="one-time-code"></div>
-          </ng-container>
-          <div class="form-group"><label for="sign-firma" class="active">{{ 'communications.firma' | translate }}</label>
-            <textarea id="sign-firma" class="form-control" rows="2" formControlName="firma"></textarea></div>
+          <p *ngIf="signForm.value.firmaAutomatica" class="small text-secondary">{{ 'communications.sign_auto_info' | translate }}</p>
+          <div class="form-group"><label for="sign-user" class="active">{{ (signForm.value.firmaAutomatica ? 'communications.sign_user_auto' : 'communications.sign_user') | translate }} *</label>
+            <input id="sign-user" class="form-control" formControlName="userName" autocomplete="username"></div>
+          <div class="form-group"><label for="sign-pwd" class="active">{{ 'communications.sign_password' | translate }} *</label>
+            <input id="sign-pwd" type="password" class="form-control" formControlName="password" autocomplete="current-password"></div>
+          <div class="form-group"><label for="sign-otp" class="active">{{ (signForm.value.firmaAutomatica ? 'communications.sign_otp_auto' : 'communications.sign_otp') | translate }} *</label>
+            <input id="sign-otp" class="form-control" formControlName="otp" autocomplete="one-time-code"></div>
         </div>
         <div class="modal-footer d-flex justify-content-between">
           <button type="button" class="btn btn-outline-secondary" (click)="modalRef?.hide()" translate>button.cancel</button>
-          <button type="submit" class="btn btn-primary" [disabled]="busy">{{ 'communications.sign' | translate }}</button>
+          <button type="submit" class="btn btn-primary" [disabled]="busy || signForm.invalid">{{ 'communications.sign' | translate }}</button>
         </div>
       </form>
     </ng-template>
@@ -289,7 +310,8 @@ import {
       </div>
       <form [formGroup]="sendForm" (ngSubmit)="send()">
         <div class="modal-body pt-3">
-          <p class="small">{{ 'communications.send_info' | translate:{value: targets('FIRMATO').length} }}</p>
+          <p class="small">{{ 'communications.send_info' | translate:{value: sendable().length} }}</p>
+          <div *ngIf="targets('GENERATO').length" class="alert alert-warning small py-2">{{ 'communications.send_unsigned' | translate:{value: targets('GENERATO').length} }}</div>
           <div class="select-wrapper mb-3">
             <label for="send-addr">{{ 'communications.address' | translate }}</label>
             <select id="send-addr" formControlName="addressFromApplication">
@@ -396,7 +418,10 @@ export class CallCommunicationsComponent implements OnInit {
               private modalService: ModalService,
               private apiMessageService: ApiMessageService,
               private translateService: TranslateService,
-              private manageCallService: ManageCallService) {}
+              private manageCallService: ManageCallService,
+              private documentService: DocumentService,
+              private operationsService: ApplicationOperationsService,
+              private authService: AuthService) {}
 
   /** Segnaposto per le note: campi della domanda e del bando (come i jsonlist del legacy). */
   public placeholders: { key: string, label: string, group?: string }[] = [];
@@ -419,7 +444,12 @@ export class CallCommunicationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPlaceholders();
-    this.signForm = this.formBuilder.group({ firmaAutomatica: [false], userName: [''], password: [''], otp: [''], firma: [''] });
+    this.signForm = this.formBuilder.group({
+      firmaAutomatica: [false],
+      userName: ['', Validators.required],
+      password: ['', Validators.required],
+      otp: ['', Validators.required]
+    });
     this.sendForm = this.formBuilder.group({ addressFromApplication: ['EMAIL'], pec: [false], userNamePEC: [''], passwordPEC: [''] });
     this.route.queryParams.subscribe(params => {
       this.callId = params['callId'];
@@ -656,7 +686,10 @@ export class CallCommunicationsComponent implements OnInit {
 
   sign(): void {
     this.busy = true;
-    this.communicationsService.sign(this.callId, this.kind, this.targets('GENERATO'), this.signForm.value).subscribe(count => {
+    // come il legacy: la dicitura della firma è quella dell'utente collegato
+    const user: any = this.authService.getUser() || {};
+    const credentials = { ...this.signForm.value, firma: 'Firmato da ' + [user.firstName, user.lastName].filter(Boolean).join(' ') };
+    this.communicationsService.sign(this.callId, this.kind, this.targets('GENERATO'), credentials).subscribe(count => {
       this.busy = false;
       this.modalRef?.hide();
       this.signForm.patchValue({ password: '', otp: '' });
@@ -667,7 +700,7 @@ export class CallCommunicationsComponent implements OnInit {
 
   send(): void {
     this.busy = true;
-    this.communicationsService.send(this.callId, this.kind, this.targets('FIRMATO'), this.sendForm.value).subscribe(count => {
+    this.communicationsService.send(this.callId, this.kind, this.sendable(), this.sendForm.value).subscribe(count => {
       this.busy = false;
       this.modalRef?.hide();
       this.sendForm.patchValue({ passwordPEC: '' });
@@ -690,6 +723,63 @@ export class CallCommunicationsComponent implements OnInit {
         this.apiMessageService.sendMessage(MessageType.SUCCESS, 'communications.deleted');
         this.loadDocuments();
       }, () => this.busy = false);
+    });
+  }
+
+  /** Documenti che si possono inviare: generati (senza firma) e firmati. */
+  sendable(): string[] {
+    return [...this.targets('GENERATO'), ...this.targets('FIRMATO')];
+  }
+
+  /** Metadati del documento (tipo, stato, protocollo, destinatario). */
+  view(document: any): void {
+    this.documentService.getById(document['cmis:objectId']).subscribe(cmisObject =>
+      this.modalService.show(ShowMetadataComponent, { initialState: { cmisObject }, class: 'modal-lg' }));
+  }
+
+  /** Modifica dei metadati (es. data e numero di protocollo) con la finestra dei documenti. */
+  edit(document: any): void {
+    this.documentService.getById(document['cmis:objectId']).subscribe(entity => {
+      const ref = this.modalService.show(ManageDocumentComponent, { initialState: { entity, typeId: entity.objectTypeId }, class: 'modal-lg' });
+      ref.content.event.subscribe(() => {
+        this.apiMessageService.sendMessage(MessageType.SUCCESS, 'communications.updated');
+        this.loadDocuments();
+      });
+    });
+  }
+
+  /** Aggiorna il contenuto del documento (nuova versione), come "aggiorna" del legacy. */
+  replace(document: any, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files && input.files.length ? input.files[0] : null;
+    input.value = '';
+    if (!file) {
+      return;
+    }
+    this.busy = true;
+    this.operationsService.updateDocument(file, {
+      'cmis:objectId': document['cmis:objectId'],
+      'cmis:objectTypeId': document['cmis:objectTypeId']
+    }).subscribe(() => {
+      this.busy = false;
+      this.apiMessageService.sendMessage(MessageType.SUCCESS, 'communications.updated');
+      this.loadDocuments();
+    }, () => this.busy = false);
+  }
+
+  deleteOne(document: any): void {
+    const ref = this.modalService.show(ModalConfirmComponent, {
+      initialState: { body: this.translateService.instant('message.document.delete.confirm', { value: document['cmis:name'] }) },
+      class: 'modal-dialog-centered'
+    });
+    ref.content.confirm.subscribe(() => {
+      this.busy = true;
+      this.communicationsService.delete(this.callId, this.kind, this.state(document) as CommunicationState, [document['cmis:objectId']])
+        .subscribe(() => {
+          this.busy = false;
+          this.apiMessageService.sendMessage(MessageType.SUCCESS, 'communications.deleted');
+          this.loadDocuments();
+        }, () => this.busy = false);
     });
   }
 

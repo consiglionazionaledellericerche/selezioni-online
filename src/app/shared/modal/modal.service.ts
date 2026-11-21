@@ -118,6 +118,7 @@ export class ModalService {
       this.open.splice(this.open.indexOf(ref), 1);
       if (this.open.length === 0) {
         doc.body.classList.remove('modal-open');
+        doc.documentElement.classList.remove('modal-open-html');
       }
       previousFocus?.focus?.();
       ref.onHidden.next();
@@ -127,6 +128,8 @@ export class ModalService {
     doc.body.appendChild(backdrop);
     doc.body.appendChild(modal);
     doc.body.classList.add('modal-open');
+    // la pagina sotto non deve scorrere: altrimenti compaiono due barre verticali (pagina e finestra)
+    doc.documentElement.classList.add('modal-open-html');
     this.open.push(ref);
     const view = componentRef ? componentRef.hostView : templateView;
     this.appRef.attachView(view);

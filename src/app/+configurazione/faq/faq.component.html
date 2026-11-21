@@ -7,7 +7,7 @@
   <app-accordion [closeOthers]="true" class="d-block shadow-sm rounded">
     <app-accordion-group *ngFor="let faq of faqType.value">
       <span accordion-heading class="fw-semibold">{{ faq.question }}</span>
-      <div [innerHtml]="faq.answer"></div>
+      <div appContentLinks [innerHtml]="faq.answer"></div>
     </app-accordion-group>
   </app-accordion>
 </section>

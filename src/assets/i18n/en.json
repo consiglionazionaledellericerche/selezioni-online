@@ -197,7 +197,14 @@
     "graduatoria_privata": {
       "label": "Private ranking",
       "info": "The attached document will be sent to the candidates and stored among the call attachments as \"Private ranking\", visible only to authorized users, with registration date and number."
-    }
+    },
+    "send_unsigned": "{{value}} documents are not signed: they will be sent without a digital signature.",
+    "sign_auto_info": "Automatic signature with the credentials of the automatic signature service (user, password and domain code/PIN).",
+    "sign_user_auto": "Automatic signature user",
+    "sign_otp": "OTP",
+    "sign_otp_auto": "Automatic signature PIN / code",
+    "replace": "Update the document",
+    "updated": "Document updated."
   },
   "yes": "Yes",
   "no": "No",
@@ -533,7 +540,8 @@
       "rbac": "Permissions (RBAC)",
       "cache": "Cache",
       "views": "View inspector",
-      "jsConsole": "JS console"
+      "jsConsole": "JS console",
+      "frontoffice": "Notices and FAQ"
     },
     "error": {
       "forbidden": "You are not allowed to perform this operation",
@@ -654,7 +662,8 @@
     "rbac": "Permissions (RBAC)",
     "cache": "Cache",
     "views": "View inspector",
-    "jsConsole": "JS console"
+    "jsConsole": "JS console",
+    "frontoffice": "Notices and FAQ"
   },
   "message": {
     "alert": {
@@ -665,7 +674,10 @@
       }
     },
     "document": {
-      "uploaded": "Uploaded"
+      "uploaded": "Uploaded",
+      "download": {
+        "error": "Unable to download the document."
+      }
     },
     "document.upload.success": "The file “{{value}}” has been uploaded.",
     "document.uploaded": "Uploaded",
@@ -1307,7 +1319,9 @@
       "application": "Applications"
     },
     "jconon_protocollo_data": "Protocol date",
-    "jconon_protocollo_numero": "Protocol number"
+    "jconon_protocollo_numero": "Protocol number",
+    "attivata": "Enabled",
+    "disattivata": "Disabled"
   },
   "application": {
     "error_title": "Unable to open the application",
@@ -1337,7 +1351,8 @@
   "header": {
     "company": {
       "title": "National Research Council of Italy",
-      "url": "https://www.cnr.it/en"
+      "url": "https://www.cnr.it/en",
+      "short": "CNR"
     },
     "title": "CNR E-Recruitment",
     "subtitle": "Online application system for recruitment"
@@ -2041,6 +2056,17 @@
       "label": "Visibility",
       "public": "Public",
       "private": "Private"
+    },
+    "replace": "Update",
+    "permissions": {
+      "title": "Permissions",
+      "inherited": "Inherit the call permissions (public document)"
+    },
+    "send": {
+      "title": "Send attachment",
+      "info": "The attachment is sent by PEC to all candidates with an active application, to the PEC (or email) address of the application.",
+      "submit": "Send",
+      "done": "Attachment sent to {{value}} candidates."
     }
   },
   "account": {
@@ -2063,5 +2089,44 @@
       "done": "Your password has been changed: you can now sign in with the new password.",
       "invalid_link": "The link is not valid: request the password recovery again from the sign-in page."
     }
+  },
+  "notice": {
+    "title": "Notices",
+    "create": "New",
+    "edit": "Edit",
+    "type": "Call type",
+    "all_types": "All types",
+    "published_from": "Published from",
+    "published_to": "to",
+    "question_contains": "Question contains",
+    "notice_title": "Notice title",
+    "style": "Style",
+    "styles": {
+      "information": "Information",
+      "success": "Success",
+      "warning": "Warning",
+      "alert": "Alert",
+      "error": "Error"
+    },
+    "published": "Publication",
+    "expires": "Expiry",
+    "visible": "Visible to users",
+    "authority_info": "Optional: user or group to show the notice to (empty = everyone).",
+    "number": "Number",
+    "question": "Question",
+    "answer": "Answer",
+    "text": "Text",
+    "found": "{{value}} items found",
+    "saved": "Saved.",
+    "deleted": "Deleted.",
+    "confirm_delete": "Delete \"{{value}}\"?",
+    "states": {
+      "visible": "Visible",
+      "hidden": "Hidden",
+      "active": "Active",
+      "scheduled": "Scheduled",
+      "expired": "Expired"
+    },
+    "none": "There are no current notices."
   }
 }

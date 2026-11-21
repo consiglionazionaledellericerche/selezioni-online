@@ -1,3 +1,5 @@
+import { NoticesPanelComponent } from '../core/frontoffice/notices-panel.component';
+import { FrontOfficeService, Notice } from '../core/frontoffice/frontoffice.service';
 import { forkJoin } from 'rxjs';
 import { CacheService } from '../core/cache.service';
 import { ObjectType } from '../common/model/object-type.model';
@@ -31,7 +33,7 @@ import { ApplicationSummaryComponent } from '../core/application/application-sum
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe, ItHeaderComponent, ItNavBarModule,
+  imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe, ItHeaderComponent, ItNavBarModule, NoticesPanelComponent,
     ItDropdownModule, ItIconComponent, ToastsComponent, ItMegamenuComponent, ApplicationSummaryComponent, UserPanelComponent],
   templateUrl: './header.component.html',
   styles: `
@@ -55,6 +57,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private readonly manageCallService = inject(ManageCallService);
   private readonly cacheService = inject(CacheService);
   private readonly pushNotificationsService = inject(PushNotificationsService);
+  private readonly frontOfficeService = inject(FrontOfficeService);
+  /** Avvisi in corso di validità e pannello laterale che li mostra. */
+  public notices: Notice[] = [];
+  /** Su smartphone (sotto lg) la barra superiore mostra "CNR" invece del nome completo. */
+  public compactSlim = typeof window !== 'undefined' && window.matchMedia
+    ? window.matchMedia('(max-width: 991.98px)').matches : false;
+  public noticesOpen = false;
 
   public user: User = null;
   public navbarMenu: NavbarMenu = null;
@@ -74,6 +83,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.user = this.authService.getUser();
     }
     this.loadMegaMenus();
+    this.frontOfficeService.notices().subscribe(notices => this.notices = notices);
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      const query = window.matchMedia('(max-width: 991.98px)');
+      query.addEventListener('change', event => this.compactSlim = event.matches);
+    }
     this.subscriptions.add(this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.openMega = null;

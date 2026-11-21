@@ -1,3 +1,7 @@
+import { AllowableAction } from '../../common/model/allowableaction.enum';
+import { DocumentPermissionsModalComponent } from '../document/actions/document-permissions-modal.component';
+import { SendAttachmentModalComponent } from '../document/actions/send-attachment-modal.component';
+import { ApplicationOperationsService } from '../application/application-operations.service';
 import { ManageCallService } from '../call/manage-call.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
 import { CommonListComponent} from '../../common/controller/common-list.component';
@@ -49,6 +53,19 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
                 </span>
                 <span *ngIf="version(item)">{{ 'layout.attachments.version' | translate }} {{ version(item) }}</span>
               </div>
+              <!-- azioni degli allegati del bando (come nel legacy: aggiorna, autorizzazioni, spedisci allegato) -->
+              <div *ngIf="callId" class="doc-macro">
+                <button *ngIf="canReplace(item)" type="button" class="btn btn-link btn-sm p-0" (click)="replaceInput.click()">
+                  <svg class="icon icon-xs icon-primary me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-upload"></use></svg>{{'document.replace' | translate}}
+                </button>
+                <input #replaceInput type="file" class="d-none" (change)="replace(item, $event)">
+                <button *ngIf="canAcl(item)" type="button" class="btn btn-link btn-sm p-0" (click)="permissions(item)">
+                  <svg class="icon icon-xs icon-primary me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-locked"></use></svg>{{'document.permissions.title' | translate}}
+                </button>
+                <button type="button" class="btn btn-link btn-sm p-0" (click)="sendToCandidates(item)">
+                  <svg class="icon icon-xs icon-primary me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-mail"></use></svg>{{'document.send.title' | translate}}
+                </button>
+              </div>
               <div *ngIf="macroCallId" class="doc-macro">
                 <button type="button" class="btn btn-link btn-sm p-0" (click)="linkToChildren(item)">
                   <svg class="icon icon-xs icon-primary me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-link"></use></svg>{{'call_manage.attachments.link_children' | translate}}
@@ -85,6 +102,8 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
   @Input() typeId: string;
   @Input() queryName: string;
   @Input() show_date: string;
+  /** Se valorizzato (id del bando) mostra le azioni sugli allegati del bando: aggiorna, autorizzazioni, spedisci. */
+  @Input() callId: string;
   /** Se valorizzato (id del macro-bando) mostra le azioni per collegare o copiare l'allegato nei bandi figli. */
   @Input() macroCallId: string;
   bsModalRef: ModalRef;
@@ -98,6 +117,7 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
                      protected objectTypeService: ObjectTypeService,
                      protected router: Router,
                      protected changeDetector: ChangeDetectorRef,
+                     private operationsService: ApplicationOperationsService,
                      protected navigationService: NavigationService,
                      protected translateService: TranslateService,
                      protected manageCallService: ManageCallService) {
@@ -154,6 +174,40 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
         this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
       });
     });
+  }
+
+  canReplace(item: Attachment): boolean {
+    return item.hasAllowableActions(AllowableAction.CAN_SET_CONTENT_STREAM) || item.canEdit();
+  }
+
+  canAcl(item: Attachment): boolean {
+    return item.hasAllowableActions(AllowableAction.CAN_APPLY_ACL);
+  }
+
+  /** Aggiorna il contenuto dell'allegato (nuova versione), come "aggiorna" del legacy. */
+  replace(item: Attachment, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files && input.files.length ? input.files[0] : null;
+    input.value = '';
+    if (!file) {
+      return;
+    }
+    this.operationsService.updateDocument(file, { 'cmis:objectId': item.objectId, 'cmis:objectTypeId': item.objectTypeId })
+      .subscribe(() => {
+        this.translateService.get('message.document.upload.success', { value: file.name })
+          .subscribe(label => this.apiMessageService.sendMessage(MessageType.SUCCESS, label));
+        this.loadList();
+      });
+  }
+
+  permissions(item: Attachment): void {
+    this.modalService.show(DocumentPermissionsModalComponent,
+      { initialState: { objectId: item.objectId, name: item.name }, class: 'modal-lg' });
+  }
+
+  sendToCandidates(item: Attachment): void {
+    this.modalService.show(SendAttachmentModalComponent,
+      { initialState: { callId: this.callId, objectId: item.objectId, name: item.name }, class: 'modal-dialog-centered' });
   }
 
   public onEdit(cmisObject: Document) {

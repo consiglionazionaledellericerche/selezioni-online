@@ -1,3 +1,5 @@
+import { ASPECT_CONTROL_PREFIX } from '../../core/call/manage-call.service';
+import { hasAspect } from './call-settings.component';
 import { ChangeDetectorRef, Component, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormControl, Validators } from '@angular/forms';
@@ -58,6 +60,29 @@ import { toBoolean } from './call-settings.component';
           </app-control-toggle>
         </div>
       </div>
+      <!-- allegati richiesti al vincitore (aspect P:jconon_call_aspect_winner:aspect, come nel legacy) -->
+      <div class="row gx-2 pt-3 border-top">
+        <div class="col-md-6 align-self-center">
+          <app-control-toggle [inline]="true" [label]="'label.jconon_call_aspect_winner' | translate"
+                              [formControlName]="winnerControl"></app-control-toggle>
+        </div>
+        <ng-container *ngIf="form.value[winnerControl]">
+          <div class="col-md-6 align-self-center">
+            <span class="small fw-semibold d-block mb-1">{{ 'label.jconon_call_aspect_winner_active' | translate }}</span>
+            <app-segmented [options]="winnerWindow" formControlName="jconon_call_aspect_winner:active"></app-segmented>
+          </div>
+          <div class="form-group col-md-12 pt-3">
+            <app-control-select-model
+              [inline]="true"
+              [multiple]="true"
+              [labelactive]="'true'"
+              [label]="'label.jconon_call_aspect_winner_elenco_file' | translate"
+              [strings]="options['jsonlistApplicationAttachments']"
+              formControlName="jconon_call_aspect_winner:elenco_file">
+            </app-control-select-model>
+          </div>
+        </ng-container>
+      </div>
     </form>
   `
 })
@@ -76,6 +101,12 @@ export class JcononAffixCallAspirantDetailComponent extends DynamicComponent<Cal
     { name: 'elenco_schede_anonime', list: 'jsonlistApplicationSchedeAnonime' }
   ];
   public options: {[list: string]: string[]};
+  /** Controllo che aggiunge o toglie l'aspect degli allegati del vincitore. */
+  public readonly winnerControl = ASPECT_CONTROL_PREFIX + 'P:jconon_call_aspect_winner:aspect';
+  public readonly winnerWindow = [
+    { value: true, label: 'label.attivata' },
+    { value: false, label: 'label.disattivata' }
+  ] as any[];
 
   constructor(
     protected cacheService: CacheService,
@@ -88,6 +119,11 @@ export class JcononAffixCallAspirantDetailComponent extends DynamicComponent<Cal
   ngOnInit(): void {
     super.ngOnInit();
     const data: any = this.data;
+    this.form.addControl(this.winnerControl, new FormControl(hasAspect(this.data, 'P:jconon_call_aspect_winner:aspect')));
+    this.form.addControl('jconon_call_aspect_winner:active', new FormControl(toBoolean(data.winner_active)));
+    const elenco = data.winner_elenco_file;
+    this.form.addControl('jconon_call_aspect_winner:elenco_file',
+      new FormControl(Array.isArray(elenco) ? elenco : (elenco ? [elenco] : [])));
     this.fields.forEach(field =>
       this.form.addControl('jconon_call:' + field.name, new FormControl(data[field.name] || [])));
     this.form.addControl('jconon_call:numero_max_prodotti',
@@ -379,6 +415,7 @@ export class JcononAffixCallHelpDeskComponent extends DynamicComponent<Call> {
             </div>
           </div>
           <children-list #childrenlist [show_date]="'true'" [parentId]="data.objectId" [typeId]="type"
+            [callId]="data.objectId"
             [macroCallId]="isMacroCall() ? data.objectId : undefined"></children-list>
         </app-accordion-group>
       </app-accordion>

@@ -1131,3 +1131,10 @@ app-form-layout .form-control.is-invalid:focus {
   line-height: 1;
   letter-spacing: .02em;
 }
+
+/* pulsante degli avvisi nella barra superiore */
+.notices-button { color: #fff; border: 1px solid rgba(255,255,255,.5); display: inline-flex; align-items: center; }
+.notices-button:hover, .notices-button:focus-visible { background: rgba(255,255,255,.15); color: #fff; }
+
+/* con una finestra modale aperta scorre solo la finestra, non la pagina sottostante */
+html.modal-open-html, html.modal-open-html body { overflow: hidden; }

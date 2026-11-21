@@ -110,7 +110,8 @@
     "users": "Utenti",
     "rbac": "Permessi (RBAC)",
     "cache": "Cache",
-    "views": "Ispettore viste"
+    "views": "Ispettore viste",
+    "frontoffice": "Avvisi e FAQ"
   },
   "message": {
     "alert": {
@@ -225,7 +226,8 @@
         "success": "Il documento è stato correttamente cancellato."
       },
       "download": {
-        "success": "Il documento {{value}} è stato correttamente scaricato."
+        "success": "Il documento {{value}} è stato correttamente scaricato.",
+        "error": "Impossibile scaricare il documento."
       }
     },
     "application": {
@@ -384,7 +386,14 @@
     "graduatoria_privata": {
       "label": "Graduatoria privata",
       "info": "Il documento allegato sarà inviato ai candidati e registrato negli allegati del bando come \"Graduatoria privata\", visibile ai soli autorizzati, con data e numero di protocollo."
-    }
+    },
+    "send_unsigned": "{{value}} documenti non sono firmati: verranno inviati senza firma digitale.",
+    "sign_auto_info": "Firma automatica con le credenziali del servizio di firma automatica (utente, password e codice del dominio/PIN).",
+    "sign_user_auto": "Utente della firma automatica",
+    "sign_otp": "OTP",
+    "sign_otp_auto": "PIN / codice di firma automatica",
+    "replace": "Aggiorna il documento",
+    "updated": "Documento aggiornato."
   },
   "yes": "Sì",
   "no": "No",
@@ -720,7 +729,8 @@
       "rbac": "Permessi (RBAC)",
       "cache": "Cache",
       "views": "Ispettore viste",
-      "jsConsole": "Console JS"
+      "jsConsole": "Console JS",
+      "frontoffice": "Avvisi e FAQ"
     },
     "error": {
       "forbidden": "Permessi non sufficienti per questa operazione",
@@ -840,7 +850,8 @@
   "header": {
     "company": {
       "title": "Consiglio Nazionale delle Ricerche",
-      "url": "https://www.cnr.it"
+      "url": "https://www.cnr.it",
+      "short": "CNR"
     },
     "title": "Selezioni online CNR",
     "subtitle": "Sistema di presentazione delle candidature online"
@@ -1077,6 +1088,17 @@
       "version": "Versione",
       "title": "Versioni Precedenti",
       "detail": "aggiornata il {{lastModificationDate}} di dimensione {{contentStreamLength}}"
+    },
+    "replace": "Aggiorna",
+    "permissions": {
+      "title": "Autorizzazioni",
+      "inherited": "Eredita i permessi del bando (documento pubblico)"
+    },
+    "send": {
+      "title": "Spedisci allegato",
+      "info": "L'allegato viene inviato via PEC a tutti i candidati con domanda attiva, all'indirizzo PEC (o email) indicato nella domanda.",
+      "submit": "Spedisci",
+      "done": "Allegato inviato a {{value}} candidati."
     }
   },
   "label": {
@@ -1884,7 +1906,9 @@
       "application": "Domande"
     },
     "jconon_protocollo_data": "Data protocollo",
-    "jconon_protocollo_numero": "Numero protocollo"
+    "jconon_protocollo_numero": "Numero protocollo",
+    "attivata": "Attivata",
+    "disattivata": "Disattivata"
   },
   "D:jconon_attachment:document": "Allegati alla domanda di concorso",
   "D:jconon_attachment:call_abstract": "Allegato astratto al Bando di concorso",
@@ -2516,5 +2540,44 @@
       "done": "La password è stata cambiata: ora puoi accedere con la nuova password.",
       "invalid_link": "Il link non è valido: richiedi di nuovo il recupero della password dalla pagina di accesso."
     }
+  },
+  "notice": {
+    "title": "Avvisi",
+    "create": "Nuovo",
+    "edit": "Modifica",
+    "type": "Tipologia di bando",
+    "all_types": "Tutte le tipologie",
+    "published_from": "Pubblicati dal",
+    "published_to": "al",
+    "question_contains": "Domanda contiene",
+    "notice_title": "Titolo dell'avviso",
+    "style": "Stile",
+    "styles": {
+      "information": "Informazione",
+      "success": "Successo",
+      "warning": "Attenzione",
+      "alert": "Avviso",
+      "error": "Errore"
+    },
+    "published": "Pubblicazione",
+    "expires": "Scadenza",
+    "visible": "Visibile agli utenti",
+    "authority_info": "Facoltativo: utente o gruppo a cui mostrare l'avviso (vuoto = tutti).",
+    "number": "Numero",
+    "question": "Domanda",
+    "answer": "Risposta",
+    "text": "Testo",
+    "found": "{{value}} elementi trovati",
+    "saved": "Salvato.",
+    "deleted": "Eliminato.",
+    "confirm_delete": "Eliminare \"{{value}}\"?",
+    "states": {
+      "visible": "Visibile",
+      "hidden": "Non visibile",
+      "active": "In corso",
+      "scheduled": "Da pubblicare",
+      "expired": "Scaduto"
+    },
+    "none": "Non ci sono avvisi in corso."
   }
 }

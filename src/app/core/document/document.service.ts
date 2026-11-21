@@ -45,6 +45,14 @@ export class DocumentService extends CommonService<Document>{
     return DocumentService.ROUTE;
   }
 
+  /** Metadati del documento: l'id va come parametro perché contiene la versione (";1.0"). */
+  public getById(id: string): Observable<Document> {
+    return this.configService.getApiBase().pipe(
+      switchMap(apiBase => this.httpClient.get<any>(apiBase + this.getRequestMapping() + '/metadata', { params: { id } })),
+      map(result => this.buildInstance(result))
+    );
+  }
+
   /**
    * Proprietà da inviare: quelle del modello più le altre del form (metadati del bulkinfo: protocollo, date,
    * Gazzetta...), che il modello Document non conosce e la serializzazione perderebbe. Le date nel formato

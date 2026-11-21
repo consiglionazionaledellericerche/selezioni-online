@@ -40,6 +40,7 @@ export class AdminSectionComponent implements OnInit {
     { path: 'gestori', label: 'admin.menu.gestori', icon: 'it-key', rbac: 'gestori' },
     { path: 'users', label: 'admin.menu.users', icon: 'it-user', rbac: 'gestione-utenti' },
     { path: 'rbac', label: 'admin.menu.rbac', icon: 'it-locked', rbac: 'rbac-admin' },
+    { path: 'frontoffice', label: 'admin.menu.frontoffice', icon: 'it-horn' },
     { path: 'cache', label: 'admin.menu.cache', icon: 'it-refresh' },
     { path: 'views', label: 'admin.menu.views', icon: 'it-files' },
     { path: 'js-console', label: 'admin.menu.jsConsole', icon: 'it-code-circle', rbac: 'jsConsole' }
