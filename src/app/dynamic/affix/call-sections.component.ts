@@ -19,6 +19,7 @@ import { ManageDocumentComponent } from '../../core/document/manage-document.com
 import { ChildrenListComponent } from '../../core/children/children-list.component';
 import { ChildrenService } from '../../core/children/children.service';
 import { Document } from '../../common/model/document.model';
+import { FrontOfficeService } from '../../core/frontoffice/frontoffice.service';
 import { toBoolean } from './call-settings.component';
 
 /**
@@ -481,7 +482,8 @@ export class JcononAffixCallAttachmentsComponent extends DynamicComponent<Call> 
     protected modalService: ModalService,
     protected translateService: TranslateService,
     protected apiMessageService: ApiMessageService,
-    protected childrenService: ChildrenService
+    protected childrenService: ChildrenService,
+    protected frontOfficeService: FrontOfficeService
   ) {
     super(cacheService, changeDetectorRef);
   }
@@ -579,13 +581,30 @@ export class JcononAffixCallAttachmentsComponent extends DynamicComponent<Call> 
     return false;
   }
 
+  /** Allegato "Avviso Pubblico di Convocazione Candidati": alla pubblicazione si crea in automatico l'avviso (come nel legacy). */
+  public static readonly CONVOCATION_TYPE = 'D:jconon_attachment:call_convocazioni_candidati';
+
+  private publishConvocationNotice(document: Document, expiry: Date | string): void {
+    const call: any = this.data;
+    const code = call?.codice || call?.['jconon_call:codice'] || '';
+    this.frontOfficeService.notifyConvocation(code, document, expiry).subscribe(
+      () => this.translateService.get('notice.convocation_published').subscribe(label =>
+        this.apiMessageService.sendMessage(MessageType.SUCCESS, label)),
+      () => this.translateService.get('notice.convocation_error').subscribe(label =>
+        this.apiMessageService.sendMessage(MessageType.WARNING, label)));
+  }
+
   private upload(typeId: string): void {
     const initialState = { parentId: this.data.objectId, typeId, upload: true };
     this.bsModalRef = this.modalService.show(ManageDocumentComponent, Object.assign({initialState}, { animated: true, class: 'modal-lg' }));
-    this.bsModalRef.content.event.subscribe((document: Document) => {
+    const content = this.bsModalRef.content;
+    content.event.subscribe((document: Document) => {
       this.translateService.get('message.document.upload.success', {value: document.name}).subscribe((label) => {
         this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
       });
+      if (typeId === JcononAffixCallAttachmentsComponent.CONVOCATION_TYPE) {
+        this.publishConvocationNotice(document, content.form?.value?.['jconon_attachment:data_scadenza_convocazione']);
+      }
       this.lastUploaded = typeId;
       this.loadCounts();
       setTimeout(() => this.childrenListComponent.forEach(comp => comp.loadList()));

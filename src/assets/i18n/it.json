@@ -2546,7 +2546,9 @@
     }
   },
   "notice": {
-    "title": "Avvisi",
+"title": "Avvisi",
+    "convocation_published": "Avviso di convocazione pubblicato.",
+    "convocation_error": "Convocazione caricata, ma non è stato possibile creare l'avviso automatico: crearlo da Amministratore > Avvisi.",
     "create": "Nuovo",
     "edit": "Modifica",
     "type": "Tipologia di bando",

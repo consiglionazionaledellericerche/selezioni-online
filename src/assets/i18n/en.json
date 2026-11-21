@@ -2095,7 +2095,9 @@
     }
   },
   "notice": {
-    "title": "Notices",
+"title": "Notices",
+    "convocation_published": "Convocation notice published.",
+    "convocation_error": "Convocation uploaded, but the automatic notice could not be created: create it from Administrator > Notices.",
     "create": "New",
     "edit": "Edit",
     "type": "Call type",

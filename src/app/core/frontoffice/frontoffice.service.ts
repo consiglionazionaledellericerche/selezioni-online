@@ -36,6 +36,9 @@ export interface FaqItem {
 @Injectable({ providedIn: 'root' })
 export class FrontOfficeService {
 
+  /** Visibilità di default degli avvisi (tutti gli utenti). */
+  static readonly EVERYONE = 'GROUP_EVERYONE';
+
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
   /** Avvisi in corso di validità (pubblicati e non scaduti). */
@@ -51,8 +54,33 @@ export class FrontOfficeService {
     return this.get('/faq/manage', filters);
   }
 
+  /**
+   * Crea o modifica un avviso. Come nel legacy (default del campo "Visibilità"), senza un utente o gruppo
+   * indicato l'avviso è visibile a tutti (GROUP_EVERYONE): con l'autorità vuota il backend risponde 500.
+   */
   saveNotice(notice: { [key: string]: any }): Observable<any> {
-    return this.configService.getApiBase().pipe(switchMap(apiBase => this.http.post(apiBase + '/v1/frontoffice/notices', notice)));
+    const body = { ...notice, authority: (notice.authority || '').trim() || FrontOfficeService.EVERYONE };
+    return this.configService.getApiBase().pipe(switchMap(apiBase => this.http.post(apiBase + '/v1/frontoffice/notices', body)));
+  }
+
+  /**
+   * Avviso automatico alla pubblicazione di una convocazione del bando, come nel legacy: tipo
+   * "Convocazione Bando <codice>", valido da oggi alla scadenza della convocazione, con il link al documento.
+   */
+  notifyConvocation(callCode: string, document: { objectId?: string, name?: string }, expiry: Date | string): Observable<any> {
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const day = (date: Date) => date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate());
+    const now = new Date();
+    const end = expiry ? new Date(expiry as any) : null;
+    return this.saveNotice({
+      title: 'E\' stata pubblicata la convocazione ' + document.name,
+      text: '<p>Per scaricare la convocazione cliccare <a href=\'rest/content?nodeRef=' + document.objectId + '\'>qui</a></p>',
+      type: 'Convocazione Bando ' + callCode,
+      style: 'information',
+      data: day(now),
+      dataScadenza: day(end && !isNaN(end.getTime()) ? end : now),
+      number: Number(String(now.getFullYear()) + pad(now.getMonth() + 1) + pad(now.getDate()) + pad(now.getHours()))
+    });
   }
 
   saveFaq(faq: { [key: string]: any }): Observable<any> {
