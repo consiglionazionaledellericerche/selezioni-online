@@ -1,3 +1,5 @@
+import { AuthService } from '../../auth/auth.service';
+import { ManageCallService } from '../../core/call/manage-call.service';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
@@ -73,11 +75,11 @@ import { Sede } from '../../common/model/sede.model';
               </app-control-select-model>
             </div>
             <div class="form-group col-lg-6">
-              <app-control-text type="text" [inline]="true" [labelactive]="sedi.length > 0" [disabled]="sedi.length > 0"
+              <app-control-text type="text" [inline]="true" [labelactive]="true" [disabled]="sedi.length > 0 && !canEditPlace"
                 [label]="'label.jconon_call.struttura_destinataria' | translate" formControlName="jconon_call:struttura_destinataria"></app-control-text>
             </div>
             <div class="form-group col-lg-6">
-              <app-control-text type="text" [inline]="true" [labelactive]="sedi.length > 0" [disabled]="sedi.length > 0"
+              <app-control-text type="text" [inline]="true" [labelactive]="true" [disabled]="sedi.length > 0 && !canEditPlace"
                 [label]="'label.jconon_call.sede' | translate" formControlName="jconon_call:sede"></app-control-text>
             </div>
             <ng-container *ngIf="isEnglishCallToggle()">
@@ -150,8 +152,46 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
       protected objectTypeService: ObjectTypeService,
       protected changeDetectorRef: ChangeDetectorRef,
       protected callService: CallService,
+      protected manageCallService: ManageCallService,
+      protected authService: AuthService,
     ) {
       super(cacheService, changeDetectorRef);
+    }
+
+    /**
+     * Sedi selezionabili come nel legacy (ui.gestorisedi): per i gestori limitati ad alcune sedi solo quelle abilitate
+     * per la tipologia di bando (più quella già scelta, se non è tra queste); altrimenti tutte le sedi attive.
+     */
+    /** Amministratori e gruppo CONCORSI: sede facoltativa e sede di lavoro/struttura modificabili a mano. */
+    public get canEditPlace(): boolean {
+      return ManageCallService.isConcorsi(this.authService.getUser());
+    }
+
+    private loadSedi(): void {
+      const show = (sedi: Sede[]) => {
+        this.sedi = sedi;
+        this.sediLabel = sedi.map((sede: Sede) => sede.label);
+        // senza elenco delle sedi il campo non compare: non può essere obbligatorio
+        const control = this.form.controls['jconon_call:sede_id'];
+        if (control && !sedi.length) {
+          control.clearValidators();
+          control.updateValueAndValidity({ emitEvent: false });
+        }
+        this.changeDetectorRef.markForCheck();
+      };
+      this.manageCallService.managersSedi(this.data.objectTypeId).subscribe(result => {
+        if (!result?.restricted) {
+          this.cacheService.sedi('true').subscribe(show);
+          return;
+        }
+        const enabled = (result.sedi || []).map((s: any) => new Sede(s.sedeId, s.label, s.citta, s.descrizione));
+        const current = this.data.sede_id;
+        if (current && !enabled.some(s => s.sedeId === current)) {
+          this.cacheService.sedi('false').subscribe(all => show(enabled.concat(all.filter(s => s.sedeId === current))));
+        } else {
+          show(enabled);
+        }
+      }, () => this.cacheService.sedi('true').subscribe(show));
     }
 
     ngOnInit(): void {
@@ -162,12 +202,7 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
       this.objectTypeService.listChoice('P:jconon_call:aspect_tipo_selezione','jconon_call:elenco_tipo_selezione').subscribe((choice) => {
         this.selectionTypes = choice;
       });
-      this.cacheService.sedi('true').subscribe((sedi) => {
-        this.sedi = sedi;
-        this.sediLabel = sedi.map((sede: Sede) => {
-          return sede.label;
-        })
-      });
+      this.loadSedi();
 
       this.form.addControl('english_call_toggle', 
         new FormControl(this.data.isDirector()));
@@ -184,8 +219,9 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
         new FormControl(this.data.descrizione_ridotta));
       this.form.addControl('jconon_call:descrizione_ridotta_en', 
         new FormControl(this.data.descrizione_ridotta_en));
+      // obbligatoria tranne che per amministratori e gruppo CONCORSI (controllo anche nel backend)
       this.form.addControl('jconon_call:sede_id', 
-        new FormControl(this.data.sede_id));
+        new FormControl(this.data.sede_id, this.canEditPlace ? null : Validators.required));
 
       this.form.addControl('jconon_call:struttura_destinataria', 
         new FormControl(this.data.struttura_destinataria||''));

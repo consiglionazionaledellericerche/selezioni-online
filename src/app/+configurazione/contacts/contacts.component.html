@@ -1,15 +1,53 @@
-<div class="container-fluid pt-2">
-    <div class="row g-0">
-        <h3 class="w-100">{{'contacts.subtitle' | translate}}</h3>
-        <ul class="w-100">
-            <li *ngIf="telefono" [innerHtml]="telefono"></li>
-            <li *ngIf="fax" [innerHtml]="fax"></li>
-            <li *ngIf="email" [innerHtml]="email"></li>
-            <li *ngIf="pec" [innerHtml]="pec"></li>
-        </ul>
-        <h4 class="w-100">{{'contacts.helpdesk.info' | translate}} <a href="/configurazione/helpdesk">{{'contacts.helpdesk.name' | translate}}</a></h4>
-        <div class="alert alert-danger">
-            <strong>{{'contacts.helpdesk.alert' | translate}}</strong>
+<div class="contacts-page pt-2 pb-5">
+  <!-- intestazione: ufficio e indirizzo -->
+  <div class="mb-4">
+    <h2 class="h3 text-primary mb-1">{{ 'contacts.subtitle' | translate }}</h2>
+    <p class="text-secondary d-flex align-items-center gap-1 mb-0">
+      <svg class="icon icon-sm icon-secondary"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-map-marker"></use></svg>
+      {{ address }}
+    </p>
+  </div>
+
+  <!-- recapiti -->
+  <div class="row g-3 mb-5">
+    <div class="col-md-6 col-xl-3" *ngFor="let contact of contacts">
+      <div class="card card-bg shadow-sm rounded h-100 contact-card">
+        <div class="card-body d-flex gap-3">
+          <span class="contact-icon flex-shrink-0">
+            <svg class="icon icon-primary"><use [attr.href]="'/bootstrap-italia/dist/svg/sprites.svg#' + contact.icon"></use></svg>
+          </span>
+          <div class="min-w-0">
+            <h3 class="h6 text-uppercase text-secondary mb-2 no_toc">{{ contact.label | translate }}</h3>
+            <a *ngFor="let value of contact.values" class="d-block fw-semibold text-break contact-value"
+               [href]="href(contact.scheme, value)">{{ value }}</a>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+
+  <!-- assistenza -->
+  <div class="card card-bg rounded shadow-sm assistance mb-4">
+    <div class="card-body p-4 d-lg-flex align-items-center gap-4">
+      <span class="assistance-icon flex-shrink-0 mb-3 mb-lg-0">
+        <svg class="icon icon-lg icon-white"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-help-circle"></use></svg>
+      </span>
+      <div class="flex-grow-1">
+        <h3 class="h5 mb-1 no_toc">{{ 'contacts.helpdesk.title' | translate }}</h3>
+        <p class="mb-0">{{ 'contacts.helpdesk.info' | translate }} <strong>{{ 'contacts.helpdesk.name' | translate }}</strong>.</p>
+      </div>
+      <div class="d-flex flex-wrap gap-2 mt-3 mt-lg-0 flex-shrink-0">
+        <a class="btn btn-primary" routerLink="/configurazione/helpdesk">
+          <svg class="icon icon-sm icon-white me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-comment"></use></svg>{{ 'contacts.helpdesk.open' | translate }}
+        </a>
+        <a class="btn btn-outline-primary" routerLink="/configurazione/faq">{{ 'contacts.helpdesk.faq' | translate }}</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- consiglio sulle scadenze -->
+  <div class="alert alert-warning d-flex gap-2" role="note">
+    <svg class="icon icon-warning flex-shrink-0"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clock"></use></svg>
+    <span>{{ 'contacts.helpdesk.alert' | translate }}</span>
+  </div>
 </div>

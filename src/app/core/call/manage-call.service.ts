@@ -93,6 +93,14 @@ export class ManageCallService {
 
   /* Elenchi per il form del bando */
 
+  /** Sedi abilitate per il gestore nella tipologia di bando (restricted = false: tutte). */
+  managersSedi(callType: string): Observable<{ restricted: boolean, sedi: any[] }> {
+    return this.configService.getApiBase().pipe(
+      switchMap(apiBase => this.httpClient.get<{ restricted: boolean, sedi: any[] }>(apiBase + '/v1/call/managers-sedi',
+        { params: { callType } }))
+    );
+  }
+
   callManagementCache(): Observable<CallManagementCache> {
     if (!this.cache$) {
       this.cache$ = this.configService.getApiBase().pipe(

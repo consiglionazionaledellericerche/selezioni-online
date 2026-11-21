@@ -214,7 +214,9 @@
       "cnr.user": "L'utente collegato corrisponde ad una utenza CNR, per modificare le impostazioni personali occorre seguire il seguente link <a href=\"http://utenti.cnr.it\">http://utenti.cnr.it</a>",
       "user.application": "Non è possibile modificare le impostazioni personali per utenze provenienti da {{value}}",
       "comunicazioni.graduatoria.privata.protocollo": "Indicare data e numero di protocollo della graduatoria privata.",
-      "comunicazioni.graduatoria.privata.file": "Allegare il documento della graduatoria privata."
+      "comunicazioni.graduatoria.privata.file": "Allegare il documento della graduatoria privata.",
+      "call.sede.required": "Indicare la Sede di lavoro prescelta.",
+      "call.sede.not.enabled": "Non si è abilitati a gestire bandi per la Sede di lavoro prescelta."
     },
     "document": {
       "uploaded": "Caricato",
@@ -274,9 +276,18 @@
     "email": "e-mail: <a class=\"d-inline-block\" href=\"mailto:concorsi@cnr.it\">concorsi@cnr.it</a>",
     "pec": "PEC: <a class=\"d-inline-block\" href=\"mailto:concorsi@pec.cnr.it\">concorsi@pec.cnr.it</a>",
     "helpdesk": {
-      "info": "Per ricevere assistenza a problemi tecnici/informatici o normativi utilizzare il servizio",
+      "info": "Per problemi tecnici, informatici o normativi utilizza il servizio",
       "name": "HelpDesk",
-      "alert": "Si consiglia vivamente di procedere alla compilazione e all'invio della domanda online evitando i giorni immediatamente precedenti la scadenza del termine previsto dal bando, per non incorrere in possibili inconvenienti derivanti da un eventuale sovraccarico del sistema e per usufruire del supporto di Help Desk in tempo utile."
+      "alert": "Si consiglia vivamente di procedere alla compilazione e all'invio della domanda online evitando i giorni immediatamente precedenti la scadenza del termine previsto dal bando, per non incorrere in possibili inconvenienti derivanti da un eventuale sovraccarico del sistema e per usufruire del supporto di Help Desk in tempo utile.",
+      "title": "Hai bisogno di assistenza?",
+      "open": "Apri una segnalazione",
+      "faq": "Consulta le F.A.Q."
+    },
+    "labels": {
+      "phone": "Telefono",
+      "email": "E-mail",
+      "pec": "PEC",
+      "fax": "Fax"
     }
   },
   "faq": {

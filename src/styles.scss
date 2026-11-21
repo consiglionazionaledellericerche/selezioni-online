@@ -1138,3 +1138,12 @@ app-form-layout .form-control.is-invalid:focus {
 
 /* con una finestra modale aperta scorre solo la finestra, non la pagina sottostante */
 html.modal-open-html, html.modal-open-html body { overflow: hidden; }
+
+/* menu a tendina con la stessa linea inferiore dei campi di testo, in tutta l'applicazione */
+select.form-select, .select-wrapper select {
+  border: 0;
+  border-bottom: 1px solid #5d7083;
+  border-radius: 0;
+  box-shadow: none;
+}
+select.form-select:focus, .select-wrapper select:focus { border-bottom-color: #0066cc; }

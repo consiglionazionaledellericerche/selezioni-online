@@ -53,12 +53,12 @@ interface ApplicationAction {
             </div>
           </div>
           <div class="mt-auto d-flex flex-wrap align-items-center gap-2">
-            <a *ngIf="(isActive && isDomandaProvvisoria) || user?.capabilities?.isAdmin" class="btn btn-primary btn-sm" href="javascript:"
+            <a *ngIf="(isActive && isDomandaProvvisoria && isOwner()) || user?.capabilities?.isAdmin" class="btn btn-primary btn-sm" href="javascript:"
                (click)="newApplication()">
               <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-pencil"></use></svg>
               {{ 'application.edit' | translate }}
             </a>
-            <a *ngIf="isActive && isDomandaConfermata" class="btn btn-outline-primary btn-sm" href="javascript:"
+            <a *ngIf="isActive && isDomandaConfermata && (isOwner() || user?.capabilities?.isAdmin)" class="btn btn-outline-primary btn-sm" href="javascript:"
                (click)="reopenApplication()">
               <svg class="icon icon-primary icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-exchange-circle"></use></svg>
               {{ 'application.reopen' | translate }}
@@ -278,6 +278,14 @@ export class ListItemApplicationComponent {
       'application': this.item
     };
     this.modalService.show(PrintApplicationComponent, Object.assign({initialState}, { animated: true, class: 'modal-dialog-left' }));
+  }
+
+  /**
+   * Domanda dell'utente collegato: come nel backend (ApplicationService, message.error.caller.user) solo il candidato
+   * titolare o un amministratore possono aprirla in modifica o riaprirla; il gruppo CONCORSI no.
+   */
+  public isOwner(): boolean {
+    return !!this.user && !!this.item && this.item.user === this.user.userName;
   }
 
   public canEditApplication(): boolean {
