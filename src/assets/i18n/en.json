@@ -1433,7 +1433,11 @@
       },
       "requirements": "Requirments",
       "struttura": "Reference structure",
-      "sede": "Place of work"
+      "sede": "Place of work",
+      "new_gazette": "New Official Gazette (amendment)",
+      "inpa": "Publication on inPA",
+      "graduatoria": "Ranking publication",
+      "numero_posti": "Number of positions (at least)"
     }
   },
   "D:jconon_attachment:document": "Allegati alla domanda di concorso",

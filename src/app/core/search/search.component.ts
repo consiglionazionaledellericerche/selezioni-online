@@ -75,6 +75,13 @@ export class SearchComponent implements OnInit, OnDestroy{
         requirements: new FormControl(''),
         struttura: new FormControl(''),
         sede: new FormControl(''),
+        numeroPosti: new FormControl(''),
+        newGazzetteNumber: new FormControl(''),
+        newGazzetteDate: new FormControl(''),
+        dallaDataInPA: new FormControl(''),
+        allaDataInPA: new FormControl(''),
+        dallaDataGraduatoria: new FormControl(''),
+        allaDataGraduatoria: new FormControl(''),
         orderBy: new FormControl('scadenza'),
         orderDirection: new FormControl('desc'),
       });
@@ -124,6 +131,8 @@ export class SearchComponent implements OnInit, OnDestroy{
     this.filterFormSearch.reset({
       callCode: '', filterType: 'all', type: 'jconon_call:folder', inizioScadenza: '', fineScadenza: '', profile: '',
       gazzetteNumber: '', gazzetteDate: '', requirements: '', struttura: '', sede: '',
+      numeroPosti: '', newGazzetteNumber: '', newGazzetteDate: '', dallaDataInPA: '', allaDataInPA: '',
+      dallaDataGraduatoria: '', allaDataGraduatoria: '',
       orderBy: this.filterFormSearch.value.orderBy, orderDirection: this.filterFormSearch.value.orderDirection
     });
   }

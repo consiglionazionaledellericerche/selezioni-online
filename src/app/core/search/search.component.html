@@ -62,7 +62,47 @@
           </div>
         </div>
 
+        <h2 class="filters-title">{{ 'call.search.new_gazette' | translate }}</h2>
+        <div class="row g-2 mb-4">
+          <div class="col-5">
+            <label for="s-ngun" class="small fw-semibold d-block mb-1">{{ 'layout.number' | translate }}</label>
+            <input id="s-ngun" type="search" class="form-control form-control-sm plain-input" formControlName="newGazzetteNumber">
+          </div>
+          <div class="col-7">
+            <label for="s-ngud" class="small fw-semibold d-block mb-1">{{ 'layout.date' | translate }}</label>
+            <input id="s-ngud" type="date" class="form-control form-control-sm plain-input" formControlName="newGazzetteDate">
+          </div>
+        </div>
+
+        <h2 class="filters-title">{{ 'call.search.inpa' | translate }}</h2>
+        <div class="row g-2 mb-4">
+          <div class="col-6">
+            <label for="s-inpa-from" class="small fw-semibold d-block mb-1">{{ 'layout.date_from' | translate }}</label>
+            <input id="s-inpa-from" type="date" class="form-control form-control-sm plain-input" formControlName="dallaDataInPA">
+          </div>
+          <div class="col-6">
+            <label for="s-inpa-to" class="small fw-semibold d-block mb-1">{{ 'layout.date_to' | translate }}</label>
+            <input id="s-inpa-to" type="date" class="form-control form-control-sm plain-input" formControlName="allaDataInPA">
+          </div>
+        </div>
+
+        <h2 class="filters-title">{{ 'call.search.graduatoria' | translate }}</h2>
+        <div class="row g-2 mb-4">
+          <div class="col-6">
+            <label for="s-grad-from" class="small fw-semibold d-block mb-1">{{ 'layout.date_from' | translate }}</label>
+            <input id="s-grad-from" type="date" class="form-control form-control-sm plain-input" formControlName="dallaDataGraduatoria">
+          </div>
+          <div class="col-6">
+            <label for="s-grad-to" class="small fw-semibold d-block mb-1">{{ 'layout.date_to' | translate }}</label>
+            <input id="s-grad-to" type="date" class="form-control form-control-sm plain-input" formControlName="allaDataGraduatoria">
+          </div>
+        </div>
+
         <h2 class="filters-title">{{ 'layout.content' | translate }}</h2>
+        <div class="form-group mb-3">
+          <label for="s-posti" class="active">{{ 'call.search.numero_posti' | translate }}</label>
+          <input id="s-posti" type="number" min="1" class="form-control" formControlName="numeroPosti">
+        </div>
         <div class="select-wrapper mb-3" *ngIf="profiles?.length">
           <label for="s-profile">{{ 'call.search.profile' | translate }}</label>
           <select id="s-profile" formControlName="profile">

@@ -942,7 +942,11 @@
       "sede": "Sede di Lavoro",
       "message": {
         "no_item": "Non ci sono bandi che corrispondono ai criteri di ricerca impostati!<br><a href=\"https://www.cnr.it/it/concorsi-opportunita\">Consultare le altre voci della pagina Concorsi e opportunità del sito CNR</a>"
-      }
+      },
+      "new_gazette": "Nuova Gazzetta Ufficiale (rettifica)",
+      "inpa": "Pubblicazione su inPA",
+      "graduatoria": "Pubblicazione graduatoria",
+      "numero_posti": "Numero di posti (almeno)"
     },
     "menuitem": {
       "application": "Domande",
