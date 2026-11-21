@@ -19,7 +19,6 @@ import { ManageDocumentComponent } from '../../core/document/manage-document.com
 import { ChildrenListComponent } from '../../core/children/children-list.component';
 import { ChildrenService } from '../../core/children/children.service';
 import { Document } from '../../common/model/document.model';
-import { FrontOfficeService } from '../../core/frontoffice/frontoffice.service';
 import { toBoolean } from './call-settings.component';
 
 /**
@@ -27,9 +26,9 @@ import { toBoolean } from './call-settings.component';
  * allegati, curriculum, prodotti e schede anonime.
  */
 @Component({
-  standalone: false,
-  selector: 'affix_tabCallAspirantDetail',
-  template: `
+    standalone: false,
+    selector: 'affix_tabCallAspirantDetail',
+    template: `
     <form [formGroup]="form" *ngIf="isLoaded() && options">
       <div class="row gx-2 pb-2">
         <div class="form-group col-md-12" *ngFor="let field of fields">
@@ -89,62 +88,62 @@ import { toBoolean } from './call-settings.component';
 })
 export class JcononAffixCallAspirantDetailComponent extends DynamicComponent<Call> {
 
-  public fields = [
-    { name: 'elenco_aspects', list: 'jsonlistApplicationAspects' },
-    { name: 'elenco_aspects_sezione_cnr', list: 'jsonlistApplicationAspects' },
-    { name: 'elenco_aspects_ulteriori_dati', list: 'jsonlistApplicationAspects' },
-    { name: 'elenco_aspects_sezione_4', list: 'jsonlistApplicationAspects' },
-    { name: 'elenco_aspects_sezione_5', list: 'jsonlistApplicationAspects' },
-    { name: 'elenco_association', list: 'jsonlistApplicationAttachments' },
-    { name: 'elenco_sezioni_curriculum', list: 'jsonlistApplicationCurriculums' },
-    { name: 'elenco_sezioni_curriculum_ulteriore', list: 'jsonlistApplicationCurriculums' },
-    { name: 'elenco_prodotti', list: 'jsonlistApplicationProdotti' },
-    { name: 'elenco_schede_anonime', list: 'jsonlistApplicationSchedeAnonime' }
-  ];
-  public options: {[list: string]: string[]};
-  /** Controllo che aggiunge o toglie l'aspect degli allegati del vincitore. */
-  public readonly winnerControl = ASPECT_CONTROL_PREFIX + 'P:jconon_call_aspect_winner:aspect';
-  public readonly winnerWindow = [
-    { value: true, label: 'label.attivata' },
-    { value: false, label: 'label.disattivata' }
-  ] as any[];
+    public fields = [
+        { name: 'elenco_aspects', list: 'jsonlistApplicationAspects' },
+        { name: 'elenco_aspects_sezione_cnr', list: 'jsonlistApplicationAspects' },
+        { name: 'elenco_aspects_ulteriori_dati', list: 'jsonlistApplicationAspects' },
+        { name: 'elenco_aspects_sezione_4', list: 'jsonlistApplicationAspects' },
+        { name: 'elenco_aspects_sezione_5', list: 'jsonlistApplicationAspects' },
+        { name: 'elenco_association', list: 'jsonlistApplicationAttachments' },
+        { name: 'elenco_sezioni_curriculum', list: 'jsonlistApplicationCurriculums' },
+        { name: 'elenco_sezioni_curriculum_ulteriore', list: 'jsonlistApplicationCurriculums' },
+        { name: 'elenco_prodotti', list: 'jsonlistApplicationProdotti' },
+        { name: 'elenco_schede_anonime', list: 'jsonlistApplicationSchedeAnonime' }
+    ];
+    public options: {[list: string]: string[]};
+    /** Controllo che aggiunge o toglie l'aspect degli allegati del vincitore. */
+    public readonly winnerControl = ASPECT_CONTROL_PREFIX + 'P:jconon_call_aspect_winner:aspect';
+    public readonly winnerWindow = [
+        { value: true, label: 'label.attivata' },
+        { value: false, label: 'label.disattivata' }
+    ] as any[];
 
-  constructor(
-    protected cacheService: CacheService,
-    protected changeDetectorRef: ChangeDetectorRef,
-    protected manageCallService: ManageCallService
-  ) {
-    super(cacheService, changeDetectorRef);
-  }
+    constructor(
+        protected cacheService: CacheService,
+        protected changeDetectorRef: ChangeDetectorRef,
+        protected manageCallService: ManageCallService
+    ) {
+        super(cacheService, changeDetectorRef);
+    }
 
-  ngOnInit(): void {
-    super.ngOnInit();
-    const data: any = this.data;
-    this.form.addControl(this.winnerControl, new FormControl(hasAspect(this.data, 'P:jconon_call_aspect_winner:aspect')));
-    this.form.addControl('jconon_call_aspect_winner:active', new FormControl(toBoolean(data.winner_active)));
-    const elenco = data.winner_elenco_file;
-    this.form.addControl('jconon_call_aspect_winner:elenco_file',
-      new FormControl(Array.isArray(elenco) ? elenco : (elenco ? [elenco] : [])));
-    this.fields.forEach(field =>
-      this.form.addControl('jconon_call:' + field.name, new FormControl(data[field.name] || [])));
-    this.form.addControl('jconon_call:numero_max_prodotti',
-      new FormControl(data.numero_max_prodotti, [Helpers.patternValidator(/^[0-9]*$/, { onlyNumber: true })]));
-    this.form.addControl('jconon_call:scheda_anonima_sintetica', new FormControl(toBoolean(data.scheda_anonima_sintetica)));
-    this.manageCallService.callManagementCache().subscribe((cache: CallManagementCache) => {
-      const options = {};
-      this.fields.forEach(field => options[field.list] = (cache[field.list] || []).map(item => item.key));
-      this.options = options;
-    });
-  }
+    ngOnInit(): void {
+        super.ngOnInit();
+        const data: any = this.data;
+        this.form.addControl(this.winnerControl, new FormControl(hasAspect(this.data, 'P:jconon_call_aspect_winner:aspect')));
+        this.form.addControl('jconon_call_aspect_winner:active', new FormControl(toBoolean(data.winner_active)));
+        const elenco = data.winner_elenco_file;
+        this.form.addControl('jconon_call_aspect_winner:elenco_file',
+            new FormControl(Array.isArray(elenco) ? elenco : (elenco ? [elenco] : [])));
+        this.fields.forEach(field =>
+            this.form.addControl('jconon_call:' + field.name, new FormControl(data[field.name] || [])));
+        this.form.addControl('jconon_call:numero_max_prodotti',
+            new FormControl(data.numero_max_prodotti, [Helpers.patternValidator(/^[0-9]*$/, { onlyNumber: true })]));
+        this.form.addControl('jconon_call:scheda_anonima_sintetica', new FormControl(toBoolean(data.scheda_anonima_sintetica)));
+        this.manageCallService.callManagementCache().subscribe((cache: CallManagementCache) => {
+            const options = {};
+            this.fields.forEach(field => options[field.list] = (cache[field.list] || []).map(item => item.key));
+            this.options = options;
+        });
+    }
 }
 
 /**
  * Sezione IV del bando (ex affix_sezione_4): fino a 7 voci di punteggio con minimo e limite.
  */
 @Component({
-  standalone: false,
-  selector: 'affix_tabCallScore',
-  template: `
+    standalone: false,
+    selector: 'affix_tabCallScore',
+    template: `
     <form [formGroup]="form" *ngIf="isLoaded()">
       <p class="small text-muted" translate>call_manage.score.info</p>
       <div class="row gx-2" *ngFor="let n of scores">
@@ -179,22 +178,22 @@ export class JcononAffixCallAspirantDetailComponent extends DynamicComponent<Cal
 })
 export class JcononAffixCallScoreComponent extends DynamicComponent<Call> {
 
-  public scores = [1, 2, 3, 4, 5, 6, 7];
+    public scores = [1, 2, 3, 4, 5, 6, 7];
 
-  constructor(protected cacheService: CacheService, protected changeDetectorRef: ChangeDetectorRef) {
-    super(cacheService, changeDetectorRef);
-  }
+    constructor(protected cacheService: CacheService, protected changeDetectorRef: ChangeDetectorRef) {
+        super(cacheService, changeDetectorRef);
+    }
 
-  ngOnInit(): void {
-    super.ngOnInit();
-    const data: any = this.data;
-    const numeric = Helpers.patternValidator(/^-?[0-9]*([.,][0-9]+)?$/, { onlyNumber: true });
-    this.scores.forEach(n => {
-      this.form.addControl('jconon_call:punteggio_' + n, new FormControl(data['punteggio_' + n]));
-      this.form.addControl('jconon_call:punteggio_' + n + '_min', new FormControl(data['punteggio_' + n + '_min'], [numeric]));
-      this.form.addControl('jconon_call:punteggio_' + n + '_limite', new FormControl(data['punteggio_' + n + '_limite'], [numeric]));
-    });
-  }
+    ngOnInit(): void {
+        super.ngOnInit();
+        const data: any = this.data;
+        const numeric = Helpers.patternValidator(/^-?[0-9]*([.,][0-9]+)?$/, { onlyNumber: true });
+        this.scores.forEach(n => {
+            this.form.addControl('jconon_call:punteggio_' + n, new FormControl(data['punteggio_' + n]));
+            this.form.addControl('jconon_call:punteggio_' + n + '_min', new FormControl(data['punteggio_' + n + '_min'], [numeric]));
+            this.form.addControl('jconon_call:punteggio_' + n + '_limite', new FormControl(data['punteggio_' + n + '_limite'], [numeric]));
+        });
+    }
 }
 
 /**
@@ -202,9 +201,9 @@ export class JcononAffixCallScoreComponent extends DynamicComponent<Call> {
  * Aggiunta e rimozione sono riservate ad amministratori e gruppo CONCORSI.
  */
 @Component({
-  standalone: false,
-  selector: 'affix_tabCallAccountable',
-  template: `
+    standalone: false,
+    selector: 'affix_tabCallAccountable',
+    template: `
     <div *ngIf="!data?.objectId" class="alert alert-info" translate>call_manage.save_first</div>
     <div *ngIf="data?.objectId">
       <p *ngIf="data.createdBy"><strong translate>call_manage.rdp.gestore</strong>: {{data.createdBy}}</p>
@@ -233,55 +232,55 @@ export class JcononAffixCallScoreComponent extends DynamicComponent<Call> {
 })
 export class JcononAffixCallAccountableComponent extends DynamicComponent<Call> {
 
-  public members: any[];
-  public authority: string;
-  public canEdit = false;
+    public members: any[];
+    public authority: string;
+    public canEdit = false;
 
-  constructor(
-    protected cacheService: CacheService,
-    protected changeDetectorRef: ChangeDetectorRef,
-    protected manageCallService: ManageCallService,
-    protected authService: AuthService
-  ) {
-    super(cacheService, changeDetectorRef);
-  }
-
-  ngOnInit(): void {
-    super.ngOnInit();
-    this.canEdit = ManageCallService.isConcorsi(this.authService.getUser());
-    this.load();
-  }
-
-  load() {
-    if (!this.data || !this.data.objectId || !this.data.rdp) {
-      this.members = this.data && this.data.objectId ? [] : undefined;
-      return;
+    constructor(
+        protected cacheService: CacheService,
+        protected changeDetectorRef: ChangeDetectorRef,
+        protected manageCallService: ManageCallService,
+        protected authService: AuthService
+    ) {
+        super(cacheService, changeDetectorRef);
     }
-    this.members = undefined;
-    this.manageCallService.rdp(this.data.objectId)
-      .subscribe(members => this.members = members || [], () => this.members = []);
-  }
 
-  add() {
-    this.manageCallService.addRdp(this.data.objectId, this.authority.trim()).subscribe(() => {
-      this.authority = '';
-      this.load();
-    });
-  }
+    ngOnInit(): void {
+        super.ngOnInit();
+        this.canEdit = ManageCallService.isConcorsi(this.authService.getUser());
+        this.load();
+    }
 
-  remove(member: any) {
-    this.manageCallService.removeRdp(this.data.objectId, member.attr.authorityId || member.attr.shortName)
-      .subscribe(() => this.load());
-  }
+    load() {
+        if (!this.data || !this.data.objectId || !this.data.rdp) {
+            this.members = this.data && this.data.objectId ? [] : undefined;
+            return;
+        }
+        this.members = undefined;
+        this.manageCallService.rdp(this.data.objectId)
+            .subscribe(members => this.members = members || [], () => this.members = []);
+    }
+
+    add() {
+        this.manageCallService.addRdp(this.data.objectId, this.authority.trim()).subscribe(() => {
+            this.authority = '';
+            this.load();
+        });
+    }
+
+    remove(member: any) {
+        this.manageCallService.removeRdp(this.data.objectId, member.attr.authorityId || member.attr.shortName)
+            .subscribe(() => this.load());
+    }
 }
 
 /**
  * Sezione HelpDesk: categorie create alla pubblicazione del bando ed esperti associati.
  */
 @Component({
-  standalone: false,
-  selector: 'affix_tabCallHelpDesk',
-  template: `
+    standalone: false,
+    selector: 'affix_tabCallHelpDesk',
+    template: `
     <div *ngIf="categories.length === 0" class="alert alert-info" translate>call_manage.helpdesk.not_published</div>
     <div *ngFor="let category of categories" class="card card-bg mb-3">
       <div class="card-body">
@@ -309,63 +308,63 @@ export class JcononAffixCallAccountableComponent extends DynamicComponent<Call> 
 })
 export class JcononAffixCallHelpDeskComponent extends DynamicComponent<Call> {
 
-  public categories: {id: number, label: string}[] = [];
-  public esperti: {[id: number]: any[]} = {};
-  public newEsperto: {[id: number]: string} = {};
-  public canEdit = false;
+    public categories: {id: number, label: string}[] = [];
+    public esperti: {[id: number]: any[]} = {};
+    public newEsperto: {[id: number]: string} = {};
+    public canEdit = false;
 
-  constructor(
-    protected cacheService: CacheService,
-    protected changeDetectorRef: ChangeDetectorRef,
-    protected httpClient: HttpClient,
-    protected configService: ConfigService,
-    protected authService: AuthService,
-    protected apiMessageService: ApiMessageService
-  ) {
-    super(cacheService, changeDetectorRef);
-  }
+    constructor(
+        protected cacheService: CacheService,
+        protected changeDetectorRef: ChangeDetectorRef,
+        protected httpClient: HttpClient,
+        protected configService: ConfigService,
+        protected authService: AuthService,
+        protected apiMessageService: ApiMessageService
+    ) {
+        super(cacheService, changeDetectorRef);
+    }
 
-  ngOnInit(): void {
-    super.ngOnInit();
-    this.canEdit = ManageCallService.isConcorsi(this.authService.getUser());
-    const data: any = this.data || {};
-    [{ id: data.id_categoria_tecnico_helpdesk, label: 'call_manage.helpdesk.tecnico' },
-     { id: data.id_categoria_normativa_helpdesk, label: 'call_manage.helpdesk.normativo' }]
-      .filter(category => category.id)
-      .forEach(category => {
-        this.categories.push(category);
-        this.load(category.id);
-      });
-  }
+    ngOnInit(): void {
+        super.ngOnInit();
+        this.canEdit = ManageCallService.isConcorsi(this.authService.getUser());
+        const data: any = this.data || {};
+        [{ id: data.id_categoria_tecnico_helpdesk, label: 'call_manage.helpdesk.tecnico' },
+            { id: data.id_categoria_normativa_helpdesk, label: 'call_manage.helpdesk.normativo' }]
+            .filter(category => category.id)
+            .forEach(category => {
+                this.categories.push(category);
+                this.load(category.id);
+            });
+    }
 
-  load(id: number) {
-    this.esperti[id] = undefined;
-    this.configService.getApiBase().pipe(
-      switchMap(apiBase => this.httpClient.get<any[]>(apiBase + '/v1/helpdesk/esperti',
-        { params: new HttpParams().set('idCategoria', String(id)) })),
-      catchError(() => of([]))
-    ).subscribe(esperti => this.esperti[id] = esperti || []);
-  }
+    load(id: number) {
+        this.esperti[id] = undefined;
+        this.configService.getApiBase().pipe(
+            switchMap(apiBase => this.httpClient.get<any[]>(apiBase + '/v1/helpdesk/esperti',
+                { params: new HttpParams().set('idCategoria', String(id)) })),
+            catchError(() => of([]))
+        ).subscribe(esperti => this.esperti[id] = esperti || []);
+    }
 
-  add(id: number) {
-    this.update(id, this.newEsperto[id].trim(), false);
-  }
+    add(id: number) {
+        this.update(id, this.newEsperto[id].trim(), false);
+    }
 
-  remove(id: number, login: string) {
-    this.update(id, login, true);
-  }
+    remove(id: number, login: string) {
+        this.update(id, login, true);
+    }
 
-  private update(id: number, login: string, remove: boolean) {
-    const params = new HttpParams().set('idCategoria', String(id)).set('idEsperto', login);
-    this.configService.getApiBase().pipe(
-      switchMap(apiBase => remove ?
-        this.httpClient.delete(apiBase + '/v1/helpdesk/esperti', { params }) :
-        this.httpClient.put(apiBase + '/v1/helpdesk/esperti', null, { params }))
-    ).subscribe(() => {
-      this.newEsperto[id] = '';
-      this.load(id);
-    }, () => this.apiMessageService.sendMessage(MessageType.ERROR, 'admin.error.generic'));
-  }
+    private update(id: number, login: string, remove: boolean) {
+        const params = new HttpParams().set('idCategoria', String(id)).set('idEsperto', login);
+        this.configService.getApiBase().pipe(
+            switchMap(apiBase => remove ?
+                this.httpClient.delete(apiBase + '/v1/helpdesk/esperti', { params }) :
+                this.httpClient.put(apiBase + '/v1/helpdesk/esperti', null, { params }))
+        ).subscribe(() => {
+            this.newEsperto[id] = '';
+            this.load(id);
+        }, () => this.apiMessageService.sendMessage(MessageType.ERROR, 'admin.error.generic'));
+    }
 }
 
 /**
@@ -373,9 +372,9 @@ export class JcononAffixCallHelpDeskComponent extends DynamicComponent<Call> {
  * Per i macro-bandi ogni allegato si puo' collegare o copiare nei bandi figli.
  */
 @Component({
-  standalone: false,
-  selector: 'affix_tabCallAttachments',
-  template: `
+    standalone: false,
+    selector: 'affix_tabCallAttachments',
+    template: `
     <div *ngIf="!data?.objectId" class="alert alert-info" translate>call_manage.save_first</div>
     <ng-container *ngIf="data?.objectId && types">
       <div class="attachments-toolbar">
@@ -416,6 +415,7 @@ export class JcononAffixCallHelpDeskComponent extends DynamicComponent<Call> {
             </div>
           </div>
           <children-list #childrenlist [show_date]="'true'" [parentId]="data.objectId" [typeId]="type"
+            (counted)="setCount(type, $event)"
             [callId]="data.objectId"
             [macroCallId]="isMacroCall() ? data.objectId : undefined"></children-list>
         </app-accordion-group>
@@ -448,7 +448,7 @@ export class JcononAffixCallHelpDeskComponent extends DynamicComponent<Call> {
       </div>
     </ng-template>
   `,
-  styles: [`
+    styles: [`
     .attachments-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-bottom: .75rem; }
     .attachments-search { display: flex; align-items: center; gap: .4rem; flex: 1; min-width: 14rem; padding: .3rem .6rem;
       border: 1px solid #d9dadb; border-radius: 4px; background: #fff; }
@@ -462,152 +462,155 @@ export class JcononAffixCallHelpDeskComponent extends DynamicComponent<Call> {
 })
 export class JcononAffixCallAttachmentsComponent extends DynamicComponent<Call> {
 
-  public types: string[];
-  public search = '';
-  public chooserSearch = '';
-  /** Solo le tipologie con documenti (default se ce ne sono), altrimenti tutte. */
-  public onlyWithDocuments = true;
-  /** Tipologia dell'ultimo caricamento: resta visibile e aperta. */
-  public lastUploaded: string;
-  public chooserRef: ModalRef;
-  private counts: { [type: string]: number } = {};
-  private bsModalRef: ModalRef;
-  @ViewChild('chooser', { static: true }) chooserTemplate: TemplateRef<any>;
-  @ViewChildren('childrenlist') childrenListComponent: ChildrenListComponent[];
+    public types: string[];
+    public search = '';
+    public chooserSearch = '';
+    /** Solo le tipologie con documenti (default se ce ne sono), altrimenti tutte. */
+    public onlyWithDocuments = true;
+    /** Tipologia dell'ultimo caricamento: resta visibile e aperta. */
+    public lastUploaded: string;
+    public chooserRef: ModalRef;
+    private counts: { [type: string]: number } = {};
+    private bsModalRef: ModalRef;
+    @ViewChild('chooser', { static: true }) chooserTemplate: TemplateRef<any>;
+    @ViewChildren('childrenlist') childrenListComponent: ChildrenListComponent[];
 
-  constructor(
-    protected cacheService: CacheService,
-    protected changeDetectorRef: ChangeDetectorRef,
-    protected manageCallService: ManageCallService,
-    protected modalService: ModalService,
-    protected translateService: TranslateService,
-    protected apiMessageService: ApiMessageService,
-    protected childrenService: ChildrenService,
-    protected frontOfficeService: FrontOfficeService
-  ) {
-    super(cacheService, changeDetectorRef);
-  }
-
-  ngOnInit(): void {
-    super.ngOnInit();
-    this.manageCallService.callManagementCache()
-      .subscribe(cache => this.types = (cache.jsonlistCallAttachments || []).map(item => item.key));
-    this.loadCounts(true);
-  }
-
-  /** Conteggio dei documenti per tipologia, con una sola ricerca degli allegati del bando. */
-  loadCounts(initial = false): void {
-    if (!this.data || !this.data.objectId) {
-      return;
+    constructor(
+        protected cacheService: CacheService,
+        protected changeDetectorRef: ChangeDetectorRef,
+        protected manageCallService: ManageCallService,
+        protected modalService: ModalService,
+        protected translateService: TranslateService,
+        protected apiMessageService: ApiMessageService,
+        protected childrenService: ChildrenService
+    ) {
+        super(cacheService, changeDetectorRef);
     }
-    const filters = { parentId: this.data.objectId, fetchObject: false };
-    let pages = 0;
-    this.childrenService.getPageable(0, filters).pipe(
-      expand((page: any) => page.hasMoreItems && ++pages < 40 ? this.childrenService.getPageable(pages, filters) : EMPTY),
-      reduce((all: any[], page: any) => all.concat(page.items || []), [])
-    ).subscribe(items => {
-      const counts = {};
-      items.forEach((item: any) => counts[item.objectTypeId] = (counts[item.objectTypeId] || 0) + 1);
-      this.counts = counts;
-      if (initial && this.typesWithDocuments() === 0) {
-        this.onlyWithDocuments = false;
-      }
-      this.changeDetectorRef.markForCheck();
-    });
-  }
 
-  count(type: string): number {
-    return this.counts[type] || 0;
-  }
-
-  typesWithDocuments(): number {
-    return (this.types || []).filter(type => this.count(type) > 0).length;
-  }
-
-  totalDocuments(): number {
-    return Object.keys(this.counts).reduce((total, type) => total + this.counts[type], 0);
-  }
-
-  typeLabel(type: string): string {
-    const translated = this.translateService.instant(type);
-    return translated && translated !== type ? translated : type;
-  }
-
-  private matches(type: string, term: string): boolean {
-    const text = (term || '').trim().toLowerCase();
-    return !text || this.typeLabel(type).toLowerCase().includes(text) || type.toLowerCase().includes(text);
-  }
-
-  visibleTypes(): string[] {
-    return (this.types || []).filter(type =>
-      this.matches(type, this.search) &&
-      (!this.onlyWithDocuments || this.search || this.count(type) > 0 || type === this.lastUploaded));
-  }
-
-  /** Nella scelta: prima le tipologie con documenti, poi le altre in ordine alfabetico. */
-  chooserTypes(): string[] {
-    return (this.types || [])
-      .filter(type => this.matches(type, this.chooserSearch))
-      .sort((a, b) => (this.count(b) > 0 ? 1 : 0) - (this.count(a) > 0 ? 1 : 0) || this.typeLabel(a).localeCompare(this.typeLabel(b)));
-  }
-
-  trackType(index: number, type: string): string {
-    return type;
-  }
-
-  isMacroCall(): boolean {
-    return ManageCallService.isMacroCall(this.data);
-  }
-
-  openChooser(): void {
-    this.chooserSearch = '';
-    this.chooserRef = this.modalService.show(this.chooserTemplate, { class: 'modal-lg' });
-  }
-
-  chooseType(type: string): void {
-    if (this.chooserRef) {
-      this.chooserRef.hide();
+    ngOnInit(): void {
+        super.ngOnInit();
+        this.manageCallService.callManagementCache()
+            .subscribe(cache => this.types = (cache.jsonlistCallAttachments || []).map(item => item.key));
+        this.loadCounts(true);
     }
-    this.upload(type);
-  }
 
-  openUpload(event: any, accordion: any, typeId: string): boolean {
-    event.stopPropagation();
-    event.preventDefault();
-    if (!accordion.isOpen) {
-      accordion.toggleOpen();
+    /** Conteggio dei documenti per tipologia, con una sola ricerca degli allegati del bando. */
+    loadCounts(initial = false): void {
+        if (!this.data || !this.data.objectId) {
+            return;
+        }
+        const filters = { parentId: this.data.objectId, fetchObject: false };
+        let pages = 0;
+        this.childrenService.getPageable(0, filters).pipe(
+            expand((page: any) => page.hasMoreItems && ++pages < 40 ? this.childrenService.getPageable(pages, filters) : EMPTY),
+            reduce((all: any[], page: any) => all.concat(page.items || []), [])
+        ).subscribe(items => {
+            const counts = {};
+            items.forEach((item: any) => counts[item.objectTypeId] = (counts[item.objectTypeId] || 0) + 1);
+            this.counts = counts;
+            if (initial && this.typesWithDocuments() === 0) {
+                this.onlyWithDocuments = false;
+            }
+            this.changeDetectorRef.markForCheck();
+        });
     }
-    this.upload(typeId);
-    return false;
-  }
 
-  /** Allegato "Avviso Pubblico di Convocazione Candidati": alla pubblicazione si crea in automatico l'avviso (come nel legacy). */
-  public static readonly CONVOCATION_TYPE = 'D:jconon_attachment:call_convocazioni_candidati';
+    /** Il tipo restituito dalla ricerca può avere o no il prefisso ("D:"): il conteggio li confronta senza. */
+    count(type: string): number {
+        const key = (t: string) => String(t || '').replace(/^[A-Z]:/, '');
+        return Object.keys(this.counts).filter(k => key(k) === key(type)).reduce((n, k) => n + this.counts[k], 0);
+    }
 
-  private publishConvocationNotice(document: Document, expiry: Date | string): void {
-    const call: any = this.data;
-    const code = call?.codice || call?.['jconon_call:codice'] || '';
-    this.frontOfficeService.notifyConvocation(code, document, expiry).subscribe(
-      () => this.translateService.get('notice.convocation_published').subscribe(label =>
-        this.apiMessageService.sendMessage(MessageType.SUCCESS, label)),
-      () => this.translateService.get('notice.convocation_error').subscribe(label =>
-        this.apiMessageService.sendMessage(MessageType.WARNING, label)));
-  }
+    /** Il totale dell'elenco aperto è quello certo: corregge il conteggio calcolato per tipologia. */
+    setCount(type: string, value: number): void {
+        if (typeof value === 'number' && value !== this.count(type)) {
+            const key = (t: string) => String(t || '').replace(/^[A-Z]:/, '');
+            Object.keys(this.counts).filter(k => key(k) === key(type)).forEach(k => delete this.counts[k]);
+            this.counts = { ...this.counts, [type]: value };
+            this.changeDetectorRef.markForCheck();
+        }
+    }
 
-  private upload(typeId: string): void {
-    const initialState = { parentId: this.data.objectId, typeId, upload: true };
-    this.bsModalRef = this.modalService.show(ManageDocumentComponent, Object.assign({initialState}, { animated: true, class: 'modal-lg' }));
-    const content = this.bsModalRef.content;
-    content.event.subscribe((document: Document) => {
-      this.translateService.get('message.document.upload.success', {value: document.name}).subscribe((label) => {
-        this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
-      });
-      if (typeId === JcononAffixCallAttachmentsComponent.CONVOCATION_TYPE) {
-        this.publishConvocationNotice(document, content.form?.value?.['jconon_attachment:data_scadenza_convocazione']);
-      }
-      this.lastUploaded = typeId;
-      this.loadCounts();
-      setTimeout(() => this.childrenListComponent.forEach(comp => comp.loadList()));
-    });
-  }
+    typesWithDocuments(): number {
+        return (this.types || []).filter(type => this.count(type) > 0).length;
+    }
+
+    totalDocuments(): number {
+        return Object.keys(this.counts).reduce((total, type) => total + this.counts[type], 0);
+    }
+
+    typeLabel(type: string): string {
+        const translated = this.translateService.instant(type);
+        return translated && translated !== type ? translated : type;
+    }
+
+    private matches(type: string, term: string): boolean {
+        const text = (term || '').trim().toLowerCase();
+        return !text || this.typeLabel(type).toLowerCase().includes(text) || type.toLowerCase().includes(text);
+    }
+
+    visibleTypes(): string[] {
+        return (this.types || []).filter(type =>
+            this.matches(type, this.search) &&
+            (!this.onlyWithDocuments || this.search || this.count(type) > 0 || type === this.lastUploaded));
+    }
+
+    /** Nella scelta: prima le tipologie con documenti, poi le altre in ordine alfabetico. */
+    chooserTypes(): string[] {
+        return (this.types || [])
+            .filter(type => this.matches(type, this.chooserSearch))
+            .sort((a, b) => (this.count(b) > 0 ? 1 : 0) - (this.count(a) > 0 ? 1 : 0) || this.typeLabel(a).localeCompare(this.typeLabel(b)));
+    }
+
+    trackType(index: number, type: string): string {
+        return type;
+    }
+
+    isMacroCall(): boolean {
+        return ManageCallService.isMacroCall(this.data);
+    }
+
+    openChooser(): void {
+        this.chooserSearch = '';
+        this.chooserRef = this.modalService.show(this.chooserTemplate, { class: 'modal-lg' });
+    }
+
+    chooseType(type: string): void {
+        if (this.chooserRef) {
+            this.chooserRef.hide();
+        }
+        this.upload(type);
+    }
+
+    openUpload(event: any, accordion: any, typeId: string): boolean {
+        event.stopPropagation();
+        event.preventDefault();
+        if (!accordion.isOpen) {
+            accordion.toggleOpen();
+        }
+        this.upload(typeId);
+        return false;
+    }
+
+    /** Allegato "Avviso Pubblico di Convocazione Candidati": alla pubblicazione si crea in automatico l'avviso (come nel legacy). */
+    public static readonly CONVOCATION_TYPE = 'D:jconon_attachment:call_convocazioni_candidati';
+
+    private upload(typeId: string): void {
+        const initialState = { parentId: this.data.objectId, typeId, upload: true };
+        this.bsModalRef = this.modalService.show(ManageDocumentComponent, Object.assign({initialState}, { animated: true, class: 'modal-lg' }));
+        const content = this.bsModalRef.content;
+        content.event.subscribe((document: Document) => {
+            this.translateService.get('message.document.upload.success', {value: document.name}).subscribe((label) => {
+                this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
+            });
+            // l'avviso di convocazione lo crea il backend al caricamento (DocumentController), per ogni punto di caricamento
+            if (typeId === JcononAffixCallAttachmentsComponent.CONVOCATION_TYPE) {
+                this.translateService.get('notice.convocation_published').subscribe(label =>
+                    this.apiMessageService.sendMessage(MessageType.SUCCESS, label));
+            }
+            this.lastUploaded = typeId;
+            this.loadCounts();
+            setTimeout(() => this.childrenListComponent.forEach(comp => comp.loadList()));
+        });
+    }
 }

@@ -3,7 +3,7 @@ import { DocumentPermissionsModalComponent } from '../document/actions/document-
 import { SendAttachmentModalComponent } from '../document/actions/send-attachment-modal.component';
 import { ApplicationOperationsService } from '../application/application-operations.service';
 import { ManageCallService } from '../call/manage-call.service';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonListComponent} from '../../common/controller/common-list.component';
 import { ActivatedRoute, Router} from '@angular/router';
 import { FormControl, FormGroup} from '@angular/forms';
@@ -124,7 +124,11 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
     super(service, route, router, changeDetector, navigationService);
   }
 
+  /** Numero di documenti dell'elenco (per tipologia), dopo ogni caricamento. */
+  @Output() counted = new EventEmitter<number>();
+
   public setItems(items: Attachment[]) {
+    setTimeout(() => this.counted.emit(this.count));
     this.items = items;
   }
 
