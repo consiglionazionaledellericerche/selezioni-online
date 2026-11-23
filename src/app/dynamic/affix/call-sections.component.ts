@@ -1,3 +1,4 @@
+import { BRAND } from '../../../brand/brand';
 import { ASPECT_CONTROL_PREFIX } from '../../core/call/manage-call.service';
 import { hasAspect } from './call-settings.component';
 import { ChangeDetectorRef, Component, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
@@ -60,6 +61,9 @@ import { toBoolean } from './call-settings.component';
           </app-control-toggle>
         </div>
       </div>
+      <!-- campi in più definiti dall'installazione (es. discipline ed età massima dei bandi Lincei), vedi src/brand -->
+      <app-aspect-generic *ngIf="extraForm" [data]="data" [form]="form" [aspectType]="data.objectTypeId"
+        [formName]="extraForm" [handledProperties]="handledProperties()" aspectMode="call"></app-aspect-generic>
       <!-- allegati richiesti al vincitore (aspect P:jconon_call_aspect_winner:aspect, come nel legacy) -->
       <div class="row gx-2 pt-3 border-top">
         <div class="col-md-6 align-self-center">
@@ -101,6 +105,18 @@ export class JcononAffixCallAspirantDetailComponent extends DynamicComponent<Cal
     { name: 'elenco_schede_anonime', list: 'jsonlistApplicationSchedeAnonime' }
   ];
   public options: {[list: string]: string[]};
+  /** Form del bulkinfo con i campi in più dell'installazione (vuoto per il CNR). */
+  public readonly extraForm = BRAND.callExtraForms.aspirant;
+  private handled: string[];
+
+  /** Proprietà già gestite da questa sezione: il componente generico non le ripete. */
+  handledProperties(): string[] {
+    if (!this.handled) {
+      this.handled = Object.keys(this.form.controls).filter(key => !key.startsWith('aspect:'));
+    }
+    return this.handled;
+  }
+
   /** Controllo che aggiunge o toglie l'aspect degli allegati del vincitore. */
   public readonly winnerControl = ASPECT_CONTROL_PREFIX + 'P:jconon_call_aspect_winner:aspect';
   public readonly winnerWindow = [

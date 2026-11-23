@@ -6,6 +6,12 @@ import { ObjectToIdConverter } from '../../common/helpers/ObjectToIdConverter';
 
 @JsonObject("Call")
 export class Call extends Folder {
+  /**
+   * Proprietà del bando non dichiarate in questo modello (es. aspect delle installazioni che estendono
+   * cool-jconon, come le discipline dei bandi Lincei): conservate per i componenti generici.
+   */
+  public extraProperties: { [property: string]: any };
+
   @JsonProperty('jconon_call:codice')
   public codice: string;
   @JsonProperty('jconon_call:descrizione')

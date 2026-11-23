@@ -74,6 +74,18 @@ export class CallService extends CommonService<Call> {
       );
   }
 
+  /** Come la costruzione standard, ma conserva le proprietà del bando che il modello non dichiara. */
+  public buildInstance(json: any): Call {
+    const instance = super.buildInstance(json);
+    if (instance && json) {
+      const declared = this.serializeInstance(instance) || {};
+      instance.extraProperties = Object.keys(json)
+        .filter(key => key.includes(':') && !(key in declared) && !/^(cmis|alfcmis|sys|cm|app):/.test(key))
+        .reduce((extra, key) => ({ ...extra, [key]: json[key] }), {});
+    }
+    return instance;
+  }
+
   public getModule(): string {
     return MODULE_CONFIGURAZIONE;
   }

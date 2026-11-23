@@ -1,5 +1,6 @@
+import { ASPECT_CONTROL_PREFIX } from '../../core/call/manage-call.service';
 import { padProtocollo } from '../../common/helpers/protocollo';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
@@ -180,7 +181,19 @@ export const GENERIC_FIELDS_TEMPLATE = `
 })
 export class JcononAspectGenericComponent extends DynamicComponent<Application> {
   /** Chiave dell'aspect (impostata dal servizio dinamico). */
-  public aspectType: string;
+  @Input() public aspectType: string;
+  /** Form del bulkinfo da rendere (predefinito "default"), es. "affix_sezione_3" del tipo di bando. */
+  @Input() public formName = 'default';
+  /**
+   * Proprietà già gestite da componenti dedicati, da non ripetere: così il componente rende solo i campi in più
+   * definiti dalle installazioni che estendono cool-jconon (es. le discipline dei bandi Lincei).
+   */
+  @Input() public handledProperties: string[] = [];
+  /**
+   * "call": il form è quello del bando, dove gli aspect si aggiungono con i controlli "aspect:..." del salvataggio
+   * del bando; si aggiungono solo gli aspect dei campi in più resi qui (stesso namespace, es. jconon_lincei_materie).
+   */
+  @Input() public aspectMode: 'document' | 'call' = 'document';
   public fields: GenericField[] = [];
   public loading = true;
   /** Proprietà del bulkinfo non rese come campi (es. titolo e descrizione degli allegati, gestiti a parte). */
@@ -209,7 +222,8 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       params = params.set('cmis:objectId', objectId);
     }
     this.configService.getGateway().pipe(
-      switchMap(gateway => this.http.get<any>(gateway + '/rest/bulkInfo/view/' + encodeURIComponent(this.aspectType) + '/form/default', { params }))
+      switchMap(gateway => this.http.get<any>(gateway + '/rest/bulkInfo/view/' + encodeURIComponent(this.aspectType) + '/form/' +
+        encodeURIComponent(this.formName || 'default'), { params }))
     ).subscribe(view => {
       this.buildFields(view);
       this.applyImplementedAspects(view);
@@ -221,6 +235,25 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       this.loading = false;
       this.changeDetectorRef.markForCheck();
     });
+  }
+
+  /**
+   * Opzioni scelte dal bando (come il frontend legacy per le lingue e, nei bandi Lincei, per le discipline): per la
+   * proprietà della domanda "ns:application_elenco_X" valgono i valori della proprietà del bando "ns:call_elenco_X",
+   * se il bando li indica. Restituisce null se il bando non prevede l'elenco.
+   */
+  protected optionsFromCall(property: string): any[] {
+    const call: any = (this.data as any)?.call;
+    const match = /^([^:]+):application_(elenco_.+)$/.exec(property || '');
+    if (!call || !match) {
+      return null;
+    }
+    const callProperty = match[1] + ':call_' + match[2];
+    const values = call[callProperty] ?? call.properties?.[callProperty] ?? call.extraProperties?.[callProperty];
+    if (!Array.isArray(values) || !values.length) {
+      return null;
+    }
+    return values.map(value => ({ key: value, label: value, defaultLabel: value }));
   }
 
   /** Valori interpretati come "sì" (le proprietà sì/no sono d:boolean: si salva true/false). */
@@ -346,6 +379,20 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
    * Es. P:jconon_attachment:prorogation, da cui dipende l'aggiornamento delle date del bando dopo una proroga.
    */
   protected applyImplementedAspects(view: any): void {
+    if (this.aspectMode === 'call') {
+      const namespaces = new Set(this.fields.map(f => String(f.property || '').split(':')[0])
+        .filter(ns => ns && ns !== 'jconon_call' && ns !== 'cmis'));
+      (Array.isArray(view && view.aspect) ? view.aspect : [])
+        .map((aspect: any) => typeof aspect === 'string' ? aspect : (aspect && (aspect.name || aspect.key || aspect.id)))
+        .filter((aspect: string) => !!aspect && aspect.startsWith('P:') && namespaces.has(aspect.substring(2).split(':')[0]))
+        .forEach((aspect: string) => {
+          const control = ASPECT_CONTROL_PREFIX + aspect;
+          if (!this.form.contains(control)) {
+            this.form.addControl(control, new FormControl(true));
+          }
+        });
+      return;
+    }
     const toggled = new Set(this.fields.filter(f => f.kind === 'aspect').map(f => f.property.replace(/^aspect:/, '')));
     (Array.isArray(view && view.aspect) ? view.aspect : [])
       .map((aspect: any) => typeof aspect === 'string' ? aspect : (aspect && (aspect.name || aspect.key || aspect.id)))
@@ -442,7 +489,8 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
     Object.keys(form).forEach(key => {
       const def = form[key] || {};
       const property = def.property || def.name;
-      if (!property || this.excluded.includes(property) || def.visible === false || def.visible === 'false') {
+      if (!property || this.excluded.includes(property) || this.handledProperties.includes(property) ||
+        def.visible === false || def.visible === 'false') {
         return;
       }
       // visibilità del documento: campo del bulkinfo senza proprietà CMIS, con il suo valore predefinito
@@ -462,7 +510,7 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
         this.fields.push(this.aspectField(key, def));
         return;
       }
-      const list: any[] = Array.isArray(def.jsonlist) ? def.jsonlist : [];
+      const list: any[] = this.optionsFromCall(property) || (Array.isArray(def.jsonlist) ? def.jsonlist : []);
       const options = list.map(o => ({ value: String(o.key), label: o.label || o.defaultLabel || String(o.key) }));
       const keys = options.map(o => o.value.toLowerCase()).sort().join(',');
       const widget = String(def.widget || '').toLowerCase();

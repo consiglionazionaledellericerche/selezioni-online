@@ -1,3 +1,4 @@
+import { BRAND } from '../../../brand/brand';
 import {Component} from '@angular/core';
 
 @Component({
@@ -19,15 +20,15 @@ import {Component} from '@angular/core';
 export class ContactsComponent {
     public static ROUTE = 'contacts';
 
-    public readonly address = 'Piazzale Aldo Moro, 7 - 00185 Roma';
+    public readonly address = BRAND.contacts.address;
 
-    /** Recapiti dell'Ufficio Concorsi: etichetta tradotta, icona, valori e schema del link. */
+    /** Recapiti (dalla configurazione dell'installazione, src/brand): etichetta, icona, valori e schema del link. */
     public readonly contacts = [
-      { label: 'contacts.labels.phone', icon: 'it-telephone', scheme: 'tel:', values: ['+39 06 4993 2172', '+39 06 4993 2140'] },
-      { label: 'contacts.labels.email', icon: 'it-mail', scheme: 'mailto:', values: ['concorsi@cnr.it'] },
-      { label: 'contacts.labels.pec', icon: 'it-inbox', scheme: 'mailto:', values: ['concorsi@pec.cnr.it'] },
-      { label: 'contacts.labels.fax', icon: 'it-print', scheme: 'tel:', values: ['+39 06 4993 3852'] }
-    ];
+      { label: 'contacts.labels.phone', icon: 'it-telephone', scheme: 'tel:', values: BRAND.contacts.phones },
+      { label: 'contacts.labels.email', icon: 'it-mail', scheme: 'mailto:', values: BRAND.contacts.emails },
+      { label: 'contacts.labels.pec', icon: 'it-inbox', scheme: 'mailto:', values: BRAND.contacts.pec },
+      { label: 'contacts.labels.fax', icon: 'it-print', scheme: 'tel:', values: BRAND.contacts.fax }
+    ].filter(contact => contact.values && contact.values.length);
 
     /** Link del recapito senza spazi (tel:+390649932172, mailto:...). */
     href(scheme: string, value: string): string {

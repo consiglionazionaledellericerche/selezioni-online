@@ -92,3 +92,18 @@ Issues and pull requests are welcome. Please open an issue to discuss significan
 ## License
 
 Released under the [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html).
+
+## Installazioni che estendono selezioni-online
+
+Altre installazioni (es. [selezioni-lincei](https://github.com/consiglionazionaledellericerche/selezioni-lincei))
+riusano questo progetto sostituendo pochi file, senza fork. I punti di estensione sono in `src/brand/`:
+
+- `brand.ts` – configurazione (`Brand`, definita in `brand.model.ts`): recapiti della pagina Contatti e form del
+  bulkinfo del tipo di bando i cui campi in più vanno resi nella gestione del bando (`callExtraForms`);
+- `_brand.scss` – variabili Sass di Bootstrap Italia (es. `$primary-h`, `$primary-s`, `$primary-b`), importate prima
+  della libreria;
+- `_brand-overrides.scss` – regole CSS aggiuntive, importate dopo gli stili comuni.
+
+Logo, favicon e icone si sostituiscono con file degli stessi nomi; testi e manifest si integrano unendo le chiavi
+JSON. Nell'installazione CNR questi file non attivano nulla.
+

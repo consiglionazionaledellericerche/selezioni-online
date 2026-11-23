@@ -5,6 +5,9 @@ $enable-negative-margins: true;
 $zindex-fixed: 1001;
 $nav-link-padding-x: 0.5rem;
 
+// Personalizzazioni delle installazioni che estendono selezioni-online (vuote per il CNR)
+@import 'brand/brand';
+
 // Importazione libreria SCSS di bootstrap-italia
 @import 'bootstrap-italia/src/scss/bootstrap-italia';
 
@@ -1147,3 +1150,6 @@ select.form-select, .select-wrapper select {
   box-shadow: none;
 }
 select.form-select:focus, .select-wrapper select:focus { border-bottom-color: #0066cc; }
+
+// Regole aggiuntive delle installazioni che estendono selezioni-online (vuote per il CNR)
+@import 'brand/brand-overrides';
