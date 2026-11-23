@@ -36,9 +36,9 @@ import { Call } from '../call.model';
   `,
   styles: [`
     .call-ref { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .75rem; padding: .75rem 1rem;
-      background: #f0f6fc; border-left: 4px solid #0066cc; border-radius: 4px; }
+      background: #f0f6fc; border-left: 4px solid var(--app-primary); border-radius: 4px; }
     .call-ref-label { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #5d7083; }
-    .call-ref-code { font-size: 1.5rem; font-weight: 700; color: #0066cc; text-decoration: none; }
+    .call-ref-code { font-size: 1.5rem; font-weight: 700; color: var(--app-primary); text-decoration: none; }
     .call-ref-code:hover { text-decoration: underline; }
     .call-ref-profile { color: #17324d; }
   `],

@@ -1,3 +1,4 @@
+import { BRAND } from '../../brand/brand';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {ConfigurazioneSectionComponent} from './configurazione-section.component';
@@ -13,10 +14,11 @@ const configurazioneRoutes: Routes = [
       { path: '', component: ContactsComponent },
     ], data: {service: ServiceReg.CONFIGURAZIONE} 
   },
-  { path: HelpDeskComponent.ROUTE, component: ConfigurazioneSectionComponent, children: [
+  // HelpDesk solo se l'installazione lo prevede (src/brand)
+  ...(BRAND.helpdesk === false ? [] : [{ path: HelpDeskComponent.ROUTE, component: ConfigurazioneSectionComponent, children: [
     { path: '', component: HelpDeskComponent },
-    ], data: {service: ServiceReg.CONFIGURAZIONE} 
-  },
+    ], data: {service: ServiceReg.CONFIGURAZIONE}
+  }]),
   { path: FAQComponent.ROUTE, component: ConfigurazioneSectionComponent, children: [
     { path: '', component: FAQComponent },
     ], data: {service: ServiceReg.CONFIGURAZIONE} 

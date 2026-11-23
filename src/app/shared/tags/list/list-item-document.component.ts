@@ -37,8 +37,8 @@ import { CmisObject } from '../../../common/model/cmisobject.model';
     .doc-action { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem;
       border: 0; border-radius: 6px; background: transparent; }
     .doc-action .icon { fill: #5d7083; }
-    .doc-action:hover:not(:disabled), .doc-action:focus-visible { background: #e6f0fa; }
-    .doc-action:hover:not(:disabled) .icon, .doc-action:focus-visible .icon { fill: #0066cc; }
+    .doc-action:hover:not(:disabled), .doc-action:focus-visible { background: var(--app-primary-light); }
+    .doc-action:hover:not(:disabled) .icon, .doc-action:focus-visible .icon { fill: var(--app-primary); }
     .doc-action-danger:hover:not(:disabled), .doc-action-danger:focus-visible { background: #fdecee; }
     .doc-action-danger:hover:not(:disabled) .icon, .doc-action-danger:focus-visible .icon { fill: #d9364f; }
     .doc-action:disabled { opacity: .4; }

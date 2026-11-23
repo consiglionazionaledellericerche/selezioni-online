@@ -19,7 +19,7 @@ import { DatePipe } from '@angular/common';
     :host { display: inline-block; }
     .date-tile { width: 4.5rem; text-align: center; background: #fff; border-radius: 8px; overflow: hidden;
       box-shadow: 0 2px 8px rgba(23, 50, 77, .12), 0 1px 2px rgba(23, 50, 77, .08); }
-    .date-tile-month { background: #0066cc; color: #fff; font-size: .8rem; font-weight: 700; text-transform: uppercase;
+    .date-tile-month { background: var(--app-primary); color: #fff; font-size: .8rem; font-weight: 700; text-transform: uppercase;
       letter-spacing: .04em; padding: .25rem 0; }
     .date-tile-day { font-size: 1.9rem; font-weight: 700; line-height: 1.1; color: #17324d; padding-top: .35rem; }
     .date-tile-year { font-size: .8rem; color: #5d7083; padding-bottom: .4rem; }

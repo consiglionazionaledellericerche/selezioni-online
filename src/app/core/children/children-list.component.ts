@@ -91,7 +91,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
     .doc-meta { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin-top: .3rem; font-size: .85rem; color: #5d7083; }
     .doc-meta .icon { width: .9rem; height: .9rem; fill: #5d7083; vertical-align: -2px; }
     .doc-macro { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin-top: .4rem; }
-    .icon-pdf { fill: #d9364f; } .icon-doc { fill: #0066cc; } .icon-sheet { fill: #008758; } .icon-other { fill: #5d7083; }
+    .icon-pdf { fill: #d9364f; } .icon-doc { fill: var(--app-primary); } .icon-sheet { fill: #008758; } .icon-other { fill: #5d7083; }
   `]
 })
 export class ChildrenListComponent extends CommonListComponent<Attachment> implements OnInit {

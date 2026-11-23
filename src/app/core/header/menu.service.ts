@@ -1,3 +1,4 @@
+import { BRAND } from '../../../brand/brand';
 
 import { throwError as observableThrowError, of as observableOf, Subject, Observable, forkJoin } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -61,7 +62,8 @@ export class MenuService {
       adminMenuItems.push(new MenuItem('menu.jsConsole', undefined, '/admin/js-console', 'menu.jsConsole', 'GET', 'jsConsole'));
       const adminMenu = new Menu('menu.admin', undefined, adminMenuItems, undefined, 'sidebar');
 
-      return observableOf(new NavbarMenu([application, application_user, helpdesk, faq, contacts, callMenu, adminMenu]));
+      return observableOf(new NavbarMenu([application, application_user, ...(BRAND.helpdesk === false ? [] : [helpdesk]),
+        faq, contacts, callMenu, adminMenu]));
     }));
   }
 

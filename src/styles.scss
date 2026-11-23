@@ -11,6 +11,15 @@ $nav-link-padding-x: 0.5rem;
 // Importazione libreria SCSS di bootstrap-italia
 @import 'bootstrap-italia/src/scss/bootstrap-italia';
 
+// colori derivati dal primario di Bootstrap Italia ($primary, personalizzabile in src/brand/_brand.scss):
+// usati al posto dei blu scritti a mano, così cambiano con l'installazione
+:root {
+  --app-primary: #{$primary};
+  --app-primary-dark: #{shade-color($primary, 25%)};
+  --app-primary-light: #{tint-color($primary, 88%)};
+  --app-primary-lighter: #{tint-color($primary, 94%)};
+}
+
 // ---------------------------------------------------------------- layout generale
 @media (min-width: 1400px) {
   .container, .container-lg, .container-md, .container-sm, .container-xl {
@@ -105,7 +114,7 @@ $nav-link-padding-x: 0.5rem;
 
 // ---------------------------------------------------------------- card delle liste
 .card.border-bottom-card {
-  border-bottom: 4px solid var(--bs-primary, #0066cc) !important;
+  border-bottom: 4px solid var(--bs-primary, var(--app-primary)) !important;
 }
 
 .hover-shadow {
@@ -121,7 +130,7 @@ $nav-link-padding-x: 0.5rem;
 
 // ---------------------------------------------------------------- sezione con sfondo (home)
 .section-gesfor {
-  background: linear-gradient(135deg, #003366 0%, #0066cc 100%);
+  background: linear-gradient(135deg, #003366 0%, var(--app-primary) 100%);
   color: #fff;
   h2, h3, a.text-white { color: #fff; }
 }
@@ -230,7 +239,7 @@ ul.materials {
 
 // ---------------------------------------------------------------- carousel home
 .it-carousel-wrapper .it-header-block .it-header-block-title h2 {
-  color: var(--bs-primary, #0066cc);
+  color: var(--bs-primary, var(--app-primary));
 }
 
 .it-carousel-wrapper .card-wrapper {
@@ -290,7 +299,7 @@ ul.materials {
 
 .form-group input.form-control:focus,
 .form-group textarea.form-control:focus {
-  border-bottom: 2px solid var(--bs-primary, #0066cc) !important;
+  border-bottom: 2px solid var(--bs-primary, var(--app-primary)) !important;
 }
 
 .form-group input.form-control[readonly] {
@@ -323,7 +332,7 @@ ul.materials {
   background: transparent;
   text-align: left;
   padding: .5rem 1.5rem;
-  color: var(--bs-primary, #0066cc);
+  color: var(--bs-primary, var(--app-primary));
   white-space: nowrap;
   font-size: 1rem;
   line-height: 1.5;
@@ -340,7 +349,7 @@ a.btn-menu-item span, button.btn-menu-item span {
 .it-header-slim-wrapper .dropdown-menu .btn-menu-item,
 .it-header-slim-wrapper .dropdown-menu button.dropdown-item {
   background: transparent !important;
-  color: var(--bs-primary, #0066cc) !important;
+  color: var(--bs-primary, var(--app-primary)) !important;
   font-weight: 400;
   &:hover, &:focus {
     background: var(--bs-gray-100, #f2f2f2) !important;
@@ -365,7 +374,7 @@ a.btn-menu-item span, button.btn-menu-item span {
   gap: .75rem;
   padding: .75rem 1.25rem;
   font-weight: 600;
-  color: var(--bs-primary, #0066cc);
+  color: var(--bs-primary, var(--app-primary));
   text-decoration: none;
   transition: background-color .15s ease-in-out;
 
@@ -397,7 +406,7 @@ a.btn-menu-item span, button.btn-menu-item span {
 
 // ---------------------------------------------------------------- home: "Le mie iscrizioni"
 .my-subscriptions {
-  background: #eef5fc;
+  background: var(--app-primary-light);
   border-radius: 8px;
   padding: 1.25rem 1rem .5rem;
 
@@ -424,7 +433,7 @@ a.btn-menu-item span, button.btn-menu-item span {
 
   span { display: block; line-height: 1.2; }
   .date-leaf-month {
-    background: var(--bs-primary, #0066cc);
+    background: var(--bs-primary, var(--app-primary));
     color: #fff;
     font-size: .75rem;
     font-weight: 600;
@@ -500,7 +509,7 @@ a.btn-menu-item span, button.btn-menu-item span {
   }
 
   .mode-aula { background: #eaf6ef; border-color: #008758; .icon, .mode-places { color: #00573a; fill: #00573a; } }
-  .mode-streaming { background: #e8f1fb; border-color: #0066cc; .icon, .mode-places { color: #004080; fill: #004080; } }
+  .mode-streaming { background: #e8f1fb; border-color: var(--app-primary); .icon, .mode-places { color: var(--app-primary-dark); fill: var(--app-primary-dark); } }
   .mode-webinar { background: #f3eefb; border-color: #7a4cc2; .icon, .mode-places { color: #4f2a8a; fill: #4f2a8a; } }
 
   .mode-full {
@@ -519,7 +528,7 @@ a.btn-menu-item span, button.btn-menu-item span {
   background: #e9ecef;
   color: #17324d;
   &.mode-badge-aula { background: #d4efe3; color: #00573a; }
-  &.mode-badge-streaming { background: #d6e6f8; color: #004080; }
+  &.mode-badge-streaming { background: #d6e6f8; color: var(--app-primary-dark); }
   &.mode-badge-webinar { background: #e7dcf7; color: #4f2a8a; }
 }
 
@@ -622,7 +631,7 @@ a.btn-menu-item span, button.btn-menu-item span {
   padding: .3rem .5rem;
   min-height: 0;
   background: transparent;
-  color: var(--bs-primary, #0066cc);
+  color: var(--bs-primary, var(--app-primary));
   border: 1px solid currentColor;
   box-shadow: none;
 }
@@ -777,8 +786,8 @@ app-control-toggle .toggles label {
   border-color: #008758;
 }
 .section-tabs .nav-link.active .section-number:not(.done) {
-  background: #0066cc;
-  border-color: #0066cc;
+  background: var(--app-primary);
+  border-color: var(--app-primary);
   color: #fff;
 }
 .steppers .steppers-nav {
@@ -876,7 +885,7 @@ form a.it-has-checkbox app-control-datepicker {
   gap: .75rem;
   padding: .75rem 1rem;
   border: 1px solid #b8d4f1;
-  border-left: 4px solid #0066cc;
+  border-left: 4px solid var(--app-primary);
   border-radius: 4px;
   background: #f0f6fc;
   color: #17324d;
@@ -899,7 +908,7 @@ it-upload-drag-drop .upload-dragdrop-text label {
   font-size: inherit !important;
   font-weight: 600;
   background: transparent !important;
-  color: #0066cc;
+  color: var(--app-primary);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -924,7 +933,7 @@ it-upload-drag-drop .upload-dragdrop-text label {
   align-items: flex-start;
   gap: .85rem;
   padding: .9rem 2.75rem .9rem 1rem;
-  border-left: 4px solid #0066cc;
+  border-left: 4px solid var(--app-primary);
   border-radius: 8px;
   background: #fff;
   box-shadow: 0 10px 30px rgba(23, 50, 77, .18), 0 2px 6px rgba(23, 50, 77, .08);
@@ -984,8 +993,8 @@ it-upload-drag-drop .upload-dragdrop-text label {
 .app-toast-error .app-toast-icon { fill: #d9364f; }
 .app-toast-warning { border-left-color: #a66300; }
 .app-toast-warning .app-toast-icon { fill: #a66300; }
-.app-toast-info { border-left-color: #0066cc; }
-.app-toast-info .app-toast-icon { fill: #0066cc; }
+.app-toast-info { border-left-color: var(--app-primary); }
+.app-toast-info .app-toast-icon { fill: var(--app-primary); }
 @keyframes app-toast-in {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
@@ -1046,7 +1055,7 @@ app-form-layout .form-control.is-invalid:focus {
 }
 .megamenu .mega-call-code {
   font-weight: 700;
-  color: #0066cc;
+  color: var(--app-primary);
 }
 .megamenu .mega-call-desc {
   font-size: .85rem;
@@ -1128,7 +1137,7 @@ app-form-layout .form-control.is-invalid:focus {
 
 // pulsante utente su smartphone: iniziali nel cerchio bianco al posto dell'icona
 .user-button .rounded-icon.user-initials {
-  color: #0066cc;
+  color: var(--app-primary);
   font-weight: 700;
   font-size: .875rem;
   line-height: 1;
@@ -1149,7 +1158,7 @@ select.form-select, .select-wrapper select {
   border-radius: 0;
   box-shadow: none;
 }
-select.form-select:focus, .select-wrapper select:focus { border-bottom-color: #0066cc; }
+select.form-select:focus, .select-wrapper select:focus { border-bottom-color: var(--app-primary); }
 
 // Regole aggiuntive delle installazioni che estendono selezioni-online (vuote per il CNR)
 @import 'brand/brand-overrides';

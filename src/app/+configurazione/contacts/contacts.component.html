@@ -26,8 +26,8 @@
     </div>
   </div>
 
-  <!-- assistenza -->
-  <div class="card card-bg rounded shadow-sm assistance mb-4">
+  <!-- assistenza (solo se l'installazione prevede l'HelpDesk) -->
+  <div *ngIf="helpdesk" class="card card-bg rounded shadow-sm assistance mb-4">
     <div class="card-body p-4 d-lg-flex align-items-center gap-4">
       <span class="assistance-icon flex-shrink-0 mb-3 mb-lg-0">
         <svg class="icon icon-lg icon-white"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-help-circle"></use></svg>

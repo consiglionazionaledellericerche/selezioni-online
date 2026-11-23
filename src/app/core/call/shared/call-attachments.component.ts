@@ -88,7 +88,7 @@ import { Page } from '../../../common/model/page.model';
     .attachment-description { font-size: .9rem; color: #455b71; margin-top: .1rem; }
     .attachment-meta { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: .35rem; font-size: .85rem; color: #5d7083; }
     .attachment-meta .icon { width: .9rem; height: .9rem; fill: #5d7083; vertical-align: -2px; }
-    .icon-pdf { fill: #d9364f; } .icon-doc { fill: #0066cc; } .icon-sheet { fill: #008758; } .icon-other { fill: #5d7083; }
+    .icon-pdf { fill: #d9364f; } .icon-doc { fill: var(--app-primary); } .icon-sheet { fill: #008758; } .icon-other { fill: #5d7083; }
   `],
 })
 export class CallAttachmentsComponent implements OnChanges {

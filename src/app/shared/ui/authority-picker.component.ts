@@ -42,7 +42,7 @@ import { AutocompleteComponent } from './autocomplete.component';
     .kind-option { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .8rem; border: 0; border-radius: 4px;
       background: transparent; font-size: .85rem; font-weight: 600; color: #5d7083; }
     .kind-option .icon { fill: currentColor; }
-    .kind-option.active { background: #fff; color: #0066cc; box-shadow: 0 1px 3px rgba(23, 50, 77, .15); }
+    .kind-option.active { background: #fff; color: var(--app-primary); box-shadow: 0 1px 3px rgba(23, 50, 77, .15); }
   `]
 })
 export class AuthorityPickerComponent implements ControlValueAccessor {

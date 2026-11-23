@@ -13,7 +13,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
     .filters-title { font-size: .875rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: #5d7083; margin-bottom: .5rem; }
     .type-list a { display: block; padding: .35rem .5rem; border-radius: 4px; text-decoration: none; color: #17324d; font-size: .95rem; }
     .type-list a:hover { background: #f0f6fc; }
-    .type-list a.active { background: #0066cc; color: #fff; font-weight: 600; }
+    .type-list a.active { background: var(--app-primary); color: #fff; font-weight: 600; }
     .type-group { display: block; padding: .5rem .5rem .25rem; font-size: .8rem; font-weight: 700; color: #5d7083; text-transform: uppercase; }
   `]
 })

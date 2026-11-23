@@ -23,7 +23,7 @@ import { switchMap } from 'rxjs/operators';
       </div>
       <div class="modal-body">
         <!-- tipo di allegato a elemento unico: come nel legacy, avviso prima del caricamento -->
-        <div *ngIf="mono" class="alert alert-warning mb-3" role="alert">
+        <div *ngIf="mono && monoWarning" class="alert alert-warning mb-3" role="alert">
           <strong>{{ 'message.alert.document.mono_title' | translate }}</strong>
           {{ 'message.alert.document.mono' | translate }}
           <span *ngIf="existing > 0"><br>{{ 'message.alert.document.mono_existing' | translate:{ value: existing } }}</span>
@@ -61,6 +61,8 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
   @Input() typeId;  
   @Input() aspect: string[] = [];  
   @Input() upload: boolean = true;
+  /** Avviso sulle tipologie a documento unico (no per i documenti del vincitore, che non sono allegati della domanda). */
+  @Input() monoWarning = true;
   public event: EventEmitter<Document> = new EventEmitter();
   public submitted = false;
   /** Il tipo ammette un solo documento per domanda (D:jconon_attachment:document_mono). */

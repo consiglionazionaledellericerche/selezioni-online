@@ -23,7 +23,7 @@ interface GenericField {
   /** Data con ora (widget ui.datetimepicker o formato con le ore). */
   time?: boolean;
   label: string;
-  kind: 'toggle' | 'aspect' | 'segmented' | 'select' | 'textarea' | 'date' | 'text';
+  kind: 'toggle' | 'aspect' | 'segmented' | 'select' | 'multiselect' | 'textarea' | 'date' | 'text';
   options: { value: string, label: string }[];
   required: boolean;
   /** Numero di protocollo (widget ui.protocollo): completato a 7 cifre all'uscita dal campo. */
@@ -68,6 +68,10 @@ export const GENERIC_FIELDS_TEMPLATE = `
                 <span class="small fw-semibold d-block mb-1">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></span>
                 <app-segmented [options]="field.options" [formControlName]="field.property"></app-segmented>
               </div>
+              <div *ngSwitchCase="'multiselect'" class="form-group mb-0">
+                <app-control-select-model [inline]="true" [multiple]="true" [labelactive]="'true'" [label]="fieldLabel(field)"
+                  [strings]="optionValues(field)" [formControlName]="field.property"></app-control-select-model>
+              </div>
               <div *ngSwitchCase="'select'" class="select-wrapper">
                 <label [for]="id(field)">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></label>
                 <select [id]="id(field)" [formControlName]="field.property">
@@ -100,6 +104,10 @@ export const GENERIC_FIELDS_TEMPLATE = `
               <div *ngSwitchCase="'segmented'">
                 <span class="small fw-semibold d-block mb-1">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></span>
                 <app-segmented [options]="field.options" [formControlName]="field.property"></app-segmented>
+              </div>
+              <div *ngSwitchCase="'multiselect'" class="form-group mb-0">
+                <app-control-select-model [inline]="true" [multiple]="true" [labelactive]="'true'" [label]="fieldLabel(field)"
+                  [strings]="optionValues(field)" [formControlName]="field.property"></app-control-select-model>
               </div>
               <div *ngSwitchCase="'select'" class="select-wrapper">
                 <label [for]="id(field)">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></label>
@@ -137,6 +145,10 @@ export const GENERIC_FIELDS_TEMPLATE = `
               <div *ngSwitchCase="'segmented'">
                 <span class="small fw-semibold d-block mb-1">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></span>
                 <app-segmented [options]="field.options" [formControlName]="field.property"></app-segmented>
+              </div>
+              <div *ngSwitchCase="'multiselect'" class="form-group mb-0">
+                <app-control-select-model [inline]="true" [multiple]="true" [labelactive]="'true'" [label]="fieldLabel(field)"
+                  [strings]="optionValues(field)" [formControlName]="field.property"></app-control-select-model>
               </div>
               <div *ngSwitchCase="'select'" class="select-wrapper">
                 <label [for]="id(field)">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></label>
@@ -235,6 +247,21 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       this.loading = false;
       this.changeDetectorRef.markForCheck();
     });
+  }
+
+  /** Valori delle opzioni per la selezione multipla (le etichette coincidono con i valori, come nel legacy). */
+  optionValues(field: GenericField): string[] {
+    return (field.options || []).map(o => o.value);
+  }
+
+  private optionLabel(option: any): string {
+    if (option.label) {
+      const translated = this.translateService.instant(option.label);
+      if (translated && translated !== option.label) {
+        return option.label;
+      }
+    }
+    return option.defaultLabel || option.label || String(option.key);
   }
 
   /**
@@ -361,7 +388,7 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
 
   /** Campo a tutta larghezza (interruttori, aree di testo, opzioni); date e testi brevi stanno su due colonne. */
   public isWide(field: GenericField): boolean {
-    return ['toggle', 'aspect', 'textarea', 'segmented', 'select'].includes(field.kind);
+    return ['toggle', 'aspect', 'textarea', 'segmented', 'select', 'multiselect'].includes(field.kind);
   }
 
   /**
@@ -484,7 +511,8 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
 
   protected buildFields(view: any): void {
     // il legacy usa il form con il nome dell'aspect (con le classi di visibilità), altrimenti "default"
-    const form = (view && (view[this.aspectType] || view['default'] || (view.forms && view[view.forms[0]]))) || {};
+    const form = (view && ((this.formName && this.formName !== 'default' && view[this.formName]) ||
+      view[this.aspectType] || view['default'] || (view.forms && view[view.forms[0]]))) || {};
     const names = Object.keys(form);
     Object.keys(form).forEach(key => {
       const def = form[key] || {};
@@ -507,17 +535,27 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
         return;
       }
       if (property === 'add-remove-aspect') {
+        // aspect già gestito da chi usa il componente (es. allegati del vincitore nella sezione del bando)
+        const options: any[] = Array.isArray(def.jsonlist) ? def.jsonlist : [];
+        const aspectName = String(def.default || (options[0] && options[0].key) || '').replace(/^(add|remove)-/, '');
+        if (this.handledProperties.includes(aspectName) || this.handledProperties.includes('aspect:' + aspectName)) {
+          return;
+        }
         this.fields.push(this.aspectField(key, def));
         return;
       }
       const list: any[] = this.optionsFromCall(property) || (Array.isArray(def.jsonlist) ? def.jsonlist : []);
-      const options = list.map(o => ({ value: String(o.key), label: o.label || o.defaultLabel || String(o.key) }));
+      // etichetta tradotta se esiste, altrimenti quella predefinita del bulkinfo (es. le discipline Lincei)
+      const options = list.map(o => ({ value: String(o.key), label: this.optionLabel(o) }));
       const keys = options.map(o => o.value.toLowerCase()).sort().join(',');
       const widget = String(def.widget || '').toLowerCase();
       const inputType = String(def.inputType || '').toUpperCase();
       let kind: GenericField['kind'] = 'text';
       if (this.isYesNo(options) || inputType === 'CHECKBOX' || widget.includes('checkbox') || (widget.includes('radio') && !options.length)) {
         kind = 'toggle';
+      } else if (options.length && [true, 'true', 'multiple'].includes(def.multiple)) {
+        // selezione multipla del bulkinfo (multiple="true"), es. le discipline dei bandi Lincei
+        kind = 'multiselect';
       } else if (options.length && options.length <= 3) {
         kind = 'segmented';
       } else if (options.length) {
@@ -543,6 +581,8 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
         const raw = Array.isArray(value) ? value[0] : value;
         value = yesNo && (raw === null || raw === undefined || raw === '') ? null :
           this.yesValues.includes(String(raw).toLowerCase());
+      } else if (kind === 'multiselect') {
+        value = Array.isArray(value) ? value : (value === null || value === undefined || value === '' ? [] : [value]);
       } else if (Array.isArray(value)) {
         value = value[0];
       }

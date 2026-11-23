@@ -1,3 +1,4 @@
+import { BRAND } from '../../../brand/brand';
 import { Component, OnInit, Injector, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -23,6 +24,9 @@ import { CheckboxModel } from '../../common/model/checkbox.model';
     templateUrl: './user-edit.component.html'
 })
 export class UserEditComponent extends CommonEditComponent<User> implements OnInit {
+    /** Link all'HelpDesk solo se l'installazione lo prevede. */
+    public readonly helpdesk = BRAND.helpdesk !== false;
+
 
     ngForm: FormGroup;
     ngPasswordForm: FormGroup;

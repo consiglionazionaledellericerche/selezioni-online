@@ -53,7 +53,7 @@ import { ApiMessageService, MessageType } from '../../api-message.service';
   `,
   styles: [`
     .export-option { display: flex; align-items: flex-start; padding: .9rem 1rem; background: #fff; border: 1px solid #d9dadb;
-      border-left: 4px solid #0066cc; border-radius: 4px; height: 100%; }
+      border-left: 4px solid var(--app-primary); border-radius: 4px; height: 100%; }
     .export-option:hover:not(:disabled) { background: #f0f6fc; }
     .export-option:disabled { opacity: .6; }
     .export-option.started { border-left-color: #008758; }

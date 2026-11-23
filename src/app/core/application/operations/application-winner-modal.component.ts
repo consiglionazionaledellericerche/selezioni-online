@@ -1,3 +1,4 @@
+import { ManageDocumentComponent } from '../../document/manage-document.component';
 import { Component, OnInit, inject } from '@angular/core';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -5,7 +6,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ModalRef, ModalService } from '../../../shared/modal/modal.service';
 import { ModalConfirmComponent } from '../../../shared/tags/wizard/modal-confirm.component';
 import { ApiMessageService, MessageType } from '../../api-message.service';
-import { AuthService } from '../../../auth/auth.service';
 import { Application } from '../application.model';
 import { ApplicationOperationsService } from '../application-operations.service';
 
@@ -79,15 +79,19 @@ const WINNER_ASPECT = 'P:jconon_call_aspect_winner:attachment';
               <option [value]="t">{{ t | translate }}</option>
             }
           </select>
-          <input type="file" class="form-control" (change)="onFile($event)" [attr.aria-label]="'application_operations.file' | translate">
-          <div class="text-end mt-3">
-            <button type="button" class="btn btn-primary btn-sm" [disabled]="busy || !file || !type" (click)="upload()">
-              {{ 'application_operations.winner.upload' | translate }}
-            </button>
-          </div>
         }
       </div>
     </div>
+    @if (types.length) {
+      <!-- come nella domanda: la finestra del documento chiede i metadati della tipologia e il file -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modalRef.hide()">{{ 'layout.close' | translate }}</button>
+        <button type="button" class="btn btn-primary" [disabled]="busy || !type" (click)="add()">
+          <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus-circle"></use></svg>
+          {{ 'application_operations.winner.upload' | translate }}
+        </button>
+      </div>
+    }
   `,
   styles: [`
     .candidate { padding: .6rem .9rem; background: #f0f6fc; border-left: 4px solid #008758; border-radius: 4px; }
@@ -100,14 +104,12 @@ export class ApplicationWinnerModalComponent implements OnInit {
   public documents: any[] = [];
   public types: string[] = [];
   public type: string;
-  public file: File;
   public loading = true;
   public busy = false;
 
   public readonly modalRef = inject(ModalRef);
   private readonly service = inject(ApplicationOperationsService);
   private readonly modalService = inject(ModalService);
-  private readonly authService = inject(AuthService);
   private readonly apiMessageService = inject(ApiMessageService);
   private readonly translateService = inject(TranslateService);
 
@@ -135,24 +137,16 @@ export class ApplicationWinnerModalComponent implements OnInit {
     this.service.download(doc['cmis:objectId'], doc['cmis:name'] || 'documento').subscribe();
   }
 
-  onFile(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.file = input.files && input.files.length ? input.files[0] : null;
-  }
-
-  upload(): void {
-    const user = this.authService.getUser();
-    this.busy = true;
-    this.service.createDocument(this.application.objectId, this.file, {
-      'cmis:objectTypeId': this.type,
-      'aspect': [WINNER_ASPECT],
-      'jconon_attachment:user': user ? user.userName : null
-    }).subscribe(() => {
-      this.busy = false;
-      this.file = null;
+  /** Nuovo documento della tipologia scelta con la finestra dei documenti (metadati della tipologia e file). */
+  add(): void {
+    const ref = this.modalService.show(ManageDocumentComponent, {
+      initialState: { parentId: this.application.objectId, typeId: this.type, aspect: [WINNER_ASPECT], monoWarning: false },
+      class: 'modal-lg'
+    });
+    ref.content.event.subscribe(() => {
       this.apiMessageService.sendMessage(MessageType.SUCCESS, this.translateService.instant('application_operations.winner.done'));
       this.load();
-    }, () => this.busy = false);
+    });
   }
 
   remove(doc: any): void {

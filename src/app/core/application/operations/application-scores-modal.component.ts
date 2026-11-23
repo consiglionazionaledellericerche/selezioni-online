@@ -79,7 +79,7 @@ import { ApplicationOperationsService, ESITI, ScoreField, callScoreFields } from
     </form>
   `,
   styles: [`
-    .candidate { padding: .6rem .9rem; background: #f0f6fc; border-left: 4px solid #0066cc; border-radius: 4px; }
+    .candidate { padding: .6rem .9rem; background: #f0f6fc; border-left: 4px solid var(--app-primary); border-radius: 4px; }
   `]
 })
 export class ApplicationScoresModalComponent implements OnInit {

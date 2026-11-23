@@ -1,3 +1,4 @@
+import { BRAND } from '../../../brand/brand';
 import { ObjectType } from '../../common/model/object-type.model';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../auth/auth.service';
@@ -82,6 +83,7 @@ export class SearchComponent implements OnInit, OnDestroy{
         allaDataInPA: new FormControl(''),
         dallaDataGraduatoria: new FormControl(''),
         allaDataGraduatoria: new FormControl(''),
+        extraFilters: new FormControl([]),
         orderBy: new FormControl('scadenza'),
         orderDirection: new FormControl('desc'),
       });
@@ -127,10 +129,32 @@ export class SearchComponent implements OnInit, OnDestroy{
     return label && label !== item.key ? label : ObjectType.readable(item.key);
   }
 
+  /** Filtri in più dell'installazione (src/brand): una scelta per filtro, inviata come "proprietà~valore". */
+  public readonly extraFilters = BRAND.search?.extraFilters || [];
+  private extraSelection: { [name: string]: string } = {};
+
+  /** Filtri mostrati: tutti, tranne quelli che l'installazione nasconde (BRAND.search.hidden). */
+  public shows(name: string): boolean {
+    return !(BRAND.search?.hidden || []).includes(name);
+  }
+
+  public isExtraSelected(name: string, value: string): boolean {
+    return this.extraSelection[name] === value;
+  }
+
+  public toggleExtra(name: string, value: string): void {
+    this.extraSelection[name] = this.extraSelection[name] === value ? undefined : value;
+    const filters = this.extraFilters
+      .filter(filter => this.extraSelection[filter.name])
+      .map(filter => filter.property + (filter.operator === 'like' ? '~' : '=') + this.extraSelection[filter.name]);
+    this.filterFormSearch.controls['extraFilters'].setValue(filters);
+  }
+
   public resetFilters(): void {
+    this.extraSelection = {};
     this.filterFormSearch.reset({
       callCode: '', filterType: 'all', type: 'jconon_call:folder', inizioScadenza: '', fineScadenza: '', profile: '',
-      gazzetteNumber: '', gazzetteDate: '', requirements: '', struttura: '', sede: '',
+      gazzetteNumber: '', gazzetteDate: '', requirements: '', struttura: '', sede: '', extraFilters: [],
       numeroPosti: '', newGazzetteNumber: '', newGazzetteDate: '', dallaDataInPA: '', allaDataInPA: '',
       dallaDataGraduatoria: '', allaDataGraduatoria: '',
       orderBy: this.filterFormSearch.value.orderBy, orderDirection: this.filterFormSearch.value.orderDirection

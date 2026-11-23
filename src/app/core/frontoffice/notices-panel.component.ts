@@ -48,7 +48,7 @@ import { FrontOfficeService, Notice } from './frontoffice.service';
     .notices-panel { width: min(460px, 94vw); visibility: hidden; transition: transform .3s ease, visibility .3s; z-index: 1045; }
     .notices-panel.show { visibility: visible; transform: none; }
     .offcanvas-backdrop { z-index: 1044; }
-    .notice { border-left: 4px solid #0066cc; background: #f5f9fd; border-radius: 4px; padding: .75rem 1rem; margin-bottom: .75rem; }
+    .notice { border-left: 4px solid var(--app-primary); background: var(--app-primary-lighter); border-radius: 4px; padding: .75rem 1rem; margin-bottom: .75rem; }
     .notice.n-success { border-left-color: #008758; background: #f0f9f5; }
     .notice.n-warning { border-left-color: #cc7a00; background: #fff8ec; }
     .notice.n-error { border-left-color: #d9364f; background: #fdf1f3; }

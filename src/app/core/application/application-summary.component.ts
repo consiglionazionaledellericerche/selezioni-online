@@ -51,8 +51,8 @@ import { AuthService } from '../../auth/auth.service';
   styles: [`
     .badge { color: #fff !important; min-width: 2rem; }
     .badge.text-dark { color: #1a1a1a !important; }
-    .summary-tile--selected { background: #f0f6fc; outline: 2px solid #0066cc; }
-    .summary-tile { border: 0; display: flex; flex-direction: column; padding: 1rem 1.25rem; border-left: 4px solid #0066cc; color: #17324d; }
+    .summary-tile--selected { background: #f0f6fc; outline: 2px solid var(--app-primary); }
+    .summary-tile { border: 0; display: flex; flex-direction: column; padding: 1rem 1.25rem; border-left: 4px solid var(--app-primary); color: #17324d; }
     .summary-tile::after { display: none; }
     .summary-tile:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.12) !important; }
     .summary-tile--draft { border-left-color: #cc7a00; }

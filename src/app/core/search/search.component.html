@@ -50,8 +50,8 @@
           </div>
         </div>
 
-        <h2 class="filters-title">{{ 'layout.gazette' | translate }}</h2>
-        <div class="row g-2 mb-4">
+        <h2 class="filters-title" [hidden]="!shows('gazzetteNumber')">{{ 'layout.gazette' | translate }}</h2>
+        <div class="row g-2 mb-4" [hidden]="!shows('gazzetteNumber')">
           <div class="col-5">
             <label for="s-gun" class="small fw-semibold d-block mb-1">{{ 'layout.number' | translate }}</label>
             <input id="s-gun" type="search" class="form-control form-control-sm plain-input" formControlName="gazzetteNumber">
@@ -62,8 +62,8 @@
           </div>
         </div>
 
-        <h2 class="filters-title">{{ 'call.search.new_gazette' | translate }}</h2>
-        <div class="row g-2 mb-4">
+        <h2 class="filters-title" [hidden]="!shows('newGazzetteNumber')">{{ 'call.search.new_gazette' | translate }}</h2>
+        <div class="row g-2 mb-4" [hidden]="!shows('newGazzetteNumber')">
           <div class="col-5">
             <label for="s-ngun" class="small fw-semibold d-block mb-1">{{ 'layout.number' | translate }}</label>
             <input id="s-ngun" type="search" class="form-control form-control-sm plain-input" formControlName="newGazzetteNumber">
@@ -74,8 +74,8 @@
           </div>
         </div>
 
-        <h2 class="filters-title">{{ 'call.search.inpa' | translate }}</h2>
-        <div class="row g-2 mb-4">
+        <h2 class="filters-title" [hidden]="!shows('dallaDataInPA')">{{ 'call.search.inpa' | translate }}</h2>
+        <div class="row g-2 mb-4" [hidden]="!shows('dallaDataInPA')">
           <div class="col-6">
             <label for="s-inpa-from" class="small fw-semibold d-block mb-1">{{ 'layout.date_from' | translate }}</label>
             <input id="s-inpa-from" type="date" class="form-control form-control-sm plain-input" formControlName="dallaDataInPA">
@@ -86,8 +86,8 @@
           </div>
         </div>
 
-        <h2 class="filters-title">{{ 'call.search.graduatoria' | translate }}</h2>
-        <div class="row g-2 mb-4">
+        <h2 class="filters-title" [hidden]="!shows('dallaDataGraduatoria')">{{ 'call.search.graduatoria' | translate }}</h2>
+        <div class="row g-2 mb-4" [hidden]="!shows('dallaDataGraduatoria')">
           <div class="col-6">
             <label for="s-grad-from" class="small fw-semibold d-block mb-1">{{ 'layout.date_from' | translate }}</label>
             <input id="s-grad-from" type="date" class="form-control form-control-sm plain-input" formControlName="dallaDataGraduatoria">
@@ -98,27 +98,39 @@
           </div>
         </div>
 
+        <!-- filtri in più dell'installazione (es. disciplina dei bandi Lincei), vedi src/brand -->
+        <ng-container *ngFor="let filter of extraFilters">
+          <h2 class="filters-title">{{ filter.label | translate }}</h2>
+          <div class="d-flex flex-wrap gap-2 mb-4" role="group" [attr.aria-label]="filter.label | translate">
+            <button *ngFor="let option of filter.options" type="button" class="btn btn-sm"
+                    [ngClass]="isExtraSelected(filter.name, option.value) ? 'btn-primary' : 'btn-outline-primary'"
+                    [attr.aria-pressed]="isExtraSelected(filter.name, option.value)" (click)="toggleExtra(filter.name, option.value)">
+              {{ option.label | translate }}
+            </button>
+          </div>
+        </ng-container>
+
         <h2 class="filters-title">{{ 'layout.content' | translate }}</h2>
-        <div class="form-group mb-3">
+        <div class="form-group mb-3" [hidden]="!shows('numeroPosti')">
           <label for="s-posti" class="active">{{ 'call.search.numero_posti' | translate }}</label>
           <input id="s-posti" type="number" min="1" class="form-control" formControlName="numeroPosti">
         </div>
-        <div class="select-wrapper mb-3" *ngIf="profiles?.length">
+        <div class="select-wrapper mb-3" *ngIf="profiles?.length && shows('profile')">
           <label for="s-profile">{{ 'call.search.profile' | translate }}</label>
           <select id="s-profile" formControlName="profile">
             <option value=""></option>
             <option *ngFor="let p of profiles" [value]="p.getEnumValue()">{{ p.getEnumValue() }}</option>
           </select>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group mb-3" [hidden]="!shows('requirements')">
           <label for="s-req" class="active">{{ 'call.search.requirements' | translate }}</label>
           <input id="s-req" type="search" class="form-control" formControlName="requirements">
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group mb-3" [hidden]="!shows('struttura')">
           <label for="s-str" class="active">{{ 'call.search.struttura' | translate }}</label>
           <input id="s-str" type="search" class="form-control" formControlName="struttura">
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group mb-3" [hidden]="!shows('sede')">
           <label for="s-sede" class="active">{{ 'call.search.sede' | translate }}</label>
           <input id="s-sede" type="search" class="form-control" formControlName="sede">
         </div>

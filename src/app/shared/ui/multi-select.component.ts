@@ -81,14 +81,14 @@ export interface MultiSelectOption {
     .ms-panel { position: absolute; left: 0; right: 0; z-index: 30; background: #fff; border: 1px solid #d9dadb; border-radius: 4px; margin-top: .25rem; }
     .ms-panel-head { padding: .75rem; border-bottom: 1px solid #e3e8ee; }
     .ms-filter { display: block; width: 100%; height: 2.25rem; padding: .25rem .5rem; border: 1px solid #d9dadb; border-radius: 4px; font-size: .95rem; }
-    .ms-filter:focus { outline: 2px solid #0066cc; outline-offset: 0; border-color: #0066cc; }
+    .ms-filter:focus { outline: 2px solid var(--app-primary); outline-offset: 0; border-color: var(--app-primary); }
     .ms-list { max-height: 18rem; overflow: auto; padding: .25rem 0; }
     .ms-option { position: static; display: flex; align-items: center; gap: .6rem; padding: .4rem .75rem; margin: 0; cursor: pointer; font-size: .95rem; color: #17324d; }
     .ms-option:hover { background: #f0f6fc; }
     .ms-option.checked { font-weight: 600; }
-    .ms-option:focus { outline: 2px solid #0066cc; outline-offset: -2px; }
+    .ms-option:focus { outline: 2px solid var(--app-primary); outline-offset: -2px; }
     .native-check { pointer-events: none; position: static !important; opacity: 1 !important; left: auto !important; width: 1.1rem; height: 1.1rem; margin: 0;
-      flex-shrink: 0; accent-color: var(--bs-primary, #0066cc); }
+      flex-shrink: 0; accent-color: var(--bs-primary, var(--app-primary)); }
   `],
 })
 export class MultiSelectComponent implements OnChanges {

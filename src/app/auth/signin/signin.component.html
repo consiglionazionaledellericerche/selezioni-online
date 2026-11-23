@@ -10,12 +10,12 @@
         <div class="h6">
           <span class="pe-1">{{'signin.manuale' | translate}}</span>
         </div>
-        <div class="h6">
+        <div class="h6" *ngIf="helpdesk">
           <span class="pe-1">{{'signin.helpdesk' | translate}}</span>
           <a [routerLink]="['/configurazione/helpdesk']">{{'contacts.helpdesk.name' | translate}}</a>.
         </div>
         <p innerHtml="{{'signin.candidaticnr' | translate}}"></p>
-        <ng-container *ngIf="oidcEnabled">
+        <ng-container *ngIf="oidcEnabled || spidEnabled">
           <p class="mt-4">{{ 'signin.spid.info' | translate }}</p>
           <ul class="list-unstyled spid-links">
             <li><a href="https://www.spid.gov.it" target="_blank" rel="noopener">{{ 'signin.spid.more' | translate }}</a></li>
@@ -57,6 +57,21 @@
             <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-user"></use></svg>
             {{'signin.title' | translate}}
           </button>
+          <!-- accesso SPID diretto del backend (come il legacy): scelta dell'Identity Provider -->
+          <div *ngIf="spidEnabled && spidIdps.length" class="spid-wrapper flex-fill">
+            <button type="button" class="btn btn-sso w-100" (click)="spidOpen = !spidOpen" [attr.aria-expanded]="spidOpen"
+                    aria-haspopup="true" aria-controls="spid-idp-list">
+              <span class="sso-icon" aria-hidden="true"><svg class="icon icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-user"></use></svg></span>
+              {{ 'signin.spid.button' | translate }}
+            </button>
+            <ul *ngIf="spidOpen" id="spid-idp-list" class="spid-idp-list list-unstyled shadow">
+              <li *ngFor="let idp of spidIdps">
+                <button type="button" class="btn spid-idp" (click)="startSpid(idp)">
+                  <img [src]="spidImage(idp)" [alt]="idp.name">
+                </button>
+              </li>
+            </ul>
+          </div>
           <button *ngIf="oidcEnabled" (click)="startOidc()" class="btn btn-sso flex-fill" type="button">
             <span class="sso-icon" aria-hidden="true"><svg class="icon icon-sm"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-user"></use></svg></span>
             {{ 'signin.sso' | translate }}

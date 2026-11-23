@@ -88,7 +88,7 @@ const COMMENTO = 'jconon_attachment:scheda_valutazione_commento';
     </div>
   `,
   styles: [`
-    .candidate { padding: .6rem .9rem; background: #f0f6fc; border-left: 4px solid #0066cc; border-radius: 4px; }
+    .candidate { padding: .6rem .9rem; background: #f0f6fc; border-left: 4px solid var(--app-primary); border-radius: 4px; }
     .versions li + li { border-top: 1px solid #e3e8ee; }
   `]
 })

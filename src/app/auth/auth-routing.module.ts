@@ -1,3 +1,5 @@
+import { SpidCallbackComponent } from './spid/spid-callback.component';
+import { BRAND } from '../../brand/brand';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
@@ -10,6 +12,8 @@ import {FormsModule} from '@angular/forms';
 
 const authRoutes: Routes = [
   { path: 'auth/signin', component: SigninComponent },
+  // ritorno dall'accesso SPID diretto del backend (BRAND.spid)
+  { path: 'auth/spid', component: SpidCallbackComponent },
   { path: 'create-account', component: UserEditComponent },
   // link delle mail di registrazione e recupero password (backend con frontend.urls configurato)
   { path: 'confirm-account', component: ConfirmAccountComponent },
@@ -17,7 +21,7 @@ const authRoutes: Routes = [
   { path: 'rest/security/confirm-account', component: ConfirmAccountComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'login', redirectTo: 'auth/signin', pathMatch: 'full' },
-  { path: 'helpdesk', redirectTo: 'configurazione/helpdesk', pathMatch: 'full' },
+  { path: 'helpdesk', redirectTo: BRAND.helpdesk === false ? '' : 'configurazione/helpdesk', pathMatch: 'full' },
 ];
 
 @NgModule({

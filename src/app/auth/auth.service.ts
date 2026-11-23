@@ -94,6 +94,27 @@ export class AuthService {
   }
 
   /**
+   * Accesso con un ticket già ottenuto dal backend (ritorno dall'Identity Provider SPID, /spid/send-response):
+   * il backend lo verifica e restituisce ticket, utente e scadenza come il login.
+   */
+  public signinWithTicket(ticket: string): Observable<any> {
+    return this.configService.getApiBase().pipe(switchMap((apiBase) => {
+      return this.httpClient.post<Token>(apiBase + '/security/ticket', 'ticket=' + encodeURIComponent(ticket),
+        {headers: AuthService.tokenHeaders.set('X-alfresco-ticket', ticket)}).pipe(
+        map((token) => {
+          token.valid_until = token.valid_until || (new Date().getTime() + ((token.expires_in || 3600) * 1000));
+          this.setToken(token);
+          this.userActivated.next(this.token.user);
+          return this.getToken();
+        }),
+        catchError((error: HttpErrorResponse) => {
+          this.apiMessageService.sendMessage(MessageType.ERROR, 'signin.unauthorized');
+          return observableThrowError(error);
+        }));
+    }));
+  }
+
+  /**
    * Login.
    * In caso positivo ritorna il token, altrimenti l'errore.
    * @param username

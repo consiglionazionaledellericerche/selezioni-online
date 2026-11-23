@@ -1,3 +1,4 @@
+import { BRAND } from '../../../brand/brand';
 import { invalidFieldsMessage } from '../../common/helpers/form-errors';
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonEditComponent } from '../../common/controller/common-edit.component';
@@ -187,7 +188,7 @@ export class ManageCallComponent extends CommonEditComponent<Call> implements On
     'affix_tabCallAccountable',
     'affix_tabCallHelpDesk',
     'affix_tabCallAttachments'
-  ];
+  ].filter(affix => BRAND.helpdesk !== false || affix !== 'affix_tabCallHelpDesk');
   callType: string;
   objectId: string;
   copyFrom: string;

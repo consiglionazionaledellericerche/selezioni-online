@@ -1,4 +1,6 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { CallSectionFields } from '../../core/call/call-section-fields';
+import { CallBulkinfoService } from '../../core/call/call-bulkinfo.service';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DynamicComponent } from '../dynamic.component';
 import { Call } from '../../core/call/call.model';
@@ -33,7 +35,7 @@ export function hasAspect(call: Call, aspect: string): boolean {
         <fieldset class="form-block">
           <legend class="form-block-title">{{ 'call_manage.block.application_structure' | translate }}</legend>
           <div class="row g-3">
-            <div class="col-12">
+            <div class="col-12" *ngIf="section.shows('aspect_macro_call')">
               <app-control-toggle [inline]="true" [label]="'label.jconon_call.aspect_macro_call' | translate"
                 [formControlName]="macroControl"></app-control-toggle>
             </div>
@@ -47,17 +49,17 @@ export function hasAspect(call: Call, aspect: string): boolean {
                   formControlName="jconon_call:group_multiple_application"></app-control-text>
               </div>
             </ng-container>
-            <div class="form-group col-12">
+            <div class="form-group col-12" *ngIf="section.shows('jconon_call:elenco_sezioni_domanda')">
               <app-control-select-model [inline]="true" [multiple]="true" [labelactive]="'true'"
                 [label]="'label.jconon_call.elenco_sezioni_domanda' | translate" [strings]="sezioniKeys"
                 formControlName="jconon_call:elenco_sezioni_domanda"></app-control-select-model>
             </div>
-            <div class="form-group col-12">
+            <div class="form-group col-12" *ngIf="section.shows('jconon_call:elenco_field_not_required')">
               <app-control-select-model [inline]="true" [multiple]="true" [labelactive]="'true'"
                 [label]="'label.jconon_call.elenco_field_not_required' | translate" [strings]="fieldsKeys"
                 formControlName="jconon_call:elenco_field_not_required"></app-control-select-model>
             </div>
-            <div class="form-group col-12" *ngIf="lingue">
+            <div class="form-group col-12" *ngIf="lingue && section.shows('jconon_call:elenco_lingue_da_conoscere')">
               <app-control-select-model [inline]="true" [multiple]="true" [labelactive]="'true'"
                 [label]="'label.jconon_call.elenco_lingue_da_conoscere' | translate" [strings]="lingue"
                 formControlName="jconon_call:elenco_lingue_da_conoscere"></app-control-select-model>
@@ -68,17 +70,17 @@ export function hasAspect(call: Call, aspect: string): boolean {
         <fieldset class="form-block">
           <legend class="form-block-title">{{ 'call_manage.block.options' | translate }}</legend>
           <div class="row g-3">
-            <div class="col-lg-6" *ngFor="let flag of flags">
+            <ng-container *ngFor="let flag of flags"><div class="col-lg-6" *ngIf="section.shows('jconon_call:' + flag)">
               <app-control-toggle [inline]="true" [label]="'label.jconon_call.' + flag | translate"
                 [formControlName]="'jconon_call:' + flag"></app-control-toggle>
-            </div>
+            </div></ng-container>
           </div>
         </fieldset>
 
         <fieldset class="form-block">
           <legend class="form-block-title">{{ 'call_manage.block.reminder_payment' | translate }}</legend>
           <div class="row g-3">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6" *ngIf="section.shows('jconon_call:num_giorni_mail_sollecito')">
               <app-control-text type="number" [inline]="true" [showValidation]="true"
                 [label]="'label.jconon_call.num_giorni_mail_sollecito' | translate" formControlName="jconon_call:num_giorni_mail_sollecito"></app-control-text>
             </div>
@@ -111,6 +113,10 @@ export class JcononAffixCallSettingsComponent extends DynamicComponent<Call> {
     public sezioniKeys: string[] = [];
     public fieldsKeys: string[] = [];
 
+    /** Campi mostrati: tutti, oppure quelli del bulkinfo affix_sezione_2 dell'installazione. */
+    public readonly section = new CallSectionFields();
+    private readonly bulkinfoService = inject(CallBulkinfoService);
+
     constructor(
       protected cacheService: CacheService,
       protected changeDetectorRef: ChangeDetectorRef,
@@ -123,6 +129,7 @@ export class JcononAffixCallSettingsComponent extends DynamicComponent<Call> {
 
     ngOnInit(): void {
       super.ngOnInit();
+      this.section.load(this.bulkinfoService, this.data.objectTypeId, 'affix_sezione_2', this.changeDetectorRef);
       const data: any = this.data;
       this.manageCallService.callManagementCache().subscribe(lists => {
         this.sezioniKeys = this.keys(lists.jsonlistAffixApplication);

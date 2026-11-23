@@ -174,7 +174,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
     /* i menu a tendina con la stessa linea inferiore dei campi di testo */
     select.form-select { border: 0; border-bottom: 1px solid #5d7083; border-radius: 0; background-color: transparent;
       padding-left: .5rem; height: 2.5rem; box-shadow: none; }
-    select.form-select:focus { border-bottom-color: #0066cc; outline: 2px solid #ff9900; outline-offset: 2px; }
+    select.form-select:focus { border-bottom-color: var(--app-primary); outline: 2px solid #ff9900; outline-offset: 2px; }
     .fo-form .card-body { padding: .5rem 1.5rem 1.5rem; }
     .fo-form .form-group { margin-top: 1.75rem; margin-bottom: 0; }
     .fo-form .fo-check { margin-top: 1.5rem; }

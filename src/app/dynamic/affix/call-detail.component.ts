@@ -1,6 +1,9 @@
+import { CallSectionFields } from '../../core/call/call-section-fields';
+import { CallBulkinfoService } from '../../core/call/call-bulkinfo.service';
+import { BRAND } from '../../../brand/brand';
 import { AuthService } from '../../auth/auth.service';
 import { ManageCallService } from '../../core/call/manage-call.service';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CacheService } from '../../core/cache.service';
 import { Helpers } from '../../common/helpers/helpers';
@@ -32,19 +35,22 @@ import { Sede } from '../../common/model/sede.model';
               <app-control-text type="number" [inline]="true" [showValidation]="true" [label]="'label.jconon_call.numero_posti' | translate"
                 formControlName="jconon_call:numero_posti"></app-control-text>
             </div>
-            <div *ngIf="!data.isDirector()" class="form-group col-lg-6">
+            <div *ngIf="!data.isDirector() && shows('jconon_call:profilo')" class="form-group col-lg-6">
               <app-control-select-model [inline]="true" [label]="'label.jconon_call.profilo' | translate" [labelactive]="'true'"
                 [strings]="profiles" [showValidation]="true" [allowClear]="true"
                 [placeholder]="'label.jconon_call.profilo_placeholder' | translate" formControlName="jconon_call:profilo">
               </app-control-select-model>
             </div>
-            <div class="form-group" [ngClass]="data.isDirector() ? 'col-lg-6' : 'col-12'">
+            <div *ngIf="shows('jconon_call:elenco_tipo_selezione')" class="form-group" [ngClass]="data.isDirector() ? 'col-lg-6' : 'col-12'">
               <app-control-select-model [inline]="true" [label]="'label.jconon_call.elenco_tipo_selezione' | translate" [labelactive]="'true'"
                 [multiple]="true" [strings]="selectionTypes" [showValidation]="true"
                 [placeholder]="'label.jconon_call.elenco_tipo_selezione_placeholder' | translate" formControlName="jconon_call:elenco_tipo_selezione">
               </app-control-select-model>
             </div>
           </div>
+          <!-- campi in più dell'installazione (es. disciplina dei bandi Lincei), vedi src/brand -->
+          <app-aspect-generic *ngIf="extraForm" [data]="data" [form]="form" [aspectType]="data.objectTypeId"
+            [formName]="extraForm" [handledProperties]="handledProperties()" aspectMode="call"></app-aspect-generic>
         </fieldset>
 
         <fieldset class="form-block">
@@ -68,7 +74,7 @@ import { Sede } from '../../common/model/sede.model';
         <fieldset class="form-block">
           <legend class="form-block-title">{{ 'call_manage.block.place' | translate }}</legend>
           <div class="row g-3">
-            <div class="form-group col-12" *ngIf="sedi.length > 0">
+            <div class="form-group col-12" *ngIf="sedi.length > 0 && shows('jconon_call:sede_id')">
               <app-control-select-model [inline]="true" [label]="'label.jconon_call.sede_id' | translate" [labelactive]="'true'"
                 (onChangeEvent)="onChangeSede($event)" [items]="sedi" [showValidation]="true" [allowClear]="true"
                 [placeholder]="'label.jconon_call.sede_id_placeholder' | translate" formControlName="jconon_call:sede_id">
@@ -162,12 +168,38 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
      * Sedi selezionabili come nel legacy (ui.gestorisedi): per i gestori limitati ad alcune sedi solo quelle abilitate
      * per la tipologia di bando (più quella già scelta, se non è tra queste); altrimenti tutte le sedi attive.
      */
+    /** Campi in più dell'installazione (form del bulkinfo, vedi src/brand). */
+    public readonly extraForm = BRAND.callExtraForms.detail;
+    private handled: string[];
+
+    /** Campi mostrati: tutti, oppure quelli del bulkinfo affix_sezione_1 dell'installazione, meno callDetailHidden. */
+    public readonly section = new CallSectionFields(BRAND.callDetailHidden || []);
+    private readonly bulkinfoService = inject(CallBulkinfoService);
+
+    public shows(property: string): boolean {
+      return this.section.shows(property);
+    }
+
+    /** Proprietà già gestite da questa sezione: il componente generico non le ripete. */
+    handledProperties(): string[] {
+      if (!this.handled) {
+        this.handled = Object.keys(this.form.controls).filter(key => !key.startsWith('aspect:'))
+          .concat(BRAND.callDetailHidden || []);
+      }
+      return this.handled;
+    }
+
     /** Amministratori e gruppo CONCORSI: sede facoltativa e sede di lavoro/struttura modificabili a mano. */
     public get canEditPlace(): boolean {
       return ManageCallService.isConcorsi(this.authService.getUser());
     }
 
     private loadSedi(): void {
+      if (!this.shows('jconon_call:sede_id')) {
+        this.sedi = [];
+        this.sediLabel = [];
+        return;
+      }
       const show = (sedi: Sede[]) => {
         this.sedi = sedi;
         this.sediLabel = sedi.map((sede: Sede) => sede.label);
@@ -196,6 +228,14 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
 
     ngOnInit(): void {
       super.ngOnInit();
+      // sede prescelta non prevista dal bulkinfo dell'installazione: non obbligatoria
+      this.section.load(this.bulkinfoService, this.data.objectTypeId, 'affix_sezione_1', this.changeDetectorRef, () => {
+        const sede = this.form.controls['jconon_call:sede_id'];
+        if (sede && !this.shows('jconon_call:sede_id')) {
+          sede.clearValidators();
+          sede.updateValueAndValidity({ emitEvent: false });
+        }
+      });
       this.objectTypeService.listChoice('P:jconon_call:aspect_inquadramento','jconon_call:profilo').subscribe((choice) => {
         this.profiles = choice;
       });
@@ -221,7 +261,7 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
         new FormControl(this.data.descrizione_ridotta_en));
       // obbligatoria tranne che per amministratori e gruppo CONCORSI (controllo anche nel backend)
       this.form.addControl('jconon_call:sede_id', 
-        new FormControl(this.data.sede_id, this.canEditPlace ? null : Validators.required));
+        new FormControl(this.data.sede_id, this.canEditPlace || !this.shows('jconon_call:sede_id') ? null : Validators.required));
 
       this.form.addControl('jconon_call:struttura_destinataria', 
         new FormControl(this.data.struttura_destinataria||''));

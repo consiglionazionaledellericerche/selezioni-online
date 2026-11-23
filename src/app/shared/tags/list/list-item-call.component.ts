@@ -1,3 +1,4 @@
+import { BRAND } from '../../../../brand/brand';
 import { ObjectType } from '../../../common/model/object-type.model';
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {Call} from '../../../core/call/call.model';
@@ -36,6 +37,13 @@ import { TranslateService } from '@ngx-translate/core';
           </h3>
           <p *ngIf="item.profilo" class="mb-1 fw-semibold">{{ item.profilo }}</p>
           <p *ngIf="item.sede" class="mb-2 text-secondary">{{ item.sede }}</p>
+          <!-- proprietà in più dell'installazione (es. disciplina dei bandi Lincei), vedi src/brand -->
+          <ng-container *ngFor="let field of cardFields">
+            <p *ngIf="extraValue(field.property)" class="mb-1 small">
+              <span class="text-secondary">{{ field.label | translate }}:</span>
+              <strong class="ms-1">{{ (field.valueLabelPrefix ? field.valueLabelPrefix + extraValue(field.property) : extraValue(field.property)) | translate }}</strong>
+            </p>
+          </ng-container>
           <div class="call-meta small text-secondary d-flex flex-wrap gap-3">
             <span *ngIf="item.numero_gu">G.U. n. {{ item.numero_gu }}<span *ngIf="item.data_gu"> del {{ item.data_gu | date:'dd/MM/yyyy' }}</span></span>
             <span *ngIf="item.numero_posti">{{ 'call.numero_posti' | translate }} <strong>{{ item.numero_posti }}</strong></span>
@@ -69,12 +77,12 @@ import { TranslateService } from '@ngx-translate/core';
     </article>
   `,
   styles: [`
-    .call-row { border-left: 4px solid var(--bs-primary, #0066cc); transition: box-shadow .15s ease; }
+    .call-row { border-left: 4px solid var(--bs-primary, var(--app-primary)); transition: box-shadow .15s ease; }
     .call-row::after { display: none; }
     .call-row:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.12) !important; }
     .call-row--expiring { border-left-color: #cc7a00; }
     .call-row--closed { border-left-color: #a0a8b0; }
-    .call-type { background: #e6f0fa; color: #0066cc; font-weight: 600; }
+    .call-type { background: var(--app-primary-light); color: var(--app-primary); font-weight: 600; }
     .call-side { background: #f7f9fc; border-top-right-radius: inherit; border-bottom-right-radius: inherit; }
     @media (min-width: 992px) { .call-side { border-left: 1px solid #e3e8ee; } }
     .call-meta :is(span, app-show-text-modal) { white-space: nowrap; }
@@ -116,6 +124,14 @@ export class ListItemCallComponent {
 
   public readableType(key: string): string {
     return ObjectType.readable(key);
+  }
+
+  /** Proprietà in più del bando da mostrare nella scheda (configurazione dell'installazione). */
+  public readonly cardFields = BRAND.callCardFields || [];
+
+  public extraValue(property: string): string {
+    const value = (this.item as any)?.extraProperties?.[property];
+    return Array.isArray(value) ? value.join(', ') : value;
   }
 
   public isManager(): boolean {

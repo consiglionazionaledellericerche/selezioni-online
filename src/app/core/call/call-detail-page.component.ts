@@ -143,7 +143,7 @@ import { CallService } from './call.service';
     </ng-container>
   `,
   styles: [`
-    .call-type { background: #e6f0fa; color: #0066cc; font-weight: 600; }
+    .call-type { background: var(--app-primary-light); color: var(--app-primary); font-weight: 600; }
     .detail-card::after, .side-card::after { display: none; }
     .detail-html { line-height: 1.6; }
     .detail-html ::ng-deep ol, .detail-html ::ng-deep ul { padding-left: 1.5rem; }
@@ -156,7 +156,7 @@ import { CallService } from './call.service';
     .extended-deadline { display: flex; align-items: center; gap: 1rem; padding: .75rem; margin-top: .25rem;
       border-radius: 8px; background: #fff6e5; color: #5c3a00; }
     .detail-list dd { margin-bottom: .75rem; }
-    .side-card { border-top: 4px solid #0066cc; }
+    .side-card { border-top: 4px solid var(--app-primary); }
     @media (min-width: 992px) { .detail-sticky { position: sticky; top: 1.5rem; } }
   `]
 })

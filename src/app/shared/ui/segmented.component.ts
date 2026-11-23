@@ -42,7 +42,7 @@ export interface SegmentedOption {
     .segmented-list button { display: block; width: 100%; text-align: left; border: 0; background: none; padding: .35rem .5rem;
       border-radius: 4px; color: #17324d; font-size: .95rem; }
     .segmented-list button:hover { background: #f0f6fc; }
-    .segmented-list button.active { background: #0066cc; color: #fff; font-weight: 600; }
+    .segmented-list button.active { background: var(--app-primary); color: #fff; font-weight: 600; }
   `],
 })
 export class SegmentedComponent implements ControlValueAccessor {

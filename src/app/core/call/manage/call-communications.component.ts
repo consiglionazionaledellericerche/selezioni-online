@@ -344,19 +344,19 @@ import {
     </ng-template>
   `,
   styles: [`
-    .gp-box { padding: .75rem 1rem; background: #f7f9fc; border-left: 4px solid #0066cc; border-radius: 4px; }
+    .gp-box { padding: .75rem 1rem; background: #f7f9fc; border-left: 4px solid var(--app-primary); border-radius: 4px; }
     .candidate-list { max-height: 28rem; overflow: auto; }
     .state-tiles { display: flex; flex-wrap: wrap; gap: .75rem; }
     .state-tile { display: flex; flex-direction: column; align-items: flex-start; min-width: 9rem; padding: .6rem 1rem;
       background: #fff; border: 1px solid #d9dadb; border-left: 4px solid #5d7083; border-radius: 4px; text-align: left; cursor: pointer; }
     .state-tile:hover { background: #f0f6fc; }
-    .state-tile.active { background: #e6f0fa; border-color: #0066cc; box-shadow: 0 0 0 1px #0066cc inset; }
-    .state-tile.state-FIRMATO { border-left-color: #0066cc; }
+    .state-tile.active { background: var(--app-primary-light); border-color: var(--app-primary); box-shadow: 0 0 0 1px var(--app-primary) inset; }
+    .state-tile.state-FIRMATO { border-left-color: var(--app-primary); }
     .state-tile.state-SPEDITO, .state-tile.state-CONSEGNATO, .state-tile.state-RICEVUTO { border-left-color: #008758; }
     .state-count { font-size: 1.5rem; font-weight: 700; line-height: 1.2; color: #17324d; }
     .state-label { font-size: .875rem; color: #5d7083; }
     .native-check { position: static !important; opacity: 1 !important; left: auto !important; width: 1.15rem; height: 1.15rem;
-      margin: 0; vertical-align: middle; accent-color: var(--bs-primary, #0066cc); cursor: pointer; }
+      margin: 0; vertical-align: middle; accent-color: var(--bs-primary, var(--app-primary)); cursor: pointer; }
     .table td, .table th { vertical-align: middle; }
     .card h2 { margin-bottom: 2.25rem; }
     .card .form-group, .card .select-wrapper { margin-top: 2rem; margin-bottom: 1rem; }

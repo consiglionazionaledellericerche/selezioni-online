@@ -98,10 +98,21 @@ Released under the [GNU Affero General Public License v3.0](https://www.gnu.org/
 Altre installazioni (es. [selezioni-lincei](https://github.com/consiglionazionaledellericerche/selezioni-lincei))
 riusano questo progetto sostituendo pochi file, senza fork. I punti di estensione sono in `src/brand/`:
 
-- `brand.ts` – configurazione (`Brand`, definita in `brand.model.ts`): recapiti della pagina Contatti e form del
-  bulkinfo del tipo di bando i cui campi in più vanno resi nella gestione del bando (`callExtraForms`);
+- `brand.ts` – configurazione (`Brand`, definita in `brand.model.ts`):
+  - `callExtraForms`: form del bulkinfo del tipo di bando i cui campi in più vanno resi nella gestione del bando;
+  - `callSectionsFromBulkinfo`: le sezioni della gestione del bando mostrano solo i campi dei form `affix_sezione_N`
+    del bulkinfo del tipo di bando, come il frontend legacy;
+  - `callDetailHidden`: campi di "Dettagli Bando" da nascondere comunque;
+  - `search`: filtri della ricerca da nascondere e filtri in più (parametro `extraFilters` del backend);
+  - `callCardFields`: proprietà in più nelle schede dei bandi;
+  - `spid`: `true` per l'accesso SPID diretto del backend (modulo cool-jconon-spid), con la scelta dell'Identity
+    Provider e il ritorno su `/auth/spid` (l'indirizzo del frontend va in `frontend.urls` del backend);
+  - `helpdesk`: `false` per le installazioni senza HelpDesk (menu, pagina, link e sezione del bando spariscono);
+  - `footer`: contenuti del piè di pagina;
+  - `contacts`: recapiti della pagina Contatti;
 - `_brand.scss` – variabili Sass di Bootstrap Italia (es. `$primary-h`, `$primary-s`, `$primary-b`), importate prima
-  della libreria;
+  della libreria; dal primario derivano anche `--app-primary`, `--app-primary-dark` e `--app-primary-light`, usate
+  al posto dei blu nei componenti;
 - `_brand-overrides.scss` – regole CSS aggiuntive, importate dopo gli stili comuni.
 
 Logo, favicon e icone si sostituiscono con file degli stessi nomi; testi e manifest si integrano unendo le chiavi

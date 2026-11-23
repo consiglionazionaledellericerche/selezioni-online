@@ -108,7 +108,7 @@ interface ApplicationAction {
     </article>
     `,
   styles: [`
-    .call-type { background: #e6f0fa; color: #0066cc; font-weight: 600; }
+    .call-type { background: var(--app-primary-light); color: var(--app-primary); font-weight: 600; }
     .app-row { border-left: 4px solid #008758; transition: box-shadow .15s ease; }
     .app-row::after { display: none; }
     .app-row:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.12) !important; }

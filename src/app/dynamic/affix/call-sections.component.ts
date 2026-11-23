@@ -1,7 +1,9 @@
+import { CallSectionFields } from '../../core/call/call-section-fields';
+import { CallBulkinfoService } from '../../core/call/call-bulkinfo.service';
 import { BRAND } from '../../../brand/brand';
 import { ASPECT_CONTROL_PREFIX } from '../../core/call/manage-call.service';
 import { hasAspect } from './call-settings.component';
-import { ChangeDetectorRef, Component, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, TemplateRef, ViewChild, ViewChildren, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,7 +34,7 @@ import { toBoolean } from './call-settings.component';
   template: `
     <form [formGroup]="form" *ngIf="isLoaded() && options">
       <div class="row gx-2 pb-2">
-        <div class="form-group col-md-12" *ngFor="let field of fields">
+        <ng-container *ngFor="let field of fields"><div class="form-group col-md-12" *ngIf="section.shows('jconon_call:' + field.name)">
           <app-control-select-model
             [inline]="true"
             [multiple]="true"
@@ -41,10 +43,10 @@ import { toBoolean } from './call-settings.component';
             [strings]="options[field.list]"
             [formControlName]="'jconon_call:' + field.name">
           </app-control-select-model>
-        </div>
+        </div></ng-container>
       </div>
       <div class="row gx-2">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-4" *ngIf="section.shows('jconon_call:numero_max_prodotti')">
           <app-control-text
             type="number"
             [inline]="true"
@@ -53,7 +55,7 @@ import { toBoolean } from './call-settings.component';
             formControlName="jconon_call:numero_max_prodotti">
           </app-control-text>
         </div>
-        <div class="col-md-8 align-self-center">
+        <div class="col-md-8 align-self-center" *ngIf="section.shows('jconon_call:scheda_anonima_sintetica')">
           <app-control-toggle
             [inline]="true"
             [label]="'label.jconon_call.scheda_anonima_sintetica'| translate"
@@ -105,6 +107,10 @@ export class JcononAffixCallAspirantDetailComponent extends DynamicComponent<Cal
     { name: 'elenco_schede_anonime', list: 'jsonlistApplicationSchedeAnonime' }
   ];
   public options: {[list: string]: string[]};
+  /** Campi mostrati: tutti, oppure quelli del bulkinfo affix_sezione_3 dell'installazione. */
+  public readonly section = new CallSectionFields();
+  private readonly bulkinfoService = inject(CallBulkinfoService);
+
   /** Form del bulkinfo con i campi in più dell'installazione (vuoto per il CNR). */
   public readonly extraForm = BRAND.callExtraForms.aspirant;
   private handled: string[];
@@ -112,7 +118,9 @@ export class JcononAffixCallAspirantDetailComponent extends DynamicComponent<Cal
   /** Proprietà già gestite da questa sezione: il componente generico non le ripete. */
   handledProperties(): string[] {
     if (!this.handled) {
-      this.handled = Object.keys(this.form.controls).filter(key => !key.startsWith('aspect:'));
+      // anche gli aspect gestiti qui (es. allegati del vincitore), altrimenti il componente generico li ripete
+      this.handled = Object.keys(this.form.controls)
+        .concat(Object.keys(this.form.controls).filter(key => key.startsWith('aspect:')).map(key => key.substring('aspect:'.length)));
     }
     return this.handled;
   }
@@ -135,6 +143,7 @@ export class JcononAffixCallAspirantDetailComponent extends DynamicComponent<Cal
   ngOnInit(): void {
     super.ngOnInit();
     const data: any = this.data;
+    this.section.load(this.bulkinfoService, this.data.objectTypeId, 'affix_sezione_3', this.changeDetectorRef);
     this.form.addControl(this.winnerControl, new FormControl(hasAspect(this.data, 'P:jconon_call_aspect_winner:aspect')));
     this.form.addControl('jconon_call_aspect_winner:active', new FormControl(toBoolean(data.winner_active)));
     const elenco = data.winner_elenco_file;
@@ -473,7 +482,7 @@ export class JcononAffixCallHelpDeskComponent extends DynamicComponent<Call> {
     .chooser-list { max-height: 60vh; overflow-y: auto; }
     .chooser-item { display: flex; justify-content: space-between; align-items: center; gap: 1rem; width: 100%;
       padding: .55rem .75rem; border: 0; border-bottom: 1px solid #eef1f4; background: #fff; text-align: left; color: #17324d; }
-    .chooser-item:hover, .chooser-item:focus { background: #f0f6fc; color: #0066cc; }
+    .chooser-item:hover, .chooser-item:focus { background: #f0f6fc; color: var(--app-primary); }
   `]
 })
 export class JcononAffixCallAttachmentsComponent extends DynamicComponent<Call> {
