@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { NgClass } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { switchMap } from 'rxjs/operators';
 import { ModalRef } from '../../../shared/modal/modal.service';
@@ -14,7 +13,7 @@ import { ApiMessageService, MessageType } from '../../api-message.service';
 @Component({
   selector: 'app-export-calls',
   standalone: true,
-  imports: [NgClass, TranslatePipe],
+  imports: [TranslatePipe],
   template: `
     <div class="modal-header">
       <h2 class="modal-title h5 no_toc d-flex align-items-center">

@@ -87,11 +87,8 @@ interface PathItem {
         <p class="small text-muted" translate>admin.groups.addMemberHint</p>
         <div class="row align-items-end">
           <div class="form-group col-md-8">
-            <label for="g-member" class="active" translate>admin.groups.member</label>
-            <input id="g-member" type="text" class="form-control" [(ngModel)]="memberName" (input)="onSearchGroup()" list="g-member-options">
-            <datalist id="g-member-options">
-              <option *ngFor="let g of groupOptions" [value]="g.authorityName">{{g.authorityDisplayName}}</option>
-            </datalist>
+            <!-- utente o gruppo, con l'autocompletamento comune (come nel legacy cnr.ui.authority) -->
+            <app-authority-picker mode="both" [(ngModel)]="memberName"></app-authority-picker>
           </div>
           <div class="form-group col-md-4 text-end">
             <button class="btn btn-primary btn-sm" [disabled]="!memberName" (click)="onAddMember()" translate>add</button>

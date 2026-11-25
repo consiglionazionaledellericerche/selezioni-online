@@ -1,9 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { AllowableAction } from '../../common/model/allowableaction.enum';
 import { DocumentPermissionsModalComponent } from '../document/actions/document-permissions-modal.component';
 import { SendAttachmentModalComponent } from '../document/actions/send-attachment-modal.component';
 import { ApplicationOperationsService } from '../application/application-operations.service';
 import { ManageCallService } from '../call/manage-call.service';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonListComponent} from '../../common/controller/common-list.component';
 import { ActivatedRoute, Router} from '@angular/router';
 import { FormControl, FormGroup} from '@angular/forms';
@@ -39,14 +40,23 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
               <use [attr.href]="'/bootstrap-italia/dist/svg/sprites.svg#' + icon(item)"></use>
             </svg>
             <div class="doc-text">
-              <button type="button" class="btn btn-link p-0 doc-name text-start" (click)="getBlob(item.objectId, item.name)">
+              <button *ngIf="hasContent(item); else linkOnly" type="button" class="btn btn-link p-0 doc-name text-start"
+                      (click)="getBlob(item.objectId, item.name)">
                 {{ item.name }}
               </button>
+              <!-- documento con il solo link esterno (nessun file): il nome è il titolo, il link si apre -->
+              <ng-template #linkOnly>
+                <span class="doc-name">{{ item.name }}</span>
+              </ng-template>
               <div class="doc-type">
                 {{ item.objectTypeId | translate }}<ng-container *ngIf="item.title && item.title !== item.name"> · {{ item.title }}</ng-container>
               </div>
               <div class="doc-meta">
-                <span>{{ format(item) }} · {{ item.getFileSize() }}</span>
+                <span *ngIf="hasContent(item)">{{ format(item) }} · {{ item.getFileSize() }}</span>
+                <span *ngIf="!hasContent(item) && linkOf(item) as link">
+                  <svg class="icon icon-xs icon-primary" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-link"></use></svg>
+                  <a [href]="link" target="_blank" rel="noopener noreferrer">{{ link }}</a>
+                </span>
                 <span *ngIf="show_date && validDate(item.lastModificationDate)">
                   <svg class="icon icon-xs" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-calendar"></use></svg>
                   {{ item.lastModificationDate | date:'dd/MM/yyyy HH:mm' }}
@@ -178,6 +188,31 @@ export class ChildrenListComponent extends CommonListComponent<Attachment> imple
         this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
       });
     });
+  }
+
+  private readonly httpClient = inject(HttpClient);
+  private readonly links: { [objectId: string]: string } = {};
+
+  /** Documento con contenuto (file); senza, è un documento con il solo link esterno. */
+  hasContent(item: Attachment): boolean {
+    return Number((item as any).contentStreamLength) > 0;
+  }
+
+  /** Link esterno del documento (proprietà "...:link"), letto una volta dai metadati completi. */
+  linkOf(item: Attachment): string {
+    const id = item.objectId;
+    if (!(id in this.links)) {
+      this.links[id] = null;
+      this.configService.getApiBase().pipe(
+        switchMap(apiBase => this.httpClient.get<any>(apiBase + '/v1/document/metadata', { params: { id } }))
+      ).subscribe(properties => {
+        const key = Object.keys(properties || {}).find(k => /:link$/.test(k) && properties[k]);
+        const value = key ? String(properties[key]).trim() : null;
+        this.links[id] = value && /^https?:\/\//i.test(value) ? value : null;
+        this.changeDetector.markForCheck();
+      }, () => this.links[id] = null);
+    }
+    return this.links[id];
   }
 
   canReplace(item: Attachment): boolean {

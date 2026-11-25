@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { CallAttachmentsModalComponent } from '../../../dynamic/affix/call-attachments-modal.component';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
@@ -137,7 +138,8 @@ export class CallActionsComponent {
               private authService: AuthService,
               private manageCallService: ManageCallService,
               private modalService: ModalService,
-              private apiMessageService: ApiMessageService) {}
+              private apiMessageService: ApiMessageService,
+              private translateService: TranslateService) {}
 
   /** Operazioni di gestione (menu "altre azioni" nelle righe, elenco esteso nel dettaglio). */
   manageActions(): ManageAction[] {
@@ -167,6 +169,8 @@ export class CallActionsComponent {
       { label: 'exam_sessions.title', icon: 'it-files', route: '/exam-sessions', queryParams: { callId: id } },
       { label: 'communications.kind.esclusioni', icon: 'it-ban', route: '/call-communications', queryParams: { callId: id, kind: 'esclusioni' } },
       { label: 'communications.kind.comunicazioni', icon: 'it-mail', route: '/call-communications', queryParams: { callId: id, kind: 'comunicazioni' } },
+      // bando aperto (es. riaperto o prorogato): avviso via mail a tutti i candidati
+      ...(this.isActive() ? [{ label: 'call_manage.reopening.title', icon: 'it-mail-open', action: () => this.notifyReopening() }] : []),
       scores,
       { label: 'call_attachment.title', icon: 'it-clip', route: '/call-application-attachment', queryParams: { callId: id } }
     ];
@@ -218,6 +222,14 @@ export class CallActionsComponent {
         this.item.pubblicato = publish;
         this.changed.emit();
       }));
+  }
+
+  /** Comunicazione di riapertura dei termini a tutti i candidati del bando (POST /v1/call/{id}/reopening-notice). */
+  notifyReopening(): void {
+    this.confirm('call_manage.reopening.confirm', () =>
+      this.manageCallService.notifyReopening(this.item.objectId).subscribe(count =>
+        this.apiMessageService.sendMessage(MessageType.SUCCESS,
+          this.translateService.instant('call_manage.reopening.done', { value: count }))));
   }
 
   deleteCall(): void {

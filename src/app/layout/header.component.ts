@@ -23,7 +23,6 @@ import { NavbarMenu } from '../core/header/model/navbar-menu.model';
 import { NotifyService } from './notify.service';
 import { PushNotificationsService } from '../core/push/push-notifications.service';
 import { UserPanelComponent } from './user-panel.component';
-import { ApplicationSummaryComponent } from '../core/application/application-summary.component';
 
 /**
  * Intestazione Bootstrap Italia sul modello di GesFor/GERI: header slim CNR con link di supporto,
@@ -34,7 +33,7 @@ import { ApplicationSummaryComponent } from '../core/application/application-sum
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe, ItHeaderComponent, ItNavBarModule, NoticesPanelComponent,
-    ItDropdownModule, ItIconComponent, ToastsComponent, ItMegamenuComponent, ApplicationSummaryComponent, UserPanelComponent],
+    ItDropdownModule, ItIconComponent, ToastsComponent, ItMegamenuComponent, UserPanelComponent],
   templateUrl: './header.component.html',
   styles: `
     .brand-logo { height: 56px; width: auto; margin-right: .75rem; flex-shrink: 0; }

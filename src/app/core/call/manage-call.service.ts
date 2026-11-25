@@ -93,6 +93,16 @@ export class ManageCallService {
 
   /* Elenchi per il form del bando */
 
+  /** Mail di riapertura dei termini a tutti i candidati del bando: restituisce quanti indirizzi l'hanno ricevuta. */
+  notifyReopening(callId: string): Observable<number> {
+    return this.configService.getApiBase().pipe(
+      switchMap(apiBase => this.httpClient.post<{ count: number }>(apiBase + '/v1/call/' + encodeURIComponent(callId) +
+        '/reopening-notice', {})),
+      map(result => result?.count ?? 0),
+      catchError(error => this.handleError(error))
+    );
+  }
+
   /** Sedi abilitate per il gestore nella tipologia di bando (restricted = false: tutte). */
   managersSedi(callType: string): Observable<{ restricted: boolean, sedi: any[] }> {
     return this.configService.getApiBase().pipe(

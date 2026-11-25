@@ -1,5 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Call } from '../call.model';
@@ -16,7 +15,7 @@ import { ApiMessageService, MessageType } from '../../api-message.service';
 @Component({
   selector: 'app-export-applications',
   standalone: true,
-  imports: [NgClass, FormsModule, TranslatePipe, MultiSelectComponent],
+  imports: [FormsModule, TranslatePipe, MultiSelectComponent],
   template: `
     <div class="modal-header">
       <h2 class="modal-title h5 no_toc">{{ 'export.title' | translate }} {{ call?.codice }}</h2>

@@ -162,7 +162,8 @@
       "codicefiscale": "Codice fiscale non valido!",
       "application": {
         "section_not_confirmed": "Confermare prima le sezioni precedenti"
-      }
+      },
+      "url": "Indicare un indirizzo web valido (es. https://...)."
     },
     "form.invalid": "Corregere gli errori, per proseguire.",
     "confirm.registration": "Per completare la registrazione verrà inviata una e-mail al seguente indirizzo: <a href=\"mailto:{{value}}\">{{value}}</a><br><b>Si desidera procedere?</b>",
@@ -216,7 +217,8 @@
       "comunicazioni.graduatoria.privata.protocollo": "Indicare data e numero di protocollo della graduatoria privata.",
       "comunicazioni.graduatoria.privata.file": "Allegare il documento della graduatoria privata.",
       "call.sede.required": "Indicare la Sede di lavoro prescelta.",
-      "call.sede.not.enabled": "Non si è abilitati a gestire bandi per la Sede di lavoro prescelta."
+      "call.sede.not.enabled": "Non si è abilitati a gestire bandi per la Sede di lavoro prescelta.",
+      "call.reopening.closed": "Il bando non è aperto: la riapertura si comunica dopo aver prorogato la scadenza."
     },
     "document": {
       "uploaded": "Caricato",
@@ -729,7 +731,12 @@
       "published_info": "Il bando è pubblicato: le date iniziali non sono modificabili. Le date effettive si aggiornano con i provvedimenti di proroga o riapertura.",
       "extended_to": "Prorogata al"
     },
-    "save_incomplete": "Vuoi salvare comunque la sezione? Potrai completare i campi in seguito; il bando non potrà essere pubblicato finché resta incompleto."
+    "save_incomplete": "Vuoi salvare comunque la sezione? Potrai completare i campi in seguito; il bando non potrà essere pubblicato finché resta incompleto.",
+    "reopening": {
+      "title": "Comunica riapertura ai candidati",
+      "confirm": "Inviare a tutti i candidati del bando la comunicazione di riapertura dei termini con la nuova scadenza?",
+      "done": "Comunicazione di riapertura inviata a {{value}} candidati."
+    }
   },
   "admin": {
     "title": "Amministrazione",

@@ -19,7 +19,7 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
       <div class="card-body">
         <h5 class="card-title" translate>admin.rbac.add</h5>
         <form [formGroup]="form" (ngSubmit)="onAdd()" class="row align-items-end">
-          <div class="form-group col-md-3">
+          <div class="form-group col-md-2">
             <label for="r-id" class="active" translate>admin.rbac.id</label>
             <input id="r-id" type="text" class="form-control" formControlName="id" list="r-ids">
             <datalist id="r-ids"><option *ngFor="let id of ids" [value]="id"></option></datalist>
@@ -45,9 +45,16 @@ import { ModalConfirmComponent } from '../../shared/tags/wizard/modal-confirm.co
               <option value="all">all</option>
             </select>
           </div>
-          <div class="form-group col-md-2">
-            <label for="r-authority" class="active" translate>admin.rbac.authority</label>
-            <input id="r-authority" type="text" class="form-control" formControlName="authority" [readonly]="form.value.type === 'all'">
+          <!-- utente o gruppo con l'autocompletamento comune, secondo il tipo scelto ("all": nessuno) -->
+          <div class="form-group col-md-3">
+            @if (form.value.type === 'group') {
+              <app-authority-picker mode="groups" formControlName="authority"></app-authority-picker>
+            } @else if (form.value.type === 'user') {
+              <app-authority-picker mode="users" formControlName="authority"></app-authority-picker>
+            } @else {
+              <label for="r-authority" class="active" translate>admin.rbac.authority</label>
+              <input id="r-authority" type="text" class="form-control" value="*" readonly>
+            }
           </div>
           <div class="form-group col-md-1 text-end">
             <button type="submit" class="btn btn-primary btn-sm"
@@ -118,6 +125,8 @@ export class RbacComponent implements OnInit {
       type: ['group', Validators.required],
       authority: ['']
     });
+    // cambiando tipo (utente, gruppo, tutti) si sceglie di nuovo chi
+    this.form.get('type').valueChanges.subscribe(() => this.form.patchValue({ authority: '' }, { emitEvent: false }));
     this.load();
   }
 

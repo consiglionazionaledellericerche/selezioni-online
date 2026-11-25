@@ -119,8 +119,47 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
     ).subscribe(result => this.existing = result?.count ?? (result?.items || []).length, () => this.existing = 0);
   }
 
+  /** Link esterno in alternativa al file (es. aspect jconon_lincei_allegati:aspect_link): proprietà "...:link". */
+  private linkControls(): string[] {
+    return Object.keys(this.form.controls).filter(key => /:link$/.test(key));
+  }
+
+  private static readonly URL = /^https?:\/\/[^\s/$.?#][^\s]*\.[^\s]+$/i;
+
+  /**
+   * Con un link esterno valorizzato il file non è più obbligatorio (documenti troppo pesanti); il link deve essere
+   * un indirizzo web valido (http/https).
+   */
+  private applyLinkRules(): string {
+    const links = this.linkControls();
+    if (!links.length) {
+      return null;
+    }
+    links.forEach(key => {
+      const control = this.form.controls[key];
+      // errore "url": messaggio message.validation.url
+      control.setValidators((c) => !c.value || ManageDocumentComponent.URL.test(String(c.value).trim()) ? null : { url: true });
+      control.updateValueAndValidity({ emitEvent: false });
+    });
+    const link = links.map(key => String(this.form.controls[key].value || '').trim()).find(value => !!value);
+    const file = this.form.controls['file'];
+    if (file && !this.entity) {
+      file.setValidators(link ? null : Validators.required);
+      file.updateValueAndValidity({ emitEvent: false });
+    }
+    return link;
+  }
+
   save(): void {
     this.submitted = true;
+    const link = this.applyLinkRules();
+    // solo il link, senza file: il documento prende come nome il titolo
+    if (link && !this.entity && !this.form.value.file && !this.form.contains('cmis:name')) {
+      const title = Object.keys(this.form.controls).filter(key => /:titolo$/.test(key))
+        .map(key => String(this.form.controls[key].value || '').trim()).find(value => !!value);
+      const name = (title || 'Link esterno').replace(/[\\/:*?"<>|]/g, ' ').trim();
+      this.form.addControl('cmis:name', new FormControl(name));
+    }
     // tutti i campi obbligatori (anche quelli dei metadati del tipo) devono risultare compilati
     this.form.markAllAsTouched();
     Object.keys(this.form.controls).forEach(control => this.form.controls[control].markAsDirty({onlySelf: true}));

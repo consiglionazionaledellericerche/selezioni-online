@@ -538,7 +538,12 @@
       "published_info": "The call is published: initial dates cannot be changed. Effective dates are updated by extension or reopening measures.",
       "extended_to": "Extended to"
     },
-    "save_incomplete": "Do you want to save the section anyway? You can complete the fields later; the call cannot be published while it is incomplete."
+    "save_incomplete": "Do you want to save the section anyway? You can complete the fields later; the call cannot be published while it is incomplete.",
+    "reopening": {
+      "title": "Notify candidates of re-opening",
+      "confirm": "Send all candidates of the call the re-opening notice with the new deadline?",
+      "done": "Re-opening notice sent to {{value}} candidates."
+    }
   },
   "admin": {
     "title": "Administration",
@@ -755,11 +760,13 @@
       "comunicazioni.graduatoria.privata.protocollo": "Please enter the registration date and number of the private ranking.",
       "comunicazioni.graduatoria.privata.file": "Please attach the private ranking document.",
       "call.sede.required": "Please select the chosen workplace.",
-      "call.sede.not.enabled": "You are not enabled to manage calls for the chosen workplace."
+      "call.sede.not.enabled": "You are not enabled to manage calls for the chosen workplace.",
+      "call.reopening.closed": "The call is not open: send the re-opening notice after extending the deadline."
     },
     "validation": {
       "required_fields": "Please fill in the highlighted required fields.",
-      "maxlength5000": "Must not exceed 5000 characters"
+      "maxlength5000": "Must not exceed 5000 characters",
+      "url": "Enter a valid web address (e.g. https://...)."
     }
   },
   "label": {
