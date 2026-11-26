@@ -674,7 +674,15 @@
       "old_label": "Etichetta originale",
       "new_label": "Nuova etichetta",
       "current": "Etichetta attuale",
-      "confirm_delete": "Ripristinare l'etichetta originale?"
+      "confirm_delete": "Ripristinare l'etichetta originale?",
+      "type": "Tipologia",
+      "choose_type": "Scegli la tipologia",
+      "edit_type": "Modifica etichetta",
+      "details": "Dettagli",
+      "edit_field": "Modifica etichetta del campo",
+      "field": "Campo",
+      "choose_field": "Scegli il campo",
+      "no_details": "La tipologia non ha campi di cui modificare l'etichetta."
     },
     "permissions": {
       "title": "Permessi",

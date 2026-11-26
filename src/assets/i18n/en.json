@@ -481,7 +481,15 @@
       "old_label": "Original label",
       "new_label": "New label",
       "current": "Current label",
-      "confirm_delete": "Restore the original label?"
+      "confirm_delete": "Restore the original label?",
+      "type": "Type",
+      "choose_type": "Choose a type",
+      "edit_type": "Edit label",
+      "details": "Details",
+      "edit_field": "Edit field label",
+      "field": "Field",
+      "choose_field": "Choose a field",
+      "no_details": "This type has no fields whose label can be changed."
     },
     "permissions": {
       "title": "Permissions",
@@ -799,7 +807,10 @@
       "elenco_prodotti": "Product types",
       "numero_max_prodotti": "Maximum number of products",
       "scheda_anonima_sintetica": "Anonymous summary form",
-      "elenco_schede_anonime": "Anonymous forms"
+      "elenco_schede_anonime": "Anonymous forms",
+      "codice": "Call number",
+      "sede": "Reference structure",
+      "numero_posti": "Number of positions"
     },
     "jconon_application": {
       "afl_cittadinanza_italiana_lista": "to be in possession of Italian citizenship",
@@ -1437,6 +1448,10 @@
     "elenco_titoli_studio": "Requirements:",
     "submit_application": "Submit Application",
     "attach_to": "Attachments to Call {{value}}",
+    "menuitem": {
+      "application": "Applications",
+      "update": "Edit"
+    },
     "search": {
       "title": "Filter Calls",
       "code": "Call code",
