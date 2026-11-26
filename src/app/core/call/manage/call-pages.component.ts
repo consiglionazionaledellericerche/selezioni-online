@@ -1,4 +1,7 @@
-import { Component, Directive, OnDestroy, OnInit } from '@angular/core';
+import { Component, Directive, OnDestroy, OnInit, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { switchMap } from 'rxjs/operators';
+import { ConfigService } from '../../config.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -100,7 +103,9 @@ export class CallChildrenComponent extends CallPageBase {
 }
 
 /**
- * Etichette personalizzate del bando (ex pagina manage-call-labels).
+ * Etichette personalizzate del bando (ex pagina manage-call-labels, call-labels.js): si sceglie la tipologia
+ * (sezione della domanda, dichiarazione, allegato...) e se ne cambia il nome ("Modifica etichetta") oppure il nome di
+ * uno dei suoi campi ("Dettagli", campi del bulkinfo della tipologia).
  */
 @Component({
   standalone: false,
@@ -108,30 +113,64 @@ export class CallChildrenComponent extends CallPageBase {
   template: `<app-call-header [call]="call" page="call_manage.labels.title"></app-call-header>
     <h2 class="text-primary">{{'call_manage.labels.title' | translate}}</h2>
     <p class="small text-muted" translate>call_manage.labels.info</p>
-    <form [formGroup]="form" (ngSubmit)="onSave()" class="card card-bg mb-3">
-      <div class="card-body row align-items-end">
-        <div class="form-group col-md-5">
-          <label for="lbl-key" class="active" translate>call_manage.labels.key</label>
-          <input id="lbl-key" type="text" class="form-control" formControlName="key" list="lbl-keys" (change)="onChangeKey()">
-          <datalist id="lbl-keys"><option *ngFor="let key of suggestedKeys" [value]="key">{{key | translate}}</option></datalist>
+
+    <div class="card card-bg mb-3">
+      <div class="card-body">
+        <div class="row align-items-end g-3">
+          <div class="col-lg-7">
+            <div class="select-wrapper">
+              <label for="lbl-type">{{ 'call_manage.labels.type' | translate }}</label>
+              <select id="lbl-type" [(ngModel)]="selectedType" (ngModelChange)="onType()">
+                <option [ngValue]="null">{{ 'call_manage.labels.choose_type' | translate }}</option>
+                <option *ngFor="let type of types" [ngValue]="type">{{ type.label }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-5 d-flex flex-wrap gap-2 justify-content-lg-end">
+            <button type="button" class="btn btn-primary btn-sm" [disabled]="!selectedType" (click)="editType()">
+              <svg class="icon icon-white icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-pencil"></use></svg>{{ 'call_manage.labels.edit_type' | translate }}
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!selectedType || loadingFields" (click)="showFields()">
+              <svg class="icon icon-primary icon-sm me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-list"></use></svg>{{ 'call_manage.labels.details' | translate }}
+            </button>
+          </div>
         </div>
-        <div class="form-group col-md-5">
-          <label for="lbl-new" class="active" translate>call_manage.labels.new_label</label>
-          <input id="lbl-new" type="text" class="form-control" formControlName="newLabel">
-          <small class="text-muted" *ngIf="form.value.key">{{'call_manage.labels.current' | translate}}: {{form.value.key | translate}}</small>
-        </div>
-        <div class="form-group col-md-2 text-end">
-          <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid" translate>save</button>
-        </div>
+
+        <!-- modifica dell'etichetta della tipologia o di un suo campo -->
+        <form *ngIf="editing" [formGroup]="form" (ngSubmit)="onSave()" class="mt-4 pt-3 border-top">
+          <h3 class="h6 mb-3">{{ (editing === 'type' ? 'call_manage.labels.edit_type' : 'call_manage.labels.edit_field') | translate }}:
+            {{ selectedType?.label }}</h3>
+          <div class="row g-3">
+            <div class="col-lg-5" *ngIf="editing === 'field'">
+              <div class="select-wrapper">
+                <label for="lbl-field">{{ 'call_manage.labels.field' | translate }}</label>
+                <select id="lbl-field" formControlName="key" (change)="onField()">
+                  <option value="">{{ 'call_manage.labels.choose_field' | translate }}</option>
+                  <option *ngFor="let field of fields" [value]="field.key">{{ field.label }}</option>
+                </select>
+              </div>
+            </div>
+            <div [ngClass]="editing === 'field' ? 'col-lg-7' : 'col-12'">
+              <label for="lbl-new" class="small fw-semibold d-block mb-1">{{ 'call_manage.labels.new_label' | translate }}</label>
+              <textarea id="lbl-new" class="form-control" rows="3" formControlName="newLabel"></textarea>
+              <small class="text-muted" *ngIf="form.value.oldLabel">{{ 'call_manage.labels.current' | translate }}: {{ form.value.oldLabel }}</small>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end gap-2 mt-3">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancel()">{{ 'button.cancel' | translate }}</button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid">{{ 'save' | translate }}</button>
+          </div>
+        </form>
+        <div *ngIf="noFields" class="alert alert-info mt-3 mb-0">{{ 'call_manage.labels.no_details' | translate }}</div>
       </div>
-    </form>
+    </div>
+
     <app-layout-wait [loaded]="labels"></app-layout-wait>
     <div *ngIf="labels && labels.length === 0" class="alert alert-light" translate>no_item</div>
     <div class="table-responsive" *ngIf="labels && labels.length">
-      <table class="table table-sm table-hover">
+      <table class="table table-sm table-hover align-middle">
         <thead>
           <tr>
-            <th translate>call_manage.labels.key</th>
             <th translate>call_manage.labels.old_label</th>
             <th translate>call_manage.labels.new_label</th>
             <th></th>
@@ -139,9 +178,8 @@ export class CallChildrenComponent extends CallPageBase {
         </thead>
         <tbody>
           <tr *ngFor="let label of labels">
-            <td class="font-monospace small">{{label.key}}</td>
-            <td>{{label.oldLabel}}</td>
-            <td class="fw-semibold">{{label.newLabel}}</td>
+            <td>{{label.oldLabel || label.key}}<div class="font-monospace small text-muted">{{label.key}}</div></td>
+            <td class="fw-semibold pre-line">{{label.newLabel}}</td>
             <td class="text-end text-nowrap">
               <button class="btn btn-link btn-sm" (click)="onEdit(label)" translate>edit</button>
               <button class="btn btn-link btn-sm text-danger" (click)="onDelete(label)" translate>delete</button>
@@ -150,36 +188,62 @@ export class CallChildrenComponent extends CallPageBase {
         </tbody>
       </table>
     </div>
-  `
+  `,
+  styles: [`.pre-line { white-space: pre-line; }`]
 })
 export class CallLabelsComponent extends CallPageBase {
   public labels: {key: string, oldLabel: string, newLabel: string}[];
-  public suggestedKeys: string[] = [];
+  /** Tipologie: sezioni della domanda e dichiarazioni, allegati, curriculum, prodotti e schede del bando. */
+  public types: {key: string, label: string}[] = [];
+  public selectedType: {key: string, label: string} = null;
+  public fields: {key: string, label: string}[] = [];
+  public editing: 'type' | 'field' = null;
+  public loadingFields = false;
+  public noFields = false;
   public form: FormGroup;
 
-  private static AFFIX = [
-    'F:jconon_application:folder', 'affix_tabAnagrafica', 'affix_tabResidenza', 'affix_tabDichiarazioni', 'affix_tabTitoli',
-    'affix_tabReperibilita', 'affix_tabDichiarazioniConclusive', 'affix_tabCurriculum', 'affix_tabCurriculum_ulteriore',
-    'affix_tabElencoProdotti', 'affix_tabProdottiScelti', 'affix_tabSchedaAnonima', 'affix_tabDatiCNR',
-    'affix_tabUlterioriDati', 'affix_tabSezione4', 'affix_tabSezione5'
+  /** Sezioni della domanda, come nel legacy. */
+  private static SECTIONS = [
+    ['F:jconon_application:folder', 'Domanda'], ['affix_tabAnagrafica', 'Dati Anagrafici'], ['affix_tabResidenza', 'Dati Residenza'],
+    ['affix_tabDichiarazioni', 'Dichiarazioni'], ['affix_tabTitoli', 'Allegati Vari'], ['affix_tabReperibilita', 'Reperibilità'],
+    ['affix_tabDichiarazioniConclusive', 'Dichiarazioni Sostitutive'], ['affix_tabCurriculum', 'A) Curriculum'],
+    ['affix_tabCurriculum_ulteriore', 'A1) Curriculum'], ['affix_tabElencoProdotti', 'B) Elenco prodotti'],
+    ['affix_tabProdottiScelti', 'C) Prodotti scelti'], ['affix_tabSchedaAnonima', 'Scheda Anonima Sintetica'],
+    ['affix_tabDatiCNR', 'Dati CNR'], ['affix_tabUlterioriDati', 'Dati Preselezione'], ['affix_tabSezione4', 'Dati Sezione 4'],
+    ['affix_tabSezione5', 'Dati Sezione 5']
   ];
+
+  private readonly http = inject(HttpClient);
+  private readonly configService = inject(ConfigService);
 
   constructor(route: ActivatedRoute, callService: CallService, modalService: ModalService,
               private manageCallService: ManageCallService, private formBuilder: FormBuilder,
               private translateService: TranslateService, private apiMessageService: ApiMessageService) {
     super(route, callService, modalService);
-    this.form = this.formBuilder.group({ key: ['', Validators.required], newLabel: ['', Validators.required] });
+    this.form = this.formBuilder.group({ key: ['', Validators.required], oldLabel: [''], newLabel: ['', Validators.required] });
   }
 
   protected onCallLoaded(): void {
     const call: any = this.call;
-    const keys = new Set<string>(CallLabelsComponent.AFFIX);
-    ['elenco_aspects', 'elenco_aspects_sezione_cnr', 'elenco_aspects_ulteriori_dati', 'elenco_aspects_sezione_4',
-     'elenco_aspects_sezione_5', 'elenco_association', 'elenco_sezioni_curriculum', 'elenco_sezioni_curriculum_ulteriore',
-     'elenco_prodotti', 'elenco_schede_anonime', 'elenco_sezioni_domanda']
-      .forEach(field => (call[field] || []).forEach(key => keys.add(key)));
-    this.suggestedKeys = Array.from(keys);
-    this.manageCallService.callManagementCache().subscribe();
+    this.manageCallService.callManagementCache().subscribe((cache: any) => {
+      const label = (list: any[], key: string) => {
+        const item = (list || []).find(i => i.key === key);
+        const translated = this.translateService.instant(key);
+        return (item && (item.defaultLabel || item.label)) || (translated !== key ? translated : key);
+      };
+      const from = (fields: string[], list: any[]) => fields
+        .reduce((keys, field) => keys.concat(call[field] || []), [] as string[])
+        .map((key: string) => ({ key, label: label(list, key) }));
+      const types = CallLabelsComponent.SECTIONS.map(([key, text]) => ({ key, label: text }))
+        .concat(from(['elenco_aspects', 'elenco_aspects_sezione_cnr', 'elenco_aspects_ulteriori_dati', 'elenco_aspects_sezione_4',
+          'elenco_aspects_sezione_5'], cache?.jsonlistApplicationAspects))
+        .concat(from(['elenco_association', 'winner_elenco_file'], cache?.jsonlistApplicationAttachments))
+        .concat(from(['elenco_schede_anonime'], cache?.jsonlistApplicationSchedeAnonime))
+        .concat(from(['elenco_sezioni_curriculum', 'elenco_sezioni_curriculum_ulteriore'], cache?.jsonlistApplicationCurriculums))
+        .concat(from(['elenco_prodotti'], cache?.jsonlistApplicationProdotti));
+      const seen = new Set<string>();
+      this.types = types.filter(type => !seen.has(type.key) && !!seen.add(type.key));
+    });
     this.load();
   }
 
@@ -192,27 +256,83 @@ export class CallLabelsComponent extends CallPageBase {
     }, () => this.labels = []);
   }
 
-  onChangeKey() {
-    const existing = (this.labels || []).find(label => label.key === this.form.value.key);
-    if (existing) {
-      this.form.patchValue({ newLabel: existing.newLabel });
-    }
+  onType() {
+    this.cancel();
   }
 
-  onEdit(label: {key: string, newLabel: string}) {
-    this.form.setValue({ key: label.key, newLabel: label.newLabel || '' });
+  /** Nome della tipologia scelta. */
+  editType() {
+    this.noFields = false;
+    const existing = (this.labels || []).find(l => l.key === this.selectedType.key);
+    this.form.reset({ key: this.selectedType.key, oldLabel: this.selectedType.label, newLabel: existing ? existing.newLabel : this.selectedType.label });
+    this.editing = 'type';
+  }
+
+  /**
+   * Campi della tipologia dal bulkinfo, come il pulsante "Dettagli" del legacy: per una dichiarazione (P:...) il suo
+   * form, per la domanda i form delle sezioni anagrafiche, per gli allegati il form "default".
+   */
+  showFields() {
+    const key = this.selectedType.key;
+    const formName = key.startsWith('P:') ? key : (key === 'F:jconon_application:folder'
+      ? 'affix_tabAnagrafica,affix_tabResidenza,affix_tabReperibilita,affix_tabDichiarazioniConclusive' : 'default');
+    this.loadingFields = true;
+    this.noFields = false;
+    this.configService.getGateway().pipe(
+      switchMap(gateway => this.http.get<any>(gateway + '/rest/bulkInfo/view/' + encodeURIComponent(key) + '/form/' +
+        encodeURIComponent(formName), { params: { guest: 'true' } }))
+    ).subscribe(view => {
+      this.loadingFields = false;
+      const fields: {key: string, label: string}[] = [];
+      (view && view.forms || []).forEach((name: string) => Object.values(view[name] || {}).forEach((el: any) => {
+        const labelKey = el && (el.label || (el.jsonlabel && el.jsonlabel.key));
+        if (labelKey && !fields.some(f => f.key === labelKey)) {
+          const translated = this.translateService.instant(labelKey);
+          fields.push({ key: labelKey, label: translated !== labelKey ? translated : ((el.jsonlabel && el.jsonlabel.default) || labelKey) });
+        }
+      }));
+      if (!fields.length) {
+        this.noFields = true;
+        this.editing = null;
+        return;
+      }
+      this.fields = fields;
+      this.form.reset({ key: '', oldLabel: '', newLabel: '' });
+      this.editing = 'field';
+    }, () => {
+      this.loadingFields = false;
+      this.noFields = true;
+    });
+  }
+
+  onField() {
+    const field = this.fields.find(f => f.key === this.form.value.key);
+    const existing = (this.labels || []).find(l => l.key === this.form.value.key);
+    this.form.patchValue({ oldLabel: field ? field.label : '', newLabel: existing ? existing.newLabel : (field ? field.label : '') });
+  }
+
+  onEdit(label: {key: string, oldLabel: string, newLabel: string}) {
+    this.noFields = false;
+    this.form.reset({ key: label.key, oldLabel: label.oldLabel, newLabel: label.newLabel || '' });
+    this.editing = 'type';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  cancel() {
+    this.editing = null;
+    this.noFields = false;
+    this.form.reset({ key: '', oldLabel: '', newLabel: '' });
+  }
+
   onSave() {
-    const key = this.form.value.key.trim();
+    const value = this.form.value;
     this.manageCallService.saveLabel(this.callId, {
-      key,
-      oldLabel: this.translateService.instant(key),
-      newLabel: this.form.value.newLabel
+      key: String(value.key).trim(),
+      oldLabel: value.oldLabel || this.translateService.instant(value.key),
+      newLabel: value.newLabel
     }).subscribe(() => {
       this.apiMessageService.sendMessage(MessageType.SUCCESS, 'call_manage.saved');
-      this.form.reset({ key: '', newLabel: '' });
+      this.cancel();
       this.load();
     });
   }
