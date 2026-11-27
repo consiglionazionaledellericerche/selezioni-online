@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Call } from './call.model';
 import { CallService } from './call.service';
+import { ManageCallService } from './manage-call.service';
 
 /**
  * Dettaglio pubblico di un bando (ex pagina call-detail di cool-jconon), raggiungibile senza autenticazione
@@ -90,6 +91,29 @@ import { CallService } from './call.service';
             </div>
           </section>
 
+          <!-- bandi della selezione (macro-bando): visibili anche a chi non ha effettuato l'accesso -->
+          <section *ngIf="children?.length" class="card shadow-sm rounded mb-4 detail-card">
+            <div class="card-body">
+              <h2 class="h5 text-primary">{{ 'call_manage.children.public_title' | translate }} ({{ children.length }})</h2>
+              <ul class="list-unstyled mb-0 child-calls">
+                <li *ngFor="let child of children" class="py-3">
+                  <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                    <a class="fw-semibold" [routerLink]="['/call-detail']" [queryParams]="{ callId: child.objectId }">{{ child.codice }}</a>
+                    <span class="badge rounded-pill" [ngClass]="isOpen(child) ? 'bg-success' : 'bg-secondary'">
+                      {{ (isOpen(child) ? 'call.open' : 'call.closed') | translate }}</span>
+                  </div>
+                  <div *ngIf="child.profilo" class="small">{{ child.profilo }}</div>
+                  <div *ngIf="child.sede || child.struttura_destinataria" class="small text-secondary">
+                    {{ text(child.sede, child.sede_en) }}<ng-container *ngIf="child.sede && child.struttura_destinataria"> · </ng-container>{{ text(child.struttura_destinataria, child.struttura_destinataria_en) }}
+                  </div>
+                  <div *ngIf="child.data_fine_invio_domande" class="small text-secondary">
+                    {{ 'layout.call_deadline' | translate }}: {{ child.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm' }}
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+
           <app-call-attachments [callId]="call.objectId"></app-call-attachments>
         </div>
 
@@ -157,6 +181,7 @@ import { CallService } from './call.service';
       border-radius: 8px; background: #fff6e5; color: #5c3a00; }
     .detail-list dd { margin-bottom: .75rem; }
     .side-card { border-top: 4px solid var(--app-primary); }
+    .child-calls li + li { border-top: 1px solid #e3e4e6; }
     @media (min-width: 992px) { .detail-sticky { position: sticky; top: 1.5rem; } }
   `]
 })
@@ -164,6 +189,8 @@ export class CallDetailPageComponent implements OnInit {
   public static ROUTE = 'call-detail';
 
   public call: Call;
+  /** Bandi figli del macro-bando, pubblicati (per chi non gestisce il bando). */
+  public children: Call[];
   public code: string;
   public loaded = false;
 
@@ -171,6 +198,7 @@ export class CallDetailPageComponent implements OnInit {
     private route: ActivatedRoute,
     public router: Router,
     private callService: CallService,
+    private manageCallService: ManageCallService,
     public translateService: TranslateService
   ) {}
 
@@ -192,7 +220,20 @@ export class CallDetailPageComponent implements OnInit {
     ).subscribe(call => {
       this.call = call;
       this.loaded = true;
+      this.children = undefined;
+      if (call && ManageCallService.isMacroCall(call)) {
+        this.manageCallService.children(call.objectId).subscribe(children => this.children = (children || [])
+          .sort((a, b) => String(a.codice).localeCompare(String(b.codice))), () => this.children = []);
+      }
     }, () => this.loaded = true);
+  }
+
+  /** Bando aperto: pubblicato e dentro i termini di presentazione delle domande. */
+  public isOpen(call: Call): boolean {
+    const now = new Date();
+    const start = call.data_inizio_invio_domande ? new Date(call.data_inizio_invio_domande as any) : null;
+    const end = call.data_fine_invio_domande ? new Date(call.data_fine_invio_domande as any) : null;
+    return (!start || start <= now) && (!end || end >= now);
   }
 
   /** Testo nella lingua corrente, con ripiego sull'italiano. */
