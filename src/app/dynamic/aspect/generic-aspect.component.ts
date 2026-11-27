@@ -33,6 +33,11 @@ interface GenericField {
    * Le caselle (ui.checkbox) e ui.mandatory.radio richiedono invece "Sì".
    */
   yesNo?: boolean;
+  /**
+   * Layout orizzontale del legacy (labelClass "spanN" nella description del modello, es. il posizionamento):
+   * etichetta a sinistra e campo stretto a destra.
+   */
+  horizontal?: boolean;
 }
 
 /**
@@ -50,7 +55,14 @@ export const GENERIC_FIELDS_STYLES = `
     .generic-group { margin: .5rem 0; border-radius: 6px; }
     .generic-group.open { padding: .25rem .9rem .9rem; background: #f5f8fb; border: 1px solid #e3e8ee; }
     .generic-group-body { margin-top: -.25rem; }
-    @media (max-width: 767.98px) { .generic-grid { grid-template-columns: minmax(0, 1fr); } }
+    .generic-field.horizontal { border-bottom: 1px solid #e3e8ee; }
+    .generic-field.horizontal .select-wrapper.horizontal-select { display: flex; align-items: center; gap: 1.5rem; margin-top: 0; padding: .6rem 0; }
+    .horizontal-select label { position: static; transform: none; flex: 1 1 auto; margin: 0; font-size: 1rem; font-weight: 400; white-space: normal; }
+    .horizontal-select select { flex: 0 0 8rem; width: 8rem; }
+    @media (max-width: 767.98px) {
+      .generic-grid { grid-template-columns: minmax(0, 1fr); }
+      .generic-field.horizontal .select-wrapper.horizontal-select { flex-wrap: wrap; gap: .5rem; }
+    }
     /* etichette personalizzate del bando con HTML (titoli, note, simbolo "?" con suggerimento) */
     :host ::ng-deep label.textarea-label { position: static !important; transform: none !important; display: block; width: auto;
       font-size: 1rem; font-weight: 600; color: inherit; white-space: normal; margin-bottom: .5rem; padding: 0; pointer-events: auto; }
@@ -70,7 +82,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
         <ng-container *ngFor="let group of groups()">
           <!-- interruttore con i suoi campi dipendenti, in un riquadro visibile solo se attivo -->
           <div *ngIf="group.head" class="generic-group" [class.open]="groupOpen(group)">
-            <ng-container *ngFor="let field of [group.head]"><div class="generic-field" [class.wide]="isWide(field)">
+            <ng-container *ngFor="let field of [group.head]"><div class="generic-field" [class.wide]="isWide(field)" [class.horizontal]="field.horizontal && field.kind === 'select'">
             <ng-container [ngSwitch]="field.kind">
               <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)" [yesNo]="!!field.yesNo"
                 [formControlName]="field.property"></app-control-toggle>
@@ -84,7 +96,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
                 <app-control-select-model [inline]="true" [multiple]="true" [labelactive]="'true'" [label]="fieldLabel(field)"
                   [strings]="optionValues(field)" [formControlName]="field.property"></app-control-select-model>
               </div>
-              <div *ngSwitchCase="'select'" class="select-wrapper">
+              <div *ngSwitchCase="'select'" class="select-wrapper" [class.horizontal-select]="field.horizontal">
                 <label [for]="id(field)"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></label>
                 <select [id]="id(field)" [formControlName]="field.property">
                   <option value=""></option>
@@ -107,7 +119,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
           </div></ng-container>
             <div class="generic-grid generic-group-body" *ngIf="groupOpen(group)">
               <ng-container *ngFor="let field of group.fields">
-                <ng-container *ngIf="isVisible(field)"><div class="generic-field" [class.wide]="isWide(field)">
+                <ng-container *ngIf="isVisible(field)"><div class="generic-field" [class.wide]="isWide(field)" [class.horizontal]="field.horizontal && field.kind === 'select'">
             <ng-container [ngSwitch]="field.kind">
               <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)" [yesNo]="!!field.yesNo"
                 [formControlName]="field.property"></app-control-toggle>
@@ -121,7 +133,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
                 <app-control-select-model [inline]="true" [multiple]="true" [labelactive]="'true'" [label]="fieldLabel(field)"
                   [strings]="optionValues(field)" [formControlName]="field.property"></app-control-select-model>
               </div>
-              <div *ngSwitchCase="'select'" class="select-wrapper">
+              <div *ngSwitchCase="'select'" class="select-wrapper" [class.horizontal-select]="field.horizontal">
                 <label [for]="id(field)"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></label>
                 <select [id]="id(field)" [formControlName]="field.property">
                   <option value=""></option>
@@ -148,7 +160,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
           <!-- campi indipendenti -->
           <div *ngIf="!group.head" class="generic-grid">
             <ng-container *ngFor="let field of group.fields">
-              <ng-container *ngIf="isVisible(field)"><div class="generic-field" [class.wide]="isWide(field)">
+              <ng-container *ngIf="isVisible(field)"><div class="generic-field" [class.wide]="isWide(field)" [class.horizontal]="field.horizontal && field.kind === 'select'">
             <ng-container [ngSwitch]="field.kind">
               <app-control-toggle *ngSwitchCase="'toggle'" [inline]="true" [label]="fieldLabel(field)" [yesNo]="!!field.yesNo"
                 [formControlName]="field.property"></app-control-toggle>
@@ -162,7 +174,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
                 <app-control-select-model [inline]="true" [multiple]="true" [labelactive]="'true'" [label]="fieldLabel(field)"
                   [strings]="optionValues(field)" [formControlName]="field.property"></app-control-select-model>
               </div>
-              <div *ngSwitchCase="'select'" class="select-wrapper">
+              <div *ngSwitchCase="'select'" class="select-wrapper" [class.horizontal-select]="field.horizontal">
                 <label [for]="id(field)"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></label>
                 <select [id]="id(field)" [formControlName]="field.property">
                   <option value=""></option>
@@ -404,6 +416,23 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
   }
 
   /**
+   * Etichetta dei campi generati dal modello: { key: "label.<tipo>.<proprietà>", default: <title del modello> }.
+   * Se la chiave è tradotta vale la traduzione, altrimenti il title del modello (non il nome della proprietà).
+   */
+  protected jsonLabel(def: any): string {
+    const jsonlabel = def && def.jsonlabel;
+    if (!jsonlabel) {
+      return undefined;
+    }
+    const key = typeof jsonlabel === 'string' ? jsonlabel : jsonlabel.key;
+    const fallback = typeof jsonlabel === 'string' ? undefined : (jsonlabel['default'] || jsonlabel.defaultLabel);
+    if (key && this.translateService.instant(key) !== key) {
+      return key;
+    }
+    return fallback || key;
+  }
+
+  /**
    * Etichetta per proprietà che nel bulkinfo legacy non ne hanno una (resa da widget dedicati, es. ui.protocollo):
    * chiave "label.<prefisso>_<nome>" se tradotta.
    */
@@ -589,6 +618,13 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
         (!widget.includes('radio') && inputType === 'CHECKBOX');
       const yesNo = kind === 'toggle' && required && radio && !mustBeTrue;
       let value = def.val !== undefined && def.val !== null ? def.val : null;
+      // valore predefinito del modello (es. "0%" del posizionamento), solo se tra le opzioni o per i testi
+      const defaultValue = Array.isArray(def.default) ? def.default[0] : def.default;
+      if ((value === null || value === '') && defaultValue !== undefined && defaultValue !== null && defaultValue !== '' &&
+          (kind === 'select' || kind === 'segmented' || kind === 'text') &&
+          (kind === 'text' || options.some(o => o.value === String(defaultValue)))) {
+        value = String(defaultValue);
+      }
       if (kind === 'toggle') {
         const raw = Array.isArray(value) ? value[0] : value;
         value = yesNo && (raw === null || raw === undefined || raw === '') ? null :
@@ -626,8 +662,9 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       });
       const time = kind === 'date' && (widget.includes('datetime') || /H/.test(String(def.format || '')));
       const protocollo = kind === 'text' && (widget.includes('protocollo') || property === 'jconon_protocollo:numero');
-      this.fields.push({ name, property, showWhen, label: def.label || def.jsonlabel?.key || this.knownLabel(property) || property,
-        kind, options, required, time, protocollo, yesNo });
+      const horizontal = /\bspan\d+\b/.test(String(def.labelClass || ''));
+      this.fields.push({ name, property, showWhen, label: def.label || this.jsonLabel(def) || this.knownLabel(property) || property,
+        kind, options, required, time, protocollo, yesNo, horizontal });
     });
     this.applyVisibility();
     // aggiorna la visibilità dei campi dipendenti quando cambia il campo da cui dipendono

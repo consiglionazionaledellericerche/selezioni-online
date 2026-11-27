@@ -9,7 +9,7 @@ import { AffixComponent } from './affix.component';
     template: `
       <form [formGroup]="form" *ngIf="isLoaded() && cache !== undefined" class="pb-2">
         <div class="it-list-wrapper">
-          <ul class="it-list ps-2">
+          <ul class="it-list ps-2" [class.unnumbered]="!numbered">
             <ng-container *ngFor="let aspect of data.call[callProperty]">
               <li class="shadow-sm p-0 mb-1 bg-white" *ngIf="isShow(aspect)">
                   <show-affix #dichiarazioniComponent [form]="form" [cmisObject]="data" [type]="aspect"></show-affix>
@@ -21,7 +21,8 @@ import { AffixComponent } from './affix.component';
     `,
     styles: [
       'ul.it-list {list-style-type: upper-alpha;}',
-      'ul.it-list li::marker {font-weight: bold;}'
+      'ul.it-list li::marker {font-weight: bold;}',
+      'ul.it-list.unnumbered {list-style-type: none; padding-left: 0 !important;}'
     ]
   })
 export class JcononAffixDichiarazioniComponent extends AffixComponent {
@@ -34,6 +35,8 @@ export class JcononAffixDichiarazioniComponent extends AffixComponent {
     }
     cache: any;
     public callProperty: string;
+    /** Aspect elencati con le lettere A, B, C… (le sezioni 4 e 5 del legacy non le hanno). */
+    public numbered = true;
 
     @ViewChildren('dichiarazioniComponent') dichiarazioniComponents: ShowAffixComponent[];
     ngOnInit(): void {

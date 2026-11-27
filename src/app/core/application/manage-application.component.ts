@@ -62,9 +62,9 @@ import { PrintApplicationComponent } from './print-application.component';
           <span class="ps-1">{{entity.cognome|uppercase}}</span>
           <span class="ps-1">{{entity.nome|uppercase}}</span>
         </h5>
-        <h5 class="text-center" *ngIf="call.objectTypeId == 'F:jconon_call_employees:folder'">
-          <span>{{'user.matricola_value' | translate:{value: user.matricola||''} }}</span>
-          <span class="ps-1">{{'user.email_value' | translate:{value: entity.email_comunicazioni} }}</span>
+        <h5 class="text-center" *ngIf="call.objectTypeId == 'F:jconon_call_employees:folder' && (user?.matricola || entity.email_comunicazioni)">
+          <span *ngIf="user?.matricola">{{'user.matricola_value' | translate:{value: user.matricola} }}</span>
+          <span class="ps-1" *ngIf="entity.email_comunicazioni">{{'user.email_value' | translate:{value: entity.email_comunicazioni} }}</span>
         </h5>
         <h5 class="text-center" *ngIf="call.objectTypeId != 'F:jconon_call_mobility_open:folder'">
           {{'application.richiesta.partecipazione'| translate}}
@@ -97,6 +97,8 @@ import { PrintApplicationComponent } from './print-application.component';
           <div><strong>{{ 'application.preview.title' | translate }}</strong> — {{ 'application.preview.info' | translate }}</div>
         </div>
         <div class="card-body mt-2">  
+          <div *ngIf="sectionIntro(call.elenco_sezioni_domanda[affixCompleted]) as intro" class="section-intro mx-3 mt-3 small"
+            [innerHTML]="intro"></div>
           <show-affix #affixComponent [form]="form" [cmisObject]="entity" [type]="call.elenco_sezioni_domanda[affixCompleted]"></show-affix>
           <div class="steppers">
             <nav class="steppers-nav px-0">
@@ -517,11 +519,40 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     this.subscription.unsubscribe();
   }
 
+  /** Righe di un'etichetta personalizzata (testo o HTML), divise dopo gli a capo, i <br> e la fine dei blocchi. */
+  private labelLines(key: string): string[] {
+    const label = this.translateService.instant(key || '');
+    if (!label || label === key) {
+      return [];
+    }
+    return String(label)
+      .replace(/<br\s*\/?>|<\/(p|div|h[1-6]|li|ul|ol|table|tr)>/gi, match => match + '\n')
+      .split(/\r?\n/);
+  }
+
+  /** Testo introduttivo della sezione: l'etichetta personalizzata dopo la prima riga (che è il nome della scheda). */
+  public sectionIntro(key: string): string {
+    const lines = this.labelLines(key);
+    const first = lines.findIndex(line => !!Helpers.stripHtml(line));
+    if (first < 0) {
+      return '';
+    }
+    const rest = lines.slice(first + 1).join('\n').trim();
+    if (!Helpers.stripHtml(rest)) {
+      return '';
+    }
+    // testo semplice: gli a capo diventano <br> (l'HTML resta com'è)
+    return /<[a-z][^>]*>/i.test(rest) ? rest : rest.replace(/\r?\n/g, '<br>');
+  }
+
   /** Nome della sezione nella scheda, senza il prefisso "Sezione I - " (il numero è già nel cerchio). */
   public tabLabel(key: string): string {
     const label = this.translateService.instant(key || '') || key;
-    // le etichette personalizzate possono contenere HTML: nella scheda solo il testo
-    const text = Helpers.stripHtml(String(label))
+    // le etichette personalizzate possono contenere HTML e un testo introduttivo dopo il titolo
+    // (righe, <br> o blocchi successivi): nella scheda solo il testo della prima riga
+    const firstLine = this.labelLines(key).map(line => Helpers.stripHtml(line)).find(line => !!line) ||
+      Helpers.stripHtml(String(label)) || String(key);
+    const text = firstLine
       .replace(/^\s*(sezione|section)\s+[ivxlcdm\d]+\s*[-–:.]\s*/i, '')
       .replace(/^\s*(sezione|section)\s+/i, '');
     // nomi tutti in maiuscolo: in forma normale, più leggibili e meno larghi nelle schede

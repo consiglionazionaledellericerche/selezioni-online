@@ -163,6 +163,22 @@ export class DynamicService {
             callProperty : "elenco_aspects_ulteriori_dati"
           }
         },
+        'affix_tabSezione4' : {
+          model: Application,
+          showcomponent: JcononAffixDichiarazioniComponent,
+          params: {
+            callProperty : "elenco_aspects_sezione_4",
+            numbered: false
+          }
+        },
+        'affix_tabSezione5' : {
+          model: Application,
+          showcomponent: JcononAffixDichiarazioniComponent,
+          params: {
+            callProperty : "elenco_aspects_sezione_5",
+            numbered: false
+          }
+        },
         'affix_tabCurriculum' : {
           model: Application,
           showcomponent: JcononAffixAllegatiComponent,
