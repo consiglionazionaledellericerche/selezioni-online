@@ -636,7 +636,8 @@
       "info": "Il nuovo bando eredita tutte le impostazioni del bando {{value}}, tranne commissione e responsabili."
     },
     "children": {
-      "title": "Bandi figli"
+      "title": "Bandi figli",
+      "public_title": "Bandi della selezione"
     },
     "attachments": {
       "link_children": "Collega ai bandi figli",
@@ -978,7 +979,9 @@
     "menuitem": {
       "application": "Domande",
       "update": "Modifica"
-    }
+    },
+    "open": "Aperto",
+    "closed": "Chiuso"
   },
   "application": {
     "error_title": "Impossibile aprire la domanda",

@@ -443,7 +443,8 @@
       "info": "The new call inherits all settings of call {{value}}, except commission and managers."
     },
     "children": {
-      "title": "Child calls"
+      "title": "Child calls",
+      "public_title": "Calls of the selection"
     },
     "attachments": {
       "link_children": "Link to child calls",
@@ -1472,7 +1473,9 @@
       "inpa": "Publication on inPA",
       "graduatoria": "Ranking publication",
       "numero_posti": "Number of positions (at least)"
-    }
+    },
+    "open": "Open",
+    "closed": "Closed"
   },
   "D:jconon_attachment:document": "Allegati alla domanda di concorso",
   "D:jconon_attachment:call_abstract": "Allegato astratto al Bando di concorso",
