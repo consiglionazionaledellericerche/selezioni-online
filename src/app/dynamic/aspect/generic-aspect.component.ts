@@ -51,6 +51,18 @@ export const GENERIC_FIELDS_STYLES = `
     .generic-group.open { padding: .25rem .9rem .9rem; background: #f5f8fb; border: 1px solid #e3e8ee; }
     .generic-group-body { margin-top: -.25rem; }
     @media (max-width: 767.98px) { .generic-grid { grid-template-columns: minmax(0, 1fr); } }
+    /* etichette personalizzate del bando con HTML (titoli, note, simbolo "?" con suggerimento) */
+    :host ::ng-deep label.textarea-label { position: static !important; transform: none !important; display: block; width: auto;
+      font-size: 1rem; font-weight: 600; color: inherit; white-space: normal; margin-bottom: .5rem; padding: 0; pointer-events: auto; }
+    :host ::ng-deep .rich-label :is(h1, h2, h3, h4, h5, h6), :host ::ng-deep label :is(h1, h2, h3, h4, h5, h6) {
+      display: inline; font-size: 1.05rem; font-weight: 700; margin: 0 .25rem 0 0; color: inherit; }
+    :host ::ng-deep .rich-label sub, :host ::ng-deep label sub { display: block; vertical-align: baseline; font-size: .85rem;
+      font-weight: 400; color: #5d7083; margin-top: .15rem; }
+    :host ::ng-deep .rich-label i[title], :host ::ng-deep label i[title] { display: inline-flex; align-items: center;
+      justify-content: center; width: 1.15rem; height: 1.15rem; margin-right: .35rem; border-radius: 50%;
+      background: var(--app-primary, #0066cc); color: #fff; font-style: normal; font-size: .75rem; font-weight: 700;
+      cursor: help; vertical-align: middle; }
+    :host ::ng-deep .rich-label i[title]:empty::before, :host ::ng-deep label i[title]:empty::before { content: "?"; }
 `;
 
 /** Campi del bulkinfo resi come controlli del form (condiviso da aspect e allegati generici). */
@@ -65,7 +77,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
               <app-control-toggle *ngSwitchCase="'aspect'" [inline]="true" [label]="labelOf(field.label)"
                 [formControl]="field.control"></app-control-toggle>
               <div *ngSwitchCase="'segmented'">
-                <span class="small fw-semibold d-block mb-1">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></span>
+                <span class="small fw-semibold d-block mb-1 rich-label"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></span>
                 <app-segmented [options]="field.options" [formControlName]="field.property"></app-segmented>
               </div>
               <div *ngSwitchCase="'multiselect'" class="form-group mb-0">
@@ -73,14 +85,14 @@ export const GENERIC_FIELDS_TEMPLATE = `
                   [strings]="optionValues(field)" [formControlName]="field.property"></app-control-select-model>
               </div>
               <div *ngSwitchCase="'select'" class="select-wrapper">
-                <label [for]="id(field)">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></label>
+                <label [for]="id(field)"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></label>
                 <select [id]="id(field)" [formControlName]="field.property">
                   <option value=""></option>
                   <option *ngFor="let o of field.options" [value]="o.value">{{ labelOf(o.label) }}</option>
                 </select>
               </div>
               <div *ngSwitchCase="'textarea'" class="form-group mb-0">
-                <label [for]="id(field)" class="active">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></label>
+                <label [for]="id(field)" class="rich-label textarea-label"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></label>
                 <textarea [id]="id(field)" class="form-control" rows="3" [formControlName]="field.property"></textarea>
               </div>
               <div *ngSwitchCase="'date'" class="form-group mb-0">
@@ -102,7 +114,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
               <app-control-toggle *ngSwitchCase="'aspect'" [inline]="true" [label]="labelOf(field.label)"
                 [formControl]="field.control"></app-control-toggle>
               <div *ngSwitchCase="'segmented'">
-                <span class="small fw-semibold d-block mb-1">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></span>
+                <span class="small fw-semibold d-block mb-1 rich-label"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></span>
                 <app-segmented [options]="field.options" [formControlName]="field.property"></app-segmented>
               </div>
               <div *ngSwitchCase="'multiselect'" class="form-group mb-0">
@@ -110,14 +122,14 @@ export const GENERIC_FIELDS_TEMPLATE = `
                   [strings]="optionValues(field)" [formControlName]="field.property"></app-control-select-model>
               </div>
               <div *ngSwitchCase="'select'" class="select-wrapper">
-                <label [for]="id(field)">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></label>
+                <label [for]="id(field)"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></label>
                 <select [id]="id(field)" [formControlName]="field.property">
                   <option value=""></option>
                   <option *ngFor="let o of field.options" [value]="o.value">{{ labelOf(o.label) }}</option>
                 </select>
               </div>
               <div *ngSwitchCase="'textarea'" class="form-group mb-0">
-                <label [for]="id(field)" class="active">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></label>
+                <label [for]="id(field)" class="rich-label textarea-label"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></label>
                 <textarea [id]="id(field)" class="form-control" rows="3" [formControlName]="field.property"></textarea>
               </div>
               <div *ngSwitchCase="'date'" class="form-group mb-0">
@@ -143,7 +155,7 @@ export const GENERIC_FIELDS_TEMPLATE = `
               <app-control-toggle *ngSwitchCase="'aspect'" [inline]="true" [label]="labelOf(field.label)"
                 [formControl]="field.control"></app-control-toggle>
               <div *ngSwitchCase="'segmented'">
-                <span class="small fw-semibold d-block mb-1">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></span>
+                <span class="small fw-semibold d-block mb-1 rich-label"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></span>
                 <app-segmented [options]="field.options" [formControlName]="field.property"></app-segmented>
               </div>
               <div *ngSwitchCase="'multiselect'" class="form-group mb-0">
@@ -151,14 +163,14 @@ export const GENERIC_FIELDS_TEMPLATE = `
                   [strings]="optionValues(field)" [formControlName]="field.property"></app-control-select-model>
               </div>
               <div *ngSwitchCase="'select'" class="select-wrapper">
-                <label [for]="id(field)">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></label>
+                <label [for]="id(field)"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></label>
                 <select [id]="id(field)" [formControlName]="field.property">
                   <option value=""></option>
                   <option *ngFor="let o of field.options" [value]="o.value">{{ labelOf(o.label) }}</option>
                 </select>
               </div>
               <div *ngSwitchCase="'textarea'" class="form-group mb-0">
-                <label [for]="id(field)" class="active">{{ labelOf(field.label) }}<span *ngIf="field.required"> *</span></label>
+                <label [for]="id(field)" class="rich-label textarea-label"><span [innerHTML]="labelOf(field.label)"></span><span *ngIf="field.required"> *</span></label>
                 <textarea [id]="id(field)" class="form-control" rows="3" [formControlName]="field.property"></textarea>
               </div>
               <div *ngSwitchCase="'date'" class="form-group mb-0">

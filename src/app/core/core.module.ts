@@ -1,3 +1,4 @@
+import { CallParentComponent } from './call/call-parent.component';
 import { ContentLinksDirective } from './frontoffice/content-links.directive';
 import { ExamSessionsComponent } from './call/manage/exam-sessions.component';
 import { CallScoresComponent } from './call/manage/call-scores.component';
@@ -98,6 +99,7 @@ import { CustomTranslationCompiler } from '../common/helpers/translation-compile
         BadRequestComponent,
     ],
     imports: [
+        CallParentComponent,
         AuthorityPickerComponent,
         ContentLinksDirective,
         DateTileComponent,

@@ -36,6 +36,8 @@ import { ManageCallService } from './manage-call.service';
           </div>
           <h1 class="h2 text-primary mb-1">{{ call.codice }}</h1>
           <p *ngIf="call.profilo" class="lead mb-0">{{ call.profilo }}</p>
+          <!-- bando figlio: il bando multiplo di cui fa parte -->
+          <app-call-parent [call]="call"></app-call-parent>
         </div>
       </div>
 

@@ -444,7 +444,12 @@
     },
     "children": {
       "title": "Child calls",
-      "public_title": "Calls of the selection"
+      "public_title": "Calls of the selection",
+      "macro_info": "This selection includes several calls: choose the call you want to apply for.",
+      "show": "Show the calls of the selection",
+      "hide": "Hide the calls",
+      "macro_info_closed": "This selection includes several calls.",
+      "parent": "Main call"
     },
     "attachments": {
       "link_children": "Link to child calls",

@@ -1,3 +1,5 @@
+import { ASPECT_CONTROL_PREFIX } from '../../core/call/manage-call.service';
+import { ASPECT_MACRO_CALL, hasAspect } from './call-settings.component';
 import { CallSectionFields } from '../../core/call/call-section-fields';
 import { CallBulkinfoService } from '../../core/call/call-bulkinfo.service';
 import { BRAND } from '../../../brand/brand';
@@ -27,6 +29,11 @@ import { Sede } from '../../common/model/sede.model';
         <fieldset class="form-block">
           <legend class="form-block-title">{{ 'call_manage.block.identification' | translate }}</legend>
           <div class="row g-3">
+            <!-- bando multiplo (macro bando, con bandi figli): come nella sezione I del legacy; non per i bandi figli -->
+            <div class="col-12" *ngIf="shows('aspect_macro_call') && !data.has_macro_call">
+              <app-control-toggle [inline]="true" [label]="'label.jconon_call.aspect_macro_call' | translate"
+                [formControlName]="macroControl"></app-control-toggle>
+            </div>
             <div class="form-group col-md-8 col-lg-4">
               <app-control-text type="text" [inline]="true" [showValidation]="true" [label]="'label.jconon_call.codice' | translate"
                 formControlName="jconon_call:codice"></app-control-text>
@@ -168,6 +175,9 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
      * Sedi selezionabili come nel legacy (ui.gestorisedi): per i gestori limitati ad alcune sedi solo quelle abilitate
      * per la tipologia di bando (più quella già scelta, se non è tra queste); altrimenti tutte le sedi attive.
      */
+    /** Controllo che aggiunge o toglie l'aspect del macro bando (bando multiplo). */
+    public readonly macroControl = ASPECT_CONTROL_PREFIX + ASPECT_MACRO_CALL;
+
     /** Campi in più dell'installazione (form del bulkinfo, vedi src/brand). */
     public readonly extraForm = BRAND.callExtraForms.detail;
     private handled: string[];
@@ -260,6 +270,7 @@ export class JcononAffixCallDetailComponent extends DynamicComponent<Call> {
       this.form.addControl('jconon_call:descrizione_ridotta_en', 
         new FormControl(this.data.descrizione_ridotta_en));
       // obbligatoria tranne che per amministratori e gruppo CONCORSI (controllo anche nel backend)
+      this.form.addControl(this.macroControl, new FormControl(hasAspect(this.data, ASPECT_MACRO_CALL)));
       this.form.addControl('jconon_call:sede_id', 
         new FormControl(this.data.sede_id, this.canEditPlace || !this.shows('jconon_call:sede_id') ? null : Validators.required));
 

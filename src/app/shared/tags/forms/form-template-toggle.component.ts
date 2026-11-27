@@ -12,7 +12,7 @@ import {FormCommonTag} from './form-common-tag';
   template:
      `
     <div [ngClass]="divToggleClass">
-      <label *ngIf="label" [ngClass]="labelClass" (click)="yesNo ? cycleAnswer() : toggle()" translate>{{label}}</label>
+      <label *ngIf="label" [ngClass]="labelClass" (click)="yesNo ? cycleAnswer() : toggle()" [innerHTML]="label | translate"></label>
       <div *ngIf="innerHtml" class="text-dark c-pointer" (click)="yesNo ? cycleAnswer() : toggle()" [innerHtml]="innerHtml"></div>
       <!-- risposta obbligatoria Sì/No (legacy ui.radio): "No" è una risposta valida, l'assenza di risposta no -->
       <div *ngIf="yesNo" class="yes-no ms-3 flex-shrink-0" role="radiogroup" [attr.aria-label]="label | translate">

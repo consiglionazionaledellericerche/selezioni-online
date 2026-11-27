@@ -43,6 +43,7 @@ import { PrintApplicationComponent } from './print-application.component';
       <div class="shadow-none p-3 px-1 py-3 mx-n3" #cardApplication>
         <div class="text-end">
           <span>{{'application.call.title' | translate:{value: call.codice} }}</span>
+          <app-call-parent class="d-block" [call]="call"></app-call-parent>
           <app-show-children-modal 
             [parentId] = "call.objectId" 
             [buttonClass] = "'text-primary'"
@@ -519,7 +520,8 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
   /** Nome della sezione nella scheda, senza il prefisso "Sezione I - " (il numero è già nel cerchio). */
   public tabLabel(key: string): string {
     const label = this.translateService.instant(key || '') || key;
-    const text = String(label)
+    // le etichette personalizzate possono contenere HTML: nella scheda solo il testo
+    const text = Helpers.stripHtml(String(label))
       .replace(/^\s*(sezione|section)\s+[ivxlcdm\d]+\s*[-–:.]\s*/i, '')
       .replace(/^\s*(sezione|section)\s+/i, '');
     // nomi tutti in maiuscolo: in forma normale, più leggibili e meno larghi nelle schede

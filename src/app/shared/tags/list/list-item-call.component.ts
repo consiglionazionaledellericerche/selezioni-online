@@ -1,6 +1,6 @@
 import { BRAND } from '../../../../brand/brand';
 import { ObjectType } from '../../../common/model/object-type.model';
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ChangeDetectorRef } from '@angular/core';
 import {Call} from '../../../core/call/call.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import { AllowableAction } from '../../../common/model/allowableaction.enum';
@@ -74,6 +74,35 @@ import { TranslateService } from '@ngx-translate/core';
           </div>
         </div>
       </div>
+      <!-- macro-bando: i bandi della selezione, ben visibili e consultabili anche senza accesso -->
+      <div *ngIf="isMacroCall()" class="macro-strip px-3 px-lg-4 py-3">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+          <svg class="icon icon-primary" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-folder"></use></svg>
+          <span class="fw-semibold me-auto">{{ (status() === 'closed' ? 'call_manage.children.macro_info_closed' : 'call_manage.children.macro_info') | translate }}</span>
+          <button type="button" class="btn btn-primary btn-sm" (click)="toggleChildren()" [attr.aria-expanded]="childrenOpen"
+                  [attr.aria-controls]="'children-' + item.objectId">
+            {{ (childrenOpen ? 'call_manage.children.hide' : 'call_manage.children.show') | translate }}
+            <span *ngIf="children" class="badge bg-white text-primary ms-1">{{ children.length }}</span>
+            <svg class="icon icon-white icon-sm ms-1" aria-hidden="true">
+              <use [attr.href]="'/bootstrap-italia/dist/svg/sprites.svg#' + (childrenOpen ? 'it-collapse' : 'it-expand')"></use></svg>
+          </button>
+        </div>
+        <div *ngIf="childrenOpen" [id]="'children-' + item.objectId" class="mt-3">
+          <div *ngIf="!children" class="small text-secondary">{{ 'layout.loading' | translate }}</div>
+          <div *ngIf="children && !children.length" class="small text-secondary">{{ 'no_item' | translate }}</div>
+          <ul *ngIf="children?.length" class="list-unstyled mb-0 child-calls">
+            <li *ngFor="let child of children" class="d-flex flex-wrap align-items-center gap-2 py-2">
+              <a class="fw-semibold" [routerLink]="['/call-detail']" [queryParams]="{ callId: child.objectId }">{{ child.codice }}</a>
+              <span class="badge rounded-pill" [ngClass]="childOpen(child) ? 'bg-success' : 'bg-secondary'">
+                {{ (childOpen(child) ? 'call.open' : 'call.closed') | translate }}</span>
+              <span *ngIf="child.profilo" class="small">{{ child.profilo }}</span>
+              <span *ngIf="child.sede" class="small text-secondary">{{ child.sede }}</span>
+              <span *ngIf="child.data_fine_invio_domande" class="small text-secondary ms-lg-auto">
+                {{ 'layout.call_deadline' | translate }} {{ child.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm' }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </article>
   `,
   styles: [`
@@ -86,6 +115,9 @@ import { TranslateService } from '@ngx-translate/core';
     .call-side { background: #f7f9fc; border-top-right-radius: inherit; border-bottom-right-radius: inherit; }
     @media (min-width: 992px) { .call-side { border-left: 1px solid #e3e8ee; } }
     .call-meta :is(span, app-show-text-modal) { white-space: nowrap; }
+    .macro-strip { background: var(--app-primary-light); border-top: 1px solid #e3e8ee;
+      border-bottom-left-radius: inherit; border-bottom-right-radius: inherit; }
+    .child-calls li + li { border-top: 1px solid rgba(0,0,0,.08); }
   `]
 })
 export class ListItemCallComponent {
@@ -96,7 +128,34 @@ export class ListItemCallComponent {
               private manageCallService: ManageCallService,
               private modalService: ModalService,
               private apiMessageService: ApiMessageService,
-              public translateService: TranslateService) {}
+              public translateService: TranslateService,
+              private changeDetectorRef: ChangeDetectorRef) {}
+
+  /** Bandi figli del macro-bando, caricati alla prima apertura. */
+  public children: Call[];
+  public childrenOpen = false;
+
+  toggleChildren(): void {
+    this.childrenOpen = !this.childrenOpen;
+    if (this.childrenOpen && !this.children) {
+      // componente OnPush: la risposta arriva dopo, va segnalato l'aggiornamento
+      this.manageCallService.children(this.item.objectId).subscribe(children => {
+        this.children = (children || []).sort((a, b) => String(a.codice).localeCompare(String(b.codice)));
+        this.changeDetectorRef.markForCheck();
+      }, () => {
+        this.children = [];
+        this.changeDetectorRef.markForCheck();
+      });
+    }
+  }
+
+  /** Bando figlio dentro i termini di presentazione delle domande. */
+  childOpen(call: Call): boolean {
+    const now = new Date();
+    const start = call.data_inizio_invio_domande ? new Date(call.data_inizio_invio_domande as any) : null;
+    const end = call.data_fine_invio_domande ? new Date(call.data_fine_invio_domande as any) : null;
+    return (!start || start <= now) && (!end || end >= now);
+  }
 
   /** Emesso dopo pubblicazione/ritiro o eliminazione, per ricaricare l'elenco. */
   @Output() onChange = new EventEmitter();

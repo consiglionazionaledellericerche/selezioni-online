@@ -35,10 +35,7 @@ export function hasAspect(call: Call, aspect: string): boolean {
         <fieldset class="form-block">
           <legend class="form-block-title">{{ 'call_manage.block.application_structure' | translate }}</legend>
           <div class="row g-3">
-            <div class="col-12" *ngIf="section.shows('aspect_macro_call')">
-              <app-control-toggle [inline]="true" [label]="'label.jconon_call.aspect_macro_call' | translate"
-                [formControlName]="macroControl"></app-control-toggle>
-            </div>
+            <!-- "bando multiplo" si sceglie in Dettagli Bando: qui solo le impostazioni che ne dipendono -->
             <ng-container *ngIf="isBandoMultiplo()">
               <div class="form-group col-md-4">
                 <app-control-text type="number" [inline]="true" [showValidation]="true"

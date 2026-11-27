@@ -5,6 +5,20 @@ import {Helpers} from '../../../common/helpers/helpers';
 
 @Component({
   standalone: false,
+  styles: [`
+    /* etichette personalizzate del bando con HTML (titoli, note, simbolo "?" con suggerimento) */
+    :host ::ng-deep label.textarea-label { position: static !important; transform: none !important; display: block; width: auto;
+      font-size: 1rem; font-weight: 600; color: inherit; white-space: normal; margin-bottom: .5rem; padding: 0; pointer-events: auto; }
+    :host ::ng-deep .rich-label :is(h1, h2, h3, h4, h5, h6), :host ::ng-deep label :is(h1, h2, h3, h4, h5, h6) {
+      display: inline; font-size: 1.05rem; font-weight: 700; margin: 0 .25rem 0 0; color: inherit; }
+    :host ::ng-deep .rich-label sub, :host ::ng-deep label sub { display: block; vertical-align: baseline; font-size: .85rem;
+      font-weight: 400; color: #5d7083; margin-top: .15rem; }
+    :host ::ng-deep .rich-label i[title], :host ::ng-deep label i[title] { display: inline-flex; align-items: center;
+      justify-content: center; width: 1.15rem; height: 1.15rem; margin-right: .35rem; border-radius: 50%;
+      background: var(--app-primary, #0066cc); color: #fff; font-style: normal; font-size: .75rem; font-weight: 700;
+      cursor: help; vertical-align: middle; }
+    :host ::ng-deep .rich-label i[title]:empty::before, :host ::ng-deep label i[title]:empty::before { content: "?"; }
+`],
   selector: 'app-form-layout',
   template:
      `
@@ -14,7 +28,7 @@ import {Helpers} from '../../../common/helpers/helpers';
           <i *ngIf="prepend" class="fa fa-{{ prepend }}" aria-hidden="true"></i>
           {{ prependText }}
         </div>
-        <label *ngIf="!noLabel" #label (click)="focusControl()" [ngClass]="labelClasses()" tooltipPlacement="right" [itTooltip]="getLabelTruncated() | translate">{{getLabel() | translate}}</label>
+        <label *ngIf="!noLabel" #label (click)="focusControl()" [ngClass]="labelClasses()" tooltipPlacement="right" [itTooltip]="plain(getLabelTruncated() | translate)" [innerHTML]="getLabel() | translate"></label>
         <ng-content></ng-content>
         <div *ngIf="append || appendText" class="input-group-append" [itTooltip]="ttipAppend | translate" tooltipPlacement="left">
           <div class="input-group-text">
@@ -122,6 +136,11 @@ export class FormLayoutComponent {
       'col-sm-10': !this.inline,
       'is-invalid': this.isInvalid()
     };
+  }
+
+  /** Testo senza HTML per il suggerimento. */
+  plain(value: string): string {
+    return Helpers.stripHtml(value);
   }
 
   getLabel() {

@@ -1,3 +1,4 @@
+import { CallParentComponent } from '../call-parent.component';
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -10,7 +11,7 @@ import { Call } from '../call.model';
 @Component({
   selector: 'app-call-header',
   standalone: true,
-  imports: [RouterLink, TranslatePipe],
+  imports: [RouterLink, TranslatePipe, CallParentComponent],
   template: `
     <nav class="breadcrumb-container pt-3" [attr.aria-label]="'layout.breadcrumb' | translate">
       <ol class="breadcrumb p-0 mb-0">
@@ -32,6 +33,7 @@ import { Call } from '../call.model';
           <span class="call-ref-profile">{{ call.profilo }}</span>
         }
       </div>
+      <app-call-parent [call]="call"></app-call-parent>
     }
   `,
   styles: [`

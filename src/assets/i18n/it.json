@@ -637,7 +637,12 @@
     },
     "children": {
       "title": "Bandi figli",
-      "public_title": "Bandi della selezione"
+      "public_title": "Bandi della selezione",
+      "macro_info": "Questa selezione comprende più bandi: scegli il bando per cui presentare domanda.",
+      "show": "Vedi i bandi della selezione",
+      "hide": "Nascondi i bandi",
+      "macro_info_closed": "Questa selezione comprende più bandi.",
+      "parent": "Bando di riferimento"
     },
     "attachments": {
       "link_children": "Collega ai bandi figli",
