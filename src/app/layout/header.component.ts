@@ -44,6 +44,23 @@ import { UserPanelComponent } from './user-panel.component';
   `,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  /**
+   * Sesso dell'utente: quello del profilo o, se manca, dal codice fiscale (giorno di nascita oltre 40 per le donne;
+   * nei codici con omocodia le cifre sono sostituite da lettere L-V).
+   */
+  static sesso(user: any): string {
+    if (user && (user.sesso === 'F' || user.sesso === 'M')) {
+      return user.sesso;
+    }
+    const cf = String(user && (user.codicefiscale || user.codiceFiscale) || '').toUpperCase();
+    if (cf.length !== 16) {
+      return null;
+    }
+    const digit = (c: string) => /[0-9]/.test(c) ? Number(c) : 'LMNPQRSTUV'.indexOf(c);
+    const day = digit(cf.charAt(9)) * 10 + digit(cf.charAt(10));
+    return day > 40 ? 'F' : 'M';
+  }
+
   @ViewChild(ItHeaderComponent) private readonly header?: ItHeaderComponent;
 
   private readonly authService = inject(AuthService);
@@ -96,7 +113,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.user = user;
       this.loadMegaMenus();
       if (user) {
-        const welcome = user.sesso === 'F' ? 'layout.welcome_F' : 'layout.welcome';
+        const welcome = HeaderComponent.sesso(user) === 'F' ? 'layout.welcome_F' : 'layout.welcome';
         this.notify.success(this.translateService.instant(welcome, { value: user.firstName || user.userName }), ' ');
       }
       this.menuService.evaluateNavbar();

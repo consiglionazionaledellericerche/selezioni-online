@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  /** Ultimo avviso di sessione scaduta: entro questo intervallo non se ne mostrano altri. */
+  private static lastExpired = 0;
+  private static readonly EXPIRED_WINDOW = 10000;
 
   constructor(private router: Router,
               private inj: Injector,
@@ -44,8 +47,14 @@ export class AuthInterceptor implements HttpInterceptor {
           });
           return next.handle(copiedReq);
         }
-        this.router.navigate(['auth/signin']);
-        this.apiMessageService.sendMessage(MessageType.WARNING, 'Sessione scaduta.');
+        // le richieste partite insieme (es. pagina con più chiamate) scadono tutte: un solo avviso e un solo rinvio
+        // alla pagina di accesso, e l'intestazione non mostra più l'utente
+        if (Date.now() - AuthInterceptor.lastExpired > AuthInterceptor.EXPIRED_WINDOW) {
+          AuthInterceptor.lastExpired = Date.now();
+          authService.userActivated.next(null);
+          this.router.navigate(['auth/signin']);
+          this.apiMessageService.sendMessage(MessageType.WARNING, 'Sessione scaduta.');
+        }
         return next.handle(req);
       }));
   }
