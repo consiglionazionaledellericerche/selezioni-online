@@ -552,9 +552,7 @@ export class ManageApplicationComponent extends CommonEditComponent<Application>
     // (righe, <br> o blocchi successivi): nella scheda solo il testo della prima riga
     const firstLine = this.labelLines(key).map(line => Helpers.stripHtml(line)).find(line => !!line) ||
       Helpers.stripHtml(String(label)) || String(key);
-    const text = firstLine
-      .replace(/^\s*(sezione|section)\s+[ivxlcdm\d]+\s*[-–:.]\s*/i, '')
-      .replace(/^\s*(sezione|section)\s+/i, '');
+    const text = firstLine.replace(/^\s*(sezione|section)\s+[ivxlcdm\d]+\s*[-–:.]\s*(?=\S)/i, '');
     // nomi tutti in maiuscolo: in forma normale, più leggibili e meno larghi nelle schede
     return text.length > 3 && text === text.toUpperCase() && /[A-Z]/.test(text)
       ? text.charAt(0) + text.slice(1).toLowerCase()
