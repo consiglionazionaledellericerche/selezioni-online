@@ -15,6 +15,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { switchMap } from 'rxjs/operators';
 import { saveAs } from 'file-saver';
 import { ConfigService } from '../../core/config.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   standalone: false,
@@ -26,12 +27,12 @@ import { ConfigService } from '../../core/config.service';
             <app-accordion-group #accordionGroup panelClass="border border-light no-after">
               <div class="d-flex align-items-start" accordion-heading>
                 <h4 #title class="p-1 text-truncate text-primary" [attr.title]="attachment | translate" translate>{{attachment}}</h4>
-                <span class="badge rounded-pill badge-outline-primary d-table ms-n1" [ngClass]="{'badge-outline-danger': childrenlist.count === 0}">{{childrenlist.count}}</span>
+                <span class="badge rounded-pill badge-outline-primary d-table ms-n1" [ngClass]="{'badge-outline-danger': (childrenlist.count || 0) + previewCount(attachment) === 0}">{{(childrenlist.count || 0) + previewCount(attachment)}}</span>
                 <span *ngIf="uploaded[attachment]" class="badge rounded-pill bg-success upload-ok ms-2 align-self-center" role="status">
                   <svg class="icon icon-xs icon-white me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-check"></use></svg>{{ 'message.document.uploaded' | translate }}
                 </span>
                 <div class="me-auto p-1 h4">
-                  <button *ngIf="data.objectId" class="btn p-0" [itPopover]="'new'| translate" popoverTrigger="hover" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
+                  <button *ngIf="data.objectId || preview" class="btn p-0" [itPopover]="'new'| translate" popoverTrigger="hover" (click)="openModalWithComponent($event, accordionGroup, data.objectId, attachment)">
                     <svg class="icon icon-success">
                       <use href="/bootstrap-italia/dist/svg/sprites.svg#it-plus-circle"></use>
                     </svg>
@@ -83,6 +84,18 @@ import { ConfigService } from '../../core/config.service';
                 <span *ngIf="pagopa.numeroAvviso"> {{ 'pagopa.notice_number' | translate }} <strong>{{ pagopa.numeroAvviso }}</strong>.</span>
               </div>
               <children-list #childrenlist [show_date]="true" [parentId]="data.objectId" [typeId]="attachment"></children-list>
+              <!-- anteprima: documenti "caricati" solo nel browser, non salvati -->
+              <ul *ngIf="previewDocs[attachment]?.length" class="list-group list-group-flush mx-3 mb-3">
+                <li *ngFor="let doc of previewDocs[attachment]; let i = index" class="list-group-item d-flex align-items-center gap-2 px-0">
+                  <svg class="icon icon-sm icon-secondary flex-shrink-0"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clip"></use></svg>
+                  <span class="text-truncate">{{ doc.name }}</span>
+                  <span *ngIf="doc.size" class="small text-secondary text-nowrap">{{ doc.size | number:'1.0-0' }} KB</span>
+                  <span class="badge badge-outline-secondary ms-auto text-nowrap">{{ 'application.preview.not_saved' | translate }}</span>
+                  <button type="button" class="btn btn-link p-0" [attr.aria-label]="'delete' | translate" (click)="removePreviewDoc(attachment, i)">
+                    <svg class="icon icon-sm icon-danger"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-delete"></use></svg>
+                  </button>
+                </li>
+              </ul>
             </app-accordion-group>
           </ng-container>  
         </app-accordion>
@@ -99,7 +112,8 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
       protected apiMessageService: ApiMessageService,
       protected translateService: TranslateService,
       private http: HttpClient,
-      private configService: ConfigService
+      private configService: ConfigService,
+      private route: ActivatedRoute
     ) {
       super(cacheService, changeDetectorRef);
       this.subscription = this.apiMessageService.loadingEvent$.subscribe((loadingState: LoadingState) => {
@@ -167,20 +181,51 @@ export class JcononAffixAllegatiComponent extends DynamicComponent<Application> 
     /** Tipi di allegato appena caricati (badge "Caricato" temporaneo). */
     public uploaded: { [type: string]: any } = {};
 
+    /** Anteprima della domanda (dalla gestione del bando): la domanda non esiste, quindi nessun objectId. */
+    public get preview(): boolean {
+      return !this.data?.objectId && this.route.snapshot.queryParamMap.get('preview') === 'true';
+    }
+
+    /** Documenti scelti in anteprima, per tipo di allegato: restano nel browser e non vengono salvati. */
+    public previewDocs: { [type: string]: { name: string, size?: number }[] } = {};
+
+    public previewCount(typeId: string): number {
+      return (this.previewDocs[typeId] || []).length;
+    }
+
+    public removePreviewDoc(typeId: string, index: number): void {
+      this.previewDocs[typeId] = (this.previewDocs[typeId] || []).filter((_, i) => i !== index);
+    }
+
     openModalWithComponent(event: any, accordion: any, parentId: string, typeId: string): boolean { 
       event.stopPropagation(); 
       event.preventDefault(); 
       if (!accordion.isOpen) {
         accordion.toggleOpen();
       }
-      const initialState = {
+      const initialState: any = {
         parentId: parentId,
         typeId: typeId,
         upload: this.upload
       };
+      if (this.preview) {
+        // anteprima: nessun caricamento sul backend, il documento resta solo nell'elenco locale
+        initialState.preview = true;
+        initialState.existing = this.previewCount(typeId);
+      }
 
       this.bsModalRef = this.modalService.show(ManageDocumentComponent, Object.assign({initialState}, { animated: true, class: 'modal-lg' }));
       this.bsModalRef.content.event.subscribe((document: Document) => {
+        if (this.preview) {
+          const file: File = (document as any).previewFile;
+          this.previewDocs[typeId] = [...(this.previewDocs[typeId] || []),
+            { name: document.name, size: file ? Math.max(1, Math.round(file.size / 1024)) : undefined }];
+          this.translateService.get('application.preview.upload_simulated', {value: document.name}).subscribe((label) => {
+            this.apiMessageService.sendMessage(MessageType.WARNING, label);
+          });
+          this.changeDetectorRef.markForCheck();
+          return;
+        }
         this.translateService.get('message.document.upload.success', {value: document.name}).subscribe((label) => {
           this.apiMessageService.sendMessage(MessageType.SUCCESS, label);
         });

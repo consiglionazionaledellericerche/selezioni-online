@@ -371,6 +371,7 @@
     "status_expiring": "Closing soon",
     "status_closed": "Closed",
     "status_today": "Closes today",
+    "status_tomorrow": "Closes tomorrow",
     "status_days_left": "{{value}} days left",
     "home": "Home",
     "calls": "Calls",
@@ -1362,7 +1363,9 @@
     "error_title": "Unable to open the application",
     "preview": {
       "title": "Application preview",
-      "info": "this is how candidates will see it; entered data is not saved."
+      "info": "this is how candidates will see it; entered data is not saved.",
+      "not_saved": "not saved",
+      "upload_simulated": "Simulated upload: {{value}} is not saved (preview)."
     },
     "download_zip": "Download application (zip)",
     "copy": "Copy application",

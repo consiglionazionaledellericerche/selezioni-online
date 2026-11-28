@@ -11,6 +11,7 @@ import { ManageCallService } from './manage-call.service';
  * Dettaglio pubblico di un bando (ex pagina call-detail di cool-jconon), raggiungibile senza autenticazione
  * con ?callCode=<codice> (stesso indirizzo della vecchia interfaccia) oppure ?callId=<id>.
  */
+import { Helpers } from '../../common/helpers/helpers';
 @Component({
   standalone: false,
   selector: 'call-detail-page',
@@ -157,7 +158,7 @@ import { ManageCallService } from './manage-call.service';
                 <p *ngIf="status() !== 'closed' && daysLeft() !== null" class="small mt-2 mb-3"
                    [ngClass]="status() === 'expiring' ? 'text-danger fw-semibold' : 'text-secondary'">
                   <svg class="icon icon-xs" [class.icon-danger]="status() === 'expiring'" aria-hidden="true"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-clock"></use></svg>
-                  {{ (daysLeft() === 0 ? 'layout.status_today' : 'layout.status_days_left') | translate:{value: daysLeft()} }}
+                  {{ (daysLeft() === 0 ? 'layout.status_today' : daysLeft() === 1 ? 'layout.status_tomorrow' : 'layout.status_days_left') | translate:{value: daysLeft()} }}
                 </p>
                 <app-call-prorogations [callId]="call.objectId" class="mb-3"></app-call-prorogations>
                 <app-call-actions [item]="call" mode="panel" (deleted)="router.navigate(['/'])"></app-call-actions>
@@ -257,9 +258,9 @@ export class CallDetailPageComponent implements OnInit {
     return now >= new Date(this.call.data_inizio_invio_domande) && now <= new Date(this.call.data_fine_invio_domande);
   }
 
+  /** Giorni di calendario alla scadenza (0 = oggi, 1 = domani). */
   public daysLeft(): number {
-    const end = this.call && this.call.data_fine_invio_domande ? new Date(this.call.data_fine_invio_domande as any).getTime() : NaN;
-    return isNaN(end) ? null : Math.max(Math.floor((end - Date.now()) / 86400000), 0);
+    return Helpers.calendarDaysLeft(this.call && this.call.data_fine_invio_domande);
   }
 
   public status(): 'open' | 'expiring' | 'closed' {

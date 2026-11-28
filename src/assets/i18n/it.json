@@ -564,6 +564,7 @@
     "status_expiring": "In scadenza",
     "status_closed": "Chiuso",
     "status_today": "Scade oggi",
+    "status_tomorrow": "Scade domani",
     "status_days_left": "Mancano {{value}} giorni",
     "home": "Home",
     "calls": "Bandi di concorso",
@@ -992,7 +993,9 @@
     "error_title": "Impossibile aprire la domanda",
     "preview": {
       "title": "Anteprima della domanda",
-      "info": "così la vedranno i candidati; i dati inseriti non vengono salvati."
+      "info": "così la vedranno i candidati; i dati inseriti non vengono salvati.",
+      "not_saved": "non salvato",
+      "upload_simulated": "Caricamento simulato: {{value}} non viene salvato (anteprima)."
     },
     "download_zip": "Scarica la domanda (zip)",
     "title": "DOMANDA DI PARTECIPAZIONE",

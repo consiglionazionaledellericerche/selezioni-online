@@ -412,7 +412,39 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
 
   /** Campo a tutta larghezza (interruttori, aree di testo, opzioni); date e testi brevi stanno su due colonne. */
   public isWide(field: GenericField): boolean {
+    if (this.isWideKind(field)) {
+      return true;
+    }
+    // campo breve rimasto da solo sulla riga (es. il titolo prima della descrizione): tutta la larghezza
+    const group = this.groups().find(g => g.fields.includes(field));
+    if (!group) {
+      return false;
+    }
+    let run: GenericField[] = [];
+    for (const f of group.fields.filter(item => this.isVisible(item))) {
+      if (this.isWideKind(f)) {
+        if (run.includes(field)) {
+          break;
+        }
+        run = [];
+      } else {
+        run.push(f);
+      }
+    }
+    return run.length % 2 === 1 && run[run.length - 1] === field;
+  }
+
+  private isWideKind(field: GenericField): boolean {
     return ['toggle', 'aspect', 'textarea', 'segmented', 'select', 'multiselect'].includes(field.kind);
+  }
+
+  /**
+   * Proprietà comuni di Alfresco: nel bulkinfo generato dal modello hanno come etichetta il displayName inglese
+   * ("Title", "Description"); si usano le traduzioni dell'applicazione.
+   */
+  protected commonLabel(property: string): string {
+    const key = ({ 'cm:title': 'title', 'cm:description': 'description', 'cm:name': 'name' } as any)[property];
+    return key && this.translateService.instant(key) !== key ? key : undefined;
   }
 
   /**
@@ -663,7 +695,8 @@ export class JcononAspectGenericComponent extends DynamicComponent<Application> 
       const time = kind === 'date' && (widget.includes('datetime') || /H/.test(String(def.format || '')));
       const protocollo = kind === 'text' && (widget.includes('protocollo') || property === 'jconon_protocollo:numero');
       const horizontal = /\bspan\d+\b/.test(String(def.labelClass || ''));
-      this.fields.push({ name, property, showWhen, label: def.label || this.jsonLabel(def) || this.knownLabel(property) || property,
+      this.fields.push({ name, property, showWhen,
+        label: this.commonLabel(property) || def.label || this.jsonLabel(def) || this.knownLabel(property) || property,
         kind, options, required, time, protocollo, yesNo, horizontal });
     });
     this.applyVisibility();

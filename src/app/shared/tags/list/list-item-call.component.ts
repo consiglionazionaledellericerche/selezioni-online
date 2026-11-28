@@ -12,6 +12,7 @@ import { ApiMessageService, MessageType } from '../../../core/api-message.servic
 import { ModalConfirmComponent } from '../wizard/modal-confirm.component';
 import { TranslateService } from '@ngx-translate/core';
 
+import { Helpers } from '../../../common/helpers/helpers';
 @Component({
   standalone: false,
   selector: 'app-list-item-call',
@@ -66,7 +67,7 @@ import { TranslateService } from '@ngx-translate/core';
             <div class="small text-secondary">{{ (isExpired() ? 'call.data_fine_invio_domande_scaduto' : 'call.data_fine_invio_domande') | translate }}</div>
             <div class="h5 mb-0">{{ item.data_fine_invio_domande | date:'dd/MM/yyyy HH:mm' }}</div>
             <div *ngIf="status() !== 'closed' && daysLeft() !== null" class="small" [ngClass]="status() === 'expiring' ? 'text-danger fw-semibold' : 'text-secondary'">
-              {{ (daysLeft() === 0 ? 'layout.status_today' : 'layout.status_days_left') | translate:{value: daysLeft()} }}
+              {{ (daysLeft() === 0 ? 'layout.status_today' : daysLeft() === 1 ? 'layout.status_tomorrow' : 'layout.status_days_left') | translate:{value: daysLeft()} }}
             </div>
           </div>
           <div class="mt-auto">
@@ -173,12 +174,9 @@ export class ListItemCallComponent {
     return { open: 'bg-success', expiring: 'bg-warning text-dark', closed: 'bg-secondary' }[this.status()];
   }
 
+  /** Giorni di calendario alla scadenza (0 = oggi, 1 = domani). */
   public daysLeft(): number {
-    const end = this.item && this.item.data_fine_invio_domande ? new Date(this.item.data_fine_invio_domande as any).getTime() : NaN;
-    if (isNaN(end)) {
-      return null;
-    }
-    return Math.max(Math.floor((end - Date.now()) / 86400000), 0);
+    return Helpers.calendarDaysLeft(this.item && this.item.data_fine_invio_domande);
   }
 
   public readableType(key: string): string {

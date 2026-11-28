@@ -63,6 +63,11 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
   @Input() upload: boolean = true;
   /** Avviso sulle tipologie a documento unico (no per i documenti del vincitore, che non sono allegati della domanda). */
   @Input() monoWarning = true;
+  /**
+   * Anteprima della domanda: stessa modale e stesse validazioni, ma il documento non viene caricato sul backend
+   * (la domanda non esiste); al salvataggio si restituisce il documento compilato con il file scelto.
+   */
+  @Input() preview = false;
   public event: EventEmitter<Document> = new EventEmitter();
   public submitted = false;
   /** Il tipo ammette un solo documento per domanda (D:jconon_attachment:document_mono). */
@@ -171,6 +176,15 @@ export class ManageDocumentComponent extends CommonEditComponent<Document>  impl
           invalid.focus();
         }
       });
+      return;
+    }
+    if (!this.form.invalid && this.preview) {
+      const file: File = this.form.value.file;
+      const document = this.buildInstance();
+      (document as any).name = (file && file.name) || this.form.value['cmis:name'] || this.typeId;
+      (document as any).previewFile = file;
+      this.event.emit(document);
+      this.modalRef.hide();
       return;
     }
     if (!this.form.invalid) {

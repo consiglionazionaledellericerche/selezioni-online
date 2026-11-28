@@ -13,6 +13,22 @@ export class Helpers {
    * Testo senza HTML (le etichette personalizzate del bando possono contenere tag): per schede, suggerimenti e
    * attributi, dove l'HTML non può essere reso.
    */
+  /**
+   * Giorni di calendario (ora locale) da oggi alla data indicata: 0 se scade oggi, 1 se domani, ecc.
+   * Non conta i periodi di 24 ore: domani alle 18:00 è "domani" anche se mancano meno di 24 ore.
+   * null se la data non è valida; mai negativo.
+   */
+  public static calendarDaysLeft(value: any, now: Date = new Date()): number {
+    const end = value ? new Date(value) : null;
+    if (!end || isNaN(end.getTime())) {
+      return null;
+    }
+    const endDay = new Date(end.getFullYear(), end.getMonth(), end.getDate()).getTime();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    // round: i giorni del cambio d'ora durano 23 o 25 ore
+    return Math.max(Math.round((endDay - today) / 86400000), 0);
+  }
+
   public static stripHtml(value: string): string {
     if (!value) {
       return value;
