@@ -38,6 +38,7 @@ export class AdminSectionComponent implements OnInit {
   public links: AdminLink[] = [
     { path: 'groups', label: 'admin.menu.groups', icon: 'it-pa', rbac: 'groups' },
     { path: 'gestori', label: 'admin.menu.gestori', icon: 'it-key', rbac: 'gestori' },
+    { path: 'commissari-rdp', label: 'admin.menu.registry', icon: 'it-user', rbac: 'applications-user' },
     { path: 'users', label: 'admin.menu.users', icon: 'it-user', rbac: 'gestione-utenti' },
     { path: 'rbac', label: 'admin.menu.rbac', icon: 'it-locked', rbac: 'rbac-admin' },
     { path: 'frontoffice', label: 'admin.menu.frontoffice', icon: 'it-horn' },

@@ -104,6 +104,7 @@
   "description": "Descrizione",
   "menu": {
     "admin": "Amministratore",
+    "registry": "Commissari e RdP",
     "groups": "Gruppi",
     "jsConsole": "Console JS",
     "gestori": "Gestori sedi",
@@ -757,6 +758,7 @@
     "title": "Amministrazione",
     "menu": {
       "groups": "Gruppi",
+      "registry": "Commissari e RdP",
       "gestori": "Gestori sedi",
       "users": "Utenti",
       "rbac": "Permessi (RBAC)",
@@ -764,6 +766,45 @@
       "views": "Ispettore viste",
       "jsConsole": "Console JS",
       "frontoffice": "Avvisi e FAQ"
+    },
+    "registry": {
+      "info": "Commissari e responsabili del procedimento (RdP) di tutti i bandi, con i dati dell'utenza. Scorri per caricarne altri; apri una riga per vedere i bandi in cui la persona è stata commissario o RdP.",
+      "tab": {
+        "commissioners": "Commissari",
+        "rdp": "Responsabili del procedimento"
+      },
+      "filter_commissioners": "Cerca per cognome (e nome)",
+      "filter_rdp": "Cerca per username",
+      "loaded": "{{value}} persone caricate",
+      "assignments": "{{value}} incarichi trovati",
+      "found": "{{value}} persone trovate",
+      "empty": "Nessuna persona trovata.",
+      "external": "senza utenza",
+      "account_missing": "utenza inesistente",
+      "account_disabled": "utenza disabilitata",
+      "account": {
+        "cognome": "Cognome",
+        "nome": "Nome",
+        "matricola": "Matricola",
+        "codiceFiscale": "Codice fiscale",
+        "email": "Email",
+        "emailEsterna": "Email esterna",
+        "telefono": "Telefono",
+        "tipo": "Tipo utenza",
+        "ldap": "Utenza CNR",
+        "local": "Utenza esterna"
+      },
+      "calls_count_one": "1 bando",
+      "calls_count_other": "{{value}} bandi",
+      "assignments_count_one": "1 incarico",
+      "assignments_count_other": "{{value}} incarichi",
+      "no_calls": "Nessun bando trovato.",
+      "call": "Bando",
+      "description": "Profilo / descrizione",
+      "structure": "Struttura",
+      "deadline": "Scadenza",
+      "role": "Ruolo",
+      "more": "Carica altri"
     },
     "error": {
       "forbidden": "Permessi non sufficienti per questa operazione",

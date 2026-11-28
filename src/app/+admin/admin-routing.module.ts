@@ -9,6 +9,7 @@ import { RbacComponent } from './rbac/rbac.component';
 import { CacheComponent } from './cache/cache.component';
 import { ViewsComponent } from './views/views.component';
 import { JsConsoleComponent } from './js-console/js-console.component';
+import { RegistryComponent } from './registry/registry.component';
 
 /**
  * Gli id in data.rbac sono quelli gia' configurati in rbac.get.json per le pagine legacy.
@@ -24,7 +25,9 @@ const adminRoutes: Routes = [
       { path: 'cache', component: CacheComponent, canActivate: [AdminGuard] },
       { path: 'views', component: ViewsComponent, canActivate: [AdminGuard] },
       { path: 'frontoffice', component: FrontOfficeAdminComponent, canActivate: [AdminGuard] },
-      { path: 'js-console', component: JsConsoleComponent, canActivate: [AdminGuard], data: { rbac: 'jsConsole' } }
+      { path: 'js-console', component: JsConsoleComponent, canActivate: [AdminGuard], data: { rbac: 'jsConsole' } },
+      // amministratori e gruppo CONCORSI: id RBAC applications-user (stessi gruppi); il backend ripete il controllo
+      { path: 'commissari-rdp', component: RegistryComponent, canActivate: [AdminGuard], data: { rbac: 'applications-user' } }
     ]
   }
 ];

@@ -20,6 +20,7 @@ import { RbacComponent } from './rbac/rbac.component';
 import { CacheComponent } from './cache/cache.component';
 import { ViewsComponent } from './views/views.component';
 import { JsConsoleComponent } from './js-console/js-console.component';
+import { RegistryComponent } from './registry/registry.component';
 
 /**
  * Modulo di amministrazione, caricato solo quando serve (route /admin).
@@ -34,7 +35,8 @@ import { JsConsoleComponent } from './js-console/js-console.component';
     RbacComponent,
     CacheComponent,
     ViewsComponent,
-    JsConsoleComponent
+    JsConsoleComponent,
+    RegistryComponent
   ],
   imports: [
     NazioneSelectComponent,

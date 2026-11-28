@@ -55,6 +55,8 @@ export class MenuService {
       adminMenuItems.push(new MenuItem('menu.groups', undefined, '/admin/groups', 'menu.groups', 'GET', 'groups'));
       adminMenuItems.push(new MenuItem('menu.gestori', undefined, '/admin/gestori', 'menu.gestori', 'GET', 'gestori'));
       adminMenuItems.push(new MenuItem('menu.users', undefined, '/admin/users', 'menu.users', 'GET', 'gestione-utenti'));
+      // amministratori e gruppo CONCORSI (id RBAC applications-user)
+      adminMenuItems.push(new MenuItem('menu.registry', undefined, '/admin/commissari-rdp', 'menu.registry', 'GET', 'applications-user'));
       adminMenuItems.push(new MenuItem('menu.rbac', undefined, '/admin/rbac', 'menu.rbac', 'GET', 'rbac-admin'));
       adminMenuItems.push(new MenuItem('menu.frontoffice', undefined, '/admin/frontoffice', 'menu.frontoffice', 'GET', 'rbac-admin'));
       adminMenuItems.push(new MenuItem('menu.cache', undefined, '/admin/cache', 'menu.cache', 'GET', 'rbac-admin'));

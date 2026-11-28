@@ -28,6 +28,59 @@ export interface Permission {
   authority?: string;
 }
 
+/** Persona dell'anagrafica commissari/RdP (GET /v1/call/registry/...). */
+export interface RegistryPerson {
+  key: string;
+  username?: string;
+  cognome?: string;
+  nome?: string;
+  qualifica?: string;
+  email?: string;
+  /** Commissari: numero di incarichi. */
+  incarichi?: number;
+  /** Dati dell'utenza (solo per chi ha uno username). */
+  account?: RegistryAccount;
+}
+
+/** Utenza Alfresco di un commissario o RdP. */
+export interface RegistryAccount {
+  username: string;
+  cognome?: string;
+  nome?: string;
+  email?: string;
+  emailEsterna?: string;
+  telefono?: string;
+  matricola?: number;
+  codiceFiscale?: string;
+  /** Utenza CNR (LDAP) o esterna. */
+  ldap?: boolean;
+  disabilitata?: boolean;
+  /** L'utente non esiste (più). */
+  notFound?: boolean;
+}
+
+/** Bando di una persona dell'anagrafica; ruolo solo per i commissari. */
+export interface RegistryCall {
+  id: string;
+  objectTypeId?: string;
+  codice?: string;
+  descrizione?: string;
+  profilo?: string;
+  struttura?: string;
+  sede?: string;
+  dataFine?: number;
+  ruolo?: string;
+}
+
+/** Pagina della ricerca di commissari o RdP. */
+export interface RegistryPage {
+  items: RegistryPerson[];
+  nextSkip: number;
+  hasMore: boolean;
+  /** Commissari: incarichi trovati in tutto (-1 se il repository non lo indica); RdP: persone trovate. */
+  total?: number;
+}
+
 export type CacheName = 'bulkinfo' | 'application' | 'call' | 'jasper' | 'sedi' | 'labels' | 'types' | 'all';
 
 /**
@@ -37,6 +90,7 @@ export type CacheName = 'bulkinfo' | 'application' | 'call' | 'jasper' | 'sedi' 
 export class AdminService {
 
   public static URL = '/v1/admin';
+  public static REGISTRY = '/v1/call/registry';
 
   constructor(
     private httpClient: HttpClient,
@@ -157,6 +211,35 @@ export class AdminService {
   }
 
   /* ---------------------------------------------------------------- */
+
+  /* Commissari e RdP (amministratori e gruppo CONCORSI) */
+
+  /**
+   * Commissari, a pagine di max persone (ordine cognome e nome) con i dati dell'utenza; skip è la posizione restituita
+   * dalla pagina precedente (nextSkip). filter: prima parola sul cognome, seconda sul nome.
+   */
+  registryCommissioners(skip: number, max: number, filter?: string): Observable<RegistryPage> {
+    return this.call(apiBase => this.httpClient.get<RegistryPage>(apiBase + AdminService.REGISTRY + '/commissioners',
+      {params: this.params({skip, max, filter})}));
+  }
+
+  /** Commissario con utenza: per username; senza utenza: per cognome e nome. */
+  registryCommissionerCalls(person: RegistryPerson): Observable<RegistryCall[]> {
+    const params = person.username ? this.params({username: person.username}) :
+      this.params({cognome: person.cognome, nome: person.nome});
+    return this.call(apiBase => this.httpClient.get<RegistryCall[]>(apiBase + AdminService.REGISTRY + '/commissioners/calls', {params}));
+  }
+
+  /** Responsabili del procedimento, a pagine di max persone con i dati dell'utenza; filter sullo username. */
+  registryRdp(skip: number, max: number, filter?: string): Observable<RegistryPage> {
+    return this.call(apiBase => this.httpClient.get<RegistryPage>(apiBase + AdminService.REGISTRY + '/rdp',
+      {params: this.params({skip, max, filter})}));
+  }
+
+  registryRdpCalls(username: string): Observable<RegistryPerson & { calls: RegistryCall[] }> {
+    return this.call(apiBase => this.httpClient.get<RegistryPerson & { calls: RegistryCall[] }>(
+      apiBase + AdminService.REGISTRY + '/rdp/calls', {params: this.params({username})}));
+  }
 
   private get<T = any>(path: string, params?: HttpParams): Observable<T> {
     return this.call(apiBase => this.httpClient.get<T>(apiBase + AdminService.URL + path, {params}));

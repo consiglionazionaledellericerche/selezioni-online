@@ -564,6 +564,7 @@
     "title": "Administration",
     "menu": {
       "groups": "Groups",
+      "registry": "Commissioners and RdP",
       "gestori": "Office managers",
       "users": "Users",
       "rbac": "Permissions (RBAC)",
@@ -571,6 +572,45 @@
       "views": "View inspector",
       "jsConsole": "JS console",
       "frontoffice": "Notices and FAQ"
+    },
+    "registry": {
+      "info": "Commission members and procedure managers (RdP) of all calls, with their account details. Scroll to load more; open a row to see the calls in which the person was a commission member or RdP.",
+      "tab": {
+        "commissioners": "Commission members",
+        "rdp": "Procedure managers"
+      },
+      "filter_commissioners": "Search by surname (and name)",
+      "filter_rdp": "Search by username",
+      "loaded": "{{value}} people loaded",
+      "assignments": "{{value}} assignments found",
+      "found": "{{value}} people found",
+      "empty": "No people found.",
+      "external": "no account",
+      "account_missing": "account not found",
+      "account_disabled": "account disabled",
+      "account": {
+        "cognome": "Surname",
+        "nome": "Name",
+        "matricola": "Employee ID",
+        "codiceFiscale": "Tax code",
+        "email": "Email",
+        "emailEsterna": "External email",
+        "telefono": "Phone",
+        "tipo": "Account type",
+        "ldap": "CNR account",
+        "local": "External account"
+      },
+      "calls_count_one": "1 call",
+      "calls_count_other": "{{value}} calls",
+      "assignments_count_one": "1 assignment",
+      "assignments_count_other": "{{value}} assignments",
+      "no_calls": "No calls found.",
+      "call": "Call",
+      "description": "Profile / description",
+      "structure": "Structure",
+      "deadline": "Deadline",
+      "role": "Role",
+      "more": "Load more"
     },
     "error": {
       "forbidden": "You are not allowed to perform this operation",
@@ -685,6 +725,7 @@
   },
   "menu": {
     "admin": "Administration",
+    "registry": "Commissioners and RdP",
     "groups": "Groups",
     "gestori": "Office managers",
     "users": "Users",
