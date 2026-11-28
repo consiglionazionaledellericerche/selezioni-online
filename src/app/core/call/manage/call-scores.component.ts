@@ -83,23 +83,56 @@ interface ScoreRow {
                  [(ngModel)]="filter" [attr.aria-label]="'call_scores.filter' | translate">
         </div>
         <span class="small text-secondary">{{ 'call_scores.count' | translate:{ value: visibleRows().length, total: rows.length } }}</span>
+        <button *ngIf="sortKey" type="button" class="btn btn-link btn-sm p-0 d-inline-flex align-items-center" (click)="clearSort()">
+          <svg class="icon icon-xs icon-primary me-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-close"></use></svg>
+          {{ 'call_scores.sort_clear' | translate }}
+        </button>
       </div>
       <div *ngIf="!rows.length" class="alert alert-light">{{ 'call_scores.empty' | translate }}</div>
       <div class="table-responsive scores" *ngIf="rows.length">
         <table class="table table-sm table-hover align-middle mb-0">
           <thead>
             <tr>
-              <th scope="col" class="sticky-col"><span class="row-number">#</span>{{ 'call_scores.candidate' | translate }}</th>
-              <th scope="col" *ngFor="let field of fields" class="text-end score-col" [title]="field.label">
-                <div class="text-truncate">{{ field.label }}</div>
+              <th scope="col" class="sticky-col" [attr.aria-sort]="ariaSort('candidate')">
+                <span class="row-number">#</span>
+                <button type="button" class="sort-btn" (click)="sortBy('candidate')"
+                        [attr.aria-label]="'call_scores.sort_by' | translate:{ value: ('call_scores.candidate' | translate) }">
+                  {{ 'call_scores.candidate' | translate }}
+                  <ng-container *ngTemplateOutlet="sortIcon; context: { $implicit: 'candidate' }"></ng-container>
+                </button>
+              </th>
+              <th scope="col" *ngFor="let field of fields" class="text-end score-col" [title]="field.label" [attr.aria-sort]="ariaSort(field.property)">
+                <button type="button" class="sort-btn justify-content-end w-100" (click)="sortBy(field.property)"
+                        [attr.aria-label]="'call_scores.sort_by' | translate:{ value: field.label }">
+                  <span class="text-truncate">{{ field.label }}</span>
+                  <ng-container *ngTemplateOutlet="sortIcon; context: { $implicit: field.property }"></ng-container>
+                </button>
                 <small class="fw-normal text-secondary">
                   <span *ngIf="hasValue(field.min)">min {{ field.min }}</span>
                   <span *ngIf="hasValue(field.max)"> max {{ field.max }}</span>
                 </small>
               </th>
-              <th scope="col" class="text-end text-success">{{ 'call_scores.total' | translate }}</th>
-              <th scope="col" class="text-end">{{ 'call_scores.position' | translate }}</th>
-              <th scope="col">{{ 'call_scores.outcome' | translate }}</th>
+              <th scope="col" class="text-end text-success" [attr.aria-sort]="ariaSort('totale')">
+                <button type="button" class="sort-btn" (click)="sortBy('totale')"
+                        [attr.aria-label]="'call_scores.sort_by' | translate:{ value: ('call_scores.total' | translate) }">
+                  {{ 'call_scores.total' | translate }}
+                  <ng-container *ngTemplateOutlet="sortIcon; context: { $implicit: 'totale' }"></ng-container>
+                </button>
+              </th>
+              <th scope="col" class="text-end" [attr.aria-sort]="ariaSort(GRADUATORIA)">
+                <button type="button" class="sort-btn" (click)="sortBy(GRADUATORIA)"
+                        [attr.aria-label]="'call_scores.sort_by' | translate:{ value: ('call_scores.position' | translate) }">
+                  {{ 'call_scores.position' | translate }}
+                  <ng-container *ngTemplateOutlet="sortIcon; context: { $implicit: GRADUATORIA }"></ng-container>
+                </button>
+              </th>
+              <th scope="col" class="esito-col" [attr.aria-sort]="ariaSort(ESITO)">
+                <button type="button" class="sort-btn" (click)="sortBy(ESITO)"
+                        [attr.aria-label]="'call_scores.sort_by' | translate:{ value: ('call_scores.outcome' | translate) }">
+                  {{ 'call_scores.outcome' | translate }}
+                  <ng-container *ngTemplateOutlet="sortIcon; context: { $implicit: ESITO }"></ng-container>
+                </button>
+              </th>
               <th scope="col" class="note-col">{{ 'call_scores.notes' | translate }}</th>
               <th scope="col">{{ 'call_scores.prot_graduatoria' | translate }}</th>
               <th scope="col">{{ 'call_scores.prot_scorrimento' | translate }}</th>
@@ -120,7 +153,7 @@ interface ScoreRow {
                        [(ngModel)]="row.values[GRADUATORIA]" [readonly]="locked" [attr.aria-label]="'call_scores.position' | translate">
               </td>
               <td>
-                <select class="form-select form-select-sm" [(ngModel)]="row.values[ESITO]" [disabled]="row.esitoLocked"
+                <select class="form-select form-select-sm esito-select" [(ngModel)]="row.values[ESITO]" [disabled]="row.esitoLocked"
                         [attr.aria-label]="'call_scores.outcome' | translate">
                   <option value=""></option>
                   <option *ngFor="let esito of esiti" [value]="esito">{{ esito }} - {{ 'application_operations.esito.' + esito | translate }}</option>
@@ -147,6 +180,13 @@ interface ScoreRow {
         </table>
       </div>
     </ng-container>
+    <!-- freccia di ordinamento: piena sulla colonna attiva, tenue sulle altre -->
+    <ng-template #sortIcon let-key>
+      <svg class="icon icon-xs sort-icon flex-shrink-0" [class.active]="sortKey === key" aria-hidden="true">
+        <use *ngIf="sortKey !== key || sortDir > 0" href="/bootstrap-italia/dist/svg/sprites.svg#it-arrow-up-triangle"></use>
+        <use *ngIf="sortKey === key && sortDir < 0" href="/bootstrap-italia/dist/svg/sprites.svg#it-arrow-down-triangle"></use>
+      </svg>
+    </ng-template>
   `,
   styles: [`
     .search { min-width: 260px; }
@@ -160,7 +200,14 @@ interface ScoreRow {
     .pos-input { width: 5rem; }
     .prot-num { width: 6rem; }
     .note-col { min-width: 14rem; }
+    .esito-col { min-width: 18rem; }
+    .esito-select { min-width: 18rem; }
     .scores input[readonly] { background: #f2f2f2; }
+    .sort-btn { display: inline-flex; align-items: center; gap: .15rem; max-width: 100%; padding: 0; border: 0; background: none;
+      color: inherit; font: inherit; font-weight: 600; text-align: inherit; cursor: pointer; }
+    .sort-btn:hover { text-decoration: underline; }
+    .sort-icon { fill: currentColor; opacity: .25; }
+    .sort-icon.active { opacity: 1; }
   `]
 })
 export class CallScoresComponent extends CallPageBase {
@@ -177,6 +224,12 @@ export class CallScoresComponent extends CallPageBase {
   public rows: ScoreRow[];
   public filter = '';
   public busy = false;
+  /**
+   * Colonna di ordinamento scelta: 'candidate', 'totale', una voce di punteggio, posizione o esito;
+   * null = ordine predefinito (posizione in graduatoria, poi cognome e nome).
+   */
+  public sortKey: string = null;
+  public sortDir: 1 | -1 = 1;
   private snapshot: { [id: string]: string } = {};
   private user: User;
 
@@ -203,7 +256,8 @@ export class CallScoresComponent extends CallPageBase {
   private loadRows(): void {
     this.rows = null;
     this.service.activeApplications(this.callId).subscribe(items => {
-      this.rows = items.map(item => this.toRow(item)).sort((a, b) => this.compare(a, b));
+      this.rows = items.map(item => this.toRow(item));
+      this.applySort();
       this.snapshot = {};
       this.rows.forEach(row => this.snapshot[row.id] = JSON.stringify(row.values));
     });
@@ -229,11 +283,84 @@ export class CallScoresComponent extends CallPageBase {
     };
   }
 
-  /** Posizione in graduatoria (le domande senza posizione in fondo), poi cognome e nome. */
+  /**
+   * Clic sull'intestazione: primo verso, verso opposto, poi nessun ordinamento (ordine predefinito).
+   * Il totale parte dal più alto, le altre colonne dal valore più basso (o dalla A).
+   */
+  sortBy(key: string): void {
+    const first: 1 | -1 = key === 'totale' ? -1 : 1;
+    if (this.sortKey !== key) {
+      this.sortKey = key;
+      this.sortDir = first;
+    } else if (this.sortDir === first) {
+      this.sortDir = first > 0 ? -1 : 1;
+    } else {
+      this.sortKey = null;
+      this.sortDir = 1;
+    }
+    this.applySort();
+  }
+
+  /** Torna all'ordine predefinito. */
+  clearSort(): void {
+    this.sortKey = null;
+    this.sortDir = 1;
+    this.applySort();
+  }
+
+  ariaSort(key: string): string {
+    return this.sortKey === key ? (this.sortDir > 0 ? 'ascending' : 'descending') : null;
+  }
+
+  /** Riordina le righe solo su richiesta (caricamento o clic): mentre si scrive un punteggio le righe restano ferme. */
+  private applySort(): void {
+    if (this.rows) {
+      this.rows = [...this.rows].sort((a, b) => this.compare(a, b));
+    }
+  }
+
+  /**
+   * Colonna scelta nel verso scelto, con i valori vuoti sempre in fondo; a parità, posizione in graduatoria
+   * e poi cognome e nome.
+   */
   private compare(a: ScoreRow, b: ScoreRow): number {
-    const ga = this.hasValue(a.values[GRADUATORIA]) ? Number(a.values[GRADUATORIA]) : Number.MAX_SAFE_INTEGER;
-    const gb = this.hasValue(b.values[GRADUATORIA]) ? Number(b.values[GRADUATORIA]) : Number.MAX_SAFE_INTEGER;
-    return ga - gb || a.cognome.localeCompare(b.cognome) || a.nome.localeCompare(b.nome);
+    if (!this.sortKey) {
+      return this.compareBy(GRADUATORIA, a, b, 1) || this.compareBy('candidate', a, b, 1);
+    }
+    const byKey = this.compareBy(this.sortKey, a, b, this.sortDir);
+    if (byKey || this.sortKey === 'candidate') {
+      return byKey;
+    }
+    return (this.sortKey !== GRADUATORIA ? this.compareBy(GRADUATORIA, a, b, 1) : 0) || this.compareBy('candidate', a, b, 1);
+  }
+
+  private compareBy(key: string, a: ScoreRow, b: ScoreRow, dir: number): number {
+    if (key === 'candidate') {
+      const name = (row: ScoreRow) => (row.cognome + ' ' + row.nome).trim();
+      return dir * name(a).localeCompare(name(b), 'it', { sensitivity: 'base' });
+    }
+    const va = this.sortValue(key, a);
+    const vb = this.sortValue(key, b);
+    if (va === null || vb === null) {
+      return va === vb ? 0 : va === null ? 1 : -1;
+    }
+    if (typeof va === 'number' && typeof vb === 'number') {
+      return dir * (va - vb);
+    }
+    return dir * String(va).localeCompare(String(vb), 'it', { numeric: true, sensitivity: 'base' });
+  }
+
+  /** Valore della colonna per l'ordinamento: numeri per punteggi, totale e posizione (anche con la virgola), null se vuoto. */
+  private sortValue(key: string, row: ScoreRow): number | string {
+    const value = key === 'totale' ? row.totale : row.values[key];
+    if (!this.hasValue(value)) {
+      return null;
+    }
+    if (key === ESITO) {
+      return String(value);
+    }
+    const number = Number(String(value).trim().replace(',', '.'));
+    return isNaN(number) ? String(value) : number;
   }
 
   visibleRows(): ScoreRow[] {

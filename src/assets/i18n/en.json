@@ -1977,6 +1977,8 @@
     "locked": "The call ranking has been generated: scores and positions cannot be changed. Notes, unassigned outcomes and registrations can still be changed.",
     "no_fields": "No score items are configured in the call: set them in the Scores section of the call.",
     "filter": "Search candidate",
+    "sort_by": "Sort by {{value}}",
+    "sort_clear": "Clear sorting",
     "count": "{{value}} of {{total}} applications",
     "empty": "No active applications for this call.",
     "candidate": "Candidate",

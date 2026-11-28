@@ -2439,6 +2439,8 @@
     "locked": "La graduatoria del bando è stata generata: punteggi e posizioni non sono modificabili. Restano modificabili note, esiti non assegnati e protocolli.",
     "no_fields": "Nel bando non sono configurate voci di punteggio: impostarle nella sezione Punteggi del bando.",
     "filter": "Cerca candidato",
+    "sort_by": "Ordina per {{value}}",
+    "sort_clear": "Rimuovi ordinamento",
     "count": "{{value}} di {{total}} domande",
     "empty": "Nessuna domanda attiva per questo bando.",
     "candidate": "Candidato",
